@@ -201,7 +201,7 @@
         "day": "एक दिवसासाठी"
       },
       "helpTypes": {
-        "request": "मदतीसाठी पहात आहात",
+        "request": "मदतीची विनंती करत आहे",
         "offer": "मदत देणे"
       }
     },
@@ -342,7 +342,7 @@
       "typeAndIndustry": "प्रकार आणि उद्योग",
       "type": "प्रकार",
       "types": [
-        "प्रारंभ",
+        "स्टार्टअप",
         "कंपनी",
         "समुदाय",
         "सरकार",
@@ -485,7 +485,7 @@
     "general": [
       [
         "फाइटपॅन्डमिक्स म्हणजे काय?",
-        "फाइटपॅन्डमिक्स हा एक व्यासपीठ आहे ज्यात कॉव्हीड -१. च्या उद्रेकाच्या वेळी साथीच्या (साथीच्या रोगाचा) आजारांनी बर्‍याच प्रकारे बाधीत असलेल्या लोकांसाठी जाण्याचा प्रयत्न केला जाऊ शकतो.",
+        "फाइटपांडेमिक्स हे कॉव्हीड -१९ च्या उद्रेकादरम्यान निर्माण झालेले एक व्यासपीठ आहे. साथीच्या रोगाने प्रभावित झालेल्या लोकांसाठी मदतीचे ठिकाण असावे या उद्देशाने फाइटपांडेमिक्स हे एक व्यासपीठ आहे.",
         "स्थानिक आणि जागतिक पातळीवर साथीच्या रोगाच्या संकटादरम्यान मदत मागणाऱ्या व्यक्ती आणि संस्थांना जोडणे हे आमचे मुख्य ध्येय आहे. तुम्ही वैद्यकीय मदत, चेहऱ्यावरील मुखवटे, कायदेशीर मदत, किराणा सामान, तुमच्या कुत्र्याला चालण्यासाठी किंवा इतर कोणत्याही दैनंदिन कामांसाठी आधार मागितला तरी तुम्ही ते येथे शोधू शकता:",
         "आम्ही आवश्यक अशी माहिती एकत्रित करण्याचा प्रयत्न करतो जी अत्यंत खंडित, एक नेटवर्क व्यक्ती, समुदाय आणि साथीच्या रोगांशी संबंधित विषयांवर किंवा प्रकल्पांवर कार्य करणार्‍या संस्थांमध्ये कनेक्ट होते. आमची दृष्टी अशी परिस्थिती निर्माण करण्याची आहे की जिथं प्रत्येकजण आपत्कालीन परिस्थितीत अधिक प्रतिरोधक असेल, आरोग्य आपत्कालीन परिस्थिती आणि मानवतावादी संकटांना समुदायांना अधिक जलद आणि प्रभावीपणे प्रतिसाद देऊन मदत करेल."
       ],
@@ -504,7 +504,7 @@
       ],
       [
         "मी फाइटपॅन्डमिक्सवर ऑफर किंवा मदतीसाठी विनंती कशी पोस्ट करू शकतो?",
-        "<0>When you join the community, you will have unlimited access to view and create posts and comments on FightPandemics platform.</0><1>To join the community as a user, click the \"Menu\" button and select the \"Join Now/Sign In\" option. There you will be able to join with your choice of email or social media credentials.</1><2>Once you have completed your profile, select the menu button, select view my profile and click on the plus button to create your first post.</2>"
+        "< 0 > आपण समुदायामध्ये सामील  व्हाल तेव्हा फाइटपॅन्डमिक्स प्लॅटफॉर्मवर पोस्ट्स आणि टिप्पण्या पाहण्यास आणि तयार करण्यासाठी आपल्याकडे अमर्यादित प्रवेश असेल. < / 0 > < 1 > एकवापरकर्ता म्हणून समुदायात सामील होण्यासाठी, \"मेनू\" बटणावर क्लिक करा आणि \"आता सामील व्हा / साइन इन\" पर्याय निवडा. तेथे आपण आपल्या पसंतीच्या ईमेल किंवा सोशल मीडिया क्रेडेन्शियल्समध्ये सामील होऊ शकता. < / 1 > < 2 > एकदा आपण आपले प्रोफाइल पूर्ण केल्यावर मेनू बटण निवडा, माझे प्रोफाइल पहा निवडा आणि आपली पहिली पोस्ट तयार करण्यासाठी प्लस बटणावर क्लिक करा. < / 2 >"
       ],
       [
         "मी फाइटपांडेमिक्स च्या बातम्यांशी अद्ययावत कसे राहू शकतो?",
@@ -521,7 +521,7 @@
       ],
       [
         "मला मदत कशी मिळेल?",
-        "From the FightPandemics homepage, select \"Need help\". If you choose \"Other help\", you'll enter your location and be directed to a page with the help offers in the selected area. You can then filter the postings that you want to see also by provider and type. Alternatively, you can select \"View community postings\" from the main page to view all postings and apply the desired filters."
+        "फाइटपांडेमिक्स होमपेजवरून, \"मदतीची गरज\" निवडा. जर तुम्ही \"इतर मदत\" निवडली तर तुम्ही तुमच्या लोकेशनमध्ये प्रवेश कराल आणि निवडलेल्या क्षेत्रातील मदतीच्या ऑफर्ससह एका पानावर पाठवाल. त्यानंतर तुम्ही प्रदाता आणि प्रकाराद्वारे तुम्हाला पाहू इच्छिणाऱ्या पोस्टफिल्टर करू शकता. पर्यायाने, सर्व पोस्ट पाहण्यासाठी आणि इच्छित फिल्टर लागू करण्यासाठी तुम्ही मुख्य पानावरून \"कम्युनिटी पोस्टिंग\" निवडू शकता."
       ],
       [
         "मी मदत कशी देऊ शकतो?",
@@ -587,11 +587,11 @@
       ],
       [
         "मी माझे वैयक्तिक प्रोफाइल संस्थेच्या प्रोफाइलमध्ये कसे बदलू शकतो?",
-        "An organizational profile is tied to your individual profile. Once you create your individual profile, you can add as many organizational profiles as you'd like tied to that individual profile. Your sign in credentials will continue to be the email and password you used to join for the individual profile."
+        "एक संस्थात्मक प्रोफाइल आपल्या वैयक्तिक प्रोफाइलशी जोडलेले आहे. एकदा आपण आपले वैयक्तिक प्रोफाइल तयार केले की आपण त्या वैयक्तिक प्रोफाइलशी जोडले पाहिजे तितके आपण बरेच संघटनात्मक प्रोफाइल जोडू शकता. आपले साइन इन क्रेडेन्शियल्स आपण स्वतंत्र प्रोफाईलसाठी सामील होण्यासाठी वापरलेला ईमेल आणि संकेतशब्द असेल."
       ],
       [
         "मी माझ्या संस्थेचे प्रोफाइल वैयक्तिक प्रोफाइलमध्ये कसे बदलू शकतो?",
-        "You cannot change your organization profile to an individual profile. In order to create an organizational profile, you are required to have an individual profile. Once you create your individual profile, you can add as many organization profiles as you'd like, tied to that individual profile. Your sign in credentials will continue to be the email and password you used to join for the individual profile."
+        "आपण आपले प्रोफाइल प्रोफाइल स्वतंत्र प्रोफाइलमध्ये बदलू शकत नाही. संस्थात्मक प्रोफाइल तयार करण्यासाठी आपल्याकडे वैयक्तिक प्रोफाइल असणे आवश्यक आहे. एकदा आपण आपले वैयक्तिक प्रोफाइल तयार केले की आपण त्या वैयक्तिक प्रोफाइलशी बद्ध म्हणून आपल्यास पाहिजे तितक्या संघटना प्रोफाइल जोडू शकता. आपले साइन इन क्रेडेन्शियल्स आपण स्वतंत्र प्रोफाईलसाठी सामील होण्यासाठी वापरलेला ईमेल आणि संकेतशब्द असेल."
       ],
       [
         "मी माझा पासवर्ड(संकेतशब्द) कसा रिसेट करू शकतो?",
@@ -662,10 +662,10 @@
   },
   "cookies": {
     "whatCookies": "कुकीज काय आहेत?",
-    "whatCookiesContent": "<0>This Website uses ¨Cookies¨, and other similar mechanisms (hereinafter, Cookies). Cookies are files sent to a browser through a web server to record the activities of the User on a specific website or on all websites, apps and / or services on this website. The first purpose of Cookies is to provide the User with faster and more personalized access to the services offered. Cookies are associated only with an anonymous User and his/her computer and do not provide references that allow the deduction of the User's personal data.</0><1>The User may configure his/her browser to notify and reject the installation of Cookies sent by this website, without prejudice to the User's ability to access the Contents. However, we note that, in any case, the performance of the website may decrease. This website makes use of Web Bugs, which are tiny and transparent images inserted in the emails. When the User opens a newsletter of the Website, this image is downloaded along with the rest of the email content and allows to know if a specific email has been opened or not, as well as the IP address from which it was downloaded. FightPandemics uses this information to obtain statistics and carry out analytical studies on the reception of its emails by Users.</1>",
+    "whatCookiesContent": "< 0 > ही वेबसाइट ¨ कूकीज 'आणि इतर तत्सम यंत्रणा वापरते (यानंतर, कुकीज). कुकीज या वेबसाइटवर वापरकर्त्याच्या क्रियाकलाप विशिष्ट वेबसाइटवर किंवा सर्व वेबसाइट्स, अ‍ॅप्स आणि / किंवा सेवांवर रेकॉर्ड करण्यासाठी वेब सर्व्हरद्वारे ब्राउझरला पाठविल्या जाणार्‍या फायली असतात. कुकीजचा प्रथम उद्देश वापरकर्त्यास देऊ केलेल्या सेवांमध्ये वेगवान आणि अधिक वैयक्तिकृत प्रवेश प्रदान करणे हा आहे. कुकीज केवळ अज्ञात वापरकर्ता आणि त्याच्या / तिच्या संगणकाशी संबंधित आहेत आणि वापरकर्त्याचा वैयक्तिक डेटा वजा करण्यास अनुमती देणारे संदर्भ प्रदान करत नाहीत. < / 0 > < 1 > वापरकर्त्याने सामग्रीमध्ये प्रवेश करण्याच्या क्षमतेचा पूर्वग्रह न ठेवता, या वेबसाइटद्वारे पाठविलेल्या कुकीजच्या स्थापनेस सूचित आणि नाकारण्यासाठी वापरकर्त्याने त्याचे ब्राउझर कॉन्फिगर केले आहे. तथापि, आम्ही नोंद घेत आहोत की कोणत्याही परिस्थितीत वेबसाइटची कामगिरी कमी होऊ शकते. ही वेबसाइट वेब बग वापरते, जे ईमेलमध्ये घातलेल्या लहान आणि पारदर्शक प्रतिमा असतात. जेव्हा वापरकर्त्याने वेबसाइटचे वृत्तपत्र उघडले, तेव्हा ही प्रतिमा उर्वरित ईमेल सामग्रीसह डाउनलोड केली जाते आणि विशिष्ट ईमेल उघडला आहे की नाही याची माहिती देते, तसेच ज्या आयपी पत्त्यावरून ते डाउनलोड केले गेले आहे. फाइटपॅन्डमिक्स ही माहिती आकडेवारी मिळविण्यासाठी आणि वापरकर्त्यांद्वारे त्याच्या ईमेलच्या रिसेप्शनवर विश्लेषणात्मक अभ्यास करण्यासाठी करते. < / 1 >",
     "typeCookies": "कुकीजचा प्रकार, उद्देश आणि फंक्शनिंग",
-    "typeCookiesBegin": "Cookies, depending on their permanence, can be divided into session or permanent Cookies. The first ones expire when the User closes the browser. The second ones expire depending on when the objective for which they serve is fulfilled or when they are manually deleted. Additionally, depending on your objective, the Cookies used by this Website can be classified as follows:",
-    "typeCookiesContent": "<0>Technical cookies: These allow the user to navigate through a web page, platform or application and use the different options or services that exist there, such as, for example, control traffic and data communication, identify the session, access restricted access parts, remember the elements that make up an order, make the purchase process of an order, make the request for registration or participation in an event, use security elements during navigation, store content for dissemination of videos or sound or share content through social networks.</0><1>Analysis cookies: Those that are processed by us or by third parties, which allow to quantify the number of users and thus perform the measurement and statistical analysis of the use made by users of the services offered. For this, your browsing on our website is analyzed in order to improve the offer of products or services that we offer.</1><2>Advertising cookies: Are those that are processed by us or by third parties, allowing us to manage in the most efficient way possible the offer of the advertising spaces that are on the website, adapting the content of the advertisement to the content of the requested service or to the use that you make from our website. For this we can analyze your browsing habits on the Internet, and we can show you advertising related to your browsing profile.</2><3>Behavioral advertising cookies: These allow the management, in the most efficient way possible, of the advertising spaces that, where appropriate, the editor has included in a web page, application or platform from which it provides the requested service. These cookies store information on the behavior of users obtained through the continuous observation of their browsing habits, which allows developing a specific profile to display advertising based on it.</3>",
+    "typeCookiesBegin": "कुकीज, त्यांच्या शाश्वततेनुसार सत्र किंवा कायम कुकीजमध्ये विभागल्या जाऊ शकतात. जेव्हा वापरकर्ता ब्राउझर बंद करतो तेव्हा प्रथम कालबाह्य होईल. दुसरे विषय कालबाह्य होत आहेत यावर अवलंबून असते की ते ज्या उद्देशाने सेवा करतात त्यांना कधी पूर्ण केले जाते किंवा ते स्वतः हटविले जातात. याव्यतिरिक्त, आपल्या उद्दीष्टानुसार या वेबसाइटद्वारे वापरल्या जाणार्‍या कुकीजचे वर्गवारी खालीलप्रमाणे केली जाऊ शकते:",
+    "typeCookiesContent": "<0>तांत्रिक कुकीज: हे वापरकर्त्याला वेब पेज  प्लॅटफॉर्म किंवा अनुप्रयोगाद्वारे नेव्हिगेशन करण्याची परवानगी देते आणि तेथे अस्तित्वात असलेले विविध पर्याय किंवा सेवा वापरण्याची परवानगी देते, जसे की, वाहतूक आणि डेटा संवाद नियंत्रित करा, सत्र ओळखा, प्रतिबंधित प्रवेश भाग> < लक्षात ठेवा <1>विश्लेषण कुकीज: जे अमेरिका किंवा तृतीयपंथीयांनी प्रक्रिया केलेले आहेत, जे वापरकर्त्यांची संख्या मोजण्याची परवानगी देतात आणि अशा प्रकारे प्रदान केलेल्या सेवांच्या वापरकर्त्यांनी केलेल्या वापराचे मोजमाप आणि सांख्यिकी विश्लेषण करतात. यासाठी, आम्ही देत असलेल्या उत्पादने किंवा सेवांची ऑफर सुधारण्यासाठी आमच्या वेबसाइटवरील तुमच्या ब्राऊजिंगचे विश्लेषण केले जाते.</1> <2>जाहिरात कुकीज: जे आमच्याकडून किंवा तृतीयपंथीयांनी प्रक्रिया केले आहेत, जे आपल्याला वेबसाइटवर असलेल्या जाहिरात जागांची ऑफर शक्य तितक्या कार्यक्षमतेने व्यवस्थापित करण्याची परवानगी देतात, विनंती केलेल्या सेवेच्या सामग्रीशी किंवा वापराशी जुळवून घेतात त्यासाठी आम्ही इंटरनेटवरील तुमच्या ब्राऊजिंग सवयींचे विश्लेषण करू शकतो आणि आम्ही तुम्हाला तुमच्या ब्राऊजिंग प्रोफाइलशी संबंधित जाहिरात दाखवू शकतो.</2> <3>वर्तन जाहिरात कुकीज: हे व्यवस्थापनाला शक्य तितक्या कार्यक्षम पद्धतीने, जाहिरात जागांपैकी शक्य आहे जे योग्य तेथे संपादकाने वेब पान, अनुप्रयोग किंवा प्लॅटफॉर्ममध्ये समाविष्ट केले आहे ज्यातून विनंती केलेली सेवा प्रदान करते. हे कुकीज त्यांच्या ब्राऊजिंग सवयींचे सतत निरीक्षण करून प्राप्त वापरकर्त्यांच्या वर्तनाची माहिती साठवतात, जे < त्यावर आधारित जाहिरात प्रदर्शित करण्यासाठी विशिष्ट प्रोफाइल विकसित करण्याची परवानगी देते>",
     "typeCookiesEnd": "वेबसाइट तृतीय पक्ष सेवा वापरू शकते ज्यांना वापरकर्त्यांवरील कुकीज बसविणे आवश्यक आहे आणि फाइटपॅन्डमिक्सच्या वतीने, आणि वापरकर्त्याद्वारे वेबसाइट वापरण्यावर आणि वेबसाइटशी संबंधित इतर सेवांच्या तरतूदीसाठी सांख्यिकीय हेतूंसाठी माहिती गोळा करेल. क्रियाकलाप आणि इतर इंटरनेट सेवा.",
     "disableCookies": "मुख्य ब्राउझरमध्ये कुकीज आणि वेब बग कसे अक्षम करावे?",
     "disableCookiesContent": "ब्राउझर कुकीज स्वीकारणे थांबविणे किंवा एखाद्या विशिष्ट सेवेवरून कुकीज स्वीकारणे थांबविणे सामान्यपणे शक्य आहे. सर्व आधुनिक ब्राउझर आपल्याला कुकीजचे कॉन्फिगरेशन बदलण्याची परवानगी देतात. या सेटिंग्ज सहसा आपल्या ब्राउझर मेनूच्या 'पर्याय' किंवा 'प्राधान्ये' मध्ये आढळतात. आपण आपला ब्राउझर किंवा ईमेल व्यवस्थापक कॉन्फिगर देखील करू शकता, तसेच ईमेल उघडताना वेब बग डाउनलोड होण्यापासून प्रतिबंधित करण्यासाठी विनामूल्य अॅड-ऑन्स देखील स्थापित करू शकता. कुकी प्राधान्ये बदलण्यासाठी आपल्या इंटरनेट ब्राउझरनुसार खालील सूचना वापरा:",
