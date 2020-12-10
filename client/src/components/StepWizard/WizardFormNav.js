@@ -45,6 +45,8 @@ export const StyledButtonWizard = styled(StepWizard)`
 const WizardFormNav = ({ gtmPrefix = "" }) => {
   const history = useHistory();
   const { t } = useTranslation();
+  // expandable with paginated paths to keep scroll level
+  const fromPath = ["dashboard", "feed"];
   const fullPath = (from, pathname) => from.slice(from.indexOf(pathname) - 1);
   const [isBrowserBackClicked, setBrowserBackClicked] = useState(false);
 
@@ -66,8 +68,11 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
     if (!isBrowserBackClicked && state) {
       setBrowserBackClicked(true);
       if (typeof state.from !== "object") {
-        if (state.from.indexOf("feed") > -1) {
-          history.push(fullPath(state.from, "feed"), {
+        const toPath = fromPath
+          .filter((path) => state.from.indexOf(path) > -1)
+          .toString();
+        if (toPath) {
+          history.push(fullPath(state.from, toPath), {
             ...state,
             keepScroll: true,
           });
@@ -86,8 +91,11 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
     if (history?.location?.state?.from) {
       const { state } = history.location;
       if (typeof state.from !== "object") {
-        if (state.from.indexOf("feed") > -1) {
-          history.push(fullPath(state.from, "feed"), {
+        const toPath = fromPath
+          .filter((path) => state.from.indexOf(path) > -1)
+          .toString();
+        if (toPath) {
+          history.push(fullPath(state.from, toPath), {
             ...state,
             keepScroll: true,
           });
