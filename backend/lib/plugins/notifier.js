@@ -54,6 +54,7 @@ class Notifier {
       },
       sharedVia: details.sharedVia,
       commentText: details.commentText,
+      justification: details.justification,
       triggeredBy: {
         id: triggeredBy._id,
         name: triggeredBy.name,

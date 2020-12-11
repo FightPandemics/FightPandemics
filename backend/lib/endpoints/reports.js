@@ -218,8 +218,16 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
 
-      // action, post, actorId (triggredBy), authUserId, details
-      // app.notifier.notify("report", updatedPost, actor._id, userId);
+      if (actionProps.action === "accept") {
+        // action, post, actorId (moderator), authUserId (moderator), details (justification)
+        app.notifier.notify(
+          "report",
+          updatedPost,
+          actionProps.moderatorId,
+          actionProps.moderatorId,
+          { justification: actionProps.justification },
+        );
+      }
 
       reply.code(201);
       return {
@@ -315,7 +323,7 @@ async function routes(app) {
         return {
           logs,
           meta: {
-            total: totalLogsCount || 0
+            total: totalLogsCount || 0,
           },
         };
       }

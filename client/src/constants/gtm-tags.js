@@ -195,6 +195,7 @@ module.exports = {
     share: "_SH",
     comment: "_CM",
     settings: "_SET",
+    report: "_RP",
   },
   moderation: {
     hide: "_HIP",
