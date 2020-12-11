@@ -49,3 +49,13 @@ exports.insertDocument = async function (Model, collectionName) {
     console.error("insert error" + err.message);
   }
 };
+
+exports.deleteDocument = async function (collectionName, condition) {
+  try {
+    return await mongoose.connection
+      .collection(collectionName)
+      .deleteOne(condition);
+  } catch (err) {
+    console.error("delete error" + err.message);
+  }
+};

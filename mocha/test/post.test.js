@@ -32,8 +32,7 @@ const post = {
     },
   },
   content:
-    "Agnieszka his Mutual Aid Network is intended to distribute resources from local people to those who are vulnerable and in need in the area",
-  // expireAt: dateInTwoWeeks,
+    "Testers Mutual Aid Network is intended to distribute resources from local people to those who are vulnerable and in need in the area",
   createdAt: new Date(),
   externalLinks: {
     website: "https://www.facebook.com/groups/1502826939890243/",
@@ -41,7 +40,7 @@ const post = {
   language: ["English"],
   likes: [],
   objective: "offer",
-  title: "Agnieszka South FL Mutual Aid",
+  title: "Testers South FL Mutual Aid",
   types: ["Information"],
   updatedAt: new Date(),
   visibility: "worldwide",
@@ -49,11 +48,9 @@ const post = {
 
 describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", function () {
   before(function () {
-    console.log("BEFORE");
     dbHelper.connectToDatabase();
   });
   beforeEach(function (done) {
-    console.log("BEFORE EACH");
     dbHelper.insertDocument(post, "posts").then((result) => {
       postID = result.insertedId;
       insertResult = result.ops;
@@ -84,8 +81,7 @@ describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", 
   });
 
   afterEach(function (done) {
-    console.log("AFTER EACH");
-    //delete record
+    dbHelper.deleteDocument("posts", { _id: postID });
     done();
   });
   it("404 error - post was not found by random mongodb ObjectID", async function () {
@@ -102,7 +98,6 @@ describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", 
     );
   });
   after(function () {
-    console.log("AFTER");
     dbHelper.disconnect();
   });
 });
