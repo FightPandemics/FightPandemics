@@ -9,6 +9,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "http-status": "^1.4.2",
+    "lodash": "^4.17.20",
     "mocha": "^8.1.0",
     "mongoose": "^5.10.13",
     "should": "^13.2.3",

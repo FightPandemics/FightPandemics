@@ -10,6 +10,7 @@ const ObjectID = require("mongodb").ObjectID;
 const authorID = new ObjectID();
 const authorName = "Sourced by FightPandemics (Testers)";
 let postID = 0;
+let insertResult = [];
 
 const post = {
   airtableId: "rec00UgojtQL4VGNw",
@@ -55,6 +56,7 @@ describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", 
     console.log("BEFORE EACH");
     dbHelper.insertDocument(post, "posts").then((result) => {
       postID = result.insertedId;
+      insertResult = result.ops;
       done();
     });
   });
@@ -64,11 +66,27 @@ describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", 
       getPostApiEndpoint + "/" + postID,
     );
     validator.validateStatusCodeAndMessage(response, httpStatus.OK, 200);
+    validator.validateInitialAndResponseObject(
+      insertResult[0],
+      ["author.location", "author.id", "createdAt", "updatedAt", "_id"],
+      response.body.post,
+      [
+        "author.location",
+        "author.id",
+        "elapsedTimeText",
+        "liked",
+        "likesCount",
+        "createdAt",
+        "updatedAt",
+        "_id",
+      ],
+    );
   });
 
-  afterEach(function () {
+  afterEach(function (done) {
     console.log("AFTER EACH");
     //delete record
+    done();
   });
   it("404 error - post was not found by random mongodb ObjectID", async function () {
     var objectId = new ObjectID();
