@@ -173,7 +173,7 @@ const routes = [
     component: DashBoard,
     props: {
       navSearch: true,
-      permLevel: SCOPES.DASH_READ_ACCESS,
+      permRequired: true,
       hideFooter: true,
     },
   },

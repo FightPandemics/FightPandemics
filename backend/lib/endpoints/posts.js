@@ -381,7 +381,7 @@ async function routes(app) {
       // if user is not a "reader" (with dashboard read access)
       if (
         actor &&
-        (!actor.permissions || !(actor.permissions & SCOPES.DASH_READ_ACCESS))
+        (!actor.permissions || !(actor.permissions & SCOPES.REPORT_READ))
       ) {
         if (post.status === "removed") throw app.httpErrors.notFound();
         // user shouldn't see posts reported by them, even if public.

@@ -171,11 +171,11 @@ const Post = ({
               setForModerator={setForModerator}
               isEnabled={
                 activeTab === "PENDING" &&
-                Boolean(user?.permissions & SCOPES.REPORT_WRITE_ACCESS)
+                Boolean(user?.permissions & SCOPES.REPORT_WRITE)
               }
               canRestore={
                 activeTab === "ACCEPTED" &&
-                Boolean(user?.permissions & SCOPES.REPORT_WRITE_ACCESS)
+                Boolean(user?.permissions & SCOPES.REPORT_WRITE)
               }
             />
             {callReport ? (

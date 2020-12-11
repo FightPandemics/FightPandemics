@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import AdminDashboard from "components/DashBoard/AdminDashboard";
 import AuditLog from "components/DashBoard/AuditLog";
+import Stats from "components/DashBoard/Stats";
+
 // ICONS
 import { ReactComponent as BackIcon } from "assets/icons/back-black.svg";
 // Antd
@@ -43,6 +45,7 @@ let REPORTS_TYPE = {
 };
 
 let ADMIN_PANELS = {
+  STATS: "Statistics",
   LOGS: "Audit Logs",
   MANAGE: "Manage Users",
 };
@@ -51,9 +54,10 @@ const initialState = {
   showFilters: false,
   applyFilters: false,
   activePanel: null,
-  status: "PENDING",
+  status: "STATS",
   logs: [],
   users: [],
+  stats: null,
 };
 
 export const NoPosts = styled.div`
@@ -103,6 +107,7 @@ const Feed = (props) => {
     showFilters,
     status,
     logs,
+    stats,
     users,
   } = feedState;
   const filters = Object.values(filterOptions);
@@ -190,7 +195,20 @@ const Feed = (props) => {
     let endpoint = `${baseURL}${statusURL()}${searchURL()}`;
     dispatch(postsActions.fetchPostsBegin());
 
-    if (status === "LOGS") {
+    if (status === "STATS") {
+      // Audit log
+      endpoint = `/api/reports/stats`;
+      try {
+        const {
+          data: { stats },
+        } = await axios.get(endpoint);
+        if (stats) {
+          dispatchAction(SET_VALUE, "stats", stats);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (status === "LOGS") {
       // Audit log
       endpoint = `/api/reports/logs?limit=${limit}&skip=${skip}`;
       try {
@@ -206,6 +224,7 @@ const Feed = (props) => {
         console.log(error);
       }
     } else if (status === "MANAGE") {
+      // manage users
       endpoint = `/api/users/roles`;
       try {
         const {
@@ -383,10 +402,16 @@ const Feed = (props) => {
                     </StyledMenuItem>
                   </>
                 ))}
-                <div style={{ height: "calc(100% - 23rem)" }} />
-                {user?.permissions & SCOPES.LOGS_READ_ACCESS && (
+                <div style={{ height: "calc(100% - 27rem)" }} />
+                {user?.permissions & SCOPES.LOGS_READ && (
                   <StyledMenuItem key={"LOGS"}>
                     {ADMIN_PANELS["LOGS"]}
+                    <StyledForwardIcon />
+                  </StyledMenuItem>
+                )}
+                {user?.permissions & SCOPES.STATS_READ && (
+                  <StyledMenuItem key={"STATS"}>
+                    {ADMIN_PANELS["STATS"]}
                     <StyledForwardIcon />
                   </StyledMenuItem>
                 )}
@@ -421,6 +446,7 @@ const Feed = (props) => {
                     setToggleRefetch={setToggleRefetch}
                   />
                 );
+              else if (status === "STATS") return <Stats stats={stats} />;
               else
                 return (
                   <>

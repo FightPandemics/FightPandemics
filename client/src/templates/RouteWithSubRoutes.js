@@ -49,7 +49,7 @@ export const RouteWithSubRoutes = (route) => {
     mobiletabs,
     navSearch,
     forgotPassword,
-    permLevel,
+    permRequired,
   } = props;
 
   return (
@@ -66,8 +66,8 @@ export const RouteWithSubRoutes = (route) => {
           } else if (loggedInOnly && !isAuthenticated) {
             redirect = LOGIN;
           } else if (
-            permLevel &&
-            (!isAuthenticated || !(user.permissions & permLevel))
+            permRequired &&
+            (!isAuthenticated || (isAuthenticated && !user.permissions))
           ) {
             redirect = HOME;
           } else if (notLoggedInOnly && isAuthenticated) {

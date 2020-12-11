@@ -62,7 +62,7 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkScopes([SCOPES.DASH_READ_ACCESS]),
+        app.checkScopes([SCOPES.REPORT_READ]),
       ],
       schema: getPostReportsSchema,
     },
@@ -179,7 +179,7 @@ async function routes(app) {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkScopes([SCOPES.REPORT_WRITE_ACCESS]),
+        app.checkScopes([SCOPES.REPORT_WRITE]),
       ],
       schema: moderatorActionSchema,
     },
@@ -236,14 +236,14 @@ async function routes(app) {
     },
   );
 
-  // report a post
+  // audit logs
   app.get(
     "/logs",
     {
       preValidation: [
         app.authenticate,
         app.setActor,
-        app.checkScopes([SCOPES.LOGS_READ_ACCESS]),
+        app.checkScopes([SCOPES.LOGS_READ]),
       ],
       schema: getAuditLogSchema,
     },
@@ -325,6 +325,245 @@ async function routes(app) {
           meta: {
             total: totalLogsCount || 0,
           },
+        };
+      }
+    },
+  );
+
+  app.get(
+    "/stats",
+    {
+      preValidation: [
+        app.authenticate,
+        app.setActor,
+        app.checkScopes([SCOPES.STATS_READ]),
+      ],
+    },
+    async (req) => {
+      const aggregationPipeline = [
+        {
+          $facet: {
+            pendingPostsCount: [
+              {
+                $match: { status: "flagged" },
+              },
+              {
+                $group: {
+                  _id: null,
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+            removedPostsCount: [
+              {
+                $match: { status: "removed" },
+              },
+              {
+                $group: {
+                  _id: null,
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+            keptPostsCount: [
+              {
+                $match: {
+                  status: "public",
+                  reportedBy: { $exists: true, $not: { $size: 0 } },
+                },
+              },
+              {
+                $group: {
+                  _id: null,
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+            dailyGroupedCounts: [
+              {
+                $match: { status: "flagged" },
+              },
+              {
+                $unwind: "$reportedBy",
+              },
+              {
+                $set: {
+                  monthDay: {
+                    $dateToString: {
+                      format: "%Y-%m-%d",
+                      date: "$reportedBy.createdAt",
+                    },
+                  },
+                  totalCount: { $sum: 1 },
+                },
+              },
+              {
+                $group: {
+                  _id: "$reportedBy.createdAt",
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+            KeptReportReasonCounts: [
+              {
+                $match: {
+                  status: "public",
+                  reportedBy: {
+                    $exists: true,
+                    $not: { $size: 0 },
+                  },
+                },
+              },
+              {
+                $unwind: "$reportedBy",
+              },
+              {
+                $set: {
+                  reasonSplitted: { $split: ["$reportedBy.reason", "|"] },
+                },
+              },
+              { $unwind: "$reasonSplitted" },
+              {
+                $group: {
+                  _id: null,
+                  reasons: { $push: "$reasonSplitted" },
+                },
+              },
+              {
+                $project: {
+                  reasons: {
+                    $filter: {
+                      input: "$reasons",
+                      as: "reason",
+                      cond: {
+                        $or: [
+                          { $eq: ["$$reason", "Spam"] },
+                          { $eq: ["$$reason", "Inappropriate Content"] },
+                          { $eq: ["$$reason", "Violates Terms"] },
+                          { $eq: ["$$reason", "Other"] },
+                        ],
+                      },
+                    },
+                  },
+                },
+              },
+              { $unwind: "$reasons" },
+              {
+                $group: {
+                  _id: "$reasons",
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+            removedReportReasonCounts: [
+              {
+                $match: {
+                  status: "removed",
+                },
+              },
+              {
+                $unwind: "$reportedBy",
+              },
+              {
+                $set: {
+                  reasonSplitted: { $split: ["$reportedBy.reason", "|"] },
+                },
+              },
+              { $unwind: "$reasonSplitted" },
+              {
+                $group: {
+                  _id: null,
+                  reasons: { $push: "$reasonSplitted" },
+                },
+              },
+              {
+                $project: {
+                  reasons: {
+                    $filter: {
+                      input: "$reasons",
+                      as: "reason",
+                      cond: {
+                        $or: [
+                          { $eq: ["$$reason", "Spam"] },
+                          { $eq: ["$$reason", "Inappropriate Content"] },
+                          { $eq: ["$$reason", "Violates Terms"] },
+                          { $eq: ["$$reason", "Other"] },
+                        ],
+                      },
+                    },
+                  },
+                },
+              },
+              { $unwind: "$reasons" },
+              {
+                $group: {
+                  _id: "$reasons",
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+            pendingReportReasonCounts: [
+              {
+                $match: {
+                  status: "flagged",
+                },
+              },
+              {
+                $unwind: "$reportedBy",
+              },
+              {
+                $set: {
+                  reasonSplitted: { $split: ["$reportedBy.reason", "|"] },
+                },
+              },
+              { $unwind: "$reasonSplitted" },
+              {
+                $group: {
+                  _id: null,
+                  reasons: { $push: "$reasonSplitted" },
+                },
+              },
+              {
+                $project: {
+                  reasons: {
+                    $filter: {
+                      input: "$reasons",
+                      as: "reason",
+                      cond: {
+                        $or: [
+                          { $eq: ["$$reason", "Spam"] },
+                          { $eq: ["$$reason", "Inappropriate Content"] },
+                          { $eq: ["$$reason", "Violates Terms"] },
+                          { $eq: ["$$reason", "Other"] },
+                        ],
+                      },
+                    },
+                  },
+                },
+              },
+              { $unwind: "$reasons" },
+              {
+                $group: {
+                  _id: "$reasons",
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+          },
+        },
+      ];
+
+      const [postsStatsErr, postsStats] = await app.to(
+        Post.aggregate(aggregationPipeline),
+      );
+      if (postsStatsErr) {
+        req.log.error(postsStatsErr, "Failed requesting logs");
+        throw app.httpErrors.internalServerError();
+      } else if (postsStats === null || !postsStats[0]) {
+        return { stats: null };
+      } else {
+        return {
+          stats: postsStats[0],
         };
       }
     },
