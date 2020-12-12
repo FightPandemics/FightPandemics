@@ -17,7 +17,7 @@ const auditLogsColumns = [
           mobile={true}
           src={user.photo}
         >
-          {getInitialsFromFullName(user.name)}
+          {getInitialsFromFullName(user.name || "?")}
         </TextAvatar>{" "}
         {user.name}
       </>

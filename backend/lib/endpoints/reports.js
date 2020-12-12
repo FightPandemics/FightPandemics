@@ -185,11 +185,11 @@ async function routes(app) {
     },
     async (req, reply) => {
       const {
-        actor,
+        userId,
         params: { postId },
         body: actionProps,
       } = req;
-      actionProps.moderatorId = actor._id;
+      actionProps.moderatorId = userId;
       actionProps.postId = postId;
 
       const updates = {};
