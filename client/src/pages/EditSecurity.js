@@ -46,7 +46,8 @@ const EditUserPassword = (props) => {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const { t } = useTranslation();
   const { error, loading, user } = userProfileState;
-  const { firstName, lastName, usesPassword = false } = user || {};
+  const { firstName, lastName } = user || {};
+  const usesPassword = localStorage.getItem("usesPassword");
 
   const { errors, handleSubmit, register, getValues } = useForm({
     mode: "change",

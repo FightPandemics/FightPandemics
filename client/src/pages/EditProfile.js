@@ -49,8 +49,8 @@ function EditProfile(props) {
   });
   const { error, loading, user } = userProfileState;
   const { t } = useTranslation();
-  const { firstName, lastName, urls = {}, about, usesPassword = false } =
-    user || {};
+  const { firstName, lastName, urls = {}, about } = user || {};
+  const usesPassword = localStorage.getItem("usesPassword");
 
   const URLS_CONFIG = {
     facebook: [
