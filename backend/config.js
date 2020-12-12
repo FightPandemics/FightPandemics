@@ -35,6 +35,7 @@ const configData = envSchema({
     .prop("MONGO_URI", S.string().required())
     .prop("NODE_ENV", S.string().required())
     .prop("PORT", S.number().default(8000).required())
+    .prop("QUERY_LIMIT_MAX", S.integer().default(20).required())
     .prop("REDIS_HOST", S.string().default("localhost").required())
     .prop("REDIS_PORT", S.number().default(6379).required())
     .prop("S3_CDN_BUCKET", S.string().default("fp-dev-cdn"))
@@ -94,6 +95,9 @@ const config = {
         : `mongodb://${configData.MONGO_URI}`,
   },
   name,
+  query: {
+    maxLimit: configData.QUERY_LIMIT_MAX,
+  },
   sendgrid: {
     apiKey: configData.SENDGRID_API_KEY,
     contactsListId: configData.SENDGRID_CONTACTS_LIST_ID,
@@ -107,9 +111,9 @@ const config = {
     },
     redis: {
       host: configData.REDIS_HOST,
-      port: configData.REDIS_PORT
-    }
-  }
+      port: configData.REDIS_PORT,
+    },
+  },
 };
 
 module.exports = { config };
