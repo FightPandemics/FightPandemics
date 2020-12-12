@@ -277,12 +277,30 @@ async function routes(app) {
           email,
           userIdRoot,
         );
-        const userIds = otherAccounts.map((account) => account.user_id);
-        // unlinked accounts could be more than one, link all of them
-        for (const userId of userIds) {
-          await Auth0.linkAccounts(serverToken, userId, userIdRoot);
+        // the first account with valid Database record will be the primary account
+        let primaryAuthId = null;
+        for (const account of otherAccounts) {
+          const { mongo_id } = account.app_metadata;
+          if (mongo_id) {
+            const { authId } = await User.findById(mongo_id);
+            primaryAuthId = authId;
+            if (primaryAuthId) break;
+          }
         }
-        return { userIds };
+        if (!primaryAuthId) return { primaryAuthId }; // no account with Database record (profile) yet
+        // link current account to the primary account
+        await Auth0.linkAccounts(serverToken, primaryAuthId, userIdRoot);
+        // link other unlinked accounts (legacy dangling accounts) to the primary account
+        for (const account of otherAccounts) {
+          if (account.user_id !== primaryAuthId) {
+            await Auth0.linkAccounts(
+              serverToken,
+              primaryAuthId,
+              account.user_id,
+            );
+          }
+        }
+        return { primaryAuthId };
       } catch (err) {
         req.log.error(err, "Error linking accounts");
         throw app.httpErrors.internalServerError();

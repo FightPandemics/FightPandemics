@@ -174,8 +174,8 @@ const CreateProfile = ({ email, firstName, lastName, history }) => {
     (async function linkAccounts() {
       try {
         const resAccounts = await axios.post("/api/auth/link-accounts");
-        const { userIds } = resAccounts.data;
-        if (userIds?.length > 0) {
+        const { primaryAuthId } = resAccounts.data;
+        if (primaryAuthId) {
           Modal.alert(null, t("auth.linkAccountsSuccess"), [
             { text: t("common.ok"), onPress: handleLinkAccountsSuccessClose },
           ]);
