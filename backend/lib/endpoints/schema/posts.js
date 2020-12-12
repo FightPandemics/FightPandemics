@@ -1,5 +1,5 @@
 const S = require("fluent-schema");
-const { strictSchema } = require("./utils");
+const { strictSchema, strictQueryStringSchema } = require("./utils");
 
 const {
   EXPIRATION_OPTIONS,
@@ -9,13 +9,12 @@ const {
 } = require("../../models/Post");
 
 const getPostsSchema = {
-  querystring: strictSchema()
+  querystring: strictQueryStringSchema()
     .prop("actorId", S.string())
     .prop("authorId", S.string())
     .prop("filter", S.string()) // URI encoded JSON; TODO: figure out way to custom validation
     .prop("keywords", S.string())
     .prop("ignoreUserLocation", S.boolean().default(false))
-    .prop("limit", S.integer())
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false)),
@@ -95,9 +94,7 @@ const createCommentSchema = {
 
 const getCommentsSchema = {
   params: strictSchema().prop("postId", S.string().required()),
-  queryString: strictSchema()
-    .prop("limit", S.integer())
-    .prop("skip", S.integer()),
+  queryString: strictQueryStringSchema().prop("skip", S.integer()),
 };
 
 const deleteCommentSchema = {
