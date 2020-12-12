@@ -379,9 +379,12 @@ async function routes(app) {
                 },
               },
             ],
-            dailyGroupedCounts: [
+            dailyNewReportsCounts: [
               {
-                $match: { status: "flagged" },
+                $match: {
+                  status: "flagged",
+                  createdAt: { $gt: new Date(Date.now() - 2.678e9) },
+                },
               },
               {
                 $unwind: "$reportedBy",
@@ -390,7 +393,7 @@ async function routes(app) {
                 $set: {
                   monthDay: {
                     $dateToString: {
-                      format: "%Y-%m-%d",
+                      format: "%d/%m",
                       date: "$reportedBy.createdAt",
                     },
                   },
@@ -399,7 +402,7 @@ async function routes(app) {
               },
               {
                 $group: {
-                  _id: "$reportedBy.createdAt",
+                  _id: "$monthDay",
                   count: { $sum: 1 },
                 },
               },
@@ -553,15 +556,80 @@ async function routes(app) {
         },
       ];
 
+      const auditLogStatsAggregationPipeline = [
+        {
+          $match: {
+            createdAt: { $gt: new Date(Date.now() - 2.678e9) },
+          },
+        },
+        {
+          $facet: {
+            approvedReports: [
+              {
+                $match: {action: "accept"}
+              },
+              {
+                $set: {
+                  monthDay: {
+                    $dateToString: {
+                      format: "%d/%m",
+                      date: "$createdAt",
+                    },
+                  },
+                  totalCount: { $sum: 1 },
+                },
+              },
+              {
+                $group: {
+                  _id: "$monthDay",
+                  count: { $sum: 1 },
+                },
+              },
+            ],
+            rejectedReports: [
+              {
+                $match: {action: "reject"}
+              },
+              {
+                $set: {
+                  monthDay: {
+                    $dateToString: {
+                      format: "%d/%m",
+                      date: "$createdAt",
+                    },
+                  },
+                  totalCount: { $sum: 1 },
+                },
+              },
+              {
+                $group: {
+                  _id: "$monthDay",
+                  count: { $sum: 1 },
+                },
+              },
+            ]
+          }
+        }
+      ];
+
       const [postsStatsErr, postsStats] = await app.to(
         Post.aggregate(aggregationPipeline),
       );
-      if (postsStatsErr) {
-        req.log.error(postsStatsErr, "Failed requesting logs");
+
+      const [auditStatsErr, auditStats] = await app.to(
+        Audit.aggregate(auditLogStatsAggregationPipeline),
+      );
+
+      if (postsStatsErr || auditStatsErr) {
+        req.log.error(
+          postsStatsErr || auditStatsErr,
+          "Failed requesting stats",
+        );
         throw app.httpErrors.internalServerError();
-      } else if (postsStats === null || !postsStats[0]) {
+      } else if (postsStats === null || !postsStats[0] || !auditStats || !auditStats[0]) {
         return { stats: null };
       } else {
+        postsStats[0].auditStats = auditStats[0];
         return {
           stats: postsStats[0],
         };

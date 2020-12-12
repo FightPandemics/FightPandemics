@@ -1,6 +1,8 @@
 import React from "react";
 import { Doughnut, Radar, Line } from "react-chartjs-2";
-import { Row, Col } from "antd";
+import { Row, Col, Statistic, Progress } from "antd";
+import { WhiteSpace } from "antd-mobile";
+
 import moment from "moment";
 
 const POSSIBLE_REASONS = [
@@ -10,9 +12,11 @@ const POSSIBLE_REASONS = [
   "Violates Terms",
 ];
 
-const last30Days = [...new Array(30)].map((i, idx) =>
-  moment().startOf("day").subtract(idx, "days").format("DD MMM"),
-);
+const last30Days = [...new Array(30)]
+  .map(
+    (i, idx) => moment().startOf("day").subtract(idx, "days").format("D/M"), // IMPORTANT: format must match backend
+  )
+  .reverse();
 
 function Stats({ stats }) {
   if (!stats) return null;
@@ -23,15 +27,22 @@ function Stats({ stats }) {
     });
   };
 
-  const getLast30DaysStats = (dataObject) => {
+  const getLast30DaysStats = (dataObject, flip) => {
     return last30Days.map((day) => {
       return (
         dataObject.find((e) => {
-            console.log(moment(e._id).format("DD MMM"))
-          return moment(e._id).format("DD MMM") === day;
-        })?.count || 0
+          return e._id === day;
+        })?.count * (flip ? -1 : 1) || 0
       );
     });
+  };
+
+  const getTodayStats = (dataObject) => {
+    return (
+      dataObject.find((e) => {
+        return e._id === moment().format("D/M");
+      })?.count || 0
+    );
   };
 
   return (
@@ -44,7 +55,7 @@ function Stats({ stats }) {
               datasets: [
                 {
                   data: [
-                    stats.pendingPostsCount[0].count,
+                    stats.pendingPostsCount[0].coun,
                     stats.keptPostsCount[0].count,
                     stats.removedPostsCount[0].count,
                   ],
@@ -57,6 +68,128 @@ function Stats({ stats }) {
           />
         </Col>
         <Col className="gutter-row" span={12}>
+          <h1>Progress</h1>
+          <WhiteSpace size={"md"}/>
+          <Progress
+          style={{maxWidth: "90%"}}
+            title={"Progress"}
+            strokeColor={{
+              "0%": "#ff2200",
+              "100%": "#2888d1",
+            }}
+            percent={
+              (stats.pendingPostsCount[0].count *
+                (stats.keptPostsCount[0].count *
+                  stats.removedPostsCount[0].count)) /
+              100
+            }
+          />
+          <WhiteSpace size={"md"}/>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Statistic
+                title="Pending Reports Now"
+                value={stats.pendingPostsCount[0].count}
+              />
+            </Col>
+            <Col span={12}>
+              <Statistic
+                title="Posts Removed Today"
+                value={getTodayStats(stats.auditStats.approvedReports)}
+              />
+            </Col>
+            <Col span={12}>
+              <Statistic
+                title="Posts Kept Today"
+                value={getTodayStats(stats.auditStats.rejectedReports)}
+              />
+            </Col>
+            <Col span={12}>
+              <Statistic
+                title="Reports Received Today"
+                value={getTodayStats(stats.dailyNewReportsCounts)}
+              />
+            </Col>
+          </Row>
+        </Col>
+        <Col className="gutter-row" span={24}>
+          <h1>
+            Daily reports & decisions<small>(Last 30 Days)</small>
+          </h1>
+          <Line
+            data={{
+              datasets: [
+                {
+                  data: getLast30DaysStats(stats.dailyNewReportsCounts),
+                  backgroundColor: "#c55ce655",
+                  borderColor: "#c55ce6",
+                  label: "Reports received",
+                  pointHitRadius: 20,
+                },
+                {
+                  data: getLast30DaysStats(
+                    stats.auditStats.rejectedReports,
+                    true,
+                  ),
+                  backgroundColor: "#11ff0055",
+                  borderColor: "#11ff00",
+                  label: "Posts kept",
+                  backgroundColor: "#00000000",
+                  pointHitRadius: 20,
+                },
+                {
+                  data: getLast30DaysStats(
+                    stats.auditStats.approvedReports,
+                    true,
+                  ),
+                  backgroundColor: "#ff220055",
+                  borderColor: "#ff2200",
+                  label: "Posts removed",
+                  backgroundColor: "#00000000",
+                  pointHitRadius: 20,
+                },
+              ],
+              labels: last30Days,
+            }}
+            options={{
+              responsive: true,
+              title: {
+                display: true,
+                text: "Last 30 days",
+              },
+              tooltips: {
+                mode: "index",
+                axis: "x",
+                callbacks: {
+                  label: function (tooltipItem, data) {
+                    var value = tooltipItem.yLabel;
+                    return `${data.datasets[tooltipItem.datasetIndex].label}: ${
+                      value < 0 ? -value : value
+                    } posts`;
+                  },
+                },
+              },
+              scales: {
+                yAxes: [
+                  {
+                    ticks: {
+                      min: -Math.max(
+                        ...getLast30DaysStats(stats.dailyNewReportsCounts),
+                      ),
+                      max: Math.max(
+                        ...getLast30DaysStats(stats.dailyNewReportsCounts),
+                      ),
+                      callback: function (value, index, values) {
+                        return value < 0 ? -value : value;
+                      },
+                    },
+                  },
+                ],
+              },
+            }}
+          />
+        </Col>
+        <Col className="gutter-row" span={24}>
           <h1>Reasons trends</h1>
           <Radar
             data={{
@@ -87,43 +220,6 @@ function Stats({ stats }) {
                 },
               ],
               labels: POSSIBLE_REASONS,
-            }}
-          />
-        </Col>
-        <Col className="gutter-row" span={24}>
-          <h1>Daily reports & decisions</h1>
-          <Line
-            data={{
-              datasets: [
-                {
-                  data: getLast30DaysStats(stats.dailyGroupedCounts),
-                  backgroundColor: "#c55ce655",
-                  borderColor: "#c55ce6",
-                  label: "Reports Per Day (last 30 days)",
-                },
-                {
-                  data: [...new Array(30)].map((i) => 0),
-                  borderColor: "#11ff00",
-                  label: "Approves Per Day (last 30 days)",
-                },
-                {
-                  data: [...new Array(30)].map((i) => 0),
-                  borderColor: "#ff2200",
-                  label: "Rejects Per Day (last 30 days)",
-                },
-              ],
-              labels: last30Days
-            }}
-            options={{
-              scales: {
-                yAxes: [
-                  {
-                    ticks: {
-                      beginAtZero: true,
-                    },
-                  },
-                ],
-              },
             }}
           />
         </Col>
