@@ -125,55 +125,95 @@ async function routes(app) {
     },
   );
 
-  app.post("/login", { schema: loginSchema }, async (req, reply) => {
-    const { body } = req;
-    const { email, password } = body;
-    try {
-      const token = await Auth0.authenticate("password", {
-        password,
-        scope: "openid",
-        username: email,
-      });
-      reply.setAuthCookies(token);
-      const auth0User = await Auth0.getUser(token);
-      const { email_verified: emailVerified } = auth0User;
-      // Don't throw as already checking 403 from Auth0 (wrong email/pw)
-      // to respond to client as 401 unauthorized error
-      if (!emailVerified) {
-        return app.httpErrors.forbidden("emailUnverified");
-      }
-      const { payload } = app.jwt.decode(token);
-      const userId = payload[authConfig.jwtMongoIdKey];
-      if (!userId) {
-        throw new Error("no mongo_id found in JWT");
-      }
-      const dbUser = await User.findById(userId).populate("organisations");
-      let user = null;
-      if (dbUser) {
-        const { firstName, lastName, organisations, photo } = dbUser;
-        user = {
+  const getExistingAccount = (serverToken, email) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const otherAccounts = await Auth0.getAccountsWithSameEmail(
+          serverToken,
           email,
-          firstName,
-          id: userId,
-          lastName,
-          organisations,
-          photo,
-        };
-      }
-      return { email, emailVerified, token, user };
-    } catch (err) {
-      if (err.statusCode === 403) {
-        throw app.httpErrors.unauthorized("wrongCredentials");
-      }
-      if (err.statusCode === 429) {
-        req.log.error(
-          err,
-          "Maximum number of sign in attempts exceeded. (10 times)",
         );
-        throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
+        // the first account with valid Database record will be the primary account
+        let provider = null;
+        let primaryAuthId = null;
+        for (const account of otherAccounts) {
+          const { mongo_id } = account.app_metadata;
+          if (mongo_id) {
+            const dbUser = await User.findById(mongo_id);
+            if (dbUser) {
+              primaryAuthId = dbUser.authId;
+              const providerCode = primaryAuthId.split("|")[0]; // "provider|user_id"
+              provider = providerCode === "google-oauth2" ? "Google" : provider;
+              break;
+            }
+          }
+        }
+        resolve({ otherAccounts, primaryAuthId, provider });
+      } catch (err) {
+        reject(app.httpErrors.badRequest("invalidEmail"));
       }
-    }
-  });
+    });
+  };
+
+  app.post(
+    "/login",
+    { preHandler: [app.getServerToken], schema: loginSchema },
+    async (req, reply) => {
+      const { body } = req;
+      const { email, password } = body;
+      try {
+        const token = await Auth0.authenticate("password", {
+          password,
+          scope: "openid",
+          username: email,
+        });
+        reply.setAuthCookies(token);
+        const auth0User = await Auth0.getUser(token);
+        const { email_verified: emailVerified } = auth0User;
+        // Don't throw as already checking 403 from Auth0 (wrong email/pw)
+        // to respond to client as 401 unauthorized error
+        if (!emailVerified) {
+          return app.httpErrors.forbidden("emailUnverified");
+        }
+        const { payload } = app.jwt.decode(token);
+        const userId = payload[authConfig.jwtMongoIdKey];
+        if (!userId) {
+          throw new Error("no mongo_id found in JWT");
+        }
+        const dbUser = await User.findById(userId).populate("organisations");
+        let user = null;
+        if (dbUser) {
+          const { firstName, lastName, organisations, photo } = dbUser;
+          user = {
+            email,
+            firstName,
+            id: userId,
+            lastName,
+            organisations,
+            photo,
+          };
+        }
+        return { email, emailVerified, token, user };
+      } catch (err) {
+        if (err.statusCode === 403) {
+          const { provider } = await getExistingAccount(req.token, email);
+          if (provider) {
+            throw app.httpErrors.badRequest(
+              `This email is used by ${provider} account`,
+            );
+          }
+          throw app.httpErrors.unauthorized("wrongCredentials");
+        }
+        if (err.statusCode === 429) {
+          req.log.error(
+            err,
+            "Maximum number of sign in attempts exceeded. (10 times)",
+          );
+          throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
+        }
+        throw app.httpErrors.internalServerError(err);
+      }
+    },
+  );
 
   app.put(
     "/password",
@@ -255,28 +295,13 @@ async function routes(app) {
           throw app.httpErrors.unauthorized("invalidToken");
         }
         const { email } = await Auth0.getUser(token);
-        const { payload } = app.jwt.decode(token);
-        const userIdRoot = payload.sub;
         const serverToken = req.token;
-        const otherAccounts = await Auth0.getAccountsWithSameEmail(
+        const { primaryAuthId, otherAccounts } = await getExistingAccount(
           serverToken,
           email,
-          userIdRoot,
         );
-        // the first account with valid Database record will be the primary account
-        let primaryAuthId = null;
-        for (const account of otherAccounts) {
-          const { mongo_id } = account.app_metadata;
-          if (mongo_id) {
-            const { authId } = await User.findById(mongo_id);
-            primaryAuthId = authId;
-            if (primaryAuthId) break;
-          }
-        }
         if (!primaryAuthId) return { primaryAuthId }; // no account with Database record (profile) yet
-        // link current account to the primary account
-        await Auth0.linkAccounts(serverToken, primaryAuthId, userIdRoot);
-        // link other unlinked accounts (legacy dangling accounts) to the primary account
+        // link accounts (current and legacy dangling accounts) to the primary account
         for (const account of otherAccounts) {
           if (account.user_id !== primaryAuthId) {
             await Auth0.linkAccounts(
