@@ -55,7 +55,7 @@ function Stats({ stats }) {
               datasets: [
                 {
                   data: [
-                    stats.pendingPostsCount[0].coun,
+                    stats.pendingPostsCount[0].count,
                     stats.keptPostsCount[0].count,
                     stats.removedPostsCount[0].count,
                   ],
