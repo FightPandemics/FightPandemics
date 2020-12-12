@@ -25,7 +25,7 @@ describe("FightPandemics Home screen", () => {
     it("Link to Help Board screen - View Help Board is visible", () => {
       var linkToHelpBoard = home.getViewHelpBoardLink();
       linkToHelpBoard.should("be.visible");
-      linkToHelpBoard.contains("a p", "View Help Board");
+      linkToHelpBoard.contains("View Help Board");
     });
 
     it("Buttons Request Help and Offer help are visible", () => {
