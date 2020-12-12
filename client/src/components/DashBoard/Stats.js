@@ -134,7 +134,6 @@ function Stats({ stats }) {
                   backgroundColor: "#11ff0055",
                   borderColor: "#11ff00",
                   label: "Posts kept",
-                  backgroundColor: "#00000000",
                   pointHitRadius: 20,
                 },
                 {
@@ -145,7 +144,6 @@ function Stats({ stats }) {
                   backgroundColor: "#ff220055",
                   borderColor: "#ff2200",
                   label: "Posts removed",
-                  backgroundColor: "#00000000",
                   pointHitRadius: 20,
                 },
               ],
