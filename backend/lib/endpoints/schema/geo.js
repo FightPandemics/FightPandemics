@@ -17,7 +17,7 @@ const getLocationDetailsSchema = {
 
 const getLocationReverseGeocodeSchema = {
   querystring: strictSchema()
-    .prop("lat", S.number().minimum(0).maximum(90).required())
+    .prop("lat", S.number().minimum(-90).maximum(90).required())
     .prop("lng", S.number().minimum(-180).maximum(180).required()),
 };
 
