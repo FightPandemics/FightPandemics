@@ -785,6 +785,8 @@
     "emailIssue": "Email is already in use or cannot be validated",
     "emailUnverified": "Email is not verified",
     "maxSignInAttemptsExceeded": "Maximum number of sign in attempts exceeded.",
+    "noEmailAccount": "You don't have an account, please use use Join Now to create one",
+    "registeredAccount": "A social account has registered this email address",
     "failedSubmittingFeedback": "Failed submitting feedback, reason:",
     "failedCreatingUser": "Failed creating user, reason:",
     "failedLinkAccounts": "Failed linking accounts, reason:",

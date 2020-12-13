@@ -135,6 +135,7 @@ async function routes(app) {
         // the first account with valid Database record will be the primary account
         let provider = null;
         let primaryAuthId = null;
+        const noAccount = otherAccounts.length === 0;
         for (const account of otherAccounts) {
           const { mongo_id } = account.app_metadata;
           if (mongo_id) {
@@ -147,7 +148,7 @@ async function routes(app) {
             }
           }
         }
-        resolve({ otherAccounts, primaryAuthId, provider });
+        resolve({ noAccount, otherAccounts, primaryAuthId, provider });
       } catch (err) {
         reject(app.httpErrors.badRequest("invalidEmail"));
       }
@@ -195,13 +196,14 @@ async function routes(app) {
         return { email, emailVerified, token, user };
       } catch (err) {
         if (err.statusCode === 403) {
-          const { provider } = await getExistingAccount(req.token, email);
-          if (provider) {
-            throw app.httpErrors.badRequest(
-              `This email is used by ${provider} account`,
-            );
-          }
-          throw app.httpErrors.unauthorized("wrongCredentials");
+          const { noAccount, provider } = await getExistingAccount(
+            req.token,
+            email,
+          );
+          if (noAccount) throw app.httpErrors.badRequest("noEmailAccount");
+          else if (provider)
+            throw app.httpErrors.badRequest("registeredAccount");
+          else throw app.httpErrors.unauthorized("wrongCredentials");
         }
         if (err.statusCode === 429) {
           req.log.error(
