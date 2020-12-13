@@ -226,7 +226,6 @@ const Login = ({ isLoginForm, forgotPassword, isAuthenticated }) => {
               },
             });
           }
-          localStorage.removeItem("usesPassword");
           dispatch({ type: SESSION_ACTIONS.AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
@@ -256,7 +255,6 @@ const Login = ({ isLoginForm, forgotPassword, isAuthenticated }) => {
           userId: res.data?.user?.id,
         },
       });
-      localStorage.setItem("usesPassword", "en");
       dispatch({
         type: SESSION_ACTIONS.AUTH_SUCCESS,
         payload: { ...res.data, email: formData.email },

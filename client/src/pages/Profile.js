@@ -128,8 +128,8 @@ const Profile = ({
     objectives = {},
     ownUser,
     urls = {},
+    usesPassword = false,
   } = user || {};
-  const usesPassword = localStorage.getItem("usesPassword");
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
   const { address } = location;

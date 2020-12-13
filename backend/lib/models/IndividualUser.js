@@ -43,13 +43,17 @@ const individualUserSchema = new Schema(
       linkedin: String,
       twitter: String,
       website: String,
-    },
+    }
   },
   { collection: "users" },
 );
 
 individualUserSchema.virtual("name").get(function getFullName() {
   return fullName(this.firstName, this.lastName);
+});
+
+individualUserSchema.virtual("usesPassword").get(function getUsesPassword() {
+  return this.authId.startsWith("auth0");
 });
 
 individualUserSchema.virtual("organisations", {

@@ -236,6 +236,7 @@ async function routes(app) {
       urls,
       photo,
       notifyPrefs,
+      usesPassword,
     } = user;
     return {
       about,
@@ -251,6 +252,7 @@ async function routes(app) {
       photo,
       urls,
       notifyPrefs,
+      usesPassword,
     };
   });
 
@@ -353,6 +355,7 @@ async function routes(app) {
         objectives,
         photo,
         urls,
+        usesPassword
       } = user;
 
       let { location } = user;
@@ -376,6 +379,7 @@ async function routes(app) {
         ownUser,
         photo,
         urls,
+        usesPassword: ownUser ? usesPassword : undefined
       };
     },
   );

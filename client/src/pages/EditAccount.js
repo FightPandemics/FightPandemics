@@ -81,9 +81,14 @@ function EditAccount(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { error, loading, user } = userProfileState;
-  const { firstName, hide = {}, lastName, needs = {}, objectives = {} } =
-    user || {};
-  const usesPassword = localStorage.getItem("usesPassword");
+  const {
+    firstName,
+    hide = {},
+    lastName,
+    needs = {},
+    objectives = {},
+    usesPassword = false,
+  } = user || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);

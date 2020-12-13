@@ -38,8 +38,7 @@ function EditNotifications(props) {
     mode: "change",
   });
   const { error, loading, user } = userProfileState;
-  const { firstName, lastName } = user || {};
-  const usesPassword = localStorage.getItem("usesPassword");
+  const { firstName, lastName, usesPassword = false } = user || {};
   const { t } = useTranslation();
   const disabledPrefs = {
     instant: { message: false, like: false, comment: false, share: false },
