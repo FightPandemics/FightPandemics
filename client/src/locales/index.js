@@ -84,6 +84,9 @@ export const index = {
   "es-ES": {
     translation: translationES_ES,
   },
+  "es-419": {
+    translation: translationES_419,
+  },
   tl: {
     translation: translationTL,
   },

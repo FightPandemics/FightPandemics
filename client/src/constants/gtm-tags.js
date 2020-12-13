@@ -148,6 +148,7 @@ module.exports = {
     ru: "_RU",
     th: "_TH",
     id: "_ID",
+    "es_419": "_ES_419",
   },
   search: {
     prefix: "SCH",
