@@ -16,7 +16,9 @@ const generateXSignature = async (payload) => {
 const createSessionUrl = async (user) => {
   const body = {
     verification: {
-      callback: "https://google.com",
+      callback: `https://fightpandemics.com/${
+        user.type === "Individual" ? "profile" : "organisation"
+      }/${user._id}`,
       person: {
         firstName: user.firstName,
         lastName: user.lastName,
@@ -48,8 +50,11 @@ const createSessionUrl = async (user) => {
 
 const validateWebhookEvent = async (req, reply, done) => {
   const incomingXAuthClient = req.headers["x-auth-client"];
+  // reject if "x-auth-client" is not equal to PUBLIC_KEY
   if (PUBLIC_KEY !== incomingXAuthClient) throw false;
 
+  // use rawBody + PRIVATE_KEY to build the xSignature
+  // and compare it to "x-signature" header.
   const rawBody = JSON.stringify(req.body);
   const incomingXSignature = req.headers["x-signature"];
   const xSignature = await generateXSignature(rawBody);
