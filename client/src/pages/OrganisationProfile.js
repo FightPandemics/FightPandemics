@@ -34,6 +34,8 @@ import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
+import Verification from "components/Verification/";
+import VerificationTick from "components/Verification/Tick";
 
 import Loader from "components/Feed/StyledLoader";
 import {
@@ -451,7 +453,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <NameDiv>
                 <div className="name-container">
                   <NamePara>
-                    {name} {verified && <small>✔️</small>}
+                    {name} {verified && <VerificationTick />}
                   </NamePara>
                   {address && (
                     <div title={address} className="address-container">
@@ -484,6 +486,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </IconsContainer>
             </UserInfoDesktop>
           </UserInfoContainer>
+          {isSelf && !verified && <Verification />}
           <WhiteSpace />
           <div>
             <SectionHeader>

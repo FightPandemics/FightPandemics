@@ -8,15 +8,14 @@ export default {
     header: "Verify your account with Veriff",
     body:
       "Detailed description of verification with Veriff and why it’s important to verify your account with Fight Pandemics.",
-    actionText: "Start",
+    actionText: "Get Verified",
   },
   finish: {
     icon: null,
     status: "success",
-    header: "Verify your account with Veriff",
-    body:
-      "Detailed description of verification with Veriff and why it’s important to verify your account with Fight Pandemics.",
-    actionText: "Check my Badge",
+    header: "Thanks for verifying your account!",
+    body: "Your verification badge should appear on your profile in few moments",
+    actionText: "Awesome!",
   },
   cancel: {
     icon: null,

@@ -4,6 +4,8 @@ import axios from "axios";
 
 import StepModal from "./StepModal";
 import steps from "./steps";
+import StyledBanner from "./StyledBanner";
+import { ReactComponent as Arrow } from "assets/verification/arrow.svg";
 
 function Banner({}) {
   const [step, setStep] = useState(null);
@@ -19,21 +21,21 @@ function Banner({}) {
   const getSessionUrl = async () => {
     try {
       const res = await axios.get(`/api/users/verification`);
-      return launchInContextSession(res.data.sessionUrl)
+      return launchInContextSession(res.data.sessionUrl);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const launchInContextSession = (sessionUrl) =>{
+  const launchInContextSession = (sessionUrl) => {
     setStep(null);
     const veriffFrame = createVeriffFrame({
       url: sessionUrl,
       onEvent: function (msg) {
         switch (msg) {
           case MESSAGES.STARTED:
-          //
-          break;
+            //
+            break;
           case MESSAGES.CANCELED:
             setStep("cancel");
             break;
@@ -43,13 +45,18 @@ function Banner({}) {
         }
       },
     });
-  }
+  };
 
   return (
     <>
-      <div onClick={() => startVerification()}>
-        Verify your account aaaaaaaaaaa
-      </div>
+      <StyledBanner onClick={() => startVerification()}>
+        Verify your account!
+        <p>
+          We noticed that you haven’t verified your account. Click here to get
+          started.
+        </p>
+        <Arrow />
+      </StyledBanner>
       <StepModal
         step={step}
         header={steps[step]?.header}

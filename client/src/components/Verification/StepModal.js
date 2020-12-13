@@ -1,5 +1,7 @@
 import React from "react";
-import { Result, Modal, Button, Typography } from "antd";
+import { Result, Button, Typography } from "antd";
+
+import StyledModal, { StyledButton } from "./StyledModal";
 
 const { Title } = Typography;
 
@@ -14,9 +16,9 @@ function StepModal({
   onCancel,
 }) {
   return (
-    <Modal
+    <StyledModal
       width={"57rem"}
-      height={"35rem"}
+      height={"30rem"}
       footer={null}
       centered
       visible={step}
@@ -31,15 +33,15 @@ function StepModal({
             extra={
               <>
                 <p>{body}</p>
-                <Button onClick={onNext} type="primary">
+                <StyledButton onClick={onNext} type="primary">
                   {actionText}
-                </Button>
+                </StyledButton>
               </>
             }
           />
         </>
       )}
-    </Modal>
+    </StyledModal>
   );
 }
 

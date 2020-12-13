@@ -47,6 +47,7 @@ import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
 import PostPlaceHolder from "./PostPlaceHolder";
+import VerificationTick from "components/Verification/Tick";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -431,7 +432,7 @@ const Post = ({
         <div className="title-wrapper">
           <span className="author">
             <Highlight text={post?.author?.name} highlight={highlightWords} />
-            {post?.author?.verified && <span>✔️</span>}
+            {post?.author?.verified && <VerificationTick/>}
           </span>
           <div
             className="sub-header"

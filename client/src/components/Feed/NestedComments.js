@@ -18,6 +18,7 @@ import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
 import { selectActorId } from "reducers/session";
+import VerificationTick from "components/Verification/Tick";
 
 // Constants
 import { theme } from "constants/theme";
@@ -294,7 +295,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
           }
           author={
             <Link to={authorProfileLink(comment)}>
-              {comment.author.name} {comment?.author?.verified && <span>✔️</span>}
+              {comment.author.name} {comment?.author?.verified && <VerificationTick/>}
             </Link>
           }
           avatar={<Link to={authorProfileLink(comment)}>{renderAvatar}</Link>}

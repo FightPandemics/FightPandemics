@@ -22,6 +22,7 @@ import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import Verification from "components/Verification/";
+import VerificationTick from "components/Verification/Tick";
 
 import {
   ProfileLayout,
@@ -366,7 +367,7 @@ const Profile = ({
               <div className="name-container">
                 <NamePara>
                   {firstName} {lastName}
-                  {verified && <small>✔️</small>}
+                  {verified && <VerificationTick/>}
                 </NamePara>
                 {address && (
                   <div title={address} className="address-container">
@@ -422,7 +423,7 @@ const Profile = ({
           </UserInfoDesktop>
         </UserInfoContainer>
         <WhiteSpace />
-        {isSelf && <Verification />}
+        {isSelf && !verified && <Verification />}
         <WhiteSpace />
         <div>
           <SectionHeader>

@@ -366,15 +366,15 @@ export const NotificationDropDown = ({
     .map((n) => ({
       _id: n._id,
       author: n.triggeredBy.name,
-      action: notificationTypes[n.action].text,
+      action: notificationTypes[n.action]?.text,
       postTitle: n.post.title,
       path: `/post/${n.post.id}`,
-      actionAvatar: notificationTypes[n.action].icon,
+      actionAvatar: notificationTypes[n.action]?.icon,
       createdAt: getRelativeTime(n.createdAt),
       avatar: n.triggeredBy.photo,
       sharedVia: n.sharedVia,
       unread: !n.readAt,
-      gtmId: notificationTypes[n.action].gtmId,
+      gtmId: notificationTypes[n.action]?.gtmId,
     }));
 
   return (
