@@ -35,12 +35,14 @@ const configData = envSchema({
     .prop("MONGO_URI", S.string().required())
     .prop("NODE_ENV", S.string().required())
     .prop("PORT", S.number().default(8000).required())
+    .prop("QUERY_LIMIT_MAX", S.integer().default(20).required())
     .prop("REDIS_HOST", S.string().default("localhost").required())
     .prop("REDIS_PORT", S.number().default(6379).required())
     .prop("S3_CDN_BUCKET", S.string().default("fp-dev-cdn"))
     .prop("SENTRY_DSN", S.string())
     .prop("SENDGRID_API_KEY", S.string())
     .prop("SENDGRID_CONTACTS_LIST_ID", S.string())
+    .prop("VERIFF_BASE_URL", S.string().default("https://api.veriff.me/"))
     .prop("VERIFF_PUBLIC_KEY", S.string())
     .prop("VERIFF_PRIVATE_KEY", S.string()),
 });
@@ -96,6 +98,9 @@ const config = {
         : `mongodb://${configData.MONGO_URI}`,
   },
   name,
+  query: {
+    maxLimit: configData.QUERY_LIMIT_MAX,
+  },
   sendgrid: {
     apiKey: configData.SENDGRID_API_KEY,
     contactsListId: configData.SENDGRID_CONTACTS_LIST_ID,
@@ -109,11 +114,11 @@ const config = {
     },
     redis: {
       host: configData.REDIS_HOST,
-      port: configData.REDIS_PORT
+      port: configData.REDIS_PORT,
     }
   },
   veriff: {
-    baseUrl: "https://api.veriff.me/",
+    baseUrl: configData.VERIFF_BASE_URL,
     publicKey: configData.VERIFF_PUBLIC_KEY,
     privateKey: configData.VERIFF_PRIVATE_KEY,    
   }

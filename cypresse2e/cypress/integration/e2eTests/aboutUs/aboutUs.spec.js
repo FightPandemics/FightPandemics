@@ -29,14 +29,20 @@ describe("FightPandemics About Us page", () => {
       goToHelpBoardButtonIsVisibleAndPointToAppropriateLink();
     });
 
-    it("Check if supporter (lifetime, current, past) containers are exist and visible", () => {
+    it("Check if current community partner and supporter (lifetime, current, past) containers are exist and visible", () => {
+      currentCommunityPartnerIsVisible();
       lifetimeSupporterContainerIsVisible();
       currentSupporterContainerIsVisible();
       pastSupporterContainerIsVisible();
     });
 
+    it("Check if Go to Press Kit button visible and get us to the appropriate link", () => {
+      goToPressKitButtonIsVisibleAndPointToAppropriateLink();
+    });
+
     it("Check if FightPandemics email links are working", () => {
       partnershipEmailLinkIsVisibleAndPointToAppropriateLink();
+      prEmailLinkIsVisibleAndPointToAppropriateLink();
       contactEmailLinkIsVisibleAndPointToAppropriateLink();
     });
   });
@@ -83,22 +89,33 @@ describe("FightPandemics About Us page", () => {
     aboutUs.getInvolvedCloseButton().click();
   }
 
+  function currentCommunityPartnerIsVisible() {
+    supporterContainerVisible(aboutUs.currentCommunityPartner);
+  }
+
   function lifetimeSupporterContainerIsVisible() {
-    supporterContainerVisible(aboutUs.lifetimeSupportersContainerXpath)
+    supporterContainerVisible(aboutUs.lifetimeSupportersContainer);
   }
 
-   function currentSupporterContainerIsVisible() {
-    supporterContainerVisible(aboutUs.currentSupportersContainerXpath)
+  function currentSupporterContainerIsVisible() {
+    supporterContainerVisible(aboutUs.currentSupportersContainer);
   }
 
-   function pastSupporterContainerIsVisible() {
-    supporterContainerVisible(aboutUs.pastSupportersContainerXpath)
+  function pastSupporterContainerIsVisible() {
+    supporterContainerVisible(aboutUs.pastSupportersContainer);
   }
 
 
+  function goToPressKitButtonIsVisibleAndPointToAppropriateLink() {
+    cy.checkAnyKindOfLinks(aboutUs.getToPressKitButton, aboutUs.goToPressKitLink);
+  }
 
   function partnershipEmailLinkIsVisibleAndPointToAppropriateLink() {
     checkEmailWorks(socialContactInfo.partnershipEmail, socialContactInfo.partnershipEmailHref);
+  }
+
+  function prEmailLinkIsVisibleAndPointToAppropriateLink() {
+    checkEmailWorks(socialContactInfo.prEmail, socialContactInfo.prEmailHref);
   }
 
   function contactEmailLinkIsVisibleAndPointToAppropriateLink() {
@@ -112,8 +129,9 @@ describe("FightPandemics About Us page", () => {
       .and("have.attr", "href", link);
   }
 
-  function supporterContainerVisible(supporterContainerXpath) {
-    aboutUs.getSupporterContainer(supporterContainerXpath)
+
+  function supporterContainerVisible(supporterContainer) {
+    aboutUs.getSupporterContainer(supporterContainer)
       .should("be.visible");
   }
 });

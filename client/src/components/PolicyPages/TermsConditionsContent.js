@@ -681,7 +681,7 @@ const TermsConditionsContent = () => {
               any material on the Services violates this Agreement or your
               intellectual property rights, please notify the Company as soon as
               possible by sending an email to{" "}
-              <TermsLink href="mailto:legal@fightpandemics">
+              <TermsLink href="mailto:legal@fightpandemics.com">
                 legal@fightpandemics.com
               </TermsLink>
               , or by mailing a letter to the corporate address of
@@ -877,7 +877,7 @@ const TermsConditionsContent = () => {
               below) informally for at least thirty (30) days before initiating
               any arbitration. Such informal negotiations commence upon written
               notice from one person to the other. You will send your notice to{" "}
-              <TermsLink href="mailto:legal@fightpandemics">
+              <TermsLink href="mailto:legal@fightpandemics.com">
                 legal@fightpandemics.com
               </TermsLink>
               , ATTENTION: LEGAL DEPARTMENT. The Company will send its notice to
@@ -973,7 +973,7 @@ const TermsConditionsContent = () => {
               Agreement (or accepted any subsequent changes to the Agreement),
               you may reject any such change by sending us written notice
               (including by electronic mail to{" "}
-              <TermsLink href="mailto:legal@fightpandemics">
+              <TermsLink href="mailto:legal@fightpandemics.com">
                 legal@fightpandemics.com
               </TermsLink>
               ) within 30 days of the date such change became effective, as
