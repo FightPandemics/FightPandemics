@@ -42,10 +42,9 @@ const ItemContainer = styled.a`
     left: 2.6em;
   }
   .verification-tick {
-    position: absolute;
-    top: 0.3rem;
-    left: 2em;
-    width: 1.75rem;
+    margin: 0 -0.3rem 0 0;
+    vertical-align: bottom;
+    padding: 0.4rem 0 0.2rem;
   }
   .ant-avatar {
     position: absolute;
@@ -243,13 +242,12 @@ const MenuItem = ({
   return (
     <ItemContainer id={gtmId} href={path}>
       <TextAvatar src={avatar}>{getInitialsFromFullName(author)}</TextAvatar>
-      {verified && <VerificationTick />}
       <img src={actionAvatar} className="action-avatar" />
       <Content>
         <div>
           <Trans
             i18nKey={action}
-            components={[<span />, <span />, <span />]}
+            components={[<span />, <span />, verified && <VerificationTick />]}
             values={{
               username: author,
               postTitle,

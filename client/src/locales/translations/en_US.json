@@ -1001,9 +1001,9 @@
     },
     "header": "Notifications",
     "empty": "No more notifications",
-    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
-    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+    "liked": "<0>{{username}}</0><2></2> liked your post <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0><2></2> commented on your post <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0><2></2> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
   },
   "moderation": {
     "report": "Report",
