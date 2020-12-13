@@ -54,9 +54,21 @@ const Medical = (props) => {
   //   console.log("render medical page", { props });
 
   const fetchNumber = () => {
-    const emergencyNumber = "IN DEVELOPMENT"; // TODO: figure out v1.1 feature later
-    setState({ ...state, loading: false, emergencyNumber });
-    localStorage.setItem("emergencyNumber", "IN DEVELOPMENT");
+    const defaultGeolocation = {
+      lat: 37.733795,
+      lng: -122.446747,
+    };
+    const geolocation = getGeoLocation() || defaultGeolocation;
+    axios
+      .get("/api/geo/local-emergency-numbers", { params: geolocation })
+      .then((res) => {
+        const emergencyNumber = res.data.Police; // TODO: figure out v1.1 feature later
+        if (emergencyNumber) {
+          setState({ ...state, loading: false, emergencyNumber });
+          localStorage.setItem("emergencyNumber", emergencyNumber);
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   const fetchGeoData = () => {
