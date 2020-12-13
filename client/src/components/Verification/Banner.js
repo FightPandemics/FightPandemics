@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createVeriffFrame, MESSAGES } from "@veriff/incontext-sdk";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 import StepModal from "./StepModal";
 import steps from "./steps";
@@ -9,6 +10,7 @@ import { ReactComponent as Arrow } from "assets/verification/arrow.svg";
 
 function Banner({}) {
   const [step, setStep] = useState(null);
+  const { t } = useTranslation();
 
   const startVerification = () => {
     setStep("start");
@@ -50,11 +52,8 @@ function Banner({}) {
   return (
     <>
       <StyledBanner onClick={() => startVerification()}>
-        Verify your account!
-        <p>
-          We noticed that you haven’t verified your account. Click here to get
-          started.
-        </p>
+        {t("verification.verifyTitle")}
+        <p>{t("verification.verifyBody")}</p>
         <Arrow />
       </StyledBanner>
       <StepModal
@@ -64,8 +63,15 @@ function Banner({}) {
         status={steps[step]?.status}
         body={steps[step]?.body}
         actionText={steps[step]?.actionText}
-        onNext={step === "start" ? getSessionUrl : cancelVerification}
+        onNext={
+          step === "finish"
+            ? () => window.location.reload()
+            : step === "start"
+            ? getSessionUrl
+            : cancelVerification
+        }
         onCancel={cancelVerification}
+        t={t}
       />
     </>
   );

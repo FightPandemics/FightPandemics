@@ -1,5 +1,5 @@
 import React from "react";
-import { Result, Button, Typography } from "antd";
+import { Result, Typography } from "antd";
 
 import StyledModal, { StyledButton } from "./StyledModal";
 
@@ -14,6 +14,7 @@ function StepModal({
   status,
   onNext,
   onCancel,
+  t,
 }) {
   return (
     <StyledModal
@@ -26,15 +27,15 @@ function StepModal({
     >
       {step && (
         <>
-          <Title level={5}>{header}</Title>
+          <Title level={5}>{t(header)}</Title>
           <Result
             icon={icon}
             status={status}
             extra={
               <>
-                <p>{body}</p>
+                <p>{t(body)}</p>
                 <StyledButton onClick={onNext} type="primary">
-                  {actionText}
+                  {t(actionText)}
                 </StyledButton>
               </>
             }

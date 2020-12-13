@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Tooltip } from "antd";
 import { theme, mq } from "constants/theme";
 import { ReactComponent as TickSvg } from "assets/verification/tick.svg";
+import { useTranslation } from "react-i18next";
 
 const { colors } = theme;
 
@@ -16,11 +17,13 @@ const Tick = styled(TickSvg)`
 `;
 
 function VerificationTick() {
+  const { t } = useTranslation();
+
   return (
     <Tooltip
       placement="right"
       color={colors.darkGray}
-      title={"Verified by Veriff"}
+      title={t("verification.verified")}
     >
       <Tick className={"verification-tick"} />
     </Tooltip>

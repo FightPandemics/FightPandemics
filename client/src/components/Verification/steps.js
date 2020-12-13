@@ -5,24 +5,22 @@ import { ReactComponent as VerifySvg } from "assets/verification/verify.svg";
 export default {
   start: {
     icon: <VerifySvg />,
-    header: "Verify your account with Veriff",
-    body:
-      "Detailed description of verification with Veriff and why it’s important to verify your account with Fight Pandemics.",
-    actionText: "Get Verified",
+    header: "verification.stepStartTitle",
+    body: "verification.stepStartBody",
+    actionText: "verification.stepStartAction",
   },
   finish: {
     icon: null,
     status: "success",
-    header: "Thanks for verifying your account!",
-    body: "Your verification badge should appear on your profile in few moments",
-    actionText: "Awesome!",
+    header: "verification.stepSuccessTitle",
+    body: "verification.stepSuccessBody",
+    actionText: "verification.stepSuccessAction",
   },
   cancel: {
     icon: null,
     status: "error",
-    header: "You canceled the verification process",
-    body:
-      "Detailed description of verification with Veriff and why it’s important to verify your account with Fight Pandemics.",
-    actionText: "Close",
+    header: "verification.stepCancelTitle",
+    body: "verification.stepCancelBody",
+    actionText: "verification.stepCancelAction",
   },
 };
