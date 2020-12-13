@@ -36,10 +36,7 @@ describe("FightPandemics Post for unauthorized user", () => {
             .getPostTags()
             .children()
             .should(($tags) => {
-              expect($tags).to.have.attr("class").contains("am-tag-disabled");
-              expect($tags.children())
-                .to.have.attr("class")
-                .contains("am-tag-text");
+              expect($tags).to.have.attr("disabled");
             });
         },
       );
