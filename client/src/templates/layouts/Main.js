@@ -13,7 +13,7 @@ const Main = styled.main`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     background-color: ${offWhite};
     padding: 6rem 0 0;
-    min-height: calc(100vh - 6rem); // footer height
+    min-height: calc(100vh - 7.2rem); // footer height
   }
 `;
 

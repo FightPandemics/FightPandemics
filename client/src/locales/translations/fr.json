@@ -219,13 +219,19 @@
     "expire": "L'annonce que vous recherchiez a expirée. Veuillez consulter notre tableau d'aide pour trouver d'autres annonces de ce type.",
     "noActivity": "Aucune activité trouvée",
     "share": "Partager",
-    "delete": "Effacer",
+    "delete": "Supprimer le poste",
     "cancel": "Annuler",
     "confirm": "Confirmer",
     "edited": "édité",
     "share_plural": "Je partage",
     "deletePostConfirmationTitle": "Confirmation de la suppression d'un poste",
-    "deleteCommentConfirmationTitle": "Confirmation de la suppression d'un commentaire"
+    "deleteCommentConfirmationTitle": "Confirmation de la suppression d'un commentaire",
+    "deleteConfirmation": "Supprimer",
+    "edit": "Modifier le poste",
+    "hideAction": "Masquer le poste",
+    "hideCaption": "non intéressé",
+    "reportAction": "Signaler le poste",
+    "reportCaption": "Pour l'examen"
   },
   "profile": {
     "common": {
@@ -457,7 +463,11 @@
     "forStudentInAge": "Pour les étudiants âgés de 14 à 18 ans.",
     "press": "Presse",
     "pressInfo": "Si vous êtes membre de la presse, contactez-nous à l'adresse suivante",
-    "pressKitLink": "Aller au dossier de presse"
+    "pressKitLink": "Aller au dossier de presse",
+    "communityPartners": "Partenaires communautaires",
+    "communityCollaboration": "Nous voulons donner du pouvoir aux communautés et aux organisations du monde entier grâce à notre plateforme, et pour ce faire, nous devons travailler ensemble! Une collaboration continue avec nos partenaires communautaires nous permet de construire une meilleure plateforme pour eux et pour les autres.",
+    "becomeCommunityPartner": "Vous souhaitez que votre communauté soit également notre partenaire? Nous aimerions avoir de vos nouvelles et commencer à collaborer ! Contactez-nous à ",
+    "currentPartners": "Partenaires communautaires actuels"
   },
   "footer": {
     "faq": "FAQ",
@@ -995,5 +1005,27 @@
     "commented": "<0>{{username}}</0> commenté sur votre publication <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> a partagé votre publication <1>{{postTitle}}</1> sur <1>{{shareMedium}}</1>",
     "empty": "Plus de notifications"
+  },
+  "moderation": {
+    "report": "Signaler",
+    "cancel": "Annuler",
+    "finish": "Terminer",
+    "reason": "Raison du signalement:",
+    "additionalDetails": "Détails supplémentaires (facultatif)",
+    "enterDetails": "S’il vous plaît entrer plus de détails ici ...",
+    "reportPost": "Signaler le poste",
+    "reportPostSuccess": "Merci pour votre rapport! Ce poste sera soumis à l’examen.",
+    "reportPostError": "Oups! quelque chose s'est mal passé ...",
+    "reportPostSuccessTitle": "Rapport reçu",
+    "reportPostErrorTitle": "Oups!",
+    "spam": "Spam",
+    "inappropriateContent": "Contenu inapproprié",
+    "violatesTerms": "Viole les conditions",
+    "other": "Autre",
+    "postSuspected": "Ce poste a fait l'objet de plusieurs rapports et a été maintenu pour examen",
+    "showAnyway": "Montrer quand même",
+    "postHidden": "Vous avez choisi de cacher ce poste",
+    "unhide": "Afficher",
+    "youReported": "Vous avez signalé ce poste. Il ne sera plus visible sur votre flux"
   }
 }

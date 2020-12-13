@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Local
-import AutoSize from "components/Input/AutoSize";
 import Loader from "components/Feed/StyledLoader";
 import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
@@ -19,10 +18,6 @@ import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
 import { selectActorId } from "reducers/session";
-
-// Icons
-import SvgIcon from "../Icon/SvgIcon";
-import heartSmall from "assets/icons/heart-small.svg";
 
 // Constants
 import { theme } from "constants/theme";

@@ -221,11 +221,17 @@
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
     "noActivity": "No activity found",
     "share": "Share",
-    "delete": "Delete",
+    "delete": "Delete post",
+    "deleteConfirmation": "Delete",
     "cancel": "Cancel",
     "confirm": "Confirm",
     "edited": "edited",
-    "share_plural": "Shares"
+    "share_plural": "Shares",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -439,6 +445,10 @@
     "relevantContent": "Relevant Content",
     "relevantContentDetail": "Expiration periods ensure the board is always up to date.",
     "goToHelpBoard": "Go to Help Board",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners",
     "supporters": "Supporters",
     "thanksSupporters": "Thank You to our supporters, without them we would not be able to help communities prepare and respond to pandemics.",
     "becomeSupporter": "To learn more about how your business can become a supporter, please contact our partnerships team at",
@@ -994,5 +1004,27 @@
     "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "Cancel",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Other",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }
