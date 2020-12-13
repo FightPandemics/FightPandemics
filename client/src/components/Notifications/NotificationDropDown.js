@@ -17,6 +17,7 @@ import getRelativeTime from "utils/relativeTime";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { WebSocketContext } from "context/WebsocketContext";
 import GTM from "constants/gtm-tags";
+import VerificationTick from "components/Verification/Tick";
 
 import {
   LOCAL_NOTIFICATION_MARK_AS_CLEARED,
@@ -39,6 +40,12 @@ const ItemContainer = styled.a`
     position: absolute;
     top: 2.4em;
     left: 2.6em;
+  }
+  .verification-tick {
+    position: absolute;
+    top: 0.3rem;
+    left: 2em;
+    width: 1.75rem;
   }
   .ant-avatar {
     position: absolute;
@@ -218,6 +225,7 @@ const MenuItem = ({
   sharedVia,
   t,
   gtmId,
+  verified,
 }) => {
   const { clearNotification: clearRemoteNotification } = useContext(
     WebSocketContext,
@@ -235,13 +243,18 @@ const MenuItem = ({
   return (
     <ItemContainer id={gtmId} href={path}>
       <TextAvatar src={avatar}>{getInitialsFromFullName(author)}</TextAvatar>
+      {verified && <VerificationTick />}
       <img src={actionAvatar} className="action-avatar" />
       <Content>
         <div>
           <Trans
             i18nKey={action}
             components={[<span />, <span />, <span />]}
-            values={{ username: author, postTitle, shareMedium: sharedVia }}
+            values={{
+              username: author,
+              postTitle,
+              shareMedium: sharedVia,
+            }}
           ></Trans>
         </div>
         <div>
@@ -313,6 +326,7 @@ const menu = (notifications, clearAllNotifications, organisationId, t) => {
               sharedVia={each.sharedVia}
               t={t}
               gtmId={each.gtmId}
+              verified={each.verified}
             />
           ))}
         </div>
@@ -366,6 +380,7 @@ export const NotificationDropDown = ({
     .map((n) => ({
       _id: n._id,
       author: n.triggeredBy.name,
+      verified: n.triggeredBy.verified,
       action: notificationTypes[n.action]?.text,
       postTitle: n.post.title,
       path: `/post/${n.post.id}`,
