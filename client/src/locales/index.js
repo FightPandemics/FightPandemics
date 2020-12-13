@@ -19,6 +19,9 @@ import translationMS_MY from "./translations/ms_MY.json";
 import translationTE_IN from "./translations/te_IN.json";
 import translationTR from "./translations/tr.json";
 import translationVI from "./translations/vi.json";
+import translationHI_IN from "./translations/hi_IN.json";
+import translationMR_IN from "./translations/mr_IN.json";
+import translationES_419 from "./translations/es_419.json";
 
 /* Please enter languages below in alphabetical order,
 current values in index are sorted. */
@@ -48,6 +51,9 @@ export const index = {
   de: {
     translation: translationDE,
   },
+  "hi-IN": {
+    translation: translationHI_IN,
+  },
   id: {
     translation: translationID,
   },
@@ -59,6 +65,9 @@ export const index = {
   },
   "mk-MK": {
     translation: translationMK_MK,
+  },
+  "mr-IN": {
+    translation: translationMR_IN,
   },
   "ms-MY": {
     translation: translationMS_MY,
