@@ -150,7 +150,7 @@ async function routes(app) {
             if (dbUser) {
               primaryAuthId = dbUser.authId;
               const providerCode = primaryAuthId.split("|")[0]; // "provider|user_id"
-              provider = providerCode === "google-oauth2" ? "Google" : provider;
+              provider = providerCode === "google-oauth2" ? "Google" : providerCode;
               break;
             }
           }
