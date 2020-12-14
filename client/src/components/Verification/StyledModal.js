@@ -22,12 +22,19 @@ const StyledModal = styled(Modal)`
         padding: 0 3rem;
       }
     }
+    .ant-modal-close-x {
+      .ant-modal-close-icon {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+    }
   }
 `;
 
 export const StyledButton = styled(LinkButton)`
   width: 20rem;
-  margin: 0 auto!important;
+  margin: 0 auto !important;
 `;
 
 export default StyledModal;

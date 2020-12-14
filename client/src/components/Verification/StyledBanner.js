@@ -28,6 +28,10 @@ const StyledBanner = styled.div`
     right: 3rem;
     top: 50%;
     transform: translateY(calc(50% - 20px)); /* 20px === fixed Height of the SVG */
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      right: 1rem;
+      width: 2rem;
+    }
   }
 `;
 
