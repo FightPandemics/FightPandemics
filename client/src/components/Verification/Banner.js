@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { createVeriffFrame, MESSAGES } from "@veriff/incontext-sdk";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
+import { selectOrganisationId } from "reducers/session";
 import StepModal from "./StepModal";
 import steps from "./steps";
 import StyledBanner from "./StyledBanner";
 import { ReactComponent as Arrow } from "assets/verification/arrow.svg";
 
 function Banner({}) {
+  const actorOrganisationId = useSelector(selectOrganisationId);
   const [step, setStep] = useState(null);
   const { t } = useTranslation();
 
@@ -20,9 +23,12 @@ function Banner({}) {
     setStep(null);
   };
 
+  const getActorQuery = () =>
+    actorOrganisationId ? `?actorId=${actorOrganisationId}` : "";
+
   const getSessionUrl = async () => {
     try {
-      const res = await axios.get(`/api/users/verification`);
+      const res = await axios.get(`/api/users/verification${getActorQuery()}`);
       return launchInContextSession(res.data.sessionUrl);
     } catch (err) {
       console.log(err);
