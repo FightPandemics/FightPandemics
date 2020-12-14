@@ -627,7 +627,9 @@ async function routes(app) {
             },
           };
           const [updateErr, updatedUser] = await app.to(
-            Object.assign(user, verificationObject).save(),
+            BaseUser.findByIdAndUpdate(user._id, {
+              $set: verificationObject,
+            }),
           );
           if (updateErr) {
             req.log.error(updateErr, "Failed updating user");
@@ -664,7 +666,9 @@ async function routes(app) {
             },
           };
           const [updateErr, updatedUser] = await app.to(
-            Object.assign(user, verificationObject).save(),
+            BaseUser.findByIdAndUpdate(user._id, {
+              $set: verificationObject,
+            }),
           );
           if (updateErr) {
             req.log.error(updateErr, "Failed updating user");

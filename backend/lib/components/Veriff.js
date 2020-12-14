@@ -17,7 +17,7 @@ const createSessionUrl = async (user) => {
   const body = {
     verification: {
       callback: `https://fightpandemics.com/${
-        user.type === "Individual" ? "profile" : "organisation"
+        user.ownerId ? "organisation" : "profile"
       }/${user._id}`,
       person: {
         firstName: user.firstName,
