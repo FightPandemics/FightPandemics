@@ -33,9 +33,9 @@ exports.validateStatusCodeResponseBody = function (
 ) {
   expect(response.statusCode).to.be.equal(statusCode);
   expect(
-    response.body.forEach((org) => {
-      expect(org).to.have.a.property(key1);
-      expect(org).to.have.a.property(key2);
+    response.body.forEach((object) => {
+      expect(object).to.have.a.property(key1);
+      expect(object).to.have.a.property(key2);
     }),
   );
 };

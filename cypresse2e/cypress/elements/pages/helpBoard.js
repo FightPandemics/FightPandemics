@@ -1,5 +1,5 @@
 class HelpBoard {
-  addPostButton = "button > img#HB_CP";
+  addPostButton = "img#HB_CP";
   noPostsAvailableTextElement = '//*/a[@id="HB_CP"]//parent::div';
   addPostLink = "a#HB_CP";
   firstPostOnHelpBoard =
