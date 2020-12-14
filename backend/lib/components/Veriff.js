@@ -48,7 +48,7 @@ const createSessionUrl = async (user) => {
   }
 };
 
-const validateWebhookEvent = async (req, reply, done) => {
+const validateWebhookEvent = async (req, reply) => {
   const incomingXAuthClient = req.headers["x-auth-client"];
   // reject if "x-auth-client" is not equal to PUBLIC_KEY
   if (PUBLIC_KEY !== incomingXAuthClient) throw false;
@@ -60,7 +60,6 @@ const validateWebhookEvent = async (req, reply, done) => {
   const xSignature = await generateXSignature(rawBody);
 
   if (xSignature != incomingXSignature) throw false;
-  else return done();
 };
 
 module.exports = {

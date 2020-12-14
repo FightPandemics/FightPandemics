@@ -626,7 +626,13 @@ async function routes(app) {
               technicalData,
             },
           };
-          Object.assign(user, verificationObject).save();
+          const [updateErr, updatedUser] = await app.to(
+            Object.assign(user, verificationObject).save(),
+          );
+          if (updateErr) {
+            req.log.error(updateErr, "Failed updating user");
+            throw app.httpErrors.internalServerError();
+          }
         } else if (status === "approved") {
           const {
             person: {
@@ -657,7 +663,13 @@ async function routes(app) {
               technicalData, // ip address
             },
           };
-          Object.assign(user, verificationObject).save();
+          const [updateErr, updatedUser] = await app.to(
+            Object.assign(user, verificationObject).save(),
+          );
+          if (updateErr) {
+            req.log.error(updateErr, "Failed updating user");
+            throw app.httpErrors.internalServerError();
+          }
         }
 
         // update Ref
