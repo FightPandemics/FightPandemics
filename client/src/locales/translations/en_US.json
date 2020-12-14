@@ -411,7 +411,7 @@
     "passwordMin": "Password must be at least {{num}} characters.",
     "passwordConfirmationRequired": "Password confirmation is required.",
     "passwordNotMatch": "Passwords don't match",
-    "linkAccountsSuccess": "Your accounts with same email were linked together, please log in again with any of them.",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them.",
     "backHome": "Back to Home Screen"
   },
   "verifyEmail": {
@@ -785,8 +785,8 @@
     "emailIssue": "Email is already in use or cannot be validated",
     "emailUnverified": "Email is not verified",
     "maxSignInAttemptsExceeded": "Maximum number of sign in attempts exceeded.",
-    "noEmailAccount": "You don't have an account, please use use Join Now to create one",
-    "registeredAccount": "A social account has registered this email address",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
     "failedSubmittingFeedback": "Failed submitting feedback, reason:",
     "failedCreatingUser": "Failed creating user, reason:",
     "failedLinkAccounts": "Failed linking accounts, reason:",
