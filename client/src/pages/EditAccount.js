@@ -90,6 +90,8 @@ function EditAccount(props) {
     usesPassword = false,
   } = user || {};
 
+  console.log("Test PR, don't merge me!!!!");
+
   const handleLocationChange = (location) => {
     setLocation(location);
     clearError("location");
