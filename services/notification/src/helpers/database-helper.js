@@ -48,19 +48,6 @@ class DatabaseHelper {
                     MessageThreadStatus.PENDING,
                   ],
                 },
-                $or: [
-                  {
-                    lastAccess: null,
-                  },
-                  {
-                    lastAccess: {
-                      $lt: DateHelper.subtractMinutes(
-                        new Date(),
-                        this.instantUnreadLookbackInterval,
-                      ),
-                    },
-                  },
-                ],
               },
             },
           },
@@ -81,7 +68,6 @@ class DatabaseHelper {
                 in: {
                   id: "$$this.id",
                   emailSent: "$$this.emailSent",
-                  lastAccess: "$$this.lastAccess",
                   name: "$$this.name",
                   newMessages: "$$this.newMessages",
                   photo: "$$this.photo",

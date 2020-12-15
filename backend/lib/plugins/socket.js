@@ -129,7 +129,6 @@ function onSocketConnect(socket) {
       const newThread = {
         participants: [sender, receiver].map((participant) => ({
           id: participant._id,
-          lastAccess: participant == sender ? new Date() : null,
           name: participant.name,
           emailSent: false,
           newMessages: participant == receiver ? 1 : 0,
@@ -151,13 +150,12 @@ function onSocketConnect(socket) {
         this.io.to(recipientSocketId).emit("FORCE_ROOM_UPDATE", thread._id);
     } else if (!thread) return res({ code: 401, message: "Unauthorized" });
 
-    // update participant.lastAccess, and mark messages as read.
+    // mark messages as read.
     [threadErr, thread] = await this.to(
       Thread.findByIdAndUpdate(
         thread._id,
         {
           $set: {
-            "participants.$[userToUpdate].lastAccess": new Date(),
             "participants.$[userToUpdate].newMessages": 0,
           },
         },

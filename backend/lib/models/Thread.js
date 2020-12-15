@@ -18,7 +18,6 @@ const participantSchema = new Schema({
     type: ObjectId,
   },
   emailSent: Boolean,
-  lastAccess: Date,
   name: {
     required: true,
     type: String,
@@ -65,7 +64,6 @@ threadSchema.index({
 // Index for Notification Lambda to query for unread messages
 threadSchema.index({
   "participants.newMessages": 1,
-  "participants.lastAccess": 1,
   "participants.emailSent": 1,
   "participants.status": 1,
 });
