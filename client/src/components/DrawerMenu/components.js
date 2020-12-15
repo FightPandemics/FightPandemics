@@ -92,6 +92,10 @@ export const NavItem = styled(List.Item)`
   &.am-list-item-active {
     background: ${tropicalBlue};
   }
+
+  * {
+    pointer-events: none;
+  }
 `;
 
 export const CustomSvgIcon = styled(SvgIcon)`
