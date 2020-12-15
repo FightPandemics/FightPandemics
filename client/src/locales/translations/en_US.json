@@ -411,6 +411,7 @@
     "passwordMin": "Password must be at least {{num}} characters.",
     "passwordConfirmationRequired": "Password confirmation is required.",
     "passwordNotMatch": "Passwords don't match",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them.",
     "backHome": "Back to Home Screen"
   },
   "verifyEmail": {
@@ -650,7 +651,7 @@
       ],
       [
         "I need technical support.",
-        "We are sorry for that. Send us an email at <0>help@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
+        "We are sorry for that. Send us an email at <0>support@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
       ],
       [
         "I want to reach out to FightPandemics for other reasons.",
@@ -784,8 +785,11 @@
     "emailIssue": "Email is already in use or cannot be validated",
     "emailUnverified": "Email is not verified",
     "maxSignInAttemptsExceeded": "Maximum number of sign in attempts exceeded.",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
     "failedSubmittingFeedback": "Failed submitting feedback, reason:",
     "failedCreatingUser": "Failed creating user, reason:",
+    "failedLinkAccounts": "Failed linking accounts, reason:",
     "failedLoadingProfile": "Failed loading profile, reason:",
     "failedLoadingActivity": "Failed loading activity, reason:",
     "failedCreatingOrgProfile": "Failed creating organization profile, reason:",
