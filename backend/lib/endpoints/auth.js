@@ -135,64 +135,110 @@ async function routes(app) {
     },
   );
 
-  app.post("/login", { schema: loginSchema }, async (req, reply) => {
-    const { body } = req;
-    const { email, password } = body;
-    try {
-      const token = await Auth0.authenticate("password", {
-        password,
-        scope: "openid",
-        username: email,
-      });
-      reply.setAuthCookies(token);
-      const auth0User = await Auth0.getUser(token);
-      const { email_verified: emailVerified } = auth0User;
-      // Don't throw as already checking 403 from Auth0 (wrong email/pw)
-      // to respond to client as 401 unauthorized error
-      if (!emailVerified) {
-        return app.httpErrors.forbidden("emailUnverified");
-      }
-      const { payload } = app.jwt.decode(token);
-      const userId = payload[authConfig.jwtMongoIdKey];
-      if (!userId) {
-        throw new Error("no mongo_id found in JWT");
-      }
-      const dbUser = await User.findById(userId).populate("organisations");
-      let user = null;
-      if (dbUser) {
-        const {
-          firstName,
-          lastName,
-          organisations,
-          permissions = SCOPES.NONE,
-          photo,
-          usesPassword,
-        } = dbUser;
-        user = {
+  const getExistingAccount = (serverToken, email) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const otherAccounts = await Auth0.getAccountsWithSameEmail(
+          serverToken,
           email,
-          firstName,
-          id: userId,
-          lastName,
-          organisations,
-          permissions,
-          photo,
-          usesPassword,
-        };
-      }
-      return { email, emailVerified, token, user };
-    } catch (err) {
-      if (err.statusCode === 403) {
-        throw app.httpErrors.unauthorized("wrongCredentials");
-      }
-      if (err.statusCode === 429) {
-        req.log.error(
-          err,
-          "Maximum number of sign in attempts exceeded. (10 times)",
         );
-        throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
+        // the first account with valid Database record will be the primary account
+        let provider = null;
+        let primaryAuthId = null;
+        const noAccount = !otherAccounts.some((account) =>
+          account.identities.some((id) => id.provider === "auth0"),
+        );
+        for (const account of otherAccounts) {
+          const { mongo_id } = account.app_metadata ? account.app_metadata : {};
+          if (mongo_id) {
+            const dbUser = await User.findById(mongo_id);
+            if (dbUser) {
+              primaryAuthId = dbUser.authId;
+              const providerCode = primaryAuthId.split("|")[0]; // "provider|user_id"
+              provider =
+                providerCode === "google-oauth2" ? "Google" : providerCode;
+              break;
+            }
+          }
+        }
+        resolve({ noAccount, otherAccounts, primaryAuthId, provider });
+      } catch (err) {
+        reject(app.httpErrors.badRequest("invalidEmail"));
       }
-    }
-  });
+    });
+  };
+
+  app.post(
+    "/login",
+    { preHandler: [app.getServerToken], schema: loginSchema },
+    async (req, reply) => {
+      const { body } = req;
+      const { email, password } = body;
+      try {
+        const token = await Auth0.authenticate("password", {
+          password,
+          scope: "openid",
+          username: email,
+        });
+        reply.setAuthCookies(token);
+        const auth0User = await Auth0.getUser(token);
+        const { email_verified: emailVerified } = auth0User;
+        // Don't throw as already checking 403 from Auth0 (wrong email/pw)
+        // to respond to client as 401 unauthorized error
+        if (!emailVerified) {
+          return app.httpErrors.forbidden("emailUnverified");
+        }
+        const { payload } = app.jwt.decode(token);
+        const userId = payload[authConfig.jwtMongoIdKey];
+        if (!userId) {
+          throw new Error("no mongo_id found in JWT");
+        }
+        const dbUser = await User.findById(userId).populate("organisations");
+        let user = null;
+        if (dbUser) {
+          const {
+            firstName,
+            lastName,
+            organisations,
+            photo,
+            permissions = SCOPES.NONE,
+            usesPassword,
+          } = dbUser;
+          user = {
+            email,
+            firstName,
+            id: userId,
+            lastName,
+            organisations,
+            permissions,
+            photo,
+            usesPassword,
+          };
+        }
+        return { email, emailVerified, token, user };
+      } catch (err) {
+        if (err.statusCode === 403) {
+          const { noAccount, provider } = await getExistingAccount(
+            req.token,
+            email,
+          );
+          if (noAccount)
+            throw app.httpErrors.badRequest(
+              provider ? "registeredAccount" : "noEmailAccount",
+            );
+          else throw app.httpErrors.unauthorized("wrongCredentials");
+        }
+        if (err.statusCode === 429) {
+          req.log.error(
+            err,
+            "Maximum number of sign in attempts exceeded. (10 times)",
+          );
+          throw app.httpErrors.tooManyRequests("maxSignInAttemptsExceeded");
+        }
+        throw app.httpErrors.internalServerError(err);
+      }
+    },
+  );
 
   app.put(
     "/password",
@@ -260,6 +306,40 @@ async function routes(app) {
       } catch (err) {
         req.log.error(err, "Error creating change password email");
         throw app.httpErrors.internalServerError("failedChangePasswordEmail");
+      }
+    },
+  );
+
+  app.post(
+    "/link-accounts",
+    { preHandler: [app.getServerToken] },
+    async (req) => {
+      try {
+        const token = getCookieToken(req);
+        if (!token) {
+          throw app.httpErrors.unauthorized("invalidToken");
+        }
+        const { email } = await Auth0.getUser(token);
+        const serverToken = req.token;
+        const { primaryAuthId, otherAccounts } = await getExistingAccount(
+          serverToken,
+          email,
+        );
+        if (!primaryAuthId) return { primaryAuthId }; // no account with Database record (profile) yet
+        // link accounts (current and legacy dangling accounts) to the primary account
+        for (const account of otherAccounts) {
+          if (account.user_id !== primaryAuthId) {
+            await Auth0.linkAccounts(
+              serverToken,
+              primaryAuthId,
+              account.user_id,
+            );
+          }
+        }
+        return { primaryAuthId };
+      } catch (err) {
+        req.log.error(err, "Error linking accounts");
+        throw app.httpErrors.internalServerError();
       }
     },
   );

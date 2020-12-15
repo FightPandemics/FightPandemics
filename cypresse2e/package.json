@@ -4,12 +4,12 @@
   "description": "Cypress tests",
   "scripts": {
     "pretest": "rm -rf mochawesome-report/* mochawesome.json",
-    "test": "cypress run",
+    "test": "cypress run --headless --browser chrome",
     "report": "npx mochawesome-merge --reportDir mochawesome-report/ > mochawesome.json && npx mochawesome-report-generator --inline mochawesome.json"
   },
   "private": true,
   "devDependencies": {
-    "cypress": "^4.9.0",
+    "cypress": "^6.0.1",
     "cypress-failed-log": "^2.7.0 ",
     "cypress-xpath": "^1.6.0",
     "husky": "^4.3.0",

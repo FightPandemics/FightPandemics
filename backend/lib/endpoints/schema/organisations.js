@@ -1,5 +1,5 @@
 const S = require("fluent-schema");
-const { strictSchema } = require("./utils");
+const { strictSchema, strictQueryStringSchema } = require("./utils");
 const { locationSchema } = require("./location");
 const { notifyPreferenceSchema } = require("./notificationPreference");
 
@@ -43,8 +43,8 @@ const createOrganisationSchema = {
 };
 
 const createOrganisationAvatarSchema = {
-  params: strictSchema().prop("organisationId", S.string().required()),
   body: strictSchema().prop("file", S.required()),
+  params: strictSchema().prop("organisationId", S.string().required()),
 };
 
 const getOrganisationSchema = {
@@ -53,17 +53,15 @@ const getOrganisationSchema = {
 
 // TODO: Maybe add search param in query string?
 const getOrganisationsSchema = {
-  querystring: strictSchema()
-    .prop("limit", S.integer())
+  querystring: strictQueryStringSchema()
     .prop("ownerId", S.string())
     .prop("skip", S.integer()),
 };
 
 const searchOrganisationsSchema = {
-  querystring: strictSchema()
+  querystring: strictQueryStringSchema()
     .prop("filter", S.string())
     .prop("keywords", S.string())
-    .prop("limit", S.integer())
     .prop("objective", S.string())
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false)),
