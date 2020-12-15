@@ -713,7 +713,7 @@ const Post = ({
               )}
               <div className="pre-header">
                 <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-                <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+                <Tooltip color={theme.colors.darkGray} title={translateISOTimeTitle(post.createdAt)}>
                   <span className="timestamp">
                     {t(
                       `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
