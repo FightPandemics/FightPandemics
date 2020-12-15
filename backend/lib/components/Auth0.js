@@ -136,11 +136,11 @@ const linkAccounts = async (token, rootUserId, targetUserId) => {
   }
 };
 
-const getAccountsWithSameEmail = async (token, email) => {
+const getAccountsWithSameEmail = async (token, email, forVerified) => {
   try {
     const res = await axios.get(`${AUTH_DOMAIN}/api/v2/users`, {
       params: {
-        q: `email:"${email}" AND email_verified:true`,
+        q: `email:"${email}"${forVerified ? " AND email_verified:true" : ""}`,
         search_engine: "v3",
       },
       ...getAuthHeaders(token),
