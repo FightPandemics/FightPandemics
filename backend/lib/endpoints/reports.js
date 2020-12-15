@@ -559,14 +559,14 @@ async function routes(app) {
       const auditLogStatsAggregationPipeline = [
         {
           $match: {
-            createdAt: { $gt: new Date(Date.now() - 2.678e9) },
+            createdAt: { $gt: new Date(Date.now() - 2.765e9) },
           },
         },
         {
           $facet: {
             approvedReports: [
               {
-                $match: {action: "accept"}
+                $match: { action: "accept" },
               },
               {
                 $set: {
@@ -588,7 +588,7 @@ async function routes(app) {
             ],
             rejectedReports: [
               {
-                $match: {action: "reject"}
+                $match: { action: "reject" },
               },
               {
                 $set: {
@@ -607,9 +607,9 @@ async function routes(app) {
                   count: { $sum: 1 },
                 },
               },
-            ]
-          }
-        }
+            ],
+          },
+        },
       ];
 
       const [postsStatsErr, postsStats] = await app.to(
@@ -626,7 +626,12 @@ async function routes(app) {
           "Failed requesting stats",
         );
         throw app.httpErrors.internalServerError();
-      } else if (postsStats === null || !postsStats[0] || !auditStats || !auditStats[0]) {
+      } else if (
+        postsStats === null ||
+        !postsStats[0] ||
+        !auditStats ||
+        !auditStats[0]
+      ) {
         return { stats: null };
       } else {
         postsStats[0].auditStats = auditStats[0];
