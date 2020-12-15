@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import TagManager from "react-gtm-module";
 
 import Form from "./Form";
 import SubTitle from "./SubTitle";
@@ -11,6 +12,7 @@ import styled from "styled-components";
 import BaseButton from "components/Button/BaseButton";
 import { theme } from "constants/theme";
 import { selectOrganisationId } from "reducers/session";
+import GTM from "constants/gtm-tags";
 
 const { colors, typography } = theme;
 
@@ -112,6 +114,23 @@ const Body = ({
             formData,
           );
 
+      TagManager.dataLayer({
+        dataLayer: {
+          event: forModerator
+            ? forModerator.keep
+              ? GTM.moderation.keepPostEventName
+              : GTM.moderation.removePostEventName
+            : GTM.moderation.reportEventName,
+          reasons: reasonData,
+        },
+      });
+      // clear DataLayer
+      TagManager.dataLayer({
+        dataLayer: {
+          event: -1,
+          reasons: -1,
+        },
+      });
       onSuccess(true);
     } catch (error) {
       onSuccess(false);

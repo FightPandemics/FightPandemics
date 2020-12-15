@@ -200,6 +200,8 @@ module.exports = {
   moderation: {
     hide: "_HIP",
     unhide: "_UHIP",
-    report: "_RP",
+    reportEventName: "CREATE_REPORT",
+    keepPostEventName: "MOD_KEEP_POST",
+    removePostEventName: "MOD_REMOVE_POST",
   },
 };
