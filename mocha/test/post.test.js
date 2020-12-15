@@ -44,59 +44,64 @@ const post = {
   updatedAt: new Date(),
   visibility: "worldwide",
 };
-
 describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", function () {
-  before(function () {
-    dbHelper.connectToDatabase();
-  });
-  beforeEach(function (done) {
-    dbHelper.insertDocument(post, "posts").then((result) => {
-      postID = result.insertedId;
-      insertResult = result.ops;
+  describe("GET /api/posts/{postId} endpoint - record is added to the DB and then retrived using API", function () {
+    before(function () {
+      dbHelper.connectToDatabase();
+    });
+    beforeEach(function (done) {
+      dbHelper.insertDocument(post, "posts").then((result) => {
+        postID = result.insertedId;
+        insertResult = result.ops;
+        done();
+      });
+    });
+    afterEach(function (done) {
+      dbHelper.deleteDocument("posts", { _id: postID });
       done();
     });
-  });
-  it("Success - user gets a post by ID", async function () {
-    let response = await apiHelper.sendGETRequest(
-      APP_URL,
-      getPostApiEndpoint + "/" + postID,
-    );
-    validator.validateStatusCodeAndMessage(response, httpStatus.OK, 200);
-    validator.validateInitialAndResponseObject(
-      insertResult[0],
-      ["author.location", "author.id", "createdAt", "updatedAt", "_id"],
-      response.body.post,
-      [
-        "author.location",
-        "author.id",
-        "elapsedTimeText",
-        "liked",
-        "likesCount",
-        "createdAt",
-        "updatedAt",
-        "_id",
-      ],
-    );
+
+    after(function () {
+      dbHelper.disconnect();
+    });
+
+    it.only("Success - user gets a post by ID", async function () {
+      let response = await apiHelper.sendGETRequest(
+        APP_URL,
+        getPostApiEndpoint + "/" + postID,
+      );
+      validator.validateStatusCodeAndMessage(response, httpStatus.OK, 200);
+      validator.validateInitialAndResponseObject(
+        insertResult[0],
+        ["author.location", "author.id", "createdAt", "updatedAt", "_id"],
+        response.body.post,
+        [
+          "author.location",
+          "author.id",
+          "elapsedTimeText",
+          "liked",
+          "likesCount",
+          "createdAt",
+          "updatedAt",
+          "_id",
+        ],
+      );
+    });
   });
 
-  afterEach(function (done) {
-    dbHelper.deleteDocument("posts", { _id: postID });
-    done();
-  });
-  it("404 error - post was not found by random mongodb ObjectID", async function () {
-    var objectId = new ObjectID();
-    let response = await apiHelper.sendGETRequest(
-      APP_URL,
-      getPostApiEndpoint + "/" + objectId,
-    );
-    validator.validateStatusCodeErrorAndMessage(
-      response,
-      httpStatus.NOT_FOUND,
-      "Not Found",
-      "Not Found",
-    );
-  });
-  after(function () {
-    dbHelper.disconnect();
+  describe("GET /api/posts/{postId} endpoint - error when using incorrect ObjectID", function () {
+    it("404 error - post was not found by random mongodb ObjectID", async function () {
+      var objectId = new ObjectID();
+      let response = await apiHelper.sendGETRequest(
+        APP_URL,
+        getPostApiEndpoint + "/" + objectId,
+      );
+      validator.validateStatusCodeErrorAndMessage(
+        response,
+        httpStatus.NOT_FOUND,
+        "Not Found",
+        "Not Found",
+      );
+    });
   });
 });
