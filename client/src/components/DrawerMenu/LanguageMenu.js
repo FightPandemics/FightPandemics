@@ -7,6 +7,7 @@ import { MENU_STATE } from "./constants";
 import { Divider, NavItem, CustomSvgIcon } from "./components";
 import { languages } from "locales/languages";
 import i18n from "i18n";
+import GTM from "constants/gtm-tags";
 
 import BackIcon from "assets/icons/back-white.svg";
 import DoneIcon from "assets/icons/done-white.svg";
@@ -22,9 +23,13 @@ export const LanguageMenu = ({ setMenuState }) => {
       </NavItem>
       <Divider />
       {Object.entries(languages).map(([key, label]) => (
-        <NavItem key={key} onClick={() => onLanguageChange(key)}>
+        <NavItemGTMFriendly
+          id={GTM.nav.prefix + GTM.nav.language + GTM.language[key]}
+          key={key}
+          onClick={() => onLanguageChange(key)}
+        >
           <LanguageItem current={{ key, label }} />
-        </NavItem>
+        </NavItemGTMFriendly>
       ))}
     </>
   );
@@ -63,4 +68,10 @@ const LanguageItemContainer = styled.div`
   display: flex;
   margin: 5px 0;
   align-items: center;
+`;
+
+const NavItemGTMFriendly = styled(NavItem)`
+  * {
+    pointer-events: none;
+  }
 `;
