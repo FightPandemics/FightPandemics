@@ -45,6 +45,12 @@ function Stats({ stats }) {
     );
   };
 
+  const LineChartScaleMaxMin = Math.max(
+    ...getLast30DaysStats(stats.dailyNewReportsCounts),
+    ...getLast30DaysStats(stats.auditStats.rejectedReports,),
+    ...getLast30DaysStats(stats.auditStats.approvedReports),
+  );
+
   return (
     <>
       <Row gutter={[24, 24]}>
@@ -69,9 +75,9 @@ function Stats({ stats }) {
         </Col>
         <Col className="gutter-row" span={12}>
           <h1>Progress</h1>
-          <WhiteSpace size={"md"}/>
+          <WhiteSpace size={"md"} />
           <Progress
-          style={{maxWidth: "90%"}}
+            style={{ maxWidth: "90%" }}
             title={"Progress"}
             strokeColor={{
               "0%": "#ff2200",
@@ -84,7 +90,7 @@ function Stats({ stats }) {
               100
             }
           />
-          <WhiteSpace size={"md"}/>
+          <WhiteSpace size={"md"} />
           <Row gutter={16}>
             <Col span={12}>
               <Statistic
@@ -171,12 +177,8 @@ function Stats({ stats }) {
                 yAxes: [
                   {
                     ticks: {
-                      min: -Math.max(
-                        ...getLast30DaysStats(stats.dailyNewReportsCounts),
-                      ),
-                      max: Math.max(
-                        ...getLast30DaysStats(stats.dailyNewReportsCounts),
-                      ),
+                      min: -LineChartScaleMaxMin,
+                      max: LineChartScaleMaxMin,
                       callback: function (value, index, values) {
                         return value < 0 ? -value : value;
                       },
