@@ -142,15 +142,18 @@ async function routes(app) {
         // the first account with valid Database record will be the primary account
         let provider = null;
         let primaryAuthId = null;
-        const noAccount = otherAccounts.length === 0;
+        const noAccount = !otherAccounts.some((account) =>
+          account.identities.some((id) => id.provider === "auth0"),
+        );
         for (const account of otherAccounts) {
-          const { mongo_id } = account.app_metadata;
+          const { mongo_id } = account.app_metadata ? account.app_metadata : {};
           if (mongo_id) {
             const dbUser = await User.findById(mongo_id);
             if (dbUser) {
               primaryAuthId = dbUser.authId;
               const providerCode = primaryAuthId.split("|")[0]; // "provider|user_id"
-              provider = providerCode === "google-oauth2" ? "Google" : providerCode;
+              provider =
+                providerCode === "google-oauth2" ? "Google" : providerCode;
               break;
             }
           }
@@ -214,9 +217,10 @@ async function routes(app) {
             req.token,
             email,
           );
-          if (noAccount) throw app.httpErrors.badRequest("noEmailAccount");
-          else if (provider)
-            throw app.httpErrors.badRequest("registeredAccount");
+          if (noAccount)
+            throw app.httpErrors.badRequest(
+              provider ? "registeredAccount" : "noEmailAccount",
+            );
           else throw app.httpErrors.unauthorized("wrongCredentials");
         }
         if (err.statusCode === 429) {
