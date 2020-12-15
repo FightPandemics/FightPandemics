@@ -65,7 +65,7 @@ describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", 
       dbHelper.disconnect();
     });
 
-    it.only("Success - user gets a post by ID", async function () {
+    it("Success - user gets a post by ID", async function () {
       let response = await apiHelper.sendGETRequest(
         APP_URL,
         getPostApiEndpoint + "/" + postID,
@@ -84,6 +84,10 @@ describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", 
           "createdAt",
           "updatedAt",
           "_id",
+          "reportsCount",
+          "commentsCount",
+          "isEdited",
+          "status",
         ],
       );
     });
@@ -95,6 +99,19 @@ describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", 
       let response = await apiHelper.sendGETRequest(
         APP_URL,
         getPostApiEndpoint + "/" + objectId,
+      );
+      validator.validateStatusCodeErrorAndMessage(
+        response,
+        httpStatus.NOT_FOUND,
+        "Not Found",
+        "Not Found",
+      );
+    });
+    //Skip. Issue [API] - endpoint GET /api/posts/{postId} #2088 was created.
+    it.skip("404 error - post was not found by value that is NOT ObjectID", async function () {
+      let response = await apiHelper.sendGETRequest(
+        APP_URL,
+        getPostApiEndpoint + "/" + 1,
       );
       validator.validateStatusCodeErrorAndMessage(
         response,
