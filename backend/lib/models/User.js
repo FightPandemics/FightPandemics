@@ -23,6 +23,7 @@ const userSchema = new Schema(
     },
     location: Object,
     photo: String,
+    lastSeen: Date
   },
   { collection: "users", timestamps: true },
 );

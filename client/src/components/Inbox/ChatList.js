@@ -88,6 +88,8 @@ export const ChatList = ({
                 if (!room || room._id !== _room._id)
                   joinRoom({
                     threadId: _room._id,
+                    lastSeen:
+                      _room.userStatus === "offline" ? _room.lastSeen : null,
                   });
               }}
             >

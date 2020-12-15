@@ -92,6 +92,7 @@ export const RecipientHeader = ({
   participant,
   onMobileBackClick,
   status,
+  lastSeen,
   blockThread,
   archiveThread,
   blockStatus,
@@ -216,13 +217,13 @@ export const RecipientHeader = ({
               ) : (
                 <>
                   {t("messaging.lastSeen")}:{" "}
-                  {participant.lastAccess
+                  {lastSeen
                     ? t(
                         `relativeTime.${
-                          getRelativeTime(participant.lastAccess)[1]
+                          getRelativeTime(lastSeen)[1]
                         }WithCount`,
                         {
-                          count: getRelativeTime(participant.lastAccess)[0],
+                          count: getRelativeTime(lastSeen)[0],
                         },
                       )
                     : t("messaging.never")}

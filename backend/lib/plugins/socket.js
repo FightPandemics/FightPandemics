@@ -43,6 +43,16 @@ function onSocketConnect(socket) {
     if (!user) {
       return res({ code: 404, message: "User not found" });
     }
+
+    const emitUserUpdate = async (id, status) => {
+      if (status === "offline"){
+        const user = await User.findByIdAndUpdate(id, { lastSeen: new Date() });
+        this.io.emit("USER_STATUS_UPDATE", { id, status, lastSeen: user.lastSeen });
+      } else {
+        this.io.emit("USER_STATUS_UPDATE", { id, status });
+      }
+    };
+
     socket.userId = userId;
     if (data.organisationId) {
       const [errOrg, org] = await this.to(
@@ -50,10 +60,10 @@ function onSocketConnect(socket) {
       );
       if (!org || errOrg) return res({ code: 401, message: "Unauthorized" });
       socket.userId = data.organisationId;
-      this.io.emit("USER_STATUS_UPDATE", { id: userId, status: "offline" });
+      emitUserUpdate(userId, "offline");
     }
 
-    this.io.emit("USER_STATUS_UPDATE", { id: socket.userId, status: "online" });
+    emitUserUpdate(socket.userId, "online");
     socket.on("disconnect", () => {
       this.log.debug(`[ws] socket disconnected [socketId: ${socket.id}]`);
       for (const room in socket.rooms) {
@@ -62,11 +72,7 @@ function onSocketConnect(socket) {
       setTimeout(async () => {
         // the user maybe is just changing/reloading the page, wait to make sure they completely disconnected
         const stillOnline = await getSocketIdByUserId(this, socket.userId);
-        if (!stillOnline)
-          this.io.emit("USER_STATUS_UPDATE", {
-            id: socket.userId,
-            status: "offline",
-          });
+        if (!stillOnline) emitUserUpdate(socket.userId, "offline");
       }, 1000);
     });
     socket.join(socket.userId); // to send events to all the user's browsers, if many are open.
@@ -203,8 +209,11 @@ function onSocketConnect(socket) {
   });
 
   socket.on("GET_USER_STATUS", async (id, res) => {
-    const status = (await getSocketIdByUserId(this, id.toString())) ? "online" : "offline";
-    res({ code: 200, data: status });
+    const status = (await getSocketIdByUserId(this, id.toString()))
+      ? "online"
+      : "offline";
+    const user = status === "offline"? await User.findById(id): null;
+    res({ code: 200, data: {status, lastSeen: user?user.lastSeen:null} });
   });
 
   socket.on("GET_CHAT_LOG", async (data, res) => {

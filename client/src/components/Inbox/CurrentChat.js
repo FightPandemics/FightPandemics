@@ -73,7 +73,8 @@ const CurrentChat = ({
       <RecipientHeader
         threadId={room?._id}
         status={room?.userStatus || null}
-        participant={room ? receiver : null}
+        lastSeen={room?.lastSeen || null}
+        participant={room ? receiver : null}  
         onMobileBackClick={leaveAllRooms}
         blockThread={blockThread}
         unblockThread={unblockThread}

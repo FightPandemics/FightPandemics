@@ -48,9 +48,11 @@ function wsReducer(state = initialState, action) {
         state.rooms[index] = {
           ...action.payload,
           userStatus: state.rooms[index].userStatus,
+          lastSeen: state.rooms[index].lastSeen,
           topic: state.rooms[index].topic,
         };
         action.payload.userStatus = state.rooms[index].userStatus;
+        action.payload.lastSeen = state.rooms[index].lastSeen;
         action.payload.topic = state.rooms[index].topic;
       }
       return {
@@ -179,8 +181,14 @@ function wsReducer(state = initialState, action) {
       );
       if (index != -1) {
         state.rooms[index].userStatus = action.payload.status;
-        if (state.room && state.room._id == state.rooms[index]._id)
+        if(action.payload.status === "offline"){
+          state.rooms[index].lastSeen = action.payload.lastSeen;
+        }
+        if (state.room && state.room._id == state.rooms[index]._id){
           state.room.userStatus = action.payload.status;
+          if(action.payload.status === "offline")
+            state.room.lastSeen = action.payload.lastSeen;
+        }
       } else return state;
       return {
         ...state,

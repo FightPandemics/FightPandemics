@@ -117,10 +117,12 @@ const Inbox = (props) => {
             status: _room.userStatus,
           },
         });
-      let status = await getUserStatus(getReceiver(_room.participants).id);
+      let { status, lastSeen } = await getUserStatus(
+        getReceiver(_room.participants).id,
+      );
       dispatch({
         type: "USER_STATUS_UPDATE",
-        payload: { id: getReceiver(_room.participants).id, status: status },
+        payload: { id: getReceiver(_room.participants).id, status, lastSeen },
       });
     });
   }, [rooms]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -158,8 +160,8 @@ const Inbox = (props) => {
         } else {
           if (
             rooms?.length === 0 ||
-            (!toggleViewRequests && rooms.length === pendingRooms.length)
-            || (!toggleViewRequests && !acceptedRooms.length)
+            (!toggleViewRequests && rooms.length === pendingRooms.length) ||
+            (!toggleViewRequests && !acceptedRooms.length)
           ) {
             return <EmptyInbox />;
           }
