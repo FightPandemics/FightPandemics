@@ -5,7 +5,6 @@ const apiEndPointHelper = require("../utils/apiEndpoints");
 const validator = require("../utils/validators");
 let getPostApiEndpoint = apiEndPointHelper.getPostApiEndpoint;
 const dbHelper = require("../utils/dbHelper");
-//const Post = require("../models/post");
 const ObjectID = require("mongodb").ObjectID;
 const authorID = new ObjectID();
 const authorName = "Sourced by FightPandemics (Testers)";
@@ -57,7 +56,7 @@ describe("GET /api/posts/{postId} endpoint - for a user that is NOT signed in", 
       done();
     });
   });
-  it.only("Success - user gets a post by ID", async function () {
+  it("Success - user gets a post by ID", async function () {
     let response = await apiHelper.sendGETRequest(
       APP_URL,
       getPostApiEndpoint + "/" + postID,
