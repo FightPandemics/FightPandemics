@@ -607,12 +607,10 @@ async function routes(app) {
         } = verification;
 
         const [userErr, user] = await app.to(BaseUser.findById(userId));
-        if (userErr) {
-          req.log.error(userErr, "Failed retrieving user");
-          throw app.httpErrors.internalServerError();
-        } else if (user === null) {
-          req.log.error(userErr, "User does not exist");
-          throw app.httpErrors.notFound();
+        if (userErr || user === null) {
+          // ALWAYS return true (200 code) when responding to the webhook event
+          // Otherwise Veriff will keep sending the same event which results in spamming the Logs with erros.
+          return true;
         }
 
         if (status !== "approved") {
@@ -632,8 +630,9 @@ async function routes(app) {
             }),
           );
           if (updateErr) {
-            req.log.error(updateErr, "Failed updating user");
-            throw app.httpErrors.internalServerError();
+            // ALWAYS return true (200 code) when responding to the webhook event
+            // Otherwise Veriff will keep sending the same event which results in spamming the Logs with erros.
+            return true;
           }
         } else if (status === "approved") {
           const {
@@ -671,8 +670,9 @@ async function routes(app) {
             }),
           );
           if (updateErr) {
-            req.log.error(updateErr, "Failed updating user");
-            throw app.httpErrors.internalServerError();
+            // ALWAYS return true (200 code) when responding to the webhook event
+            // Otherwise Veriff will keep sending the same event which results in spamming the Logs with erros.
+            return true;
           }
         }
 
