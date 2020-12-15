@@ -20,7 +20,7 @@ const createSessionUrl = async (user) => {
         user.ownerId ? "organisation" : "profile"
       }/${user._id}`,
       person: {
-        firstName: user.firstName,
+        firstName: user.name || user.firstName,
         lastName: user.lastName,
       },
       vendorData: user._id,
