@@ -47,7 +47,7 @@ export const SectionHeader = styled(Heading)`
 export const CreatePostIcon = styled(SvgIcon)`
   position: fixed;
   bottom: 3rem;
-  right: 5%;
+  right: 2rem;
   height: 5rem;
   width: 5rem;
   z-index: 1;

@@ -131,7 +131,7 @@ a {
   /* fix how it looks on mobile */
   @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
     bottom: 1.85rem !important;
-    left: 1rem !important;
+    left: 0.5rem !important;
     transform: scale(0.95) !important;
   }
 }
