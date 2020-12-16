@@ -412,7 +412,8 @@
     "passwordMin": "Лозинката мора да има најмалку {{num}} знаци.",
     "passwordConfirmationRequired": "Потребна е потврда за лозинка.",
     "passwordNotMatch": "Лозинките не се совпаѓаат",
-    "backHome": "Назад на почетниот екран"
+    "backHome": "Назад на почетниот екран",
+    "linkAccountsSuccess": "Your account has been linked with your existing email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Проверете го вашето сандаче",
@@ -651,7 +652,7 @@
       ],
       [
         "Ми треба техничка поддршка.",
-        "Многу ни е жал. Испратете ни е-пошта на < 0 > support@fightpandemics.com. </0> Бидејќи ние сите сме тим од волонтери, ве молиме очекувајте одговор за најмалку 48 часа."
+        "Многу ни е жал. Испратете ни е-пошта на < 0 > help@fightpandemics.com. < / 0 > Бидејќи ние сите сме тим од волонтери, ве молиме очекувајте одговор за најмалку 48 часа."
       ],
       [
         "Сакам да се обратам до FightPandemics од други причини.",
@@ -845,7 +846,10 @@
       "imageDimensionTooWide": "Извинете, сликата е премногу широка. Обидете се повторно со слика што има  помала ширина  а не е двојно поголема од висината.",
       "networkError": "Извинете, се појави грешка во мрежата."
     },
-    "wrongOldPassword": "Сегашната лозинка е грешка"
+    "wrongOldPassword": "Сегашната лозинка е грешка",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "Ние не сме давател на здравствени услуги",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Оваа услуга се обезбедува со добра волја за оние кои инаку не се во можност да добијат помош и ресурси за време на оваа невидена јавна здравствена состојба.",

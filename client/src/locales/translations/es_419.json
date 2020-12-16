@@ -173,7 +173,7 @@
     "writePostHere": "Escribe su publicación aquí",
     "title": "Título",
     "writePost": "Escribe su \npublicación",
-    "whatGiving": "What are you offering?",
+    "whatGiving": "¿Qué está ofreciendo?",
     "addTags": "Agrega etiquetas para que tu publicación sea más visible",
     "whatVisibility": "¿Cuál es la visibilidad de tu publicación?",
     "postVisible": "La publicación será visible para",
@@ -412,7 +412,8 @@
     "passwordMin": "La contraseña debe tener al menos {{num}} caracteres.",
     "passwordConfirmationRequired": "Se requiere confirmación de contraseña.",
     "passwordNotMatch": "Las contraseñas no coinciden",
-    "backHome": "Volver a la pantalla de inicio"
+    "backHome": "Volver a la pantalla de inicio",
+    "linkAccountsSuccess": "Su cuenta ha sido vinculada con su misma cuenta de correo electrónico. Por favor, vuelve a iniciar sesión con cualquiera de ellas."
   },
   "verifyEmail": {
     "checkInbox": "Revisa su correo",
@@ -573,7 +574,7 @@
       ],
       [
         "¿Puedo dar / recibir ayuda de mi ciudad o estado? ¿Cuánto tiempo estará visible la publicación?",
-        "The post to give/receive help can be at a zip code, city, state or country level for a duration of a day, a week, a month or forever. By default, the posts will be set to city level for one month."
+        "La publicación para dar / recibir ayuda puede ser a nivel de código postal, ciudad, estado o país durante una duración de un día, una semana, un mes o para siempre. De forma predeterminada, las publicaciones se establecerán en el nivel de la ciudad durante un mes."
       ],
       [
         "Mi pregunta no aparece en la lista. ¿A quién puedo contactar?",
@@ -845,7 +846,10 @@
       "imageDimensionTooWide": "Lo sentimos, la imagen es demasiado amplia. Inténtelo de nuevo con una imagen que tenga un ancho inferior al doble de la altura.",
       "networkError": "Lo sentimos, se ha producido algún error de red."
     },
-    "wrongOldPassword": "Contraseña actual incorrecta"
+    "wrongOldPassword": "Contraseña actual incorrecta",
+    "noEmailAccount": "No se ha encontrado ninguna cuenta con esta dirección de correo electrónico, haga clic en \"Unirse ahora\" para crear una cuenta.",
+    "registeredAccount": "Se ha registrado una cuenta social con esta dirección de correo electrónico. Haga clic en \"Unirse ahora\" para crear una cuenta de correo electrónico y contraseña directa.",
+    "failedLinkAccounts": "Error en la vinculación de cuentas, motivo:"
   },
   "TEMP: We are not a provider of healthcare services": "No somos proveedores de servicios de salud.",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Este servicio es brindado de buena fe a quienes de otra manera no podrían obtener ayuda y recursos durante esta emergencia de salud pública sin precedentes.",

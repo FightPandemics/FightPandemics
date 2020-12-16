@@ -412,7 +412,8 @@
     "passwordMin": "รหัสผ่านต้องมีอักขระอย่างน้อย {{num}} ตัว",
     "passwordConfirmationRequired": "ต้องมีการยืนยันรหัสผ่าน",
     "passwordNotMatch": "รหัสผ่านไม่ตรงกัน",
-    "backHome": "Back to Home Screen"
+    "backHome": "Back to Home Screen",
+    "linkAccountsSuccess": "Your account has been linked with your existing email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "ตรวจสอบกล่องจดหมายของคุณ",
@@ -651,7 +652,7 @@
       ],
       [
         "ฉันต้องการการสนับสนุนทางเทคนิค",
-        "ขออภัยในความไม่สะดวก ส่งอีเมลถึงเราที่ <0> support@fightpandemics.com </0> เนื่องจากเราเป็นทีมอาสาสมัครทั้งหมด โปรดรอการตอบกลับอย่างน้อย 48 ชั่วโมง"
+        "ขออภัยในความไม่สะดวก ส่งอีเมลถึงเราที่ <0> help@fightpandemics.com </0> เนื่องจากเราเป็นทีมอาสาสมัครทั้งหมด โปรดรอการตอบกลับอย่างน้อย 48 ชั่วโมง"
       ],
       [
         "ฉันต้องการติดต่อ FightPandemics ด้วยเหตุผลอื่นๆ",
@@ -845,7 +846,10 @@
       "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
       "networkError": "Sorry, some network error occurred."
     },
-    "wrongOldPassword": "Wrong current password"
+    "wrongOldPassword": "Wrong current password",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "เราไม่ใช่ผู้ให้บริการด้านการดูแลสุขภาพ",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "บริการนี้ถูกจัดขึ้นด้วยความมุ่งหมายที่ดีเพื่อผู้ที่ไม่สามารถขอรับความช่วยเหลือและสิ่งจุนเจือต่างๆ ในสภาวะฉุกเฉินทางด้านสาธารณะสุขที่ไม่เคยเกิดขึ้นมาก่อน",

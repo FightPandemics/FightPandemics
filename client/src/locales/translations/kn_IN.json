@@ -412,7 +412,8 @@
     "passwordMin": "ಪಾಸ್ವರ್ಡ್  ಕನಿಷ್ಟಪಕ್ಷ {{num}} ಅಕ್ಷರಗಳಾಗಿರಬೇಕು.",
     "passwordConfirmationRequired": "ಪಾಸ್ ವರ್ಡ್ ದೃಢೀಕರಣ ಅಗತ್ಯವಿದೆ.",
     "passwordNotMatch": "ಪಾಸ್ವರ್ಡ್ ಹೊಂದಿಕೆ ಆಗುತ್ತಿಲ್ಲ",
-    "backHome": "Back to Home Screen"
+    "backHome": "Back to Home Screen",
+    "linkAccountsSuccess": "Your account has been linked with your existing email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "ನಿಮ್ಮ ಇನ್ ಬಾಕ್ಸ್ ಅನ್ನು ಪರಿಶೀಲಿಸಿ",
@@ -845,7 +846,10 @@
       "imageDimensionTooWide": "ಕ್ಷಮಿಸಿ, ಚಿತ್ರವು ತುಂಬಾ ಅಗಲವಾಗಿದೆ.     ಅಗಲವು\nಎತ್ತರಕ್ಕಿಂತ ಎರಡು ಪಟ್ಟು ಕಡಿಮೆ ಇರುವ ಚಿತ್ರದೊಂದಿಗೆ ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
       "networkError": "ಕ್ಷಮಿಸಿ, ಕೆಲವು ನೆಟ್‌ವರ್ಕ್ ದೋಷ ಸಂಭವಿಸಿದೆ."
     },
-    "wrongOldPassword": "Wrong current password"
+    "wrongOldPassword": "Wrong current password",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "ನಾವು ಆರೋಗ್ಯ ಸೇವೆಗಳನ್ನು ಒದಗಿಸುವವರಲ್ಲ",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "ಈ ಅಭೂತಪೂರ್ವ ಸಾರ್ವಜನಿಕ ಆರೋಗ್ಯ ತುರ್ತು ಪರಿಸ್ಥಿತಿಗಳಲ್ಲಿ ಸಹಾಯ ಮತ್ತು ಸಂಪನ್ಮೂಲಗಳನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗದವರಿಗೆ ಈ ಸೇವೆಯನ್ನು ಉತ್ತಮ ರೀತಿಯಲ್ಲಿ ಒದಗಿಸಲಾಗುತ್ತದೆ.",

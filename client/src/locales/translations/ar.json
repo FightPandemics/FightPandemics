@@ -412,7 +412,8 @@
     "passwordMin": "كلمة المرور يجب أن تكون على الأقل {{num}} حرفاً",
     "passwordConfirmationRequired": "مطلوب تأكيد كلمة المرور",
     "passwordNotMatch": "كلمات المرور غير متطابقة",
-    "backHome": "العودة إلى الشاشة الرئيسية"
+    "backHome": "العودة إلى الشاشة الرئيسية",
+    "linkAccountsSuccess": "تم ربط حسابك بحساب بريدك الإلكتروني الحالي. الرجاء تسجيل الدخول مرة أخرى من أي منهم."
   },
   "verifyEmail": {
     "checkInbox": "تحقق من بريدك الوارد",
@@ -845,7 +846,10 @@
       "imageDimensionTooWide": "عذرا الصورة واسعة جدا. الرجاء المحاولة مرة أخرى باستخدام صورة يكون عرضها أقل من ضعف الارتفاع",
       "networkError": "عذراً، حدث خطأ في الشبكة"
     },
-    "wrongOldPassword": "كلمة المرور الحالية خاطئة"
+    "wrongOldPassword": "كلمة المرور الحالية خاطئة",
+    "noEmailAccount": "لم يتم العثور على حساب بعنوان البريد الإلكتروني هذا، الرجاء النقر فوق \"الانضمام الآن\" لإنشاء حساب.",
+    "registeredAccount": "تم تسجيل حساب اجتماعي مع عنوان البريد الإلكتروني هذا. الرجاء النقر فوق \"الانضمام الآن\" لإنشاء حساب مباشر ببريد إلكتروني وكلمة مرور.",
+    "failedLinkAccounts": "فشل ربط الحسابات ، السبب:"
   },
   "TEMP: We are not a provider of healthcare services": "نحن لا نقدم خدمات طبية",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "يتم توفير هذه الخدمة بحسن النية لأولئك الذين لا يستطيعون الحصول على التعليمات والموارد خلال هذا الطارئة الصحية الغير مسبوقة",

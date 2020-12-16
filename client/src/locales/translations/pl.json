@@ -6,7 +6,7 @@
     "giveHelp": "Zaoferuj pomoc",
     "viewFeed": "Wyświetl forum pomocy",
     "register": "Dołącz",
-    "feedback": "Opinie",
+    "feedback": "Opinia",
     "question": "Pytanie",
     "aboutUs": "O nas",
     "profile": "Profil",
@@ -124,7 +124,7 @@
         "Business": "Biznes",
         "Education": "Edukacja",
         "Legal": "Kwestie Prawne",
-        "Wellbeing/Mental": "Dobre samopoczucie / psychika",
+        "Wellbeing/Mental": "Dobre samopoczucie/psychika",
         "Entertainment": "Rozrywka",
         "Information": "Informacja",
         "Funding": "Finansowanie",
@@ -195,10 +195,10 @@
         "country": "W moim kraju"
       },
       "expires": {
-        "forever": "Zawsze",
+        "forever": "zawsze",
         "month": "na miesiąc",
         "week": "na tydzień",
-        "day": "Za jeden dzień"
+        "day": "na jeden dzień"
       },
       "helpTypes": {
         "request": "Szukam pomocy",
@@ -219,7 +219,7 @@
     "expire": "Post, którego szukasz, wygasł. Więcej takich postów można znaleźć na naszej tablicy pomocy.",
     "noActivity": "Nie znaleziono żadnej aktywności",
     "share": "Udostępnij",
-    "delete": "Usuń",
+    "delete": "Usuń wpis",
     "cancel": "Anuluj",
     "confirm": "Potwierdź",
     "edited": "edytowany",
@@ -227,11 +227,11 @@
     "deletePostConfirmationTitle": "Potwierdź usunięcie wpisu",
     "deleteCommentConfirmationTitle": "Potwierdź usunięcie komentarza",
     "deleteConfirmation": "Usuń",
-    "edit": "Edit post",
-    "hideAction": "Hide post",
-    "hideCaption": "It is not relevant to me",
-    "reportAction": "Report Post",
-    "reportCaption": "For moderators review"
+    "edit": "Edytuj wpis",
+    "hideAction": "Ukryj wpis",
+    "hideCaption": "To mnie nie dotyczy",
+    "reportAction": "Zgłoś wpis",
+    "reportCaption": "Do recenzji moderatorów"
   },
   "profile": {
     "common": {
@@ -412,7 +412,8 @@
     "passwordMin": "Hasło musi zawierać co najmniej {{num}} znaków",
     "passwordConfirmationRequired": "Wymagane jest potwierdzenie hasła",
     "passwordNotMatch": "Podane hasła nie pasują do siebie",
-    "backHome": "Powrót do ekranu głównego"
+    "backHome": "Powrót do ekranu głównego",
+    "linkAccountsSuccess": "Your account has been linked with your existing email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Sprawdź swoją skrzynkę odbiorczą",
@@ -464,10 +465,10 @@
     "press": "Prasa",
     "pressInfo": "Jeśli jesteś przedstawicielem prasy, skontaktuj się z nami pod adresem",
     "pressKitLink": "Przejdź do materiałów prasowych",
-    "communityPartners": "Community Partners",
-    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
-    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
-    "currentPartners": "Current Community Partners"
+    "communityPartners": "Partnerzy społeczności",
+    "communityCollaboration": "Za pośrednictwem naszej platformy chcemy wzmocnić pozycję społeczności i organizacji na całym świecie i aby to zrobić, musimy współpracować! Stała współpraca z naszymi partnerami społecznościowymi pozwala nam budować lepszą platformę dla nich i dla innych.",
+    "becomeCommunityPartner": "Czy chciałbyś, aby Twoja społeczność była również naszym partnerem? Chcielibyśmy usłyszeć to od Ciebie i rozpocząć współpracę! Napisz na adres ",
+    "currentPartners": "Wspierają nas obecnie"
   },
   "footer": {
     "faq": "FAQ",
@@ -651,7 +652,7 @@
       ],
       [
         "Potrzebuję wsparcia technicznego.",
-        "Przykro nam z tego powodu. Wyślij do nas wiadomość e-mail na adres <0>support@fightpandemics.com.</0> Jako że wszyscy jesteśmy wolontariuszami, prosimy spodziewać się co najmniej 48 godzin na odpowiedź."
+        "Przykro nam z tego powodu. Wyślij do nas wiadomość e-mail na adres <0>help@fightpandemics.com.</0> Jako że wszyscy jesteśmy wolontariuszami, prosimy spodziewać się co najmniej 48 godzin na odpowiedź."
       ],
       [
         "Chcę skontaktować się z FightPandemics z innych powodów.",
@@ -719,11 +720,11 @@
     "second": "sekunda",
     "second_plural": "sekundy",
     "secondWithCount": "{{count}} sekundę temu",
-    "secondWithCount_plural": "{{count}} sekund temu",
+    "secondWithCount_plural": "{{count}} sekund(y) temu",
     "minute": "minuta",
     "minute_plural": "minuty",
-    "minuteWithCount": "{{count}} minut temu",
-    "minuteWithCount_plural": "przed {{count}} minutami",
+    "minuteWithCount": "{{count}} minutę temu",
+    "minuteWithCount_plural": "{{count}} minut(y) temu",
     "hour": "godzina",
     "hour_plural": "godziny",
     "hourWithCount": "{{count}} godzin temu",
@@ -735,7 +736,7 @@
     "week": "tydzień",
     "week_plural": "tygodni",
     "weekWithCount": "{{count}} tydzień temu",
-    "weekWithCount_plural": "{{count}} tygodni temu",
+    "weekWithCount_plural": "{{count}} tygodni(e) temu",
     "month": "miesiąc",
     "month_plural": "miesiące, miesięcy",
     "monthWithCount": "{{count}} miesiąc temu",
@@ -845,7 +846,10 @@
       "imageDimensionTooWide": "Przepraszamy, obraz jest zbyt szeroki. Spróbuj ponownie z obrazem, którego szerokość jest mniejsza niż dwukrotna wysokość.",
       "networkError": "Przepraszamy, wystąpił błąd sieci."
     },
-    "wrongOldPassword": "Nieprawidłowe aktualne hasło"
+    "wrongOldPassword": "Nieprawidłowe aktualne hasło",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "Nie jesteśmy dostawcą usług opieki zdrowotnej",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Usługa ta jest świadczona w dobrej wierze dla tych, którzy w przeciwnym razie nie byliby w stanie uzyskać pomocy i środków w tej bezprecedensowej sytuacji zagrożenia zdrowia publicznego.",
@@ -1007,25 +1011,25 @@
     "empty": "Nie ma więcej powiadomień"
   },
   "moderation": {
-    "report": "Report",
+    "report": "Raport",
     "cancel": "Anuluj",
-    "finish": "Finish",
-    "reason": "Reason for reporting:",
-    "additionalDetails": "Additional details (optional)",
-    "enterDetails": "Please enter more details here...",
-    "reportPost": "Report Post",
-    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
-    "reportPostError": "Oops! something went wrong...",
-    "reportPostSuccessTitle": "Report Received",
-    "reportPostErrorTitle": "Oops!",
+    "finish": "Zakończ",
+    "reason": "Powód zgłoszenia:",
+    "additionalDetails": "Dodatkowe informacje (opcjonalnie)",
+    "enterDetails": "Proszę podać więcej szczegółów tutaj ...",
+    "reportPost": "Zgłoś wpis",
+    "reportPostSuccess": "Dziękuję za zgłoszenie! Ten post zostanie przesłany moderatorom.",
+    "reportPostError": "Ups! Coś poszło nie tak...",
+    "reportPostSuccessTitle": "Otrzymano raport",
+    "reportPostErrorTitle": "Ups!",
     "spam": "Spam",
-    "inappropriateContent": "Inappropriate Content",
-    "violatesTerms": "Violates Terms",
+    "inappropriateContent": "Nieodpowiednia treść",
+    "violatesTerms": "Narusza Warunki",
     "other": "Inne",
-    "postSuspected": "This post received multiple reports and was held for review",
-    "showAnyway": "Show anyway",
-    "postHidden": "You have chosen to hide this post",
-    "unhide": "Unhide",
-    "youReported": "You have reported this post. It will no longer be visible on your feed"
+    "postSuspected": "Ten wpis otrzymał wiele zgłoszeń i został przekazany moderatorom",
+    "showAnyway": "Pokaż mimo wszystko",
+    "postHidden": "Zdecydowałeś się ukryć ten wpis",
+    "unhide": "Odkryj",
+    "youReported": "Zgłosiłeś ten post. Nie będzie już widoczny w Twoim kanale"
   }
 }

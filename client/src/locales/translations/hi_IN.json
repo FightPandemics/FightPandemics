@@ -412,7 +412,8 @@
     "passwordMin": "पासवर्ड कम से कम {{num}} वर्ण का होना चाहिए।",
     "passwordConfirmationRequired": "पासवर्ड की पुष्टि आवश्यक है।",
     "passwordNotMatch": "पासवर्ड मेल नहीं खाते",
-    "backHome": "होम स्क्रीन पर वापस"
+    "backHome": "होम स्क्रीन पर वापस",
+    "linkAccountsSuccess": "Your account has been linked with your existing email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "अपने इनबॉक्स की जांच करें",
@@ -845,7 +846,10 @@
       "imageDimensionTooWide": "क्षमा करें, छवि बहुत व्यापक(चौड़ी) है। कृपया दुगनी ऊंचाई से कम चौड़ाई की छवि के साथ फिर से प्रयास करें।",
       "networkError": "क्षमा करें, कुछ नेटवर्क त्रुटि हुई है।"
     },
-    "wrongOldPassword": "वर्तमान पासवर्ड गलत है"
+    "wrongOldPassword": "वर्तमान पासवर्ड गलत है",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "हम स्वास्थ्य सेवाओं के प्रदाता नहीं हैं",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "जो इस अभूतपूर्व सार्वजनिक स्वास्थ्य आपातकाल के दौरान सहायता और संसाधन प्राप्त करने में असमर्थ हैं, यह सेवा उन लोगों को सद्भाव से प्रदान की जाती है।",

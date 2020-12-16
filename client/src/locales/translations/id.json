@@ -412,7 +412,8 @@
     "passwordMin": "Kata sandi harus setidaknya {{num}} karakter.",
     "passwordConfirmationRequired": "Konfirmasi kata sandi diperlukan.",
     "passwordNotMatch": "Passwords don't match",
-    "backHome": "Back to Home Screen"
+    "backHome": "Back to Home Screen",
+    "linkAccountsSuccess": "Your account has been linked with your existing email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Periksa kotak masuk Anda",
@@ -651,7 +652,7 @@
       ],
       [
         "Saya membutuhkan bantuan teknis.",
-        "Kami mohon maaf untuk itu. Kirimi kami email di <0> support@fightpandemics.com. </0> Karena kami semua adalah tim relawan, harap tunggu setidaknya 48 jam untuk mendapatkan tanggapan."
+        "Kami mohon maaf untuk itu. Kirimi kami email di <0> help@fightpandemics.com. </0> Karena kami semua adalah tim relawan, harap tunggu setidaknya 48 jam untuk mendapatkan tanggapan."
       ],
       [
         "Saya ingin menghubungi FightPandemics untuk alasan lain.",
@@ -845,7 +846,10 @@
       "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
       "networkError": "Sorry, some network error occurred."
     },
-    "wrongOldPassword": "Wrong current password"
+    "wrongOldPassword": "Wrong current password",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "Kami bukan penyedia layanan kesehatan",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Layanan ini disediakan dengan itikad baik untuk orang yang tidak bisa mendapatkan bantuan dan sumber daya selama darurat kesehatan masyarakat.",

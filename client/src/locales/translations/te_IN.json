@@ -412,7 +412,8 @@
     "passwordMin": "పాస్‌వర్డ్ కనీసం {{num}} అక్షరాలు ఉండాలి.",
     "passwordConfirmationRequired": "పాస్వర్డ్ నిర్ధారణ అవసరం.",
     "passwordNotMatch": "పాస్‌వర్డ్‌లు సరిపోలడం లేదు",
-    "backHome": "Back to Home Screen"
+    "backHome": "Back to Home Screen",
+    "linkAccountsSuccess": "Your account has been linked with your existing email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "మీ ఇన్ బాక్స్ తనిఖీ చేయండి",
@@ -651,7 +652,7 @@
       ],
       [
         "నాకు సాంకేతిక మద్దతు అవసరం.",
-        "అందుకు మమ్మల్ని క్షమించండి. <0>support@fightpandemics.com</0> వద్ద మాకు ఇమెయిల్ పంపండి. మేం అన్ని వాలంటీర్ టీమ్ లు కనుక, ప్రతిస్పందన కొరకు దయచేసి కనీసం 48 గంటలు ఎదురు చూడండి."
+        "అందుకు మమ్మల్ని క్షమించండి. <0>help@fightpandemics.com</0> వద్ద మాకు ఇమెయిల్ పంపండి. మేం అన్ని వాలంటీర్ టీమ్ లు కనుక, ప్రతిస్పందన కొరకు దయచేసి కనీసం 48 గంటలు ఎదురు చూడండి."
       ],
       [
         "నేను ఇతర కారణాల కోసం FightPandemics చేరుకోవాలని అనుకుంటున్నాను.",
@@ -845,7 +846,10 @@
       "imageDimensionTooWide": "క్షమించండి, ఇమేజ్ చాలా విశాలంగా ఉంది. ఎత్తుకంటే రెట్టింపు కంటే తక్కువ వెడల్పు ఉన్న ఇమేజ్ తో దయచేసి మళ్లీ ప్రయత్నించండి.",
       "networkError": "క్షమించండి, కొన్ని నెట్‌వర్క్ లోపం సంభవించింది."
     },
-    "wrongOldPassword": "Wrong current password"
+    "wrongOldPassword": "Wrong current password",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "మేము ఆరోగ్య సేవలను అందించేవారు కాదు",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "ఈ అపూర్వమైన ప్రజారోగ్య అత్యవసర సమయంలో సహాయం మరియు వనరులను పొందలేని వారికి ఈ సేవ మంచి విశ్వాసంతో అందించబడుతుంది.",
