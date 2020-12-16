@@ -178,6 +178,7 @@ module.exports = {
     unarchive: "_UARC",
     delete: "_DLT",
     edit: "_EDT",
+    mobileEdit: "_EDT_MOB",
     sent: "_SNT",
   },
   aboutUs: {
