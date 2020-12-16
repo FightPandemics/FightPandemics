@@ -30,6 +30,7 @@ import {
   TabsWrapper,
   MobileSearchWrapper,
 } from "components/Feed/FeedWrappers";
+import { StyledCheckbox } from "components/Feed/StyledAccordion";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
@@ -110,6 +111,7 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
+  ignoreUserLocation: true,
 };
 
 export const NoPosts = styled.div`
@@ -152,6 +154,7 @@ const Feed = (props) => {
     location,
     applyFilters,
     showFilters,
+    ignoreUserLocation,
   } = feedState;
   const filters = Object.values(filterOptions);
   const {
@@ -194,6 +197,13 @@ const Feed = (props) => {
     // search category (Tab)
     query.s_category = SEARCH_OPTIONS[query.s_category]?.id || null;
     changeHelpType(query.s_category);
+
+    // ignoreUserLocation
+    if (query.near_me) {
+      dispatchAction(SET_VALUE, "ignoreUserLocation", false);
+    } else {
+      dispatchAction(SET_VALUE, "ignoreUserLocation", true);
+    }
 
     // location
     if (query.location) {
@@ -307,6 +317,12 @@ const Feed = (props) => {
     refetchPosts(null, null, true);
   };
 
+  const toggleShowNearMe = (e) => {
+    setQueryKeysValue(history, {
+      near_me: e.target.checked,
+    });
+  };
+
   const changeHelpType = (selectedValue) => {
     switch (selectedValue) {
       case "INDIVIDUALS":
@@ -369,7 +385,7 @@ const Feed = (props) => {
 
   const handleChangeType = (e) => {
     const value = e.key;
-    if (queryParams.objective?.toUpperCase() !== value) {
+    if (value && queryParams.objective?.toUpperCase() !== value) {
       setQueryKeysValue(history, {
         objective: e.key === "ALL" ? null : e.key,
       });
@@ -456,7 +472,7 @@ const Feed = (props) => {
       default:
         break;
     }
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=true`;
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -629,10 +645,12 @@ const Feed = (props) => {
     <WithSummitBanner>
       <FeedContext.Provider
         value={{
+          isAuthenticated,
           filters,
           filterModal,
           activePanel,
           location,
+          ignoreUserLocation,
           dispatchAction,
           selectedOptions,
           handleShowFilters,
@@ -641,6 +659,7 @@ const Feed = (props) => {
           handleQuit,
           handleLocation,
           handleOnClose,
+          toggleShowNearMe,
           showFilters,
           totalPostCount,
         }}
@@ -663,6 +682,14 @@ const Feed = (props) => {
                       {t(HELP_TYPE[item])}
                     </Menu.Item>
                   ))}
+                  {isAuthenticated && (
+                    <StyledCheckbox
+                      checked={!ignoreUserLocation}
+                      onChange={toggleShowNearMe}
+                    >
+                      {t("feed.filters.postsNearMe")}
+                    </StyledCheckbox>
+                  )}
                 </MenuWrapper>
                 <FiltersWrapper>
                   <button
