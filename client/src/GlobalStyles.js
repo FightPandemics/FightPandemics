@@ -128,7 +128,7 @@ a {
 }
 #launcher {
   bottom: 5rem !important;
-  /* fix how it looks on mobile */
+  z-index: 1 !important;
   @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
     bottom: 1.85rem !important;
     left: 0.5rem !important;
