@@ -33,7 +33,7 @@ import styled from "styled-components";
 import { feedReducer } from "hooks/reducers/feedReducers";
 import { setQueryKeysValue } from "components/Feed/utils";
 // Constants
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 import { SCOPES } from "constants/permissions";
 
 export const FeedContext = React.createContext();
@@ -85,6 +85,15 @@ const StyledMenuItem = styled(Menu.Item)`
     }
   }
 `;
+
+const DBoardContentWrapper = styled(ContentWrapper)`
+    margin: 0 1rem;
+    overflow-x: visible !important;
+    @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+      margin: 3.3rem 37.5rem; 3.3rem 37.5rem;
+    }
+  `;
+
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
@@ -164,6 +173,10 @@ const Feed = (props) => {
   const handleChangeType = (e) => {
     const value = e.key ? e.key : e;
     dispatchAction(SET_VALUE, "status", value);
+  };
+
+  const setShowContent = (data) => {
+    dispatch(postsActions.showContent({ postId: data.id }));
   };
 
   const loadPosts = async () => {
@@ -424,7 +437,7 @@ const Feed = (props) => {
               </MenuWrapper>
             </>
           </SiderWrapper>
-          <ContentWrapper>
+          <DBoardContentWrapper>
             {(() => {
               if (status === "LOGS")
                 return (
@@ -451,6 +464,7 @@ const Feed = (props) => {
                 return (
                   <>
                     <Posts
+                      setShowContent={setShowContent}
                       isAuthenticated={isAuthenticated}
                       filteredPosts={postsList}
                       postDispatch={dispatch}
@@ -474,7 +488,7 @@ const Feed = (props) => {
                   </>
                 );
             })()}
-          </ContentWrapper>
+          </DBoardContentWrapper>
         </LayoutWrapper>
       </FeedWrapper>
     </FeedContext.Provider>

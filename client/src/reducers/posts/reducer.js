@@ -6,6 +6,7 @@ const innitialState = {
   error: null,
   isLoading: false,
   loadMore: true,
+  showContent: false,
 };
 
 const postsReducer = (state = innitialState, action) => {
@@ -90,6 +91,20 @@ const postsReducer = (state = innitialState, action) => {
           [payload.postId]: {
             ...state.posts[payload.postId],
             reportsCount: 0,
+          },
+        },
+      };
+    }
+
+    case POSTS_ACTIONS.SHOW_CONTENT: {
+      const { payload } = action;
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [payload.postId]: {
+            ...state.posts[payload.postId],
+            showContent: !state.posts[payload.postId].showContent,
           },
         },
       };

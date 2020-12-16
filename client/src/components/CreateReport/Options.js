@@ -81,10 +81,7 @@ const Options = ({
           .map((report) => report?.reason)
           .join("|")
           .split("|")
-          .filter(
-            (e) =>
-              options.map((reason) => reason.stateKey).includes(e),
-          )
+          .filter((e) => options.map((reason) => reason.stateKey).includes(e))
           .map((reason, idx) => (
             <ReasonTag key={idx} disabled={true} selected={false}>
               {reason}
@@ -138,7 +135,7 @@ const Options = ({
             <WhiteSpace size="md" />
             {renderTags}
             <WhiteSpace />
-            {renderDescription.props.children[0].length ? (
+            {renderDescription.props.children?.children[0].length ? (
               <>
                 <SubTitle title={t("moderation.reportDetails")} />
                 <DescriptionTag>{renderDescription}</DescriptionTag>
