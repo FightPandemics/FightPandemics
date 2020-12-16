@@ -412,7 +412,8 @@
     "passwordMin": "A senha deve ter pelo menos {{num}} caracteres.",
     "passwordConfirmationRequired": "A confirmação da senha é obrigatória.",
     "passwordNotMatch": "As passwords não coincidem",
-    "backHome": "Back to Home Screen"
+    "backHome": "Back to Home Screen",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Verifique a sua caixa de entrada",
@@ -467,7 +468,10 @@
     "communityPartners": "Community Partners",
     "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
     "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
-    "currentPartners": "Current Community Partners"
+    "currentPartners": "Current Community Partners",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "Perguntas frequentes",
@@ -504,7 +508,7 @@
       ],
       [
         "Como posso publicar uma oferta ou pedido de ajuda no FightPandemics?",
-        "< 0 > Ao entrar na comunidade, você terá acesso ilimitado para ver e criar publicações e comentários na plataforma FightPandemics. < / 0 > < 1 > Para entrar na comunidade como um utilizador, clique no botão \"Menu\" e selecione a opção \"Registar agora / Entrar\". Lá, você poderá participar com sua escolha de e-mail ou credenciais de meios de comunicação social. < / 1 > < 2 > Depois de preencher o seu perfil, selecione o botão de menu, selecione ver meu perfil e clique no botão mais para criar sua primeira postagem. < / 2 >"
+        "<0> Ao entrar na comunidade, você terá acesso ilimitado para ver e criar publicações e comentários na plataforma FightPandemics. </0> <1> Para entrar na comunidade como um utilizador, clique no botão \"Menu\" e selecione a opção \"Registar agora / Entrar\". Lá, você poderá participar com sua escolha de e-mail ou credenciais de meios de comunicação social. </1> <2> Depois de preencher o seu perfil, selecione o botão de menu, selecione ver meu perfil e clique no botão mais para criar sua primeira postagem. </2>"
       ],
       [
         "Como me posso manter a par das notícias do FightPandemics?",
@@ -561,7 +565,7 @@
       ],
       [
         "Encontrei um bug no site. Como é que eu reporto isso?",
-        "Envie feedback ou entre em contato com < 0 > support@fightpandemics.com. < / 0 >"
+        "Envie feedback ou entre em contato com <0> support@fightpandemics.com. </0>"
       ],
       [
         "Não estou mais autorizado a utilizar FightPandemics - o que fazer?",
@@ -569,7 +573,7 @@
       ],
       [
         "Que informações armazena?",
-        "A FightPandemics recolhe e processa os dados pessoais dos utilizadores apenas para os fins descritos na nossa < 0 > política de privacidade. < / 0 > Em nenhum caso forneceremos acesso ou compartilharemos os seus dados pessoais com terceiros, exceto com as pessoas relevantes estabelecidas nesta política de privacidade."
+        "A FightPandemics recolhe e processa os dados pessoais dos utilizadores apenas para os fins descritos na nossa <0> política de privacidade. </0> Em nenhum caso forneceremos acesso ou compartilharemos os seus dados pessoais com terceiros, exceto com as pessoas relevantes estabelecidas nesta política de privacidade."
       ],
       [
         "Posso dar/receber ajuda da minha cidade ou estado? Por quanto tempo a publicação estará visível?",
@@ -632,7 +636,7 @@
       ],
       [
         "Eu preciso de suporte técnico.",
-        "Lamentamos por isso. Envie-nos um e-mail para < 0 > help@fightpandemics.com. < / 0 > Como somos uma equipa totalmente voluntária, espere pelo menos 48 horas por uma resposta."
+        "Lamentamos por isso. Envie-nos um e-mail para <0> support@fightpandemics.com. </0> Como somos uma equipa totalmente voluntária, espere pelo menos 48 horas por uma resposta."
       ],
       [
         "Quero entrar em contato com FightPandemics por outros motivos.",
@@ -651,7 +655,7 @@
       ],
       [
         "Eu preciso de suporte técnico.",
-        "Lamentamos por isso. Envie-nos um e-mail para <0> support@fightpandemics.com. </0> Como somos uma equipa totalmente voluntária, espere pelo menos 48 horas por uma resposta."
+        "Lamentamos por isso. Envie-nos um e-mail para <0> support@fightpandemics.com</0>. Como somos uma equipa totalmente voluntária, espere pelo menos 48 horas por uma resposta."
       ],
       [
         "Quero entrar em contacto com a FightPandemics por outros motivos.",
@@ -845,7 +849,10 @@
       "imageDimensionTooWide": "Desculpa, a imagem é demasiado larga. Por favor, tente novamente com uma imagem que tenha largura inferior ao dobro da altura.",
       "networkError": "Desculpe, ocorreu algum erro na rede."
     },
-    "wrongOldPassword": "Wrong current password"
+    "wrongOldPassword": "Wrong current password",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "Não fornecemos serviços de saúde",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Este serviço é fornecido de boa fé como último recurso para aqueles que  não conseguem obter ajuda ou recursos de outra forma, durante esta emergência de saúde pública sem precedentes.",

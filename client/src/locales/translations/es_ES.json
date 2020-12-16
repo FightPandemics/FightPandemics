@@ -225,7 +225,13 @@
     "edited": "editado",
     "share_plural": "Compartidas",
     "deletePostConfirmationTitle": "Confirmar borrar post",
-    "deleteCommentConfirmationTitle": "Confirmar borrar comentario"
+    "deleteCommentConfirmationTitle": "Confirmar borrar comentario",
+    "deleteConfirmation": "Eliminar",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -406,7 +412,8 @@
     "passwordMin": "La contraseña debe tener al menos {{num}} caracteres",
     "passwordConfirmationRequired": "Se requiere confirmación de contraseña",
     "passwordNotMatch": "Las contraseñas no son iguales",
-    "backHome": "Volver a la pantalla de inicio"
+    "backHome": "Volver a la pantalla de inicio",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Revisa tu correo",
@@ -457,7 +464,14 @@
     "forStudentInAge": "Para estudiantes de 14 a 18 años.",
     "press": "Prensa",
     "pressInfo": "Si eres miembro de la prensa, contáctanos en",
-    "pressKitLink": "Ir al Kit de Prensa"
+    "pressKitLink": "Ir al Kit de Prensa",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "Preguntas Frecuentes",
@@ -622,7 +636,7 @@
       ],
       [
         "Necesito soporte técnico.",
-        "Lo lamentamos. Envíanos un correo electrónico a <0>help@fightpandemics.com.</0> Dado que somos un equipo voluntario, por favor espera al menos 48 horas para una respuesta."
+        "Lo lamentamos. Envíanos un correo electrónico a <0>support@fightpandemics.com.</0> Dado que somos un equipo voluntario, por favor espera al menos 48 horas para una respuesta."
       ],
       [
         "Quiero contactar a FightPandemics por otras razones.",
@@ -641,7 +655,7 @@
       ],
       [
         "Necesito apoyo técnico.",
-        "Nos disculpamos. Envíanos un correo electrónico a <0>support@fightpandemics.com.</0> Ya que somos un equipo de voluntarios, por favor espera al menos 48 horas para una respuesta."
+        "Nos disculpamos. Envíanos un correo electrónico a <0>support@fightpandemics.com</0>. Ya que somos un equipo de voluntarios, por favor espera al menos 48 horas para una respuesta."
       ],
       [
         "Quiero contactar a FightPandemics por otras razones.",
@@ -835,7 +849,10 @@
       "imageDimensionTooWide": "Lo siento, la imagen es demasiado ancha. Vuelva a intentarlo con una imagen que tenga un ancho inferior al doble de la altura.",
       "networkError": "Lo siento, se produjo un error de red."
     },
-    "wrongOldPassword": "Contraseña actual incorrecta"
+    "wrongOldPassword": "Contraseña actual incorrecta",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "No somos proveedores de servicios de salud",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Este servicio se brinda de buena fe para aquellos que de otro modo no podrían obtener ayuda ni recursos durante esta emergencia de salud pública sin precedentes",
@@ -995,5 +1012,27 @@
     "commented": "<0>{{username}}</0> comentó en tu publicación <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> compartió tu publicación <1>{{postTitle}}</1> en <1>{{shareMedium}}</1>",
     "empty": "No hay más notificaciones"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "Cancelar",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Otros",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }
