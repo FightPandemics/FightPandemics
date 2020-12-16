@@ -412,7 +412,8 @@
     "passwordMin": "Le mot de passe doit comporter au moins {{num}} caractères",
     "passwordConfirmationRequired": "La confirmation du mot de passe est requise",
     "passwordNotMatch": "Mots de passe invalides",
-    "backHome": "Retour à l'écran d'accueil"
+    "backHome": "Retour à l'écran d'accueil",
+    "linkAccountsSuccess": "Votre compte a été lié à votre autre compte de courrier électronique existant. Veuillez vous connecter à nouveau avec n'importe qu'un."
   },
   "verifyEmail": {
     "checkInbox": "Vérifiez votre boîte de réception",
@@ -467,7 +468,10 @@
     "communityPartners": "Partenaires communautaires",
     "communityCollaboration": "Nous voulons donner du pouvoir aux communautés et aux organisations du monde entier grâce à notre plateforme, et pour ce faire, nous devons travailler ensemble! Une collaboration continue avec nos partenaires communautaires nous permet de construire une meilleure plateforme pour eux et pour les autres.",
     "becomeCommunityPartner": "Vous souhaitez que votre communauté soit également notre partenaire? Nous aimerions avoir de vos nouvelles et commencer à collaborer ! Contactez-nous à ",
-    "currentPartners": "Partenaires communautaires actuels"
+    "currentPartners": "Partenaires communautaires actuels",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "FAQ",
@@ -632,7 +636,7 @@
       ],
       [
         "J'ai besoin de support technique.",
-        "Nous en sommes désolés. Envoyez-nous un e-mail à <0> help@fightpandemics.com. </0> Puisque nous sommes une équipe entièrement bénévole, veuillez attendre au moins 48 heures pour une réponse."
+        "Nous en sommes désolés. Envoyez-nous un e-mail à <0> support@fightpandemics.com. </0> Puisque nous sommes une équipe entièrement bénévole, veuillez attendre au moins 48 heures pour une réponse."
       ],
       [
         "Je souhaite contacter FightPandemics pour d'autres raisons.",
@@ -643,7 +647,7 @@
     "contactsFAQ": [
       [
         "Je souhaite devenir partenaire ou sponsor.",
-        "Veuillez contacter notre équipe des partenariats à <0> partenariats@fightpandemics.com. </0>"
+        "Veuillez contacter notre équipe des partenariats à <0> partnerships@fightpandemics.com. </0>"
       ],
       [
         "Je viens de la presse / des médias.",
@@ -651,7 +655,7 @@
       ],
       [
         "J'ai besoin de support technique.",
-        "Nous en sommes désolés. Envoyez-nous un e-mail à <0> support@fightpandemics.com. </0> Puisque nous sommes une équipe entièrement bénévole, veuillez attendre au moins 48 heures pour une réponse."
+        "Nous en sommes désolés. Envoyez-nous un e-mail à <0>support@fightpandemics.com</0>. Puisque nous sommes une équipe entièrement bénévole, veuillez attendre au moins 48 heures pour une réponse."
       ],
       [
         "Je souhaite contacter FightPandemics pour d'autres raisons.",
@@ -845,7 +849,10 @@
       "imageDimensionTooWide": "Désolé, l’image est trop large. S’il vous plaît essayer à nouveau avec une image qui a une largeur inférieure à deux fois la hauteur.",
       "networkError": "Désolé, une erreur réseau s'est produite."
     },
-    "wrongOldPassword": "Mot de passe actuel incorrect"
+    "wrongOldPassword": "Mot de passe actuel incorrect",
+    "noEmailAccount": "Aucun compte n'a été trouvé avec cette adresse e-mail, veuillez cliquer sur «S'inscrire» pour créer un compte.",
+    "registeredAccount": "Un compte social a été enregistré avec cette adresse électronique. Veuillez cliquer sur \"S'inscrire\" pour créer un compte de courrier électronique direct avec un mot de passe.",
+    "failedLinkAccounts": "Échec de la liaison des comptes, raison:"
   },
   "TEMP: We are not a provider of healthcare services": "Nous ne sommes pas fournisseur de services de santé",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Nous offrons ce service en tout bonne foi pour ceux qui ne parviennent pas à trouver l'aide et les ressources nécessaires pendant cette crise sanitaire sans précédent.",
