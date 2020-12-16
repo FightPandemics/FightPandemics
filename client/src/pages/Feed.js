@@ -488,6 +488,15 @@ const Feed = (props) => {
             resultsCount: meta.total,
           },
         });
+        // clear the DataLayer
+        TagManager.dataLayer({
+          dataLayer: {
+            event: -1,
+            keyword: -1,
+            category: -1,
+            resultsCount: -1,
+          },
+        });
       }
       if (posts.length && meta.total) {
         if (prevTotalPostCount !== meta.total) {
