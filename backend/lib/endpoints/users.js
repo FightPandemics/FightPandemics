@@ -594,7 +594,7 @@ async function routes(app) {
     { preValidation: [Veriff.validateWebhookEvent] },
     async (req) => {
       const {
-        body: { verification, technicalData },
+        body: { verification },
       } = req;
 
       if (verification && verification.vendorData) {
@@ -621,7 +621,6 @@ async function routes(app) {
               status,
               reasonCode,
               decisionTime,
-              technicalData,
             },
           };
           const [updateErr, updatedUser] = await app.to(
@@ -636,32 +635,21 @@ async function routes(app) {
           }
         } else if (status === "approved") {
           const {
-            person: {
-              firstName,
-              lastName,
-              nationality,
-              gender,
-              yearOfBirth,
-              idNumber,
+            document: {
+              country,
+              type,
             },
-            document,
           } = verification;
 
           const verificationObject = {
             verification: {
               id,
-              person: {
-                firstName,
-                lastName,
-                nationality,
-                gender,
-                yearOfBirth,
-                idNumber,
-              },
               status,
-              document,
+              document: {
+                country,
+                type,
+              },
               decisionTime,
-              technicalData, // ip address
             },
           };
           const [updateErr, updatedUser] = await app.to(
