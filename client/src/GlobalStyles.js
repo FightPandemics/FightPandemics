@@ -130,9 +130,9 @@ a {
   bottom: 5rem !important;
   /* fix how it looks on mobile */
   @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
-    bottom: 5% !important;
+    bottom: 1.85rem !important;
     left: 1rem !important;
-    transform: scale(0.90) !important;
+    transform: scale(0.95) !important;
   }
 }
 `;
