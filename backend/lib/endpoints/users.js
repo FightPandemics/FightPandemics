@@ -621,6 +621,7 @@ async function routes(app) {
               status,
               reasonCode,
               decisionTime,
+              vendor: "veriff",
             },
           };
           const [updateErr, updatedUser] = await app.to(
@@ -650,6 +651,7 @@ async function routes(app) {
                 type,
               },
               decisionTime,
+              vendor: "veriff",
             },
           };
           const [updateErr, updatedUser] = await app.to(
