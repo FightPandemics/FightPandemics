@@ -5,10 +5,10 @@ const { royalBlue, white } = theme.colors;
 const { display } = theme.typography.font.family;
 
 const PostShareButton = styled(BaseButton)`
-  padding: 1rem 2rem;
+  padding: 0.9rem 2rem;
   margin-left: 0.5rem;
   border-radius: 4.6rem;
-  border: 1px solid ${white} !important;
+  border: 1px solid ${royalBlue} !important;
   font-family: ${display};
   font-size: 1.3rem;
   font-weight: 500;
