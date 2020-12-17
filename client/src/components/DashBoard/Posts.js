@@ -302,13 +302,12 @@ const Posts = ({
             setCallReport={setCallReport}
             setForModerator={setForModerator}
             isEnabled={
-              true
-              // activeTab === "PENDING" &&
-              // Boolean(user?.permissions & SCOPES.REPORT_WRITE_ACCESS)
+              activeTab === "PENDING" &&
+              Boolean(user?.permissions & SCOPES.REPORT_WRITE)
             }
             canRestore={
               activeTab === "ACCEPTED" &&
-              Boolean(user?.permissions & SCOPES.REPORT_WRITE_ACCESS)
+              Boolean(user?.permissions & SCOPES.REPORT_WRITE)
             }
           />
         </StyledPostActions>
@@ -336,7 +335,11 @@ const Posts = ({
       <div
         className="ReactVirtualized__Table__rowColumn"
         role="gridcell"
-        style={{ overflow: "hidden", flex: "0 1 1000px", whiteSpace: "pre-wrap" }}
+        style={{
+          overflow: "hidden",
+          flex: "0 1 1000px",
+          whiteSpace: "pre-wrap",
+        }}
         aria-colIndex="1"
       >
         {data.current[index].content}
