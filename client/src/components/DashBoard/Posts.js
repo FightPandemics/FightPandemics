@@ -12,16 +12,12 @@ import {
 import "react-virtualized/styles.css";
 import { Card, Checkbox } from "antd-mobile";
 import FilterTag from "components/Tag/FilterTag";
+
 //Local
 import Loader from "components/Feed/StyledLoader";
 import PostActions from "./PostActions";
 import { SCOPES } from "constants/permissions";
 import CreateReport from "components/CreateReport/CreateReport";
-import { theme, mq } from "constants/theme";
-
-const { colors, typography } = theme;
-const { darkGray } = colors;
-const { medium } = typography.size;
 
 const Posts = ({
   isAuthenticated,
@@ -96,34 +92,6 @@ const Posts = ({
 
   const StyledFilterTag = styled(FilterTag)`
     margin: 0.3rem !important;
-  `;
-  const StyledPostActions = styled.div`
-    margin-bottom: 2rem;
-    padding: 2rem 2rem 0rem 2rem;
-    overflow-wrap: break-word;
-    .social-icons {
-      span {
-        width: 1rem;
-      }
-      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        span {
-          width: 3rem;
-        }
-      }
-      .social-icon {
-        color: ${darkGray};
-        cursor: pointer;
-
-        .social-icon-svg {
-          margin-right: 0.5rem;
-          padding: 0.2rem 0 0.2rem 0;
-        }
-
-        span {
-          font-size: ${medium};
-        }
-      }
-    }
   `;
 
   const rowGetter = useCallback(
@@ -297,20 +265,18 @@ const Posts = ({
         style={{ overflow: "hidden", flex: "0 1 140px" }}
         aria-colIndex="5"
       >
-        <StyledPostActions className="something">
-          <PostActions
-            setCallReport={setCallReport}
-            setForModerator={setForModerator}
-            isEnabled={
-              activeTab === "PENDING" &&
-              Boolean(user?.permissions & SCOPES.REPORT_WRITE)
-            }
-            canRestore={
-              activeTab === "ACCEPTED" &&
-              Boolean(user?.permissions & SCOPES.REPORT_WRITE)
-            }
-          />
-        </StyledPostActions>
+        <PostActions
+          setCallReport={setCallReport}
+          setForModerator={setForModerator}
+          isEnabled={
+            activeTab === "PENDING" &&
+            Boolean(user?.permissions & SCOPES.REPORT_WRITE)
+          }
+          canRestore={
+            activeTab === "ACCEPTED" &&
+            Boolean(user?.permissions & SCOPES.REPORT_WRITE)
+          }
+        />
       </div>,
       <div
         className="ReactVirtualized__Table__rowColumn"
