@@ -92,6 +92,9 @@ async function routes(app) {
             { firstName: keywordsRegex },
             { lastName: keywordsRegex },
             { about: keywordsRegex },
+            { "location.country": keywordsRegex },
+            { "location.state": keywordsRegex },
+            { "location.city": keywordsRegex },
           ],
         });
       }

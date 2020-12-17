@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Accordion } from "antd-mobile";
+import { Checkbox } from "antd";
 import { theme, mq } from "constants/theme";
 const { display } = theme.typography.font.family;
 
@@ -40,7 +41,7 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
       font-weight: bold !important;
       font-size: ${theme.typography.size.large} !important;
       padding: 0;
-      margin-left 1.5rem;
+      margin-left: 1.5rem;
       margin-right: 3rem;
 
       @media screen and ${mq.phone.wide.max} {
@@ -91,4 +92,39 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
       }
     }
   }
+`;
+
+export const StyledCheckbox = styled(Checkbox)`
+  padding: 1.6rem 1.29rem;
+  font-size: ${theme.typography.size.large};
+  ${({ checked }) =>
+    checked
+      ? `
+      color: ${theme.colors.royalBlue};
+      font-weight: bold;
+  `
+      : ""}
+  .ant-checkbox-inner {
+    display: none;
+    &:hover {
+      display: none;
+    }
+  }
+  .ant-checkbox-input {
+    opacity: 0 !important;
+  }
+  .ant-checkbox-checked::after {
+    display: none;
+  }
+  ${({ mobile }) =>
+    mobile
+      ? `
+    .am-accordion{
+      display: none;
+    }
+    @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+      display: none;
+    }
+  `
+      : ""}
 `;
