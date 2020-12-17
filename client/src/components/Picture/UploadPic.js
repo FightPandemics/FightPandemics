@@ -59,9 +59,8 @@ function isImageFile(file) {
 
 const INITIAL_CROP_STATE = {
   aspect: 1 / 1,
-  unit: "px",
-  height: 250,
-  width: 250,
+  unit: "%",
+  height: 100,
 };
 
 const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
@@ -217,9 +216,9 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
         footer={
           <div style={{ textAlign: "center" }}>
             {user && user.photo && !photoURL ? (
-            <CustomRemoveButton key="remove" onClick={removePhoto}>
-              {t("avatar.remove")}
-            </CustomRemoveButton>
+              <CustomRemoveButton key="remove" onClick={removePhoto}>
+                {t("avatar.remove")}
+              </CustomRemoveButton>
             ) : null}
             <CustomSubmitButton
               key="change"
@@ -227,15 +226,17 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
             >
               {t("avatar.uploadNew")}
             </CustomSubmitButton>
-            { photoURL ? ( !uploadError ? (
-            <CustomSubmitButton key="save" onClick={savePhoto}>
-              {t("avatar.submitBtn")}
-            </CustomSubmitButton>
-            ) : (
-            <CustomSubmitButton key="retry" onClick={retry}>
-              {t("avatar.tryAgainBtn")}
-            </CustomSubmitButton>
-            ) ) : null}
+            {photoURL ? (
+              !uploadError ? (
+                <CustomSubmitButton key="save" onClick={savePhoto}>
+                  {t("avatar.submitBtn")}
+                </CustomSubmitButton>
+              ) : (
+                <CustomSubmitButton key="retry" onClick={retry}>
+                  {t("avatar.tryAgainBtn")}
+                </CustomSubmitButton>
+              )
+            ) : null}
           </div>
         }
       >
@@ -244,7 +245,6 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
             style={{
               textAlign: "center",
             }}
-            onClick={(e) => console.log(e)}
           >
             {uploadError ? (
               <h3>{uploadError}</h3>
