@@ -24,7 +24,7 @@ const AvatarModal = styled(Modal)`
     }
     .ant-modal-body {
       padding: 1rem 3rem;
-      img {
+      img:not(.ReactCrop__image) {
         max-width: 80%;
       }
     }
