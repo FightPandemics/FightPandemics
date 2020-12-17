@@ -890,7 +890,10 @@
   "avatar": {
     "submitBtn": "Submit",
     "cancelBtn": "Cancel",
-    "tryAgainBtn": "Try Again"
+    "tryAgainBtn": "Try Again",
+    "remove": "Remove Avatar",
+    "uploadNew": "Upload New",
+    "edit": "Edit Avatar"
   },
   "dates": {
     "monthsShort": {

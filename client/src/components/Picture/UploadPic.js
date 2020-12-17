@@ -16,8 +16,6 @@ const CustomSubmitButton = styled(BaseButton)`
   color: ${colors.white};
 `;
 
-const CustomUploadButton = styled(BaseButton)``;
-
 const CameraButtonUpload = styled.button`
   border: 0;
   padding-top: 0.1rem;
@@ -150,7 +148,6 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
       removeResponse = await axios({
         method: "delete",
         url: endPoint,
-        // data: formData,
         headers: {
           accept: "application/json",
           "Content-Type": `multipart/form-data`,
@@ -171,7 +168,7 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
   //new function
   const openModal = (e) => {
     setModalVisible(true);
-  }
+  };
 
   const closeModal = () => {
     setPhotoURL(undefined);
@@ -191,12 +188,10 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
       <AvatarModal
         title={
           <p>
-            {/* needs localization */}
-            {t("Edit Avatar")}
+            {t("avatar.edit")}
           </p>
         }
         onCancel={closeModal}
-        // onClick={(e) => console.log(e.target)}
         visible={modalVisible}
         onOk={savePhoto}
         destroyOnClose={true}
@@ -204,26 +199,24 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
         maskClosable={true}
         footer={[
           user && user.photo && !photoURL ? (
-            <CustomUploadButton key="remove" onClick={removePhoto}>
-              {/* needs localization */}
-              {t("Remove Avatar")}
-            </CustomUploadButton>
+            <BaseButton key="remove" onClick={removePhoto}>
+              {t("avatar.remove")}
+            </BaseButton>
           ) : null,
-          <CustomUploadButton key="change" onClick={() => imgUpload.current.click()}>
-            {/* needs localization */}
-            {t("Upload New")}
-          </CustomUploadButton>,
+          <BaseButton key="change" onClick={() => imgUpload.current.click()}>
+            {t("avatar.uploadNew")}
+          </BaseButton>,
           photoURL ? (
             !uploadError ? (
               <CustomSubmitButton key="save" onClick={savePhoto}>
                 {t("avatar.submitBtn")}
               </CustomSubmitButton>
             ) : (
-                <CustomSubmitButton key="retry" onClick={retry}>
-                  {t("avatar.tryAgainBtn")}
-                </CustomSubmitButton>
-              )
-          ) : null
+              <CustomSubmitButton key="retry" onClick={retry}>
+                {t("avatar.tryAgainBtn")}
+              </CustomSubmitButton>
+            )
+          ) : null,
         ]}
       >
         {photoURL ? (
@@ -236,28 +229,31 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
             {uploadError ? (
               <h3>{uploadError}</h3>
             ) : (
-                <ReactCrop
-                  src={photoURL}
-                  crop={crop}
-                  minHeight={250}
-                  minWidth={250}
-                  circularCrop={true}
-                  ruleOfThirds
-                  keepSelection={true}
-                  onImageLoaded={imageLoaded}
-                  onChange={(newCrop) => setCrop(newCrop)}
-                />
-              )}
+              <ReactCrop
+                src={photoURL}
+                crop={crop}
+                minHeight={250}
+                minWidth={250}
+                circularCrop={true}
+                ruleOfThirds
+                keepSelection={true}
+                onImageLoaded={imageLoaded}
+                onChange={(newCrop) => setCrop(newCrop)}
+              />
+            )}
           </div>
         ) : (
-            <div
-              style={{
-                textAlign: "center",
-              }}
-            >
-              <img style={{ borderRadius: "50%" }} src={user && user.photo ? user.photo : null}></img>
-            </div>
-          )}
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            <img
+              style={{ borderRadius: "50%" }}
+              src={user && user.photo ? user.photo : null}
+            ></img>
+          </div>
+        )}
       </AvatarModal>
     );
   };
@@ -278,7 +274,7 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
         name="avatar-upload-button"
         type="button"
         onClick={(e) => {
-          user.photo ? openModal(e) : imgUpload.current.click()
+          user.photo ? openModal(e) : imgUpload.current.click();
         }}
       >
         <CameraOutlined
