@@ -383,14 +383,9 @@ async function routes(app) {
     },
   );
 
-  app.post(
-    "/:organisationId/avatar",
-    {
-      preValidation: [app.authenticate],
-      schema: createOrganisationAvatarSchema,
-    },
-    async (req) => {
-      const file = req.raw.files.file;
+  const updateOrganisationAvatar = async (req, file) => {
+    // set input 'file' to be null for delete case
+    return new Promise(async (resolve, reject) => {
       const organisationId = req.params.organisationId;
       const userId = req.userId;
 
@@ -400,20 +395,21 @@ async function routes(app) {
           err,
           `Failed retrieving organisation organisationId=${organisationId}`,
         );
-        throw app.httpErrors.internalServerError();
+        reject(app.httpErrors.internalServerError());
       } else if (org === null) {
-        throw app.httpErrors.notFound();
+        reject(app.httpErrors.notFound());
       } else if (!org.ownerId.equals(userId)) {
         req.log.error("User not allowed to update this organisation");
-        throw app.httpErrors.forbidden();
+        reject(app.httpErrors.forbidden());
       }
       try {
-        const avatarUrl = await uploadOrgAvatar(organisationId, file);
-        org.photo = avatarUrl;
+        // set user photo to be null when deleting avatar
+        org.photo = file ? await uploadOrgAvatar(organisationId, file) : null;
+
         const [updateErr, updatedOrg] = await app.to(org.save());
         if (updateErr) {
           req.log.error(updateErr, "Failed updating organisation");
-          throw app.httpErrors.internalServerError();
+          reject(app.httpErrors.internalServerError());
         }
 
         // -- Update Author photo references if needed
@@ -434,7 +430,10 @@ async function routes(app) {
           ),
         );
         if (commentErr) {
-          req.log.error(commentErr, "Failed updating author photo refs at comments");
+          req.log.error(
+            commentErr,
+            "Failed updating author photo refs at comments",
+          );
         }
 
         const [threadErr] = await app.to(
@@ -451,10 +450,41 @@ async function routes(app) {
         if (threadErr) {
           req.log.error(threadErr, "Failed updating author photo at threads");
         }
-        return updatedOrg;
+        resolve(updatedOrg);
       } catch (error) {
         req.log.error(error, "Failed updating organisation avatar.");
-        throw app.httpErrors.internalServerError();
+        reject(app.httpErrors.internalServerError());
+      }
+    });
+  };
+
+  app.post(
+    "/:organisationId/avatar",
+    {
+      preValidation: [app.authenticate],
+      schema: createOrganisationAvatarSchema,
+    },
+    async (req) => {
+      const file = req.raw.files.file;
+      try {
+        return await updateOrganisationAvatar(req, file);
+      } catch (err) {
+        throw err;
+      }
+    },
+  );
+
+  app.delete(
+    "/:organisationId/avatar",
+    {
+      preValidation: [app.authenticate],
+      schema: getOrganisationSchema,
+    },
+    async (req) => {
+      try {
+        return await updateOrganisationAvatar(req, null);
+      } catch (err) {
+        throw err;
       }
     },
   );
