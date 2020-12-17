@@ -39,6 +39,7 @@ const AvatarModal = styled(Modal)`
                 font-size: ${large};
                 height: 100%;
                 padding: 0.8rem 2.2rem;
+                margin: 0.8rem;
                 border-radius: 50%;
                 &:first-child {
                     color: ${royalBlue};
