@@ -36,7 +36,7 @@
       "shareLocation": "Share My Location",
       "showAnywhere": "Show me postings from anywhere",
       "whatEmail": "What is your email address?",
-      "respectPrivacy": "We respect your privacy. Please read our and <1>Privacy Policy</1> and <3>Terms & Conditions.</3>",
+      "respectPrivacy": "We respect your privacy. Please read our <1>Privacy Policy</1> and <3>Terms & Conditions.</3>",
       "enterEmail": "Enter your email address..."
     },
     "needHelp": {
@@ -121,12 +121,6 @@
       "typesOptions": {
         "Medical Supplies": "Medical Supplies",
         "Groceries/Food": "Groceries/Food",
-        "Housing": "Housing",
-        "Childcare": "Childcare",
-        "Translations": "Translations",
-        "Volunteer": "Volunteer",
-        "Staff (paid)": "Staff (paid)",
-        "Remote Work": "Remote Work",
         "Business": "Business",
         "Education": "Education",
         "Legal": "Legal",
@@ -136,12 +130,19 @@
         "Funding": "Funding",
         "R&D": "R&D",
         "Tech": "Tech",
-        "Other": "Others"
+        "Other": "Others",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "Volunteer",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work"
       },
       "lookingForOptions": {
         "Request Help": "Requesting Help",
         "Offer Help": "Offering Help"
-      }
+      },
+      "postsNearMe": "Show results near me"
     },
     "filterBy": "Filter by",
     "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
@@ -211,22 +212,23 @@
     "whatNeed": "What do you need?",
     "viewLess": "View Less",
     "viewMore": "View More",
-    "deletePostConfirmationTitle": "Delete post confirmation",
     "deletePostConfirmation": "Are you sure you want to delete this post?",
-    "deleteCommentConfirmationTitle": "Delete comment confirmation",
     "deleteCommentConfirmation": "Are you sure you want to delete this comment?",
-    "shareVia": "Share via...",
+    "shareVia": "Share Post",
+    "copyUrl": "Copy URL",
     "others": "Others",
     "expireTitle": "Ahh... snap!",
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
     "noActivity": "No activity found",
     "share": "Share",
     "delete": "Delete post",
-    "deleteConfirmation": "Delete",
     "cancel": "Cancel",
     "confirm": "Confirm",
     "edited": "edited",
     "share_plural": "Shares",
+    "deletePostConfirmationTitle": "Delete post confirmation",
+    "deleteCommentConfirmationTitle": "Delete comment confirmation",
+    "deleteConfirmation": "Delete",
     "edit": "Edit post",
     "hideAction": "Hide post",
     "hideCaption": "It is not relevant to me",
@@ -281,10 +283,10 @@
       "notificationInfo": "Notification Preference",
       "emailNotification": "Notification Email Settings",
       "instant": "Instant",
-      "digest": "Digest",
       "daily": "Daily",
       "weekly": "Weekly",
       "biweekly": "Biweekly",
+      "digest": "Digest",
       "on": "On",
       "off": "Off"
     },
@@ -302,6 +304,7 @@
       "haveCovidSymptoms": "I have symptoms of COVID-19.",
       "other": "Other Help",
       "otherDesc": "I need assistance getting groceries/medicine/etc.",
+      "editProfile": "Edit Profile",
       "intro": "Self-introduction",
       "website": "Personal Website",
       "myActivity": "My Activity",
@@ -322,16 +325,13 @@
       "enterCurrentPassword": "Enter current password",
       "enterNewPassword": "Enter new password",
       "updatingPassword": "Updating Password",
-      "editAccount": "Edit Account",
-      "editProfile": "Edit Profile",
       "editSecurity": "Edit Security",
-      "editNotification": "Edit Notification"
+      "editNotification": "Edit Notification",
+      "editAccount": "Edit Account"
     },
     "org": {
       "title": "Create Organization Profile",
-      "editOrgAccount": "Edit Organization Account",
       "editOrgProfile": "Edit Organization Profile",
-      "editOrgNotification": "Edit Organization Notification",
       "name": "Organization Name",
       "email": "Organization Contact Email",
       "invalidEmail": "Email is invalid",
@@ -387,9 +387,12 @@
       "completeOrgProfile": "Complete Organization Profile",
       "about": "About",
       "activity": "Activity",
+      "editAccount": "Edit Account Information",
       "updateSuccess": "Organization successfully updated",
       "orgNameRequired": "Organization name is required",
-      "global": "Global"
+      "global": "Global",
+      "editOrgAccount": "Edit Organization Account",
+      "editOrgNotification": "Edit Organization Notification"
     }
   },
   "auth": {
@@ -411,7 +414,8 @@
     "passwordMin": "Password must be at least {{num}} characters.",
     "passwordConfirmationRequired": "Password confirmation is required.",
     "passwordNotMatch": "Passwords don't match",
-    "backHome": "Back to Home Screen"
+    "backHome": "Back to Home Screen",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",
@@ -445,10 +449,6 @@
     "relevantContent": "Relevant Content",
     "relevantContentDetail": "Expiration periods ensure the board is always up to date.",
     "goToHelpBoard": "Go to Help Board",
-    "communityPartners": "Community Partners",
-    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
-    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
-    "currentPartners": "Current Community Partners",
     "supporters": "Supporters",
     "thanksSupporters": "Thank You to our supporters, without them we would not be able to help communities prepare and respond to pandemics.",
     "becomeSupporter": "To learn more about how your business can become a supporter, please contact our partnerships team at",
@@ -466,7 +466,14 @@
     "forStudentInAge": "For Students ages 14-18.",
     "press": "Press",
     "pressInfo": "If you're a member of the press, contact us at",
-    "pressKitLink": "Go to Press Kit"
+    "pressKitLink": "Go to Press Kit",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "FAQ",
@@ -520,7 +527,7 @@
       ],
       [
         "How can I find help?",
-        "From the FightPandemics homepage, select \"Need help\". If you choose \"Other help\", you'll enter your location and be directed to a page with the help offers in the selected area. You can then filter the postings that you want to see also by provider and type. Alternatively, you can select \"View community postings\" from the main page to view all postings and apply the desired filters."
+        "From the FightPandemics homepage, select \"Request help\". If you choose \"Other help\", you'll enter your location and be directed to a page with the help offers in the selected area. You can then filter the postings that you want to see also by provider and type. Alternatively, you can select \"View community postings\" from the main page to view all postings and apply the desired filters."
       ],
       [
         "How can I offer help?",
@@ -631,7 +638,7 @@
       ],
       [
         "I need technical support.",
-        "We are sorry for that. Send us an email at <0>help@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
+        "We are sorry for that. Send us an email at <0>support@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
       ],
       [
         "I want to reach out to FightPandemics for other reasons.",
@@ -650,7 +657,7 @@
       ],
       [
         "I need technical support.",
-        "We are sorry for that. Send us an email at <0>help@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
+        "We are sorry for that. Send us an email at <0>support@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
       ],
       [
         "I want to reach out to FightPandemics for other reasons.",
@@ -844,7 +851,10 @@
       "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
       "networkError": "Sorry, some network error occurred."
     },
-    "wrongOldPassword": "Wrong current password"
+    "wrongOldPassword": "Wrong current password",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",
@@ -1003,10 +1013,10 @@
       "success": "Your notification preference is updated"
     },
     "header": "Notifications",
-    "empty": "No more notifications",
     "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
+    "empty": "No more notifications"
   },
   "moderation": {
     "report": "Report",

@@ -134,7 +134,9 @@ module.exports = {
     "zh-CN": "_ZN_CN",
     fr: "_FR",
     tr: "_TR",
+    "hi-IN": "_HI_IN",
     "kn-IN": "_KN_IN",
+    "mr-IN": "_MR_IN",
     "te-IN": "_TE_IN",
     "ms-MY": "_MS_MY",
     vi: "_VI",
@@ -146,6 +148,7 @@ module.exports = {
     ru: "_RU",
     th: "_TH",
     id: "_ID",
+    "es-419": "_ES_419",
   },
   search: {
     prefix: "SCH",
@@ -175,6 +178,7 @@ module.exports = {
     unarchive: "_UARC",
     delete: "_DLT",
     edit: "_EDT",
+    mobileEdit: "_EDT_MOB",
     sent: "_SNT",
   },
   aboutUs: {

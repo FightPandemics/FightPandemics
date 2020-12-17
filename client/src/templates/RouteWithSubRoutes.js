@@ -13,6 +13,8 @@ export const FEED = "/feed";
 export const CHECK_EMAIL = "/auth/check-email";
 export const CREATE_PROFILE = "/create-profile";
 export const PROFILE = "/profile";
+export const ABOUT_US = "/about-us";
+export const FAQ = "/faq";
 
 const getLayoutComponent = (layout) => {
   switch (layout) {
@@ -50,6 +52,15 @@ export const RouteWithSubRoutes = (route) => {
     navSearch,
     forgotPassword,
   } = props;
+
+  if (
+    window.zE &&
+    [HOME, FEED, ABOUT_US, FAQ].includes(window.location.pathname)
+  ) {
+    window.zE("webWidget", "show");
+  } else if (window.zE) {
+    window.zE("webWidget", "hide");
+  }
 
   return (
     <Route

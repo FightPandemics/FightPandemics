@@ -74,6 +74,7 @@ export const FiltersWrapper = styled.div`
 
 export const MenuWrapper = styled(Menu)`
   &.ant-menu {
+    border: none;
     .ant-menu-item {
       height: 3rem;
       border-left: 0.5rem solid ${white};

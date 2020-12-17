@@ -205,7 +205,7 @@
         "offer": "Yardım et"
       }
     },
-    "post": "Gönderi",
+    "post": "Paylaş",
     "postAsOrg": "Kurum olarak gönderi oluştur.",
     "createNew": "Yeni bir tane oluştur",
     "whatNeed": "Neye ihtiyacın var?",
@@ -412,7 +412,8 @@
     "passwordMin": "Şifreniz en az {{num}} karakterden oluşmalıdır.",
     "passwordConfirmationRequired": "Parolayı onaylamanız gerekmektedir",
     "passwordNotMatch": "Şifre eşleşmedi",
-    "backHome": "Ana Sayfaya Dön"
+    "backHome": "Ana Sayfaya Dön",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Gelen kutunuzu kontrol edin",
@@ -467,7 +468,10 @@
     "communityPartners": "Topluluk Ortakları",
     "communityCollaboration": "Platformumuz aracılığıyla dünyanın dört bir yanındaki toplulukları ve kuruluşları güçlendirmek istiyoruz ve bunu yapabilmek için birlikte çalışmamız gerekiyor! Topluluk ortaklarımızla devam eden işbirliğimiz, onlar ve başkaları için daha iyi bir platform oluşturmamıza olanak sağlamaktadır.",
     "becomeCommunityPartner": "Topluluğunuzun da ortağımız olmasını ister misiniz? Bu konu hakkındaki görüşlerinizi bilmek ve işbirliği yapmaya başlamak isteriz! Bize şuradan ulaşın",
-    "currentPartners": "Mevcut Topluluk Ortakları"
+    "currentPartners": "Mevcut Topluluk Ortakları",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "SSS",
@@ -624,7 +628,7 @@
     "contectsFAQ": [
       [
         "Partner veya sponsor olmak istiyorum.",
-        "Lütfen <0>partners@fightpandemics.com</0> adresinden partnerlik ekibimizle iletişime geçin."
+        "Lütfen <0>partnerships@fightpandemics.com</0> adresinden partnerlik ekibimizle iletişime geçin."
       ],
       [
         "Basından / medyadanım.",
@@ -632,7 +636,7 @@
       ],
       [
         "Teknik desteğe ihtiyacım var.",
-        "Bunun için üzgünüz. Lütfen bize <0>help@fightpandemics.com</0> adresinden bir e-posta gönderin. Tamamen gönüllülerden oluşan bir ekip olduğumuz için, yanıtlamamız en az 48 saati bulacaktır."
+        "Bunun için üzgünüz. Lütfen bize <0>support@fightpandemics.com</0> adresinden bir e-posta gönderin. Tamamen gönüllülerden oluşan bir ekip olduğumuz için, yanıtlamamız en az 48 saati bulacaktır."
       ],
       [
         "Başka nedenlerden dolayı FightPandemics'le iletişim kurmak istiyorum.",
@@ -643,7 +647,7 @@
     "contactsFAQ": [
       [
         "Ortak veya sponsor olmak istiyorum.",
-        "Lütfen <0>partners@fightpandemics.com</0> adresinden partnerlik ekibimizle iletişime geçin."
+        "Lütfen <0>partnerships@fightpandemics.com</0> adresinden partnerlik ekibimizle iletişime geçin."
       ],
       [
         "Basından / medyadanım.",
@@ -651,7 +655,7 @@
       ],
       [
         "Teknik desteğe ihtiyacım var.",
-        "Bunun için üzgünüz. Lütfen bize <0>help@fightpandemics.com</0> adresinden bir e-posta gönderin. Tamamen gönüllülerden oluşan bir ekip olduğumuz için, yanıtlamamız en az 48 saati bulacaktır."
+        "Bunun için üzgünüz. Lütfen bize <0>support@fightpandemics.com</0> adresinden bir e-posta gönderin. Tamamen gönüllülerden oluşan bir ekip olduğumuz için, yanıtlamamız en az 48 saati bulacaktır."
       ],
       [
         "FightPandemics'le başka nedenlerle iletişime geçmek istiyorum.",
@@ -845,7 +849,10 @@
       "imageDimensionTooWide": "Maalesef resim çok geniş. Lütfen yüksekliği iki katından daha az genişliğe sahip bir resimle tekrar deneyin.",
       "networkError": "Üzgünüz, ağda bir sorun oluştu."
     },
-    "wrongOldPassword": "Yanlış şifre"
+    "wrongOldPassword": "Yanlış şifre",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "Biz sağlık hizmetleri sunan bir organizasyon değiliz",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Bu hizmet, şuan yaşamakta olduğumuz halk sağlığını tehdit eden bu olagan üstü durum sırasında, yardım alamayan ve temel kaynaklarından yoksun kalan insanlara yardım etmek amacıyla verilmektedir.",
