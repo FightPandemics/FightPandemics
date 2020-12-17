@@ -79,12 +79,11 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
         apiEndPoint,
         userCredentialsWithEmptyEmail,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        'body.email should match format "email"',
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: 'body.email should match format "email"',
+      });
     });
 
     it("Invalid email syntax triggers Bad Request error", async () => {
@@ -93,12 +92,11 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
         apiEndPoint,
         userCredentialsWithInvalidEmailNoDomainSpecified,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        'body.email should match format "email"',
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: 'body.email should match format "email"',
+      });
     });
 
     it("Email local part has more than 64 characters triggers Bad Request error", async () => {
@@ -108,12 +106,11 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
         userCredentialsWithEmailLocalExceeding64Characters,
       );
       userCredentialsWithEmailLocalExceeding64Characters;
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "invalidEmail",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "invalidEmail",
+      });
     });
 
     it("Email domain part has more than 63 characters triggers Bad Request error", async () => {
@@ -122,12 +119,11 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
         apiEndPoint,
         userCredentialsWithEmailDomainExceeding63Characters,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        'body.email should match format "email"',
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: 'body.email should match format "email"',
+      });
     });
 
     it("Email invalid top level domain triggers Bad Request error", async () => {
@@ -136,12 +132,11 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
         apiEndPoint,
         userCredentialsWithEmailInvalidTopLevelDomain,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        'body.email should match format "email"',
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: 'body.email should match format "email"',
+      });
     });
   });
 
@@ -152,12 +147,11 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
         apiEndPoint,
         userCredentialsWithPasswordsNotMatched,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "passwordNotMatch",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "passwordNotMatch",
+      });
     });
 
     it("Empty password and confirm password trigger Bad Request error", async () => {
@@ -166,12 +160,11 @@ describe("POST Sign Up endpoint tests for unregistered user", () => {
         apiEndPoint,
         userCredentialsWithEmptyPasswords,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "passwordRequired",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "passwordRequired",
+      });
     });
   });
 });
