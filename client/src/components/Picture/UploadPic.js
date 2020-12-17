@@ -12,8 +12,29 @@ import GTM from "constants/gtm-tags";
 const { colors } = theme;
 
 const CustomSubmitButton = styled(BaseButton)`
+  display: inline-block;
+  width: 20rem;
+  margin: 0 0.8rem;
   background: ${colors.royalBlue};
   color: ${colors.white};
+  &:hover {
+    color: ${colors.royalBlue};
+    background-color: ${colors.white};
+    border: 0.01rem solid ${colors.royalBlue};
+  }
+`;
+
+const CustomRemoveButton = styled(BaseButton)`
+  display: inline-block;
+  width: 20rem;
+  margin: 0 0.8rem;
+  color: ${colors.white};
+  background-color: ${colors.orangeRed};
+  &:hover {
+    color: ${colors.orangeRed};
+    background-color: ${colors.white};
+    border: 0.01rem solid ${colors.orangeRed};
+  }
 `;
 
 const CameraButtonUpload = styled.button`
@@ -186,38 +207,37 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
   const cropModal = () => {
     return (
       <AvatarModal
-        title={
-          <p>
-            {t("avatar.edit")}
-          </p>
-        }
+        title={<p>{t("avatar.edit")}</p>}
         onCancel={closeModal}
         visible={modalVisible}
         onOk={savePhoto}
         destroyOnClose={true}
         closable={true}
         maskClosable={true}
-        footer={[
-          user && user.photo && !photoURL ? (
-            <BaseButton key="remove" onClick={removePhoto}>
+        footer={
+          <div style={{ textAlign: "center" }}>
+            {user && user.photo && !photoURL ? (
+            <CustomRemoveButton key="remove" onClick={removePhoto}>
               {t("avatar.remove")}
-            </BaseButton>
-          ) : null,
-          <BaseButton key="change" onClick={() => imgUpload.current.click()}>
-            {t("avatar.uploadNew")}
-          </BaseButton>,
-          photoURL ? (
-            !uploadError ? (
-              <CustomSubmitButton key="save" onClick={savePhoto}>
-                {t("avatar.submitBtn")}
-              </CustomSubmitButton>
+            </CustomRemoveButton>
+            ) : null}
+            <CustomSubmitButton
+              key="change"
+              onClick={() => imgUpload.current.click()}
+            >
+              {t("avatar.uploadNew")}
+            </CustomSubmitButton>
+            { photoURL ? ( !uploadError ? (
+            <CustomSubmitButton key="save" onClick={savePhoto}>
+              {t("avatar.submitBtn")}
+            </CustomSubmitButton>
             ) : (
-              <CustomSubmitButton key="retry" onClick={retry}>
-                {t("avatar.tryAgainBtn")}
-              </CustomSubmitButton>
-            )
-          ) : null,
-        ]}
+            <CustomSubmitButton key="retry" onClick={retry}>
+              {t("avatar.tryAgainBtn")}
+            </CustomSubmitButton>
+            ) ) : null}
+          </div>
+        }
       >
         {photoURL ? (
           <div

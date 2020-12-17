@@ -25,7 +25,7 @@ const AvatarModal = styled(Modal)`
         .ant-modal-body {
             padding: 1rem 3rem;
             img {
-                max-width: 100%;
+                max-width: 80%;
             }
         }
         .ant-modal-footer {
