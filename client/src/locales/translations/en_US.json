@@ -467,7 +467,10 @@
     "forStudentInAge": "For Students ages 14-18.",
     "press": "Press",
     "pressInfo": "If you're a member of the press, contact us at",
-    "pressKitLink": "Go to Press Kit"
+    "pressKitLink": "Go to Press Kit",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "FAQ",
