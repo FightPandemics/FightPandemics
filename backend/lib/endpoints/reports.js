@@ -8,7 +8,6 @@ const { translateISOtoRelativeTime } = require("../utils");
 const { SCOPES } = require("../constants");
 
 const MAX_REPORTS_PER_PAGE = 20;
-const UNLOGGED_POST_SIZE = 120;
 
 /*
  * /api/reports
@@ -103,12 +102,6 @@ async function routes(app) {
               $size: {
                 $ifNull: ["$reportedBy", []],
               },
-            },
-            content: {
-              $concat: [
-                { $substrCP: ["$content", 0, UNLOGGED_POST_SIZE] },
-                "...",
-              ],
             },
           },
         },

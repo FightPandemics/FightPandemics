@@ -336,7 +336,7 @@ const Posts = ({
       <div
         className="ReactVirtualized__Table__rowColumn"
         role="gridcell"
-        style={{ overflow: "hidden", flex: "0 1 1000px" }}
+        style={{ overflow: "hidden", flex: "0 1 1000px", whiteSpace: "pre-wrap" }}
         aria-colIndex="1"
       >
         {data.current[index].content}
