@@ -1,17 +1,6 @@
 const { expect } = require("chai");
 const _ = require("lodash");
 
-exports.validateStatusCodeAndSuccess = function (
-  response,
-  statusCode,
-  successMessage,
-) {
-  expect(response.statusCode).to.be.equal(statusCode);
-  expect(response.body)
-    .to.have.a.property("success")
-    .to.be.equal(successMessage);
-};
-
 exports.validateResponseBody = function (response, key1, key2) {
   expect(
     response.body.forEach((object) => {

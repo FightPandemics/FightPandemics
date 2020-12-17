@@ -57,7 +57,12 @@ describe("POST Feedback endpoint tests", () => {
         apiEndPoint,
         feedbackWithValidInputs,
       );
-      validator.validateStatusCodeAndSuccess(response, 201, true);
+      validator.validateResponse(response, {
+        statusCode: httpStatus.CREATED,
+      });
+      validator.validateResponse(response.body, {
+        success: true,
+      });
     });
 
     it("Invalid data type in Age question triggers Bad Request message", async () => {
