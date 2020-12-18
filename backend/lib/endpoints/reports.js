@@ -383,7 +383,7 @@ async function routes(app) {
               {
                 $match: {
                   status: "flagged",
-                  createdAt: { $gt: new Date(Date.now() - 2.678e9) },
+                  createdAt: { $gt: new Date(Date.now() - 2.765e9) }, // 32 days, 30 will be used by front-end, but just to be safe (timezones!)
                 },
               },
               {
@@ -559,7 +559,7 @@ async function routes(app) {
       const auditLogStatsAggregationPipeline = [
         {
           $match: {
-            createdAt: { $gt: new Date(Date.now() - 2.765e9) },
+            createdAt: { $gt: new Date(Date.now() - 2.765e9) }, // 32 days, 30 will be used by front-end, but just to be safe (timezones!)
           },
         },
         {
