@@ -68,12 +68,12 @@
         "enterAddress": "Введите адрес, почтовый индекс или название города",
         "shareLocation": "Показать моё местоположение"
       },
-      "providers": "Providers",
+      "providers": "Провайдеры",
       "providersList": [
         "Частное лицо",
         "Стартап",
         "Компания",
-        "Community",
+        "Сообщество",
         "Государственная структура",
         "Некоммерческая организация",
         "ВУЗ",
@@ -95,15 +95,15 @@
         "Технологии",
         "Другое",
         "Другое",
-        "Childcare",
-        "Translations",
+        "Уход за детьми",
+        "Переводы",
         "Помочь делами",
-        "Staff (paid)",
-        "Remote Work"
+        "Сотрудники (оплачиваемые)",
+        "Удаленная работа"
       ],
       "labels": {
         "location": "Местоположение",
-        "providers": "Providers",
+        "providers": "Провайдеры",
         "type": "Виды",
         "lookingFor": "Предложение или просьба о помощи"
       },
@@ -131,12 +131,12 @@
         "R&D": "Исследования",
         "Tech": "Технологии",
         "Other": "Другое",
-        "Housing": "Housing",
-        "Childcare": "Childcare",
-        "Translations": "Translations",
+        "Housing": "Жилье",
+        "Childcare": "Уход за детьми",
+        "Translations": "Переводы",
         "Volunteer": "Помочь делами",
-        "Staff (paid)": "Staff (paid)",
-        "Remote Work": "Remote Work"
+        "Staff (paid)": "Сотрудники (оплачиваемые)",
+        "Remote Work": "Удаленная работа"
       },
       "lookingForOptions": {
         "Request Help": "Просьбы о помощи",
@@ -177,7 +177,7 @@
     "addTags": "Добавьте теги, чтобы ваш пост был более заметным",
     "whatVisibility": "Кому будет видно ваше сообщение?",
     "postVisible": "Сообщение будет видно",
-    "success": "Success",
+    "success": "Получилось",
     "viewPost": "Просмотреть сообщение",
     "like": "Понравилось",
     "like_plural": "Понравилось",
@@ -215,7 +215,7 @@
     "deleteCommentConfirmation": "Вы уверены, что хотите удалить комментарий?",
     "shareVia": "Поделиться через...",
     "others": "Другое",
-    "expireTitle": "Ahh... snap!",
+    "expireTitle": "А... надо же!",
     "expire": "Срок действия сообщения, которое вы искали, истек. Посетите нашу Доску Объявлений, чтобы увидеть другие подобные сообщения.",
     "noActivity": "Сообщения не найдены",
     "share": "Поделиться",
@@ -227,11 +227,11 @@
     "deletePostConfirmationTitle": "Подтверждение удаления объявления",
     "deleteCommentConfirmationTitle": "Подтверждение удаления комментария",
     "deleteConfirmation": "Удалить",
-    "edit": "Edit post",
-    "hideAction": "Hide post",
-    "hideCaption": "It is not relevant to me",
-    "reportAction": "Report Post",
-    "reportCaption": "For moderators review"
+    "edit": "Редактировать объявление",
+    "hideAction": "Скрыть объявление",
+    "hideCaption": "Это не имеет ко мне отношения",
+    "reportAction": "Пожаловаться на объявление",
+    "reportCaption": "Для рассмотрения модераторам"
   },
   "profile": {
     "common": {
@@ -276,7 +276,7 @@
       "emailInvalid": "Адрес электронной почты недействителен",
       "emailDomainInvalid": "Домен электронной почты недействителен",
       "sendMessage": "Отправить сообщение",
-      "securityInfo": "Security Information",
+      "securityInfo": "Информация о безопасности",
       "changePassword": "Изменить пароль",
       "notificationInfo": "Настройки уведомлений",
       "emailNotification": "Уведомление по электронной почте",
@@ -284,7 +284,7 @@
       "daily": "Раз в день",
       "weekly": "Раз в неделю",
       "biweekly": "Раз в две недели",
-      "digest": "Digest",
+      "digest": "Дайджест",
       "on": "On",
       "off": "Off"
     },
@@ -313,7 +313,7 @@
       "lastNameRequired": "Требуется фамилия.",
       "newPassword": "Новый пароль",
       "currentPassword": "Текущий пароль",
-      "confirmNewPassword": "Confirm Password",
+      "confirmNewPassword": "Подтвердить пароль",
       "currentPasswordRequired": "Требуется текущий пароль",
       "newPasswordRequired": "Требуется новый пароль",
       "confirmNewPasswordRequired": "Пожалуйста, подтвердите пароль!",
@@ -412,7 +412,8 @@
     "passwordMin": "Пароль должен содержать не менее {{num}} символов.",
     "passwordConfirmationRequired": "Требуется подтверждение пароля.",
     "passwordNotMatch": "Пароли не совпадают",
-    "backHome": "Вернуться на главную страницу"
+    "backHome": "Вернуться на главную страницу",
+    "linkAccountsSuccess": "Ваш аккаунт был связан с другим вашим аккаунтом с тем же адресом электронной почты. Пожалуйста, войдите в систему с помощью любого из этих аккаунтов."
   },
   "verifyEmail": {
     "checkInbox": "Проверьте свою электронную почту",
@@ -443,7 +444,7 @@
     "helpBoardDetail": "Социальная платформа для частных лиц и организаций для публикации просьб о помощи и предложений помощи.",
     "localGlobal": "По соседству и во всём мире",
     "localGlobalDetail": "Предлагайте и запрашивайте помощь в своём сообществе и по всему миру.",
-    "relevantContent": "Relevant Content",
+    "relevantContent": "Соответствующий контент",
     "relevantContentDetail": "Срок годности гарантирует, что Доска Объявлений всегда в актуальном состоянии.",
     "goToHelpBoard": "Открыть Доску Объявлений",
     "supporters": "Нас поддерживают",
@@ -451,7 +452,7 @@
     "becomeSupporter": "Чтобы узнать больше о том, как ваш бизнес может поддержать проект, пожалуйста, свяжитесь с нашей командой по работе с партнерами по адресу",
     "becomePartnerEmail": "partnerships@fightpandemics.com",
     "companyLogoInfo": "Нажмите на логотип компании ниже, чтобы перейти на сайт поддерживающей нас компании.",
-    "lifetimeSupporters": "Lifetime supporters",
+    "lifetimeSupporters": "Постоянно поддерживают",
     "currentSupporters": "Поддерживают сейчас",
     "pastSupporters": "Оказывали поддержку",
     "hashtag": "#ForCommunitiesByCommunities",
@@ -461,13 +462,16 @@
     "joinStudentProgram": "Присоединиться к программе для учащихся",
     "studentSummerProgram": "Летняя программа для учащихся",
     "forStudentInAge": "Для учащихся 14-18 лет.",
-    "press": "Press",
-    "pressInfo": "If you're a member of the press, contact us at",
-    "pressKitLink": "Go to Press Kit",
-    "communityPartners": "Community Partners",
-    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
-    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
-    "currentPartners": "Current Community Partners"
+    "press": "Пресса",
+    "pressInfo": "Если вы представитель прессы, свяжитесь с нами по адресу",
+    "pressKitLink": "Перейти к Подборке материалов для прессы",
+    "communityPartners": "Партнерские сообщества",
+    "communityCollaboration": "С помощью нашей платформы, мы хотим дать новые возможности сообществам и организациям по всему миру, и для этого нам надо работать вместе! Постоянное сотрудничество с нашими партнерами позволяет нам делать нашу платформу лучше для них и для других пользователей.",
+    "becomeCommunityPartner": "Хотели бы вы, чтобы ваше сообщество тоже было нашим партнером? Мы будем рады начать сотрудничество! Пишите нам по адресу",
+    "currentPartners": "Нынешние партнерские сообщества",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "Вопросы и ответы",
@@ -491,7 +495,7 @@
       ],
       [
         "Кто стоит за FightPandemics?",
-        "FightPandemics is an all-volunteer, global team with a mission to serve as a go-to place for help. Our team is made up of 150+ engaged volunteers from 70+ countries striving to make a difference. The platform was built in an innovative collaborative effort, bringing together a diverse group of problem solvers with a wide range of skills willing to co-create and learn with one another.",
+        "FightPandemics - это международная команда волонтёров, миссия которой заключается в том, чтобы поддерживать платформу, куда можно обратиться за помощью. Наша команда состоит из более чем 150 волонтеров из более чем 70 стран, стремящихся изменить ситуацию к лучшему. Платформа была создана в результате инновационных совместных усилий, объединивших разнообразную группу специалистов с широким спектром навыков, готовых вместе созидать и учиться друг у друга.",
         "Хотите присоединиться к нашей инициативе? Свяжитесь с нами по адресу <0>hr@fightpandemics.com</0>"
       ],
       [
@@ -504,7 +508,7 @@
       ],
       [
         "Как разместить предложение или просьбу о помощи на FightPandemics?",
-        "<0>When you join the community, you will have unlimited access to view and create posts and comments on FightPandemics platform.</0><1>To join the community as a user, click the \"Menu\" button and select the \"Join Now/Sign In\" option. There you will be able to join with your choice of email or social media credentials.</1><2>Once you have completed your profile, select the menu button, select view my profile and click on the plus button to create your first post.</2>"
+        "<0>Присоединившись к сообществу, вы получите неограниченный доступ для просмотра и создания сообщений и комментариев на платформе FightPandemics.</0><1>, Чтобы присоединиться к сообществу в качестве пользователя, нажмите кнопку \"Меню\" и выберите опцию \"Присоединиться сейчас/Вход\". Там вы сможете зарегистрироваться, выбрав электронную почту или учетные данные в социальных сетях.</1><2>После того, как вы заполнили свой профиль, выберите кнопку \"Меню\", выберите \"Просмотреть мой профиль\" и нажмите на кнопку \"Плюс\", чтобы создать ваше первое объявление.</2>"
       ],
       [
         "Как я могу следить за новостями FightPandemics?",
@@ -573,7 +577,7 @@
       ],
       [
         "Могу ли я оказывать/получать помощь в своём городе или области? Как долго будет виден пост?",
-        "The post to give/receive help can be at a zip code, city, state or country level for a duration of a day, a week, a month or forever. By default, the posts will be set to city level for one month."
+        "Объявление о предоставлении / получении помощи может быть размещено для определенного почтового индекса, города, штата или страны на протяжении дня, недели, месяца или навсегда. По умолчанию объявления размещаются на уровне города сроком на один месяц."
       ],
       [
         "Моего вопроса нет в списке. К кому я могу обратиться?",
@@ -632,11 +636,11 @@
       ],
       [
         "Мне нужна техническая поддержка.",
-        "Мы сожалеем об этом. Отправьте нам письмо по адресу <0>help@fightpandemics.com.</0> Поскольку мы - команда волонтёров, время ожидания ответа будет минимум 48 часов."
+        "Мы сожалеем об этом. Отправьте нам письмо по адресу <0>support@fightpandemics.com.</0> Поскольку мы - команда волонтёров, время ожидания ответа будет минимум 48 часов."
       ],
       [
         "Я хочу связаться с FightPandemics по другим причинам.",
-        "По общим вопросам и другим вопросам, не перечисленным здесь, обращайтесь по адресу <0>contact@fightpandemics.com.</0 >"
+        "По общим вопросам и другим вопросам, не перечисленным здесь, обращайтесь по адресу <0>contact@fightpandemics.com.</0>"
       ]
     ],
     "contacts": "Контактная информация",
@@ -651,11 +655,11 @@
       ],
       [
         "Мне нужна техническая поддержка.",
-        "Мы сожалеем об этом. Отправьте нам письмо по адресу <0>support@fightpandemics.com.</0> Поскольку мы - команда волонтёров, время ожидания ответа будет минимум 48 часов."
+        "Мы сожалеем об этом. Отправьте нам письмо по адресу <0>support@fightpandemics.com</0>. Поскольку мы - команда волонтёров, время ожидания ответа будет минимум 48 часов."
       ],
       [
         "Я хочу связаться с FightPandemics по другим причинам.",
-        "По общим вопросам и другим вопросам, не перечисленным здесь, обращайтесь по адресу <0>contact@fightpandemics.com.</0 >"
+        "По общим вопросам и другим вопросам, не перечисленным здесь, обращайтесь по адресу <0>contact@fightpandemics.com.</0>"
       ]
     ],
     "faqTitle": "Часто задаваемые вопросы"
@@ -722,7 +726,7 @@
     "secondWithCount_plural": "{{count}} секунд назад",
     "minute": "минута",
     "minute_plural": "минут",
-    "minuteWithCount": "{{count}} минуту назад",
+    "minuteWithCount": "{{count}} минут назад",
     "minuteWithCount_plural": "{{count}} минут назад",
     "hour": "час",
     "hour_plural": "часов",
@@ -748,7 +752,7 @@
   "alt": {
     "logo": "Логотип FightPandemics",
     "blogLink": "[!!! FïϱλƭÞáñδè₥ïçƨ ßℓôϱ £ïñƙ £ôřè₥ ï !!!]",
-    "desktopBanner": "Desktop Mission and Vision Banner",
+    "desktopBanner": "Баннер Миссии и видения для настольного компьютера",
     "mobileBanner": "[!!! Môβïℓè Mïƨƨïôñ áñδ Vïƨïôñ ßáññèř £ôřè₥ ïƥƨ !!!]",
     "ideaImage": "Наша цель Изображение",
     "linkedinIcon": "[!!! FïϱλƭÞáñδè₥ïçƨ £ïñƙèδÌñ Ìçôñ £ôřè₥ ïƥ !!!]",
@@ -767,16 +771,16 @@
     "tags": "Пожалуйста, выберите хотя бы один тег.",
     "privacyPolicyRequired": "Вы должны согласиться с нашей политикой конфиденциальности, прежде чем вы сможете продолжить",
     "termsConditionsRequired": "Вы должны согласиться с условиями нашего пользовательского соглашения, прежде чем вы сможете продолжить",
-    "failedPredictions": "Failed getting predictions. Please retry.",
+    "failedPredictions": "Не удалось получить прогноз. Пожалуйста, попробуйте еще раз.",
     "failedLocation": "Не удалось определить местоположение.",
     "failedLocationDetails": "Не удалось получить сведения о местоположении. Пожалуйста, попробуйте еще раз.",
-    "User denied Geolocation": "User denied Geolocation.",
+    "User denied Geolocation": "Пользователь отказался от геолокации.",
     "resetBrowserLocationPermission": "Пожалуйста, измените настройки вашего браузера, чтобы разрешить отслеживание местоположения, или введите адрес.",
     "enterAddressAgain": "Пожалуйста, введите адрес или попробуйте еще раз.",
     "loggedInToCreateOrgProfile": "Вы должны войти в систему, чтобы создать профиль организации.",
     "selectOneOption": "Пожалуйста, выберите по крайней мере один вариант",
     "userExists": "Пользователь уже существует",
-    "invalidState": "Invalid state",
+    "invalidState": "Недопустимое состояние",
     "passwordsShouldMatch": "Подтверждение пароля должно полностью совпадать с паролем",
     "passwordWeak": "Пароль слишком простой",
     "wrongCredentials": "Неправильный адрес электронной почты или пароль.",
@@ -797,46 +801,46 @@
     "failedSignup": "Регистрация не удалась, причина:",
     "failedPasswordRecovery": "Восстановление пароля не удалось, причина:",
     "http": {
-      "Bad Request": "Bad Request",
-      "Unauthorized": "Unauthorized",
+      "Bad Request": "Неверный запрос",
+      "Unauthorized": "Нет авторизации",
       "Payment Required": "Требуется оплата",
-      "Forbidden": "Forbidden",
+      "Forbidden": "Запрещено",
       "Not Found": "Не найдено",
-      "Method Not Allowed": "Method Not Allowed",
-      "Not Acceptable": "Not Acceptable",
-      "Proxy Authentication Required": "Proxy Authentication Required",
-      "Request Timeout": "Request Timeout",
-      "Conflict": "Conflict",
-      "Gone": "Gone",
-      "Length Required": "Length Required",
-      "Precondition Failed": "Precondition Failed",
-      "Payload Too Large": "Payload Too Large",
-      "URI Too Long": "URI Too Long",
+      "Method Not Allowed": "Метод не разрешен",
+      "Not Acceptable": "Неприемлемо",
+      "Proxy Authentication Required": "Требуется проверка подлинности прокси",
+      "Request Timeout": "Таймаут запроса",
+      "Conflict": "Конфликт",
+      "Gone": "Отсутствует",
+      "Length Required": "Требуемая длина",
+      "Precondition Failed": "Предварительное условие не выполнено",
+      "Payload Too Large": "Слишком большая нагрузка",
+      "URI Too Long": "URI слишком длинный",
       "Unsupported Media Type": "Неподдерживаемый тип мультимедиа",
-      "Range Not Satisfiable": "Range Not Satisfiable",
-      "Expectation Failed": "Expectation Failed",
+      "Range Not Satisfiable": "Неудовлетворительный диапазон",
+      "Expectation Failed": "Условие не выполнено",
       "I'm a teapot": "Я чайник",
-      "Misdirected Request": "Misdirected Request",
-      "Unprocessable Entity": "Unprocessable Entity",
-      "Locked": "Locked",
-      "Failed Dependency": "Failed Dependency",
-      "Too Early": "Too Early",
-      "Upgrade Required": "Upgrade Required",
-      "Precondition Required": "Precondition Required",
-      "Too Many Requests": "Too Many Requests",
-      "Request Header Fields Too Large": "Request Header Fields Too Large",
-      "Unavailable For Legal Reasons": "Unavailable For Legal Reasons",
+      "Misdirected Request": "Неверный запрос",
+      "Unprocessable Entity": "Необрабатываемая единица",
+      "Locked": "Заблокировано",
+      "Failed Dependency": "Невыполненная зависимость",
+      "Too Early": "Слишком рано",
+      "Upgrade Required": "Требуется улучшение",
+      "Precondition Required": "Требуется выполнение предварительного условия",
+      "Too Many Requests": "Слишком много запросов",
+      "Request Header Fields Too Large": "Слишком большие поля заголовка запроса",
+      "Unavailable For Legal Reasons": "Недоступно по юридическим причинам",
       "Internal Server Error": "Внутренняя ошибка сервера",
-      "Not Implemented": "Not Implemented",
-      "Bad Gateway": "Bad Gateway",
+      "Not Implemented": "Не реализовано",
+      "Bad Gateway": "Плохой шлюз",
       "Service Unavailable": "Сервис недоступен",
-      "Gateway Timeout": "Gateway Timeout",
+      "Gateway Timeout": "Тайм-аут шлюза",
       "HTTP Version Not Supported": "Версия HTTP не поддерживается",
-      "Variant Also Negotiates": "Variant Also Negotiates",
+      "Variant Also Negotiates": "Вариант также согласовывается",
       "Insufficient Storage": "Недостаточно места для хранения",
-      "Loop Detected": "Loop Detected",
-      "Not Extended": "Not Extended",
-      "Network Authentication Required": "Network Authentication Required"
+      "Loop Detected": "Обнаружена петля",
+      "Not Extended": "Не продлевается",
+      "Network Authentication Required": "Требуется сетевая аутентификация"
     },
     "avatar": {
       "fileTypeNotSupported": "К сожалению, мы поддерживаем только файлы изображений типа jp(e)g и png.",
@@ -845,7 +849,10 @@
       "imageDimensionTooWide": "К сожалению, это изображение слишком широкое. Пожалуйста, выберите изображение, ширина которого в два раза меньше высоты.",
       "networkError": "Извините, произошла сетевая ошибка."
     },
-    "wrongOldPassword": "Неверный текущий пароль"
+    "wrongOldPassword": "Неверный текущий пароль",
+    "noEmailAccount": "Нет аккаунта, привязанного к этому адресу электронной почты. Пожалуйста, нажмите \"Присоединиться\", чтобы создать новый аккаунт.",
+    "registeredAccount": "С этим адресом электронной почты уже был зарегистрирован социальный аккаунт. Пожалуйста, нажмите «Присоединиться», чтобы создать учетную запись непосредственно с помощью адреса электронной почты и пароля.",
+    "failedLinkAccounts": "Не удалось связать аккаунты, причина:"
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",
@@ -988,7 +995,7 @@
     "to": "Кому",
     "send": "Отправить",
     "done": "Готово",
-    "close": "Close"
+    "close": "Закрыть"
   },
   "message": {
     "message": "Сообщение",
@@ -1004,28 +1011,28 @@
     "liked": "Пользователю <0>{{username}}</0> понравилось ваше сообщение <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> оставил(а) комментарий к вашему сообщению <1>{{postTitle}}</1>",
     "shared": "Пользователь <0>{{username}}</0> поделился вашим объявлением <1>{{postTitle}}</1> в <1>{{shareMedium}}</1>",
-    "empty": "No more notifications"
+    "empty": "Уведомлений больше нет"
   },
   "moderation": {
-    "report": "Report",
+    "report": "Жалоба",
     "cancel": "Отмена",
-    "finish": "Finish",
-    "reason": "Reason for reporting:",
-    "additionalDetails": "Additional details (optional)",
-    "enterDetails": "Please enter more details here...",
-    "reportPost": "Report Post",
-    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
-    "reportPostError": "Oops! something went wrong...",
-    "reportPostSuccessTitle": "Report Received",
-    "reportPostErrorTitle": "Oops!",
-    "spam": "Spam",
-    "inappropriateContent": "Inappropriate Content",
-    "violatesTerms": "Violates Terms",
+    "finish": "Закончить",
+    "reason": "Причина для жалобы:",
+    "additionalDetails": "Дополнительные сведения (необязательно)",
+    "enterDetails": "Пожалуйста, введите более подробную информацию здесь ...",
+    "reportPost": "Пожаловаться на объявление",
+    "reportPostSuccess": "Спасибо за ваше обращение! Объявление будет передано на рассмотрение",
+    "reportPostError": "Ой! Что-то пошло не так...",
+    "reportPostSuccessTitle": "Жалоба отправлена",
+    "reportPostErrorTitle": "Ой!",
+    "spam": "Спам",
+    "inappropriateContent": "Неприемлемое содержание",
+    "violatesTerms": "Нарушает условия Пользовательского соглашения",
     "other": "Другое",
-    "postSuspected": "This post received multiple reports and was held for review",
-    "showAnyway": "Show anyway",
-    "postHidden": "You have chosen to hide this post",
-    "unhide": "Unhide",
-    "youReported": "You have reported this post. It will no longer be visible on your feed"
+    "postSuspected": "На это объявление было получено несколько жалоб и оно ожидает рассмотрения",
+    "showAnyway": "Показать в любом случае",
+    "postHidden": "Вы решили скрыть это объявление",
+    "unhide": "Показать",
+    "youReported": "Вы пожаловались на это объявление. Оно больше не будет отображаться в вашей ленте."
   }
 }

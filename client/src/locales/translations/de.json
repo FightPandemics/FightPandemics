@@ -95,11 +95,11 @@
         "Technik",
         "Sonstigen",
         "Sonstiges",
-        "Childcare",
-        "Translations",
-        "freiwillig Helfen",
-        "Staff (paid)",
-        "Remote Work"
+        "Kinderbetreuung",
+        "Übersetzungen",
+        "Freiwillig Helfen",
+        "Personal (bezahlt)",
+        "Home Office Arbeit"
       ],
       "labels": {
         "location": "Standort",
@@ -131,12 +131,12 @@
         "R&D": "Forschung und Entwicklung",
         "Tech": "Technik",
         "Other": "Andere",
-        "Housing": "Housing",
-        "Childcare": "Childcare",
-        "Translations": "Translations",
+        "Housing": "Wohnen",
+        "Childcare": "Kinderbetreuung",
+        "Translations": "Übersetzungen",
         "Volunteer": "freiwillig Helfen",
-        "Staff (paid)": "Staff (paid)",
-        "Remote Work": "Remote Work"
+        "Staff (paid)": "Personal (bezahlt)",
+        "Remote Work": "Home Office Arbeit"
       },
       "lookingForOptions": {
         "Request Help": "Hilfe anfordern",
@@ -223,15 +223,15 @@
     "cancel": "Abbrechen",
     "confirm": "Bestätigen",
     "edited": "bearbeitet",
-    "share_plural": "Shares",
-    "deletePostConfirmationTitle": "Delete post confirmation",
-    "deleteCommentConfirmationTitle": "Delete comment confirmation",
+    "share_plural": "Anteile",
+    "deletePostConfirmationTitle": "Bestätigung löschen",
+    "deleteCommentConfirmationTitle": "Kommentarbestätigung löschen",
     "deleteConfirmation": "Löschen",
-    "edit": "Edit post",
-    "hideAction": "Hide post",
-    "hideCaption": "It is not relevant to me",
-    "reportAction": "Report Post",
-    "reportCaption": "For moderators review"
+    "edit": "Beitrag bearbeiten",
+    "hideAction": "Beitrag ausblenden",
+    "hideCaption": "Es ist für mich nicht relevant.",
+    "reportAction": "Beitrag melden",
+    "reportCaption": "Für die Überprüfung von Moderatoren"
   },
   "profile": {
     "common": {
@@ -278,13 +278,13 @@
       "sendMessage": "Nachricht senden",
       "securityInfo": "Sicherheitsinformationen",
       "changePassword": "Passwort ändern",
-      "notificationInfo": "Notification Preference",
-      "emailNotification": "Notification Email Settings",
-      "instant": "Instant",
-      "daily": "Daily",
-      "weekly": "Weekly",
-      "biweekly": "Biweekly",
-      "digest": "Digest",
+      "notificationInfo": "Benachrichtigungseinstellungen",
+      "emailNotification": "Benachrichtigungs-E-Mail-Einstellungen",
+      "instant": "Sofort",
+      "daily": "Täglich",
+      "weekly": "Wöchentlich",
+      "biweekly": "Zweiwöchentlich",
+      "digest": "Zusammenfassung",
       "on": "On",
       "off": "Off"
     },
@@ -324,8 +324,8 @@
       "enterNewPassword": "Neues Passwort eingeben",
       "updatingPassword": "Passwort aktualisieren",
       "editSecurity": "Sicherheit bearbeiten",
-      "editNotification": "Edit Notification",
-      "editAccount": "Edit Account"
+      "editNotification": "Benachrichtigung bearbeiten",
+      "editAccount": "Konto bearbeiten"
     },
     "org": {
       "title": "Organisationsprofil erstellen",
@@ -389,8 +389,8 @@
       "updateSuccess": "Organisation erfolgreich aktualisiert",
       "orgNameRequired": "Name der Organisation ist erforderlich",
       "global": "Global",
-      "editOrgAccount": "Edit Organization Account",
-      "editOrgNotification": "Edit Organization Notification"
+      "editOrgAccount": "Organisationskonto bearbeiten",
+      "editOrgNotification": "Organisationsbenachrichtigung bearbeiten"
     }
   },
   "auth": {
@@ -412,7 +412,8 @@
     "passwordMin": "Das Passwort muss mindestens {{num}} Zeichen lang sein.",
     "passwordConfirmationRequired": "Eine Passwortbestätigung ist erforderlich.",
     "passwordNotMatch": "Passwörter stimmen nicht überein",
-    "backHome": "Zurück zum Startbildschirm"
+    "backHome": "Zurück zum Startbildschirm",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Überprüfe deinen Posteingang",
@@ -461,13 +462,16 @@
     "joinStudentProgram": "Am Schülerprogramm teilnehmen",
     "studentSummerProgram": "Sommerprogramm für Schüler",
     "forStudentInAge": "Für Schüler im Alter von 14-18 Jahren.",
-    "press": "Press",
-    "pressInfo": "If you're a member of the press, contact us at",
-    "pressKitLink": "Go to Press Kit",
-    "communityPartners": "Community Partners",
-    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
-    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
-    "currentPartners": "Current Community Partners"
+    "press": "Presse",
+    "pressInfo": "Wenn du Mitglied der Presse bist, kontaktiere uns unter",
+    "pressKitLink": "Zum Presse-Kit",
+    "communityPartners": "Community-Partner",
+    "communityCollaboration": "Wir möchten Gemeinschaften und Organisationen auf der ganzen Welt über unsere Plattform stärken, und dazu müssen wir zusammenarbeiten! Durch die kontinuierliche Zusammenarbeit mit unseren Community-Partnern können wir eine bessere Plattform für sie und andere schaffen.",
+    "becomeCommunityPartner": "Möchtest du, dass deine Community auch zum Partner wird? Wir würden uns freuen, von dir zu hören und zusammenzuarbeiten! Erreiche uns unter ",
+    "currentPartners": "Aktuelle Community-Partner",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "Häufig gestellte Fragen",
@@ -632,7 +636,7 @@
       ],
       [
         "Ich brauche technische Unterstützung.",
-        "Das tut uns leid. Sende uns eine E-Mail an <0> help@fightpandemics.com. </0> Da wir ein Team von Freiwilligen sind, rechne bitte mit mindestens 48 Stunden für eine Antwort."
+        "Das tut uns leid. Sende uns eine E-Mail an <0> support@fightpandemics.com. </0> Da wir ein Team von Freiwilligen sind, rechne bitte mit mindestens 48 Stunden für eine Antwort."
       ],
       [
         "Ich möchte mich aus anderen Gründen an FightPandemics wenden.",
@@ -651,7 +655,7 @@
       ],
       [
         "Ich brauche technische Unterstützung.",
-        "Das tut uns leid. Sende uns eine E-Mail an <0> support@fightpandemics.com. </0> Da wir ein Team von Freiwilligen sind, rechne bitte mit mindestens 48 Stunden für eine Antwort."
+        "Das tut uns leid. Sende uns eine E-Mail an <0>support@fightpandemics.com</0>. Da wir ein Team von Freiwilligen sind, rechne bitte mit mindestens 48 Stunden für eine Antwort."
       ],
       [
         "Ich möchte mich aus anderen Gründen an FightPandemics wenden.",
@@ -845,7 +849,10 @@
       "imageDimensionTooWide": "Das Bild ist leider zu breit. Bitte versuche es erneut mit einem Bild mit einer Breite von weniger als der doppelten Höhe.",
       "networkError": "Ein Netzwerkfehler ist aufgetreten."
     },
-    "wrongOldPassword": "Falsches aktuelles Passwort"
+    "wrongOldPassword": "Falsches aktuelles Passwort",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "Wir sind kein Gesundheitsdienstleister",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Dieser Service wird als hilfreiche Option für jene angeboten,\ndie zur Zeit nicht in der Lage sind anderweitig Resourcen \noder Hilfe zu erlangen.",
@@ -996,36 +1003,36 @@
   },
   "notifications": {
     "unsubscribe": {
-      "unsubscribe": "Unsubscribe",
-      "canceled": "No changes will be made to your notification preferences",
-      "success": "Your notification preference is updated"
+      "unsubscribe": "Abbestellen",
+      "canceled": "Es werden keine Änderungen an deinen Benachrichtigungseinstellungen vorgenommen.",
+      "success": "Deine Benachrichtigungseinstellungen werden aktualisiert"
     },
-    "header": "Notifications",
-    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
-    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
-    "empty": "No more notifications"
+    "header": "Benachrichtigungen",
+    "liked": "<0>{{username}}</0> gefiel dein Beitrag <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> hat deinen Beitrag <1>{{postTitle}}</1> kommentiert",
+    "shared": "<0>{{username}}</0> hat deinen Beitrag <1>{{postTitle}}</1> auf <1>{{shareMedium}}</1> geteilt",
+    "empty": "Keine Benachrichtigungen mehr"
   },
   "moderation": {
-    "report": "Report",
+    "report": "Melden",
     "cancel": "Abbrechen",
-    "finish": "Finish",
-    "reason": "Reason for reporting:",
-    "additionalDetails": "Additional details (optional)",
-    "enterDetails": "Please enter more details here...",
-    "reportPost": "Report Post",
-    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
-    "reportPostError": "Oops! something went wrong...",
-    "reportPostSuccessTitle": "Report Received",
-    "reportPostErrorTitle": "Oops!",
+    "finish": "Fertig",
+    "reason": "Grund für die Meldung:",
+    "additionalDetails": "Zusätzliche Angaben (optional)",
+    "enterDetails": "Bitte gib hier weitere Details ein ...",
+    "reportPost": "Beitrag melden",
+    "reportPostSuccess": "Vielen Dank für deine Meldung! Dieser Beitrag wird überprüft.",
+    "reportPostError": "Hoppla! Da ist etwas schiefgelaufen...",
+    "reportPostSuccessTitle": "Meldung erhalten",
+    "reportPostErrorTitle": "Hoppla!",
     "spam": "Spam",
-    "inappropriateContent": "Inappropriate Content",
-    "violatesTerms": "Violates Terms",
+    "inappropriateContent": "Unangemessene Inhalte",
+    "violatesTerms": "Verstößt gegen die Bestimmungen",
     "other": "Sonstiges",
-    "postSuspected": "This post received multiple reports and was held for review",
-    "showAnyway": "Show anyway",
-    "postHidden": "You have chosen to hide this post",
-    "unhide": "Unhide",
-    "youReported": "You have reported this post. It will no longer be visible on your feed"
+    "postSuspected": "Dieser Beitrag erhielt mehrere Meldungen und wird überprüft",
+    "showAnyway": "Trotzdem anzeigen",
+    "postHidden": "Du hast diesen Beitrag ausgeblendet",
+    "unhide": "Einblenden",
+    "youReported": "Du hast diesen Beitrag gemeldet. Es wird in deinem Feed nicht mehr angezeigt"
   }
 }

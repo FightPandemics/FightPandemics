@@ -94,6 +94,9 @@ async function routes(app) {
             { firstName: keywordsRegex },
             { lastName: keywordsRegex },
             { about: keywordsRegex },
+            { "location.country": keywordsRegex },
+            { "location.state": keywordsRegex },
+            { "location.city": keywordsRegex },
           ],
         });
       }
@@ -388,27 +391,25 @@ async function routes(app) {
     },
   );
 
-  app.post(
-    "/current/avatar",
-    { preValidation: [app.authenticate], schema: createUserAvatarSchema },
-    async (req) => {
-      const { file } = req.raw.files;
+  const updateUserAvatar = async (req, file) => {
+    // set input 'file' to be null for delete case
+    return new Promise(async (resolve) => {
       const { userId } = req;
 
       const [err, user] = await app.to(User.findById(userId));
       if (err) {
         req.log.error(err, `Failed retrieving user userId=${userId}`);
-        throw app.httpErrors.internalServerError();
+        reject(app.httpErrors.internalServerError());
       } else if (user === null) {
-        throw app.httpErrors.notFound();
+        reject(app.httpErrors.notFound());
       }
       try {
-        const avatarUrl = await uploadUserAvatar(userId, file);
-        user.photo = avatarUrl;
+        // set user photo to be null when deleting avatar
+        user.photo = file ? await uploadUserAvatar(userId, file) : null;
         const [updateErr, updatedUser] = await app.to(user.save());
         if (updateErr) {
           req.log.error(updateErr, "Failed updating user");
-          throw app.httpErrors.internalServerError();
+          reject(app.httpErrors.internalServerError());
         }
 
         // -- Update Author photo references if needed
@@ -453,12 +454,37 @@ async function routes(app) {
           req.log.error(threadErr, "Failed updating author photo at threads");
         }
 
-        return {
+        resolve({
           updatedUser,
-        };
+        });
       } catch (error) {
-        req.log.error(error, "Failed updating user avatar.");
-        throw app.httpErrors.internalServerError();
+        req.log.error(error, "Failed updating user avatar.", file);
+        reject(app.httpErrors.internalServerError());
+      }
+    });
+  };
+
+  app.post(
+    "/current/avatar",
+    { preValidation: [app.authenticate], schema: createUserAvatarSchema },
+    async (req) => {
+      const { file } = req.raw.files;
+      try {
+        return await updateUserAvatar(req, file);
+      } catch (err) {
+        throw err;
+      }
+    },
+  );
+
+  app.delete(
+    "/current/avatar",
+    { preValidation: [app.authenticate] },
+    async (req) => {
+      try {
+        return await updateUserAvatar(req, null);
+      } catch (err) {
+        throw err;
       }
     },
   );

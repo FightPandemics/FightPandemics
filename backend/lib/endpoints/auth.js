@@ -135,12 +135,13 @@ async function routes(app) {
     },
   );
 
-  const getExistingAccount = (serverToken, email) => {
+  const getExistingAccount = (serverToken, email, forVerified) => {
     return new Promise(async (resolve, reject) => {
       try {
         const otherAccounts = await Auth0.getAccountsWithSameEmail(
           serverToken,
           email,
+          forVerified,
         );
         // the first account with valid Database record will be the primary account
         let provider = null;
@@ -221,6 +222,7 @@ async function routes(app) {
           const { noAccount, provider } = await getExistingAccount(
             req.token,
             email,
+            false,
           );
           if (noAccount)
             throw app.httpErrors.badRequest(
@@ -324,6 +326,7 @@ async function routes(app) {
         const { primaryAuthId, otherAccounts } = await getExistingAccount(
           serverToken,
           email,
+          true,
         );
         if (!primaryAuthId) return { primaryAuthId }; // no account with Database record (profile) yet
         // link accounts (current and legacy dangling accounts) to the primary account

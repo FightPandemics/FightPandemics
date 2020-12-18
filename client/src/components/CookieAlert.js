@@ -14,7 +14,8 @@ const CookieContainer = styled.div`
   background: ${colors.darkerGray};
   color: ${colors.selago};
   display: flex;
-  font-family: Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 1rem;
   line-height: 2rem;
   justify-content: center;
@@ -24,7 +25,7 @@ const CookieContainer = styled.div`
   left: 0;
   right: 0;
   text-align: left;
-  z-index: 2;
+  z-index: 999999;
 `;
 
 const CookieLink = styled.a`

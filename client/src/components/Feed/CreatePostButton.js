@@ -1,4 +1,4 @@
-
+import React from "react";
 import SelectWithIconButton from "components/Button/SelectWithIconButton";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
@@ -6,7 +6,7 @@ import { theme, mq } from "constants/theme";
 const CreatePostBtn = styled(SelectWithIconButton)`
   border-radius: 4.6rem;
   background-color: ${theme.colors.royalBlue};
-  color: #ffffff!important;
+  color: #ffffff !important;
   svg {
     margin-right: 1rem;
     width: 1.7rem;
@@ -22,8 +22,23 @@ const CreatePostBtn = styled(SelectWithIconButton)`
     }
   }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: none!important;
+    display: none !important;
   }
 `;
 
-export default CreatePostBtn;
+const GtmContainer = styled.span`
+  * {
+    pointer-events: none;
+  }
+  cursor: pointer;
+`;
+
+function createPostButton({ onClick, id, ...others }) {
+  return (
+    <GtmContainer id={id} onClick={onClick}>
+      <CreatePostBtn {...others} />
+    </GtmContainer>
+  );
+}
+
+export default createPostButton;

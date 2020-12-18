@@ -71,9 +71,7 @@ const Messages = ({
     getScrollToBottom.current = scrollToBottom;
   }, [getScrollToBottom]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  const isMobile = () => {
-    return window.screen.width <= parseInt(mq.phone.wide.maxWidth);
-  };
+  const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
 
   const linkify = (text) => {
     let urlRegex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
@@ -149,7 +147,7 @@ const Messages = ({
 
   function startMessageEditing(messageId, content) {
     setEditingMessageId(messageId);
-    if (isMobile()) {
+    if (isMobile) {
       setText(content);
       if (inputRef.current && inputRef.current?.focus) {
         inputRef.current.focus();
@@ -182,7 +180,11 @@ const Messages = ({
     event.preventDefault();
     Modal.operation([
       {
-        text: t("messaging.edit"),
+        text: (
+          <Text style={{ display: "block" }} id={gtmPrefix + GTM.inbox.mobileEdit}>
+            {t("messaging.edit")}
+          </Text>
+        ),
         onPress: () => {
           startMessageEditing(messageId, message);
         },
@@ -232,15 +234,12 @@ const Messages = ({
         <SenderBubble
           editingMode={editingMessageId === messageId}
           className={`${isDeleted ? "deleted" : ""}`}
-          onContextMenu={(e) => {
-            e.stopPropagation()
-            if (isDeleted) return;
-            mobileContextMenu(e, messageId, message);
-          }}
-          onTouchCancel={(e) => {
-            e.stopPropagation()
-            if (isDeleted) return;
-            mobileContextMenu(e, messageId, message);
+          onClick={(e) => {
+            if (isMobile) {
+              e.stopPropagation();
+              if (isDeleted) return;
+              mobileContextMenu(e, messageId, message);
+            }
           }}
         >
           {!isDeleted && editingMessageId !== messageId && (
@@ -254,7 +253,7 @@ const Messages = ({
               </MessageMenu>
             </Dropdown>
           )}
-          {postRef && !(!isMobile() && editingMessageId === messageId) && (
+          {postRef && !(!isMobile && editingMessageId === messageId) && (
             <OrgPost postRef={postRef} />
           )}
           <div className="message-content-sender">
@@ -262,7 +261,7 @@ const Messages = ({
               ? linkify(message)
               : t("messaging.didDelete")}
           </div>
-          {!isMobile() && editingMessageId === messageId && (
+          {!isMobile && editingMessageId === messageId && (
             <textarea
               key={"t-area-" + messageId}
               ref={editTextArea}
@@ -271,7 +270,7 @@ const Messages = ({
             ></textarea>
           )}
         </SenderBubble>
-        {!isMobile() && editingMessageId === messageId && (
+        {!isMobile && editingMessageId === messageId && (
           <div key={"m-edit-" + messageId} className={"edit-controls"}>
             <button onClick={() => cancelMessageEditing()}>
               {t("messaging.cancel")}
