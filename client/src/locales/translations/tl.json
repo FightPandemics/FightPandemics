@@ -1,6 +1,6 @@
 {
   "headline": "Isang lugar upang mag-alok at humiling ng tulong",
-  "tagline": "< 0 > Patuloy na mangyayari ang mga pandemiko. < / 0 > < 1 > Tinutulungan namin ang mga komunidad na maghanda at tumugon. < / 1 >",
+  "tagline": "<0> Patuloy na mangyayari ang mga pandemiko. </0> <1> Tinutulungan namin ang mga komunidad na maghanda at tumugon. </1>",
   "common": {
     "getHelp": "Humiling ng Tulong",
     "giveHelp": "Mag-alok ng Tulong ",
@@ -36,7 +36,7 @@
       "shareLocation": "Ibahagi ang Aking Lokasyon",
       "showAnywhere": "Ipakita sa akin ang mga post mula sa kahit saan",
       "whatEmail": "Ano ang iyong email address?",
-      "respectPrivacy": "Iginagalang namin ang iyong privacy. Mangyaring basahin ang aming at < 1 > Patakaran sa Privacy < / 1 > at < 3 > Tuntunin at Kundisyon. < / 3 >",
+      "respectPrivacy": "Iginagalang namin ang iyong privacy. Mangyaring basahin ang aming at <1> Patakaran sa Privacy </1> at <3> Tuntunin at Kundisyon. </3>",
       "enterEmail": "Ilagay ang iyong email address..."
     },
     "needHelp": {
@@ -144,11 +144,11 @@
       }
     },
     "filterBy": "Salain ng",
-    "noResults": "Paumanhin, kasalukuyang walang magagamit na mga nauugnay na post. Mangyaring subukang gumamit ng ibang paghahanap sa filter o < 0 > lumikha ng isang post < / 0 > .",
+    "noResults": "Paumanhin, kasalukuyang walang magagamit na mga nauugnay na post. Mangyaring subukang gumamit ng ibang paghahanap sa filter o <0> lumikha ng isang post </0> .",
     "allPosts": "Lahat ng mga post",
     "allPeople": "Lahat ng tao",
     "allOrgs": "Lahat ng mga samahan",
-    "noResultsPosts": "Paumanhin, kasalukuyang walang magagamit na mga nauugnay na post. Mangyaring subukang gumamit ng ibang paghahanap sa filter o < 0 > lumikha ng isang post < / 0 > .",
+    "noResultsPosts": "Paumanhin, kasalukuyang walang magagamit na mga nauugnay na post. Mangyaring subukang gumamit ng ibang paghahanap sa filter o <0> lumikha ng isang post </0> .",
     "noResultsPeople": "Paumanhin, kasalukuyang walang magagamit na mga kaugnay na Indibidwal. Mangyaring subukang gumamit ng ibang paghahanap sa filter.",
     "noResultsOrgs": "Paumanhin, kasalukuyang walang magagamit na mga nauugnay na samahan. Mangyaring subukang gumamit ng ibang paghahanap sa filter.",
     "search": {
@@ -239,8 +239,8 @@
       "profileInfo": "Impormasyon sa Profile",
       "address": "Address",
       "enterAddress": "Isulat ang address, zip code, o lungsod",
-      "agreePrivacy": "Sa pamamagitan ng pag-sign up, sumasang-ayon ako sa < 0 > Patakaran sa Privacy < / 0 >",
-      "agreeTerms": "Sa pamamagitan ng pag-sign up, sumasang-ayon ako sa < 0 > Tuntunin at Kundisyon < / 0 >",
+      "agreePrivacy": "Sa pamamagitan ng pag-sign up, sumasang-ayon ako sa <0> Patakaran sa Privacy </0>",
+      "agreeTerms": "Sa pamamagitan ng pag-sign up, sumasang-ayon ako sa <0> Tuntunin at Kundisyon </0>",
       "createProfile": "Lumikha ng iyong profile",
       "saveChanges": "I-save ang mga pagbabago",
       "thankyou": "Salamat sa pagsali sa aming komunidad!",
@@ -412,7 +412,8 @@
     "passwordMin": "Ang password ay dapat na hindi bababa sa {{num}} character.",
     "passwordConfirmationRequired": "Kailangan ang kumpirmasyon ng password.",
     "passwordNotMatch": "Hindi tumutugma ang mga password",
-    "backHome": "Bumalik sa Home Screen"
+    "backHome": "Bumalik sa Home Screen",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Tingnan ang iyong inbox or \"I-check ang iyong inbox\"",
@@ -467,7 +468,10 @@
     "communityPartners": "Community Partners",
     "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
     "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
-    "currentPartners": "Current Community Partners"
+    "currentPartners": "Current Community Partners",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "FAQ",
@@ -492,7 +496,7 @@
       [
         "Sino ang FightPandemics?",
         "Ang FightPandemics ay isang purong-boluntaryo at pandaigdigang na koponan na may isang misyon na maglingkod bilang isang mapupuntahang lugar para sa tulong. Ang aming koponan ay binubuo ng 150+ na nakikibahagi na mga boluntaryo mula sa 70+ na mga bansa na nagsusumikap na gumawa ng isang pagkakaiba. Ang platform ay itinayo sa isang makabagong pagsisikap sa pagtutulungan, pinagsasama-sama ang magkakaibang pangkat ng mga problem solvers na may malawak na hanay ng mga kasanayang handang makipagtulungan at matuto sa isa't isa.",
-        "Nais mo bang sumali sa aming pagkukusa? Alamin sa < 0 > hr@fightpandemics.com < / 0 >"
+        "Nais mo bang sumali sa aming pagkukusa? Alamin sa <0> hr@fightpandemics.com </0>"
       ],
       [
         "Saang mga lungsod nagpapatakbo ang FightPandemics?",
@@ -504,11 +508,11 @@
       ],
       [
         "Paano ako makakapag-post ng isang alok o humiling ng tulong sa FightPandemics?",
-        "< 0 > Kapag sumali ka sa komunidad, magkakaroon ka ng walang limitasyong pag-access upang matingnan at lumikha ng mga post at komento sa platform ng FightPandemics. < / 0 > < 1 > Upang sumali sa komunidad bilang isang gumagamit, i-click ang pindutang \"Menu\" at piliin ang opsyong \"Sumali Ngayon / Mag-sign In\". Doon ay makakasali ka sa iyong pagpipilian ng email o mga kredensyal sa social media. < / 1 > < 2 > Kapag nakumpleto mo na ang iyong profile, piliin ang pindutan ng menu, piliin ang tingnan ang aking profile at mag-click sa plus button upang likhain ang iyong unang post. < / 2 >"
+        "<0> Kapag sumali ka sa komunidad, magkakaroon ka ng walang limitasyong pag-access upang matingnan at lumikha ng mga post at komento sa platform ng FightPandemics. </0> <1> Upang sumali sa komunidad bilang isang gumagamit, i-click ang pindutang \"Menu\" at piliin ang opsyong \"Sumali Ngayon / Mag-sign In\". Doon ay makakasali ka sa iyong pagpipilian ng email o mga kredensyal sa social media. </1> <2> Kapag nakumpleto mo na ang iyong profile, piliin ang pindutan ng menu, piliin ang tingnan ang aking profile at mag-click sa plus button upang likhain ang iyong unang post. </2>"
       ],
       [
         "Paano ko mapapanatili ang napapanahon sa balita ng FightPandemics?",
-        "Mangyaring sundin kami sa social media! Nag-post kami ng mga regular na pag-update sa < 0 > Facebook < / 0 > , < 1 > Twitter < / 1 > , < 2 > LinkedIn < / 2 > , at < 3 > Instagram < / 3 > ."
+        "Mangyaring sundin kami sa social media! Nag-post kami ng mga regular na pag-update sa <0> Facebook </0> , <1> Twitter </1> , <2> LinkedIn </2> , at <3> Instagram </3> ."
       ],
       [
         "Kailangan ko bang magbayad upang magamit ang FightPandemics?",
@@ -517,7 +521,7 @@
       [
         "Anong uri ng tulong ang maaari kong i-alok / ihiling sa FightPandemics?",
         "Malugod kang humiling at mag-aalok ng anumang uri ng tulong upang suportahan ang mga indibidwal at samahan na makayanan sa panahon ng COVID-19 pandemya. Narito ang isang listahan na may ilang mga halimbawa ng uri ng tulong na maaari mong maalok o hilingin:",
-        "< 0 > Groceries < / 0 > < 1 > medikal na suplay < / 1 > < 2 > Legal na tulong < / 2 > < 3 > Suporta sa teknolohiya < / 3 > < 4 > Impormasyon < / 4 > < 5 > Pagpopondo < / 5 > < 6 > kaganapan at aktibidad < / 6 > < 7 > Edukasyon < / 7 > < 8 > Kaayusan < / 8 > < 9 > Pananaliksik at pag-unlad < / 9 >"
+        "<0> Groceries </0>  <1> medikal na suplay </1> <2> Legal na tulong </2> <3> Suporta sa teknolohiya </3> <4> Impormasyon </4>  <5> Pagpopondo </5> <6> kaganapan at aktibidad </6> <7> Edukasyon </7> <8> Kaayusan </8> <9> Pananaliksik at pag-unlad </9>"
       ],
       [
         "Paano ako makakahanap ng tulong?",
@@ -525,7 +529,7 @@
       ],
       [
         "Paano ako mag-aalok ng tulong?",
-        "< 0 > Maaari kang mag-alok ng tulong bilang isang indibidwal o bilang isang samahan. < / 0 > < 1 > Mula sa homepage, piliin ang \"Magbigay ng tulong\" upang makita ang lahat ng mga post na nilikha ng mga gumagamit na humihingi ng tulong at salain ang mga resulta ayon sa lokasyon at uri. Kailangan mong mag-sign in upang maabot ang mga ito. Maaari ka ring lumikha ng iyong sariling mga pag-post na naglalarawan sa tulong na maalok mo. < / 1 >"
+        "<0> Maaari kang mag-alok ng tulong bilang isang indibidwal o bilang isang samahan. </0> <1> Mula sa homepage, piliin ang \"Magbigay ng tulong\" upang makita ang lahat ng mga post na nilikha ng mga gumagamit na humihingi ng tulong at salain ang mga resulta ayon sa lokasyon at uri. Kailangan mong mag-sign in upang maabot ang mga ito. Maaari ka ring lumikha ng iyong sariling mga pag-post na naglalarawan sa tulong na maalok mo. </1>"
       ],
       [
         "Kailangan ba akong mag-sign in upang matingnan ang mga kahilingan at alok na tulong?",
@@ -545,7 +549,7 @@
       ],
       [
         "Paano ko maaasahan na maaasahan ang mga post?",
-        "Sa kasamaang palad, hindi namin masiguro na ang lahat ng mga pag-post ay maaasahan, dahil ang mga post ay nilikha ng aming mga gumagamit. Gayunpaman ginagawa namin ang aming makakaya upang mapanatili ang nauugnay na nilalaman, sa pamamagitan ng paggawa ng regular na paglilinis ng data at sa pamamagitan ng pagdi-deactivate ng mga post pagkatapos ng kanilang pag-expire. Kung mayroon kang mga alalahanin tungkol sa nilalaman ng isang post mangyaring makipag-ugnay sa amin sa < 0 > support@fightpandemics.com < / 0 >"
+        "Sa kasamaang palad, hindi namin masiguro na ang lahat ng mga pag-post ay maaasahan, dahil ang mga post ay nilikha ng aming mga gumagamit. Gayunpaman ginagawa namin ang aming makakaya upang mapanatili ang nauugnay na nilalaman, sa pamamagitan ng paggawa ng regular na paglilinis ng data at sa pamamagitan ng pagdi-deactivate ng mga post pagkatapos ng kanilang pag-expire. Kung mayroon kang mga alalahanin tungkol sa nilalaman ng isang post mangyaring makipag-ugnay sa amin sa <0> support@fightpandemics.com </0>"
       ],
       [
         "Maaari mo ba akong tulungan sa mga medikal na isyu?",
@@ -561,15 +565,15 @@
       ],
       [
         "Nakakita ako ng isang bug sa website. Paano ko ito maiuulat?",
-        "Mangyaring magsumite ng puna, o makipag-ugnay sa < 0 > support@fightpandemics.com. < / 0 >"
+        "Mangyaring magsumite ng puna, o makipag-ugnay sa <0> support@fightpandemics.com. </0>"
       ],
       [
         "Hindi na ako pinapayagan na gumamit ng FightPandemics - ano ang gagawin ko?",
-        "Mangyaring makipag-ugnay sa amin sa < 0 > support@fightpandemics.com < / 0 > at susuriin namin kung ano ang isyu sa iyong account."
+        "Mangyaring makipag-ugnay sa amin sa <0> support@fightpandemics.com </0> at susuriin namin kung ano ang isyu sa iyong account."
       ],
       [
         "Anong impormasyon ang naiimbak mo?",
-        "Kinokolekta at pinoproseso ng FightPandemics ang mga gumagamit ng personal na data lamang para sa mga layuning inilarawan sa aming < 0 > patakaran sa privacy. < / 0 > Sa anumang kaso ay magbibigay kami ng pag-access o pagbabahagi ng iyong personal na data sa anumang third party, maliban sa mga nauugnay na tao na nakalagay sa patakarang ito."
+        "Kinokolekta at pinoproseso ng FightPandemics ang mga gumagamit ng personal na data lamang para sa mga layuning inilarawan sa aming <0> patakaran sa privacy. </0> Sa anumang kaso ay magbibigay kami ng pag-access o pagbabahagi ng iyong personal na data sa anumang third party, maliban sa mga nauugnay na tao na nakalagay sa patakarang ito."
       ],
       [
         "Maaari ba akong magbigay / makatanggap ng tulong mula sa aking lungsod o estado? Gaano katagal makikita ang post?",
@@ -577,13 +581,13 @@
       ],
       [
         "Ang aking katanungan ay hindi nakalista. Kanino ako makikipag-ugnay?",
-        "Para sa mga pangkalahatang katanungan at iba pang mga isyu na hindi nakalista dito, makipag-ugnay sa < 0 > contact@fightpandemics.com. < / 0 >"
+        "Para sa mga pangkalahatang katanungan at iba pang mga isyu na hindi nakalista dito, makipag-ugnay sa <0> contact@fightpandemics.com. </0>"
       ]
     ],
     "accountFAQ": [
       [
         "Paano ako sasali?",
-        "< 0 > Upang sumali sa komunidad bilang isang gumagamit, i-click ang pindutang \"Menu\" at piliin ang opsyong \"Sumali Ngayon / Mag-sign In\". Doon ay makakasali ka sa iyong pagpipilian ng email o mga kredensyal sa social media. < / 0 > < 1 > Kapag sumali ka sa komunidad, magkakaroon ka ng walang limitasyong pag-access upang matingnan at lumikha ng mga post at komento sa platform ng FightPandemics. < / 1 >"
+        "<0> Upang sumali sa komunidad bilang isang gumagamit, i-click ang pindutang \"Menu\" at piliin ang opsyong \"Sumali Ngayon / Mag-sign In\". Doon ay makakasali ka sa iyong pagpipilian ng email o mga kredensyal sa social media. </0> <1> Kapag sumali ka sa komunidad, magkakaroon ka ng walang limitasyong pag-access upang matingnan at lumikha ng mga post at komento sa platform ng FightPandemics. </1>"
       ],
       [
         "Paano ko mababago ang aking indibidwal na profile sa isang profile na pang-samahan?",
@@ -606,11 +610,11 @@
         "Kung hindi ka pa nakakatanggap ng isang email sa pagkumpirma mangyaring subukan ang mga sumusunod na pagpipilian:",
         "Tingnan ang iyong Spam folder para sa pag-recover sa email.",
         "Subukan ang proseso na \"Ibalik ang password\".",
-        "Kung ang mga pagpipilian sa itaas ay hindi malulutas ang problema, mangyaring huwag mag-atubiling makipag-ugnay sa aming koponan ng suporta: < 0 > support@fightpandemics.com. < / 0 >"
+        "Kung ang mga pagpipilian sa itaas ay hindi malulutas ang problema, mangyaring huwag mag-atubiling makipag-ugnay sa aming koponan ng suporta: <0> support@fightpandemics.com. </0>"
       ],
       [
         "Paano ko tatanggalin / kakanselahin ang aking account?",
-        "Kung nais mong tanggalin ang iyong account, mangyaring makipag-ugnay sa amin sa < 0 > support@fightpandemics.com. < / 0 >"
+        "Kung nais mong tanggalin ang iyong account, mangyaring makipag-ugnay sa amin sa <0> support@fightpandemics.com. </0>"
       ],
       [
         "Paano ko maa-update ang aking impormasyon sa profile?",
@@ -618,36 +622,17 @@
       ],
       [
         "Paano ako mag-uulat ng isang hindi tama o nakakasakit na post?",
-        "Kung makakita ka ng isang post na hindi tama o lumalabag sa Code of Conduct ng FightPandemics, mangyaring mag-email sa amin sa < 0 > support@fightpandemics.com. < / 0 >"
+        "Kung makakita ka ng isang post na hindi tama o lumalabag sa Code of Conduct ng FightPandemics, mangyaring mag-email sa amin sa <0> support@fightpandemics.com. </0>"
       ]
     ],
     "contectsFAQ": [
       [
         "Gusto kong maging partner o sponsor.",
-        "Mangyaring makipag-ugnay sa aming koponan sa pakikipagsosyo sa < 0 > pakikipagsosyo@fightpandemics.com. < / 0 >"
+        "Mangyaring makipag-ugnay sa aming koponan sa pakikipagsosyo sa <0> partnerships@fightpandemics.com. </0>"
       ],
       [
         "\"Taga-press/media ako\" or \"Ako ay taga-press/media.\" ",
-        "Mangyaring makipag-ugnay sa amin sa < 0 > pr@fightpandemics.com. < / 0 >"
-      ],
-      [
-        "Kailangan ko ng suportang panteknikal.",
-        "Humihingi kami ng paumanhin para sa ganoon. Magpadala sa amin ng isang email sa < 0 > help@fightpandemics.com. < / 0 > Dahil lahat kami ay koponan ng boluntaryo, mangyaring asahan ang hindi bababa sa 48 oras para sa isang tugon."
-      ],
-      [
-        "Nais kong makipag-ugnay sa FightPandemics para sa iba pang mga kadahilanan.",
-        "Para sa mga pangkalahatang katanungan at iba pang mga isyu na hindi nakalista dito, mangyaring makipag-ugnay sa < 0 > contact@fightpandemics.com. < / 0 >"
-      ]
-    ],
-    "contacts": "Mga contact",
-    "contactsFAQ": [
-      [
-        "Gusto kong maging partner o sponsor.",
-        "Mangyaring makipag-ugnay sa aming koponan sa pakikipagsosyo sa < 0 > pakikipagsosyo@fightpandemics.com. < / 0 >"
-      ],
-      [
-        "\"Taga-press/media ako\" or \"Ako ay taga-press/media.\" ",
-        "Mangyaring makipag-ugnay sa amin sa < 0 > pr@fightpandemics.com. < / 0 >"
+        "Mangyaring makipag-ugnay sa amin sa <0> pr@fightpandemics.com. </0>"
       ],
       [
         "Kailangan ko ng suportang panteknikal.",
@@ -655,23 +640,42 @@
       ],
       [
         "Nais kong makipag-ugnay sa FightPandemics para sa iba pang mga kadahilanan.",
-        "Para sa mga pangkalahatang katanungan at iba pang mga isyu na hindi nakalista dito, mangyaring makipag-ugnay sa < 0 > contact@fightpandemics.com. < / 0 >"
+        "Para sa mga pangkalahatang katanungan at iba pang mga isyu na hindi nakalista dito, mangyaring makipag-ugnay sa <0> contact@fightpandemics.com. </0>"
+      ]
+    ],
+    "contacts": "Mga contact",
+    "contactsFAQ": [
+      [
+        "Gusto kong maging partner o sponsor.",
+        "Mangyaring makipag-ugnay sa aming koponan sa pakikipagsosyo sa <0> partnerships@fightpandemics.com. </0>"
+      ],
+      [
+        "\"Taga-press/media ako\" or \"Ako ay taga-press/media.\" ",
+        "Mangyaring makipag-ugnay sa amin sa <0> pr@fightpandemics.com. </0>"
+      ],
+      [
+        "Kailangan ko ng suportang panteknikal.",
+        "Humihingi kami ng paumanhin para sa ganoon. Magpadala sa amin ng isang email sa <0> support@fightpandemics.com</0>. Dahil lahat kami ay koponan ng boluntaryo, mangyaring asahan ang hindi bababa sa 48 oras para sa isang tugon."
+      ],
+      [
+        "Nais kong makipag-ugnay sa FightPandemics para sa iba pang mga kadahilanan.",
+        "Para sa mga pangkalahatang katanungan at iba pang mga isyu na hindi nakalista dito, mangyaring makipag-ugnay sa <0> contact@fightpandemics.com. </0>"
       ]
     ],
     "faqTitle": "Mga Madalas Itanong"
   },
   "cookies": {
     "whatCookies": "ANO ANG COOKIES?",
-    "whatCookiesContent": "< 0 > Ang Website na ito ay gumagamit ng ¨Cookies¨, at iba pang mga katulad na mekanismo (simula dito, Cookies). Ang mga cookie ay mga file na ipinadala sa isang browser sa pamamagitan ng isang web server upang maitala ang mga aktibidad ng Gumagamit sa isang tukoy na website o sa lahat ng mga website, app at / o mga serbisyo sa website na ito. Ang unang layunin ng Cookies ay upang bigyan ang User ng mas mabilis at mas isinapersonal na pag-access sa mga naalok na serbisyo. Ang cookies ay naiugnay lamang sa isang hindi nagpapakilalang Gumagamit at sa kanyang computer at hindi nagbibigay ng mga sanggunian na nagpapahintulot sa pagbawas ng personal na data ng Gumagamit. < / 0 > < 1 > Maaaring i-configure ng Gumagamit ang kanyang browser upang abisuhan at tanggihan ang pag-install ng Cookies na ipinadala ng website na ito, nang hindi pinahihintulutan ang kakayahan ng Gumagamit na ma-access ang Mga Nilalaman. Gayunpaman, tandaan namin na, sa anumang kaso, maaaring mabawasan ang pagganap ng website. Ginagamit ng website na ito ang Web Bugs, na kung saan ay maliliit at nakikitang mga imahe na naipasok sa mga email. Kapag nagbukas ang Gumagamit ng isang newsletter ng Website, ang imaheng ito ay nai-download kasama ang natitirang nilalaman ng email at pinapayagan na malaman kung ang isang tukoy na email ay binuksan o hindi, pati na rin ang IP address kung saan ito na-download. Ginagamit ng FightPandemics ang impormasyong ito upang makakuha ng mga istatistika at magsagawa ng mga pag-aaral na analitikal sa pagtanggap ng mga email nito ng Mga Gumagamit. < / 1 >",
+    "whatCookiesContent": "<0> Ang Website na ito ay gumagamit ng ¨Cookies¨, at iba pang mga katulad na mekanismo (simula dito, Cookies). Ang mga cookie ay mga file na ipinadala sa isang browser sa pamamagitan ng isang web server upang maitala ang mga aktibidad ng Gumagamit sa isang tukoy na website o sa lahat ng mga website, app at / o mga serbisyo sa website na ito. Ang unang layunin ng Cookies ay upang bigyan ang User ng mas mabilis at mas isinapersonal na pag-access sa mga naalok na serbisyo. Ang cookies ay naiugnay lamang sa isang hindi nagpapakilalang Gumagamit at sa kanyang computer at hindi nagbibigay ng mga sanggunian na nagpapahintulot sa pagbawas ng personal na data ng Gumagamit. </0> <1> Maaaring i-configure ng Gumagamit ang kanyang browser upang abisuhan at tanggihan ang pag-install ng Cookies na ipinadala ng website na ito, nang hindi pinahihintulutan ang kakayahan ng Gumagamit na ma-access ang Mga Nilalaman. Gayunpaman, tandaan namin na, sa anumang kaso, maaaring mabawasan ang pagganap ng website. Ginagamit ng website na ito ang Web Bugs, na kung saan ay maliliit at nakikitang mga imahe na naipasok sa mga email. Kapag nagbukas ang Gumagamit ng isang newsletter ng Website, ang imaheng ito ay nai-download kasama ang natitirang nilalaman ng email at pinapayagan na malaman kung ang isang tukoy na email ay binuksan o hindi, pati na rin ang IP address kung saan ito na-download. Ginagamit ng FightPandemics ang impormasyong ito upang makakuha ng mga istatistika at magsagawa ng mga pag-aaral na analitikal sa pagtanggap ng mga email nito ng Mga Gumagamit. </1>",
     "typeCookies": "URI, LAYUNIN AT  PAG-GANA NG COOKIES",
     "typeCookiesBegin": "Ang mga cookies, depende sa kanilang pagiging permanente, ay maaaring nahahati sa session o permanenteng Cookies. Mag-e-expire ang mga una kapag isinara ng User ang browser. Mag-e-expire ang pangalawa depende sa kung kailan natutupad ang layunin kung saan sila naglilingkod o kapag manu-manong tinanggal ang mga ito. Bilang karagdagan, depende sa iyong layunin, ang mga Cookies na ginamit ng Website na ito ay maaaring maiuri bilang mga sumusunod:",
-    "typeCookiesContent": "< 0 > Teknikal na cookies: Pinapayagan nito ang gumagamit na mag-navigate sa pamamagitan ng isang web page, platform o application at gamitin ang iba't ibang mga pagpipilian o serbisyo na mayroon doon, tulad ng, halimbawa, kontrolin ang trapiko at komunikasyon ng data, kilalanin ang session, i-access ang pinaghihigpitan ng pag-access ng mga bahagi, alalahanin ang mga elemento na bumubuo ng isang order, gumawa ng proseso ng pagbili ng isang order, humiling ng pagpaparehistro o paglahok sa isang kaganapan, gumamit ng mga elemento ng seguridad habang nabigasyon, nag-iimbak ng nilalaman para sa pagpapakalat ng mga video o tunog o pagbabahagi ng nilalaman sa pamamagitan ng mga social network . < / 0 > < 1 > Cookies sa pagtatasa: Iyon na pinoproseso namin o ng mga third party, na nagpapahintulot sa bilangin ang bilang ng mga gumagamit at sa gayon ay gampanan ang pagsukat at pag-aaral ng istatistika ng paggamit ng mga gumagamit ng mga serbisyong inaalok. Para sa mga ito, ang iyong pag-browse sa aming website ay sinusuri upang mapabuti ang alok ng mga produkto o serbisyo na inaalok namin. < / 1 > < 2 > Cookies sa advertising: Ang mga ipinoproseso ba namin o ng mga third party, na pinapayagan kaming pamahalaan sa pinakamabisang paraan na posible ng alok ng mga puwang sa advertising na nasa website, na inaangkop ang nilalaman ng ad sa nilalaman ng hiniling na serbisyo o sa paggamit na iyong ginagawa mula sa aming website. Para dito maaari naming suriin ang iyong mga gawi sa pag-browse sa Internet, at maipakita namin sa iyo ang advertising na nauugnay sa iyong profile sa pagba-browse. < / 2 > < 3 > Cookies sa pag-advertise ng pag-uugali: Pinapayagan nito ang pamamahala, sa pinakamabisang paraan na posible, ng mga puwang sa advertising na, kung kinakailangan, isinama ng editor sa isang web page, application o platform kung saan nagbibigay ito ng hiniling na serbisyo. Ang cookies na ito ay nag-iimbak ng impormasyon sa pag-uugali ng mga gumagamit na nakuha sa pamamagitan ng patuloy na pagmamasid sa kanilang mga gawi sa pag-browse, na nagbibigay-daan sa pagbuo ng isang tukoy na profile upang maipakita ang advertising batay dito. < / 3 >",
+    "typeCookiesContent": "<0> Teknikal na cookies: Pinapayagan nito ang gumagamit na mag-navigate sa pamamagitan ng isang web page, platform o application at gamitin ang iba't ibang mga pagpipilian o serbisyo na mayroon doon, tulad ng, halimbawa, kontrolin ang trapiko at komunikasyon ng data, kilalanin ang session, i-access ang pinaghihigpitan ng pag-access ng mga bahagi, alalahanin ang mga elemento na bumubuo ng isang order, gumawa ng proseso ng pagbili ng isang order, humiling ng pagpaparehistro o paglahok sa isang kaganapan, gumamit ng mga elemento ng seguridad habang nabigasyon, nag-iimbak ng nilalaman para sa pagpapakalat ng mga video o tunog o pagbabahagi ng nilalaman sa pamamagitan ng mga social network . </0> <1> Cookies sa pagtatasa: Iyon na pinoproseso namin o ng mga third party, na nagpapahintulot sa bilangin ang bilang ng mga gumagamit at sa gayon ay gampanan ang pagsukat at pag-aaral ng istatistika ng paggamit ng mga gumagamit ng mga serbisyong inaalok. Para sa mga ito, ang iyong pag-browse sa aming website ay sinusuri upang mapabuti ang alok ng mga produkto o serbisyo na inaalok namin. </1> <2> Cookies sa advertising: Ang mga ipinoproseso ba namin o ng mga third party, na pinapayagan kaming pamahalaan sa pinakamabisang paraan na posible ng alok ng mga puwang sa advertising na nasa website, na inaangkop ang nilalaman ng ad sa nilalaman ng hiniling na serbisyo o sa paggamit na iyong ginagawa mula sa aming website. Para dito maaari naming suriin ang iyong mga gawi sa pag-browse sa Internet, at maipakita namin sa iyo ang advertising na nauugnay sa iyong profile sa pagba-browse. </2> <3> Cookies sa pag-advertise ng pag-uugali: Pinapayagan nito ang pamamahala, sa pinakamabisang paraan na posible, ng mga puwang sa advertising na, kung kinakailangan, isinama ng editor sa isang web page, application o platform kung saan nagbibigay ito ng hiniling na serbisyo. Ang cookies na ito ay nag-iimbak ng impormasyon sa pag-uugali ng mga gumagamit na nakuha sa pamamagitan ng patuloy na pagmamasid sa kanilang mga gawi sa pag-browse, na nagbibigay-daan sa pagbuo ng isang tukoy na profile upang maipakita ang advertising batay dito. </3>",
     "typeCookiesEnd": "Maaaring gumamit ang Website ng mga serbisyo ng third-party na maaaring mangailangan ng pag-install ng Cookies sa Mga Gumagamit at sa ngalan ng FightPandemics, at mangolekta ng impormasyon para sa mga layuning pang-istatistika sa paggamit ng Website ng gumagamit at para sa pagkakaloob ng iba pang mga serbisyong nauugnay sa aktibidad ng Website at iba pang mga serbisyo sa Internet.",
     "disableCookies": "PAANO MA-disable ang mga COOKIES AT WEB BUGS SA PANGUNAHING BROWSERS?",
     "disableCookiesContent": "Karaniwan posible na ihinto ang pagtanggap ng mga cookies ng browser o ihinto ang pagtanggap ng cookies mula sa isang partikular na serbisyo. Pinapayagan ka ng lahat ng modernong browser na baguhin ang pagsasaayos ng Cookies. Ang mga setting na ito ay karaniwang matatagpuan sa 'mga pagpipilian' o 'Mga Kagustuhan' ng iyong menu ng browser. Maaari mo ring i-configure ang iyong browser o email manager, pati na rin ang pag-install ng mga libreng add-on upang maiwasan ang pag-download ng mga Web Bug kapag nagbubukas ng isang email. Gamitin ang mga sumusunod na tagubilin ayon sa iyong internet browser upang baguhin ang mga kagustuhan sa cookie:",
     "updateCookies": "PAGSUNOD SA PINAKABAGONG PATAKARAN NG COOKIES",
     "updateCookiesContent": "Maaaring baguhin ng FightPandemics ang Patakaran sa Cookies na ito batay sa pambatasan, mga kinakailangang pang-regulasyon, o sa layuning ibagay ang nasabing patakaran sa mga tagubiling ibinigay ng Spanish Data Protection Agency, samakatuwid pinayuhan ang mga Gumagamit na pana-panahong bisitahin ang pahinang ito upang malaman ang mga pagbabagong naghirap sa kanila. Kapag may mga makabuluhang pagbabago sa Patakaran sa Cookies na ito, aabisuhan ang mga gumagamit alinman sa pamamagitan ng web o sa pamamagitan ng email sa Mga Gumagamit na nakarehistro sa serbisyo ng newsletter.",
-    "cookieAlert": "Gumagamit ang site na ito ng cookies upang maihatid ang aming serbisyo at maipakita sa iyo ang nauugnay na impormasyon. Sa pamamagitan ng paggamit ng aming site, kinikilala mo na nabasa at naunawaan mo ang aming < 0 > Patakaran sa Cookies < / 0 > , < 1 > Patakaran sa Privacy < / 1 > , at ang aming < 2 > Tuntunin at Kundisyon < / 2 > . Ang iyong paggamit ng Mga Produkto ng FightPandemics ay napapailalim sa mga patakarang at tuntunin na ito."
+    "cookieAlert": "Gumagamit ang site na ito ng cookies upang maihatid ang aming serbisyo at maipakita sa iyo ang nauugnay na impormasyon. Sa pamamagitan ng paggamit ng aming site, kinikilala mo na nabasa at naunawaan mo ang aming <0> Patakaran sa Cookies </0> , <1> Patakaran sa Privacy </1> , at ang aming <2> Tuntunin at Kundisyon </2> . Ang iyong paggamit ng Mga Produkto ng FightPandemics ay napapailalim sa mga patakarang at tuntunin na ito."
   },
   "comment": {
     "writeAComment": "Magsulat ng komento...",
@@ -845,7 +849,10 @@
       "imageDimensionTooWide": "Paumanhin, ang imahe ay masyadong malawak. Mangyaring subukang muli sa isang imahe na may lapad na mas mababa sa dalawang beses ang taas.",
       "networkError": "Paumanhin, ilang error sa network ang naganap."
     },
-    "wrongOldPassword": "Kasalukuyang maling password"
+    "wrongOldPassword": "Kasalukuyang maling password",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "Hindi kami tagapagbigay ng mga serbisyong pangkalusugan",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Ang serbisyong ito ay ibinibigay na may mabuting pananampalataya para sa mga taong hindi makakakuha o walang mapagkukunan ng tulong sa panahon ng hindi pa nasasaksihang krisis sa larangan ng kalusugang pampubliko.",
@@ -1001,9 +1008,9 @@
       "success": "Ang iyong kagustuhan sa notification ay na-update"
     },
     "header": "Mga Abiso",
-    "liked": "< 0 > Nagustuhan ng {{username}} < / 0 > iyong post < 1 > {{postTitle}} < / 1 >",
-    "commented": "< 0 > {{username}} < / 0 > nagkomento sa iyong post < 1 > {{postTitle}} < / 1 >",
-    "shared": "< 0 > {{username}} < / 0 > ibinahagi ang iyong post < 1 > {{postTitle}} < / 1 > sa < 1 > {{shareMedium}} < / 1 >",
+    "liked": "<0> Nagustuhan ng {{username}} </0> iyong post <1> {{postTitle}} </1>",
+    "commented": "<0> {{username}} </0> nagkomento sa iyong post <1> {{postTitle}} </1>",
+    "shared": "<0> {{username}} </0> ibinahagi ang iyong post <1> {{postTitle}} </1> sa <1> {{shareMedium}} </1>",
     "empty": "Wala nang abiso"
   },
   "moderation": {

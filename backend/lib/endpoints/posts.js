@@ -135,6 +135,9 @@ async function routes(app) {
             { content: keywordsRegex },
             { "author.name": keywordsRegex },
             { types: keywordsRegex },
+            { "author.location.country": keywordsRegex },
+            { "author.location.state": keywordsRegex },
+            { "author.location.city": keywordsRegex },
           ],
         });
       }

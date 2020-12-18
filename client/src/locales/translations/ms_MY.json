@@ -1,6 +1,6 @@
 {
   "headline": "Tempat untuk menawarkan dan memohon bantuan",
-  "tagline": "<0>Pandemik akan terus berlaku.</0><1>Kami membantu komuniti untuk bersiap sedia dan bertindak balas.</1>",
+  "tagline": "<0>Pandemik terputus-putus terjadi.</0><1>Kami membantu komuniti untuk bersiap sedia dan bertindak balas.</1>",
   "common": {
     "getHelp": "Mohon Bantuan",
     "giveHelp": "Tawar Bantuan",
@@ -201,7 +201,7 @@
         "day": "Selama sehari"
       },
       "helpTypes": {
-        "request": "Meminta bantuan",
+        "request": "Memohon bantuan",
         "offer": "Menawarkan bantuan"
       }
     },
@@ -219,7 +219,7 @@
     "expire": "Siaran yang anda cari telah tamat tempoh. Sila semak Papan Bantuan kami untuk lebih banyak siaran seperti ini.",
     "noActivity": "Tiada aktiviti dijumpai",
     "share": "Kongsi",
-    "delete": "Padam",
+    "delete": "Padamkan siaran",
     "cancel": "Batal",
     "confirm": "Sah",
     "edited": "disunting",
@@ -229,9 +229,9 @@
     "deleteConfirmation": "Padam",
     "edit": "Suntingkan siaran",
     "hideAction": "Sembunyikan siaran",
-    "hideCaption": "It is not relevant to me",
+    "hideCaption": "Ianya tidak berkaitan dengan saya",
     "reportAction": "Laporkan Siaran",
-    "reportCaption": "For moderators review"
+    "reportCaption": "Untuk semakan moderator"
   },
   "profile": {
     "common": {
@@ -412,7 +412,8 @@
     "passwordMin": "Kata laluan mestilah sekurang-kurangnya {{num}} aksara.",
     "passwordConfirmationRequired": "Pengesahan kata laluan diperlukan.",
     "passwordNotMatch": "Kata laluan tidak sepadan",
-    "backHome": "Kembali ke Skrin Utama"
+    "backHome": "Kembali ke Skrin Utama",
+    "linkAccountsSuccess": "Akaun anda telah dipautkan dengan akaun e-mel anda yang sama yang sedia ada. Sila log masuk semula dengan mana-mana daripadanya."
   },
   "verifyEmail": {
     "checkInbox": "Semak peti masuk anda",
@@ -467,7 +468,10 @@
     "communityPartners": "Rakan Kongsi Komuniti",
     "communityCollaboration": "Kami mahu memperkasakan komuniti dan organisasi di seluruh dunia melalui platform kami dan untuk berbuat demikian, kami perlu bekerjasama! Kerjasama berterusan dengan rakan kongsi komuniti kami membolehkan kami membina platform yang lebih baik bagi mereka dan orang lain.",
     "becomeCommunityPartner": "Adakah anda juga mahu komuniti anda menjadi rakan kongsi kami? Kami ingin mendengar daripada anda dan mula bekerjasama! Hubungi di",
-    "currentPartners": "Rakan Kongsi Komuniti Semasa"
+    "currentPartners": "Rakan Kongsi Komuniti Semasa",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "Soalan Lazim",
@@ -485,7 +489,7 @@
     "general": [
       [
         "Apakah FightPandemics?",
-        "FightPandemics ialah platform yang diwujudkan di tengah-tengah wabak COVID-19 dengan tujuan menjadi tempat untuk orang yang terjejas oleh pandemik dalam pelbagai aspek.",
+        "FightPandemics ialah platform yang diwujudkan di tengah-tengah wabak COVID-19 dengan tujuan menjadi tempat utama untuk orang yang terjejas oleh pandemik dalam pelbagai aspek.",
         "Misi utama kami adalah untuk menghubungkan individu dan pertubuhan yang menawarkan dan meminta bantuan di peringkat tempatan dan global di tengah-tengah krisis pandemik. Tidak kira jika anda mendapatkan bantuan perubatan, topeng muka, bantuan perundangan, barangan runcit, seseorang untuk berjalan kaki dengan anjing anda atau sokongan kepada aktiviti seharian lain, anda dapat mencarinya di sini:",
         "Kami berusaha untuk mengumpulkan maklumat penting yang lebih bercebis-cebisan, berhubung dalam satu rangkaian individu, komuniti dan pertubuhan yang menguruskan isu atau projek yang berkaitan dengan pandemik. Visi kami adalah untuk mewujudkan dunia di mana setiap orang menjadi lebih berdaya tahan menghadapi kecemasan dengan membantu komuniti untuk bertindak balas terhadap kecemasan kesihatan dan krisis kemanusiaan dengan lebih cepat dan berkesan."
       ],
@@ -521,11 +525,11 @@
       ],
       [
         "Bagaimanakah saya boleh mendapatkan bantuan?",
-        "Daripada halaman utama FightPandemics, pilih \"Perlu Bantuan\". Jika anda memilih \"Bantuan Lain\", anda akan masukkan lokasi anda dan menghala ke halaman dengan tawaran bantuan di kawasan yang dipilih. Kemudian, anda juga boleh menapis siaran yang anda mahu lihat mengikut pembekal dan jenis. Sebagai alternatif, anda boleh memilih \"Lihat Siaran Komuniti\" daripada halaman utama untuk melihat semua siaran dan menggunakan penapis yang dikehendaki."
+        "Daripada halaman utama FightPandemics, pilih \"Mohon Bantuan\". Jika anda memilih \"Bantuan Lain\", anda akan masukkan lokasi anda dan menghala ke halaman dengan tawaran bantuan di kawasan yang dipilih. Kemudian, anda juga boleh menapis siaran yang anda mahu lihat mengikut pembekal dan jenis. Sebagai alternatif, anda boleh memilih \"Lihat Siaran Komuniti\" daripada halaman utama untuk melihat semua siaran dan menggunakan penapis yang dikehendaki."
       ],
       [
         "Bagaimanakah saya boleh menawarkan bantuan?",
-        "<0>Anda boleh menawarkan bantuan sebagai individu atau pertubuhan.</0><1>Daripada laman utama, pilih \"Beri Bantuan\" untuk melihat semua siaran yang dicipta oleh pengguna yang meminta bantuan dan menapis hasil mengikuti lokasi dan jenis. Anda perlu dilog masuk untuk menghubungi mereka. Anda juga boleh mencipta siaran anda sendiri untuk menerangkan bantuan yang dapat anda tawarkan.</1>"
+        "<0>Anda boleh menawarkan bantuan sebagai individu atau pertubuhan.</0><1>Daripada laman utama, pilih \"Tawar Bantuan\" untuk melihat semua siaran yang dicipta oleh pengguna yang meminta bantuan dan menapis hasil mengikuti lokasi dan jenis. Anda perlu dilog masuk untuk menghubungi mereka. Anda juga boleh mencipta siaran anda sendiri untuk menerangkan bantuan yang dapat anda tawarkan.</1>"
       ],
       [
         "Adakah saya perlu dilog masuk untuk melihat permohonan dan tawaran bantuan?",
@@ -595,11 +599,11 @@
       ],
       [
         "Bagaimanakah saya boleh menetapkan semula kata laluan saya?",
-        "Klik pada \"Daftar Masuk\" daripada halaman utama dan kemudian klik pada \"Terlupa Kata Laluan\" dan ikut arahannya"
+        "Klik pada \"Log Masuk\" daripada halaman utama dan kemudian klik pada \"Lupa Kata Laluan\" dan ikut arahannya"
       ],
       [
         "Mengapakah kata laluan saya tidak sah?",
-        "Sila semak jika kata laluan anda mempunyai sekurang-kurangnya 8 huruf. Jika anda sudah mempunyai akaun tetapi terlupa kata laluan log masuk anda, klik pada \"Log Masuk\" daripada halaman utama dan kemudian pergi ke \"Terlupa kata laluan\"."
+        "Sila semak jika kata laluan anda mempunyai sekurang-kurangnya 8 huruf. Jika anda sudah mempunyai akaun tetapi terlupa kata laluan log masuk anda, klik pada \"Log Masuk\" daripada halaman utama dan kemudian pergi ke \"Lupa kata laluan\"."
       ],
       [
         "Saya mendaftar dan tidak menerima e-mel pengesahan. Apakah yang harus saya lakukan?",
@@ -632,7 +636,7 @@
       ],
       [
         "Saya memerlukan sokongan teknikal.",
-        "Kami minta maaf atas sebarang kesulitan. Hantarkan e-mel kepada kami di <0>help@fightpandemics.com.</0> Oleh sebab kami merupakan pasukan sukarelawan penuh, sila tunggu sekurang-kurangnya 48 jam untuk mendapatkan respons."
+        "Kami minta maaf atas sebarang kesulitan. Hantarkan e-mel kepada kami di <0>support@fightpandemics.com.</0> Oleh sebab kami merupakan pasukan sukarelawan penuh, sila tunggu sekurang-kurangnya 48 jam untuk mendapatkan respons."
       ],
       [
         "Saya ingin menghubungi FightPandemics untuk sebab lain.",
@@ -651,7 +655,7 @@
       ],
       [
         "Saya memerlukan sokongan teknikal.",
-        "Kami minta maaf atas sebarang kesulitan. Hantarkan e-mel kepada kami di <0>support@fightpandemics.com.</0> Oleh sebab kami merupakan pasukan sukarelawan penuh, sila tunggu sekurang-kurangnya 48 jam untuk mendapatkan respons."
+        "Kami minta maaf atas sebarang kesulitan. Hantarkan e-mel kepada kami di <0>support@fightpandemics.com</0>. Oleh sebab kami merupakan pasukan sukarelawan penuh, sila tunggu sekurang-kurangnya 48 jam untuk mendapatkan respons."
       ],
       [
         "Saya ingin menghubungi FightPandemics atas sebab lain.",
@@ -845,7 +849,10 @@
       "imageDimensionTooWide": "Maaf, imej terlalu lebar. Sila cuba lagi dengan imej yang mempunyai lebar kurang daripada dua kali ketinggian.",
       "networkError": "Maaf, sesuatu ralat rangkaian berlaku."
     },
-    "wrongOldPassword": "Kata laluan semasa yang salah"
+    "wrongOldPassword": "Kata laluan semasa yang salah",
+    "noEmailAccount": "Tiada akaun telah dijumpai dengan alamat e-mel ini, sila klik \"Sertai Sekarang\" untuk mencipta akaun.",
+    "registeredAccount": "Akaun sosial telah didaftarkan dengan alamat e-mel ini. Sila klik \"Sertai Sekarang\" untuk mencipta akaun e-mel dan kata laluan langsung.",
+    "failedLinkAccounts": "Gagal memautkan akaun, sebab:"
   },
   "TEMP: We are not a provider of healthcare services": "Kami bukan pembekal perkhidmatan penjagaan kesihatan",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Perkhidmatan ini disediakan dengan niat ikhlas bagi sesiapa jua yang tidak mampu untuk mendapatkan bantuan dan sumber semasa kecemasan kesihatan awam yang belum pernah berlaku sebelum ini.",
@@ -1010,19 +1017,19 @@
     "report": "Laporan",
     "cancel": "Batal",
     "finish": "Selesai",
-    "reason": "Reason for reporting:",
+    "reason": "Sebab untuk melaporkan:",
     "additionalDetails": "Butiran tambahan (pilihan)",
-    "enterDetails": "Sila masukkan butiran yang lebih lanjut di sini ...",
+    "enterDetails": "Sila masukkan butiran yang lebih lanjut di sini...",
     "reportPost": "Laporkan Siaran",
     "reportPostSuccess": "Terima kasih atas laporan anda! Siaran ini akan dihantar untuk semakan.",
-    "reportPostError": "Oops! something went wrong...",
-    "reportPostSuccessTitle": "Report Received",
+    "reportPostError": "Ops! sesuatu tersalah...",
+    "reportPostSuccessTitle": "Laporan Diterima",
     "reportPostErrorTitle": "Ops!",
     "spam": "Spam",
-    "inappropriateContent": "Inappropriate Content",
-    "violatesTerms": "Violates Terms",
+    "inappropriateContent": "Kandungan Yang Tidak Sesuai",
+    "violatesTerms": "Melanggar Terma",
     "other": "Lain",
-    "postSuspected": "This post received multiple reports and was held for review",
+    "postSuspected": "Siaran ini menerima beberapa laporan dan telah disekat untuk semakan",
     "showAnyway": "Tunjukkan juga",
     "postHidden": "Anda telah memilih untuk menyembunyikan siaran ini",
     "unhide": "Nyahsembunyikan",

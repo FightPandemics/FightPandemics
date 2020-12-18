@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Modal } from "antd";
+import AvatarModal from "./AvatarModal";
 import { CameraOutlined } from "@ant-design/icons";
 import BaseButton from "../Button/BaseButton";
 import ReactCrop from "react-image-crop";
@@ -12,11 +12,30 @@ import GTM from "constants/gtm-tags";
 const { colors } = theme;
 
 const CustomSubmitButton = styled(BaseButton)`
+  display: inline-block;
+  width: 20rem;
+  margin: 0 0.8rem;
   background: ${colors.royalBlue};
   color: ${colors.white};
+  &:hover {
+    color: ${colors.royalBlue};
+    background-color: ${colors.white};
+    border: 0.01rem solid ${colors.royalBlue};
+  }
 `;
 
-const CustomCancelButton = styled(BaseButton)``;
+const CustomRemoveButton = styled(BaseButton)`
+  display: inline-block;
+  width: 20rem;
+  margin: 0 0.8rem;
+  color: ${colors.white};
+  background-color: ${colors.orangeRed};
+  &:hover {
+    color: ${colors.orangeRed};
+    background-color: ${colors.white};
+    border: 0.01rem solid ${colors.orangeRed};
+  }
+`;
 
 const CameraButtonUpload = styled.button`
   border: 0;
@@ -40,9 +59,8 @@ function isImageFile(file) {
 
 const INITIAL_CROP_STATE = {
   aspect: 1 / 1,
-  unit: "px",
-  height: 250,
-  width: 250,
+  unit: "%",
+  height: 100,
 };
 
 const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
@@ -140,7 +158,40 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
     setModalVisible(false);
   };
 
+  const removePhoto = async () => {
+    let removeResponse;
+    let endPoint = "/api/users/current/avatar";
+    if (user.ownerId) {
+      endPoint = `/api/organisations/${user._id}/avatar`;
+    }
+    try {
+      removeResponse = await axios({
+        method: "delete",
+        url: endPoint,
+        headers: {
+          accept: "application/json",
+          "Content-Type": `multipart/form-data`,
+        },
+      });
+      if (removeResponse.status == 200) {
+        setModalVisible(false);
+        window.location.reload(false);
+      }
+    } catch (error) {
+      setUploadError(t("error.avatar.networkError"));
+      console.log({
+        error,
+      });
+    }
+  };
+
+  //new function
+  const openModal = (e) => {
+    setModalVisible(true);
+  };
+
   const closeModal = () => {
+    setPhotoURL(undefined);
     imgUpload.current.value = "";
     setUploadError("");
     setModalVisible(false);
@@ -154,49 +205,76 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
 
   const cropModal = () => {
     return (
-      <Modal
+      <AvatarModal
+        title={<p>{t("avatar.edit")}</p>}
+        onCancel={closeModal}
         visible={modalVisible}
         onOk={savePhoto}
         destroyOnClose={true}
-        closable={false}
-        maskClosable={false}
-        footer={[
-          <CustomCancelButton key="cancel" onClick={closeModal}>
-            {t("avatar.cancelBtn")}
-          </CustomCancelButton>,
-          !uploadError ? (
-            <CustomSubmitButton key="save" onClick={savePhoto}>
-              {t("avatar.submitBtn")}
+        closable={true}
+        maskClosable={true}
+        footer={
+          <div style={{ textAlign: "center" }}>
+            {user && user.photo && !photoURL ? (
+              <CustomRemoveButton key="remove" onClick={removePhoto}>
+                {t("avatar.remove")}
+              </CustomRemoveButton>
+            ) : null}
+            <CustomSubmitButton
+              key="change"
+              onClick={() => imgUpload.current.click()}
+            >
+              {t("avatar.uploadNew")}
             </CustomSubmitButton>
-          ) : (
-            <CustomSubmitButton key="retry" onClick={retry}>
-              {t("avatar.tryAgainBtn")}
-            </CustomSubmitButton>
-          ),
-        ]}
+            {photoURL ? (
+              !uploadError ? (
+                <CustomSubmitButton key="save" onClick={savePhoto}>
+                  {t("avatar.submitBtn")}
+                </CustomSubmitButton>
+              ) : (
+                <CustomSubmitButton key="retry" onClick={retry}>
+                  {t("avatar.tryAgainBtn")}
+                </CustomSubmitButton>
+              )
+            ) : null}
+          </div>
+        }
       >
-        <div
-          style={{
-            textAlign: "center",
-          }}
-        >
-          {uploadError ? (
-            <h3>{uploadError}</h3>
-          ) : (
-            <ReactCrop
-              src={photoURL}
-              crop={crop}
-              minHeight={250}
-              minWidth={250}
-              circularCrop={true}
-              ruleOfThirds
-              keepSelection={true}
-              onImageLoaded={imageLoaded}
-              onChange={(newCrop) => setCrop(newCrop)}
-            />
-          )}
-        </div>
-      </Modal>
+        {photoURL ? (
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            {uploadError ? (
+              <h3>{uploadError}</h3>
+            ) : (
+              <ReactCrop
+                src={photoURL}
+                crop={crop}
+                minHeight={250}
+                minWidth={250}
+                circularCrop={true}
+                ruleOfThirds
+                keepSelection={true}
+                onImageLoaded={imageLoaded}
+                onChange={(newCrop) => setCrop(newCrop)}
+              />
+            )}
+          </div>
+        ) : (
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            <img
+              style={{ borderRadius: "50%" }}
+              src={user && user.photo ? user.photo : null}
+            ></img>
+          </div>
+        )}
+      </AvatarModal>
     );
   };
 
@@ -215,7 +293,9 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
       <CameraButtonUpload
         name="avatar-upload-button"
         type="button"
-        onClick={() => imgUpload.current.click()}
+        onClick={(e) => {
+          user.photo ? openModal(e) : imgUpload.current.click();
+        }}
       >
         <CameraOutlined
           style={{ fontSize: 18 || cameraIconSize, color: colors.offWhite }}

@@ -210,15 +210,20 @@ postSchema.index(
     content: "text",
     title: "text",
     types: "text",
+    "author.location.country": "text",
+    "author.location.state": "text",
+    "author.location.city": "text",
   },
   {
-    default_language: "none",
     language_override: "dummy",
     weights: {
       "author.name": 1,
       content: 3,
       title: 5,
       types: 2,
+      "author.location.country": 1,
+      "author.location.state": 1,
+      "author.location.city": 1,
     },
   },
 );

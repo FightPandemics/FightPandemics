@@ -173,7 +173,7 @@
     "writePostHere": "Escribe su publicación aquí",
     "title": "Título",
     "writePost": "Escribe su \npublicación",
-    "whatGiving": "What are you offering?",
+    "whatGiving": "¿Qué está ofreciendo?",
     "addTags": "Agrega etiquetas para que tu publicación sea más visible",
     "whatVisibility": "¿Cuál es la visibilidad de tu publicación?",
     "postVisible": "La publicación será visible para",
@@ -412,7 +412,8 @@
     "passwordMin": "La contraseña debe tener al menos {{num}} caracteres.",
     "passwordConfirmationRequired": "Se requiere confirmación de contraseña.",
     "passwordNotMatch": "Las contraseñas no coinciden",
-    "backHome": "Volver a la pantalla de inicio"
+    "backHome": "Volver a la pantalla de inicio",
+    "linkAccountsSuccess": "Su cuenta ha sido vinculada con su misma cuenta de correo electrónico. Por favor, vuelve a iniciar sesión con cualquiera de ellas."
   },
   "verifyEmail": {
     "checkInbox": "Revisa su correo",
@@ -467,7 +468,10 @@
     "communityPartners": "Socios comunitarios",
     "communityCollaboration": "Queremos apoderar a las comunidades y organizaciones de todo el mundo a través de nuestra plataforma,  para hacerlo, ¡necesitamos trabajar juntos! La colaboración continua con nuestros socios de la comunidad nos permite construir una mejor plataforma ellos y  para otros.",
     "becomeCommunityPartner": "¿Le gustaría que su comunidad también fuera nuestro socio? ¡Nos encantaría saber de usted y empezar a colaborar! Puede comunicarse a",
-    "currentPartners": "Socios comunitarios actuales"
+    "currentPartners": "Socios comunitarios actuales",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "FAQ",
@@ -492,7 +496,7 @@
       [
         "¿Quién es FightPandemics?",
         "FightPandemics es un equipo global de voluntarios con la misión de servir como un lugar de ayuda. Nuestro equipo está formado por más de 150 voluntarios comprometidos de más de 70 países que se esfuerzan por marcar la diferencia. La plataforma fue construida en un innovador esfuerzo colaborativo, reuniendo a un grupo diverso de solucionadores de problemas con una amplia gama de habilidades dispuestas a co-crear y aprender entre sí.",
-        "¿Desea  unirse a nuestra iniciativa? Comuníquese con < 0 > hr@fightpandemics.com < / 0 >"
+        "¿Desea  unirse a nuestra iniciativa? Comuníquese con <0> hr@fightpandemics.com </0>"
       ],
       [
         "¿En qué ciudades opera FightPandemics?",
@@ -517,7 +521,7 @@
       [
         "¿Qué tipo de ayuda puedo ofrecer / solicitar en FightPandemics?",
         "Puede solicitar y ofrecer cualquier tipo de ayuda para ayudar a las personas y organizaciones a hacer frente a la pandemia de COVID-19. A continuación se muestra una lista con algunos ejemplos del tipo de ayuda que puede ofrecer o solicitar:",
-        "< 0 > Comestibles < / 0 > < 1 > Suministros médicos < / 1 > < 2 > Asistencia legal < / 2 > < 3 > Soporte técnico < / 3 > < 4 > Información < / 4 > < 5 > Financiamiento < / 5 > < 6 > Eventos y actividades < / 6 > < 7 > Educación < / 7 > < 8 > Bienestar < / 8 > < 9 > Investigación y desarrollo < / 9 >"
+        "<0> Comestibles </0> <1> Suministros médicos </1> <2> Asistencia legal </2> <3> Soporte técnico </3> <4> Información </4> <5> Financiamiento </5> <6> Eventos y actividades </6> <7> Educación </7> <8> Bienestar </8> <9> Investigación y desarrollo </9>"
       ],
       [
         "¿Cómo puedo encontrar ayuda?",
@@ -525,7 +529,7 @@
       ],
       [
         "¿Cómo puedo ofrecer mi ayuda?",
-        "< 0 > Puede ofrecer ayuda como individuo o como organización. < / 0 > < 1 > Desde la página de inicio, seleccione \"Dar ayuda\" para ver todas las publicaciones creadas por los usuarios que solicitan ayuda y filtrar los resultados por ubicación y tipo. Debes iniciar sesión para comunicarte con ellos. También puede crear sus propias publicaciones que describan la ayuda que puede ofrecer. < / 1 >"
+        "<0> Puede ofrecer ayuda como individuo o como organización. </0> <1> Desde la página de inicio, seleccione \"Dar ayuda\" para ver todas las publicaciones creadas por los usuarios que solicitan ayuda y filtrar los resultados por ubicación y tipo. Debes iniciar sesión para comunicarte con ellos. También puede crear sus propias publicaciones que describan la ayuda que puede ofrecer. </1>"
       ],
       [
         "¿Necesito estar registrado para ver las solicitudes y ofertas de ayuda?",
@@ -561,19 +565,19 @@
       ],
       [
         "Encontré un error en el sitio web. ¿Cómo reporto eso?",
-        "Envíe sus comentarios o póngase en contacto con < 0 > support@fightpandemics.com. < / 0 >"
+        "Envíe sus comentarios o póngase en contacto con <0> support@fightpandemics.com. </0>"
       ],
       [
         "Ya no se me permite usar FightPandemics, ¿qué hago?",
-        "Comuníquese con nosotros en < 0 > support@fightpandemics.com < / 0 > y verificaremos cuál es el problema con su cuenta."
+        "Comuníquese con nosotros en <0> support@fightpandemics.com </0> y verificaremos cuál es el problema con su cuenta."
       ],
       [
         "¿Qué información es almacenada?",
-        "FightPandemics recopila y procesa los datos personales de los usuarios solo para los fines descritos en nuestra política de privacidad < 0 > . < / 0 > En ningún caso brindaremos acceso o compartiremos sus datos personales con ningún tercero, excepto con las personas relevantes establecidas en esta política."
+        "FightPandemics recopila y procesa los datos personales de los usuarios solo para los fines descritos en nuestra <0>política de privacidad. </0> En ningún caso brindaremos acceso o compartiremos sus datos personales con ningún tercero, excepto con las personas relevantes establecidas en esta política."
       ],
       [
         "¿Puedo dar / recibir ayuda de mi ciudad o estado? ¿Cuánto tiempo estará visible la publicación?",
-        "The post to give/receive help can be at a zip code, city, state or country level for a duration of a day, a week, a month or forever. By default, the posts will be set to city level for one month."
+        "La publicación para dar / recibir ayuda puede ser a nivel de código postal, ciudad, estado o país durante una duración de un día, una semana, un mes o para siempre. De forma predeterminada, las publicaciones se establecerán en el nivel de la ciudad durante un mes."
       ],
       [
         "Mi pregunta no aparece en la lista. ¿A quién puedo contactar?",
@@ -583,7 +587,7 @@
     "accountFAQ": [
       [
         "¿Cómo me inscribo?",
-        "< 0 > Para unirse a la comunidad como usuario, haga clic en el botón \"Menú\" y seleccione la opción \"Unirse ahora / Iniciar sesión\". Allí podrá unirse con su elección de correo electrónico o credenciales de redes sociales. < / 0 > < 1 > Cuando te unes a la comunidad, tendrás acceso ilimitado para ver y crear publicaciones y comentarios en la plataforma FightPandemics. < / 1 >"
+        "<0> Para unirse a la comunidad como usuario, haga clic en el botón \"Menú\" y seleccione la opción \"Unirse ahora / Iniciar sesión\". Allí podrá unirse con su elección de correo electrónico o credenciales de redes sociales. </0> <1> Cuando te unes a la comunidad, tendrás acceso ilimitado para ver y crear publicaciones y comentarios en la plataforma FightPandemics. </1>"
       ],
       [
         "¿Cómo puedo cambiar mi perfil individual a un perfil de organización?",
@@ -624,7 +628,7 @@
     "contectsFAQ": [
       [
         "Quiero ser socio o patrocinador.",
-        "Ponte en contacto con nuestro equipo de asociaciones por <0>partnership@fightpandemics.com.</0>"
+        "Ponte en contacto con nuestro equipo de asociaciones por <0>partnerships@fightpandemics.com.</0>"
       ],
       [
         "Soy de la prensa/medios de comunicación.",
@@ -632,7 +636,7 @@
       ],
       [
         "Necesito soporte técnico.",
-        "Lo sentimos. Envíanos un correo electrónico a <0>help@fightpandemics.com.</0> Dado que somos un equipo de voluntarios, espera al menos 48 horas para recibir una respuesta."
+        "Lo sentimos. Envíanos un correo electrónico a <0>support@fightpandemics.com.</0> Dado que somos un equipo de voluntarios, espera al menos 48 horas para recibir una respuesta."
       ],
       [
         "Quiero comunicarme con FightPandemics por otras razones.",
@@ -651,7 +655,7 @@
       ],
       [
         "Necesito soporte técnico.",
-        "Lo sentimos. Envíanos un correo electrónico a <0>help@fightpandemics.com.</0> Dado que somos un equipo de voluntarios, espera al menos 48 horas para recibir una respuesta."
+        "Lo sentimos. Envíanos un correo electrónico a <0>support@fightpandemics.com</0>. Dado que somos un equipo de voluntarios, espera al menos 48 horas para recibir una respuesta."
       ],
       [
         "Quiero comunicarme con FightPandemics por otras razones.",
@@ -662,7 +666,7 @@
   },
   "cookies": {
     "whatCookies": "¿QUÉ SON LAS COOKIES?",
-    "whatCookiesContent": "< 0 > Este Sitio Web utiliza ¨Cookies¨, y otros mecanismos similares (en adelante, Cookies). Las cookies son archivos enviados a un navegador a través de un servidor web para registrar las actividades del Usuario en un sitio web específico o en todos los sitios web, aplicaciones y / o servicios de este sitio web. El primer objetivo de las Cookies es proporcionar al Usuario un acceso más rápido y personalizado a los servicios ofrecidos. Las cookies se asocian únicamente con un Usuario anónimo y su ordenador y no proporcionan referencias que permitan deducir los datos personales del Usuario. < / 0 > < 1 > El Usuario podrá configurar su navegador para notificar y rechazar la instalación de las Cookies enviadas por este sitio web, sin perjuicio de la posibilidad de que el Usuario acceda a los Contenidos. Sin embargo, observamos que, en cualquier caso, el rendimiento del sitio web puede disminuir. Este sitio web hace uso de Web Bugs, que son imágenes diminutas y transparentes que se insertan en los correos electrónicos. Cuando el Usuario abre una newsletter del Sitio Web, esta imagen se descarga junto con el resto del contenido del correo electrónico y permite saber si se ha abierto o no un determinado correo, así como la dirección IP desde la que se descargó. FightPandemics utiliza esta información para obtener estadísticas y realizar estudios analíticos sobre la recepción de sus correos electrónicos por parte de los Usuarios. < / 1 >",
+    "whatCookiesContent": "<0> Este Sitio Web utiliza ¨Cookies¨, y otros mecanismos similares (en adelante, Cookies). Las cookies son archivos enviados a un navegador a través de un servidor web para registrar las actividades del Usuario en un sitio web específico o en todos los sitios web, aplicaciones y / o servicios de este sitio web. El primer objetivo de las Cookies es proporcionar al Usuario un acceso más rápido y personalizado a los servicios ofrecidos. Las cookies se asocian únicamente con un Usuario anónimo y su ordenador y no proporcionan referencias que permitan deducir los datos personales del Usuario. </0> <1> El Usuario podrá configurar su navegador para notificar y rechazar la instalación de las Cookies enviadas por este sitio web, sin perjuicio de la posibilidad de que el Usuario acceda a los Contenidos. Sin embargo, observamos que, en cualquier caso, el rendimiento del sitio web puede disminuir. Este sitio web hace uso de Web Bugs, que son imágenes diminutas y transparentes que se insertan en los correos electrónicos. Cuando el Usuario abre una newsletter del Sitio Web, esta imagen se descarga junto con el resto del contenido del correo electrónico y permite saber si se ha abierto o no un determinado correo, así como la dirección IP desde la que se descargó. FightPandemics utiliza esta información para obtener estadísticas y realizar estudios analíticos sobre la recepción de sus correos electrónicos por parte de los Usuarios. </1>",
     "typeCookies": "TIPO, FINALIDAD Y FUNCIONAMIENTO DE LAS COOKIES",
     "typeCookiesBegin": "Las Cookies, según su permanencia, se pueden dividir en Cookies de sesión o permanentes. Los primeros caducan cuando el Usuario cierra el navegador. Las segundas caducan en función de cuando se cumpla el objetivo para el que sirven o cuando se borren manualmente. Adicionalmente, dependiendo de su objetivo, las Cookies utilizadas por este Sitio Web se pueden clasificar de la siguiente manera:",
     "typeCookiesContent": "<0> cookies técnicas: Permiten al usuario navegar por una página web, plataforma o aplicación y utilizar las diferentes opciones o servicios que existen allí, como, por ejemplo, controlar el tráfico y la comunicación de datos, identificar la sesión, acceder a partes de acceso restringido, recordar los elementos que componen un pedido, realizar el proceso de compra de un pedido, realizar la solicitud de inscripción o participación en un evento, utilizar elementos de seguridad durante la navegación, almacenar contenidos para la difusión de vídeos o sonido o compartir contenidos a través de redes sociales.</0> <1>El análisis de análisis: Son acciones que son procesadas por nosotros o por terceros, que permiten cuantificar el número de usuarios y así realizar la medición y análisis estadístico del uso que hacen los usuarios de los servicios ofrecidos. Para ello, se analiza su navegación en nuestra página web con el fin de mejorar la oferta de productos o servicios que ofrecemos.</1> <2> Cookies publicitarias: Son a son a son acciones que son procesadas por nosotros o por terceros, permitiéndonos gestionar de la forma más eficiente posible la oferta de los espacios publicitarios que se encuentran en el sitio web, adaptando el contenido del anuncio al contenido del servicio solicitado o al uso que realice desde nuestra página web. Para ello podemos analizar sus hábitos de navegación en Internet, y podemos mostrarle publicidad relacionada con su perfil de navegación.</2> <3> Cookies de publicidad de gestión: Permiten la gestión, de la forma más eficaz posible, de los espacios publicitarios que, en su caso, el editor haya incluido en una página web, aplicación o plataforma desde la que presta el servicio solicitado. Estas cookies almacenan información sobre el comportamiento de los usuarios obtenida a través de la observación continuada de sus hábitos de navegación, lo que permite desarrollar un perfil específico para mostrar publicidad basada en el misma.</3>",
@@ -845,7 +849,10 @@
       "imageDimensionTooWide": "Lo sentimos, la imagen es demasiado amplia. Inténtelo de nuevo con una imagen que tenga un ancho inferior al doble de la altura.",
       "networkError": "Lo sentimos, se ha producido algún error de red."
     },
-    "wrongOldPassword": "Contraseña actual incorrecta"
+    "wrongOldPassword": "Contraseña actual incorrecta",
+    "noEmailAccount": "No se ha encontrado ninguna cuenta con esta dirección de correo electrónico, haga clic en \"Unirse ahora\" para crear una cuenta.",
+    "registeredAccount": "Se ha registrado una cuenta social con esta dirección de correo electrónico. Haga clic en \"Unirse ahora\" para crear una cuenta de correo electrónico y contraseña directa.",
+    "failedLinkAccounts": "Error en la vinculación de cuentas, motivo:"
   },
   "TEMP: We are not a provider of healthcare services": "No somos proveedores de servicios de salud.",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Este servicio es brindado de buena fe a quienes de otra manera no podrían obtener ayuda y recursos durante esta emergencia de salud pública sin precedentes.",
@@ -1001,8 +1008,8 @@
       "success": "Se actualizó su preferencia de notificaciones."
     },
     "header": "Notificaciones",
-    "liked": "< 0 > {{username}} < / 0 > le gustó tu publicación < 1 > {{postTitle}} < / 1 >",
-    "commented": "< 0 > {{username}} < / 0 > comentó en tu publicación < 1 > {{postTitle}} < / 1 >",
+    "liked": "<0> {{username}} </0> le gustó tu publicación <1> {{postTitle}} </1>",
+    "commented": "<0> {{username}} </0> comentó en tu publicación <1> {{postTitle}} </1>",
     "shared": "<0>{{username}}</0> ha compartido tu publicación <1>{{postTitle}}</1> el <1>{{shareMedium}}</1>",
     "empty": "Sin notificaciones"
   },
