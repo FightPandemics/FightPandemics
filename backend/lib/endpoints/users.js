@@ -635,7 +635,7 @@ async function routes(app) {
         const [userErr, user] = await app.to(BaseUser.findById(userId));
         if (userErr || user === null) {
           // ALWAYS return true (200 code) when responding to the webhook event
-          // Otherwise Veriff will keep sending the same event which results in spamming the Logs with erros.
+          // Otherwise Veriff will keep sending the same event which results in spamming the Logs with errors.
           req.log.error(userErr, `Failed getting user ${userId} for verification id: [${id}]`);
           return true;
         }
@@ -658,7 +658,7 @@ async function routes(app) {
           );
           if (updateErr) {
             // ALWAYS return true (200 code) when responding to the webhook event
-            // Otherwise Veriff will keep sending the same event which results in spamming the Logs with erros.
+            // Otherwise Veriff will keep sending the same event which results in spamming the Logs with errors.
             req.log.error(updateErr, `Failed saving verification [${id}] for user ${userId}`);
             return true;
           }
@@ -689,7 +689,7 @@ async function routes(app) {
           );
           if (updateErr) {
             // ALWAYS return true (200 code) when responding to the webhook event
-            // Otherwise Veriff will keep sending the same event which results in spamming the Logs with erros.
+            // Otherwise Veriff will keep sending the same event which results in spamming the Logs with errors.
             req.log.error(updateErr, `Failed saving verification [${id}] for user ${userId}`);
             return true;
           }
