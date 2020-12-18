@@ -6,9 +6,10 @@ import styled from "styled-components";
 
 import TextAvatar from "components/TextAvatar";
 import { ROLES } from "constants/permissions";
-import { RED, DARK_GRAY } from "constants/colors";
+import { theme } from "constants/theme";
 import { getInitialsFromFullName } from "utils/userInfo";
 
+const { colors } = theme
 const { Option } = Select;
 const { Search } = Input;
 
@@ -17,14 +18,14 @@ const AdDashboard = styled(Table)`
   border-radius: 0.2rem;
   .delete {
     font-weight: 700;
-    color: ${RED};
+    color: ${colors.red};
     font-size: 3rem;
     width: 100%;
     text-align: center;
   }
   small {
     display: block;
-    color: ${DARK_GRAY};
+    color: ${colors.darkGray};
     margin-left: 5rem;
   }
 `;
@@ -44,6 +45,7 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
   //we get the id from the input here
   const onSearch = async (value) => {
     if (!value) return;
+    // ObjectId validation regex
     if (!/^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i.test(value))
       return alert("Invalid ID");
     const endpoint = `/api/users/${value}/permissions`;

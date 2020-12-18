@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
 const { colors, typography } = theme;
-const { royalBlue, darkGray } = colors;
+const { royalBlue, darkGray, selago } = colors;
 const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
@@ -41,8 +41,8 @@ const PostCard = styled(Card)`
 
     .highlighted {
       font-weight: bold;
-      color: #425af2;
-      background: #f3f4fe;
+      color: ${royalBlue};
+      background: ${selago};
     }
 
     .card-header {

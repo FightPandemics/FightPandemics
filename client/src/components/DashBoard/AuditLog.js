@@ -48,6 +48,10 @@ const auditLogsColumns = [
               {reason}
             </FilterTag>
           ))}
+        {
+          // Justification (and reasons) are joined in a single string by "|" as a delimiter
+          // where the last element is the "optional detailed description"
+        }
         <p>{(justification.match(/([^\|]+$)/) || [])[0]}</p>
         {justification.length === 1 && (
           <FilterTag disabled={true} selected={false}>
