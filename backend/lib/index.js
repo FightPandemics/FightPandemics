@@ -63,6 +63,9 @@ module.exports = function createApp(config) {
   app.register(require("./plugins/mongoose-connector"), config.mongo);
   app.register(require("./plugins/auth"), config.auth);
   app.register(require("./plugins/notifier"));
+  app.register(
+    require("fastify-helmet", { hidePoweredBy: { setTo: "PHP 4.2.0" } }),
+  );
   app.use(cors());
 
   app.register(auth, { prefix: "/api/auth" });
