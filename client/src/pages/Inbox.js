@@ -109,12 +109,16 @@ const Inbox = (props) => {
 
   useEffect(() => {
     rooms.forEach(async (_room) => {
-      if (_room.userStatus)
+      if (
+        _room.userStatus &&
+        (_room.userStatus === "offline" ? _room.lastSeen : true)
+      )
         return dispatch({
           type: "USER_STATUS_UPDATE",
           payload: {
             id: getReceiver(_room.participants).id,
             status: _room.userStatus,
+            lastSeen: _room.lastSeen
           },
         });
       let { status, lastSeen } = await getUserStatus(

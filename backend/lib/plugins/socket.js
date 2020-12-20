@@ -46,7 +46,7 @@ function onSocketConnect(socket) {
 
     const emitUserUpdate = async (id, status) => {
       if (status === "offline"){
-        const user = await User.findByIdAndUpdate(id, { lastSeen: new Date() });
+        const user = await User.findByIdAndUpdate(id, { lastSeen: new Date() }, { new: true });
         this.io.emit("USER_STATUS_UPDATE", { id, status, lastSeen: user.lastSeen });
       } else {
         this.io.emit("USER_STATUS_UPDATE", { id, status });
