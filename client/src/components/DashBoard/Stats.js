@@ -47,7 +47,7 @@ function Stats({ stats }) {
 
   const LineChartScaleMaxMin = Math.max(
     ...getLast30DaysStats(stats.dailyNewReportsCounts),
-    ...getLast30DaysStats(stats.auditStats.rejectedReports,),
+    ...getLast30DaysStats(stats.auditStats.rejectedReports),
     ...getLast30DaysStats(stats.auditStats.approvedReports),
   );
 

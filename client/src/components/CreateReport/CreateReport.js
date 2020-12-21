@@ -17,11 +17,7 @@ const CreateReport = ({
   forModerator,
   changeType,
 }) => {
-  let post;
-  if (currentPost) {
-    post = currentPost;
-  }
-
+  const post = currentPost || undefined;
   const [reportSuccess, setReportSuccess] = useState(null);
   const closeModal = () => setCallReport(false);
   const { t } = useTranslation();

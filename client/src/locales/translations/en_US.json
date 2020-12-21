@@ -1048,9 +1048,9 @@
     "userReported": "Users reported this post for:",
     "removeReason": "Reason(s) for removing:",
     "keepPostConfirm": "Are you sure you want to keep this post?",
-    "reportAcceptedTitle": "Report is accepted!",
-    "reportRejectedTitle": "Report is rejected!",
-    "reportAcceptedBody": "This post is succesfully removed!",
-    "reportRejectedBody": "This post is succesfully kept"
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
   }
 }

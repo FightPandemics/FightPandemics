@@ -422,14 +422,14 @@ async function routes(app) {
               },
               {
                 $set: {
-                  reasonSplitted: { $split: ["$reportedBy.reason", "|"] },
+                  reasonSplit: { $split: ["$reportedBy.reason", "|"] },
                 },
               },
-              { $unwind: "$reasonSplitted" },
+              { $unwind: "$reasonSplit" },
               {
                 $group: {
                   _id: null,
-                  reasons: { $push: "$reasonSplitted" },
+                  reasons: { $push: "$reasonSplit" },
                 },
               },
               {
@@ -469,14 +469,14 @@ async function routes(app) {
               },
               {
                 $set: {
-                  reasonSplitted: { $split: ["$reportedBy.reason", "|"] },
+                  reasonSplit: { $split: ["$reportedBy.reason", "|"] },
                 },
               },
-              { $unwind: "$reasonSplitted" },
+              { $unwind: "$reasonSplit" },
               {
                 $group: {
                   _id: null,
-                  reasons: { $push: "$reasonSplitted" },
+                  reasons: { $push: "$reasonSplit" },
                 },
               },
               {
@@ -516,14 +516,14 @@ async function routes(app) {
               },
               {
                 $set: {
-                  reasonSplitted: { $split: ["$reportedBy.reason", "|"] },
+                  reasonSplit: { $split: ["$reportedBy.reason", "|"] },
                 },
               },
-              { $unwind: "$reasonSplitted" },
+              { $unwind: "$reasonSplit" },
               {
                 $group: {
                   _id: null,
-                  reasons: { $push: "$reasonSplitted" },
+                  reasons: { $push: "$reasonSplit" },
                 },
               },
               {

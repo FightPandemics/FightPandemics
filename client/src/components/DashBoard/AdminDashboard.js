@@ -9,11 +9,11 @@ import { ROLES } from "constants/permissions";
 import { theme } from "constants/theme";
 import { getInitialsFromFullName } from "utils/userInfo";
 
-const { colors } = theme
+const { colors } = theme;
 const { Option } = Select;
 const { Search } = Input;
 
-const AdDashboard = styled(Table)`
+const StyledAdminDashboard = styled(Table)`
   padding: 1rem;
   border-radius: 0.2rem;
   .delete {
@@ -118,7 +118,7 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
   ];
 
   return (
-    <div className="AdDashboard">
+    <div className="StyledAdminDashboard">
       <WhiteSpace size="xl" />
       <Search
         placeholder="Enter a Profile ID"
@@ -131,7 +131,7 @@ function AdminDashboard({ users, setToggleRefetch, toggleRefetch }) {
           width: "30%",
         }}
       />
-      <AdDashboard dataSource={users} columns={columns} />
+      <StyledAdminDashboard dataSource={users} columns={columns} />
     </div>
   );
 }
