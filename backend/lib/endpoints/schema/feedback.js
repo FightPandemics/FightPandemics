@@ -1,5 +1,5 @@
 const S = require("fluent-schema");
-const { strictSchema } = require("./utils");
+const { errorSchema, strictSchema } = require("./utils");
 
 const feedbackSchema = strictSchema()
   .prop("age", S.integer().minimum(1).maximum(150))
@@ -10,11 +10,6 @@ const feedbackSchema = strictSchema()
   .prop("userId", S.string())
   .prop("whatWouldChange", S.string());
 
-const errorSchema = S.object()
-  .prop("statusCode", S.integer())
-  .prop("error", S.string())
-  .prop("message", S.string());
-
 const createFeedbackSchema = {
   body: feedbackSchema.required(["rating"]),
   connection: strictSchema().prop(
@@ -24,8 +19,8 @@ const createFeedbackSchema = {
   description: "For creating a new feedback record in the database.",
   response: {
     201: S.object().prop("success", S.boolean()),
-    400: errorSchema,
-    500: errorSchema,
+    400: errorSchema(),
+    500: errorSchema(),
   },
 };
 

@@ -3,6 +3,13 @@ const {
   config: { query: queryConfig },
 } = require("../../../config");
 
+function errorSchema() {
+  return S.object()
+    .prop("statusCode", S.integer())
+    .prop("error", S.string())
+    .prop("message", S.string());
+}
+
 function strictSchema() {
   return S.object().additionalProperties(false);
 }
@@ -15,6 +22,7 @@ function strictQueryStringSchema() {
 }
 
 module.exports = {
+  errorSchema,
   strictQueryStringSchema,
   strictSchema,
 };
