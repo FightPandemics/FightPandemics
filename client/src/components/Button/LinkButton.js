@@ -24,6 +24,10 @@ const LinkButton = styled(BaseButton).attrs(({ size, inline }) => {
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  white-space: break-spaces;
+  line-height: inherit;
+  
 
   &:hover {
     background-color: ${white};
