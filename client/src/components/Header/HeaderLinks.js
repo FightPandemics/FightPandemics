@@ -35,8 +35,10 @@ export const HeaderLinks = ({
     window.localStorage.setItem("locale", lng);
   };
 
+  const langMenuStyles = { "max-height": "45rem", "overflow": "auto" };
+
   const languageMenu = (
-    <Menu>
+    <Menu style={langMenuStyles}>
       {Object.entries(languages).map(([key, label]) => (
         <Menu.Item key={key}>
           <div
