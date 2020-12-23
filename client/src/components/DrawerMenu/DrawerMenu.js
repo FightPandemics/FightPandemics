@@ -18,6 +18,7 @@ const DrawerMenu = ({
   organisationId,
   setOrganisationId,
   onOrganisationChange,
+  isNewOrganisation,
 }) => {
   const [menuState, setMenuState] = useState(MENU_STATE.SETTINGS);
   if (!show || authLoading) {
@@ -25,7 +26,7 @@ const DrawerMenu = ({
   }
 
   const index = localStorage.getItem("organisationId");
-  if (organisationId !== index) {
+  if (organisationId !== index && !isNewOrganisation) {
     setOrganisationId(index);
   }
 

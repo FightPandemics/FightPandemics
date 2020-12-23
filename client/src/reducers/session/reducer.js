@@ -13,6 +13,7 @@ const initialState = {
   forgotPasswordRequested: false,
   user: null,
   organisationId: null,
+  isNewOrganisation: false,
 };
 
 function sessionReducer(state = initialState, action) {
@@ -65,6 +66,11 @@ function sessionReducer(state = initialState, action) {
       return {
         ...state,
         organisationId: action.payload,
+      };
+    case SESSION_ACTIONS.SET_NEW_ORGANISATION:
+      return {
+        ...state,
+        isNewOrganisation: action.payload,
       };
     default:
       return state;

@@ -72,6 +72,7 @@ const NavigationLayout = (props) => {
     webSocket,
     loggedInOnly,
     organisationId,
+    isNewOrganisation,
   } = props;
   const [drawerOpened, setDrawerOpened] = useState(false);
 
@@ -419,6 +420,7 @@ const NavigationLayout = (props) => {
             user={user}
             webSocket={webSocket}
             organisationId={organisationId}
+            isNewOrganisation={isNewOrganisation}
             onFeedbackIconClick={() =>
               dispatchAction(TOGGLE_STATE, "ratingModal")
             }
