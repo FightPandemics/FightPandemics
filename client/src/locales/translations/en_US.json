@@ -267,11 +267,7 @@
       "urls": {
         "appStore": "Link to Apple Store",
         "playStore": "Link to Google Play",
-        "twitter": "Twitter URL",
-        "facebook": "Facebook URL",
-        "instagram": "Instagram URL",
-        "github": "Github URL",
-        "linkedin": "LinkedIn URL",
+        "linkSocial": "Link to Social Accounts",
         "website": "Website"
       },
       "emailMaxLength": "Email address must not exceed 200 characters",

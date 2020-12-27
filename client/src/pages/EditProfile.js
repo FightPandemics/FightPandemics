@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { authUserLink } from "utils/pizzlyAPI";
+import { Row, Col } from "antd";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 
 import ErrorAlert from "components/Alert/ErrorAlert";
 import FormInput from "components/Input/FormInput";
@@ -21,13 +22,8 @@ import {
   FormLayout,
   Background,
 } from "components/EditProfile/EditComponents";
-import {
-  FACEBOOK_URL,
-  INSTAGRAM_URL,
-  LINKEDIN_INDIVIDUAL_URL,
-  TWITTER_URL,
-  GITHUB_URL,
-} from "constants/urls";
+import Label from "components/Input/Label";
+import { blockLabelStyles } from "constants/formStyles";
 import { UserContext, withUserContext } from "context/UserContext";
 import {
   fetchUser,
@@ -39,8 +35,57 @@ import {
 } from "hooks/actions/userActions";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { validateURL } from "utils/validators";
+import facebookIcon from "assets/icons/social-facebook-unfilled.svg";
+import instagramIcon from "assets/icons/social-instagram-unfilled.svg";
+import githubIcon from "assets/icons/social-github.svg";
+import linkedinBlue from "assets/icons/social-linkedin-unfilled.svg";
+import twitterBlue from "assets/icons/social-twitter-unfilled.svg";
+import styled from "styled-components";
+import { mq, theme } from "constants/theme";
+import { WhiteSpace } from "antd-mobile";
+const { royalBlue, tropicalBlue, offWhite } = theme.colors;
+
+const SocialIconsDiv = styled(Col)`
+  img {
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      margin: 2rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+    }
+    max-width: 6rem;
+    min-width: 6rem;
+    margin: 2rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    cursor: pointer;
+    background-color: ${(props) => (props.valid ? tropicalBlue : "0xffffff")};
+    clip-path: inset(-10% 0% 0% -10% round 10px);
+
+    &:hover {
+      background-color: ${offWhite};
+      color: ${royalBlue};
+      transition: 0.3s all;
+    }
+  }
+`;
 
 const ABOUT_MAX_LENGTH = 160;
+
+const socialIconsMap = {
+  facebook: facebookIcon,
+  instagram: instagramIcon,
+  linkedin: linkedinBlue,
+  twitter: twitterBlue,
+  github: githubIcon,
+};
+
+const emptySocialUrls = {
+  facebook: null,
+  instagram: null,
+  linkedin: null,
+  twitter: null,
+  github: null,
+};
 
 function EditProfile(props) {
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
@@ -52,88 +97,43 @@ function EditProfile(props) {
   const { firstName, lastName, urls = {}, about, usesPassword = false } =
     user || {};
 
-  const URLS_CONFIG = {
-    facebook: [
-      "Facebook URL",
-      {
-        pattern: {
-          value: /^[a-zA-Z0-9.]*$/,
-          message: t("profile.common.validCharacters", {
-            characters: "A-z 0-9 .",
-          }),
-        },
-        minLength: {
-          value: 5,
-          message: t("profile.common.minCharacters", { minNum: 5 }),
-        },
-      },
-      FACEBOOK_URL,
-    ],
-    instagram: [
-      "Instagram URL",
-      {
-        pattern: {
-          value: /[a-z\d-_]{1,255}\s*$/,
-          message: t("profile.common.validCharacters", {
-            characters: "A-Z a-z 0-9 . _ -",
-          }),
-        },
-      },
-      INSTAGRAM_URL,
-    ],
-    linkedin: [
-      "LinkedIn URL",
-      {
-        pattern: {
-          value: /^[a-zA-Z0-9\-]*$/,
-          message: t("profile.common.validCharacters", {
-            characters: "A-Z a-z 0-9 -",
-          }),
-        },
-      },
-      LINKEDIN_INDIVIDUAL_URL,
-    ],
-    twitter: [
-      "Twitter URL",
-      {
-        pattern: {
-          value: /^[a-zA-Z0-9_]*$/,
-          message: t("profile.common.validCharacters", {
-            characters: "A-Z a-z 0-9 _",
-          }),
-        },
-        maxLength: {
-          value: 15,
-          message: t("profile.common.maxCharacters", { maxNum: 15 }),
-        },
-      },
-      TWITTER_URL,
-    ],
-    github: [
-      "Github URL",
-      {
-        pattern: {
-          value: /^[a-zA-Z0-9_-]*$/,
-          message: t("profile.common.validCharacters", {
-            characters: "A-Z a-z 0-9 _",
-          }),
-        },
-      },
-      GITHUB_URL,
-    ],
-    website: [
-      "Personal Website",
-      {
-        validate: (str) =>
-          !str || validateURL(str) || t("profile.common.invalidURL"),
-      },
-    ],
+  const [urlValues, setUrlValues] = useState({ ...urls, ...emptySocialUrls });
+
+  const urlValidator = (str) => {
+    !str || validateURL(str) || t("profile.common.invalidURL");
+  };
+
+  const connect = async (type) => {
+    const urlValue = await authUserLink(type);
+    setUrlValues({ ...urlValues, [type]: urlValue });
+    console.log(urlValues);
+    console.log(urlValue);
+  };
+
+  const IconItem = (props) => {
+    return (
+      <SocialIconsDiv valid={urlValues[props.type]}>
+        <img
+          loading="lazy"
+          src={props.icon}
+          onClick={() => connect(props.type)}
+          alt=""
+        />
+      </SocialIconsDiv>
+    );
   };
 
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
     try {
-      const res = await axios.patch("/api/users/current", formData);
+      console.log({
+        ...formData,
+        urls: { ...formData.urls, ...urlValues },
+      });
+      const res = await axios.patch("/api/users/current", {
+        ...formData,
+        urls: { ...formData.urls, ...urlValues },
+      });
       userProfileDispatch(updateUserSuccess(res.data));
       // TODO: consistently return _id or id or both
       props.history.push(`/profile/${res.data._id}`);
@@ -229,20 +229,29 @@ function EditProfile(props) {
                 },
               })}
             />
-            {Object.entries(URLS_CONFIG).map(
-              ([key, [label, validation, prefix]]) => (
-                <FormInput
-                  type={prefix ? "text" : "url"}
-                  inputTitle={t("profile.common.urls." + key)}
-                  name={`urls.${key}`}
-                  error={errors.urls?.[key]}
-                  prefix={prefix}
-                  defaultValue={urls[key]}
-                  ref={register(validation)}
-                  key={key}
+            <FormInput
+              type={"text"}
+              inputTitle={t("profile.common.urls.website")}
+              name={`urls.website`}
+              error={errors.urls?.["website"]}
+              defaultValue={urls["website"]}
+              ref={register(urlValidator)}
+              key={"website"}
+            />
+            <WhiteSpace />
+            <Label
+              style={blockLabelStyles}
+              label={t("profile.common.urls.linkSocial")}
+            />
+            <Row>
+              {Object.keys(socialIconsMap).map((socialType) => (
+                <IconItem
+                  key={socialType}
+                  icon={socialIconsMap[socialType]}
+                  type={socialType}
                 />
-              ),
-            )}
+              ))}
+            </Row>
             <CustomSubmitButton
               disabled={!formState.isValid}
               primary="true"
