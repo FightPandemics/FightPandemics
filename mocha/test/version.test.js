@@ -9,7 +9,7 @@ let apiEndPoint= apiEndPoints.versionApiEndpoint;
 
 describe("Get Version endpoints test", function(){
     it("user enters to see version",async function(){
-            let response= await apiHelper.sendPOSTRequest(
+            let response= await apiHelper.sendGETRequest(
             APP_URL,
             apiEndPoint
     );
