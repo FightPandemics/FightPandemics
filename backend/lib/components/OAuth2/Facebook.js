@@ -1,5 +1,5 @@
 const axios = require("axios");
-const queryString = require("query-string");
+const qs = require("querystring");
 const { generateUUID } = require("../../utils");
 const {
   config: {
@@ -16,7 +16,7 @@ const userDataUrl = "https://graph.facebook.com/me";
 const scopeData = ["id", "email", "first_name", "last_name"].join(",");
 
 const buildOauthUrl = (redirectUrl) => {
-  const stringifiedParams = queryString.stringify({
+  const stringifiedParams = qs.stringify({
     client_id: facebook.clientId,
     redirect_uri: redirectUrl,
     response_type: "code",

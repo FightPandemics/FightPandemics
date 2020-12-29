@@ -1,5 +1,5 @@
 const axios = require("axios");
-const queryString = require("query-string");
+const qs = require("querystring");
 const { generateUUID } = require("../../utils");
 const {
   config: {
@@ -14,7 +14,7 @@ const authUrl = "https://github.com/login/oauth/access_token";
 const userDataUrl = "https://api.github.com/user";
 
 const buildOauthUrl = (redirectUrl) => {
-  const stringifiedParams = queryString.stringify({
+  const stringifiedParams = qs.stringify({
     client_id: github.clientId,
     redirect_uri: redirectUrl,
     state: generateUUID({ range: 32 }),
