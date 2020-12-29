@@ -28,7 +28,15 @@ const configData = envSchema({
       S.string().default("http://localhost:4566/fp-dev-cdn"),
     )
     .prop("COMMIT_HASH", S.string())
+    .prop("FACEBOOK_CLIENT_ID", S.string())
+    .prop("FACEBOOK_SECRET_KEY", S.string())
+    .prop("GITHUB_CLIENT_ID", S.string())
+    .prop("GITHUB_SECRET_KEY", S.string())
     .prop("GOOGLE_MAPS_API_KEY", S.string())
+    .prop("INSTAGRAM_CLIENT_ID", S.string())
+    .prop("INSTAGRAM_SECRET_KEY", S.string())
+    .prop("LINKEDIN_CLIENT_ID", S.string())
+    .prop("LINKEDIN_SECRET_KEY", S.string())
     .prop("LOGGER_HOST", S.string())
     .prop("LOGGER_LEVEL", S.string().default("info"))
     .prop("LOGGER_PORT", S.number().default(1234))
@@ -41,7 +49,9 @@ const configData = envSchema({
     .prop("S3_CDN_BUCKET", S.string().default("fp-dev-cdn"))
     .prop("SENTRY_DSN", S.string())
     .prop("SENDGRID_API_KEY", S.string())
-    .prop("SENDGRID_CONTACTS_LIST_ID", S.string()),
+    .prop("SENDGRID_CONTACTS_LIST_ID", S.string())
+    .prop("TWITTER_CLIENT_ID", S.string())
+    .prop("TWITTER_SECRET_KEY", S.string()),
 });
 
 const config = {
@@ -95,6 +105,28 @@ const config = {
         : `mongodb://${configData.MONGO_URI}`,
   },
   name,
+  oauth2: {
+    facebook: {
+      clientId: configData.FACEBOOK_CLIENT_ID,
+      secretKey: configData.FACEBOOK_SECRET_KEY,
+    },
+    github: {
+      clientId: configData.GITHUB_CLIENT_ID,
+      secretKey: configData.GITHUB_SECRET_KEY,
+    },
+    instagram: {
+      clientId: configData.INSTAGRAM_CLIENT_ID,
+      secretKey: configData.INSTAGRAM_SECRET_KEY,
+    },
+    linkedin: {
+      clientId: configData.LINKEDIN_CLIENT_ID,
+      secretKey: configData.LINKEDIN_SECRET_KEY,
+    },
+    twitter: {
+      clientId: configData.TWITTER_CLIENT_ID,
+      secretKey: configData.TWITTER_SECRET_KEY,
+    },
+  },
   query: {
     maxLimit: configData.QUERY_LIMIT_MAX,
   },
