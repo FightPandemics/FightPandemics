@@ -1,4 +1,5 @@
 const Auth0 = require("../components/Auth0");
+const Oauth = require("../components/OAuth2");
 const { isValidEmail, isValidPassword } = require("../utils");
 const {
   changePasswordSchema,
@@ -11,7 +12,7 @@ const {
 const {
   config: { auth: authConfig },
 } = require("../../config");
-const { getCookieToken } = require("../utils");
+const { getCookieToken, getHostDomain } = require("../utils");
 
 /*
  * /api/auth
@@ -82,6 +83,42 @@ async function routes(app) {
       const providerName = provider === "google" ? "google-oauth2" : provider;
       const url = Auth0.buildOauthUrl(providerName, headers.referer);
       reply.redirect(url);
+    },
+  );
+
+  app.get(
+    "/oauth/:provider/auth-url",
+    { schema: oAuthProviderSchema },
+    async (req, reply) => {
+      const { headers, params } = req;
+      const { provider } = params;
+      const client = Oauth.createOauth2Client(provider);
+      const hostDomain = getHostDomain(headers.referer);
+      const url = client.buildOauthUrl(hostDomain);
+      reply.redirect(url);
+    },
+  );
+
+  app.get(
+    "/oauth/:provider/user-link",
+    { schema: oAuthProviderSchema },
+    async (req) => {
+      const {
+        headers,
+        params,
+        query: { code, state },
+      } = req;
+      const { provider } = params;
+      const client = Oauth.createOauth2Client(provider);
+      const redirectUrl = getHostDomain(headers.referer);
+      try {
+        const accessToken = await client.authenticate(code, state, redirectUrl);
+        const userLink = await client.getUserLink(accessToken);
+        return { userLink };
+      } catch (err) {
+        req.log.error(err, `Error when calling ${provider} APIs`);
+        throw app.httpErrors.internalServerError(err);
+      }
     },
   );
 

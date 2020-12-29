@@ -34,7 +34,14 @@ const oAuthSchema = {
 const oAuthProviderSchema = {
   params: strictSchema().prop(
     "provider",
-    S.enum(["google", "facebook", "linkedin", "twitter"]).required(),
+    S.enum([
+      "google",
+      "facebook",
+      "linkedin",
+      "twitter",
+      "github",
+      "instagram",
+    ]).required(),
   ),
 };
 

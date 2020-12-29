@@ -131,17 +131,23 @@ const isUserInRoom = (app, threadId, socketId) => {
   });
 };
 
+const getHostDomain = (subRoute) => {
+  const parts = subRoute.split("/");
+  return `${parts[0]}//${parts[2]}/`;
+};
+
 module.exports = {
   bool,
+  createSearchRegex,
   dateToEpoch,
   generateUUID,
   getCookieToken,
+  getHostDomain,
+  getReqParam,
   getSocketIdByUserId,
   isUserInRoom,
-  getReqParam,
   isValidEmail,
   isValidPassword,
-  createSearchRegex,
   setElapsedTimeText,
   translateISOtoRelativeTime,
 };
