@@ -19,10 +19,10 @@ const createOauth2Client = (socialType) => {
     return Instagram;
   }
   if (socialType === "linkedin" && linkedin.clientId && linkedin.secretKey) {
-    return Linkedin;
+    return new Linkedin(linkedin.clientId, linkedin.secretKey);
   }
   if (socialType === "twitter" && twitter.clientId && twitter.secretKey) {
-    return Twitter;
+    return new Twitter(twitter.clientId, twitter.secretKey);
   }
   if (socialType === "github" && github.clientId && github.secretKey) {
     return new Github(github.clientId, github.secretKey);
