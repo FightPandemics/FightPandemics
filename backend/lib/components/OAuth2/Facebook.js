@@ -1,4 +1,3 @@
-const axios = require("axios");
 const { Social } = require("./Social");
 
 // reference: https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/
@@ -8,7 +7,7 @@ const userDataUrl = "https://graph.facebook.com/me";
 
 class Facebook extends Social {
   constructor(clientId, secretKey) {
-    super("facebook", clientId, secretKey, authUrlBase, tokenUrl);
+    super("facebook", clientId, secretKey, authUrlBase, tokenUrl, userDataUrl);
   }
 
   buildOauthUrl(redirectUrl) {
@@ -16,13 +15,10 @@ class Facebook extends Social {
     return super.buildOauthUrl(scope, redirectUrl);
   }
 
-  static async getUserLink(accessToken) {
+  async getUserLink(accessToken) {
     // TODO: add 'user_link' after enabling in Facebook API dashboard
     const scope = ["id", "email", "first_name", "last_name"].join(",");
-    const { data } = await axios.get(userDataUrl, {
-      fields: scope,
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
+    const data = await super.getUserData(scope, accessToken);
     return data; // data.user_link;
   }
 }

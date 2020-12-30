@@ -1,4 +1,3 @@
-const axios = require("axios");
 const { Social } = require("./Social");
 
 // reference: https://docs.github.com/en/free-pro-team@latest/developers/apps/authorizing-oauth-apps#web-application-flow
@@ -8,7 +7,7 @@ const userDataUrl = "https://api.github.com/user";
 
 class Github extends Social {
   constructor(clientId, secretKey) {
-    super("github", clientId, secretKey, authUrlBase, tokenUrl);
+    super("github", clientId, secretKey, authUrlBase, tokenUrl, userDataUrl);
   }
 
   buildOauthUrl(redirectUrl) {
@@ -16,12 +15,9 @@ class Github extends Social {
     return super.buildOauthUrl(scope, redirectUrl);
   }
 
-  static async getUserLink(accessToken) {
+  async getUserLink(accessToken) {
     const scope = "";
-    const { data } = await axios.get(userDataUrl, {
-      fields: scope,
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
+    const data = await super.getUserData(scope, accessToken);
     return data.html_url;
   }
 }
