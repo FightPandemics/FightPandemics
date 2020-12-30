@@ -1,52 +1,29 @@
 const axios = require("axios");
-const qs = require("querystring");
-const { generateUUID } = require("../../utils");
-const {
-  config: {
-    oauth2: { github },
-  },
-} = require("../../../config");
+const { Social } = require("./Social");
 
 // reference: https://docs.github.com/en/free-pro-team@latest/developers/apps/authorizing-oauth-apps#web-application-flow
-
-const dialogUrlBase = "https://github.com/login/oauth/authorize";
-const authUrl = "https://github.com/login/oauth/access_token";
+const authUrlBase = "https://github.com/login/oauth/authorize";
+const tokenUrl = "https://github.com/login/oauth/access_token";
 const userDataUrl = "https://api.github.com/user";
 
-const buildOauthUrl = (redirectUrl) => {
-  const stringifiedParams = qs.stringify({
-    client_id: github.clientId,
-    redirect_uri: redirectUrl,
-    state: generateUUID({ range: 32 }),
-  });
-  return `${dialogUrlBase}?${stringifiedParams}`;
-};
+class Github extends Social {
+  constructor(clientId, secretKey) {
+    super("github", clientId, secretKey, authUrlBase, tokenUrl);
+  }
 
-const authenticate = async (codeStr, stateStr, redirectUrl) => {
-  const { data } = await axios({
-    headers: { Accept: "application/json" },
-    method: "post",
-    params: {
-      client_id: github.clientId,
-      client_secret: github.secretKey,
-      code: codeStr,
-      redirect_uri: redirectUrl,
-      state: stateStr,
-    },
-    url: authUrl,
-  });
-  return data.access_token;
-};
+  buildOauthUrl(redirectUrl) {
+    const scope = "";
+    return super.buildOauthUrl(scope, redirectUrl);
+  }
 
-const getUserLink = async (accesstoken) => {
-  const { data } = await axios({
-    headers: {
-      Authorization: `token ${accesstoken}`,
-    },
-    method: "get",
-    url: userDataUrl,
-  });
-  return data.html_url;
-};
+  static async getUserLink(accessToken) {
+    const scope = "";
+    const { data } = await axios.get(userDataUrl, {
+      fields: scope,
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    return data.html_url;
+  }
+}
 
-module.exports = { authenticate, buildOauthUrl, getUserLink };
+module.exports = { Github };
