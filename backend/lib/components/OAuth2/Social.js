@@ -3,16 +3,32 @@ const qs = require("querystring");
 const { generateUUID } = require("../../utils");
 
 class Social {
-  constructor(clientId, secretKey) {
+  constructor(
+    socialType,
+    clientId,
+    secretKey,
+    authUrlBase,
+    tokenUrl,
+    userDataUrl,
+    scopes,
+  ) {
     if (new.target === Social) {
       throw new TypeError("Social class is abstract, cannot construct.");
     }
     if (this.getUserLink === undefined) {
       throw new TypeError("must override method getUserLink");
     }
+    if (!socialType || !authUrlBase || !tokenUrl || !userDataUrl || !scopes) {
+      throw new TypeError("Must define all arguments");
+    }
 
+    this.socialType = socialType; // social type
     this.clientId = clientId; // client ID
     this.secretKey = secretKey; // secret Key
+    this.authUrlBase = authUrlBase; // authentication dialog URL base
+    this.tokenUrl = tokenUrl; // social endpoint to get accessToken
+    this.userDataUrl = userDataUrl; // user endpoint to get userData
+    this.scopes = scopes; // scopes for auth and accessing endpoints
   }
 
   buildOauthUrl(redirectUrl) {
