@@ -1,23 +1,20 @@
 const { Social } = require("./Social");
 
 // reference: https://docs.github.com/en/free-pro-team@latest/developers/apps/authorizing-oauth-apps#web-application-flow
-const authUrlBase = "https://github.com/login/oauth/authorize";
-const tokenUrl = "https://github.com/login/oauth/access_token";
-const userDataUrl = "https://api.github.com/user";
 
 class Github extends Social {
   constructor(clientId, secretKey) {
-    super("github", clientId, secretKey, authUrlBase, tokenUrl, userDataUrl);
+    super(clientId, secretKey);
+    this.socialType = "github";
+    this.authUrlBase = "https://github.com/login/oauth/authorize";
+    this.tokenUrl = "https://github.com/login/oauth/access_token";
+    this.userDataUrl = "https://api.github.com/user";
+    this.scopes = "";
   }
 
-  buildOauthUrl(redirectUrl) {
-    const scope = "";
-    return super.buildOauthUrl(scope, redirectUrl);
-  }
-
+  // reference: https://docs.github.com/en/free-pro-team@latest/rest/reference/users#get-the-authenticated-user
   async getUserLink(accessToken) {
-    const scope = "";
-    const data = await super.getUserData(scope, accessToken);
+    const data = await super.getUserData(accessToken);
     return data.html_url;
   }
 }

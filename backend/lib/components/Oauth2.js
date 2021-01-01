@@ -10,22 +10,37 @@ const {
   },
 } = require("../../config");
 
+const socialClasses = {
+  facebook: {
+    SocialClass: Facebook,
+    config: facebook,
+  },
+  github: {
+    SocialClass: Github,
+    config: github,
+  },
+  instagram: {
+    SocialClass: Instagram,
+    config: instagram,
+  },
+  linkedin: {
+    SocialClass: Linkedin,
+    config: linkedin,
+  },
+  twitter: {
+    SocialClass: Twitter,
+    config: twitter,
+  },
+};
+
 // abstract factory to create oauth2 client
 const createOauth2Client = (socialType) => {
-  if (socialType === "facebook" && facebook.clientId && facebook.secretKey) {
-    return new Facebook(facebook.clientId, facebook.secretKey);
+  if (!Object.prototype.hasOwnProperty.call(socialClasses, socialType)) {
+    throw new Error("Unsupported Social Type");
   }
-  if (socialType === "instagram" && instagram.clientId && instagram.secretKey) {
-    return Instagram;
-  }
-  if (socialType === "linkedin" && linkedin.clientId && linkedin.secretKey) {
-    return new Linkedin(linkedin.clientId, linkedin.secretKey);
-  }
-  if (socialType === "twitter" && twitter.clientId && twitter.secretKey) {
-    return new Twitter(twitter.clientId, twitter.secretKey);
-  }
-  if (socialType === "github" && github.clientId && github.secretKey) {
-    return new Github(github.clientId, github.secretKey);
+  const { SocialClass, config } = socialClasses[socialType];
+  if (config.clientId && config.secretKey) {
+    return new SocialClass(config.clientId, config.secretKey);
   }
   return SocialMock;
 };

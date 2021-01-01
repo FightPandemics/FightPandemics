@@ -3,25 +3,24 @@ const qs = require("querystring");
 const { generateUUID } = require("../../utils");
 
 class Social {
-  constructor(type, clientId, secretKey, authUrlBase, tokenUrl, userDataUrl) {
+  constructor(clientId, secretKey) {
     if (new.target === Social) {
       throw new TypeError("Social class is abstract, cannot construct.");
     }
+    if (this.getUserLink === undefined) {
+      throw new TypeError("must override method getUserLink");
+    }
 
-    this.type = type; // social type
     this.clientId = clientId; // client ID
     this.secretKey = secretKey; // secret Key
-    this.authUrlBase = authUrlBase; // authentication dialog URL base
-    this.tokenUrl = tokenUrl; // social endpoint to get accessToken
-    this.userDataUrl = userDataUrl;
   }
 
-  buildOauthUrl(scopes, redirectUrl) {
+  buildOauthUrl(redirectUrl) {
     const stringifiedParams = qs.stringify({
       client_id: this.clientId,
       redirect_uri: redirectUrl,
       response_type: "code",
-      scope: scopes,
+      scope: this.scopes,
       state: generateUUID({ range: 32 }),
     });
     return `${this.authUrlBase}?${stringifiedParams}`;
@@ -43,9 +42,9 @@ class Social {
     return data.access_token;
   }
 
-  async getUserData(scope, accessToken) {
+  async getUserData(accessToken) {
     const { data } = await axios.get(this.userDataUrl, {
-      fields: scope,
+      fields: this.scopes,
       headers: { Authorization: `Bearer ${accessToken}` },
     });
     return data;

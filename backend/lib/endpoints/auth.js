@@ -92,10 +92,15 @@ async function routes(app) {
     async (req, reply) => {
       const { headers, params } = req;
       const { provider } = params;
-      const client = Oauth.createOauth2Client(provider);
-      const hostDomain = getHostDomain(headers.referer);
-      const url = client.buildOauthUrl(hostDomain);
-      reply.redirect(url);
+      try {
+        const client = Oauth.createOauth2Client(provider);
+        const hostDomain = getHostDomain(headers.referer);
+        const url = client.buildOauthUrl(hostDomain);
+        reply.redirect(url);
+      } catch (err) {
+        req.log.error(err, `Error when building ${provider} auth URL`);
+        throw app.httpErrors.internalServerError(err);
+      }
     },
   );
 
