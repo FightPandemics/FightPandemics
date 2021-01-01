@@ -3,7 +3,6 @@ import {
   FETCH_POST,
   SET_SHORT_CONTENT,
   SET_FULL_CONTENT,
-  SET_COMMENT_COUNT,
   RESET_PAGE,
   RESET_POST,
   RESET_LOADING,
@@ -18,6 +17,7 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_LIKE,
+  SHOW_ANYWAY,
 } from "../actions/postActions";
 import { DELETE_MODAL_HIDE } from "../actions/feedActions";
 
@@ -98,8 +98,6 @@ export const postReducer = (state = postState, action) => {
         postLength: action.length,
         fullContent: action.content,
       };
-    case SET_COMMENT_COUNT:
-      return { ...state, totalCommentCount: action.numComments };
     case NEXT_PAGE:
       return { ...state, page: state.page + 1 };
     case RESET_PAGE:
@@ -118,7 +116,7 @@ export const postReducer = (state = postState, action) => {
       return {
         ...state,
         comments: action.comments,
-        commentsCount: action.numComments,
+        commentsCount: action.commentsCount,
       };
     case SET_COMMENT:
       state.comments = state.comments.map((comment) => {
@@ -157,6 +155,12 @@ export const postReducer = (state = postState, action) => {
         liked: !!!state.liked,
         likesCount: payload.count,
       };
+    case SHOW_ANYWAY: {
+      return {
+        ...state,
+        reportsCount: 0,
+      };
+    }
     default:
       return state;
   }

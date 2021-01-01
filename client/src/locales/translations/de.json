@@ -12,7 +12,16 @@
     "profile": "Profil",
     "addOrg": "Organisation hinzufügen",
     "logout": "Ausloggen",
-    "organisations": "Organisationen"
+    "organisations": "Organisationen",
+    "language": "Sprache",
+    "switchAccount": "Benutzer wechseln",
+    "myOrganisation": "Meine Organisationen",
+    "willRefresh": "Die Seite wird aktualisiert.",
+    "stayOnPageHeader": "Auf der aktuellen Seite bleiben?",
+    "stayOnPageContent": "Wenn du \"Nein\" auswählst, wirst du zum Hilfebrett weitergeleitet.",
+    "yes": "Ja",
+    "no": "Nein",
+    "ok": "OK"
   },
   "onboarding": {
     "common": {
@@ -84,7 +93,13 @@
         "Finanzierung",
         "Forschung und Entwicklung",
         "Technik",
-        "Sonstigen"
+        "Sonstigen",
+        "Sonstiges",
+        "Kinderbetreuung",
+        "Übersetzungen",
+        "Freiwillig Helfen",
+        "Personal (bezahlt)",
+        "Home Office Arbeit"
       ],
       "labels": {
         "location": "Standort",
@@ -115,7 +130,13 @@
         "Funding": "Finanzierung",
         "R&D": "Forschung und Entwicklung",
         "Tech": "Technik",
-        "Other": "Andere"
+        "Other": "Andere",
+        "Housing": "Wohnen",
+        "Childcare": "Kinderbetreuung",
+        "Translations": "Übersetzungen",
+        "Volunteer": "freiwillig Helfen",
+        "Staff (paid)": "Personal (bezahlt)",
+        "Remote Work": "Home Office Arbeit"
       },
       "lookingForOptions": {
         "Request Help": "Hilfe anfordern",
@@ -201,7 +222,16 @@
     "delete": "Löschen",
     "cancel": "Abbrechen",
     "confirm": "Bestätigen",
-    "edited": "bearbeitet"
+    "edited": "bearbeitet",
+    "share_plural": "Anteile",
+    "deletePostConfirmationTitle": "Bestätigung löschen",
+    "deleteCommentConfirmationTitle": "Kommentarbestätigung löschen",
+    "deleteConfirmation": "Löschen",
+    "edit": "Beitrag bearbeiten",
+    "hideAction": "Beitrag ausblenden",
+    "hideCaption": "Es ist für mich nicht relevant.",
+    "reportAction": "Beitrag melden",
+    "reportCaption": "Für die Überprüfung von Moderatoren"
   },
   "profile": {
     "common": {
@@ -245,7 +275,18 @@
       "emailMaxLength": "E-Mail-Adresse darf 200 Zeichen nicht überschreiten",
       "emailInvalid": "E-Mail-Adresse ist ungültig",
       "emailDomainInvalid": "E-Mail-Domain ist ungültig",
-      "sendMessage": "Nachricht senden"
+      "sendMessage": "Nachricht senden",
+      "securityInfo": "Sicherheitsinformationen",
+      "changePassword": "Passwort ändern",
+      "notificationInfo": "Benachrichtigungseinstellungen",
+      "emailNotification": "Benachrichtigungs-E-Mail-Einstellungen",
+      "instant": "Sofort",
+      "daily": "Täglich",
+      "weekly": "Wöchentlich",
+      "biweekly": "Zweiwöchentlich",
+      "digest": "Zusammenfassung",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "E-Mail",
@@ -269,7 +310,22 @@
       "wantHelp": "Ich möchte helfen ",
       "needHelp": "Ich brauche Hilfe",
       "firstNameRequired": "Vorname ist erforderlich.",
-      "lastNameRequired": "Nachname ist erforderlich."
+      "lastNameRequired": "Nachname ist erforderlich.",
+      "newPassword": "Neues Passwort",
+      "currentPassword": "Aktuelles Passwort",
+      "confirmNewPassword": "Passwort bestätigen",
+      "currentPasswordRequired": "Aktuelles Passwort ist erforderlich",
+      "newPasswordRequired": "Neues Passwort ist erforderlich",
+      "confirmNewPasswordRequired": "Bitte bestätige dein Passwort!",
+      "passwordMatch": "Die beiden eingegebenen Passwörter stimmen nicht überein!",
+      "passwordUpdateSuccess": "Passwortänderung erfolgreich",
+      "passwordUpdateError": "Passwortänderung nicht erfolgreich",
+      "enterCurrentPassword": "Aktuelles Passwort eingeben",
+      "enterNewPassword": "Neues Passwort eingeben",
+      "updatingPassword": "Passwort aktualisieren",
+      "editSecurity": "Sicherheit bearbeiten",
+      "editNotification": "Benachrichtigung bearbeiten",
+      "editAccount": "Konto bearbeiten"
     },
     "org": {
       "title": "Organisationsprofil erstellen",
@@ -332,7 +388,9 @@
       "editAccount": "Benutzerkontodaten ändern",
       "updateSuccess": "Organisation erfolgreich aktualisiert",
       "orgNameRequired": "Name der Organisation ist erforderlich",
-      "global": "Global"
+      "global": "Global",
+      "editOrgAccount": "Organisationskonto bearbeiten",
+      "editOrgNotification": "Organisationsbenachrichtigung bearbeiten"
     }
   },
   "auth": {
@@ -353,7 +411,9 @@
     "passwordMax": "Das Passwort darf höchstens {{num}} Zeichen lang sein.",
     "passwordMin": "Das Passwort muss mindestens {{num}} Zeichen lang sein.",
     "passwordConfirmationRequired": "Eine Passwortbestätigung ist erforderlich.",
-    "passwordNotMatch": "Passwörter stimmen nicht überein"
+    "passwordNotMatch": "Passwörter stimmen nicht überein",
+    "backHome": "Zurück zum Startbildschirm",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Überprüfe deinen Posteingang",
@@ -395,7 +455,23 @@
     "lifetimeSupporters": "Lebenslange Unterstützer",
     "currentSupporters": "Aktuelle Unterstützer",
     "pastSupporters": "Ehemalige Unterstützer",
-    "hashtag": "#FürGemeindenVonGemeinden"
+    "hashtag": "#FürGemeindenVonGemeinden",
+    "getInvolved": "Teilnehmen",
+    "joinVolunteer": "Als Freiwilliger beitreten",
+    "joinAmbassador": "Als Botschafter beitreten",
+    "joinStudentProgram": "Am Schülerprogramm teilnehmen",
+    "studentSummerProgram": "Sommerprogramm für Schüler",
+    "forStudentInAge": "Für Schüler im Alter von 14-18 Jahren.",
+    "press": "Presse",
+    "pressInfo": "Wenn du Mitglied der Presse bist, kontaktiere uns unter",
+    "pressKitLink": "Zum Presse-Kit",
+    "communityPartners": "Community-Partner",
+    "communityCollaboration": "Wir möchten Gemeinschaften und Organisationen auf der ganzen Welt über unsere Plattform stärken, und dazu müssen wir zusammenarbeiten! Durch die kontinuierliche Zusammenarbeit mit unseren Community-Partnern können wir eine bessere Plattform für sie und andere schaffen.",
+    "becomeCommunityPartner": "Möchtest du, dass deine Community auch zum Partner wird? Wir würden uns freuen, von dir zu hören und zusammenzuarbeiten! Erreiche uns unter ",
+    "currentPartners": "Aktuelle Community-Partner",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "Häufig gestellte Fragen",
@@ -560,7 +636,7 @@
       ],
       [
         "Ich brauche technische Unterstützung.",
-        "Das tut uns leid. Sende uns eine E-Mail an <0> help@fightpandemics.com. </0> Da wir ein Team von Freiwilligen sind, rechne bitte mit mindestens 48 Stunden für eine Antwort."
+        "Das tut uns leid. Sende uns eine E-Mail an <0> support@fightpandemics.com. </0> Da wir ein Team von Freiwilligen sind, rechne bitte mit mindestens 48 Stunden für eine Antwort."
       ],
       [
         "Ich möchte mich aus anderen Gründen an FightPandemics wenden.",
@@ -579,7 +655,7 @@
       ],
       [
         "Ich brauche technische Unterstützung.",
-        "Das tut uns leid. Sende uns eine E-Mail an <0> help@fightpandemics.com. </0> Da wir ein Team von Freiwilligen sind, rechne bitte mit mindestens 48 Stunden für eine Antwort."
+        "Das tut uns leid. Sende uns eine E-Mail an <0>support@fightpandemics.com</0>. Da wir ein Team von Freiwilligen sind, rechne bitte mit mindestens 48 Stunden für eine Antwort."
       ],
       [
         "Ich möchte mich aus anderen Gründen an FightPandemics wenden.",
@@ -772,7 +848,11 @@
       "imageDimensionTooSmall": "Bitte lade ein Bild hoch, das wenigstens 250 Pixel hoch und 250 Pixel breit ist.",
       "imageDimensionTooWide": "Das Bild ist leider zu breit. Bitte versuche es erneut mit einem Bild mit einer Breite von weniger als der doppelten Höhe.",
       "networkError": "Ein Netzwerkfehler ist aufgetreten."
-    }
+    },
+    "wrongOldPassword": "Falsches aktuelles Passwort",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "Wir sind kein Gesundheitsdienstleister",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Dieser Service wird als hilfreiche Option für jene angeboten,\ndie zur Zeit nicht in der Lage sind anderweitig Resourcen \noder Hilfe zu erlangen.",
@@ -819,5 +899,140 @@
     "submitBtn": "Weiter",
     "cancelBtn": "Abbrechen",
     "tryAgainBtn": "Erneut versuchen"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mär",
+      "april": "Apr",
+      "may": "Mai",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Okt",
+      "november": "Nov",
+      "december": "Dez"
+    },
+    "weekdaysShort": {
+      "sunday": "So",
+      "monday": "Mo",
+      "tuesday": "Di",
+      "wednesday": "Mi",
+      "thursday": "Do",
+      "friday": "Fr",
+      "saturday": "Sa"
+    }
+  },
+  "messaging": {
+    "header": "Nachrichten",
+    "requests": "Kontaktanfragen",
+    "settings": {
+      "header": "Nachrichteneinstellungen",
+      "blocked": "Blockierte Nutzer",
+      "archived": "Archivierte Nachrichtenverläufe",
+      "unblock": "Entsperren",
+      "unarchive": "Wiederherstellen",
+      "archiveEmpty": "Du hast keine Nachrichtenverläufe archiviert.",
+      "blockedEmpty": "Du hast keine Nutzer blockiert."
+    },
+    "emptyInbox": {
+      "header": "Du hast keine Nachrichten.",
+      "p1": "Du hast noch keine Nachrichten erhalten.",
+      "p2": "Gehe zurück zum Hilfebrett, um Angebote oder Anfragen zu finden, auf die du antworten kannst.",
+      "goToHB": "Zum Hilfebrett gehen"
+    },
+    "selectRoom": {
+      "header": "Wähle eine Nachricht zum Lesen aus",
+      "p1": "Der Nachrichteninhalt wird hier angezeigt, sobald du eine Auswahl triffst",
+      "p2": "Nachrichten aus dem Posteingang."
+    },
+    "selectRequest": {
+      "header": "Wähle eine beliebige Kontaktanfrage zum Lesen aus",
+      "p1": "Der Inhalt der Kontaktanfrage wird hier angezeigt",
+      "p2": "sobald du eine Kontaktanfrage aus dem Posteingang ausgewählt hast."
+    },
+    "didBlock": "Du hast den Nutzer \"{{username}}\" blockiert. Entsperre ihn, um erneut Nachrichten von ihm zu erhalten.",
+    "wasBlocked": "Du wurdest vo {{username}} blockiert und kannst ihm keine Nachrichten mehr senden.",
+    "acceptPropmt": "Möchtest du Kontaktanfragen annehmen? Du kannst nicht antworten, bevor du diese akzeptiert hast.",
+    "deleteMessageQuestion": "Nachricht löschen?",
+    "deleteMessageText": "Die ausgewählte Nachricht wird dauerhaft sowohl von deinem als auch dem Gerät des Empfängers gelöscht. Möchtest du sie wirklich löschen?",
+    "blockQuestion": "Nachrichten von {{username}} blockieren?",
+    "blockText": "Wenn du \"Blockieren\" auswählst, kann {{username}} dir keine Nachricht oder Kontaktanfrage senden. Um gesperrte Nutzer zu verwalten, gehe zu den Nachrichteneinstellungen.",
+    "archiveQuestion": "Den Nachrichtenverlauf archivieren?",
+    "archiveText": "Wenn du den Nachrichtenverlauf noch einmal lesen möchtest, gehe zu den Nachrichteneinstellungen und stelle ihn wieder her.",
+    "sendSuccessHeader": "Deine Nachricht wurde erfolgreich zugestellt.",
+    "sendSuccessText": "Deine Nachricht an {{username}} mit dem Titel \"{{title}}\" wurde erfolgreich zugestellt.",
+    "sendSuccessTextNoPost": "Deine Nachricht an {{username}} wurde erfolgreich zugestellt.",
+    "sendFailedHeader": "Hoppla, da ist etwas schiefgelaufen.",
+    "sendFailedText": "Deine Nachricht an {{username}} mit dem Titel \"{{title}}\" konnte nicht zugestellt werden.",
+    "sendFailedTextNoPost": "Deine Nachricht an {{username}} konnte nicht zugestellt werden.",
+    "ignoreDialogTitle": "Kontaktanfragen von {{username}} ignorieren?",
+    "ignoreDialogMessage": "Die Kontaktanfrage wird aus deiner Liste gelöscht. Bist du sicher, dass du sie ignorieren möchtest?",
+    "blockDialogTitle": "Nachrichten von {{username}} blockieren?",
+    "blockDialogMessage": "Wenn du \"Blockieren\" auswählst, kann {{username}} dir keine Nachricht oder Kontaktanfragen senden. Um gesperrte Konten zu verwalten, gehe zu den Nachrichteneinstellungen.",
+    "block": "Blockieren",
+    "archive": "Archivieren",
+    "accept": "Akzeptieren",
+    "ignore": "Ignorieren",
+    "delete": "Löschen",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "edited": "Bearbeitet",
+    "saveEdit": "Änderungen speichern",
+    "didDelete": "Du hast diese Nachricht gelöscht.",
+    "wasDeleted": "Diese Nachricht wurde gelöscht.",
+    "loadMore": "Mehr laden...",
+    "justNow": "Grade eben",
+    "lastSeen": "Zuletzt gesehen",
+    "never": "Nie",
+    "activeNow": "Jetzt aktiv",
+    "message": "Nachricht",
+    "sendMessage": "Nachricht senden",
+    "typeMessage": "Nachricht eingeben...",
+    "viewMessage": "Nachricht anzeigen",
+    "to": "An",
+    "send": "Senden",
+    "done": "Fertig",
+    "close": "Schließen"
+  },
+  "message": {
+    "message": "Nachricht",
+    "message_plural": "Nachrichten"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Abbestellen",
+      "canceled": "Es werden keine Änderungen an deinen Benachrichtigungseinstellungen vorgenommen.",
+      "success": "Deine Benachrichtigungseinstellungen werden aktualisiert"
+    },
+    "header": "Benachrichtigungen",
+    "liked": "<0>{{username}}</0> gefiel dein Beitrag <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> hat deinen Beitrag <1>{{postTitle}}</1> kommentiert",
+    "shared": "<0>{{username}}</0> hat deinen Beitrag <1>{{postTitle}}</1> auf <1>{{shareMedium}}</1> geteilt",
+    "empty": "Keine Benachrichtigungen mehr"
+  },
+  "moderation": {
+    "report": "Melden",
+    "cancel": "Abbrechen",
+    "finish": "Fertig",
+    "reason": "Grund für die Meldung:",
+    "additionalDetails": "Zusätzliche Angaben (optional)",
+    "enterDetails": "Bitte gib hier weitere Details ein ...",
+    "reportPost": "Beitrag melden",
+    "reportPostSuccess": "Vielen Dank für deine Meldung! Dieser Beitrag wird überprüft.",
+    "reportPostError": "Hoppla! Da ist etwas schiefgelaufen...",
+    "reportPostSuccessTitle": "Meldung erhalten",
+    "reportPostErrorTitle": "Hoppla!",
+    "spam": "Spam",
+    "inappropriateContent": "Unangemessene Inhalte",
+    "violatesTerms": "Verstößt gegen die Bestimmungen",
+    "other": "Sonstiges",
+    "postSuspected": "Dieser Beitrag erhielt mehrere Meldungen und wird überprüft",
+    "showAnyway": "Trotzdem anzeigen",
+    "postHidden": "Du hast diesen Beitrag ausgeblendet",
+    "unhide": "Einblenden",
+    "youReported": "Du hast diesen Beitrag gemeldet. Es wird in deinem Feed nicht mehr angezeigt"
   }
 }

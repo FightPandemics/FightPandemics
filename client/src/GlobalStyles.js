@@ -119,12 +119,22 @@ a {
     background-color: ${SELAGO};
   }
 }
-
+.ReactVirtualized__Grid, .ReactVirtualized__List, .ReactVirtualized__Grid__innerScrollContainer {
+    overflow: visible !important;
+}
 /* transform: translateZ(1px) messes up z-index precendence on iPhones */
 .feed-filter-modal-wrap {
   transform: none;
 }
-
+#launcher {
+  bottom: 5rem !important;
+  z-index: 1 !important;
+  @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
+    bottom: 1.85rem !important;
+    left: 0.5rem !important;
+    transform: scale(0.95) !important;
+  }
+}
 `;
 
 export default globalStyles;

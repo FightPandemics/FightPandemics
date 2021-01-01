@@ -16,6 +16,8 @@ import {
   CustomHeading,
   CustomSubmitButton,
   OptionDiv,
+  ToggleHeading,
+  CustomEditAccountHeader,
   FormLayout,
   Background,
 } from "components/EditProfile/EditComponents";
@@ -47,7 +49,8 @@ function EditProfile(props) {
   });
   const { error, loading, user } = userProfileState;
   const { t } = useTranslation();
-  const { firstName, lastName, urls = {}, about, usesPassword = false } = user || {};
+  const { firstName, lastName, urls = {}, about, usesPassword = false } =
+    user || {};
 
   const URLS_CONFIG = {
     facebook: [
@@ -174,9 +177,14 @@ function EditProfile(props) {
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
-          <CustomHeading level={4} className="h4">
+          <CustomEditAccountHeader className="h4">
             {t("profile.individual.editProfile")}
-          </CustomHeading>
+          </CustomEditAccountHeader>
+          <ToggleHeading>
+            <CustomHeading level={4} className="h4">
+              {t("profile.common.profileInfo")}
+            </CustomHeading>
+          </ToggleHeading>
           <FillEmptySpace />
           <ProfilePic
             resolution={"768rem"}
@@ -189,21 +197,20 @@ function EditProfile(props) {
         <ChangePicButton>Change</ChangePicButton> */}
         <FormLayout>
           <OptionDiv>
-            <CustomLink>
-              <Link to="/edit-account">{t("profile.common.accountInfo")}</Link>
+            <CustomLink to="/edit-account">
+              {t("profile.common.accountInfo")}
             </CustomLink>
-            <CustomLink isSelected>
-              <Link to="/edit-profile">{t("profile.common.profileInfo")}</Link>
-            </CustomLink>
-            <CustomLink>
-              <Link to="/edit-notifications">{t("profile.common.notificationInfo")}</Link>
+            <CustomLink to="/edit-profile" isSelected>
+              {t("profile.common.profileInfo")}
             </CustomLink>
             {usesPassword && (
-              <CustomLink>
-                <Link to="/edit-security">{t("profile.common.securityInfo")}</Link>
+              <CustomLink to="/edit-security">
+                {t("profile.common.securityInfo")}
               </CustomLink>
             )}
-
+            <CustomLink to="/edit-notifications">
+              {t("profile.common.notificationInfo")}
+            </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}

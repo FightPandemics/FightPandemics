@@ -95,6 +95,8 @@ import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
 import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -139,7 +141,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const { email, name, location = {}, about = "", isOwner, urls = {} } =
     organisation || {};
 
-  const urlsAndEmail = { ...urls, email };
+  const urlsAndEmail = { ...urls, email: isOwner ? null : email };
   if (isOwner) sessionStorage.removeItem("msgModal");
   const {
     isLoading,
@@ -480,12 +482,19 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <PlaceholderIcon />
               {isSelf && (
                 <>
-                  <CreatePostDiv>{t("post.create")}</CreatePostDiv>
                   <CreatePostIcon
-                    src={createPost}
                     id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    src={createPost}
                     onClick={onToggleCreatePostDrawer}
                   />
+                  <CreatePostButton
+                    onClick={onToggleCreatePostDrawer}
+                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    inline={true}
+                    icon={<PlusIcon />}
+                  >
+                    {t("post.create")}
+                  </CreatePostButton>
                 </>
               )}
             </SectionHeader>
@@ -537,17 +546,17 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             >
               <DrawerHeader>
                 <Link to={`/edit-organisation-account/${organisationId}`}>
-                  {t("profile.org.editAccount")}
+                  {t("profile.org.editOrgAccount")}
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
                 <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  {t("profile.individual.editProfile") + " "}
+                  {t("profile.org.editOrgProfile") + " "}
                 </Link>
               </DrawerHeader>
               <DrawerHeader>
                 <Link to={`/edit-organisation-notifications/${organisationId}`}>
-                  {t("profile.individual.editNotification")}{" "}
+                  {t("profile.org.editOrgNotification")}{" "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>

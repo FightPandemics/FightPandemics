@@ -36,7 +36,7 @@
       "shareLocation": "Share My Location",
       "showAnywhere": "Show me postings from anywhere",
       "whatEmail": "What is your email address?",
-      "respectPrivacy": "We respect your privacy. Please read our and <1>Privacy Policy</1> and <3>Terms & Conditions.</3>",
+      "respectPrivacy": "We respect your privacy. Please read our <1>Privacy Policy</1> and <3>Terms & Conditions.</3>",
       "enterEmail": "Enter your email address..."
     },
     "needHelp": {
@@ -86,6 +86,7 @@
         "Groceries/Food",
         "Business",
         "Education",
+        "Housing",
         "Legal",
         "Wellbeing/Mental",
         "Entertainment",
@@ -93,7 +94,12 @@
         "Funding",
         "R&D",
         "Tech",
-        "Other"
+        "Other",
+        "Childcare",
+        "Translations",
+        "Volunteer",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "Location",
@@ -124,12 +130,19 @@
         "Funding": "Funding",
         "R&D": "R&D",
         "Tech": "Tech",
-        "Other": "Others"
+        "Other": "Others",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "Volunteer",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work"
       },
       "lookingForOptions": {
         "Request Help": "Requesting Help",
         "Offer Help": "Offering Help"
-      }
+      },
+      "postsNearMe": "Show results near me"
     },
     "filterBy": "Filter by",
     "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
@@ -150,10 +163,6 @@
         "orgsShort": "Orgs"
       }
     }
-  },
-  "message": {
-    "message": "Message",
-    "message_plural": "Messages"
   },
   "post": {
     "create": "Create a post",
@@ -203,25 +212,33 @@
     "whatNeed": "What do you need?",
     "viewLess": "View Less",
     "viewMore": "View More",
-    "deletePostConfirmation": "Are you sure you want to delete the post?",
-    "deleteCommentConfirmation": "Are you sure you want to delete the comment?",
-    "shareVia": "Share via...",
+    "deletePostConfirmation": "Are you sure you want to delete this post?",
+    "deleteCommentConfirmation": "Are you sure you want to delete this comment?",
+    "shareVia": "Share Post",
+    "copyUrl": "Copy URL",
     "others": "Others",
     "expireTitle": "Ahh... snap!",
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
     "noActivity": "No activity found",
     "share": "Share",
-    "share_plural": "Shares",
-    "delete": "Delete",
+    "delete": "Delete post",
     "cancel": "Cancel",
     "confirm": "Confirm",
-    "edited": "edited"
+    "edited": "edited",
+    "share_plural": "Shares",
+    "deletePostConfirmationTitle": "Delete post confirmation",
+    "deleteCommentConfirmationTitle": "Delete comment confirmation",
+    "deleteConfirmation": "Delete",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
       "accountInfo": "Account Information",
       "profileInfo": "Profile Information",
-      "notificationInfo": "Notification Preference",
       "address": "Address",
       "enterAddress": "Enter address, zip code, or city",
       "agreePrivacy": "By signing up, I agree to the <0>Privacy Policy</0>",
@@ -260,14 +277,18 @@
       "emailMaxLength": "Email address must not exceed 200 characters",
       "emailInvalid": "Email address is invalid",
       "emailDomainInvalid": "Email domain is invalid",
-      "emailNotification": "Email Notification",
+      "sendMessage": "Send Message",
+      "securityInfo": "Security Information",
+      "changePassword": "Change Password",
+      "notificationInfo": "Notification Preference",
+      "emailNotification": "Notification Email Settings",
       "instant": "Instant",
       "daily": "Daily",
       "weekly": "Weekly",
       "biweekly": "Biweekly",
-      "sendMessage": "Send Message",
-      "securityInfo": "Security Information",
-      "changePassword": "Change Password"
+      "digest": "Digest",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "Email",
@@ -284,7 +305,6 @@
       "other": "Other Help",
       "otherDesc": "I need assistance getting groceries/medicine/etc.",
       "editProfile": "Edit Profile",
-      "editNotification": "Edit Notification",
       "intro": "Self-introduction",
       "website": "Personal Website",
       "myActivity": "My Activity",
@@ -305,7 +325,9 @@
       "enterCurrentPassword": "Enter current password",
       "enterNewPassword": "Enter new password",
       "updatingPassword": "Updating Password",
-      "editSecurity": "Edit Security"
+      "editSecurity": "Edit Security",
+      "editNotification": "Edit Notification",
+      "editAccount": "Edit Account"
     },
     "org": {
       "title": "Create Organization Profile",
@@ -368,7 +390,9 @@
       "editAccount": "Edit Account Information",
       "updateSuccess": "Organization successfully updated",
       "orgNameRequired": "Organization name is required",
-      "global": "Global"
+      "global": "Global",
+      "editOrgAccount": "Edit Organization Account",
+      "editOrgNotification": "Edit Organization Notification"
     }
   },
   "auth": {
@@ -390,7 +414,8 @@
     "passwordMin": "Password must be at least {{num}} characters.",
     "passwordConfirmationRequired": "Password confirmation is required.",
     "passwordNotMatch": "Passwords don't match",
-    "backHome": "Back to Home Screen"
+    "backHome": "Back to Home Screen",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",
@@ -438,7 +463,17 @@
     "joinAmbassador": "Join as Ambassador",
     "joinStudentProgram": "Join Student Program",
     "studentSummerProgram": "Student Summer Program",
-    "forStudentInAge": "For Students ages 14-18."
+    "forStudentInAge": "For Students ages 14-18.",
+    "press": "Press",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "Go to Press Kit",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "FAQ",
@@ -452,7 +487,7 @@
     "title": "About FightPandemics / General",
     "offerRequestHelp": "Offering and Requesting Help",
     "profileAccount": "Profile and Account",
-    "contects": "Contects",
+    "contects": "Contacts",
     "general": [
       [
         "What is FightPandemics?",
@@ -492,7 +527,7 @@
       ],
       [
         "How can I find help?",
-        "From the FightPandemics homepage, select \"Need help\". If you choose \"Other help\", you'll enter your location and be directed to a page with the help offers in the selected area. You can then filter the postings that you want to see also by provider and type. Alternatively, you can select \"View community postings\" from the main page to view all postings and apply the desired filters."
+        "From the FightPandemics homepage, select \"Request help\". If you choose \"Other help\", you'll enter your location and be directed to a page with the help offers in the selected area. You can then filter the postings that you want to see also by provider and type. Alternatively, you can select \"View community postings\" from the main page to view all postings and apply the desired filters."
       ],
       [
         "How can I offer help?",
@@ -570,7 +605,7 @@
       ],
       [
         "Why is my password not valid?",
-        "Please check if your password has at least 8 letters. If you already have an account but forgot your sign in password, click on \"Sign In\" from the homepage and then go to \"Forgot password\"."
+        "Please check if your password has at least 8 characters. If you already have an account but forgot your sign in password, click on \"Sign In\" from the homepage and then go to \"Forgot password\"."
       ],
       [
         "I signed up and I didn't receive the confirmation email. What do I do?",
@@ -603,7 +638,7 @@
       ],
       [
         "I need technical support.",
-        "We are sorry for that. Send us an email at <0>help@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
+        "We are sorry for that. Send us an email at <0>support@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
       ],
       [
         "I want to reach out to FightPandemics for other reasons.",
@@ -622,7 +657,7 @@
       ],
       [
         "I need technical support.",
-        "We are sorry for that. Send us an email at <0>help@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
+        "We are sorry for that. Send us an email at <0>support@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
       ],
       [
         "I want to reach out to FightPandemics for other reasons.",
@@ -715,31 +750,6 @@
     "year_plural": "years",
     "yearWithCount": "{{count}} year ago",
     "yearWithCount_plural": "{{count}} years ago"
-  },
-  "dates": {
-    "monthsShort": {
-      "january": "Jan",
-      "february": "Feb",
-      "march": "Mar",
-      "april": "Apr",
-      "may": "May",
-      "june": "Jun",
-      "july": "Jul",
-      "august": "Aug",
-      "september": "Sep",
-      "october": "Oct",
-      "november": "Nov",
-      "december": "Dec"
-    },
-    "weekdaysShort": {
-      "sunday": "Sun",
-      "monday": "Mon",
-      "tuesday": "Tue",
-      "wednesday": "Wed",
-      "thursday": "Thu",
-      "friday": "Fri",
-      "saturday": "Sat"
-    }
   },
   "alt": {
     "logo": "FightPandemics logo",
@@ -841,7 +851,10 @@
       "imageDimensionTooWide": "Sorry, the image is too wide. Please try again with an image that has width less than twice the height.",
       "networkError": "Sorry, some network error occurred."
     },
-    "wrongOldPassword": "Wrong current password"
+    "wrongOldPassword": "Wrong current password",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",
@@ -887,7 +900,35 @@
   "avatar": {
     "submitBtn": "Submit",
     "cancelBtn": "Cancel",
-    "tryAgainBtn": "Try Again"
+    "tryAgainBtn": "Try Again",
+    "remove": "Remove Avatar",
+    "uploadNew": "Upload New",
+    "edit": "Edit Avatar"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Apr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dec"
+    },
+    "weekdaysShort": {
+      "sunday": "Sun",
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat"
+    }
   },
   "messaging": {
     "header": "Messages",
@@ -914,7 +955,7 @@
     },
     "selectRequest": {
       "header": "Select any message request to read",
-      "p1": "The content of the message request would apprear here",
+      "p1": "The content of the message request would appear here",
       "p2": "once you select one from the message requests inbox."
     },
     "didBlock": "You've blocked {{username}}. Unblock to receive messages from them again.",
@@ -930,12 +971,12 @@
     "sendSuccessText": "Your message to {{username}} concerning the \"{{title}}\" was sent successfully.",
     "sendSuccessTextNoPost": "Your message to {{username}} was sent successfully.",
     "sendFailedHeader": "Oops, something went wrong",
-    "sendFailedText": "Your message to {{username}} concerning the \"{{title}}\" was not successfully sent.",
-    "sendFailedTextNoPost": "Your message to {{username}} was not successfully sent.",
+    "sendFailedText": "Your message to {{username}} concerning the \"{{title}}\" was not delivered.",
+    "sendFailedTextNoPost": "Your message to {{username}} was not delivered.",
     "ignoreDialogTitle": "Ignore the message request from {{username}}?",
     "ignoreDialogMessage": "The message request will be deleted from your device. Are you sure you want to ignore?",
     "blockDialogTitle": "Block the conversation from {{username}}?",
-    "blockDialogMessage": "By selecting “Block”, Patrick won’t be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "blockDialogMessage": "By selecting \"Block\", {{username}} won’t be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
     "block": "Block",
     "archive": "Archive",
     "accept": "Accept",
@@ -961,6 +1002,10 @@
     "done": "Done",
     "close": "Close"
   },
+  "message": {
+    "message": "Message",
+    "message_plural": "Messages"
+  },
   "notifications": {
     "unsubscribe": {
       "unsubscribe": "Unsubscribe",
@@ -970,6 +1015,29 @@
     "header": "Notifications",
     "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
-    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>"
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
+    "empty": "No more notifications"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "Cancel",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "Other",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }

@@ -14,7 +14,7 @@ import qs from "query-string";
 
 // Antd
 import { Menu } from "antd";
-
+import { WhiteSpace } from "antd-mobile";
 // Local
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "components/Alert/ErrorAlert";
@@ -30,6 +30,7 @@ import {
   TabsWrapper,
   MobileSearchWrapper,
 } from "components/Feed/FeedWrappers";
+import { StyledCheckbox } from "components/Feed/StyledAccordion";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
@@ -39,6 +40,8 @@ import { selectPosts, postsActions } from "reducers/posts";
 import Users from "components/Feed/Users";
 import FeedSearch from "components/Input/FeedSearch";
 import { setQueryKeysValue } from "components/Feed/utils";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 import {
   optionsReducer,
@@ -108,6 +111,7 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
+  ignoreUserLocation: true,
 };
 
 export const NoPosts = styled.div`
@@ -150,6 +154,7 @@ const Feed = (props) => {
     location,
     applyFilters,
     showFilters,
+    ignoreUserLocation,
   } = feedState;
   const filters = Object.values(filterOptions);
   const {
@@ -192,6 +197,13 @@ const Feed = (props) => {
     // search category (Tab)
     query.s_category = SEARCH_OPTIONS[query.s_category]?.id || null;
     changeHelpType(query.s_category);
+
+    // ignoreUserLocation
+    if (query.near_me) {
+      dispatchAction(SET_VALUE, "ignoreUserLocation", false);
+    } else {
+      dispatchAction(SET_VALUE, "ignoreUserLocation", true);
+    }
 
     // location
     if (query.location) {
@@ -305,6 +317,12 @@ const Feed = (props) => {
     refetchPosts(null, null, true);
   };
 
+  const toggleShowNearMe = (e) => {
+    setQueryKeysValue(history, {
+      near_me: e.target.checked,
+    });
+  };
+
   const changeHelpType = (selectedValue) => {
     switch (selectedValue) {
       case "INDIVIDUALS":
@@ -353,11 +371,13 @@ const Feed = (props) => {
     }
   };
 
-  const handleCreatePost = () => {
+  const handleCreatePost = (trigger) => {
     if (isAuthenticated) {
       dispatchAction(TOGGLE_STATE, "showCreatePostModal");
       sessionStorage.removeItem("createPostAttemptLoggedOut");
     } else {
+      //prevent redirect if function was triggered by useEffect(on component mount)
+      if (trigger === "useEffect") return;
       sessionStorage.setItem("createPostAttemptLoggedOut", "/feed");
       history.push(LOGIN);
     }
@@ -365,7 +385,7 @@ const Feed = (props) => {
 
   const handleChangeType = (e) => {
     const value = e.key;
-    if (queryParams.objective?.toUpperCase() !== value) {
+    if (value && queryParams.objective?.toUpperCase() !== value) {
       setQueryKeysValue(history, {
         objective: e.key === "ALL" ? null : e.key,
       });
@@ -452,7 +472,7 @@ const Feed = (props) => {
       default:
         break;
     }
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -468,16 +488,26 @@ const Feed = (props) => {
             resultsCount: meta.total,
           },
         });
+        // clear the DataLayer
+        TagManager.dataLayer({
+          dataLayer: {
+            event: -1,
+            keyword: -1,
+            category: -1,
+            resultsCount: -1,
+          },
+        });
       }
       if (posts.length && meta.total) {
         if (prevTotalPostCount !== meta.total) {
           setTotalPostCount(meta.total);
         }
-        if (posts.length < limit) {
-          dispatch(postsActions.finishLoadingAction());
-        } else if (meta.total === limit) {
+
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        if (page === lastPage) {
           dispatch(postsActions.finishLoadingAction());
         }
+
         let postsInState;
         if (history.location.state) {
           const { keepPostsState, keepPageState } = history.location.state;
@@ -488,24 +518,10 @@ const Feed = (props) => {
         }
         if (postsInState) {
           if (Object.keys(postsInState).length === meta.total) {
-            dispatch(
-              postsActions.setLoadingAction({
-                isLoading: true,
-                loadMore: false,
-              }),
-            );
+            dispatch(postsActions.finishLoadingAction());
           }
         }
-        const lastPage = Math.ceil(meta.total / limit) - 1;
-        console.log(page, lastPage, meta.total);
-        if (page === lastPage) {
-          dispatch(
-            postsActions.setLoadingAction({
-              isLoading: true,
-              loadMore: false,
-            }),
-          );
-        }
+
         const loadedPosts = posts.reduce((obj, item) => {
           obj[item._id] = item;
           return obj;
@@ -567,7 +583,7 @@ const Feed = (props) => {
       "createPostAttemptLoggedOut",
     );
     if (createPostAttemptLoggedOut) {
-      handleCreatePost();
+      handleCreatePost("useEffect");
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -638,10 +654,12 @@ const Feed = (props) => {
     <WithSummitBanner>
       <FeedContext.Provider
         value={{
+          isAuthenticated,
           filters,
           filterModal,
           activePanel,
           location,
+          ignoreUserLocation,
           dispatchAction,
           selectedOptions,
           handleShowFilters,
@@ -650,6 +668,7 @@ const Feed = (props) => {
           handleQuit,
           handleLocation,
           handleOnClose,
+          toggleShowNearMe,
           showFilters,
           totalPostCount,
         }}
@@ -672,6 +691,14 @@ const Feed = (props) => {
                       {t(HELP_TYPE[item])}
                     </Menu.Item>
                   ))}
+                  {isAuthenticated && (
+                    <StyledCheckbox
+                      checked={!ignoreUserLocation}
+                      onChange={toggleShowNearMe}
+                    >
+                      {t("feed.filters.postsNearMe")}
+                    </StyledCheckbox>
+                  )}
                 </MenuWrapper>
                 <FiltersWrapper>
                   <button
@@ -706,16 +733,14 @@ const Feed = (props) => {
                 />
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
-                  <button
+                  <CreatePostButton
                     id={gtmTag(GTM.post.createPost)}
                     onClick={handleCreatePost}
+                    inline={true}
+                    icon={<PlusIcon />}
                   >
                     {t("post.create")}
-                    <CreatePostIcon
-                      id={gtmTag(GTM.post.createPost)}
-                      src={creatPost}
-                    />
-                  </button>
+                  </CreatePostButton>
                 )}
               </HeaderWrapper>
               <MobileSearchWrapper>
@@ -741,6 +766,7 @@ const Feed = (props) => {
                   />
                 </div>
               }
+              <WhiteSpace size={"lg"} />
               {!queryParams.s_category || queryParams.s_category === "POSTS" ? (
                 <Posts
                   isAuthenticated={isAuthenticated}

@@ -12,7 +12,16 @@
     "profile": "ప్రొఫైల్",
     "addOrg": "సంస్థను జోడించండి",
     "logout": "సైన్ అవుట్ చేయండి",
-    "organisations": "సంస్థలు"
+    "organisations": "సంస్థలు",
+    "language": "Language",
+    "switchAccount": "Switch Account",
+    "myOrganisation": "నా సంస్థలు",
+    "willRefresh": "The current page will refresh.",
+    "stayOnPageHeader": "Stay on the current page?",
+    "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "సరే"
   },
   "onboarding": {
     "common": {
@@ -84,7 +93,13 @@
         "నిధులు",
         "ఆర్ అండ్ డీ",
         "టెక్",
-        "ఇతర"
+        "ఇతర",
+        "ఇతర",
+        "Childcare",
+        "Translations",
+        "స్వచ్ఛంద సేవకుడు",
+        "Staff (paid)",
+        "Remote Work"
       ],
       "labels": {
         "location": "స్థానం",
@@ -115,7 +130,13 @@
         "Funding": "నిధులు",
         "R&D": "ఆర్ అండ్ డీ",
         "Tech": "టెక్",
-        "Other": "ఇతరులు"
+        "Other": "ఇతరులు",
+        "Housing": "Housing",
+        "Childcare": "Childcare",
+        "Translations": "Translations",
+        "Volunteer": "స్వచ్ఛంద సేవకుడు",
+        "Staff (paid)": "Staff (paid)",
+        "Remote Work": "Remote Work"
       },
       "lookingForOptions": {
         "Request Help": "సహాయం అభ్యర్థించడం",
@@ -123,11 +144,11 @@
       }
     },
     "filterBy": "ద్వారా వడపోత",
-    "noResults": "క్షమించండి, ప్రస్తుతం సంబంధిత పోస్టులు అందుబాటులో లేవు. దయచేసి వేరే ఫిల్టర్ శోధనను ఉపయోగించడానికి ప్రయత్నించండి లేదా < 0 > పోస్ట్‌ను సృష్టించండి < / 0 > .",
+    "noResults": "క్షమించండి, ప్రస్తుతం సంబంధిత పోస్టులు అందుబాటులో లేవు. దయచేసి వేరే ఫిల్టర్ శోధనను ఉపయోగించడానికి ప్రయత్నించండి లేదా <0>పోస్ట్‌ను సృష్టించండి</0> .",
     "allPosts": "అన్ని పోస్టులు",
     "allPeople": "అందరూ",
     "allOrgs": "అన్ని సంస్థలు",
-    "noResultsPosts": "క్షమించండి, ప్రస్తుతం సంబంధిత పోస్టులు అందుబాటులో లేవు. దయచేసి వేరే ఫిల్టర్ శోధనను ఉపయోగించడానికి ప్రయత్నించండి లేదా < 0 > పోస్ట్‌ను సృష్టించండి < / 0 > .",
+    "noResultsPosts": "క్షమించండి, ప్రస్తుతం సంబంధిత పోస్టులు అందుబాటులో లేవు. దయచేసి వేరే ఫిల్టర్ శోధనను ఉపయోగించడానికి ప్రయత్నించండి లేదా <0>పోస్ట్‌ను సృష్టించండి</0> .",
     "noResultsPeople": "క్షమించండి, ప్రస్తుతం సంబంధిత వ్యక్తులు అందుబాటులో లేరు. దయచేసి వేరే ఫిల్టర్ శోధనను ఉపయోగించడానికి ప్రయత్నించండి.",
     "noResultsOrgs": "క్షమించండి, ప్రస్తుతం సంబంధిత సంస్థలు ఏవీ అందుబాటులో లేవు. దయచేసి వేరే ఫిల్టర్ శోధనను ఉపయోగించడానికి ప్రయత్నించండి.",
     "search": {
@@ -201,7 +222,16 @@
     "delete": "తొలగించు",
     "cancel": "రద్దు",
     "confirm": "నిర్ధారించండి",
-    "edited": "సవరించబడింది"
+    "edited": "సవరించబడింది",
+    "share_plural": "Shares",
+    "deletePostConfirmationTitle": "Delete post confirmation",
+    "deleteCommentConfirmationTitle": "Delete comment confirmation",
+    "deleteConfirmation": "తొలగించు",
+    "edit": "Edit post",
+    "hideAction": "Hide post",
+    "hideCaption": "It is not relevant to me",
+    "reportAction": "Report Post",
+    "reportCaption": "For moderators review"
   },
   "profile": {
     "common": {
@@ -209,8 +239,8 @@
       "profileInfo": "ప్రొఫైల్ సమాచారం",
       "address": "చిరునామా",
       "enterAddress": "చిరునామా, పిన్ కోడ్ లేదా నగరాన్ని నమోదు చేయండి",
-      "agreePrivacy": "సైన్ అప్ చేయడం ద్వారా, నేను < 0 > గోప్యతా విధానానికి < / 0 > అంగీకరిస్తున్నాను",
-      "agreeTerms": "సైన్ అప్ చేయడం ద్వారా, నేను < 0 > గోప్యతా విధానానికి < / 0 > అంగీకరిస్తున్నాను",
+      "agreePrivacy": "సైన్ అప్ చేయడం ద్వారా, నేను <0> గోప్యతా విధానానికి </0> అంగీకరిస్తున్నాను",
+      "agreeTerms": "సైన్ అప్ చేయడం ద్వారా, నేను <0> గోప్యతా విధానానికి </0> అంగీకరిస్తున్నాను",
       "createProfile": "మీ ప్రొఫైల్ సృష్టించండి",
       "saveChanges": "మార్పులను భద్రపర్చు",
       "thankyou": "మా కమ్యూనిటీలో చేరినందుకు ధన్యవాదాలు!",
@@ -245,7 +275,18 @@
       "emailMaxLength": "ఇమెయిల్ చిరునామా 200 అక్షరాలను మించకూడదు",
       "emailInvalid": "ఇమెయిల్ చిరునామా చెల్లుబాటు కాదు",
       "emailDomainInvalid": "ఇమెయిల్ డొమైన్ చెల్లుబాటు కాదు",
-      "sendMessage": "సందేశము పంపుము"
+      "sendMessage": "సందేశము పంపుము",
+      "securityInfo": "Security Information",
+      "changePassword": "Change Password",
+      "notificationInfo": "Notification Preference",
+      "emailNotification": "Notification Email Settings",
+      "instant": "Instant",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "biweekly": "Biweekly",
+      "digest": "Digest",
+      "on": "On",
+      "off": "Off"
     },
     "individual": {
       "email": "ఇమెయిల్",
@@ -269,7 +310,22 @@
       "wantHelp": "నేను సహాయం చేయాలని అనుకుంటున్నాను",
       "needHelp": "నాకు సహాయం కావాలి",
       "firstNameRequired": "మొదటి పేరు అవసరం.",
-      "lastNameRequired": "చివరి పేరు అవసరం."
+      "lastNameRequired": "చివరి పేరు అవసరం.",
+      "newPassword": "New Password",
+      "currentPassword": "Current Password",
+      "confirmNewPassword": "Confirm Password",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "confirmNewPasswordRequired": "Please confirm your password!",
+      "passwordMatch": "The two passwords that you entered do not match!",
+      "passwordUpdateSuccess": "Password change successful",
+      "passwordUpdateError": "Password change unsuccessful",
+      "enterCurrentPassword": "Enter current password",
+      "enterNewPassword": "Enter new password",
+      "updatingPassword": "Updating Password",
+      "editSecurity": "Edit Security",
+      "editNotification": "Edit Notification",
+      "editAccount": "Edit Account"
     },
     "org": {
       "title": "ఆర్గనైజేషన్ ప్రొఫైల్ సృష్టించు",
@@ -332,7 +388,9 @@
       "editAccount": "ఖాతా సమాచారాన్ని సవరించండి",
       "updateSuccess": "ఆర్గనైజేషన్ విజయవంతంగా అప్ డేట్ చేయబడింది",
       "orgNameRequired": "సంస్థ పేరు అవసరం",
-      "global": "గ్లోబల్"
+      "global": "గ్లోబల్",
+      "editOrgAccount": "Edit Organization Account",
+      "editOrgNotification": "Edit Organization Notification"
     }
   },
   "auth": {
@@ -353,7 +411,9 @@
     "passwordMax": "పాస్‌వర్డ్ తప్పనిసరిగా {{num}} అక్షరాలు ఉండాలి.",
     "passwordMin": "పాస్‌వర్డ్ కనీసం {{num}} అక్షరాలు ఉండాలి.",
     "passwordConfirmationRequired": "పాస్వర్డ్ నిర్ధారణ అవసరం.",
-    "passwordNotMatch": "పాస్‌వర్డ్‌లు సరిపోలడం లేదు"
+    "passwordNotMatch": "పాస్‌వర్డ్‌లు సరిపోలడం లేదు",
+    "backHome": "Back to Home Screen",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "మీ ఇన్ బాక్స్ తనిఖీ చేయండి",
@@ -395,7 +455,23 @@
     "lifetimeSupporters": "జీవితకాల మద్దతుదారులు",
     "currentSupporters": "ప్రస్తుత మద్దతుదారులు",
     "pastSupporters": "గత మద్దతుదారులు",
-    "hashtag": "#ForCommunitiesByCommunities"
+    "hashtag": "#ForCommunitiesByCommunities",
+    "getInvolved": "నిమగ్నం అవ్వండి",
+    "joinVolunteer": "వాలంటీర్ గా చేరండి",
+    "joinAmbassador": "అంబాసిడర్ గా చేరండి",
+    "joinStudentProgram": "స్టూడెంట్ ప్రోగ్రామ్ లో చేరండి",
+    "studentSummerProgram": "స్టూడెంట్ సమ్మర్ ప్రోగ్రామ్",
+    "forStudentInAge": "14-18 సంవత్సరాల వయస్సు గల విద్యార్థులకు.",
+    "press": "Press",
+    "pressInfo": "If you're a member of the press, contact us at",
+    "pressKitLink": "Go to Press Kit",
+    "communityPartners": "Community Partners",
+    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
+    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
+    "currentPartners": "Current Community Partners",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "తరచూ అడిగే ప్రశ్నలు",
@@ -409,7 +485,7 @@
     "title": "ఫైట్ పాండమిక్స్ గురించి / జనరల్",
     "offerRequestHelp": "సహాయం అందించడం మరియు అభ్యర్థించడం",
     "profileAccount": "ప్రొఫైల్ మరియు ఖాతా",
-    "contects": "కాంటెక్ట్స్",
+    "contects": "పరిచయాలు",
     "general": [
       [
         "ఫైట్ పాండమిక్స్ అంటే ఏమిటి?",
@@ -420,7 +496,7 @@
       [
         "ఫైట్ పాండమిక్స్ ఎవరు?",
         "ఫైట్ పాండెమిక్స్ అనేది స్వచ్ఛంద, గ్లోబల్ టీం, ఇది సహాయం కోసం వెళ్ళే ప్రదేశంగా ఉపయోగపడుతుంది. మా బృందం 70+ దేశాల నుండి 150+ నిశ్చితార్థం చేసిన వాలంటీర్లతో రూపొందించబడింది. ఈ ప్లాట్‌ఫాం ఒక వినూత్న సహకార ప్రయత్నంలో నిర్మించబడింది, ఒకదానికొకటి సహ-సృష్టి మరియు నేర్చుకోవటానికి సిద్ధంగా ఉన్న విస్తృత నైపుణ్యాలతో విభిన్న సమస్యల పరిష్కార సమూహాన్ని తీసుకువస్తుంది.",
-        "మీరు మా చొరవలో చేరాలని అనుకుంటున్నారా? hr@fightpandemics.కామ్ కు చేరుకోండి"
+        "మీరు మా చొరవలో చేరాలని అనుకుంటున్నారా? <0>hr@fightpandemics.com</0>కామ్ కు చేరుకోండి"
       ],
       [
         "ఫైట్ పాండమిక్స్ ఏ నగరాల్లో పనిచేస్తాయి?",
@@ -432,7 +508,7 @@
       ],
       [
         "ఫైట్ పాండెమిక్స్లో నేను ఆఫర్ లేదా సహాయం కోసం ఎలా అభ్యర్థించగలను?",
-        "<0>మీరు కమ్యూనిటీలో చేరినప్పుడు, FightPaandemics ఫ్లాట్ ఫారంపై పోస్ట్ లు మరియు కామెంట్ లను వీక్షించడం మరియు సృష్టించడానికి మీకు అపరిమిత యాక్సెస్ ఉంటుంది.</0> <1>ఒక యూజర్ గా కమ్యూనిటీలో చేరడం కొరకు, \"మెనూ\" బటన్ మీద క్లిక్ చేయండి మరియు ''ఇప్పుడు చేరండి/సైన్ ఇన్'' ఆప్షన్ ఎంచుకోండి. అక్కడ మీరు ఎంచుకున్న ఇమెయిల్ లేదా సోషల్ మీడియా క్రెడెన్షియల్స్ తో చేరవచ్చు.</1> <2>మీ ప్రొఫైల్ పూర్తి చేసిన తరువాత, మెనూ బటన్ ఎంచుకోండి, నా ప్రొఫైల్ వీక్షించండి ఎంచుకోండి మరియు మీ మొదటి పోస్ట్ సృష్టించడం కొరకు ప్లస్ బటన్ మీద క్లిక్ చేయండి.</2>"
+        "<0>మీరు కమ్యూనిటీలో చేరినప్పుడు, FightPandemics ఫ్లాట్ ఫారంపై పోస్ట్ లు మరియు కామెంట్ లను వీక్షించడం మరియు సృష్టించడానికి మీకు అపరిమిత యాక్సెస్ ఉంటుంది.</0> <1>ఒక యూజర్ గా కమ్యూనిటీలో చేరడం కొరకు, \"మెనూ\" బటన్ మీద క్లిక్ చేయండి మరియు ''ఇప్పుడు చేరండి/సైన్ ఇన్'' ఆప్షన్ ఎంచుకోండి. అక్కడ మీరు ఎంచుకున్న ఇమెయిల్ లేదా సోషల్ మీడియా క్రెడెన్షియల్స్ తో చేరవచ్చు.</1> <2>మీ ప్రొఫైల్ పూర్తి చేసిన తరువాత, మెనూ బటన్ ఎంచుకోండి, నా ప్రొఫైల్ వీక్షించండి ఎంచుకోండి మరియు మీ మొదటి పోస్ట్ సృష్టించడం కొరకు ప్లస్ బటన్ మీద క్లిక్ చేయండి.</2>"
       ],
       [
         "నేను FightPandemics వార్తలతో అప్ టూ డేట్ గా ఎలా ఉండగలను?",
@@ -445,7 +521,7 @@
       [
         "FightPandemicsపై నేను ఎటువంటి సాయం అందించగలను/ అభ్యర్థించగలను?",
         "COVID-19 మహమ్మారి సమయంలో ఎదుర్కోవటానికి వ్యక్తులు మరియు సంస్థలకు మద్దతు ఇవ్వడానికి ఏ రకమైన సహాయాన్ని అడగడానికి మరియు అందించడానికి మీకు స్వాగతం. మీరు అందించే లేదా అభ్యర్థించగల సహాయ రకానికి కొన్ని ఉదాహరణలతో కూడిన జాబితా ఇక్కడ ఉంది:",
-        "< 0 > సరకులు < / 0 > < 1 > మెడికల్ సరఫరా < / 1 > < 2 > న్యాయ సహాయం < / 2 > < 3 > టెక్ మద్దతు < / 3 > < 4 > సమాచారం < / 4 > < 5 > ఫండింగ్ < / 5 > < 6 > సంఘటనలు మరియు కార్యకలాపాలు < / 6 > < 7 > విద్య < / 7 > < 8 > ఆరోగ్యం < / 8 > < 9 > పరిశోధన మరియు అభివృద్ధి < / 9 >"
+        "<0> సరకులు </0> <1> మెడికల్ సరఫరా </1> <2> న్యాయ సహాయం </2> <3> టెక్ మద్దతు </3> <4> సమాచారం </4> <5> ఫండింగ్ </5> <6> సంఘటనలు మరియు కార్యకలాపాలు </6> <7> విద్య </7> <8> ఆరోగ్యం </8> <9> పరిశోధన మరియు అభివృద్ధి </9>"
       ],
       [
         "నేను ఎలా సహాయం పొందవచ్చు?",
@@ -473,7 +549,7 @@
       ],
       [
         "పోస్ట్లు నమ్మదగినవి అని నేను ఎలా విశ్వసించగలను?",
-        "దురదృష్టవశాత్తు, పోస్ట్‌లు మా వినియోగదారులచే సృష్టించబడినందున, అన్ని పోస్టింగ్‌లు నమ్మదగినవి అని మేము నిర్ధారించలేము. అయినప్పటికీ, సాధారణ డేటా ప్రక్షాళన చేయడం ద్వారా మరియు వాటి గడువు ముగిసిన తర్వాత పోస్ట్‌లను నిష్క్రియం చేయడం ద్వారా కంటెంట్‌ను సంబంధితంగా ఉంచడానికి మేము మా వంతు కృషి చేస్తాము. పోస్ట్ యొక్క కంటెంట్ గురించి మీకు సమస్యలు ఉంటే, దయచేసి మమ్మల్ని సంప్రదించండి < 0 > support@fightpandemics.com < / 0 >"
+        "దురదృష్టవశాత్తు, పోస్ట్‌లు మా వినియోగదారులచే సృష్టించబడినందున, అన్ని పోస్టింగ్‌లు నమ్మదగినవి అని మేము నిర్ధారించలేము. అయినప్పటికీ, సాధారణ డేటా ప్రక్షాళన చేయడం ద్వారా మరియు వాటి గడువు ముగిసిన తర్వాత పోస్ట్‌లను నిష్క్రియం చేయడం ద్వారా కంటెంట్‌ను సంబంధితంగా ఉంచడానికి మేము మా వంతు కృషి చేస్తాము. పోస్ట్ యొక్క కంటెంట్ గురించి మీకు సమస్యలు ఉంటే, దయచేసి మమ్మల్ని సంప్రదించండి <0> support@fightpandemics.com </0>"
       ],
       [
         "వైద్య సమస్యలతో మీరు నాకు సహాయం చేయగలరా?",
@@ -505,7 +581,7 @@
       ],
       [
         "నా ప్రశ్న జాబితా చేయబడలేదు. నేను ఎవరిని సంప్రదించగలను?",
-        "ఇక్కడ జాబితా చేయని సాధారణ ప్రశ్నలు మరియు ఇతర సమస్యల కోసం, < 0 > contact@fightpandemics.com కు చేరుకోండి. < / 0 >"
+        "ఇక్కడ జాబితా చేయని సాధారణ ప్రశ్నలు మరియు ఇతర సమస్యల కోసం, <0> contact@fightpandemics.com కు చేరుకోండి. </0>"
       ]
     ],
     "accountFAQ": [
@@ -534,11 +610,11 @@
         "మీకు నిర్ధారణ ఇమెయిల్ రాకపోతే దయచేసి ఈ క్రింది ఎంపికలను ప్రయత్నించండి:",
         "రికవరీ ఇమెయిల్ కోసం మీ స్పామ్ ఫోల్డర్‌ను తనిఖీ చేయండి.",
         "\"పాస్‌వర్డ్‌ను పునరుద్ధరించు\" ప్రాసెస్‌ను ప్రయత్నించండి.",
-        "పై ఎంపికలు సమస్యను పరిష్కరించకపోతే, దయచేసి మా మద్దతు బృందాన్ని సంప్రదించడానికి సంకోచించకండి: < 0 > support@fightpandemics.com. < / 0 >"
+        "పై ఎంపికలు సమస్యను పరిష్కరించకపోతే, దయచేసి మా మద్దతు బృందాన్ని సంప్రదించడానికి సంకోచించకండి: <0> support@fightpandemics.com. </0>"
       ],
       [
         "నా ఖాతాను ఎలా తొలగించాలి / రద్దు చేయాలి?",
-        "మీరు మీ ఖాతాను తొలగించాలనుకుంటే, దయచేసి < 0 > support@fightpandemics.com వద్ద మమ్మల్ని సంప్రదించండి. < / 0 >"
+        "మీరు మీ ఖాతాను తొలగించాలనుకుంటే, దయచేసి <0> support@fightpandemics.com</0> వద్ద మమ్మల్ని సంప్రదించండి."
       ],
       [
         "నా ప్రొఫైల్ సమాచారాన్ని నేను ఏవిధంగా అప్ డేట్ చేయగలను?",
@@ -546,51 +622,51 @@
       ],
       [
         "తప్పు లేదా అభ్యంతరకరమైన పోస్ట్ ని నేను ఏవిధంగా నివేదించగలను?",
-        "మీరు ఫైట్ పాండెమిక్స్ ప్రవర్తనా నియమావళిని తప్పుగా లేదా ఉల్లంఘించిన పోస్ట్ను కనుగొంటే, దయచేసి మాకు < 0 > support@fightpandemics.com వద్ద ఇమెయిల్ చేయండి. < / 0 >"
+        "మీరు ఫైట్ పాండెమిక్స్ ప్రవర్తనా నియమావళిని తప్పుగా లేదా ఉల్లంఘించిన పోస్ట్ను కనుగొంటే, దయచేసి మాకు <0>support@fightpandemics.com</0> వద్ద ఇమెయిల్ చేయండి."
       ]
     ],
     "contectsFAQ": [
       [
         "నేను ఒక భాగస్వామి లేదా స్పాన్సర్ కావాలని కోరుకుంటున్నాను.",
-        "దయచేసి మా భాగస్వామ్యాల టీమ్ తో <0>partnerships@fightpandemics.com వద్ద టచ్ లో ఉండండి.</0>"
+        "దయచేసి మా భాగస్వామ్యాల టీమ్ తో <0>partnerships@fightpandemics.com</0> వద్ద టచ్ లో ఉండండి."
       ],
       [
         "నేను ప్రెస్ / మీడియా నుండి వచ్చాను.",
-        "దయచేసి <0>pr@fightpandemics.com వద్ద మమ్మల్ని సంప్రదించండి.</0>"
+        "దయచేసి <0>pr@fightpandemics.com</0> వద్ద మమ్మల్ని సంప్రదించండి."
       ],
       [
         "నాకు సాంకేతిక మద్దతు అవసరం.",
-        "అందుకు మమ్మల్ని క్షమించండి. <0>help@fightpandemics.com వద్ద మాకు ఇమెయిల్ పంపండి.</0> మేం అన్ని వాలంటీర్ టీమ్ లు కనుక, ప్రతిస్పందన కొరకు దయచేసి కనీసం 48 గంటలు ఎదురు చూడండి."
+        "అందుకు మమ్మల్ని క్షమించండి. <0>support@fightpandemics.com</0> వద్ద మాకు ఇమెయిల్ పంపండి. మేం అన్ని వాలంటీర్ టీమ్ లు కనుక, ప్రతిస్పందన కొరకు దయచేసి కనీసం 48 గంటలు ఎదురు చూడండి."
       ],
       [
         "నేను ఇతర కారణాల కోసం FightPandemics చేరుకోవాలని అనుకుంటున్నాను.",
-        "ఇక్కడ జాబితా చేయని సాధారణ ప్రశ్నలు మరియు ఇతర సమస్యల కోసం, దయచేసి < 0 > contact@fightpandemics.com కు చేరుకోండి. < / 0 >"
+        "ఇక్కడ జాబితా చేయని సాధారణ ప్రశ్నలు మరియు ఇతర సమస్యల కోసం, దయచేసి <0>contact@fightpandemics.com</0> కు చేరుకోండి."
       ]
     ],
     "contacts": "పరిచయాలు",
     "contactsFAQ": [
       [
         "నేను ఒక భాగస్వామి లేదా స్పాన్సర్ కావాలని కోరుకుంటున్నాను.",
-        "దయచేసి మా భాగస్వామ్యాల టీమ్ తో <0>partnerships@fightpandemics.com వద్ద టచ్ లో ఉండండి.</0>"
+        "దయచేసి మా భాగస్వామ్యాల టీమ్ తో <0>partnerships@fightpandemics.com</0> వద్ద టచ్ లో ఉండండి."
       ],
       [
         "నేను ప్రెస్ / మీడియా నుండి వచ్చాను.",
-        "దయచేసి <0>pr@fightpandemics.com వద్ద మమ్మల్ని సంప్రదించండి.</0>"
+        "దయచేసి <0>pr@fightpandemics.com</0> వద్ద మమ్మల్ని సంప్రదించండి."
       ],
       [
         "నాకు సాంకేతిక మద్దతు అవసరం.",
-        "అందుకు మమ్మల్ని క్షమించండి. <0>help@fightpandemics.com వద్ద మాకు ఇమెయిల్ పంపండి.</0> మేం అన్ని వాలంటీర్ టీమ్ లు కనుక, ప్రతిస్పందన కొరకు దయచేసి కనీసం 48 గంటలు ఎదురు చూడండి."
+        "అందుకు మమ్మల్ని క్షమించండి. <0>support@fightpandemics.com</0> వద్ద మాకు ఇమెయిల్ పంపండి. మేం అన్ని వాలంటీర్ టీమ్ లు కనుక, ప్రతిస్పందన కొరకు దయచేసి కనీసం 48 గంటలు ఎదురు చూడండి."
       ],
       [
         "నేను ఇతర కారణాల కోసం FightPandemics చేరుకోవాలని అనుకుంటున్నాను.",
-        "ఇక్కడ జాబితా చేయని సాధారణ ప్రశ్నలు మరియు ఇతర సమస్యల కోసం, దయచేసి < 0 > contact@fightpandemics.com కు చేరుకోండి. < / 0 >"
+        "ఇక్కడ జాబితా చేయని సాధారణ ప్రశ్నలు మరియు ఇతర సమస్యల కోసం, దయచేసి <0>contact@fightpandemics.com</0> కు చేరుకోండి."
       ]
     ],
     "faqTitle": "తరచుగా అడిగే ప్రశ్నలు"
   },
   "cookies": {
     "whatCookies": "కుకీలు అంటే ఏమిటి?",
-    "whatCookiesContent": "< 0 > ఈ వెబ్‌సైట్ ¨ కుకీస్ and మరియు ఇతర సారూప్య విధానాలను ఉపయోగిస్తుంది (ఇకపై, కుకీలు). కుకీలు ఒక నిర్దిష్ట వెబ్‌సైట్‌లో లేదా ఈ వెబ్‌సైట్‌లోని అన్ని వెబ్‌సైట్లు, అనువర్తనాలు మరియు / లేదా సేవల్లో వినియోగదారు కార్యకలాపాలను రికార్డ్ చేయడానికి వెబ్ సర్వర్ ద్వారా బ్రౌజర్‌కు పంపిన ఫైల్‌లు. కుకీల యొక్క మొదటి ఉద్దేశ్యం ఏమిటంటే, వినియోగదారులకు అందించే సేవలకు వేగంగా మరియు మరింత వ్యక్తిగతీకరించిన ప్రాప్యతను అందించడం. కుకీలు అనామక వినియోగదారు మరియు అతని / ఆమె కంప్యూటర్‌తో మాత్రమే సంబంధం కలిగి ఉంటాయి మరియు వినియోగదారు యొక్క వ్యక్తిగత డేటాను తీసివేయడానికి అనుమతించే సూచనలను అందించవు. < / 0 > < 1 > విషయాలను యాక్సెస్ చేయగల వినియోగదారు సామర్థ్యానికి పక్షపాతం లేకుండా, ఈ వెబ్‌సైట్ పంపిన కుకీల ఇన్‌స్టాలేషన్‌ను తెలియజేయడానికి మరియు తిరస్కరించడానికి వినియోగదారు అతని / ఆమె బ్రౌజర్‌ను కాన్ఫిగర్ చేయవచ్చు. ఏదేమైనా, వెబ్‌సైట్ యొక్క పనితీరు తగ్గుతుందని మేము గమనించాము. ఈ వెబ్‌సైట్ వెబ్ బగ్‌లను ఉపయోగించుకుంటుంది, అవి ఇమెయిల్‌లలో చేర్చబడిన చిన్న మరియు పారదర్శక చిత్రాలు. వినియోగదారు వెబ్‌సైట్ యొక్క వార్తాలేఖను తెరిచినప్పుడు, ఈ చిత్రం మిగిలిన ఇమెయిల్ కంటెంట్‌తో పాటు డౌన్‌లోడ్ చేయబడుతుంది మరియు ఒక నిర్దిష్ట ఇమెయిల్ తెరవబడిందా లేదా అనేది తెలుసుకోవటానికి అనుమతిస్తుంది, అలాగే డౌన్‌లోడ్ చేసిన IP చిరునామా. ఫైట్‌పాండెమిక్స్ ఈ సమాచారాన్ని గణాంకాలను పొందటానికి మరియు వినియోగదారులు దాని ఇమెయిల్‌లను స్వీకరించడంపై విశ్లేషణాత్మక అధ్యయనాలను నిర్వహించడానికి ఉపయోగిస్తుంది. < / 1 >",
+    "whatCookiesContent": "<0> ఈ వెబ్‌సైట్ ¨ కుకీస్ and మరియు ఇతర సారూప్య విధానాలను ఉపయోగిస్తుంది (ఇకపై, కుకీలు). కుకీలు ఒక నిర్దిష్ట వెబ్‌సైట్‌లో లేదా ఈ వెబ్‌సైట్‌లోని అన్ని వెబ్‌సైట్లు, అనువర్తనాలు మరియు / లేదా సేవల్లో వినియోగదారు కార్యకలాపాలను రికార్డ్ చేయడానికి వెబ్ సర్వర్ ద్వారా బ్రౌజర్‌కు పంపిన ఫైల్‌లు. కుకీల యొక్క మొదటి ఉద్దేశ్యం ఏమిటంటే, వినియోగదారులకు అందించే సేవలకు వేగంగా మరియు మరింత వ్యక్తిగతీకరించిన ప్రాప్యతను అందించడం. కుకీలు అనామక వినియోగదారు మరియు అతని / ఆమె కంప్యూటర్‌తో మాత్రమే సంబంధం కలిగి ఉంటాయి మరియు వినియోగదారు యొక్క వ్యక్తిగత డేటాను తీసివేయడానికి అనుమతించే సూచనలను అందించవు. </0> <1> విషయాలను యాక్సెస్ చేయగల వినియోగదారు సామర్థ్యానికి పక్షపాతం లేకుండా, ఈ వెబ్‌సైట్ పంపిన కుకీల ఇన్‌స్టాలేషన్‌ను తెలియజేయడానికి మరియు తిరస్కరించడానికి వినియోగదారు అతని / ఆమె బ్రౌజర్‌ను కాన్ఫిగర్ చేయవచ్చు. ఏదేమైనా, వెబ్‌సైట్ యొక్క పనితీరు తగ్గుతుందని మేము గమనించాము. ఈ వెబ్‌సైట్ వెబ్ బగ్‌లను ఉపయోగించుకుంటుంది, అవి ఇమెయిల్‌లలో చేర్చబడిన చిన్న మరియు పారదర్శక చిత్రాలు. వినియోగదారు వెబ్‌సైట్ యొక్క వార్తాలేఖను తెరిచినప్పుడు, ఈ చిత్రం మిగిలిన ఇమెయిల్ కంటెంట్‌తో పాటు డౌన్‌లోడ్ చేయబడుతుంది మరియు ఒక నిర్దిష్ట ఇమెయిల్ తెరవబడిందా లేదా అనేది తెలుసుకోవటానికి అనుమతిస్తుంది, అలాగే డౌన్‌లోడ్ చేసిన IP చిరునామా. ఫైట్‌పాండెమిక్స్ ఈ సమాచారాన్ని గణాంకాలను పొందటానికి మరియు వినియోగదారులు దాని ఇమెయిల్‌లను స్వీకరించడంపై విశ్లేషణాత్మక అధ్యయనాలను నిర్వహించడానికి ఉపయోగిస్తుంది. </1>",
     "typeCookies": "కుకీల యొక్క రకం, ఉద్దేశ్యం మరియు పనితీరు",
     "typeCookiesBegin": "కుకీలు, వాటి యొక్క శాశ్వతత్వాన్ని బట్టి, సెషన్ లేదా శాశ్వత కుకీలుగా విభజించవచ్చు. యూజర్ బ్రౌజర్ ని క్లోజ్ చేసినప్పుడు మొదటి వి గడువు ముగుస్తుంది. రెండో విర్తమిక లక్ష్యం ఎప్పుడు నెరవేరుతుందో లేదా అవి ఎప్పుడు మానవీయంగా తొలగించబడిఉంటాయి అనే దానిపై ఆధారపడి ఉంటుంది. అదనంగా, మీ లక్ష్యాన్ని బట్టి, ఈ వెబ్ సైట్ ద్వారా ఉపయోగించే కుకీలను దిగువ పేర్కొన్న విధంగా వర్గీకరించవచ్చు:",
     "typeCookiesContent": "<0>టెక్నికల్ కుకీలు: ఇవి యూజర్ వెబ్ పేజీ ద్వారా నావిగేట్ చేయడానికి అనుమతిస్తాయి, ప్లాట్ ఫారమ్ లేదా అప్లికేషన్ మరియు అక్కడ ఉన్న విభిన్న ఎంపికలు లేదా సేవలను ఉపయోగించండి ఉదాహరణకు, ట్రాఫిక్ మరియు డేటా కమ్యూనికేషన్, సెషన్ ను గుర్తించడం, పరిమిత ప్రాప్తి భాగాలను యాక్సెస్ చేసుకోవడం, ఆర్డర్ చేసే అంశాలను గుర్తుచేసుకోవడం, ఆర్డర్ యొక్క కొనుగోలు ప్రక్రియ, ఒక ఈవెంట్ లో రిజిస్ట్రేషన్ లేదా పాల్గొనడం, నావిగేషన్ సమయంలో భద్రతా అంశాలను ఉపయోగించడం, వీడియోలు పంపిణీ చేయడం లేదా సౌండ్ లేదా సోషల్ నెట్ వర్క్ ల ద్వారా కంటెంట్ పంచుకోవడం.</0> <1>విశ్లేషణ కుకీలు: మా ద్వారా లేదా తృతీయపక్షాల ద్వారా ప్రాసెస్ చేయబడ్డ వి, ఇవి యూజర్ ల సంఖ్యను లెక్కించడానికి అనుమతిస్తాయి మరియు తద్వారా అందించబడ్డ సేవల యొక్క యూజర్ ల యొక్క వినియోగం యొక్క లెక్కింపు మరియు గణాంక విశ్లేషణను నిర్వహిస్తుంది. దీని కొరకు, మేం అందించే ఉత్పత్తులు లేదా సేవల యొక్క ఆఫర్ ని మెరుగుపరచడం కొరకు మా వెబ్ సైట్ పై మీ బ్రౌజింగ్ విశ్లేషించబడుతుంది.</1> <2>ప్రకటన కుకీలు: వెబ్ సైట్ లో ఉన్న ప్రకటన స్థలాల యొక్క ఆఫర్ ను సాధ్యమైనంత సమర్థవంతంగా నిర్వహించడానికి, అభ్యర్థించిన సేవ కంటెంట్ కు లేదా మా వెబ్ సైట్ నుండి మీరు ఉపయోగించే ఉపయోగానికి ప్రకటన యొక్క కంటెంట్ ను స్వీకరించడం ద్వారా మేము ప్రాసెస్ చేసిన లేదా తృతీయ పక్షాల ద్వారా ప్రాసెస్ చేయబడతాయి. దీని కొరకు మేం ఇంటర్నెట్ పై మీ బ్రౌజింగ్ అలవాట్లను విశ్లేషించవచ్చు, మరియు మీ బ్రౌజింగ్ ప్రొఫైల్ కు సంబంధించిన ప్రకటనలను మేం మీకు చూపించగలం.</2> <3>ప్రవర్తనా ప్రకటనల కుకీలు: ఇవి సాధ్యమైనంత వరకు, సముచితమైన చోట, సంపాదకుడు అభ్యర్థించిన సేవను అందించే వెబ్ పేజీ, అప్లికేషన్ లేదా ప్లాట్ ఫారమ్ లో చేర్చిన ప్రకటన స్థలాల నిర్వహణను అనుమతిస్తుంది. ఈ కుకీలు వారి బ్రౌజింగ్ అలవాట్లను నిరంతరం పరిశీలించడం ద్వారా పొందిన వినియోగదారుల ప్రవర్తనపై సమాచారాన్ని నిల్వ చేస్తుంది, ఇది దాని ఆధారంగా ప్రకటనలను ప్రదర్శించేందుకు ఒక నిర్దిష్ట ప్రొఫైల్ ను అభివృద్ధి చేయడానికి అనుమతిస్తుంది.</3>",
@@ -772,7 +848,11 @@
       "imageDimensionTooSmall": "కనీసం 250 పిక్సల్స్ ఎత్తు, 250 పిక్సల్స్ వెడల్పు ఉన్న ఇమేజ్ ను దయచేసి అప్ లోడ్ చేయండి.",
       "imageDimensionTooWide": "క్షమించండి, ఇమేజ్ చాలా విశాలంగా ఉంది. ఎత్తుకంటే రెట్టింపు కంటే తక్కువ వెడల్పు ఉన్న ఇమేజ్ తో దయచేసి మళ్లీ ప్రయత్నించండి.",
       "networkError": "క్షమించండి, కొన్ని నెట్‌వర్క్ లోపం సంభవించింది."
-    }
+    },
+    "wrongOldPassword": "Wrong current password",
+    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "Failed linking accounts, reason:"
   },
   "TEMP: We are not a provider of healthcare services": "మేము ఆరోగ్య సేవలను అందించేవారు కాదు",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "ఈ అపూర్వమైన ప్రజారోగ్య అత్యవసర సమయంలో సహాయం మరియు వనరులను పొందలేని వారికి ఈ సేవ మంచి విశ్వాసంతో అందించబడుతుంది.",
@@ -819,5 +899,140 @@
     "submitBtn": "సమర్పించండి",
     "cancelBtn": "రద్దు",
     "tryAgainBtn": "మళ్ళీ ప్రయత్నించండి"
+  },
+  "dates": {
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Apr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dec"
+    },
+    "weekdaysShort": {
+      "sunday": "Sun",
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat"
+    }
+  },
+  "messaging": {
+    "header": "Messages",
+    "requests": "Message Requests",
+    "settings": {
+      "header": "Messages Settings",
+      "blocked": "Blocked Accounts",
+      "archived": "Archived Conversations",
+      "unblock": "Unblock",
+      "unarchive": "Unarchive",
+      "archiveEmpty": "You don't have any archived conversations.",
+      "blockedEmpty": "You haven't blocked any accounts."
+    },
+    "emptyInbox": {
+      "header": "You don't have any messages",
+      "p1": "You haven't received any messages yet.",
+      "p2": "Head back to Help Board to find offers or requests to respond to.",
+      "goToHB": "సహాయ బోర్డుకి వెళ్లండి"
+    },
+    "selectRoom": {
+      "header": "Select any message to read",
+      "p1": "The message content would appear here once you select",
+      "p2": "a conversation from the inbox."
+    },
+    "selectRequest": {
+      "header": "Select any message request to read",
+      "p1": "The content of the message request would appear here",
+      "p2": "once you select one from the message requests inbox."
+    },
+    "didBlock": "You've blocked {{username}}. Unblock to receive messages from them again.",
+    "wasBlocked": "You've been blocked by {{username}}. You can no longer message them.",
+    "acceptPropmt": "Do you want to accept the message request? You cannot reply until you accept the request.",
+    "deleteMessageQuestion": "Delete the message?",
+    "deleteMessageText": "The selected message will be permanently deleted from both your device and the recipient's device. Are you sure you want to delete?",
+    "blockQuestion": "Block the conversation from {{username}}?",
+    "blockText": "By selecting \"Block\", {{username}} won't be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "archiveQuestion": "Archive the conversation?",
+    "archiveText": "If you'd like to read the conversation again, you'll have to go to Messages Settings to restore it.",
+    "sendSuccessHeader": "Your message was successfully sent",
+    "sendSuccessText": "Your message to {{username}} concerning the \"{{title}}\" was sent successfully.",
+    "sendSuccessTextNoPost": "Your message to {{username}} was sent successfully.",
+    "sendFailedHeader": "Oops, something went wrong",
+    "sendFailedText": "Your message to {{username}} concerning the \"{{title}}\" was not delivered.",
+    "sendFailedTextNoPost": "Your message to {{username}} was not delivered.",
+    "ignoreDialogTitle": "Ignore the message request from {{username}}?",
+    "ignoreDialogMessage": "The message request will be deleted from your device. Are you sure you want to ignore?",
+    "blockDialogTitle": "Block the conversation from {{username}}?",
+    "blockDialogMessage": "By selecting \"Block\", {{username}} won’t be able to send you a message or message request. You can go to Message Settings to manage blocked accounts.",
+    "block": "Block",
+    "archive": "Archive",
+    "accept": "Accept",
+    "ignore": "Ignore",
+    "delete": "తొలగించు",
+    "cancel": "రద్దు",
+    "edit": "సవరించు",
+    "edited": "Edited",
+    "saveEdit": "Save changes",
+    "didDelete": "You deleted this message.",
+    "wasDeleted": "This message was deleted.",
+    "loadMore": "Load More...",
+    "justNow": "Just now",
+    "lastSeen": "Last seen",
+    "never": "Never",
+    "activeNow": "Active Now",
+    "message": "Message",
+    "sendMessage": "Send a message",
+    "typeMessage": "Type a message...",
+    "viewMessage": "View message",
+    "to": "To",
+    "send": "Send",
+    "done": "పూర్తయింది",
+    "close": "Close"
+  },
+  "message": {
+    "message": "Message",
+    "message_plural": "Messages"
+  },
+  "notifications": {
+    "unsubscribe": {
+      "unsubscribe": "Unsubscribe",
+      "canceled": "No changes will be made to your notification preferences",
+      "success": "Your notification preference is updated"
+    },
+    "header": "Notifications",
+    "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
+    "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
+    "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
+    "empty": "No more notifications"
+  },
+  "moderation": {
+    "report": "Report",
+    "cancel": "రద్దు",
+    "finish": "Finish",
+    "reason": "Reason for reporting:",
+    "additionalDetails": "Additional details (optional)",
+    "enterDetails": "Please enter more details here...",
+    "reportPost": "Report Post",
+    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
+    "reportPostError": "Oops! something went wrong...",
+    "reportPostSuccessTitle": "Report Received",
+    "reportPostErrorTitle": "Oops!",
+    "spam": "Spam",
+    "inappropriateContent": "Inappropriate Content",
+    "violatesTerms": "Violates Terms",
+    "other": "ఇతర",
+    "postSuspected": "This post received multiple reports and was held for review",
+    "showAnyway": "Show anyway",
+    "postHidden": "You have chosen to hide this post",
+    "unhide": "Unhide",
+    "youReported": "You have reported this post. It will no longer be visible on your feed"
   }
 }

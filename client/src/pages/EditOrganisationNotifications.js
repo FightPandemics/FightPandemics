@@ -35,8 +35,6 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import NotifyPreferenceInput from "components/Input/NotifyPreferenceInput";
 import isEqual from "lodash/isEqual";
 
-const editProfile = true;
-
 function EditOrganisationNotifications(props) {
   const organisationId = window.location.pathname.split("/")[2];
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -140,9 +138,7 @@ function EditOrganisationNotifications(props) {
       <EditLayout>
         <TitlePictureWrapper>
           <CustomHeading level={4} className="h4">
-            {editProfile
-              ? t("profile.org.editOrgProfile")
-              : t("profile.org.completeOrgProfile")}
+            {t("profile.org.editOrgNotification")}
           </CustomHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>{renderProfilePicture()}</ProfilePicWrapper>
@@ -150,20 +146,17 @@ function EditOrganisationNotifications(props) {
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
-            <CustomLink>
-              <Link to={`/edit-organisation-account/${organisationId}`}>
-                {t("profile.common.accountInfo")}
-              </Link>
+            <CustomLink to={`/edit-organisation-account/${organisationId}`}>
+              {t("profile.common.accountInfo")}
             </CustomLink>
-            <CustomLink>
-              <Link to={`/edit-organisation-profile/${organisationId}`}>
-                {t("profile.common.profileInfo")}
-              </Link>
+            <CustomLink to={`/edit-organisation-profile/${organisationId}`}>
+              {t("profile.common.profileInfo")}
             </CustomLink>
-            <CustomLink isSelected>
-              <Link to={`/edit-organisation-notifications/${organisationId}`}>
-                {t("profile.common.notificationInfo")}
-              </Link>
+            <CustomLink
+              to={`/edit-organisation-notifications/${organisationId}`}
+              isSelected
+            >
+              {t("profile.common.notificationInfo")}
             </CustomLink>
           </OptionDiv>
           <CustomForm>

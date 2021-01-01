@@ -7,11 +7,31 @@ export const StyledPostPage = styled.div`
   @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
     width: 100%;
     position: relative;
-  }      
+  }
 `;
 
 export const StyledPostPagePostCard = styled(PostCard)`
   max-width: 100%;
+  .blur-overlay {
+    width: 50%;
+    right: 0;
+    margin: auto;
+    height: calc(100% - 25rem);
+    margin-top: 7rem;
+    @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
+      width: 100%;
+      height: calc(100% - 15rem);
+      margin-top: 2rem;
+    }
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      height: 100%;
+    }
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+      width: 100%;
+      height: 100%;
+      margin-top: 2rem;
+    }
+  }
   margin-top: 1rem;
   overflow-wrap: break-word;
   @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {

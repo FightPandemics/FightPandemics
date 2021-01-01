@@ -74,6 +74,7 @@ export const FiltersWrapper = styled.div`
 
 export const MenuWrapper = styled(Menu)`
   &.ant-menu {
+    border: none;
     .ant-menu-item {
       height: 3rem;
       border-left: 0.5rem solid ${white};
@@ -108,9 +109,7 @@ export const LayoutWrapper = styled(Layout)`
 
 export const ContentWrapper = styled(Content)`
   margin: 0 1rem;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    overflow-x: visible !important;
-  }
+  overflow-x: visible !important;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin: 3.3rem 8.5rem 3.3rem 37.5rem;
   }

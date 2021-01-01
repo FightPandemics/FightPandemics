@@ -44,6 +44,9 @@ userSchema.index(
     firstName: "text",
     lastName: "text",
     about: "text",
+    "location.country": "text",
+    "location.state": "text",
+    "location.city": "text",
   },
   {
     default_language: "none",
@@ -53,6 +56,9 @@ userSchema.index(
       firstName: 2,
       lastName: 2,
       about: 1,
+      "location.country": 1,
+      "location.state": 1,
+      "location.city": 1,
     },
   },
 );

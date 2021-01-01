@@ -55,6 +55,8 @@ module.exports = {
     orgBtn: "_ORG",
     individualBtn: "_IN",
     button: "_PO",
+    delete: "_DEL",
+    edit: "_EDT",
   },
   user: {
     completedPrefix: "PC",
@@ -132,10 +134,21 @@ module.exports = {
     "zh-CN": "_ZN_CN",
     fr: "_FR",
     tr: "_TR",
+    "hi-IN": "_HI_IN",
     "kn-IN": "_KN_IN",
+    "mr-IN": "_MR_IN",
     "te-IN": "_TE_IN",
     "ms-MY": "_MS_MY",
     vi: "_VI",
+    "mk-MK": "_MK_MK",
+    "pt-PT": "_PT_PT",
+    ar: "_AR",
+    tl: "_TL",
+    it: "_IT",
+    ru: "_RU",
+    th: "_TH",
+    id: "_ID",
+    "es-419": "_ES_419",
   },
   search: {
     prefix: "SCH",
@@ -165,6 +178,7 @@ module.exports = {
     unarchive: "_UARC",
     delete: "_DLT",
     edit: "_EDT",
+    mobileEdit: "_EDT_MOB",
     sent: "_SNT",
   },
   aboutUs: {
@@ -185,5 +199,10 @@ module.exports = {
     share: "_SH",
     comment: "_CM",
     settings: "_SET",
-  }
+  },
+  moderation: {
+    hide: "_HIP",
+    unhide: "_UHIP",
+    report: "_RP",
+  },
 };

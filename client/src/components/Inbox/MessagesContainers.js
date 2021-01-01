@@ -45,6 +45,7 @@ export const BubbleContainer = styled.div`
 export const MessagesContainer = styled.div`
   position: fixed;
   width: calc(100% - 33.6rem);
+  overscroll-behavior: none;
   max-height: ${(props) => {
     if (
       props.status === "pending" ||
@@ -97,6 +98,7 @@ export const MessagesContainer = styled.div`
       }
       return "5.1rem;";
     }}
+    top: 11rem;
     &.request-page {
       bottom: 20rem;
       max-height: calc(100vh - 31rem);
