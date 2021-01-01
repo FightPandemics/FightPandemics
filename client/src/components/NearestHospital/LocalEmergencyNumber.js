@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { NoticeBar } from "antd-mobile";
+import { useTranslation } from "react-i18next";
 
 import { theme, mq } from "../../constants/theme";
-
 const { typography } = theme;
 const { xlarge, xxlarge, medium } = typography.size;
 const { black, royalBlue, red, white } = theme.colors;
@@ -13,6 +13,7 @@ const EmergencyLine = styled(NoticeBar)`
   background-color: ${red};
   color: ${white};
   margin-top: 3rem;
+  margin-left: 1rem;
   position: relative;
   box-shadow: 0px 4px 1rem rgba(0, 0, 0, 0.05);
   border-radius: 0px 0px 0.4rem 0.4rem;
@@ -67,9 +68,11 @@ const EmergencyLine = styled(NoticeBar)`
 `;
 
 const LocalEmergencyNumber = (props) => {
+  const { t } = useTranslation();
+
   return (
     <EmergencyLine mode="closable" icon={null} {...props}>
-      <h4>Local emergency number</h4>
+      <h4>{t("nearestHsp.locaEmrgNbr")}</h4>
       <h3>911</h3>
     </EmergencyLine>
   );

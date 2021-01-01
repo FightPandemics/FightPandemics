@@ -63,7 +63,7 @@ const SearchBarContainer = styled.div`
   }
 `;
 
-const NearestHealthFacilities = (props) => {
+const ConfirmedCases = (props) => {
   const [searchValue, setSearchValue] = useState("");
 
   const onSearchInputChange = (value) => {
@@ -101,4 +101,4 @@ const NearestHealthFacilities = (props) => {
   );
 };
 
-export default NearestHealthFacilities;
+export default ConfirmedCases;

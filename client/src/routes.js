@@ -137,10 +137,6 @@ const routes = [
   {
     path: "/nearest-hospital",
     component: NearestHospital,
-    props: {
-      mobiletabs: true,
-      tabIndex: 0,
-    },
   },
   {
     path: "/find-help",

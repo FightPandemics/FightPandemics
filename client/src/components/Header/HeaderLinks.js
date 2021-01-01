@@ -69,6 +69,15 @@ export const HeaderLinks = ({
         </li>
         <li>
           <NavLink
+            id={GTM.nav.prefix + GTM.nav.nearestHsp}
+            activeStyle={activeStyles}
+            to="/nearest-hospital"
+          >
+            {t("common.nearestHsp")}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
             id={GTM.nav.prefix + GTM.nav.feed}
             activeStyle={activeStyles}
             to="/feed"

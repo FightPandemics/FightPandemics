@@ -1,17 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import GTM from "../../constants/gtm-tags";
 
 import { theme } from "../../constants/theme";
 const { colors, typography } = theme;
 const { white, black, royalBlue } = colors;
-const { large, xlarge } = typography.size;
+const { large } = typography.size;
 
 const CheckSymptomsBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   background-color: ${white};
   color: ${black};
   font-size: ${large};
@@ -19,9 +17,10 @@ const CheckSymptomsBox = styled.div`
   box-sizing: border-box;
   border-radius: 0.2rem;
   padding: 2rem;
+  margin-left: 1rem;
   p {
     flex-basis: 47%;
-    margin-bottom: 0;
+    padding-bottom: 1rem;
     span {
       font-weight: bold;
     }
@@ -29,8 +28,7 @@ const CheckSymptomsBox = styled.div`
 `;
 
 const SymptomsLink = styled(NavLink)`
-  padding: 1.5rem 7.5rem;
-  font-size: ${xlarge};
+  padding: 1rem 1rem;
   background-color: ${royalBlue};
   color: ${white};
   text-decoration: none;
@@ -45,14 +43,26 @@ const SymptomsLink = styled(NavLink)`
 `;
 
 const CheckSymptoms = (props) => {
+  const { t } = useTranslation();
+
   return (
     <CheckSymptomsBox>
-      <p>
-        Evaluate your health and receive instructions and recommendations about{" "}
-        <span>COVID-19</span>
-      </p>
-      <div style={{ flexBasis: "46%" }}>
-        <SymptomsLink to="/symptoms-check">Check Symptoms</SymptomsLink>
+      <div>
+        <p>
+          <span>{t("nearestHsp.hlthEval")}</span>
+        </p>
+        <p>
+          {t("nearestHsp.evalYourHlth")}
+          <span>{t("nearestHsp.covid19")}</span>
+        </p>
+      </div>
+      <div>
+        <SymptomsLink
+          to="/symptoms-check"
+          id={GTM.nav.prefix + GTM.nav.checkSymp}
+        >
+          {t("nearestHsp.chkSymptms")}
+        </SymptomsLink>
       </div>
     </CheckSymptomsBox>
   );

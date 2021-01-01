@@ -25,7 +25,7 @@ describe("FightPandemics Navigation bar", () => {
           .and("have.attr", "href", "/auth/signup");
       });
 
-      it("About us, Help Board and Feedback buttons are visible", () => {
+      it("About us, Help Board, Health Aid and Feedback buttons are visible", () => {
         header
           .getAboutUsLink()
           .should("be.visible")
@@ -38,6 +38,10 @@ describe("FightPandemics Navigation bar", () => {
           .getFeedbackButton()
           .find("img")
           .should("have.attr", "alt", "Icon");
+        header
+          .getNearestHspLink()
+          .should("be.visible")
+          .and("have.attr", "href", "/nearest-hospital");
       });
     },
   );

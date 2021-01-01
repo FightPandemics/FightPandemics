@@ -1,53 +1,22 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
-
+import GTM from "../../constants/gtm-tags";
+import LocationInput from "../Input/LocationInput";
+import InputError from "../Input/InputError";
+import ButtonTag from "../Tag/ButtonTag";
+import FacilityCard from "./FacilityCard";
+import FacilityMap from "./FacilityMap";
+import FacilityView from "./FacilityView";
 import ConfirmedCases from "./ConfirmedCases";
-import SearchInput from "../Input/SearchInput";
-// import { SearchBar } from 'antd-mobile';
-
-// ICONS
-import SvgIcon from "../Icon/SvgIcon";
-import shareLocation from "../../assets/icons/share-my-location.svg";
-import NrMap from "../../pages/NrMap";
-import DescriptionCard from "../Card/DescriptionCard";
+import { useTranslation } from "react-i18next";
+import { WhiteSpace } from "antd-mobile";
+import { Spin } from "antd";
 
 const { colors, typography } = theme;
-const { darkerGray, white, royalBlue } = colors;
-const { xxlarge } = typography.size;
-
-const HealthFacilitiesData = [
-  {
-    id: 1,
-    hospitalName: "United hospital",
-    hospitalAddress:
-      "9915 Saddle Dr Undefined San Fancisco, Washinton United State",
-    openDate: "Open Mon - Fri 09:00 to 22:00",
-    contactNo: "(704) 555.0126",
-    distance: "3km",
-    isOpen: true,
-  },
-  {
-    id: 2,
-    hospitalName: "United hospital",
-    hospitalAddress:
-      "9915 Saddle Dr Undefined San Fancisco, Washinton United State",
-    openDate: "Open Mon - Fri 09:00 to 22:00",
-    contactNo: "(234) 191.5131",
-    distance: "4.3km",
-    isOpen: false,
-  },
-  {
-    id: 3,
-    hospitalName: "United hospital",
-    hospitalAddress:
-      "9915 Saddle Dr Undefined San Fancisco, Washinton United State",
-    openDate: "Open Mon - Fri 09:00 to 22:00",
-    contactNo: "(704) 555.0126",
-    distance: "6km",
-    isOpen: false,
-  },
-];
+const { darkerGray, white, royalBlue, black } = colors;
+const { xxlarge, medium, small } = typography.size;
 
 const NearestLocationContainer = styled.div`
   display: flex;
@@ -61,7 +30,7 @@ const NearestLocationContainer = styled.div`
   }
 `;
 
-const HealthFacilities = styled.div`
+const HealthFacilitiesContainer = styled.div`
   flex-basis: 55%;
   align-self: flex-start;
   padding-top: 2rem;
@@ -69,21 +38,13 @@ const HealthFacilities = styled.div`
   h2 {
     font-weight: bold;
     color: ${darkerGray};
+    margin-left: 2rem;
   }
   div {
     margin-right: 2rem;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       margin-right: 0;
     }
-  }
-`;
-
-const MapContainer = styled.div`
-  /* align-self: flex-start; */
-  flex: 1;
-  div {
-    align-self: flex-start;
-    height: auto;
   }
 `;
 
@@ -112,19 +73,24 @@ const ShareLocationContainer = styled.div`
   }
 `;
 
-const SearchBarContainer = styled.div`
-  margin: 0 9rem;
+const ShareLocationInputContainer = styled.div`
+  align-self: flex-end;
+  white-space: nowrap;
+  background-color: ${colors.offWhite};
+  margin: 0 2rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin: 0 2rem;
   }
 `;
 
-const ShareLocation = styled.div`
+const ChangeLocOrTypeContainer = styled.div`
+  background-color: ${white};
+  border: 0.1rem solid rgba(0, 0, 0, 0.12);
+  width: 100%;
   padding: 1rem;
   cursor: pointer;
-  color: ${royalBlue};
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    text-align: center;
+    display: flow-root;
   }
   &:hover {
     color: ${royalBlue};
@@ -132,132 +98,320 @@ const ShareLocation = styled.div`
   &:active {
     color: ${royalBlue};
   }
-`;
-
-const CasesContainer = styled.div`
-  display: none;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: block;
+  h1 {
+    padding: 0 1rem 1rem 0;
+    font-weight: bold;
+    color: ${black};
+    font-size: ${medium};
   }
 `;
 
-const shareIconStyles = {
-  margin: "0 auto",
-  color: `${royalBlue}`,
-  width: "11px",
-  marginRight: ".8rem",
-};
+const TypeButtonsWrapper = styled.div`
+  display: inline-flex;
+  margin: 1rem 0 2.5rem 0;
+  .tags-selector {
+    margin-right: -0.3rem;
+    margin-left: -0.3rem;
+  }
+`;
 
-const NearestHealthFacilities = (props) => {
-  const [searchValue, setSearchValue] = useState("");
+const ChangeLocationContainer = styled.div`
+  display: inline-flex;
+  align-self: flex-end;
+  white-space: nowrap;
+  background-color: ${colors.offWhite};
+  margin: 0 2rem 2rem 2rem;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: flow-root;
+    margin: 0 2rem;
+  }
+`;
 
-  const onSearchInputChange = (value) => {
-    setSearchValue(value);
-  };
-  const clearSearch = () => {
-    setSearchValue("");
-  };
+const NoResultsContainer = styled.div`
+  background-color: ${colors.offWhite};
+  h4 {
+    padding: 0 0 0 0;
+    font-weight: bold;
+    color: ${black};
+    font-size: ${medium};
+  }
+  span {
+    padding: 0 0 0 0;
+    font-weight: normal;
+    color: ${black};
+    font-size: ${small};
+  }
+`;
 
-  const [userCoords, setCoords] = useState(null);
-  const [gettingLocation, setGettingLocation] = useState(false);
+const ModeContainer = styled.button`
+  type: submit;
+  width: 9rem;
+  height: 3rem;
+  border-radius: 4rem;
+  background-color: ${black};
+  position: fixed;
+  top: 60rem;
+  left: 38%;
+  z-index: 10;
+`;
 
-  const userLocation = () => {
-    if (navigator.geolocation) {
-      setGettingLocation(true);
+const ModeLabel = styled.div`
+  color: ${white};
+`;
 
-      const errorCallback_highAccuracy = (error) => {
-        if (error.code === error.TIMEOUT) {
-          navigator.geolocation.getCurrentPosition(
-            successCallback,
-            errorCallback_lowAccuracy,
-            { maximumAge: 600000, timeout: 30000, enableHighAccuracy: false },
-          );
+const NearestHealthFacilities = () => {
+  const { t } = useTranslation();
+  const facilityTypes = [
+    { type: "hospital", label: t("nearestHsp.hospitals"), default: true },
+    { type: "doctor", label: t("nearestHsp.doctors"), default: false },
+    { type: "pharmacy", label: t("nearestHsp.pharmacies"), default: false },
+  ];
+  const facilityModeTypes = [
+    { type: "list", label: t("nearestHsp.viewMap"), default: true },
+    { type: "map", label: t("nearestHsp.viewList"), default: false },
+  ];
+  const [apiError, setApiError] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [view, setView] = useState("HealthFacilities");
+  const [loadingPlaces, setLoadingPlaces] = useState(false);
+  const [facilityMode, setFacilityMode] = useState(
+    facilityModeTypes.find((m) => m.default === true),
+  );
+  const [selectedType, setSelectedType] = useState(
+    facilityTypes.find((t) => t.default === true).type,
+  );
+  const [facilitiesData, setFacilitiesData] = useState(null);
+  const sourceLocation = useRef(null);
 
-          return;
-        }
-        setGettingLocation(false);
-        let errorMsg;
-        if (error.code === 1) {
-          errorMsg = "PERMISSION_DENIED.";
-        } else if (error.code === 2) {
-          errorMsg = "POSITION_UNAVAILABLE.";
-        }
-        let msg = `${errorMsg} We could not get your location`;
-        alert(msg);
-      };
+  const hidingViewTabs = true; //until Confirmed Cases component is ready
 
-      const errorCallback_lowAccuracy = (error) => {
-        setGettingLocation(false);
-        let errorMsg;
-        if (error.code === 1) {
-          errorMsg = "PERMISSION_DENIED.";
-        } else if (error.code === 2) {
-          errorMsg = "POSITION_UNAVAILABLE.";
-        } else if (error.code === 3) errorMsg = "TIMEOUT.";
-        let msg = `${errorMsg} We could not get your location`;
-        alert(msg);
-      };
+  const initialize = () => {
+    const feedLocation = sessionStorage.getItem("feedLocation");
+    const defaultLocation = feedLocation ? JSON.parse(feedLocation) : null;
+    sourceLocation.current = defaultLocation;
+    handleLocationChange(sourceLocation.current);
 
-      const successCallback = (position) => {
-        setGettingLocation(false);
-        setCoords(position.coords);
-      };
-
-      navigator.geolocation.getCurrentPosition(
-        successCallback,
-        errorCallback_highAccuracy,
-        { maximumAge: 600000, timeout: 25000, enableHighAccuracy: true },
-      );
-    } else {
-      alert("Browser not supported!");
+    if (window.screen.width <= parseInt(mq.phone.wide.maxWidth)) {
+      setIsMobile(true);
     }
   };
 
+  useEffect(initialize, []);
+
+  const loadData = useCallback(async (location, type) => {
+    setApiError(null);
+    try {
+      setLoadingPlaces(true);
+      const { data } = await axios.get(
+        `/api/geo/health-facility-places?lat=${location.coordinates[1]}&lng=${location.coordinates[0]}&type=${type}`,
+      );
+      console.log("data: " + JSON.stringify(data));
+      setFacilitiesData(
+        data.map((facility, i) => {
+          return {
+            ...facility,
+            name: i + 1 + ". " + facility.name,
+            geometry_location: checkDupCoordinates(facility, data),
+          };
+        }),
+      );
+    } catch (error) {
+      setApiError(t("error.failedHealthFacPlaces"));
+    } finally {
+      setLoadingPlaces(false);
+    }
+  });
+
+  const checkDupCoordinates = (facility, data) => {
+    if (
+      data.some(
+        (item) =>
+          item.geometry_location.lat === facility.geometry_location.lat &&
+          item.geometry_location.lng === facility.geometry_location.lng &&
+          item.place_id != facility.place_id,
+      )
+    ) {
+      //slightly offset coord in order to see the marker if duplicate
+      const min = 0.999999;
+      const max = 1.000001;
+      return {
+        lat:
+          facility.geometry_location.lat * (Math.random() * (max - min) + min),
+        lng:
+          facility.geometry_location.lng * (Math.random() * (max - min) + min),
+      };
+    } else {
+      return facility.geometry_location;
+    }
+  };
+
+  const handleLocationChange = async (location) => {
+    sourceLocation.current = location;
+    console.log(
+      "sourceLocation.current: " + JSON.stringify(sourceLocation.current),
+    );
+    if (sourceLocation.current) {
+      await loadData(sourceLocation.current, selectedType);
+    }
+  };
+
+  const handleTypeClick = useCallback(
+    (e, type) => {
+      e.persist();
+      e.stopPropagation();
+      setSelectedType(type);
+      if (sourceLocation.current) {
+        loadData(sourceLocation.current, type);
+      }
+    },
+    [loadData],
+  );
+
+  const handleViewClick = (viewName) => {
+    setView(viewName);
+  };
+
+  const onToggleFacilityMode = useCallback(
+    (e, currentMode) => {
+      e.persist();
+      e.stopPropagation();
+      setFacilityMode(
+        currentMode.type === "list"
+          ? facilityModeTypes[1]
+          : facilityModeTypes[0],
+      );
+    },
+    [facilityModeTypes],
+  );
+
+  if (loadingPlaces) return <Spin size="medium" />;
+
   return (
     <div>
-      {userCoords ? (
-        <NearestLocationContainer>
-          <CasesContainer>
-            <ConfirmedCases />
-          </CasesContainer>
-          <HealthFacilities>
-            <h2>Your nearest health facilities</h2>
-
-            {HealthFacilitiesData.map((data) => (
-              <DescriptionCard
-                key={data.id}
-                hospitalName={data.hospitalName}
-                hospitalAddress={data.hospitalAddress}
-                openDate={data.openDate}
-                contactNo={data.contactNo}
-                distance={data.distance}
-                isOpen={data.isOpen}
-              />
-            ))}
-          </HealthFacilities>
-          <MapContainer>
-            <NrMap />
-          </MapContainer>
-        </NearestLocationContainer>
+      {isMobile ? (
+        <>
+          {!hidingViewTabs ? (
+            <FacilityView
+              selectedView={view}
+              onViewClick={handleViewClick}
+            ></FacilityView>
+          ) : (
+            <WhiteSpace />
+          )}
+          {sourceLocation.current && view === "HealthFacilities" ? (
+            <ModeContainer
+              onClick={(e) => {
+                onToggleFacilityMode(e, facilityMode);
+              }}
+            >
+              <ModeLabel>{facilityMode.label}</ModeLabel>
+            </ModeContainer>
+          ) : (
+            <WhiteSpace />
+          )}
+        </>
       ) : (
-        <ShareLocationContainer>
-          <h1>
-            Share your location if you want to see your nearest health
-            facilities
-          </h1>
-          <SearchBarContainer>
-            <SearchInput
-              value={searchValue}
-              placeholder="Enter Address, Zip Code, or City"
-              onClear={clearSearch}
-              onChange={onSearchInputChange}
+        <WhiteSpace />
+      )}
+      {view === "HealthFacilities" && sourceLocation.current ? (
+        <ChangeLocOrTypeContainer>
+          <TypeButtonsWrapper>
+            <h1>{t("nearestHsp.facility")}</h1>
+            <div className="tags-selector">
+              {facilityTypes.map(({ type, label }, idx) => (
+                <ButtonTag
+                  className={
+                    "tag-selectable " +
+                    (selectedType === type ? "tag-selected" : "")
+                  }
+                  onClick={(e) => {
+                    handleTypeClick(e, type);
+                  }}
+                  label={label}
+                  key={idx}
+                >
+                  {label}
+                </ButtonTag>
+              ))}
+            </div>
+          </TypeButtonsWrapper>
+          <ChangeLocationContainer>
+            <h1>{t("nearestHsp.changeLoc")}</h1>
+            <LocationInput
+              location={sourceLocation.current}
+              onLocationChange={handleLocationChange}
+              includeNavigator={false}
+              gtmPrefix={
+                GTM.nearestHospital.prefix + GTM.nearestHospital.locationChange
+              }
             />
-            <ShareLocation onClick={userLocation}>
-              <SvgIcon src={shareLocation} style={shareIconStyles} />
-              {gettingLocation ? "Getting location..." : "Share My Location"}
-            </ShareLocation>
-          </SearchBarContainer>
-        </ShareLocationContainer>
+          </ChangeLocationContainer>
+        </ChangeLocOrTypeContainer>
+      ) : (
+        <WhiteSpace />
+      )}
+      {view === "HealthFacilities" ? (
+        sourceLocation.current ? (
+          <NearestLocationContainer>
+            {!isMobile || (isMobile && facilityMode.type === "list") ? (
+              <HealthFacilitiesContainer>
+                <h2>
+                  {facilityTypes.find((o) => o.type === selectedType).label}
+                </h2>
+                {apiError && <InputError>{apiError}</InputError>}
+                {!apiError &&
+                  (facilitiesData && facilitiesData.length > 0 ? (
+                    facilitiesData.map((data, idx) => (
+                      <FacilityCard
+                        key={idx + 1}
+                        facilityName={data.name}
+                        facilityAddress={data.formatted_address}
+                        contactNo={data.international_phone_number}
+                        distance={data.distance}
+                        isOpen={data.open_now}
+                        periods={data.opening_hours_periods}
+                        floating={false}
+                        url={data.url}
+                      />
+                    ))
+                  ) : (
+                    <NoResultsContainer>
+                      <h1>{t("nearestHsp.noResults")}</h1>
+                      <span>{t("nearestHsp.tryAdjusting")}</span>
+                    </NoResultsContainer>
+                  ))}
+              </HealthFacilitiesContainer>
+            ) : (
+              <WhiteSpace />
+            )}
+            {!isMobile || (isMobile && facilityMode.type === "map") ? (
+              <FacilityMap
+                apiKey={process.env.REACT_APP_GOOGLE_KEY}
+                defaultCenter={sourceLocation.current}
+                defaultZoom={11}
+                facilities={facilitiesData}
+              />
+            ) : (
+              <WhiteSpace />
+            )}
+          </NearestLocationContainer>
+        ) : (
+          <ShareLocationContainer>
+            <h1>{t("nearestHsp.shareLoc")}</h1>
+            <ShareLocationInputContainer>
+              <LocationInput
+                location={sourceLocation.current}
+                onLocationChange={handleLocationChange}
+                includeNavigator={false}
+                gtmPrefix={
+                  GTM.nearestHospital.prefix + GTM.nearestHospital.locationShare
+                }
+              />
+            </ShareLocationInputContainer>
+          </ShareLocationContainer>
+        )
+      ) : (
+        <ConfirmedCases />
       )}
     </div>
   );

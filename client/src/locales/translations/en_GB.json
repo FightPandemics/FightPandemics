@@ -13,15 +13,7 @@
     "addOrg": "Add Organisation",
     "logout": "Sign Out",
     "organisations": "Organisations",
-    "language": "Language",
-    "switchAccount": "Switch Account",
-    "myOrganisation": "My Organisations",
-    "willRefresh": "The current page will refresh.",
-    "stayOnPageHeader": "Stay on the current page?",
-    "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
-    "yes": "Yes",
-    "no": "No",
-    "ok": "OK"
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -698,6 +690,32 @@
     "check": "Symptoms Check",
     "findHelp": "Find Help"
   },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Location",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHlth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "hlthEval": "Health Evaluation",
+    "chkSymptms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "locaEmrgNbr": "Local emergency number"
+  },
   "feedback": {
     "poorly": "Poorly",
     "well": "Very well",
@@ -800,6 +818,7 @@
     "failedLogin": "Login failed, reason:",
     "failedSignup": "Signup failed, reason:",
     "failedPasswordRecovery": "Password recovery failed, reason:",
+    "failedHealthFacPlaces": "Failed getting health facilities.",
     "http": {
       "Bad Request": "Bad Request",
       "Unauthorized": "Unauthorised",

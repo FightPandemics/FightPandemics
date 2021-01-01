@@ -95,13 +95,17 @@ const getPlaceDetails = async (place) => {
     business_status: data.result.business_status,
     formatted_address: data.result.formatted_address,
     formatted_phone_number: data.result.formatted_phone_number,
-    geometry: JSON.stringify(data.result.geometry),
+    geometry_location: data.result.geometry.location,
     international_phone_number: data.result.international_phone_number,
     name: place.name,
-    opening_hours:
-      data.result.opening_hours === undefined
+    open_now:
+      data.result.opening_hours === undefined || data.result.opening_hours.open_now === undefined
         ? ""
-        : JSON.stringify(data.result.opening_hours),
+        : JSON.stringify(data.result.opening_hours.open_now),
+    opening_hours_periods:
+      data.result.opening_hours === undefined || data.result.opening_hours.periods === undefined
+        ? []
+        : data.result.opening_hours.periods,
     place_id: place.place_id,
     type: place.type,
     url: data.result.url,
@@ -111,7 +115,7 @@ const getPlaceDetails = async (place) => {
 const getPlacesDistances = async (lat, lng, places) => {
   const location = { lat, lng };
   const destinationLocations = places.map(
-    (place) => JSON.parse(place.geometry).location,
+    (place) => place.geometry_location, 
   );
 
   const { data } = await client.distancematrix({
