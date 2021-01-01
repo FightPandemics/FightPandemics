@@ -205,7 +205,6 @@ const NearestHealthFacilities = () => {
       const { data } = await axios.get(
         `/api/geo/health-facility-places?lat=${location.coordinates[1]}&lng=${location.coordinates[0]}&type=${type}`,
       );
-      console.log("data: " + JSON.stringify(data));
       setFacilitiesData(
         data.map((facility, i) => {
           return {
@@ -247,9 +246,6 @@ const NearestHealthFacilities = () => {
 
   const handleLocationChange = async (location) => {
     sourceLocation.current = location;
-    console.log(
-      "sourceLocation.current: " + JSON.stringify(sourceLocation.current),
-    );
     if (sourceLocation.current) {
       await loadData(sourceLocation.current, selectedType);
     }
