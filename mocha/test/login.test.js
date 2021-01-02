@@ -17,8 +17,8 @@ let userCredentialsWithEmailExceeding254Characters =
   testData.userCredentialsWithEmailExceeding254Characters;
 
 describe("POST Login endpoint tests for user that is NOT signed in", function () {
-  describe("401  - unauthorized", function () {
-    it("Unauthorized error - when trying to log in without signed in", async function () {
+  describe("400  - Bad Request", function () {
+    it("Bad Request error - when trying to log in without signing up an account", async function () {
       let response = await apiHelper.sendPOSTRequest(
         APP_URL,
         apiEndPoint,
@@ -26,9 +26,9 @@ describe("POST Login endpoint tests for user that is NOT signed in", function ()
       );
       validator.validateStatusCodeErrorAndMessage(
         response,
-        httpStatus.UNAUTHORIZED,
-        "Unauthorized",
-        "wrongCredentials",
+        httpStatus.BAD_REQUEST,
+        "Bad Request",
+        "noEmailAccount",
       );
     });
   });
@@ -89,9 +89,9 @@ describe("POST Login endpoint tests for user that is NOT signed in", function ()
       );
       validator.validateStatusCodeErrorAndMessage(
         response,
-        httpStatus.UNAUTHORIZED,
-        "Unauthorized",
-        "wrongCredentials",
+        httpStatus.BAD_REQUEST,
+        "Bad Request",
+        "noEmailAccount",
       );
     });
 

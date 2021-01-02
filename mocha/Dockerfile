@@ -2,7 +2,7 @@ FROM node:12-alpine as builder
 WORKDIR '/app'
 COPY package.json package-lock.json ./
 # Install mocha
-RUN npm install --global mocha
+RUN npm install --global mocha mochawesome
 
 # Install dependencies
 RUN npm install --save-dev should supertest chai http-status
