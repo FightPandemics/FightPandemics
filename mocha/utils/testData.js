@@ -74,7 +74,7 @@ function generateInvalidRandomEmail() {
   );
 }
 function generateRandomPassword() {
-  return randomStringGenerator.randomString(8) + "3;";
+  return randomStringGenerator.randomString(8) + ".;";
 }
 
 function generateEmailLocalExceeding64Characters() {
