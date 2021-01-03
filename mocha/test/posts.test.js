@@ -9,11 +9,9 @@ let postsApiEndpoint = apiEndpoints.postsEndpoint;
 describe("GET posts endpoint test", () => {
   it("send GET request to check that a list of posts exist in endpoint", async () => {
     let response = await apiHelper.sendGETRequest(APP_URL, postsApiEndpoint);
-    validator.validateStatusCodeResponseBody(
-      response,
-      httpStatus.OK,
-      "_id",
-      "types",
-    );
+    validator.validateResponse(response, {
+      statusCode: httpStatus.OK,
+    });
+    validator.validateResponseBody(response, "_id", "types");
   });
 });
