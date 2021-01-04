@@ -13,7 +13,6 @@ exports.sendPOSTRequest = async (baseUrl, apiEndPoint, requestBody) => {
     console.log("Error in sending POST Request: ", err);
   }
 };
-
 exports.sendGETRequest = async (baseUrl, apiEndPoint) => {
   try {
     let res = await supertest(baseUrl)
@@ -21,7 +20,6 @@ exports.sendGETRequest = async (baseUrl, apiEndPoint) => {
       .retry(2)
       .set("Accept", "application/json")
       .set("Content-Type", "application/json");
-    //.done();
     return res;
   } catch (err) {
     console.log("Error in sending GET Request: ", err);

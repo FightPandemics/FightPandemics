@@ -57,7 +57,12 @@ describe("POST Feedback endpoint tests", () => {
         apiEndPoint,
         feedbackWithValidInputs,
       );
-      validator.validateStatusCodeAndSuccess(response, 201, true);
+      validator.validateResponse(response, {
+        statusCode: httpStatus.CREATED,
+      });
+      validator.validateResponse(response.body, {
+        success: true,
+      });
     });
 
     it("Invalid data type in Age question triggers Bad Request message", async () => {
@@ -66,12 +71,11 @@ describe("POST Feedback endpoint tests", () => {
         apiEndPoint,
         feedbackWithInvalidAge,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "body.age should be integer",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "body.age should be integer",
+      });
     });
 
     it("Negative number in Age question triggers Bad Request message", async () => {
@@ -80,12 +84,11 @@ describe("POST Feedback endpoint tests", () => {
         apiEndPoint,
         feedbackWithNegativeAge,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "body.age should be >= 1",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "body.age should be >= 1",
+      });
     });
 
     it("Number over 150 in Age question triggers Bad Request message", async () => {
@@ -94,12 +97,11 @@ describe("POST Feedback endpoint tests", () => {
         apiEndPoint,
         feedbackWithAgeOver150,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "body.age should be <= 150",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "body.age should be <= 150",
+      });
     });
 
     it("Invalid data type in Rating question triggers Bad Request message", async () => {
@@ -108,12 +110,11 @@ describe("POST Feedback endpoint tests", () => {
         apiEndPoint,
         feedbackWithInvalidRating,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "body.rating should be integer",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "body.rating should be integer",
+      });
     });
 
     it("Negative number in Rating question triggers Bad Request message", async () => {
@@ -122,12 +123,11 @@ describe("POST Feedback endpoint tests", () => {
         apiEndPoint,
         feedbackWithNegativeRating,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "body.rating should be >= 1",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "body.rating should be >= 1",
+      });
     });
 
     it("Number over 5 in Rating question triggers Bad Request message", async () => {
@@ -136,12 +136,11 @@ describe("POST Feedback endpoint tests", () => {
         apiEndPoint,
         feedbackWithRatingOver5,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "body.rating should be <= 5",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "body.rating should be <= 5",
+      });
     });
   });
 
@@ -152,12 +151,11 @@ describe("POST Feedback endpoint tests", () => {
         apiEndPoint,
         feedbackWithBlankInputs,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        "body.age should be integer, body.rating should be integer",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "body.age should be integer, body.rating should be integer",
+      });
     });
   });
 });
