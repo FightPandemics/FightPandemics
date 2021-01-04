@@ -4,7 +4,7 @@ import Post from "../../../elements/pages/post";
 describe("FightPandemics Post for unauthorized user", () => {
   const helpBoard = new HelpBoard();
   const post = new Post();
-  const shareViaModalWindowTitle = "Share via...";
+  const shareViaModalWindowTitle = "Share Post";
 
   context("User opens Help Board", () => {
     beforeEach(() => {
