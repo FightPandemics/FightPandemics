@@ -370,10 +370,8 @@ async function routes(app) {
           "author.location.zip": false,
         }),
       );
-      if (postErr) {
-        req.log.error(postErr, "Failed retrieving post");
-        throw app.httpErrors.internalServerError();
-      } else if (post === null) {
+      if (post === null || postErr) {
+        postErr && req.log.error(postErr, "Can't find a post with given id");
         throw app.httpErrors.notFound();
       }
 
