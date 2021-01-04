@@ -373,7 +373,7 @@ async function routes(app) {
       if (postErr){
         req.log.error(postErr, "Can't find a post with given id");
         throw app.httpErrors.badRequest();
-      }else if (post === null) {
+      } else if (post === null) {
         throw app.httpErrors.notFound();
       }
 
