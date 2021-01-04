@@ -2,6 +2,8 @@ import tlds from "tlds";
 import _isEmail from "validator/lib/isEmail";
 import wildcards from "disposable-email-domains";
 
+const wildcardsSet = new Set(wildcards);
+
 const validateTopLevelDomain = (string) => {
   for (const tld of tlds) {
     if (string.endsWith("." + tld)) {
@@ -12,12 +14,8 @@ const validateTopLevelDomain = (string) => {
 };
 
 const validateDisposableEmail = (email) => {
-  for (const wildcard of wildcards) {
-    if (email.includes(wildcard)) {
-      return true;
-    }
-  }
-  return false;
+  const emailDomain = email.split("@")[1];
+  return wildcardsSet.has(emailDomain);
 };
 
 export const validateEmail = (email) => {
