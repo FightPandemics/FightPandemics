@@ -10,7 +10,7 @@ describe("FightPandemics Footer Section", () => {
 
     it("FP copyright text is visible", () => {
       var copyright =
-        "Copyright " + "2020" + " FightPandemics. All rights reserved.";
+        "Copyright " + "2021" + " FightPandemics. All rights reserved.";
       footer.getCopyright().should("be.visible").contains(copyright);
     });
 
