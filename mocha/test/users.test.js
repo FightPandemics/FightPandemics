@@ -9,11 +9,9 @@ let usersApiEndPoint = apiEndPoints.usersEndpoint;
 describe("GET users endpoint tests", () => {
   it("sending GET request with users endpoint, status : 200 OK with response body", async () => {
     let response = await apiHelper.sendGETRequest(APP_URL, usersApiEndPoint);
-    validator.validateStatusCodeResponseBody(
-      response,
-      200,
-      "firstName",
-      "lastName",
-    );
+    validator.validateResponse(response, {
+      statusCode: httpStatus.OK,
+    });
+    validator.validateResponseBody(response, "firstName", "lastName");
   });
 });
