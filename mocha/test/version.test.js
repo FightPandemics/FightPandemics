@@ -4,7 +4,7 @@ const apiEndPoints = require("../utils/apiEndpoints");
 const apiHelper = require("../utils/apiHelper");
 const validator = require("../utils/validators");
 
-let apiEndPoint = apiEndPoints.versionApiEndpoint;
+let apiEndPoint = apiEndPoints.versionEndpoint;
 
 describe("GET Version endpoint test", () => {
   it("sending GET request with endpoint, status : 200 OK with response body", async () => {
