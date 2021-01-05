@@ -420,7 +420,6 @@ const NavigationLayout = (props) => {
             user={user}
             webSocket={webSocket}
             organisationId={organisationId}
-            isNewOrganisation={isNewOrganisation}
             onFeedbackIconClick={() =>
               dispatchAction(TOGGLE_STATE, "ratingModal")
             }

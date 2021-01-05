@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FEED, PROFILE } from "../templates/RouteWithSubRoutes";
 import { refetchUser } from "actions/authActions";
-import { setOrganisation, setNewOrganisation } from "../actions/profileActions";
+import { setOrganisation } from "../actions/profileActions";
 
 import {
   ProfileCompletedButtonsWrapper,
@@ -17,12 +17,7 @@ import {
 import GTM from "constants/gtm-tags";
 import { connect } from "react-redux";
 
-const ProfileCompleted = ({
-  user,
-  refetchUser,
-  setOrganisationId,
-  setNewOrganisation,
-}) => {
+const ProfileCompleted = ({ user, refetchUser, setOrganisationId }) => {
   const { t } = useTranslation();
   const location = useLocation();
   useEffect(() => {
@@ -32,8 +27,9 @@ const ProfileCompleted = ({
 
   const switchAccountDrawerMenu = () => {
     if (location?.state?.orgId) {
-      setNewOrganisation(true);
-      setOrganisationId(location.state.orgId);
+      const index = location.state.orgId;
+      localStorage.setItem("organisationId", index);
+      setOrganisationId(index);
     }
   };
 
@@ -81,7 +77,6 @@ const ProfileCompleted = ({
 
 const mapDispatchToProps = {
   refetchUser,
-  setNewOrganisation,
   setOrganisationId: setOrganisation,
 };
 

@@ -67,11 +67,6 @@ function sessionReducer(state = initialState, action) {
         ...state,
         organisationId: action.payload,
       };
-    case SESSION_ACTIONS.SET_NEW_ORGANISATION:
-      return {
-        ...state,
-        isNewOrganisation: action.payload,
-      };
     default:
       return state;
   }

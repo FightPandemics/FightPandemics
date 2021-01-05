@@ -43,7 +43,6 @@ export const RouteWithSubRoutes = (route) => {
     user,
     isIdentified,
     webSocket,
-    isNewOrganisation,
   } = route;
   const {
     loggedInOnly,
@@ -134,7 +133,6 @@ export const RouteWithSubRoutes = (route) => {
             isIdentified={isIdentified}
             organisationId={organisationId}
             loggedInOnly={loggedInOnly}
-            isNewOrganisation={isNewOrganisation}
           />
         );
       }}
@@ -153,7 +151,6 @@ const mapStateToProps = ({ session, webSocket }) => ({
   isIdentified: webSocket.isIdentified,
   webSocket: webSocket,
   organisationId: session.organisationId,
-  isNewOrganisation: session.isNewOrganisation,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteWithSubRoutes);
