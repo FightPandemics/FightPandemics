@@ -72,7 +72,6 @@ const NavigationLayout = (props) => {
     webSocket,
     loggedInOnly,
     organisationId,
-    isNewOrganisation,
   } = props;
   const [drawerOpened, setDrawerOpened] = useState(false);
 

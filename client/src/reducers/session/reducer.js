@@ -13,7 +13,6 @@ const initialState = {
   forgotPasswordRequested: false,
   user: null,
   organisationId: null,
-  isNewOrganisation: false,
 };
 
 function sessionReducer(state = initialState, action) {
