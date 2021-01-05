@@ -4,9 +4,6 @@ const apiEndPoints = require("../utils/apiEndpoints");
 const apiHelper = require("../utils/apiHelper");
 const validator = require("../utils/validators");
 
-/* commit: "unknown",
-servivceName: "fightpandemics", 
-version: "1.0.0",  */
 let apiEndPoint = apiEndPoints.versionApiEndpoint;
 
 describe("GET Version endpoint test", () => {
