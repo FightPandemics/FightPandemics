@@ -3,4 +3,4 @@ exports.feedbackEndpoint = "/api/feedback";
 exports.signUpApiEndpoint = "/api/auth/signup";
 exports.organisationsEndpoint = "/api/organisations";
 exports.postsEndpoint = "/api/posts";
-exports.versionApiEndpoint = "/api/version";
+exports.versionEndpoint = "/api/version";
