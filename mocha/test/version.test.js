@@ -7,7 +7,7 @@ const validator = require("../utils/validators");
 let apiEndPoint = apiEndPoints.versionEndpoint;
 
 describe("GET Version endpoint test", () => {
-  it("sending GET request with endpoint, status : 200 OK with response body", async () => {
+  it("Sending GET request with endpoint, status : 200 OK with response body", async () => {
     let response = await apiHelper.sendGETRequest(APP_URL, apiEndPoint);
     validator.validateResponse(response, {
       statusCode: httpStatus.OK,
