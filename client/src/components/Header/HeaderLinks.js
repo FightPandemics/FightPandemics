@@ -45,18 +45,24 @@ export const HeaderLinks = ({
       padding: 0.5em 1em;
       letter-spacing: 1px;
     }
-    clip-path: inset(0% 0% 0% -10% round 10px);
-      ::-webkit-scrollbar {
-        width: 0.8rem;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
-        background-color: light-grey;
-        overflow: hidden;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: ${theme.colors.darkGray};
-        cursor: pointer;
-      }
+    /* clip-path: inset(0% 0% 0% -10% round 10px); */
+    ::-webkit-scrollbar {
+      width: 0.8rem;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      /* background-color: lightgrey; */
+      overflow: hidden;
+    }
+    /* ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3) !important;
+    } */
+    ::-webkit-scrollbar-thumb {
+      background: ${theme.colors.darkGray};
+      cursor: pointer;
+      /* border-radius: 10px; */
+      /* border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px; */
+    }
   `;
 
   const languageMenu = (
