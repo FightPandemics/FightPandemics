@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Menu, Dropdown, Button } from "antd";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 
 import i18n from "../../i18n";
 import SvgIcon from "../Icon/SvgIcon";
@@ -35,10 +36,32 @@ export const HeaderLinks = ({
     window.localStorage.setItem("locale", lng);
   };
 
-  const langMenuStyles = { "max-height": "45rem", "overflow": "auto" };
+  // const langMenuStyles = { "max-height": "45rem", "overflow": "auto" };
+  const StyledMenu = styled(Menu)`
+    max-height: 45rem;
+    border-radius: 10px;
+    overflow: auto;
+    a {
+      padding: 0.5em 1em;
+      letter-spacing: 1px;
+    }
+    clip-path: inset(0% 0% 0% -10% round 10px);
+      ::-webkit-scrollbar {
+        width: 0.8rem;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background-color: light-grey;
+        overflow: hidden;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: ${theme.colors.darkGray};
+        cursor: pointer;
+      }
+  `;
 
   const languageMenu = (
-    <Menu style={langMenuStyles}>
+    // <Menu style={langMenuStyles}>
+    <StyledMenu>
       {Object.entries(languages).map(([key, label]) => (
         <Menu.Item key={key}>
           <div
@@ -54,7 +77,8 @@ export const HeaderLinks = ({
           </div>
         </Menu.Item>
       ))}
-    </Menu>
+    </StyledMenu>
+    // </Menu>
   );
 
   return (
@@ -134,6 +158,9 @@ export const HeaderLinks = ({
             className="icon-btn"
             overlay={languageMenu}
             trigger={["click"]}
+            getPopupContainer={() =>
+              document.getElementsByClassName("am-navbar-right")[0]
+              }
           >
             <button>
               <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} />
