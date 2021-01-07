@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "description": "Mocha API integration tests",
   "scripts": {
-    "test": "mocha './test/**/*.js' --recursive --timeout 60000 --exit"
+    "pretest": "rm -rf mochawesome-report/*",
+    "test": "mocha --reporter mochawesome './test/**/*.js' --recursive --timeout 60000 --exit"
   },
   "private": true,
   "devDependencies": {
     "chai": "^4.2.0",
     "http-status": "^1.4.2",
-    "lodash": "^4.17.20",
     "mocha": "^8.1.0",
+    "mochawesome": "^6.2.1",
+    "lodash": "^4.17.20",
     "mongoose": "^5.10.13",
     "should": "^13.2.3",
     "supertest": "^4.0.2"
