@@ -36,7 +36,6 @@ export const HeaderLinks = ({
     window.localStorage.setItem("locale", lng);
   };
 
-  // const langMenuStyles = { "max-height": "45rem", "overflow": "auto" };
   const StyledMenu = styled(Menu)`
     max-height: 45rem;
     border-radius: 10px;
@@ -45,28 +44,19 @@ export const HeaderLinks = ({
       padding: 0.5em 1em;
       letter-spacing: 1px;
     }
-    /* clip-path: inset(0% 0% 0% -10% round 10px); */
     ::-webkit-scrollbar {
       width: 0.8rem;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
-      /* background-color: lightgrey; */
       overflow: hidden;
     }
-    /* ::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3) !important;
-    } */
     ::-webkit-scrollbar-thumb {
       background: ${theme.colors.darkGray};
       cursor: pointer;
-      /* border-radius: 10px; */
-      /* border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px; */
     }
   `;
 
   const languageMenu = (
-    // <Menu style={langMenuStyles}>
     <StyledMenu>
       {Object.entries(languages).map(([key, label]) => (
         <Menu.Item key={key}>
@@ -84,7 +74,6 @@ export const HeaderLinks = ({
         </Menu.Item>
       ))}
     </StyledMenu>
-    // </Menu>
   );
 
   return (
