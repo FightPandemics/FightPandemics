@@ -4,7 +4,9 @@ const { Social } = require("./Social");
 const authUrlBase = "https://www.linkedin.com/oauth/v2/authorization";
 const tokenUrl = "https://www.linkedin.com/oauth/v2/accessToken";
 const userDataUrl = "https://api.linkedin.com/v2/me";
-const scopes = ["r_liteprofile", "r_emailaddress"].join(" "); // furture scope: "w_member_social"
+// TODO: linkedin need request scopes for 'r_basicprofile'
+const scopes = ["r_basicprofile", "r_emailaddress"].join(","); // furture scope: "w_member_social"
+const extraFields = { grant_type: "authorization_code" }; // needed for authentication
 
 class Linkedin extends Social {
   constructor(clientId, secretKey) {
@@ -16,6 +18,7 @@ class Linkedin extends Social {
       tokenUrl,
       userDataUrl,
       scopes,
+      extraFields,
     );
   }
 

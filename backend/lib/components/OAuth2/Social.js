@@ -11,6 +11,7 @@ class Social {
     tokenUrl,
     userDataUrl,
     scopes,
+    extraFields = {},
   ) {
     if (new.target === Social) {
       throw new TypeError("Social class is abstract, cannot construct.");
@@ -29,6 +30,7 @@ class Social {
     this.tokenUrl = tokenUrl; // social endpoint to get accessToken
     this.userDataUrl = userDataUrl; // user endpoint to get userData
     this.scopes = scopes; // scopes for auth and accessing endpoints
+    this.extraFields = extraFields; // special fields needed
   }
 
   buildOauthUrl(redirectUrl) {
@@ -52,6 +54,7 @@ class Social {
         code: codeStr,
         redirect_uri: redirectUrl,
         state: stateStr,
+        ...this.extraFields,
       },
       url: this.tokenUrl,
     });
