@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Heading from "../Typography/Heading";
-import { Select } from "antd";
+import { Link } from "react-router-dom";
 import { mq, theme } from "../../constants/theme";
 import SubmitButton from "../Button/SubmitButton";
 const { colors } = theme;
@@ -50,7 +50,7 @@ export const CustomForm = styled.form`
   }
 `;
 
-export const CustomLink = styled.div`
+export const CustomLink = styled(Link)`
   color: ${colors.black};
   border: 0.1rem solid ${colors.lightGray};
   border-radius: 0.3rem;
@@ -181,39 +181,4 @@ export const ToggleHeading = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
-`;
-
-export const StyledSelect = styled(Select)`
-  border: 1px solid ${theme.colors.royalBlue};
-  border-radius: 0.3rem;
-  color: ${theme.colors.royalBlue};
-  width: 35%;
-  margin-right: 1.8rem;
-  @media screen and (max-width: ${mq.tablet.narrow.minWidth}) {
-    width: 60%;
-    margin-bottom: 1.8rem;
-  }
-`;
-
-export const ProfileImage = styled.img`
-  width: 70%;
-  align-self: end;
-`;
-
-export const Eclipse = styled.div`
-  width: 7rem;
-  height: 6.5rem;
-  background-color: ${theme.colors.selago};
-  position: relative;
-  border: 2px solid ${theme.colors.royalBlue};
-  border-radius: 100%;
-  align-self: center;
-`;
-
-export const PlusIcon = styled.img`
-  width: 40%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
 `;

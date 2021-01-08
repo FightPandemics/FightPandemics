@@ -1,9 +1,10 @@
 const S = require("fluent-schema");
-const { strictSchema } = require("./utils");
+const { strictSchema, strictQueryStringSchema } = require("./utils");
 const { locationSchema } = require("./location");
+const { notifyPreferenceSchema } = require("./notificationPreference");
 
 const organisation = {
-  about: S.string().maxLength(100),
+  about: S.string().maxLength(260),
   email: S.string().format("email"),
   global: S.boolean(),
   industry: S.string(),
@@ -37,7 +38,13 @@ const createOrganisationSchema = {
     .prop("needs", organisation.needs)
     .prop("type", organisation.type.required())
     .prop("urls", organisation.urls)
+    .prop("notifyPrefs", notifyPreferenceSchema)
     .required(["location"]),
+};
+
+const createOrganisationAvatarSchema = {
+  body: strictSchema().prop("file", S.required()),
+  params: strictSchema().prop("organisationId", S.string().required()),
 };
 
 const getOrganisationSchema = {
@@ -46,10 +53,19 @@ const getOrganisationSchema = {
 
 // TODO: Maybe add search param in query string?
 const getOrganisationsSchema = {
-  querystring: strictSchema()
-    .prop("limit", S.integer())
+  querystring: strictQueryStringSchema()
     .prop("ownerId", S.string())
     .prop("skip", S.integer()),
+};
+
+const searchOrganisationsSchema = {
+  querystring: strictQueryStringSchema()
+    .prop("filter", S.string())
+    .prop("keywords", S.string())
+    .prop("objective", S.string())
+    .prop("skip", S.integer())
+    .prop("includeMeta", S.boolean().default(false))
+    .prop("ignoreUserLocation", S.boolean().default(false)),
 };
 
 const updateOrganisationSchema = {
@@ -63,7 +79,8 @@ const updateOrganisationSchema = {
     .prop("name", organisation.name)
     .prop("needs", organisation.needs)
     .prop("type", organisation.type)
-    .prop("urls", organisation.urls),
+    .prop("urls", organisation.urls)
+    .prop("notifyPrefs", notifyPreferenceSchema),
   params: strictSchema().prop("organisationId", S.string().required()),
 };
 
@@ -72,9 +89,11 @@ const deleteOrganisationSchema = {
 };
 
 module.exports = {
+  createOrganisationAvatarSchema,
   createOrganisationSchema,
   deleteOrganisationSchema,
   getOrganisationSchema,
   getOrganisationsSchema,
+  searchOrganisationsSchema,
   updateOrganisationSchema,
 };

@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 
-const { setElapsedTimeText } = require("../utils");
+const {
+  setElapsedTimeText,
+  createSearchRegex,
+  translateISOtoRelativeTime,
+} = require("../utils");
 
 const {
   createCommentSchema,
@@ -34,33 +38,24 @@ async function routes(app) {
   app.get(
     "/",
     {
-      preValidation: [app.authenticateOptional],
+      preValidation: [app.authenticateOptional, app.setActor],
       schema: getPostsSchema,
     },
     async (req) => {
-      const { query, userId } = req;
       const {
-        authorId,
-        ignoreUserLocation,
-        filter,
-        limit,
-        objective,
-        skip,
-        includeMeta,
-      } = query;
+        actor,
+        query: {
+          authorId,
+          ignoreUserLocation,
+          filter,
+          keywords,
+          limit,
+          objective,
+          skip,
+          includeMeta,
+        },
+      } = req;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
-      let user;
-      let userErr;
-      if (userId) {
-        [userErr, user] = await app.to(User.findById(userId));
-        if (userErr) {
-          req.log.error(userErr, "Failed retrieving user");
-          throw app.httpErrors.internalServerError();
-        } else if (user === null) {
-          req.log.error(userErr, "User does not exist");
-          throw app.httpErrors.forbidden();
-        }
-      }
 
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
@@ -72,8 +67,8 @@ async function routes(app) {
       let location;
       if (queryFilters.location) {
         location = queryFilters.location;
-      } else if (user && !ignoreUserLocation) {
-        location = user.location;
+      } else if (actor && !ignoreUserLocation) {
+        location = actor.location;
       }
 
       if (location) {
@@ -131,6 +126,27 @@ async function routes(app) {
       };
       /* eslint-enable sort-keys */
 
+      // if location is defined, use simple regex text query, in order to use $geoNear
+      if (location && keywords) {
+        const keywordsRegex = createSearchRegex(keywords);
+        filters.push({
+          $or: [
+            { title: keywordsRegex },
+            { content: keywordsRegex },
+            { "author.name": keywordsRegex },
+            { types: keywordsRegex },
+            { "author.location.country": keywordsRegex },
+            { "author.location.state": keywordsRegex },
+            { "author.location.city": keywordsRegex },
+          ],
+        });
+      }
+
+      // remove posts the user have reported
+      if (actor) {
+        filters.push({ "reportedBy.id": { $ne: actor._id } });
+      }
+
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
@@ -150,6 +166,11 @@ async function routes(app) {
               },
             },
             { $sort: { distance: 1, _id: -1 } },
+          ]
+        : keywords
+        ? [
+            { $match: { $and: filters, $text: { $search: keywords } } },
+            { $sort: { score: { $meta: "textScore" } } },
           ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
@@ -205,14 +226,25 @@ async function routes(app) {
             expireAt: true,
             externalLinks: true,
             language: true,
-            liked: { $in: [mongoose.Types.ObjectId(userId), "$likes"] },
+            liked: {
+              $in: [
+                mongoose.Types.ObjectId(actor ? actor._id : null),
+                "$likes",
+              ],
+            },
+            isEdited: true,
             likesCount: {
               $size: { $ifNull: ["$likes", []] },
             },
             objective: true,
+            reportsCount: {
+              $size: { $ifNull: ["$reportedBy", []] },
+            },
             title: true,
             types: true,
             visibility: true,
+            createdAt: true,
+            updatedAt: true,
           },
         },
       ];
@@ -227,14 +259,29 @@ async function routes(app) {
 
       // Get the total results without pagination steps but with filtering aplyed - totalResults
       /* eslint-disable sort-keys */
-      const totalResultsAggregationPipeline = await Post.aggregate([
-        { $match: { $and: filters } },
-        { $group: { _id: null, count: { $sum: 1 } } },
-      ]);
+      const totalResultsAggregationPipeline = await Post.aggregate(
+        keywords && !location
+          ? [
+              { $match: { $and: filters, $text: { $search: keywords } } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ]
+          : [
+              { $match: { $and: filters } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ],
+      );
       /* eslint-enable sort-keys */
 
       const [postsErr, posts] = await app.to(
-        Post.aggregate(aggregationPipelineResults),
+        Post.aggregate(aggregationPipelineResults).then((posts) => {
+          posts.forEach((post) => {
+            post.elapsedTimeText = {
+              created: translateISOtoRelativeTime(post.createdAt),
+              isEdited: post.isEdited, // keep frontend format
+            };
+          });
+          return posts;
+        }),
       );
 
       const responseHandler = (response) => {
@@ -265,50 +312,19 @@ async function routes(app) {
   app.post(
     "/",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticate, app.setActor],
       schema: createPostSchema,
     },
     async (req, reply) => {
-      const { userId, body: postProps } = req;
-      // return postProps;
-      const [userErr, user] = await app.to(User.findById(userId));
-      if (userErr) {
-        req.log.error(userErr, "Failed retrieving user");
-        throw app.httpErrors.internalServerError();
-      } else if (user === null) {
-        req.log.error(userErr, "User does not exist");
-        throw app.httpErrors.forbidden();
-      }
-
-      // Author defaults to user unless organisationId set
-      let author = user;
-      const { organisationId } = postProps;
-      if (organisationId) {
-        const [orgErr, org] = await app.to(User.findById(organisationId));
-        if (orgErr) {
-          req.log.error(userErr, "Failed retrieving organisation");
-          throw app.httpErrors.internalServerError();
-        } else if (org === null) {
-          req.log.error(userErr, "Organisation does not exist");
-          throw app.httpErrors.forbidden();
-        } else if (org.ownerId.toString() !== userId.toString()) {
-          req.log.error(
-            userErr,
-            "User not allowed to post as this organisation",
-          );
-          throw app.httpErrors.forbidden();
-        }
-        author = org;
-        delete postProps.organisationId;
-      }
+      const { actor, body: postProps } = req;
 
       // Creates embedded author document
       postProps.author = {
-        id: mongoose.Types.ObjectId(author.id),
-        location: author.location,
-        name: author.name,
-        photo: author.photo,
-        type: author.type,
+        id: mongoose.Types.ObjectId(actor.id),
+        location: actor.location,
+        name: actor.name,
+        photo: actor.photo,
+        type: actor.type,
       };
 
       // ExpireAt needs to calculate the date
@@ -338,12 +354,14 @@ async function routes(app) {
   app.get(
     "/:postId",
     {
-      preValidation: [app.authenticateOptional],
+      preValidation: [app.authenticateOptional, app.setActor],
       schema: getPostByIdSchema,
     },
     async (req) => {
-      const { userId } = req;
-      const { postId } = req.params;
+      const {
+        actor,
+        params: { postId },
+      } = req;
       const [postErr, post] = await app.to(
         Post.findById(postId).select({
           "author.location.address": false,
@@ -352,11 +370,25 @@ async function routes(app) {
           "author.location.zip": false,
         }),
       );
-      if (postErr) {
-        req.log.error(postErr, "Failed retrieving post");
+      
+      if (postErr){
+        if (postErr instanceof mongoose.Error.CastError){
+            req.log.error(postErr, "Can't find a post with given id");
+            throw app.httpErrors.badRequest();
+        }
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
         throw app.httpErrors.notFound();
+      }
+
+      if (actor) {
+        // user shouldn't see reported posts on post page
+        const didReport = post.reportedBy
+          ? post.reportedBy.find(
+              (r) => r.id.toString() === actor._id.toString(),
+            )
+          : false;
+        if (didReport) throw app.httpErrors.notFound();
       }
 
       /* eslint-disable sort-keys */
@@ -377,12 +409,20 @@ async function routes(app) {
 
       const projectedPost = {
         ...post.toObject(),
-        liked: post.likes.includes(mongoose.Types.ObjectId(userId)),
+        liked: post.likes.includes(
+          mongoose.Types.ObjectId(actor ? actor._id : null),
+        ),
         likesCount: post.likes.length,
+        elapsedTimeText: {
+          created: translateISOtoRelativeTime(post.createdAt),
+          isEdited: post.isEdited, // keep frontend format
+        },
+        reportsCount: (post.reportedBy || []).length,
+        commentsCount: commentQuery || 0,
       };
+      delete projectedPost.reportedBy;
 
       return {
-        numComments: commentQuery || 0,
         post: projectedPost,
       };
     },
@@ -456,6 +496,7 @@ async function routes(app) {
       } else {
         body.expireAt = null;
       }
+      body.isEdited = true; // set edited true when update
 
       const [updateErr, updatedPost] = await app.to(
         Object.assign(post, body).save(),
@@ -471,22 +512,22 @@ async function routes(app) {
   );
 
   app.put(
-    "/:postId/likes/:userId",
+    "/:postId/likes/:actorId",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticate, app.setActor],
       schema: likeUnlikePostSchema,
     },
     async (req) => {
-      if (!req.userId.equals(req.params.userId)) {
-        throw app.httpErrors.forbidden();
-      }
-
-      const { postId, userId } = req.params;
+      const {
+        actor,
+        userId,
+        params: { postId },
+      } = req;
 
       const [updateErr, updatedPost] = await app.to(
         Post.findOneAndUpdate(
           { _id: postId },
-          { $addToSet: { likes: userId } },
+          { $addToSet: { likes: actor._id } },
           { new: true },
         ),
       );
@@ -497,6 +538,9 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
+      // action, post, actorId (triggredBy), authUserId, details
+      app.notifier.notify("like", updatedPost, actor._id, userId);
+
       return {
         likes: updatedPost.likes,
         likesCount: updatedPost.likes.length,
@@ -505,21 +549,21 @@ async function routes(app) {
   );
 
   app.delete(
-    "/:postId/likes/:userId",
+    "/:postId/likes/:actorId",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticate, app.setActor],
       schema: likeUnlikePostSchema,
     },
     async (req) => {
-      if (!req.userId.equals(req.params.userId)) {
-        throw app.httpErrors.forbidden();
-      }
-      const { postId, userId } = req.params;
+      const {
+        actor,
+        params: { postId },
+      } = req;
 
       const [updateErr, updatedPost] = await app.to(
         Post.findOneAndUpdate(
           { _id: postId },
-          { $pull: { likes: userId } },
+          { $pull: { likes: actor._id } },
           { new: true },
         ),
       );
@@ -596,18 +640,17 @@ async function routes(app) {
 
   app.post(
     "/:postId/comments",
-    { preValidation: [app.authenticate], schema: createCommentSchema },
+    {
+      preValidation: [app.authenticate, app.setActor],
+      schema: createCommentSchema,
+    },
     async (req, reply) => {
-      const { userId, body: commentProps, params } = req;
-      const { postId } = params;
-
-      const [userErr, user] = await app.to(User.findById(userId));
-      if (userErr) {
-        req.log.error(userErr, "Failed retrieving user");
-        throw app.httpErrors.internalServerError();
-      } else if (user === null) {
-        throw app.httpErrors.notFound();
-      }
+      const {
+        actor,
+        userId,
+        body: commentProps,
+        params: { postId },
+      } = req;
 
       // Assign postId and parent comment id (if present)
       commentProps.postId = mongoose.Types.ObjectId(postId);
@@ -617,10 +660,10 @@ async function routes(app) {
 
       // Creates embedded author document
       commentProps.author = {
-        id: mongoose.Types.ObjectId(user.id),
-        name: user.name,
-        photo: user.photo,
-        type: user.type,
+        id: mongoose.Types.ObjectId(actor.id),
+        name: actor.name,
+        photo: actor.photo,
+        type: actor.type,
       };
 
       // Initial empty likes array
@@ -632,6 +675,19 @@ async function routes(app) {
         req.log.error(err, "Failed creating comment");
         throw app.httpErrors.internalServerError();
       }
+
+      const [errPost, post] = await app.to(Post.findById(postId));
+      if (errPost) {
+        req.log.error(errPost, "Failed retrieving post");
+        throw app.httpErrors.internalServerError();
+      } else if (post === null) {
+        throw app.httpErrors.notFound();
+      }
+
+      // action, post, actorId (triggredBy), authUserId, details
+      app.notifier.notify("comment", post, actor._id, userId, {
+        commentText: commentProps.content,
+      });
 
       reply.code(201);
       return comment;
@@ -650,7 +706,12 @@ async function routes(app) {
       if (err) {
         req.log.error(err, "Failed retrieving comment");
         throw app.httpErrors.internalServerError();
-      } else if (!userId.equals(comment.author.id)) {
+      } else if (comment === null) {
+        throw app.httpErrors.notFound();
+      }
+
+      const [, author] = await app.to(User.findById(comment.author.id));
+      if (!(userId.equals(author.id) || userId.equals(author.ownerId))) {
         throw app.httpErrors.forbidden();
       }
 
@@ -671,11 +732,17 @@ async function routes(app) {
     async (req) => {
       const { userId } = req;
       const { commentId } = req.params;
+
       const [findErr, comment] = await app.to(Comment.findById(commentId));
       if (findErr) {
         req.log.error(findErr, "Failed retrieving comment");
         throw app.httpErrors.internalServerError();
-      } else if (!userId.equals(comment.author.id)) {
+      } else if (comment === null) {
+        throw app.httpErrors.notFound();
+      }
+
+      const [, author] = await app.to(User.findById(comment.author.id));
+      if (!(userId.equals(author.id) || userId.equals(author.ownerId))) {
         throw app.httpErrors.forbidden();
       }
 
@@ -704,19 +771,21 @@ async function routes(app) {
   );
 
   app.put(
-    "/:postId/comments/:commentId/likes/:userId",
-    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    "/:postId/comments/:commentId/likes/:actorId",
+    {
+      preValidation: [app.authenticate, app.setActor],
+      schema: likeUnlikeCommentSchema,
+    },
     async (req) => {
-      if (!req.userId.equals(req.params.userId)) {
-        throw app.httpErrors.forbidden();
-      }
-      const { userId } = req;
-      const { commentId } = req.params;
+      const {
+        actor,
+        params: { commentId },
+      } = req;
 
       const [updateErr, updatedComment] = await app.to(
         Comment.findOneAndUpdate(
           { _id: commentId },
-          { $addToSet: { likes: userId } },
+          { $addToSet: { likes: actor._id } },
           { new: true },
         ),
       );
@@ -733,19 +802,21 @@ async function routes(app) {
   );
 
   app.delete(
-    "/:postId/comments/:commentId/likes/:userId",
-    { preValidation: [app.authenticate], schema: likeUnlikeCommentSchema },
+    "/:postId/comments/:commentId/likes/:actorId",
+    {
+      preValidation: [app.authenticate, app.setActor],
+      schema: likeUnlikeCommentSchema,
+    },
     async (req) => {
-      if (!req.userId.equals(req.params.userId)) {
-        throw app.httpErrors.forbidden();
-      }
-      const { userId } = req;
-      const { commentId } = req.params;
+      const {
+        actor,
+        params: { commentId },
+      } = req;
 
       const [updateErr, updatedComment] = await app.to(
         Comment.findOneAndUpdate(
           { _id: commentId },
-          { $pull: { likes: userId } },
+          { $pull: { likes: actor._id } },
           { new: true },
         ),
       );

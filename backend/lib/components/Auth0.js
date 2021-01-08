@@ -85,7 +85,20 @@ const getUser = async (token) => {
   }
 };
 
-const changePassword = async (token, email) => {
+const updateUser = async (token, userId, payload) => {
+  try {
+    const res = await axios.patch(
+      `${AUTH_DOMAIN}/api/v2/users/${userId}`,
+      payload,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
+};
+
+const sendChangePasswordEmail = async (token, email) => {
   const client_id = config.auth.clientId;
   const connection = "Username-Password-Authentication";
   const payload = {
@@ -105,10 +118,46 @@ const changePassword = async (token, email) => {
   }
 };
 
+const linkAccounts = async (token, rootUserId, targetUserId) => {
+  const parts = targetUserId.split("|"); // "provider|user_id"
+  const payload = {
+    provider: parts[0],
+    user_id: parts[1],
+  };
+  try {
+    const res = await axios.post(
+      `${AUTH_DOMAIN}/api/v2/users/${rootUserId}/identities`,
+      payload,
+      getAuthHeaders(token),
+    );
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
+};
+
+const getAccountsWithSameEmail = async (token, email, forVerified) => {
+  try {
+    const res = await axios.get(`${AUTH_DOMAIN}/api/v2/users`, {
+      params: {
+        q: `email:"${email}"${forVerified ? " AND email_verified:true" : ""}`,
+        search_engine: "v3",
+      },
+      ...getAuthHeaders(token),
+    });
+    return res.data;
+  } catch (err) {
+    return wrapError(err);
+  }
+};
+
 module.exports = {
   authenticate,
   buildOauthUrl,
-  changePassword,
   createUser,
+  getAccountsWithSameEmail,
   getUser,
+  linkAccounts,
+  sendChangePasswordEmail,
+  updateUser,
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Tabs } from "antd-mobile";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { theme, mq } from "../../constants/theme";
 const { black, darkGray, darkerGray } = theme.colors;
@@ -31,36 +32,37 @@ const TabsContainer = styled.div`
   }
 `;
 
-const tabs = [
-  /* Commenting out for fist MVP launch
-  {
-    title: (
-      <CustomLink activeStyle={ActiveLinkStyles} to="/nearest-hospital">
-        Health Facilities
-      </CustomLink>
-    ),
-  },
-  {
-    title: (
-      <CustomLink activeStyle={ActiveLinkStyles} to="/symptoms-check">
-        Symptom Checker
-      </CustomLink>
-    ),
-  },
-  */
-  {
-    title: (
-      <CustomLink activeStyle={ActiveLinkStyles} to="/feed">
-        Help Board
-      </CustomLink>
-    ),
-  },
-];
-
 const MobileTabs = (props) => {
+  const { t } = useTranslation();
   const { tabIndex, childComponent } = props;
 
   const [status, setStatus] = useState(true);
+
+  const tabs = [
+    /* Commenting out for fist MVP launch
+    {
+      title: (
+        <CustomLink activeStyle={ActiveLinkStyles} to="/nearest-hospital">
+          Health Facilities
+        </CustomLink>
+      ),
+    },
+    {
+      title: (
+        <CustomLink activeStyle={ActiveLinkStyles} to="/symptoms-check">
+          Symptom Checker
+        </CustomLink>
+      ),
+    },
+    */
+    {
+      title: (
+        <CustomLink activeStyle={ActiveLinkStyles} to="/feed">
+          {t("feed.title")}
+        </CustomLink>
+      ),
+    },
+  ];
 
   useEffect(() => {
     const noticeBar = sessionStorage.getItem("LocalEmergencyBox");

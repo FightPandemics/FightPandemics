@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import Checkbox from "components/Input/Checkbox";
 import { getInitialsFromFullName } from "utils/userInfo";
 import FormInput from "components/Input/FormInput";
@@ -40,6 +41,8 @@ import Marker from "../assets/create-profile-images/location-marker.svg";
 import { blockLabelStyles } from "../constants/formStyles";
 import LocationInput from "../components/Input/LocationInput";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { SESSION_ACTIONS } from "../reducers/session";
 
 const InputWrapper = styled.div`
   margin: 2.2rem auto;
@@ -75,9 +78,17 @@ function EditAccount(props) {
   } = useForm({
     mode: "change",
   });
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { error, loading, user } = userProfileState;
-  const { firstName, hide = {}, lastName, needs = {}, objectives = {} } =
-    user || {};
+  const {
+    firstName,
+    hide = {},
+    lastName,
+    needs = {},
+    objectives = {},
+    usesPassword = false,
+  } = user || {};
 
   const handleLocationChange = (location) => {
     setLocation(location);
@@ -90,7 +101,7 @@ function EditAccount(props) {
       return setError(
         "location",
         "required",
-        "Address is required. Please enter your address and select it from the drop-down",
+        t("profile.common.addressRequired"),
       );
     }
     userProfileDispatch(updateUser());
@@ -100,12 +111,22 @@ function EditAccount(props) {
         location,
       });
       userProfileDispatch(updateUserSuccess(res.data));
+      dispatch({
+        type: SESSION_ACTIONS.SET_USER, // update the global user
+        payload: { user: { ...user, ...res.data } }, // populate orgs
+      });
       // TODO: consistently return _id or id or both
       props.history.push(`/profile/${res.data._id}`);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       userProfileDispatch(
-        updateUserError(`Failed updating profile, reason: ${message}`),
+        updateUserError(
+          `${t("error.failedUpdatingProfile")} ${translatedErrorMessage}`,
+        ),
       );
     }
   };
@@ -119,31 +140,38 @@ function EditAccount(props) {
         userProfileDispatch(fetchUserSuccess(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
         userProfileDispatch(
-          fetchUserError(`Failed loading account data, reason: ${message}`),
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
-  }, [userProfileDispatch]);
+  }, [t, userProfileDispatch]);
 
-  if (loading) return <div>"loading"</div>;
+  if (loading) return <div>"{t("profile.common.loading")}"</div>;
   return (
     <Background>
       <EditLayout>
         <TitlePictureWrapper>
           <CustomEditAccountHeader className="h4">
-            Edit Profile
+            {t("profile.individual.editAccount")}
           </CustomEditAccountHeader>
           <ToggleHeading>
             <CustomHeading level={4} className="h4">
-              Account Information
+              {t("profile.common.accountInfo")}
             </CustomHeading>
           </ToggleHeading>
           <FillEmptySpace />
           <ProfilePicWrapper>
             <ProfilePic
-              resolution={"7680px"}
-              noPic={true}
+              resolution={"768rem"}
+              allowUpload={false}
+              user={user}
               initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
             />
             {/* hide this until backend API is available
@@ -152,40 +180,48 @@ function EditAccount(props) {
         </TitlePictureWrapper>
         <FormLayout>
           <OptionDiv>
-            <CustomLink isSelected>
-              <Link to="/edit-account">Account Information</Link>
+            <CustomLink to="/edit-account" isSelected>
+              {t("profile.common.accountInfo")}
             </CustomLink>
-            <CustomLink>
-              <Link to="/edit-profile">Profile Information</Link>
+            <CustomLink to="/edit-profile">
+              {t("profile.common.profileInfo")}
+            </CustomLink>
+            {usesPassword && (
+              <CustomLink to="/edit-security">
+                {t("profile.common.securityInfo")}
+              </CustomLink>
+            )}
+            <CustomLink to="/edit-notifications">
+              {t("profile.common.notificationInfo")}
             </CustomLink>
           </OptionDiv>
           <CustomForm>
             {error && <ErrorAlert message={error} type="error" />}
             <FormInput
-              inputTitle="First name"
+              inputTitle={t("profile.individual.firstName")}
               name="firstName"
               type="text"
               defaultValue={firstName}
               error={errors.firstName}
               ref={register({
-                required: "First name is required.",
+                required: t("profile.individual.firstNameRequired"),
                 maxLength: {
                   value: 30,
-                  message: "Max. 30 characters",
+                  message: t("profile.common.maxCharacters", { maxNum: 30 }),
                 },
               })}
             />
             <FormInput
-              inputTitle="Last name"
+              inputTitle={t("profile.individual.lastName")}
               name="lastName"
               type="text"
               defaultValue={lastName}
               error={errors.lastName}
               ref={register({
-                required: "Last name is required.",
+                required: t("profile.individual.lastNameRequired"),
                 maxLength: {
                   value: 30,
-                  message: "Max. 30 characters",
+                  message: t("profile.common.maxCharacters", { maxNum: 30 }),
                 },
               })}
             />
@@ -194,7 +230,7 @@ function EditAccount(props) {
                 htmlFor="location"
                 icon={Marker}
                 style={blockLabelStyles}
-                label="Address"
+                label={t("profile.common.address")}
               />
               <LocationInput
                 formError={errors.location}
@@ -211,10 +247,12 @@ function EditAccount(props) {
                 onChange={([event]) => event.target.checked}
                 valueName="checked"
               >
-                <Label inputColor="#000000">Don't show my address</Label>
+                <Label inputColor="#000000">
+                  {t("profile.individual.hideAddress")}
+                </Label>
               </Controller>
             </CheckBoxWrapper>
-            <Label>I want to</Label>
+            <Label>{t("profile.individual.iWant")}</Label>
             <HelpWrapper>
               {Object.entries(OBJECTIVES).map(([key, label]) => (
                 <CheckBoxWrapper key={key}>
@@ -226,12 +264,14 @@ function EditAccount(props) {
                     onChange={([event]) => event.target.checked}
                     valueName="checked"
                   >
-                    <Label inputColor="#000000">{label}</Label>
+                    <Label inputColor="#000000">
+                      {t("profile.individual." + key)}
+                    </Label>
                   </Controller>
                 </CheckBoxWrapper>
               ))}
             </HelpWrapper>
-            <Label>I need</Label>
+            <Label>{t("profile.individual.iNeed")}</Label>
             <HelpWrapper>
               {Object.entries(NEEDS).map(([key, [label, description]]) => (
                 <CheckBoxWrapper key={key}>
@@ -243,14 +283,22 @@ function EditAccount(props) {
                     onChange={([event]) => event.target.checked}
                     valueName="checked"
                   >
-                    <Label inputColor="black">{label}</Label>
-                    <UnderLineDescription>{description}</UnderLineDescription>
+                    <Label inputColor="black">
+                      {label === "Medical Help"
+                        ? t("profile.individual.medical")
+                        : t("profile.individual.other")}
+                    </Label>
+                    <UnderLineDescription>
+                      {description === "I have symptoms of COVID-19"
+                        ? t("profile.individual.haveCovidSymptoms")
+                        : t("profile.individual.otherDesc")}
+                    </UnderLineDescription>
                   </Controller>
                 </CheckBoxWrapper>
               ))}
             </HelpWrapper>
             <CustomSubmitButton primary="true" onClick={handleSubmit(onSubmit)}>
-              Save Changes
+              {t("profile.common.saveChanges")}
             </CustomSubmitButton>
           </CustomForm>
         </FormLayout>

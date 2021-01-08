@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
+import { Trans, useTranslation } from "react-i18next";
 import InputError from "components/Input/InputError";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
-import { validateEmail } from "utils/validators";
 import axios from "axios";
 import GTM from "constants/gtm-tags";
 import {
@@ -26,12 +26,14 @@ import {
   WizardSubmit,
   StyledDiv,
 } from "components/StepWizard";
+import qs from "query-string";
+import filterOptions from "assets/data/filterOptions";
+const filters = Object.values(filterOptions);
 
 const INITIAL_STATE = {
   postType: "Offering help",
   providers: [],
   location: "",
-  email: "",
 };
 
 const STEP_1_ANSWERS = [
@@ -47,6 +49,7 @@ const STEP_1_STATE = {
 const Step1 = (props) => {
   const [state, updateState] = useState(STEP_1_STATE);
   const { answers, none } = state;
+  const { t } = useTranslation();
 
   const toggleAnswer = (answer) => {
     const updatedAnswers = { ...answers, [answer]: !answers[answer] };
@@ -68,12 +71,19 @@ const Step1 = (props) => {
     }
   };
 
+  const getAnswer = (answer) => {
+    if (answer === "As a Volunteer") return t("onboarding.offerHelp.volunteer");
+    else if (answer === "As a Donor/Investor")
+      return t("onboarding.offerHelp.donorInvestor");
+    else return t("onboarding.offerHelp.organisation");
+  };
+
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("onboarding.common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>How do you want to contribute?</StepTitle>
+      <StepTitle>{t("onboarding.offerHelp.howContribute")}</StepTitle>
       <WizardFormWrapper>
         <WizardCheckboxWrapper>
           {Object.entries(answers).map(([answer, checked], i) => (
@@ -87,7 +97,7 @@ const Step1 = (props) => {
               }
               onChange={() => toggleAnswer(answer)}
               checked={!none && checked}
-              text={answer}
+              text={getAnswer(answer)}
             />
           ))}
         </WizardCheckboxWrapper>
@@ -97,6 +107,8 @@ const Step1 = (props) => {
 };
 
 const Step2 = (props) => {
+  const { t } = useTranslation();
+
   const selectLocationDetection = (location) => {
     try {
       props.update("location", location);
@@ -115,10 +127,10 @@ const Step2 = (props) => {
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("onboarding.common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>Where are you located?</StepTitle>
-      <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
+      <StepTitle>{t("onboarding.common.whereLocated")}</StepTitle>
+      <StepSubtitle>{t("onboarding.common.relevantResults")}</StepSubtitle>
       <WizardFormWrapper>
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
@@ -140,93 +152,8 @@ const Step2 = (props) => {
             GTM.wizardNav.showAnywhere
           }
         >
-          Show me postings from anywhere
+          {t("onboarding.common.showAnywhere")}
         </ShowAnywhere>
-      </WizardFormWrapper>
-    </WizardStep>
-  );
-};
-const Step3 = (props) => {
-  const [email, setEmail] = useState("");
-  const [valid, setValid] = useState(false);
-
-  useEffect(() => {
-    const validated = !email || validateEmail(email);
-    setValid(validated);
-  }, [email]);
-
-  const onChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const onSubmit = () => {
-    props.update("email", email);
-  };
-
-  return (
-    <WizardStep className="wizard-step">
-      <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
-      </WizardProgress>
-      <StepTitle>What is your email address?</StepTitle>
-      <StyledDiv>
-        We respect your privacy. Please read our{" "}
-        <Link to="/privacy-policy">Privacy Policy</Link> and{" "}
-        <Link to="/terms-conditions">Terms & Conditions.</Link>
-      </StyledDiv>
-      <WizardFormWrapper>
-        <WizardFormGroup controlId="userEmailGroup">
-          <StyledTextInput
-            type="email"
-            id={
-              GTM.offerHelp.prefix +
-              GTM.wizardNav.step +
-              props.currentStep +
-              GTM.wizardNav.enterEmail
-            }
-            name="email"
-            label="Email"
-            className={!valid && "has-error"}
-            placeholder="Enter your email address..."
-            onChange={onChange}
-            value={email}
-            required
-          />
-          {!valid && <InputError>Email is invalid</InputError>}
-        </WizardFormGroup>
-        <WizardSubmit
-          disabled={email === "" || !valid}
-          id={
-            GTM.offerHelp.prefix +
-            GTM.wizardNav.step +
-            props.currentStep +
-            GTM.wizardNav.submit
-          }
-          primary="true"
-          onClick={onSubmit}
-        >
-          Submit
-        </WizardSubmit>
-        <SkipLink
-          id={
-            GTM.offerHelp.prefix +
-            GTM.wizardNav.step +
-            props.currentStep +
-            GTM.wizardNav.skip
-          }
-        >
-          <span
-            id={
-              GTM.offerHelp.prefix +
-              GTM.wizardNav.step +
-              props.currentStep +
-              GTM.wizardNav.skip
-            }
-            onClick={onSubmit}
-          >
-            Skip
-          </span>
-        </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
   );
@@ -243,18 +170,15 @@ const OfferHelp = withRouter((props) => {
   const updateAnswers = (key, value) => {
     const updatedAnswers = { ...state, [key]: value };
     setState({ ...updatedAnswers });
-    if (key === "email") {
-      localStorage.setItem("offerHelpAnswers", JSON.stringify(updatedAnswers));
-      if (value) {
-        try {
-          axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
-        } catch (err) {
-          console.log(err);
-        }
-      }
+    if (key === "location") {
+      let query = {
+        objective: "REQUEST",
+      };
+      if (updatedAnswers.location)
+        query.location = btoa(JSON.stringify(updatedAnswers.location));
       props.history.push({
         pathname: "/feed",
-        state: updatedAnswers,
+        search: qs.stringify(query),
       });
     }
   };
@@ -269,7 +193,6 @@ const OfferHelp = withRouter((props) => {
           >
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
-            <Step3 hashKey={"Step3"} update={updateAnswers} {...props} />
           </StyledWizard>
         )}
       </Transition>

@@ -2,32 +2,52 @@ import React, {
   useReducer,
   useEffect,
   useCallback,
-  useRef,
   useState,
+  useRef,
 } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
+import qs from "query-string";
 
 // Antd
-import { Layout, Menu } from "antd";
-
+import { Menu } from "antd";
+import { WhiteSpace } from "antd-mobile";
 // Local
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import filterOptions from "assets/data/filterOptions";
-import FeedWrapper from "components/Feed/FeedWrapper";
+import {
+  FeedWrapper,
+  SiderWrapper,
+  FiltersWrapper,
+  MenuWrapper,
+  LayoutWrapper,
+  ContentWrapper,
+  HeaderWrapper,
+  TabsWrapper,
+  MobileSearchWrapper,
+} from "components/Feed/FeedWrappers";
+import { StyledCheckbox } from "components/Feed/StyledAccordion";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
-import Loader from "components/Feed/StyledLoader";
 import Posts from "components/Feed/Posts";
+import { selectOrganisationId } from "reducers/session";
+import { selectPosts, postsActions } from "reducers/posts";
+import Users from "components/Feed/Users";
+import FeedSearch from "components/Input/FeedSearch";
+import { setQueryKeysValue } from "components/Feed/utils";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 import {
   optionsReducer,
   feedReducer,
-  postsReducer,
-  postsState,
+  deletePostModalreducer,
+  deletePostState,
 } from "hooks/reducers/feedReducers";
 
 // ICONS
@@ -36,26 +56,22 @@ import creatPost from "assets/icons/create-post.svg";
 import { ReactComponent as FiltersIcon } from "assets/icons/filters.svg";
 
 // Constants
-import { theme, mq } from "constants/theme";
+import { theme } from "constants/theme";
 import {
   ADD_OPTION,
   REMOVE_OPTION,
   REMOVE_ALL_OPTIONS,
+  SET_OPTIONS,
   TOGGLE_STATE,
   SET_VALUE,
-  SET_POSTS,
-  FETCH_POSTS,
-  ERROR_POSTS,
-  NEXT_PAGE,
-  RESET_PAGE,
-  SET_LOADING,
-  SET_LIKE,
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
+import TagManager from "react-gtm-module";
+import WithSummitBanner from "components/WithSummitBanner";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -80,148 +96,25 @@ const gtmTagsMap = {
 
 const gtmTag = (tag) => GTM.feed.prefix + tag;
 
-const { black, darkerGray, royalBlue, white, offWhite } = theme.colors;
-
 export const FeedContext = React.createContext();
 
-const { Content, Sider } = Layout;
-
-// feed types
-const HELP_TYPE = {
+let HELP_TYPE = {
   ALL: "All posts",
   REQUEST: "Requesting help",
   OFFER: "Offering help",
 };
 
 const initialState = {
-  selectedType: "ALL",
   showFilters: false,
   filterModal: false,
   showCreatePostModal: false,
   applyFilters: false,
   activePanel: null,
   location: null,
+  ignoreUserLocation: true,
 };
 
-const SiderWrapper = styled(Sider)`
-  background-color: ${white};
-  height: calc(100vh - 5rem);
-  overflow-x: hidden;
-  padding-top: 3.3rem;
-  position: fixed;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: none;
-  }
-`;
-
-const FiltersWrapper = styled.div`
-  border-top: 0.05rem solid rgba(0, 0, 0, 0.5);
-  margin: 1.5rem 2rem 0;
-  padding-top: 2rem;
-  button {
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    color: ${black};
-    cursor: pointer;
-    display: flex;
-    width: 100%;
-    font-family: ${theme.typography.font.family.display};
-    font-size: ${theme.typography.size.large};
-    font-weight: bold;
-    margin-bottom: 1rem;
-    padding: 0;
-    span {
-      align-items: center;
-      border: 0.1rem solid ${royalBlue};
-      border-radius: 50%;
-      color: ${royalBlue};
-      display: flex;
-      height: 4.2rem;
-      justify-content: center;
-      margin-right: 1rem;
-      width: 4.2rem;
-      pointer-events: none;
-      svg {
-        fill: ${royalBlue};
-        height: 2rem;
-        width: 2rem;
-        pointer-events: none;
-      }
-    }
-  }
-`;
-
-const MenuWrapper = styled(Menu)`
-  &.ant-menu {
-    .ant-menu-item {
-      height: 3rem;
-      border-left: 0.5rem solid ${white};
-      color: ${darkerGray};
-      font-size: ${theme.typography.size.large};
-      &:hover {
-        color: ${royalBlue};
-      }
-    }
-    .ant-menu-item-selected {
-      background-color: transparent;
-      border-left: 0.5rem solid ${royalBlue};
-      color: ${royalBlue};
-      font-weight: bold;
-    }
-  }
-`;
-
-const LayoutWrapper = styled(Layout)`
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    background-color: ${white};
-  }
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    background-color: ${offWhite};
-    min-height: calc(100vh - 5rem);
-    .create-post,
-    .filter-box {
-      display: none;
-    }
-  }
-`;
-
-const ContentWrapper = styled(Content)`
-  margin: 0 1rem;
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    margin: 3.3rem 8.5rem 3.3rem calc(29rem + 8.5rem);
-  }
-`;
-
-const HeaderWrapper = styled.div`
-  display: none;
-  h1 {
-    font-size: ${theme.typography.heading.one};
-    font-weight: bold;
-    margin-top: 0;
-  }
-  button {
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    color: ${black};
-    cursor: pointer;
-    display: flex;
-    font-family: ${theme.typography.font.family.display};
-    font-size: ${theme.typography.size.large};
-    padding: 0;
-    img {
-      margin-left: 1.2rem;
-      pointer-events: none;
-    }
-  }
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-
-const NoPosts = styled.div`
+export const NoPosts = styled.div`
   text-align: center;
   position: relative;
   top: 2em;
@@ -232,65 +125,168 @@ const NoPosts = styled.div`
   }
 `;
 
-const buttonPulse = styled.button`
-  background-color: rgba(255, 255, 0, 0.4);
-  padding: 0 0.2em;
-  border-radius: 3em;
-  height: 4em;
-  position: relative;
-  top: 1.3em;
-`;
+const PAGINATION_LIMIT = 10;
+const ARBITRARY_LARGE_NUM = 10000;
 
 const Feed = (props) => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
     showCreatePostModal: id === "create-post",
   });
+  const [deleteModal, deleteModalDispatch] = useReducer(
+    deletePostModalreducer,
+    deletePostState,
+  );
+  const organisationId = useSelector(selectOrganisationId);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-  const [posts, postsDispatch] = useReducer(postsReducer, postsState);
-  const [isOnboarding, setOnboarding] = useState(true);
-
+  const posts = useSelector(selectPosts);
+  //react-virtualized loaded rows and row count.
+  const [itemCount, setItemCount] = useState(0);
+  const [toggleRefetch, setToggleRefetch] = useState(false);
+  const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const {
     filterModal,
     showCreatePostModal,
     activePanel,
     location,
-    selectedType,
     applyFilters,
     showFilters,
+    ignoreUserLocation,
   } = feedState;
-
   const filters = Object.values(filterOptions);
   const {
     error: postsError,
-    filterType,
     isLoading,
     loadMore,
     page,
     posts: postsList,
-    status,
-    deleteModalVisibility,
   } = posts;
+  const { deleteModalVisibility } = deleteModal;
+  const feedPosts = Object.entries(postsList);
+  const prevTotalPostCount = usePrevious(totalPostCount);
+  const [queryParams, setQueryParams] = useState({});
+  const SEARCH_OPTIONS = [
+    { name: "feed.search.options.posts", id: "POSTS", default: true },
+    {
+      name: "feed.search.options.orgs",
+      id: "ORGANISATIONS",
+      mobile_display: "feed.search.options.orgsShort",
+    },
+    { name: "feed.search.options.people", id: "INDIVIDUALS" },
+  ];
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
 
   const { history, isAuthenticated, user } = props;
-  let bottomBoundaryRef = useRef(null);
 
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
-  const handleFilterModal = () => {
-    // method for mobile
-    dispatchAction(TOGGLE_STATE, "filterModal");
-    dispatchAction(SET_VALUE, "applyFilters", false);
-    // dispatchAction(
-    //   SET_VALUE,
-    //   "activePanel",
-    //   panelIdx > -1 ? `${panelIdx}` : null,
-    // );
+  const getStateFromQuery = () => {
+    const query = qs.parse(history.location.search);
+
+    // search category (Tab)
+    query.s_category = SEARCH_OPTIONS[query.s_category]?.id || null;
+    changeHelpType(query.s_category);
+
+    // ignoreUserLocation
+    if (query.near_me) {
+      dispatchAction(SET_VALUE, "ignoreUserLocation", false);
+    } else {
+      dispatchAction(SET_VALUE, "ignoreUserLocation", true);
+    }
+
+    // location
+    if (query.location) {
+      query.location = JSON.parse(atob(query.location));
+      dispatchAction(SET_VALUE, "location", query.location);
+    } else dispatchAction(SET_VALUE, "location", "");
+
+    // filters / help type (objective)
+    if (query.filters || query.objective) {
+      let selectedFilters = {};
+      if (query.filters) {
+        if (!query.s_category) {
+          query.filters = JSON.parse(atob(query.filters));
+          selectedFilters = query.filters;
+        } else delete query.filters;
+      }
+      if (query.objective) {
+        let indexOfHelpType = Object.keys(HELP_TYPE).indexOf(
+          query.objective.toUpperCase(),
+        );
+        if (indexOfHelpType > 0)
+          selectedFilters["lookingFor"] = [
+            filters[3].options[indexOfHelpType - 1]?.value,
+          ];
+        else query.objective = "ALL";
+      } else {
+        delete selectedFilters["lookingFor"];
+      }
+      optionsDispatch({
+        type: SET_OPTIONS,
+        payload: { option: selectedFilters },
+      });
+    } else {
+      optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+    }
+    // will trigger => refetchPosts() =(if needed)> loadPosts()
+    setQueryParams(query);
   };
 
-  const refetchPosts = () => {
+  const setQueryFromState = () => {
+    const newQuery = {};
+    const oldFiltersLength =
+      (queryParams.filters?.type || []).length +
+      (queryParams.filters?.providers || []).length;
+    const newFiltersLength =
+      (selectedOptions?.type || []).length +
+      (selectedOptions?.providers || []).length;
+    if (applyFilters && location) {
+      newQuery.location = btoa(JSON.stringify(location));
+    }
+    if (applyFilters && selectedOptions.lookingFor?.length) {
+      const selectedType =
+        (selectedOptions["lookingFor"][1] ||
+          selectedOptions["lookingFor"][0]) === "Request Help"
+          ? "REQUEST"
+          : "OFFER";
+      newQuery.objective = selectedType;
+      if (selectedOptions.lookingFor.length > 1) {
+        optionsDispatch({
+          type: REMOVE_OPTION,
+          payload: {
+            option: selectedOptions.lookingFor[0],
+            label: "lookingFor",
+          },
+        });
+        return;
+      }
+    }
+    if (newFiltersLength) {
+      if (applyFilters || oldFiltersLength > newFiltersLength) {
+        newQuery.filters = btoa(JSON.stringify(selectedOptions));
+      }
+    } else if (queryParams.filters && !newFiltersLength)
+      newQuery.filters = null;
+    setQueryKeysValue(history, newQuery);
+  };
+
+  const handleFilterModal = () => {
+    dispatchAction(TOGGLE_STATE, "filterModal");
+    dispatchAction(SET_VALUE, "applyFilters", false);
+  };
+
+  const refetchPosts = (isLoading, loadMore, softRefresh = false) => {
     if (filterModal) {
       dispatchAction(TOGGLE_STATE, "filterModal");
     }
@@ -298,52 +294,101 @@ const Feed = (props) => {
     if (showFilters) {
       dispatchAction(TOGGLE_STATE, "showFilters");
     }
-    dispatchAction(SET_VALUE, "applyFilters", true);
-    dispatchAction(SET_VALUE, "location", "");
-    dispatchAction(SET_VALUE, "activePanel", null);
-    postsDispatch({ type: RESET_PAGE, filterType: "" });
-    optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+
+    // softRefresh = only close filter modal etc.. but not RESET_PAGE and refetch posts
+    if (!softRefresh) {
+      dispatchAction(SET_VALUE, "applyFilters", true);
+      dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
+      if (page === 0) {
+        setToggleRefetch(!toggleRefetch);
+      }
+    }
   };
 
   const handleQuit = (e) => {
     e.preventDefault();
-    refetchPosts();
+    optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
+    dispatchAction(SET_VALUE, "location", null);
+    setQueryKeysValue(history, { location: null });
+    setTimeout(() => {
+      dispatchAction(SET_VALUE, "activePanel", null);
+    }, 500);
+    // perform soft refetch to only close filter modal etc.. but not actually refetch posts
+    refetchPosts(null, null, true);
+  };
+
+  const toggleShowNearMe = (e) => {
+    setQueryKeysValue(history, {
+      near_me: e.target.checked,
+    });
+  };
+
+  const changeHelpType = (selectedValue) => {
+    switch (selectedValue) {
+      case "INDIVIDUALS":
+        HELP_TYPE = {
+          ALL: "feed.allPeople",
+        };
+        break;
+      case "ORGANISATIONS":
+        HELP_TYPE = {
+          ALL: "feed.allOrgs",
+        };
+        break;
+      default:
+        HELP_TYPE = {
+          ALL: "feed.allPosts",
+          REQUEST: "feed.request",
+          OFFER: "feed.offer",
+        };
+        break;
+    }
   };
 
   const handleLocation = (value) => {
     if (applyFilters) {
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
+      dispatch(postsActions.resetPageAction({}));
     }
     dispatchAction(SET_VALUE, "location", value);
+    if (!value && queryParams.location)
+      setQueryKeysValue(history, { location: null });
   };
 
   const handleOption = (label, option) => (e) => {
     const options = selectedOptions[label] || [];
     const hasOption = options.includes(option);
-    if (applyFilters) {
-      postsDispatch({ type: RESET_PAGE, filterType: "" });
-    }
-    return optionsDispatch({
+    optionsDispatch({
       type: hasOption ? REMOVE_OPTION : ADD_OPTION,
       payload: { option, label },
     });
+    if (hasOption && label === "lookingFor") {
+      const selectedFilters = selectedOptions;
+      delete selectedFilters["lookingFor"];
+      setQueryKeysValue(history, {
+        objective: null,
+        filters: btoa(JSON.stringify(selectedFilters)),
+      });
+    }
   };
 
-  const handleCreatePost = () => {
+  const handleCreatePost = (trigger) => {
     if (isAuthenticated) {
       dispatchAction(TOGGLE_STATE, "showCreatePostModal");
       sessionStorage.removeItem("createPostAttemptLoggedOut");
     } else {
-      sessionStorage.setItem("createPostAttemptLoggedOut", true);
+      //prevent redirect if function was triggered by useEffect(on component mount)
+      if (trigger === "useEffect") return;
+      sessionStorage.setItem("createPostAttemptLoggedOut", "/feed");
       history.push(LOGIN);
     }
   };
 
   const handleChangeType = (e) => {
     const value = e.key;
-    if (selectedType !== value) {
-      dispatchAction(SET_VALUE, "selectedType", e.key);
-      postsDispatch({ type: RESET_PAGE, filterType: value });
+    if (value && queryParams.objective?.toUpperCase() !== value) {
+      setQueryKeysValue(history, {
+        objective: e.key === "ALL" ? null : e.key,
+      });
     }
   };
 
@@ -356,71 +401,43 @@ const Feed = (props) => {
   const handleOnClose = () => {
     dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
-    postsDispatch({ type: RESET_PAGE, filterType: "" });
     dispatchAction(SET_VALUE, "applyFilters", true);
   };
 
-  const handlePostLike = async (postId, liked, create) => {
-    sessionStorage.removeItem("likePost");
-
-    if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-      let response = {};
-
-      if (user) {
-        if (liked) {
-          try {
-            response = await axios.delete(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        } else {
-          try {
-            response = await axios.put(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        }
-
-        if (response.data) {
-          postsDispatch({
-            type: SET_LIKE,
-            postId,
-            count: response.data.likesCount,
-          });
-        }
-      }
-    } else {
-      if (create) {
-        sessionStorage.setItem("likePost", postId);
-        history.push(LOGIN);
-      }
-    }
-  };
-
   const handlePostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
-    postsDispatch({
+    deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_HIDE,
     });
   };
 
-  const loadPosts = useCallback(async () => {
+  const loadPosts = async () => {
+    if (!applyFilters) return;
+    dispatchAction(SET_VALUE, "applyFilters", false);
+    const filterURL = () => {
+      const filterObj = { ...(queryParams.filters || {}) };
+      delete filterObj["lookingFor"];
+      if (location) filterObj.location = location;
+      return Object.keys(filterObj).length === 0
+        ? ""
+        : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+    };
+
     const objectiveURL = () => {
-      let objective = selectedType;
+      let objective = queryParams.objective;
       if (
-        selectedOptions["offer or request help"] &&
-        selectedOptions["offer or request help"].length < 2
+        selectedOptions["lookingFor"] &&
+        selectedOptions["lookingFor"].length < 2
       ) {
         objective =
-          selectedOptions["offer or request help"][0] === "Request Help"
+          selectedOptions["lookingFor"][0] === "Request Help"
             ? "REQUEST"
             : "OFFER";
       }
@@ -433,154 +450,168 @@ const Feed = (props) => {
           return "";
       }
     };
-    const filterURL = () => {
-      const filterObj = { ...selectedOptions };
-      delete filterObj["offer or request help"];
-      if (location) filterObj.location = location;
-      return Object.keys(filterObj).length === 0
-        ? ""
-        : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
+    const searchKeyword = queryParams.s_keyword;
+    const searchURL = () => {
+      if (searchKeyword)
+        return `&keywords=${encodeURIComponent(searchKeyword)}`;
+      else return "";
     };
-    const limit = 5;
-    const skip = page * limit;
-    const baseURL = `/api/posts?limit=${limit}&skip=${skip}`;
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
-    let response = {};
-    if (isLoading) {
-      return;
-    }
 
-    await postsDispatch({ type: FETCH_POSTS });
+    const limit = PAGINATION_LIMIT;
+    const skip = page * limit;
+    let baseURL = gePostsBasetUrl(organisationId, limit, skip);
+    switch (queryParams.s_category) {
+      case "POSTS":
+        break;
+      case "INDIVIDUALS":
+        baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}`;
+        break;
+      case "ORGANISATIONS":
+        baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}`;
+        break;
+      default:
+        break;
+    }
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
+    dispatch(postsActions.fetchPostsBegin());
 
     try {
-      response = await axios.get(endpoint);
-    } catch (error) {
-      await postsDispatch({ error, type: ERROR_POSTS });
-    }
-
-    if (response && response.data && response.data.length) {
-      const loadedPosts = response.data.reduce((obj, item) => {
-        obj[item._id] = item;
-        return obj;
-      }, {});
-
-      if (postsList) {
-        await postsDispatch({
-          type: SET_POSTS,
-          posts: { ...postsList, ...loadedPosts },
+      const {
+        data: { data: posts, meta },
+      } = await axios.get(endpoint);
+      if (searchKeyword) {
+        TagManager.dataLayer({
+          dataLayer: {
+            event: "SEARCH_KEYWORD",
+            keyword: searchKeyword,
+            category: queryParams.s_category || "POSTS",
+            resultsCount: meta.total,
+          },
         });
-      } else {
-        await postsDispatch({
-          type: SET_POSTS,
-          posts: { ...loadedPosts },
+        // clear the DataLayer
+        TagManager.dataLayer({
+          dataLayer: {
+            event: -1,
+            keyword: -1,
+            category: -1,
+            resultsCount: -1,
+          },
         });
       }
-    } else if (response && response.data) {
-      await postsDispatch({
-        type: SET_POSTS,
-        posts: { ...postsList },
-      });
-      await postsDispatch({
-        type: SET_LOADING,
-        isLoading: false,
-        loadMore: false,
-      });
-    } else {
-      await postsDispatch({ type: SET_LOADING });
+      if (posts.length && meta.total) {
+        if (prevTotalPostCount !== meta.total) {
+          setTotalPostCount(meta.total);
+        }
+
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        if (page === lastPage) {
+          dispatch(postsActions.finishLoadingAction());
+        }
+
+        let postsInState;
+        if (history.location.state) {
+          const { keepPostsState, keepPageState } = history.location.state;
+          postsInState = keepPostsState;
+          if (keepPageState >= page) {
+            dispatch(postsActions.setPageAction(keepPageState));
+          }
+        }
+        if (postsInState) {
+          if (Object.keys(postsInState).length === meta.total) {
+            dispatch(postsActions.finishLoadingAction());
+          }
+        }
+
+        const loadedPosts = posts.reduce((obj, item) => {
+          obj[item._id] = item;
+          return obj;
+        }, {});
+        if (postsInState) {
+          dispatch(
+            postsActions.fetchPostsSuccess({
+              posts: { ...postsInState, ...loadedPosts },
+            }),
+          );
+        } else if (Object.keys(postsList).length && page) {
+          dispatch(
+            postsActions.fetchPostsSuccess({
+              posts: { ...postsList, ...loadedPosts },
+            }),
+          );
+        } else {
+          dispatch(
+            postsActions.fetchPostsSuccess({
+              posts: { ...loadedPosts },
+            }),
+          );
+        }
+      } else if (posts) {
+        dispatch(
+          postsActions.fetchPostsSuccess({
+            posts: { ...postsList },
+          }),
+        );
+        dispatch(postsActions.finishLoadingAction());
+      } else {
+        dispatch(postsActions.finishLoadingAction());
+      }
+    } catch (error) {
+      dispatch(postsActions.fetchPostsError(error));
     }
-  }, [page, location, selectedOptions, selectedType, isLoading, postsList]);
+  };
+
+  useEffect(() => {
+    getStateFromQuery();
+  }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setQueryFromState();
+  }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
+  }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
-      if (isOnboarding) {
-        delete selectedOptions["providers"];
-        setOnboarding(false);
-      }
       loadPosts();
     }
-  }, [location, page, filterType, selectedOptions, applyFilters]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [toggleRefetch, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // Onboarding
-    if (props.history.location.state) {
-      const handleOnboardingOptions = (option, label) => {
-        optionsDispatch({ type: ADD_OPTION, payload: { option, label } });
-      };
-
-      const {
-        postType,
-        helpType,
-        location,
-        providers,
-      } = props.history.location.state;
-      location && dispatchAction(SET_VALUE, "location", location);
-      const getValue = (postType) => {
-        switch (postType) {
-          case "Requesting help":
-            return "OFFER";
-          case "Offering help":
-            return "REQUEST";
-          default:
-            return "All";
-        }
-      };
-      const value = getValue(postType);
-      if (postType === HELP_TYPE.REQUEST) {
-        // requesting help
-        handleChangeType({ key: value });
-        if (helpType === "medical") {
-          let option = filters[2].options[0];
-          handleOnboardingOptions(option, "type");
-        } else {
-          for (let i = 1; i < filters[2].options.length; ++i) {
-            let option = filters[2].options[i];
-            handleOnboardingOptions(option, "type");
-          }
-        }
-      } else {
-        // offering help
-        handleChangeType({ key: value });
-        if (providers) {
-          let organisationFilter = providers.filter(
-            (option) => option === "As an Organisation",
-          );
-          if (organisationFilter.length > 0) {
-            for (let i = 1; i < filters[1].options.length; ++i) {
-              let option = filters[1].options[i];
-              handleOnboardingOptions(option, "providers");
-            }
-          } else {
-            let option = filters[1].options[0];
-            handleOnboardingOptions(option, "providers");
-          }
-        }
-      }
+    const createPostAttemptLoggedOut = sessionStorage.getItem(
+      "createPostAttemptLoggedOut",
+    );
+    if (createPostAttemptLoggedOut) {
+      handleCreatePost("useEffect");
     }
-    dispatchAction(SET_VALUE, "applyFilters", true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const scrollObserver = useCallback(
-    (node) => {
-      new IntersectionObserver((entries) => {
-        entries.forEach(async (entry) => {
-          if (entry.intersectionRatio > 0 && !isLoading && loadMore) {
-            await postsDispatch({ type: NEXT_PAGE });
-          }
+  const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
+
+  const loadNextPage = useCallback(
+    ({ stopIndex }) => {
+      if (
+        !isLoading &&
+        loadMore &&
+        stopIndex >= feedPosts.length &&
+        feedPosts.length
+      ) {
+        return new Promise((resolve) => {
+          dispatch(postsActions.setNextPageAction());
+          dispatchAction(SET_VALUE, "applyFilters", true);
+          resolve();
         });
-      }).observe(node);
+      } else {
+        return Promise.resolve();
+      }
     },
-    [postsDispatch, loadMore, isLoading],
+    [feedPosts.length, isLoading, loadMore], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(() => {
-    let observer;
-    if (bottomBoundaryRef.current) {
-      observer = scrollObserver(bottomBoundaryRef.current);
-    }
-    return () => {
-      observer && observer.disconnect();
-    };
-  }, [scrollObserver, bottomBoundaryRef]);
+    setItemCount(loadMore ? feedPosts.length + 1 : feedPosts.length);
+  }, [feedPosts.length, loadMore]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -599,11 +630,16 @@ const Feed = (props) => {
           };
           delete allPosts[post._id];
 
-          await postsDispatch({
-            type: SET_POSTS,
-            posts: allPosts,
-          });
+          setTotalPostCount(totalPostCount - 1);
+          if (totalPostCount < 10) {
+            const isLoading = true;
+            const loadMore = false;
+            refetchPosts(isLoading, loadMore);
+          } else {
+            refetchPosts();
+          }
         }
+        setTotalPostCount(totalPostCount - 1);
       } catch (error) {
         console.log({
           error,
@@ -612,125 +648,206 @@ const Feed = (props) => {
     }
   };
 
-  const emptyFeed = () => {
-    return Object.keys(postsList).length < 1 && !isLoading;
-  };
+  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
 
   return (
-    <FeedContext.Provider
-      value={{
-        filters,
-        filterModal,
-        activePanel,
-        location,
-        dispatchAction,
-        selectedOptions,
-        handleShowFilters,
-        handleOption,
-        handleFilterModal,
-        handleQuit,
-        handleLocation,
-        handleOnClose,
-        showFilters,
-        handlePostLike,
-      }}
-    >
-      <FeedWrapper>
-        <LayoutWrapper>
-          <SiderWrapper
-            breakpoint="md"
-            className="site-layout-background"
-            width="29rem"
-          >
-            <div>
-              <MenuWrapper
-                defaultSelectedKeys={["ALL"]}
-                selectedKeys={[selectedType]}
-                onClick={handleChangeType}
-              >
-                {Object.keys(HELP_TYPE).map((item, index) => (
-                  <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
-                    {HELP_TYPE[item]}
-                  </Menu.Item>
-                ))}
-              </MenuWrapper>
-              <FiltersWrapper>
-                <button
-                  id={gtmTag(GTM.post.filterPost)}
-                  onClick={handleShowFilters}
+    <WithSummitBanner>
+      <FeedContext.Provider
+        value={{
+          isAuthenticated,
+          filters,
+          filterModal,
+          activePanel,
+          location,
+          ignoreUserLocation,
+          dispatchAction,
+          selectedOptions,
+          handleShowFilters,
+          handleOption,
+          handleFilterModal,
+          handleQuit,
+          handleLocation,
+          handleOnClose,
+          toggleShowNearMe,
+          showFilters,
+          totalPostCount,
+        }}
+      >
+        <FeedWrapper>
+          <LayoutWrapper>
+            <SiderWrapper
+              breakpoint="md"
+              className="site-layout-background"
+              width="29rem"
+            >
+              <>
+                <MenuWrapper
+                  defaultSelectedKeys={["ALL"]}
+                  selectedKeys={[queryParams.objective || "ALL"]}
+                  onClick={handleChangeType}
                 >
-                  <span>
-                    <FiltersIcon />
-                  </span>
-                  Filters
-                </button>
-                <FiltersList />
-              </FiltersWrapper>
-            </div>
-            <FiltersSidebar gtmPrefix={GTM.feed.prefix} />
-          </SiderWrapper>
-          <ContentWrapper>
-            <HeaderWrapper empty={emptyFeed()}>
-              <h1>Help Board</h1>
-              <button
-                id={gtmTag(GTM.post.createPost)}
-                onClick={handleCreatePost}
-              >
-                Create a post
-                <CreatePostIcon
-                  id={gtmTag(GTM.post.createPost)}
-                  src={creatPost}
-                />
-              </button>
-            </HeaderWrapper>
-            <div>
-              <FilterBox gtmPrefix={GTM.feed.prefix} />
-            </div>
-            <Posts
-              isAuthenticated={isAuthenticated}
-              filteredPosts={postsList}
-              handlePostLike={handlePostLike}
-              loadPosts={loadPosts}
-              postDelete={postDelete}
-              user={user}
-              deleteModalVisibility={deleteModalVisibility}
-              handlePostDelete={handlePostDelete}
-              handleCancelPostDelete={handleCancelPostDelete}
-            />
-            {status === ERROR_POSTS && (
-              <ErrorAlert message={postsError.message} />
-            )}
-            {isLoading ? <Loader /> : <></>}
-            {emptyFeed() ? (
-              <NoPosts>
-                Sorry, there are currently no relevant posts available. Please
-                try using a different filter search or{" "}
-                <a id={gtmTag(GTM.post.createPost)} onClick={handleCreatePost}>
-                  create a post
-                </a>
-                .
-              </NoPosts>
-            ) : (
-              <CreatePostIcon
-                id={gtmTag(GTM.post.createPost)}
-                src={creatPost}
-                onClick={handleCreatePost}
-                className="create-post"
+                  {Object.keys(HELP_TYPE).map((item, index) => (
+                    <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
+                      {t(HELP_TYPE[item])}
+                    </Menu.Item>
+                  ))}
+                  {isAuthenticated && (
+                    <StyledCheckbox
+                      checked={!ignoreUserLocation}
+                      onChange={toggleShowNearMe}
+                    >
+                      {t("feed.filters.postsNearMe")}
+                    </StyledCheckbox>
+                  )}
+                </MenuWrapper>
+                <FiltersWrapper>
+                  <button
+                    id={gtmTag(GTM.post.filterPost)}
+                    onClick={handleShowFilters}
+                  >
+                    <span>
+                      <FiltersIcon />
+                    </span>
+                    {t("feed.filters.title")}
+                  </button>
+                  <FiltersList />
+                </FiltersWrapper>
+              </>
+              <FiltersSidebar
+                locationOnly={
+                  !(
+                    !queryParams.s_category ||
+                    queryParams.s_category === "POSTS"
+                  )
+                }
+                gtmPrefix={GTM.feed.prefix}
               />
-            )}
-          </ContentWrapper>
-        </LayoutWrapper>
-        <CreatePost
-          gtmPrefix={GTM.feed.prefix}
-          onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
-          loadPosts={refetchPosts}
-          visible={showCreatePostModal}
-          user={user}
-        />
-        {!isLoading && <div id="list-bottom" ref={bottomBoundaryRef}></div>}
-      </FeedWrapper>
-    </FeedContext.Provider>
+            </SiderWrapper>
+            <ContentWrapper>
+              <HeaderWrapper empty={emptyFeed()}>
+                <TabsWrapper
+                  options={SEARCH_OPTIONS}
+                  showOptions={!!queryParams.s_keyword}
+                  displayValue={"name"}
+                  t={t}
+                />
+                {(!queryParams.s_category ||
+                  queryParams.s_category === "POSTS") && (
+                  <CreatePostButton
+                    id={gtmTag(GTM.post.createPost)}
+                    onClick={handleCreatePost}
+                    inline={true}
+                    icon={<PlusIcon />}
+                  >
+                    {t("post.create")}
+                  </CreatePostButton>
+                )}
+              </HeaderWrapper>
+              <MobileSearchWrapper>
+                <FeedSearch
+                  isMobile={true}
+                  options={SEARCH_OPTIONS}
+                  isObject={true}
+                  displayValue={"name"}
+                  placeholder={t("feed.search.placeholder")}
+                  t={t}
+                />
+              </MobileSearchWrapper>
+              {
+                <div>
+                  <FilterBox
+                    locationOnly={
+                      !(
+                        !queryParams.s_category ||
+                        queryParams.s_category === "POSTS"
+                      )
+                    }
+                    gtmPrefix={GTM.feed.prefix}
+                  />
+                </div>
+              }
+              <WhiteSpace size={"lg"} />
+              {!queryParams.s_category || queryParams.s_category === "POSTS" ? (
+                <Posts
+                  isAuthenticated={isAuthenticated}
+                  filteredPosts={postsList}
+                  postDelete={postDelete}
+                  postDispatch={dispatch}
+                  user={user}
+                  deleteModalVisibility={deleteModalVisibility}
+                  handlePostDelete={handlePostDelete}
+                  handleCancelPostDelete={handleCancelPostDelete}
+                  isNextPageLoading={isLoading}
+                  loadNextPage={loadNextPage}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoaded}
+                  hasNextPage={loadMore}
+                  totalPostCount={totalPostCount}
+                  highlightWords={queryParams.s_keyword}
+                  page={page}
+                />
+              ) : (
+                <Users
+                  isAuthenticated={isAuthenticated}
+                  filteredUsers={postsList}
+                  user={user}
+                  isNextPageLoading={isLoading}
+                  loadNextPage={loadNextPage}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoaded}
+                  hasNextPage={loadMore}
+                  totalUsersCount={totalPostCount}
+                  highlightWords={queryParams.s_keyword}
+                />
+              )}
+              {emptyFeed() ? (
+                <NoPosts>
+                  <Trans
+                    i18nKey={
+                      !queryParams.s_category ||
+                      queryParams.s_category === "POSTS"
+                        ? "feed.noResultsPosts"
+                        : queryParams.s_category === "INDIVIDUALS"
+                        ? "feed.noResultsPeople"
+                        : "feed.noResultsOrgs"
+                    }
+                    components={[
+                      <a
+                        id={gtmTag(GTM.post.createPost)}
+                        onClick={handleCreatePost}
+                      />,
+                    ]}
+                  />
+                </NoPosts>
+              ) : (
+                (!queryParams.s_category ||
+                  queryParams.s_category === "POSTS") && (
+                  <CreatePostIcon
+                    id={gtmTag(GTM.post.createPost)}
+                    src={creatPost}
+                    onClick={handleCreatePost}
+                    className="create-post"
+                  />
+                )
+              )}
+            </ContentWrapper>
+          </LayoutWrapper>
+          <CreatePost
+            gtmPrefix={GTM.feed.prefix}
+            onCancel={() => dispatchAction(TOGGLE_STATE, "showCreatePostModal")}
+            loadPosts={refetchPosts}
+            visible={showCreatePostModal}
+            user={user}
+          />
+        </FeedWrapper>
+      </FeedContext.Provider>
+    </WithSummitBanner>
   );
+};
+
+const gePostsBasetUrl = (organisationId, limit, skip) => {
+  const actorId = organisationId ? `&actorId=${organisationId}` : "";
+  return `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}${actorId}`;
 };
 
 export default Feed;

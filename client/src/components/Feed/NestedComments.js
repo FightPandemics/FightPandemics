@@ -1,22 +1,23 @@
 // Core
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import axios from "axios";
-import { Avatar, Input, Tooltip, Space } from "antd";
-import { connect } from "react-redux";
+import { Input, Tooltip, Space } from "antd";
+import { Avatar } from "components/Avatar";
+import { getInitialsFromFullName } from "utils/userInfo";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Local
-import AutoSize from "components/Input/AutoSize";
 import Loader from "components/Feed/StyledLoader";
 import StyledComment from "./StyledComment";
 import { StyledCommentButton } from "./StyledCommentButton";
+import { Menu, Dropdown } from "antd";
+import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
-import Linkify from "./Linkify"
-// Icons
-import SvgIcon from "../Icon/SvgIcon";
-import heartSmall from "assets/icons/heart-small.svg";
+import { selectActorId } from "reducers/session";
 
 // Constants
 import { theme } from "constants/theme";
@@ -37,13 +38,8 @@ const TextInput = styled(TextArea)`
   }
 `;
 
-const NestedComments = ({
-  user,
-  isAuthenticated,
-  comment,
-  dispatchPostAction,
-  deleteComment,
-}) => {
+const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
+  const { t } = useTranslation();
   const [likedComment, setLikedComment] = useState(false);
   const [fakeNumLikes, setFakeNumLikes] = useState(comment.numLikes);
   const [fakeNumReplies, setFakeNumReplies] = useState(0);
@@ -51,12 +47,31 @@ const NestedComments = ({
   const [showReply, setShowReply] = useState(false);
   const [editComment, setEditComment] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.content);
+  const actorId = useSelector(selectActorId);
+
+  const [visible, setVisible] = useState(false);
+  const [isComponentVisible, setIsComponentVisible] = useState(false);
+  const ref = useRef(false);
+
+  const handleMenuItemClick = async (e) => {
+    setVisible(false);
+    setIsComponentVisible(!isComponentVisible);
+  };
+
+  const handleSubMenuClick = (e) => {
+    setVisible(true);
+     setIsComponentVisible(!isComponentVisible);
+  };
 
   const renderAvatar = (
-    <Avatar
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTGhWTUkY0xGbbdHyReD6227iz53ADtRmcn1PTN4GUS3clC6MCT&usqp=CAU"
-      alt={`${comment.author.name}`}
-    />
+    <Avatar src={comment.author.photo} alt={`${comment.author.name}`}>
+      {getInitialsFromFullName(
+        `${
+          comment.author.name ||
+          `${comment.author.firstName} ${comment.author.lastName}`
+        }`,
+      )}
+    </Avatar>
   );
 
   //TODO: Add comment replies, like button and number of likes.
@@ -147,7 +162,7 @@ const NestedComments = ({
     const { _id: commentId, postId } = comment;
     const payload = { content: editedComment };
 
-    if (isAuthenticated && comment.author.id === user.id) {
+    if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
 
       try {
@@ -171,7 +186,7 @@ const NestedComments = ({
   };
 
   const handleDeleteComment = (e) => {
-    e.target.blur();
+    // e.target.blur();
     deleteComment(comment);
   };
 
@@ -179,42 +194,35 @@ const NestedComments = ({
     setEditComment(!editComment);
   };
 
-  const commentActions = [
-    <Space size="small">
-      <StyledCommentButton
-        size="small"
-        ghost
-        onClick={() => toggleEditComment()}
-      >
-        Edit
-      </StyledCommentButton>
-      <StyledCommentButton
-        size="small"
-        ghost
-        onClick={(e) => handleDeleteComment(e)}
-      >
-        Delete
-      </StyledCommentButton>
-    </Space>,
-  ];
+  const commentActions = (
+    <Menu  onClick={handleMenuItemClick}>
+    <Menu.Item   onClick={() => toggleEditComment()} >
+      {t("comment.edit")}
+    </Menu.Item>
+    <Menu.Item   onClick={(e) => handleDeleteComment(e)} >
+      {t("comment.delete")}
+    </Menu.Item>
+  </Menu>
+
+  );
 
   const editCommentContent = (
     <>
-      {isAuthenticated && comment.author.id === user.id && (
+      {actorId === comment.author.id && (
         <>
           <TextInput
             onChange={handleCommentEdit}
             value={editedComment}
             autoSize={{ minRows: 2 }}
           />
-          <Space direction="vertical">
+          <Space>
             <span></span>
             <StyledCommentButton
               size="small"
               ghost
               onClick={() => handleSubmit()}
             >
-              Save
+              {t("comment.save")}
             </StyledCommentButton>
           </Space>
         </>
@@ -223,23 +231,52 @@ const NestedComments = ({
   );
 
   const renderCommentContent = (
-    <Space direction="vertical">
-      <span><Linkify text = {editedComment}/></span>
-      {isAuthenticated && comment.author.id === user.id && (
-        <span>{commentActions}</span>
-      )}
+    <Space direction='vertical' >
+      <span>{editedComment}</span>
+      {actorId === comment.author.id && <span  style={{cursor:'pointer',position:'absolute',top:'10px',right:'10px'}}  >{ <div className="card-header">
+              {isComponentVisible ? (
+                <Dropdown
+                  // style={{ position: "fixed"}}
+                  onVisibleChange={handleSubMenuClick}
+                  onBlur={() => {
+                    setVisible(false);
+                  }}
+                  visible={visible}
+                  overlay={commentActions}
+                >
+                  <div
+                    className="ant-dropdown-link"
+                    onClick={handleSubMenuClick}
+                  >
+                    <SubMenuIcon  />
+                  </div>
+                </Dropdown>
+              ) : (
+                <div className="ant-dropdown-link" onClick={handleSubMenuClick}>
+                  <SubMenuIcon />
+                </div>
+              )}
+            </div>}</span>}
     </Space>
   );
 
   return (
-    <div>
+    <div >
       {comment ? (
         <StyledComment
           datetime={
+
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
-                  {comment?.elapsedTimeText ? comment.elapsedTimeText : ""}
+                  {t(
+                    `relativeTime.${comment?.elapsedTimeText.created.unit}WithCount`,
+                    {
+                      count: comment?.elapsedTimeText.created.count,
+                    },
+                  )}
+                  {comment?.elapsedTimeText.isEdited &&
+                    ` · ${t("post.edited")}`}
                 </span>
               </Tooltip>
             </>
@@ -251,16 +288,10 @@ const NestedComments = ({
           content={editComment ? editCommentContent : renderCommentContent}
         ></StyledComment>
       ) : (
-          <Loader />
-        )}
+        <Loader />
+      )}
     </div>
   );
 };
 
-const mapStateToProps = ({ session }) => {
-  return {
-    isAuthenticated: session.isAuthenticated,
-  };
-};
-
-export default connect(mapStateToProps)(NestedComments);
+export default NestedComments;

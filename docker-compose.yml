@@ -39,6 +39,7 @@ services:
     working_dir: /app
     depends_on:
       - mongo
+      - redis
     networks:
       - fp_network
 
@@ -61,25 +62,50 @@ services:
     networks:
       - fp_network
 
-  cypress-e2e:
-    build: 
+  cypress-e2e-tests:
+    build:
       context: cypresse2e
       dockerfile: Dockerfile
-    container_name: cypress-e2e
+    container_name: cypress-e2e-tests
     depends_on:
       - client
     environment:
       - CYPRESS_baseUrl=http://client:3000
-    command: dockerize -wait http://client:3000 -timeout 300s npx cypress run
+    entrypoint: ""
+    command:
+      [
+        "dockerize",
+        "-wait",
+        "http://client:3000",
+        "-timeout",
+        "300s",
+        "bash",
+        "-c",
+        "npm run test",
+      ]
     volumes:
+      - ./cypresse2e/mochawesome-report/:/app/mochawesome-report/
       - ./cypresse2e/cypress:/app/cypress
       - ./cypresse2e/cypress.json:/app/cypress.json
     working_dir: /app
     networks:
       - fp_network
 
+  cypress-e2e-report:
+    build:
+      context: cypresse2e
+      dockerfile: Dockerfile
+    container_name: cypress-e2e-report
+    entrypoint: ""
+    command: ["bash", "-c", "npm run report"]
+    volumes:
+      - ./cypresse2e/mochawesome-report/:/app/mochawesome-report/
+      - ./cypresse2e/cypress:/app/cypress
+      - ./cypresse2e/cypress.json:/app/cypress.json
+    working_dir: /app
+
   mocha-integration:
-    build: 
+    build:
       context: mocha
       dockerfile: Dockerfile
     container_name: mocha-integration
@@ -87,13 +113,55 @@ services:
       - client
     environment:
       MOCHA_URL: http://backend-service:8000
-    command: dockerize -wait http://client:3000 -timeout 300s npm run test 
+    command: dockerize -wait http://client:3000 -timeout 300s npm run test
     volumes:
+      - ./mocha/mochawesome-report/:/app/mochawesome-report/
       - ./mocha/test/:/app/test/
+      - ./mocha/utils/:/app/utils/
     working_dir: /app
+    networks:
+      - fp_network
+
+  awscli:
+    image: mesosphere/aws-cli
+    environment:
+      AWS_ACCESS_KEY_ID: dummy_id
+      AWS_SECRET_ACCESS_KEY: dummy_key
+      AWS_DEFAULT_REGION: us-east-1
+    networks:
+      - fp_network
+
+  localstack:
+    image: localstack/localstack
+    container_name: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3
+      HOSTNAME: localstack
+      DOCKER_HOST: unix:///var/run/docker.sock
+      DATA_DIR: /tmp/localstack/data
+      DEBUG: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./localstack:/docker-entrypoint-initaws.d
+    networks:
+      - fp_network
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "26379:6379"
+    volumes:
+      - redis-volume:/data
     networks:
       - fp_network
 
 networks:
   fp_network:
     driver: bridge
+
+volumes:
+  redis-volume:

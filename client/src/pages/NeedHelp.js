@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
-import { withRouter, Link } from "react-router-dom";
-import InputError from "components/Input/InputError";
+import { withRouter } from "react-router-dom";
 import LocationInput from "components/Input/LocationInput";
-import { validateEmail } from "utils/validators";
-import axios from "axios";
+import { useTranslation } from "react-i18next";
 import {
   AnswerButton,
   ShowAnywhere,
@@ -14,21 +12,18 @@ import {
   WizardStep,
   WizardNav,
   StepTitle,
-  StyledTextInput,
   WizardProgress,
   WizardFormWrapper,
-  WizardFormGroup,
-  WizardSubmit,
-  SkipLink,
-  StyledDiv,
 } from "components/StepWizard";
 import GTM from "constants/gtm-tags";
+import qs from "query-string";
+import filterOptions from "assets/data/filterOptions";
+const filters = Object.values(filterOptions);
 
 const INITIAL_STATE = {
   postType: "Requesting help",
   helpType: "",
   location: "",
-  email: "",
 };
 
 const Step1 = (props) => {
@@ -36,12 +31,13 @@ const Step1 = (props) => {
     props.update("helpType", answer);
     props.nextStep();
   };
+  const { t } = useTranslation();
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>What type of help do you need?</StepTitle>
+      <StepTitle>{t("onboarding.needHelp.whatHelp")}</StepTitle>
       <AnswerButton
         id={
           GTM.requestHelp.prefix +
@@ -51,7 +47,8 @@ const Step1 = (props) => {
         }
         onSelect={() => onSelectAnswer("medical")}
       >
-        <strong>Medical:</strong> I have symptoms of COVID-19.
+        <strong>{t("onboarding.needHelp.medical")}:</strong>{" "}
+        {t("onboarding.needHelp.haveCovidSymptoms")}
       </AnswerButton>
       <AnswerButton
         id={
@@ -62,8 +59,8 @@ const Step1 = (props) => {
         }
         onSelect={() => onSelectAnswer("other")}
       >
-        <strong>Other Help:</strong> I need assistance getting
-        groceries/medicine/etc.
+        <strong>{t("onboarding.needHelp.other")}:</strong>{" "}
+        {t("onboarding.needHelp.otherDesc")}
       </AnswerButton>
     </WizardStep>
   );
@@ -84,13 +81,14 @@ const Step2 = (props) => {
     props.update("location", null);
     props.nextStep();
   };
+  const { t } = useTranslation();
   return (
     <WizardStep>
       <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
+        {t("common.question")} {props.currentStep}/{props.totalSteps}
       </WizardProgress>
-      <StepTitle>Where are you located?</StepTitle>
-      <StepSubtitle>We want to show you the most relevant results</StepSubtitle>
+      <StepTitle>{t("onboarding.common.whereLocated")}</StepTitle>
+      <StepSubtitle>{t("onboarding.common.relevantResults")}</StepSubtitle>
       <WizardFormWrapper>
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <LocationInput
@@ -112,85 +110,8 @@ const Step2 = (props) => {
           tertiary="true"
           onClick={rejectLocationDetection}
         >
-          Show me postings from anywhere
+          {t("onboarding.common.showAnywhere")}
         </ShowAnywhere>
-      </WizardFormWrapper>
-    </WizardStep>
-  );
-};
-
-const Step3 = (props) => {
-  const [email, setEmail] = useState("");
-  const [valid, setValid] = useState(false);
-
-  useEffect(() => {
-    const validated = !email || validateEmail(email);
-    setValid(validated);
-  }, [email]);
-
-  const onChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const onSubmit = () => {
-    props.update("email", email);
-  };
-
-  return (
-    <WizardStep className="wizard-step">
-      <WizardProgress className="text-primary">
-        Question {props.currentStep}/{props.totalSteps}
-      </WizardProgress>
-      <StepTitle>What is your email address?</StepTitle>
-      <StyledDiv>
-        We respect your privacy. Please read our{" "}
-        <Link to="/privacy-policy">Privacy Policy</Link> and{" "}
-        <Link to="/terms-conditions">Terms & Conditions.</Link>
-      </StyledDiv>
-      <WizardFormWrapper>
-        <WizardFormGroup controlId="userEmailGroup">
-          <StyledTextInput
-            id={
-              GTM.requestHelp.prefix +
-              GTM.wizardNav.step +
-              props.currentStep +
-              GTM.wizardNav.enterEmail
-            }
-            type="email"
-            name="email"
-            label="Email"
-            className={!valid && "has-error"}
-            placeholder="Enter your email address..."
-            onChange={onChange}
-            value={email}
-            required
-          />
-          {!valid && <InputError>Email is invalid</InputError>}
-        </WizardFormGroup>
-        <WizardSubmit
-          id={
-            GTM.requestHelp.prefix +
-            GTM.wizardNav.step +
-            props.currentStep +
-            GTM.wizardNav.submit
-          }
-          disabled={email === "" || !valid}
-          primary="true"
-          onClick={onSubmit}
-        >
-          Submit
-        </WizardSubmit>
-        <SkipLink
-          id={
-            GTM.requestHelp.prefix +
-            GTM.wizardNav.step +
-            props.currentStep +
-            GTM.wizardNav.skip
-          }
-          onClick={onSubmit}
-        >
-          Skip
-        </SkipLink>
       </WizardFormWrapper>
     </WizardStep>
   );
@@ -207,18 +128,26 @@ const NeedHelp = withRouter((props) => {
   const updateAnswers = (key, value) => {
     const updatedAnswers = { ...state, [key]: value };
     setState({ ...updatedAnswers });
-    if (key === "email") {
-      localStorage.setItem("needHelpAnswers", JSON.stringify(updatedAnswers));
-      if (value) {
-        try {
-          axios.put(`/api/sendgrid/create-contact`, updatedAnswers);
-        } catch (err) {
-          console.log(err);
+    if (key === "location") {
+      let query = {
+        objective: "OFFER",
+      };
+      if (updatedAnswers.location)
+        query.location = btoa(JSON.stringify(updatedAnswers.location));
+      const selectedFilters = {
+        type: [],
+      };
+      if (updatedAnswers.helpType === "medical") {
+        selectedFilters.type.push(filters[2].options[0].value);
+      } else {
+        for (let i = 1; i < filters[2].options.length; ++i) {
+          selectedFilters.type.push(filters[2].options[i].value);
         }
       }
+      query.filters = btoa(JSON.stringify(selectedFilters));
       props.history.push({
         pathname: "/feed",
-        state: updatedAnswers,
+        search: qs.stringify(query),
       });
     }
   };
@@ -233,7 +162,6 @@ const NeedHelp = withRouter((props) => {
           >
             <Step1 hashKey={"Step1"} update={updateAnswers} />
             <Step2 hashKey={"Step2"} update={updateAnswers} />
-            <Step3 hashKey={"Step3"} update={updateAnswers} {...props} />
           </StyledWizard>
         )}
       </Transition>

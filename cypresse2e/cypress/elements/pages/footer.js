@@ -1,46 +1,45 @@
 class Footer {
+  copyright = "footer div:nth-child(1)";
+  aboutUs = "footer a:nth-child(1)";
+  faq = "footer a:nth-child(2)";
+  blog = "footer a:nth-child(3)";
+  termsAndConditions = "footer a:nth-child(4)";
+  privacyPolicy = "footer a:nth-child(5)";
+  cookiesPolicy = "footer a:nth-child(6)";
 
-    copyright = 'footer div:nth-child(1)';
-    aboutUs = 'footer a:nth-child(1)';
-    faq = 'footer a:nth-child(2)';
-    blog = 'footer a:nth-child(3)';
-    termsAndConditions = 'footer a:nth-child(4)';
-    privacyPolicy = 'footer a:nth-child(5)';
-    cookiesPolicy = 'footer a:nth-child(6)';
+  constructor() {}
 
-    constructor() { }
+  visit() {
+    cy.visit("");
+  }
 
-    visit() {
-        cy.visit('');
-    }
+  getCopyright() {
+    return cy.get(this.copyright);
+  }
 
-    getCopyright() {
-        return cy.get(this.copyright);
-    }
+  getAboutUs() {
+    return cy.get(this.aboutUs);
+  }
 
-    getAboutUs() {
-        return cy.get(this.aboutUs);
-    }
+  getFaq() {
+    return cy.get(this.faq);
+  }
 
-    getFaq() {
-        return cy.get(this.faq);
-    }
+  getBlog() {
+    return cy.get(this.blog);
+  }
 
-    getBlog() {
-        return cy.get(this.blog);
-    }
+  getTermsAndConditions() {
+    return cy.get(this.termsAndConditions);
+  }
 
-    getTermsAndConditions() {
-        return cy.get(this.termsAndConditions);
-    }
+  getPrivacyPolicy() {
+    return cy.get(this.privacyPolicy);
+  }
 
-    getPrivacyPolicy() {
-        return cy.get(this.privacyPolicy);
-    }
-
-    getCookiesPolicy() {
-        return cy.get(this.cookiesPolicy);
-    }
+  getCookiesPolicy() {
+    return cy.get(this.cookiesPolicy);
+  }
 }
 
 export default Footer;

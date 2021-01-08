@@ -1,6 +1,7 @@
 const S = require("fluent-schema");
-const { strictSchema } = require("./utils");
+const { strictSchema, strictQueryStringSchema } = require("./utils");
 const { locationSchema } = require("./location");
+const { notifyPreferenceSchema } = require("./notificationPreference");
 
 // todo: upgrade to shorter regex when AJV supported, see https://github.com/ajv-validator/ajv/blob/master/lib/compile/formats.js#L16
 //  const URL_REGEX = /^(?:(?:https?):\/\/)?(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u{00a1}-\u{ffff}0-9]+-?)*[a-z\u{00a1}-\u{ffff}0-9]+)(?:\.(?:[a-z\u{00a1}-\u{ffff}0-9]+-?)*[a-z\u{00a1}-\u{ffff}0-9]+)*(?:\.(?:[a-z\u{00a1}-\u{ffff}]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/iu;
@@ -56,7 +57,22 @@ const createUserSchema = {
     .prop("objectives", objectivesSchema)
     .prop("url", urlsSchema)
     .prop("location", locationSchema)
+    .prop("notifyPrefs", notifyPreferenceSchema)
     .required(["location"]),
+};
+
+const getUsersSchema = {
+  querystring: strictQueryStringSchema()
+    .prop("filter", S.string())
+    .prop("keywords", S.string())
+    .prop("objective", S.string())
+    .prop("skip", S.integer())
+    .prop("includeMeta", S.boolean().default(false))
+    .prop("ignoreUserLocation", S.boolean().default(false)),
+};
+
+const createUserAvatarSchema = {
+  body: strictSchema().prop("file", S.required()),
 };
 
 const getUserByIdSchema = {
@@ -73,11 +89,14 @@ const updateUserSchema = {
     .prop("needs", needsSchema)
     .prop("objectives", objectivesSchema)
     .prop("photo", S.string().pattern(URL_REGEX))
-    .prop("urls", urlsSchema),
+    .prop("urls", urlsSchema)
+    .prop("notifyPrefs", notifyPreferenceSchema),
 };
 
 module.exports = {
+  createUserAvatarSchema,
   createUserSchema,
   getUserByIdSchema,
+  getUsersSchema,
   updateUserSchema,
 };

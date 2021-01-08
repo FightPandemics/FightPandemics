@@ -12,7 +12,7 @@ jobs:
       - id: get-branch-name-sanitized
         name: Sanitize branch name
         shell: bash
-        run: echo "::set-output name=branch::$(jq --raw-output .pull_request.head.ref "$GITHUB_EVENT_PATH" | tr -cd '[a-zA-Z0-9]-')"
+        run: echo "::set-output name=branch::$(jq --raw-output .pull_request.head.ref "$GITHUB_EVENT_PATH" | tr -cd '[a-zA-Z0-9]-' | cut -b 1-40)"
       - env:
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.REVIEW_AWS_ACCESS_KEY_ID }}

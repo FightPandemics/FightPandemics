@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import backArrow from "assets/icons/back-arrow.svg";
 import { FEED } from "../../templates/RouteWithSubRoutes";
 import {
@@ -33,7 +34,7 @@ export const StyledButtonWizard = styled(StepWizard)`
   }
 
   @media screen and (min-width: ${desktopBreakpoint}) {
-    width: 40rem;
+    width: 50rem;
   }
 
   @media only screen and (max-width: ${mq.phone.narrow.maxWidth}) {
@@ -43,10 +44,59 @@ export const StyledButtonWizard = styled(StepWizard)`
 
 const WizardFormNav = ({ gtmPrefix = "" }) => {
   const history = useHistory();
+  const { t } = useTranslation();
+  const fullPath = (from, pathname) => from.slice(from.indexOf(pathname) - 1);
+  const [isBrowserBackClicked, setBrowserBackClicked] = useState(false);
+
+  useEffect(() => {
+    const { state, pathname } = history.location;
+    history.push(pathname, {
+      ...state,
+      keepScroll: true,
+    });
+    window.addEventListener("popstate", onBrowserBack);
+    return () => {
+      window.removeEventListener("popstate", onBrowserBack);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onBrowserBack = (e) => {
+    e.preventDefault();
+    const { state } = history.location;
+    if (!isBrowserBackClicked) {
+      setBrowserBackClicked(true);
+      if (typeof state.from !== "object") {
+        if (state.from.indexOf("feed") > -1) {
+          history.push(fullPath(state.from, "feed"), {
+            ...state,
+            keepScroll: true,
+          });
+        } else {
+          history.goBack();
+        }
+      } else {
+        history.push(FEED);
+      }
+    } else {
+      setBrowserBackClicked(false);
+    }
+  };
 
   const handleClick = () => {
-    if (history?.location?.state?.from?.state) {
-      history.goBack();
+    if (history?.location?.state?.from) {
+      const { state } = history.location;
+      if (typeof state.from !== "object") {
+        if (state.from.indexOf("feed") > -1) {
+          history.push(fullPath(state.from, "feed"), {
+            ...state,
+            keepScroll: true,
+          });
+        } else {
+          history.goBack();
+        }
+      } else {
+        history.push(FEED);
+      }
     } else {
       history.push(FEED);
     }
@@ -56,7 +106,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
     <StyledWizardNav>
       <BackButton onClick={handleClick} id={gtmPrefix + GTM.wizardNav.back}>
         <SvgIcon src={backArrow} title="Navigate to previous page or feed" />
-        <BackText>Back</BackText>
+        <BackText>{t("onboarding.common.previous")}</BackText>
       </BackButton>
     </StyledWizardNav>
   );

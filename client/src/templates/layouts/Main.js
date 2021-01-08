@@ -1,19 +1,19 @@
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
-const { offWhite } = theme.colors;
+const { offWhite, ghostWhite } = theme.colors;
 
 const Main = styled.main`
-  padding-top: 4rem;
+  padding: 6rem 0;
   display: flex;
   align-items: inherit;
   justify-content: center;
+  ${(props) => `${props.isProfile ? `background: ${ghostWhite};` : ""}`}
 
-  min-height: calc(100vh - 119px); // mobile footer height
+  min-height: calc(100vh - 11.9rem); // mobile footer height
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     background-color: ${offWhite};
-    padding-top: 6rem;
-
-    min-height: calc(100vh - 6rem); // footer height
+    padding: 6rem 0 0;
+    min-height: calc(100vh - 7.2rem); // footer height
   }
 `;
 

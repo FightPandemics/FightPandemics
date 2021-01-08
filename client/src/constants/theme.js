@@ -1,6 +1,7 @@
 import {
   ROYAL_BLUE,
   DARK_GRAY,
+  DARKISH_GRAY,
   DARKER_GRAY,
   MEDIUM_GRAY,
   LIGHT_GRAY,
@@ -14,13 +15,17 @@ import {
   WHITE,
   OFF_WHITE,
   TROPICAL_BLUE,
+  GRAY,
+  LIGHTER_BLACK,
+  GHOST_WHITE,
 } from "./colors";
 
 const theme = {
   typography: {
     font: {
       family: {
-        display: "Poppins",
+        display:
+          'Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
         body: "Work Sans",
         button: "DM Sans",
       },
@@ -61,6 +66,7 @@ const theme = {
     tropicalBlue: TROPICAL_BLUE,
     selago: SELAGO,
     darkGray: DARK_GRAY,
+    darkishGray: DARKISH_GRAY,
     darkerGray: DARKER_GRAY,
     mediumGray: MEDIUM_GRAY,
     lightGray: LIGHT_GRAY,
@@ -72,6 +78,9 @@ const theme = {
     black: BLACK,
     white: WHITE,
     offWhite: OFF_WHITE,
+    gray: GRAY,
+    lighterBlack: LIGHTER_BLACK,
+    ghostWhite: GHOST_WHITE,
   },
   button: {
     fontFamily: "DM Sans",

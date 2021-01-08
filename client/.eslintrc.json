@@ -2,7 +2,12 @@
   "extends": [
     "react-app"
   ],
+  "plugins": [
+    "react-hooks"
+  ],
   "rules":  {
-    "no-var": "warn"
+    "no-var": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn" 
   }
 }

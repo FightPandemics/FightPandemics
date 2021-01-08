@@ -1,5 +1,16 @@
 {
-    "baseUrl": "http://localhost:3000/",
-    "video": false
-    
+  "baseUrl": "http://localhost:3000/",
+  "numTestsKeptInMemory": 0,
+  "defaultCommandTimeout": 10000,
+  "pageLoadTimeout": 60000,
+  "viewportWidth": 1280,
+  "viewportHeight": 720,
+  "video": false,
+  "reporter": "../node_modules/mochawesome/src/mochawesome.js",
+  "reporterOptions": {
+    "overwrite": false,
+    "html": false,
+    "json": true,
+    "timestamp": "mm-dd-yyyy_HH:MM:ss"
+  }
 }

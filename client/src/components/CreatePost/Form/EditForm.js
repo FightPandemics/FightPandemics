@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 import First from "./FirstSection";
 import Second from "./SecondSection";
@@ -14,13 +15,6 @@ import {
   formDataToPostPatch,
 } from "assets/data/formToPostMappings";
 
-const errorMsg = {
-  title: "Please include a title for your post.",
-  description: "Please include a description for your post.",
-  help: "Please select a type of help.",
-  tags: "Please add at least one tag.",
-};
-
 const EditModalComponent = ({
   isAuthenticated,
   onClose,
@@ -30,7 +24,15 @@ const EditModalComponent = ({
   type,
   user,
 }) => {
+  const { t } = useTranslation();
   const post = { ...currentPost };
+
+  const errorMsg = {
+    title: t("post.title"),
+    description: t("post.description"),
+    help: t("post.help"),
+    tags: t("post.tags"),
+  };
 
   const initialState = {
     formData: postToFormData(post),
@@ -151,7 +153,7 @@ const EditModalComponent = ({
             formData.tags.length === 0
           }
         >
-          Post
+          {t("post.post")}
         </Submit>
       </Footer>
     </>

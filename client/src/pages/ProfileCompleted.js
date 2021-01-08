@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { FEED, PROFILE } from "../templates/RouteWithSubRoutes";
 import { refetchUser } from "actions/authActions";
+import { setOrganisation } from "../actions/profileActions";
 
 import {
   ProfileCompletedButtonsWrapper,
@@ -15,19 +17,29 @@ import {
 import GTM from "constants/gtm-tags";
 import { connect } from "react-redux";
 
-const ProfileCompleted = ({ user, refetchUser }) => {
+const ProfileCompleted = ({ user, refetchUser, setOrganisationId }) => {
+  const { t } = useTranslation();
   const location = useLocation();
   useEffect(() => {
     refetchUser();
     // will only run once (on mount) to update navbar org list
   }, [refetchUser]);
+
+  const switchAccountDrawerMenu = () => {
+    if (location?.state?.orgId) {
+      const index = location.state.orgId;
+      localStorage.setItem("organisationId", index);
+      setOrganisationId(index);
+    }
+  };
+
   return (
     <ProfileCompletedWrapper>
       <ProfileCompletedHeader>
         <ProfileCompletedHeadingWrapper>
           <HeadingIcon />
           <ProfileCompletedHeading>
-            Thank you for joining our community!
+            {t("profile.common.thankyou")}
           </ProfileCompletedHeading>
         </ProfileCompletedHeadingWrapper>
       </ProfileCompletedHeader>
@@ -43,8 +55,9 @@ const ProfileCompleted = ({ user, refetchUser }) => {
           <StyledButton
             tertiary={true}
             id={GTM.user.profilePrefix + GTM.profile.viewProfile}
+            onClick={switchAccountDrawerMenu}
           >
-            View my Profile
+            {t("profile.common.viewMyProfile")}
           </StyledButton>
         </Link>
         <Link to={FEED}>
@@ -53,8 +66,8 @@ const ProfileCompleted = ({ user, refetchUser }) => {
             id={GTM.user.profilePrefix + GTM.profile.continuePosting}
           >
             {sessionStorage.getItem("createPostAttemptLoggedOut")
-              ? "Continue posting"
-              : "View Help Board"}
+              ? t("profile.common.continuePosting")
+              : t("profile.common.viewFeed")}
           </StyledButton>
         </Link>
       </ProfileCompletedButtonsWrapper>
@@ -64,6 +77,7 @@ const ProfileCompleted = ({ user, refetchUser }) => {
 
 const mapDispatchToProps = {
   refetchUser,
+  setOrganisationId: setOrganisation,
 };
 
 export default connect(null, mapDispatchToProps)(ProfileCompleted);

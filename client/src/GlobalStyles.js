@@ -8,12 +8,11 @@ const globalStyles = createGlobalStyle`
 }
 
 ::-webkit-scrollbar{
-  width: 5px;
+  width: 10px;
   background-color: ${WHITE};
 }
 
 ::-webkit-scrollbar-thumb{
-  width: 5px;
   background-color: grey;
 }
 
@@ -53,10 +52,17 @@ a {
   background-color: ${WHITE} !important;
 }
 
+.am-drawer, .app-drawer, .am-drawer-right {
+  min-height: 100% !important;
+}
+
 .app-drawer .am-drawer-sidebar {
   background-color: $white;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .app-drawer .am-drawer-sidebar .am-list {
@@ -69,6 +75,9 @@ a {
 	min-height: 100vh;
 	padding-bottom: 6rem; // footer height
 	overflow: hidden;
+  @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
+	  padding-bottom: 8rem; // max mobile footer height based on content
+  }
 }
 
 .am-drawer-sidebar {
@@ -110,12 +119,22 @@ a {
     background-color: ${SELAGO};
   }
 }
-
+.ReactVirtualized__Grid, .ReactVirtualized__List, .ReactVirtualized__Grid__innerScrollContainer {
+    overflow: visible !important;
+}
 /* transform: translateZ(1px) messes up z-index precendence on iPhones */
 .feed-filter-modal-wrap {
   transform: none;
 }
-
+#launcher {
+  bottom: 5rem !important;
+  z-index: 1 !important;
+  @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
+    bottom: 1.85rem !important;
+    left: 0.5rem !important;
+    transform: scale(0.95) !important;
+  }
+}
 `;
 
 export default globalStyles;

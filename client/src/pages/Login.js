@@ -9,10 +9,7 @@ import GTM from "constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import Heading from "components/Typography/Heading";
-import {
-  AUTH_SUCCESS,
-  FORGOT_PASSWORD_REQUEST_SUCCESS,
-} from "constants/action-types";
+import { SESSION_ACTIONS } from "reducers/session";
 import { inputStyles, blockLabelStyles } from "constants/formStyles";
 import { theme, mq } from "constants/theme";
 import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from "config";
@@ -33,6 +30,7 @@ import InputError from "components/Input/InputError";
 import Label from "components/Input/Label";
 import { useQuery } from "utils/hooks.js";
 import { validateEmail, validatePassword } from "utils/validators";
+import { useTranslation } from "react-i18next";
 
 // ICONS
 import SvgIcon from "components/Icon/SvgIcon";
@@ -60,12 +58,12 @@ const StyleSocialIcon = {
 const SectionDiv = styled.div`
   font-size: 1.4rem;
   text-transform: uppercase;
-  color: ${colors.lightGray};
+  color: ${colors.darkishGray};
   &:before,
   &:after {
     display: inline-block;
     content: "";
-    border-top: 0.1rem solid ${colors.lightGray};
+    border-top: 0.1rem solid ${colors.darkishGray};
     width: 7rem;
     margin: 0 0.5rem;
     transform: translateY(-0.3rem);
@@ -90,12 +88,12 @@ const SocialButton = styled(Button)`
 const ButtonText = styled.span`
   font-family: ${typography.font.family.display};
   font-size: 1.4rem;
-  color: ${colors.darkGray};
+  color: ${colors.darkishGray};
 `;
 
 const AuthLink = styled(Link)`
   font-family: ${typography.font.family.display};
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1.6rem;
   line-height: 2.1rem;
   color: ${colors.royalBlue};
@@ -196,7 +194,7 @@ const VisibilityButton = ({ onClick, type }) => {
   );
 };
 
-const Login = ({ isLoginForm, forgotPassword }) => {
+const Login = ({ isLoginForm, forgotPassword, isAuthenticated }) => {
   const dispatch = useDispatch();
   const { errors, formState, getValues, handleSubmit, register } = useForm({
     mode: "change",
@@ -207,6 +205,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
   );
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
+  const { t } = useTranslation();
   const queryParams = useQuery();
   const code = queryParams.get("code");
   const state = queryParams.get("state");
@@ -227,18 +226,24 @@ const Login = ({ isLoginForm, forgotPassword }) => {
               },
             });
           }
-          dispatch({ type: AUTH_SUCCESS, payload: res.data });
+          dispatch({ type: SESSION_ACTIONS.AUTH_SUCCESS, payload: res.data });
         } catch (err) {
           const message = err.response?.data?.message || err.message;
+          const translatedErrorMessage = t([
+            `error.${message}`,
+            `error.http.${message}`,
+          ]);
           authFormDispatch({
             type: AUTH_FORM_SOCIAL_ERROR,
-            error: `Authentication failed, reason: ${message}`,
+            error: `${t(
+              "error.failedAuthentication",
+            )} ${translatedErrorMessage}`,
           });
         }
       };
       loadOAuth();
     }
-  }, [code, state, dispatch]);
+  }, [code, state, dispatch, t]);
 
   const onLoginWithEmail = async (formData) => {
     authFormDispatch({ type: AUTH_FORM_LOGIN });
@@ -251,14 +256,18 @@ const Login = ({ isLoginForm, forgotPassword }) => {
         },
       });
       dispatch({
-        type: AUTH_SUCCESS,
+        type: SESSION_ACTIONS.AUTH_SUCCESS,
         payload: { ...res.data, email: formData.email },
       });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       authFormDispatch({
         type: AUTH_FORM_LOGIN_ERROR,
-        error: `Login failed, reason: ${message}`,
+        error: `${t("error.failedLogin")} ${translatedErrorMessage}`,
       });
     }
   };
@@ -268,15 +277,25 @@ const Login = ({ isLoginForm, forgotPassword }) => {
     try {
       const res = await axios.post("/api/auth/signup", formData);
       dispatch({
-        type: AUTH_SUCCESS,
+        type: SESSION_ACTIONS.AUTH_SUCCESS,
         payload: { ...res.data, email: formData.email },
       });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       authFormDispatch({
         type: AUTH_FORM_SIGNUP_ERROR,
-        error: `Signup failed, reason: ${message}`,
+        error: `${t("error.failedSignup")} ${translatedErrorMessage}`,
       });
+    }
+  };
+
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      isLoginForm ? handleSubmit(onLoginWithEmail)() : handleSubmit(onSignup)();
     }
   };
 
@@ -285,14 +304,18 @@ const Login = ({ isLoginForm, forgotPassword }) => {
     try {
       await axios.post("/api/auth/change-password", formData);
       dispatch({
-        type: FORGOT_PASSWORD_REQUEST_SUCCESS,
+        type: SESSION_ACTIONS.FORGOT_PASSWORD_REQUEST_SUCCESS,
         payload: { email: formData.email },
       });
     } catch (err) {
       const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
       authFormDispatch({
         type: AUTH_FORM_FORGOT_PASSWORD_ERROR,
-        error: `Forgot Password failed, reason: ${message}`,
+        error: `${t("error.failedPasswordRecovery")} ${translatedErrorMessage}`,
       });
     }
   };
@@ -319,7 +342,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
 
   const comparePasswordConfirmation = (confirmPassword) => {
     const { password } = getValues();
-    return password === confirmPassword || "Passwords don't match";
+    return password === confirmPassword || t("auth.passwordNotMatch");
   };
 
   return (
@@ -335,13 +358,13 @@ const Login = ({ isLoginForm, forgotPassword }) => {
       </LoginLeftContainer>
       <LoginRightContainer>
         <div className={forgotPassword ? "bkg-white" : "form-container"}>
-          <FormContainer>
+          <FormContainer onKeyPress={handleEnterKeyPress}>
             <Heading className="h4 text-center" level={4}>
               {isLoginForm
-                ? "Sign In"
+                ? t("auth.signIn")
                 : forgotPassword
-                ? "Recover Password"
-                : "Join Now"}
+                ? t("auth.forgotPassword")
+                : t("auth.joinNow")}
             </Heading>
             {authFormState.error && (
               <ErrorAlert message={authFormState.error} type="error" />
@@ -352,51 +375,55 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   <Label
                     htmlFor="email"
                     style={blockLabelStyles}
-                    label="Email"
+                    label={t("auth.email")}
                   />
                   <Input
                     type="email"
+                    required
                     name="email"
                     id="email"
                     className={errors.email && "has-error"}
-                    placeholder="Enter email address"
+                    placeholder={t("auth.enterEmail")}
                     ref={register({
-                      required: "Email is required.",
-                      validate: (email) =>
-                        validateEmail(email) || "Invalid email",
+                      validate: (email) => validateEmail(email),
                     })}
                     style={inputStyles}
                   />
                   {errors.email && (
-                    <InputError>{errors.email.message}</InputError>
+                    <InputError>
+                      {t(`profile.common.${errors.email.message}`)}
+                    </InputError>
                   )}
                 </InputWrapper>
                 <InputWrapper>
                   <Label
                     htmlFor="password"
                     style={blockLabelStyles}
-                    label="Password"
+                    label={t("auth.password")}
                   />
                   <Input
                     type={passwordType}
                     name="password"
                     id="password"
                     className={errors.password && "has-error"}
-                    placeholder="Enter password"
+                    placeholder={t("auth.enterPassword")}
                     ref={register({
                       maxLength: {
                         value: PASSWORD_MAX_LENGTH,
-                        message: `Password must be at most ${PASSWORD_MAX_LENGTH} characters`,
+                        message: t("auth.passwordMax", {
+                          num: PASSWORD_MAX_LENGTH,
+                        }),
                       },
                       minLength: {
                         value: PASSWORD_MIN_LENGTH,
-                        message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+                        message: t("auth.passwordMin", {
+                          num: PASSWORD_MIN_LENGTH,
+                        }),
                       },
-                      required: "Password is required.",
+                      required: t("profile.common.passwordRequired") + ".",
                       validate: (password) =>
                         validatePassword(password) ||
-                        "Password must contain at least 3 of these: " +
-                          "a lower-case letter, an upper-case letter, a number, a special character (such as !@#$%^&*).",
+                        t("profile.common.invalidPassword"),
                     })}
                     style={{ ...inputStyles, paddingRight: "3.5rem" }}
                   />
@@ -413,7 +440,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     <Label
                       htmlFor="confirmPassword"
                       style={blockLabelStyles}
-                      label="Confirm Password"
+                      label={t("auth.confirmPassword")}
                     />
                     <Input
                       type={confirmPasswordType}
@@ -421,11 +448,11 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       id="confirmPassword"
                       className={errors.confirmPassword && "has-error"}
                       required
-                      placeholder="Confirm password"
+                      placeholder={t("auth.confirmPassword")}
                       ref={register({
                         maxLength: PASSWORD_MAX_LENGTH,
                         minLength: PASSWORD_MIN_LENGTH,
-                        required: "Password confirmation is required.",
+                        required: t("auth.passwordConfirmationRequired"),
                         validate: comparePasswordConfirmation,
                       })}
                       style={{ ...inputStyles, paddingRight: "3.5rem" }}
@@ -453,7 +480,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       : handleSubmit(onSignup)
                   }
                 >
-                  {isLoginForm ? "Sign In" : "Join Now"}
+                  {isLoginForm ? t("auth.signIn") : t("auth.joinNow")}
                 </SubmitButton>
               </form>
             ) : (
@@ -463,23 +490,24 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                     <Label
                       htmlFor="email"
                       style={blockLabelStyles}
-                      label="Your Email"
+                      label={t("auth.email")}
                     />
                     <Input
                       type="email"
+                      required
                       name="email"
                       id="email"
                       className={errors.email && "has-error"}
-                      placeholder="Enter email address"
+                      placeholder={t("auth.enterEmail")}
                       ref={register({
-                        required: "Email is required.",
-                        validate: (email) =>
-                          validateEmail(email) || "Invalid email",
+                        validate: (email) => validateEmail(email),
                       })}
                       style={inputStyles}
                     />
                     {errors.email && (
-                      <InputError>{errors.email.message}</InputError>
+                      <InputError>
+                        {t(`profile.common.${errors.email.message}`)}
+                      </InputError>
                     )}
                   </InputWrapper>
 
@@ -489,7 +517,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       disabled={!formState.isValid}
                       onClick={handleSubmit(onForgotPassword)}
                     >
-                      Email me a recovery link
+                      {t("onboarding.common.submit")}
                     </SubmitButton>
                   </EmailButtonContainer>
                 </form>
@@ -503,7 +531,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                   <>
                     <p>
                       <AuthLink to="/auth/forgot-password">
-                        Forgot password?
+                        {t("auth.forgotPassword")}
                       </AuthLink>
                     </p>
                     <p>
@@ -511,7 +539,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                         id={GTM.sign.inPrefix + GTM.sign.up}
                         to="/auth/signup"
                       >
-                        Don't have an account? <u>Join Now</u>
+                        {t("auth.noAccount")} <u>{t("auth.joinNow")}</u>
                       </AuthLink>
                     </p>
                   </>
@@ -521,7 +549,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                       id={GTM.sign.upPrefix + GTM.sign.in}
                       to="/auth/login"
                     >
-                      Already have an account? <u>Sign In</u>
+                      {t("auth.haveAccount")} <u>{t("auth.signIn")}</u>
                     </AuthLink>
                   </p>
                 )}
@@ -529,14 +557,16 @@ const Login = ({ isLoginForm, forgotPassword }) => {
             ) : (
               <BackLinkContainer>
                 <div className="text-center">
-                  <AuthLink to="/auth/login">Back to Sign In screen</AuthLink>
+                  <AuthLink to={isAuthenticated ? "/" : "/auth/login"}>
+                    {t(isAuthenticated ? "auth.backHome" : "auth.back")}
+                  </AuthLink>
                 </div>
               </BackLinkContainer>
             )}
             <WhiteSpace />
             {!forgotPassword && (
               <SectionDiv className="text-center">
-                {isLoginForm ? "Or Sign In with" : "Or Join Now with"}
+                {isLoginForm ? t("auth.orSignIn") : t("auth.orJoinNow")}
               </SectionDiv>
             )}
             <WhiteSpace />
@@ -585,7 +615,7 @@ const Login = ({ isLoginForm, forgotPassword }) => {
                 icon={<SvgIcon src={linkedin} />}
                 onClick={() => handleSocialLogin("linkedin")}
               >
-                <ButtonText>Linkedin</ButtonText>
+                <ButtonText>LinkedIn</ButtonText>
               </SocialButton>
             </FlexBox>
           )}

@@ -1,4 +1,8 @@
 import tlds from "tlds";
+import _isEmail from "validator/lib/isEmail";
+import wildcards from "disposable-email-domains";
+
+const wildcardsSet = new Set(wildcards);
 
 const validateTopLevelDomain = (string) => {
   for (const tld of tlds) {
@@ -9,15 +13,30 @@ const validateTopLevelDomain = (string) => {
   return false;
 };
 
-export const validateEmail = (email) => {
-  const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const emailInput = String(email).toLowerCase();
-  const isEmailValid = re.test(emailInput);
-
-  return isEmailValid ? validateTopLevelDomain(emailInput) : false;
+const validateDisposableEmail = (email) => {
+  const emailDomain = email.split("@")[1];
+  return wildcardsSet.has(emailDomain);
 };
 
-const SPECIAL_CHARS = /[!@#$%^&*]/;
+export const validateEmail = (email) => {
+  let errorMessage = "";
+  if (!email) {
+    errorMessage = "emailRequired";
+  } else if (
+    !_isEmail(email) ||
+    !validateTopLevelDomain(email) ||
+    validateDisposableEmail(email)
+  ) {
+    errorMessage = "emailInvalid";
+  }
+  if (errorMessage.length != 0) {
+    return errorMessage;
+  } else {
+    return true;
+  }
+};
+
+const SPECIAL_CHARS = / |!|"|#|\$|%|&|'|\(|\)|\*|\+|,|-|\.|\/|:|;|<|=|>|\?|@|\[|\\|\]|\^|_|`|{|\||}|~/;
 const containsLowerCase = (str) => /[a-z]/.test(str);
 const containsUpperCase = (str) => /[A-Z]/.test(str);
 const containsNumber = (str) => /\d/.test(str);

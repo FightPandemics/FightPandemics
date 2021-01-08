@@ -19,7 +19,7 @@ const SendButton = styled(Button)`
 
   @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
     height: 5rem;
-    padding: .5rem .5rem;
+    padding: 0.5rem 0.5rem;
   }
 `;
 
@@ -29,6 +29,7 @@ const AutoSize = ({
   onChange,
   onPressEnter,
   gtmTag = "",
+  maxLength,
 }) => {
   return (
     <>
@@ -37,8 +38,8 @@ const AutoSize = ({
         autoSize
         value={value}
         onChange={onChange}
-        onPressEnter={onPressEnter}
         placeholder={placeholder}
+        maxLength={maxLength}
       />
       <SendButton onClick={onPressEnter}>
         <SvgIcon src={send} />

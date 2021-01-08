@@ -1,6 +1,8 @@
 import React, { useEffect, useReducer } from "react";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
 import isEmpty from "lodash/isEmpty";
@@ -15,20 +17,18 @@ import PostMetaContainer from "components/Meta/PostMetaContainer";
 import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { postReducer, postState } from "hooks/reducers/postReducers";
+import { selectOrganisationId, selectActorId } from "reducers/session";
 import GTM from "constants/gtm-tags";
 
 // Constants
-import { FEED, LOGIN } from "templates/RouteWithSubRoutes";
+import { FEED } from "templates/RouteWithSubRoutes";
 import {
   SET_POST,
   FETCH_POST,
   SET_DELETE_MODAL_VISIBILITY,
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_SHORT_CONTENT,
-  RESET_LOADMORE,
-  SET_LOADMORE,
   SET_FULL_CONTENT,
-  SET_LIKE,
 } from "hooks/actions/postActions";
 import {
   DELETE_MODAL_POST,
@@ -37,7 +37,7 @@ import {
 } from "hooks/actions/feedActions";
 import { theme, mq } from "constants/theme";
 
-const { colors, typography } = theme;
+const { typography } = theme;
 const { font, two, four } = theme.typography.heading;
 
 const Container = styled.div`
@@ -70,21 +70,16 @@ const Body = styled.p`
 `;
 
 const StyledLink = styled(Link)`
-  text-decoration: none;
-  margin: 0 auto;
-  font-weight: 500;
-  display: block;
-  text-align: center;
-  background-color: ${theme.colors.white};
-  font-size: ${theme.typography.size.large};
-  color: ${theme.colors.royalBlue};
-  line-height: 7rem;
-  height: 7rem;
-  border-radius: 1rem;
+  padding: 1rem 2rem;
+  background-color: ${theme.colors.royalBlue};
+  font-size: ${theme.typography.size.xxlarge};
+  color: ${theme.colors.white};
+  border-radius: 2rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-  &:focus {
+  &:hover {
     border: 1px solid ${theme.colors.royalBlue};
     color: ${theme.colors.royalBlue};
+    background-color: ${theme.colors.white};
   }
 `;
 
@@ -94,6 +89,9 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const history = useHistory();
   const { postId } = useParams();
   const [post, postDispatch] = useReducer(postReducer, postState);
+  const { t } = useTranslation();
+  const organisationId = useSelector(selectOrganisationId);
+  const actorId = useSelector(selectActorId);
   const dispatchPostAction = (type, key1, value1, key2, value2) => {
     let obj = { type };
 
@@ -112,58 +110,27 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const {
     postLength,
     fullContent,
-    partialContent: postSubstring,
-    editPostModalVisibility,
+    //editPostModalVisibility,
     deleteModalVisibility,
-    loadMorePost,
     commentsCount,
     showComments,
   } = post;
 
+  // switching accounts will reload the page, make sure it's the author
+  const editPostModalVisibility =
+    post.editPostModalVisibility && actorId == post.author.id;
+
   const initialState = { ...post };
+
+  const getActorQuery = () => {
+    return organisationId ? `?actorId=${organisationId}` : "";
+  };
 
   const editRedirectFromFeed = () => {
     postDispatch({
       type: SET_EDIT_POST_MODAL_VISIBILITY,
       visibility: true,
     });
-  };
-
-  const handlePostLike = async (postId, liked, create) => {
-    sessionStorage.removeItem("likePost");
-
-    if (isAuthenticated) {
-      const endPoint = `/api/posts/${postId}/likes/${user?.id || user?._id}`;
-      let response = {};
-
-      if (user) {
-        if (liked) {
-          try {
-            response = await axios.delete(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        } else {
-          try {
-            response = await axios.put(endPoint);
-          } catch (error) {
-            console.log({ error });
-          }
-        }
-        if (response.data) {
-          postDispatch({
-            type: SET_LIKE,
-            postId,
-            count: response.data.likesCount,
-          });
-        }
-      }
-    } else {
-      if (create) {
-        sessionStorage.setItem("likePost", postId);
-        history.push(LOGIN);
-      }
-    }
   };
 
   const handleEditPost = () => {
@@ -185,24 +152,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       type: SET_EDIT_POST_MODAL_VISIBILITY,
       visibility: false,
     });
-  };
-
-  const toggleViewContent = async () => {
-    if (!loadMorePost) {
-      postDispatch({
-        type: SET_POST,
-        post,
-        content: postSubstring,
-      });
-      dispatchPostAction(SET_LOADMORE);
-    } else {
-      postDispatch({
-        type: SET_POST,
-        post,
-        content: fullContent,
-      });
-      dispatchPostAction(RESET_LOADMORE);
-    }
   };
 
   const handlePostDelete = () => {
@@ -239,7 +188,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
         DELETE_MODAL_HIDE,
       );
       history.push(FEED);
-      let endPoint = `/api/posts/${postId}`;
+      let endPoint = `/api/posts/${postId}${getActorQuery()}`;
       try {
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
@@ -260,7 +209,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
 
   const loadPost = async () => {
     let response;
-    const endPoint = `/api/posts/${postId}`;
+    const endPoint = `/api/posts/${postId}${getActorQuery()}`;
 
     dispatchPostAction(FETCH_POST);
 
@@ -326,19 +275,14 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   if (isPostDeleted)
     return (
       <Container>
-        <Title>Ahh... snap!</Title>
-        <Body>
-          The post you have been looking for has expired. Please check our Help
-          Board for more such posts.
-        </Body>
-        <ProfileCompletedButtonsWrapper>
+        <Title>{t("post.expireTitle")}</Title>
+        <Body>{t("post.expire")}</Body>
           <StyledLink
             id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
             to="/feed"
           >
-            Help Board
+            {t("feed.title")}
           </StyledLink>
-        </ProfileCompletedButtonsWrapper>
       </Container>
     );
   return (
@@ -348,10 +292,8 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
           value={{
             user,
             fullContent,
-            loadMorePost,
             updateComments,
             isAuthenticated,
-            handlePostLike,
             editPostModalVisibility,
             dispatchPostAction,
             postDispatch,
@@ -367,16 +309,13 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
                 includeProfileLink={true}
                 postDispatch={postDispatch}
                 dispatchPostAction={dispatchPostAction}
-                onClick={toggleViewContent}
-                loadMorePost={loadMorePost}
                 onSelect={handleEditPost}
                 showComments={showComments}
-                numComments={commentsCount}
+                commentsCount={commentsCount}
                 onChange={handlePostDelete}
                 handleCancelPostDelete={handleCancelPostDelete}
                 handleCommentDelete={handleCommentDelete}
                 postDelete={postDelete}
-                handlePostLike={handlePostLike}
                 updateComments={updateComments}
                 fullPostLength={postLength}
                 user={user}

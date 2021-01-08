@@ -3,26 +3,23 @@ import {
   FETCH_POST,
   SET_SHORT_CONTENT,
   SET_FULL_CONTENT,
-  SET_COMMENT_COUNT,
   RESET_PAGE,
   RESET_POST,
   RESET_LOADING,
   NEXT_PAGE,
   SET_LOADING,
-  RESET_LOADMORE,
-  SET_LOADMORE,
   SET_COMMENT,
   SET_COMMENTS,
+  SET_PAGE,
   SHOW_COMMENTS,
   TOGGLE_COMMENTS,
   TOGGLE_SHOW_COMMENTS,
   SET_DELETE_MODAL_VISIBILITY,
   SET_EDIT_POST_MODAL_VISIBILITY,
   SET_LIKE,
+  SHOW_ANYWAY,
 } from "../actions/postActions";
-import {
-  DELETE_MODAL_HIDE,
-} from "../actions/feedActions";
+import { DELETE_MODAL_HIDE } from "../actions/feedActions";
 
 export const postState = {
   status: SET_POST,
@@ -47,7 +44,6 @@ export const postState = {
   editPostModalVisibility: false,
   showComments: true,
   isLoading: false,
-  loadMorePost: false,
   loadMoreComments: true,
   page: 1,
 };
@@ -102,25 +98,25 @@ export const postReducer = (state = postState, action) => {
         postLength: action.length,
         fullContent: action.content,
       };
-    case SET_COMMENT_COUNT:
-      return { ...state, totalCommentCount: action.numComments };
     case NEXT_PAGE:
       return { ...state, page: state.page + 1 };
     case RESET_PAGE:
       return { ...state, page: state.page - 1 };
+    case SET_PAGE:
+      return { ...state, page: action.page };
     case RESET_LOADING:
       return { ...state, isLoading: false };
     case SET_LOADING:
-      return { ...state, isLoading: true };
-    case RESET_LOADMORE:
-      return { ...state, loadMorePost: false };
-    case SET_LOADMORE:
-      return { ...state, loadMorePost: true };
+      return {
+        ...state,
+        isLoading: action.isLoading || true,
+        loadMore: action.loadMore || false,
+      };
     case SET_COMMENTS:
       return {
         ...state,
         comments: action.comments,
-        commentsCount: action.numComments,
+        commentsCount: action.commentsCount,
       };
     case SET_COMMENT:
       state.comments = state.comments.map((comment) => {
@@ -153,11 +149,18 @@ export const postReducer = (state = postState, action) => {
         loadMoreComments: true,
       };
     case SET_LIKE:
+      const { payload } = action;
       return {
         ...state,
         liked: !!!state.liked,
-        likesCount: action.count,
+        likesCount: payload.count,
       };
+    case SHOW_ANYWAY: {
+      return {
+        ...state,
+        reportsCount: 0,
+      };
+    }
     default:
       return state;
   }

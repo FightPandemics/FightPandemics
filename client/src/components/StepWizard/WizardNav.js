@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { mq, theme } from "constants/theme";
 import LeftRightIconButton from "components/Button/LeftRightIconButton";
 import GTM from "constants/gtm-tags";
@@ -34,7 +35,7 @@ export const StyledWizardNav = styled.div`
   }
 
   @media screen and (min-width: ${desktopBreakpoint}) {
-    width: 40rem;
+    width: 50rem;
   }
 `;
 
@@ -54,7 +55,7 @@ export const BackButton = styled(LeftRightIconButton)`
 
   @media screen and (min-width: ${desktopBreakpoint}) {
     height: 4.8rem;
-    width: 19.2rem;
+    width: 25rem;
     transition: all 0.1s;
 
     & span {
@@ -75,7 +76,7 @@ export const BackButton = styled(LeftRightIconButton)`
 `;
 
 export const BackText = styled.span`
-  margin-left: 3rem;
+  margin-left: 1.5rem;
 `;
 
 const NextButton = styled(LeftRightIconButton)`
@@ -102,6 +103,10 @@ const NextButton = styled(LeftRightIconButton)`
     width: 19.2rem;
     transition: all 0.1s;
 
+    &.am-button > span {
+      margin-right: 1.5rem;
+    }
+
     & span {
       display: inline;
     }
@@ -127,37 +132,41 @@ const WizardNav = ({
   previousStep,
   totalSteps,
   gtmPrefix,
-}) => (
-  <StyledWizardNav>
-    {currentStep > 1 ? (
-      <BackButton
-        id={gtmPrefix + currentStep + GTM.wizardNav.back}
-        onClick={previousStep}
-      >
-        <SvgIcon
-          src={backArrow}
-          title={`Navigate to step ${currentStep - 1}`}
-        />
-        <BackText>Back</BackText>
-      </BackButton>
-    ) : (
-      <Link to={"/"}>
-        <BackButton id={gtmPrefix + currentStep + GTM.wizardNav.back}>
-          <SvgIcon src={backArrow} title="Navigate to the homepage" />
-          <BackText>Back</BackText>
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <StyledWizardNav>
+      {currentStep > 1 ? (
+        <BackButton
+          id={gtmPrefix + currentStep + GTM.wizardNav.back}
+          onClick={previousStep}
+        >
+          <SvgIcon
+            src={backArrow}
+            title={`Navigate to step ${currentStep - 1}`}
+          />
+          <BackText>{t("onboarding.common.previous")}</BackText>
         </BackButton>
-      </Link>
-    )}
-    {currentStep < totalSteps && (
-      <NextButton
-        id={gtmPrefix + currentStep + GTM.wizardNav.next}
-        onClick={nextStep}
-      >
-        <span>Next</span>
-        <SvgIcon src={nextArrow} />
-      </NextButton>
-    )}
-  </StyledWizardNav>
-);
+      ) : (
+        <Link to={"/"}>
+          <BackButton id={gtmPrefix + currentStep + GTM.wizardNav.back}>
+            <SvgIcon src={backArrow} title="Navigate to the homepage" />
+            <BackText>{t("onboarding.common.previous")}</BackText>
+          </BackButton>
+        </Link>
+      )}
+      {currentStep < totalSteps && (
+        <NextButton
+          id={gtmPrefix + currentStep + GTM.wizardNav.next}
+          onClick={nextStep}
+        >
+          <span>{t("onboarding.common.next")}</span>
+          <SvgIcon src={nextArrow} />
+        </NextButton>
+      )}
+    </StyledWizardNav>
+  );
+};
 
 export default WizardNav;
