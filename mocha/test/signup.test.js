@@ -5,7 +5,7 @@ const apiHelper = require("../utils/apiHelper");
 const validator = require("../utils/validators");
 const testData = require("../utils/testData");
 
-let apiEndPoint = apiEndPoints.signUpApiEndpoint;
+let apiEndPoint = apiEndPoints.signUpEndpoint;
 
 let userCredentialsWithEmptyEmail = {};
 Object.assign(
