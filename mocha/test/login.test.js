@@ -4,7 +4,7 @@ const apiHelper = require("../utils/apiHelper");
 const apiEndPointHelper = require("../utils/apiEndpoints");
 const validator = require("../utils/validators");
 const testData = require("../utils/testData");
-let apiEndPoint = apiEndPointHelper.loginApiEndpoint;
+let apiEndPoint = apiEndPointHelper.loginEndpoint;
 let userCredentialsWithRandomEmailAndRandomPassword =
   testData.userCredentialsWithRandomEmailAndRandomPassword;
 let userCredentialsWithRandomEmail = testData.userCredentialsWithRandomEmail;
