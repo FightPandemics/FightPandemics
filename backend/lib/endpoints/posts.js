@@ -370,8 +370,12 @@ async function routes(app) {
           "author.location.zip": false,
         }),
       );
-      if (postErr) {
-        req.log.error(postErr, "Failed retrieving post");
+      
+      if (postErr){
+        if (postErr instanceof mongoose.Error.CastError){
+            req.log.error(postErr, "Can't find a post with given id");
+            throw app.httpErrors.badRequest();
+        }
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
         throw app.httpErrors.notFound();

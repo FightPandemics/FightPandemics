@@ -9,6 +9,9 @@ let orgApiEndPoint = apiEndPoints.organisationsEndpoint;
 describe("GET organisations endpoint tests", () => {
   it("sending GET request with endpoint, status : 200 OK with response body", async () => {
     let response = await apiHelper.sendGETRequest(APP_URL, orgApiEndPoint);
-    validator.validateStatusCodeResponseBody(response, 200, "name", "_id");
+    validator.validateResponse(response, {
+      statusCode: httpStatus.OK,
+    });
+    validator.validateResponseBody(response, "name", "_id");
   });
 });
