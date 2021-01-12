@@ -382,7 +382,7 @@ const NearestHealthFacilities = () => {
             )}
             {!isMobile || (isMobile && facilityMode.type === "map") ? (
               <FacilityMap
-                apiKey={process.env.REACT_APP_GOOGLE_KEY}
+                apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
                 defaultCenter={sourceLocation.current}
                 defaultZoom={11}
                 facilities={facilitiesData}

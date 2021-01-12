@@ -72,7 +72,7 @@ const LocalEmergencyNumber = (props) => {
 
   return (
     <EmergencyLine mode="closable" icon={null} {...props}>
-      <h4>{t("nearestHsp.locaEmrgNbr")}</h4>
+      <h4>{t("nearestHsp.localEmergencyNumber")}</h4>
       <h3>911</h3>
     </EmergencyLine>
   );

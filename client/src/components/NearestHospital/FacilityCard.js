@@ -102,14 +102,23 @@ const FacilityCard = (props) => {
   const forDirAndMore = t("nearestHsp.forDirAndMore");
 
   const getOpenDays = (periods) => {
+    //missing periods from google api indicates no information in regards to days/hours open
     if (periods.length === 0) return "";
+    //a particular setting of periods from google api indicates open 24 hours
     if (
       periods.length === 1 &&
       periods[0].open.day === 0 &&
       periods[0].open.time === "0000"
     )
       return open24Hours;
-
+    //The first .map converts the periods to a simple structure.   Note that from google api
+    // a particular day can have multiple time periods that apply, so these are repeated
+    // for the day of the week with the varying time(s).
+    //The reduce takes objects that have the same day of the week, group them together (.i.e.
+    // putting their time in the same array), as in : ["1100 - 1400", "1900 - 2200"], if
+    // multiple times are involved with that day.
+    //The second map maps the index to days array to get the label of the day, depending
+    // on the previous array.
     const openingHours = periods
       .map((p) => ({
         day: p.open.day,

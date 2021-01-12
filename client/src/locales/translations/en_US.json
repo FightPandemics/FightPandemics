@@ -711,12 +711,12 @@
     "open": "Open",
     "closed": "Closed",
     "and": " and ",
-    "evalYourHlth": "Evaluate your health and receive instructions and recommendations about ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
     "covid19": "COVID-19",
-    "hlthEval": "Health Evaluation",
-    "chkSymptms": "Check Symptoms",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
     "forDirAndMore": "For directions and more info",
-    "locaEmrgNbr": "Local emergency number"
+    "localEmergencyNumber": "Local emergency number"
   },
   "feedback": {
     "poorly": "Poorly",

@@ -132,6 +132,12 @@ const FacilityMap = (props) => {
     );
   });
 
+  const createMapOptions = () => {
+    return {
+      gestureHandling: "greedy",
+    };
+  };
+
   return (
     <MapContainer>
       <GoogleMapReact
@@ -144,6 +150,7 @@ const FacilityMap = (props) => {
         onChildMouseEnter={onChildMouseEnter}
         onChildMouseLeave={onChildMouseLeave}
         yesIWantToUseGoogleMapApiInternals
+        options={createMapOptions}
       >
         {
           <FacilityMapUserMarker

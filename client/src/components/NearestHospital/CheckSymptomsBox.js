@@ -49,10 +49,10 @@ const CheckSymptoms = (props) => {
     <CheckSymptomsBox>
       <div>
         <p>
-          <span>{t("nearestHsp.hlthEval")}</span>
+          <span>{t("nearestHsp.healthEval")}</span>
         </p>
         <p>
-          {t("nearestHsp.evalYourHlth")}
+          {t("nearestHsp.evalYourHealth")}
           <span>{t("nearestHsp.covid19")}</span>
         </p>
       </div>
@@ -61,7 +61,7 @@ const CheckSymptoms = (props) => {
           to="/symptoms-check"
           id={GTM.nav.prefix + GTM.nav.checkSymp}
         >
-          {t("nearestHsp.chkSymptms")}
+          {t("nearestHsp.chkSymptoms")}
         </SymptomsLink>
       </div>
     </CheckSymptomsBox>
