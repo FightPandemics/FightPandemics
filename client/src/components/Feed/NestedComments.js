@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { linkify } from "utils/validators";
 
 // Local
 import Loader from "components/Feed/StyledLoader";
@@ -232,7 +233,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
 
   const renderCommentContent = (
     <Space direction='vertical' >
-      <span>{editedComment}</span>
+      <span>{linkify(editedComment)}</span>
       {actorId === comment.author.id && <span  style={{cursor:'pointer',position:'absolute',top:'10px',right:'10px'}}  >{ <div className="card-header">
               {isComponentVisible ? (
                 <Dropdown

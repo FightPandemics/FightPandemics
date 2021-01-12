@@ -31,7 +31,7 @@ const StyledComment = styled(Comment)`
           border-top-left-radius: 1.5rem;
           border-top-right-radius: 1.5rem;
           margin-bottom: 0;
-          padding: 1rem 0 0.5rem 1.5rem;         
+          padding: 1rem 0 0.5rem 1.5rem;
           .ant-comment-content-author-name > * {
             color: black;
             font-weight: 500;
@@ -45,6 +45,9 @@ const StyledComment = styled(Comment)`
           padding: 0 1.5rem 1.5rem;
           font-size: ${medium};
           line-height: 140%;
+          a {
+              text-decoration: underline;
+          }
         }
         .ant-comment-actions {
           position: relative;

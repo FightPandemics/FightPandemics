@@ -47,6 +47,7 @@ import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
 import PostPlaceHolder from "./PostPlaceHolder";
+import { linkify } from "utils/validators";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -833,10 +834,10 @@ const renderContent = (title, content, highlightWords, showComplete) => {
   return (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        <Highlight text={title} highlight={highlightWords} />
+        <Highlight text={linkify(title)} highlight={highlightWords} />
       </Heading>
       <p className="post-description">
-        <Highlight text={finalContent} highlight={highlightWords} />
+        <Highlight text={linkify(finalContent)} highlight={highlightWords} />
       </p>
     </Card.Body>
   );
