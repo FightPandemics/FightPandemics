@@ -1,5 +1,5 @@
 // Core
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Input, Tooltip, Space } from "antd";
 import { Avatar } from "components/Avatar";
@@ -18,6 +18,7 @@ import { ReactComponent as SubMenuIcon } from "assets/icons/submenu.svg";
 import { translateISOTimeTitle } from "assets/data/formToPostMappings";
 import { authorProfileLink } from "./utils";
 import { selectActorId } from "reducers/session";
+import VerificationTick from "components/Verification/Tick";
 
 // Constants
 import { theme } from "constants/theme";
@@ -53,14 +54,14 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const [isComponentVisible, setIsComponentVisible] = useState(false);
   const ref = useRef(false);
 
-  const handleMenuItemClick = async (e) => {  
+  const handleMenuItemClick = async (e) => {
     setVisible(false);
     setIsComponentVisible(!isComponentVisible);
   };
 
   const handleSubMenuClick = (e) => {
     setVisible(true);
-     setIsComponentVisible(!isComponentVisible);
+    setIsComponentVisible(!isComponentVisible);
   };
 
   const renderAvatar = (
@@ -195,16 +196,15 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   };
 
   const commentActions = (
-    <Menu  onClick={handleMenuItemClick}>
-    <Menu.Item   onClick={() => toggleEditComment()} >
-      {t("comment.edit")}
-    </Menu.Item>
-    <Menu.Item   onClick={(e) => handleDeleteComment(e)} >
-      {t("comment.delete")}
-    </Menu.Item>
-  </Menu>
-     
-  ); 
+    <Menu onClick={handleMenuItemClick}>
+      <Menu.Item onClick={() => toggleEditComment()}>
+        {t("comment.edit")}
+      </Menu.Item>
+      <Menu.Item onClick={(e) => handleDeleteComment(e)}>
+        {t("comment.delete")}
+      </Menu.Item>
+    </Menu>
+  );
 
   const editCommentContent = (
     <>
@@ -231,11 +231,21 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   );
 
   const renderCommentContent = (
-    <Space direction='vertical' > 
+    <Space direction="vertical">
       <span>{editedComment}</span>
-      {actorId === comment.author.id && <span  style={{cursor:'pointer',position:'absolute',top:'10px',right:'10px'}}  >{ <div className="card-header">
+      {actorId === comment.author.id && (
+        <span
+          style={{
+            cursor: "pointer",
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+          }}
+        >
+          {
+            <div className="card-header">
               {isComponentVisible ? (
-                <Dropdown 
+                <Dropdown
                   // style={{ position: "fixed"}}
                   onVisibleChange={handleSubMenuClick}
                   onBlur={() => {
@@ -248,7 +258,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
                     className="ant-dropdown-link"
                     onClick={handleSubMenuClick}
                   >
-                    <SubMenuIcon  />
+                    <SubMenuIcon />
                   </div>
                 </Dropdown>
               ) : (
@@ -256,16 +266,18 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
                   <SubMenuIcon />
                 </div>
               )}
-            </div>}</span>}
+            </div>
+          }
+        </span>
+      )}
     </Space>
   );
 
   return (
-    <div >
+    <div>
       {comment ? (
         <StyledComment
           datetime={
-            
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
@@ -282,7 +294,9 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
             </>
           }
           author={
-            <Link to={authorProfileLink(comment)}>{comment.author.name}</Link>
+            <Link to={authorProfileLink(comment)}>
+              {comment.author.name} {comment?.author?.verified && <VerificationTick/>}
+            </Link>
           }
           avatar={<Link to={authorProfileLink(comment)}>{renderAvatar}</Link>}
           content={editComment ? editCommentContent : renderCommentContent}
@@ -295,7 +309,3 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
 };
 
 export default NestedComments;
-
-
-
-

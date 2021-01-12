@@ -17,6 +17,7 @@ import getRelativeTime from "utils/relativeTime";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { WebSocketContext } from "context/WebsocketContext";
 import GTM from "constants/gtm-tags";
+import VerificationTick from "components/Verification/Tick";
 
 import {
   LOCAL_NOTIFICATION_MARK_AS_CLEARED,
@@ -39,6 +40,11 @@ const ItemContainer = styled.a`
     position: absolute;
     top: 2.4em;
     left: 2.6em;
+  }
+  .verification-tick {
+    margin: 0 -0.3rem 0 0;
+    vertical-align: bottom;
+    padding: 0.4rem 0 0.2rem;
   }
   .ant-avatar {
     position: absolute;
@@ -218,6 +224,7 @@ const MenuItem = ({
   sharedVia,
   t,
   gtmId,
+  verified,
 }) => {
   const { clearNotification: clearRemoteNotification } = useContext(
     WebSocketContext,
@@ -240,8 +247,12 @@ const MenuItem = ({
         <div>
           <Trans
             i18nKey={action}
-            components={[<span />, <span />, <span />]}
-            values={{ username: author, postTitle, shareMedium: sharedVia }}
+            components={[<span />, <span />, verified && <VerificationTick />]}
+            values={{
+              username: author,
+              postTitle,
+              shareMedium: sharedVia,
+            }}
           ></Trans>
         </div>
         <div>
@@ -313,6 +324,7 @@ const menu = (notifications, clearAllNotifications, organisationId, t) => {
               sharedVia={each.sharedVia}
               t={t}
               gtmId={each.gtmId}
+              verified={each.verified}
             />
           ))}
         </div>
@@ -366,15 +378,16 @@ export const NotificationDropDown = ({
     .map((n) => ({
       _id: n._id,
       author: n.triggeredBy.name,
-      action: notificationTypes[n.action].text,
+      verified: n.triggeredBy.verified,
+      action: notificationTypes[n.action]?.text,
       postTitle: n.post.title,
       path: `/post/${n.post.id}`,
-      actionAvatar: notificationTypes[n.action].icon,
+      actionAvatar: notificationTypes[n.action]?.icon,
       createdAt: getRelativeTime(n.createdAt),
       avatar: n.triggeredBy.photo,
       sharedVia: n.sharedVia,
       unread: !n.readAt,
-      gtmId: notificationTypes[n.action].gtmId,
+      gtmId: notificationTypes[n.action]?.gtmId,
     }));
 
   return (

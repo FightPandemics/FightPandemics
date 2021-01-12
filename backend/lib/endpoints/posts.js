@@ -218,6 +218,7 @@ async function routes(app) {
             "author.name": true,
             "author.photo": true,
             "author.type": true,
+            "author.verified": true,
             commentsCount: {
               $size: { $ifNull: ["$comments", []] },
             },
@@ -325,6 +326,7 @@ async function routes(app) {
         name: actor.name,
         photo: actor.photo,
         type: actor.type,
+        verified: actor.verification && actor.verification.status === "approved"
       };
 
       // ExpireAt needs to calculate the date
@@ -664,6 +666,7 @@ async function routes(app) {
         name: actor.name,
         photo: actor.photo,
         type: actor.type,
+        verified: actor.verification && actor.verification.status === "approved"
       };
 
       // Initial empty likes array
