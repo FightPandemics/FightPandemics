@@ -62,23 +62,25 @@ function Banner({}) {
         <p>{t("verification.verifyBody")}</p>
         <Arrow />
       </StyledBanner>
-      <StepModal
-        step={step}
-        header={steps[step]?.header}
-        icon={steps[step]?.icon}
-        status={steps[step]?.status}
-        body={steps[step]?.body}
-        actionText={steps[step]?.actionText}
-        onNext={
-          step === "finish"
-            ? () => window.location.reload()
-            : step === "start"
-            ? getSessionUrl
-            : cancelVerification
-        }
-        onCancel={cancelVerification}
-        t={t}
-      />
+      {step && (
+        <StepModal
+          step={step}
+          header={steps[step]?.header}
+          icon={steps[step]?.icon}
+          status={steps[step]?.status}
+          body={steps[step]?.body}
+          actionText={steps[step]?.actionText}
+          onNext={
+            step === "finish"
+              ? () => window.location.reload()
+              : step === "start"
+              ? getSessionUrl
+              : cancelVerification
+          }
+          onCancel={cancelVerification}
+          t={t}
+        />
+      )}
     </>
   );
 }
