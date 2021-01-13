@@ -73,8 +73,8 @@ const URLS = {
 
 const filters = Object.values(filterOptions);
 
-const Highlight = ({ text = "", highlight = "" }) => {
-  if (!highlight || !highlight.trim() || !(typeof text === "string")) {
+const highlightString = (text, highlight) => {
+  if (!highlight || !highlight.trim()) {
     return text;
   }
   const regex = highlightSearchRegex(highlight);
@@ -84,6 +84,19 @@ const Highlight = ({ text = "", highlight = "" }) => {
     .map((part) =>
       regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
     );
+};
+
+const Highlight = ({ textObj = "", highlight = "" }) => {
+  if (typeof textObj === "string") {
+    return highlightString(textObj, highlight);
+  }
+  // linkify result could be Array
+  if (Array.isArray(textObj)) {
+    return textObj.map((part) =>
+      typeof part === "string" ? highlightString(part, highlight) : part,
+    );
+  }
+  return textObj;
 };
 
 export const CONTENT_LENGTH = 120;
@@ -433,7 +446,10 @@ const Post = ({
       title={
         <div className="title-wrapper">
           <span className="author">
-            <Highlight text={post?.author?.name} highlight={highlightWords} />
+            <Highlight
+              textObj={post?.author?.name}
+              highlight={highlightWords}
+            />
             {post?.author?.verified && <VerificationTick />}
           </span>
           <div
@@ -843,10 +859,10 @@ const renderContent = (title, content, highlightWords, showComplete) => {
   return (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        <Highlight text={linkify(title)} highlight={highlightWords} />
+        <Highlight textObj={linkify(title)} highlight={highlightWords} />
       </Heading>
       <p className="post-description">
-        <Highlight text={linkify(finalContent)} highlight={highlightWords} />
+        <Highlight textObj={linkify(finalContent)} highlight={highlightWords} />
       </p>
     </Card.Body>
   );
