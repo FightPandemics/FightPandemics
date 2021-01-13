@@ -51,7 +51,6 @@ const notificationSchema = new Schema(
       type: {
         type: String,
       },
-      verified: Boolean,
     },
     isCleared: {
       type: Boolean,

@@ -59,7 +59,6 @@ class Notifier {
         name: triggeredBy.name,
         photo: triggeredBy.photo,
         type: triggeredBy.type,
-        verified: triggeredBy.verification && triggeredBy.verification.status === "approved",
       },
       isCleared: false,
     };

@@ -32,7 +32,6 @@ import {
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import MessageModal from "components/Feed/MessagesModal/MessageModal.js";
 import GTM from "constants/gtm-tags";
-import VerificationTick from "components/Verification/Tick";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -52,9 +51,6 @@ const UserCard = styled(PostCard)`
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      .verification-tick {
-        vertical-align: middle!important;
-      }
       a {
         &:hover {
           color: inherit;
@@ -175,7 +171,6 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
     industry,
     type,
     location,
-    verified,
   } = _user || {};
 
   const AvatarName =
@@ -264,7 +259,6 @@ const User = ({ currentUser, highlightWords, isAuthenticated, user }) => {
                 }`}
                 highlight={highlightWords}
               />
-              {verified && <VerificationTick />}
             </Link>
             <ProfileType>
               <SvgIcon

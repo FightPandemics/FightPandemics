@@ -81,7 +81,7 @@ async function routes(app) {
 
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
-        const keywordsRegex = createSearchRegex(keywords);
+        const keywordsRegex = createSearchRegex(keywords)
         filters.push({
           $or: [
             { name: keywordsRegex },
@@ -152,13 +152,6 @@ async function routes(app) {
             global: true,
             location: true,
             photo: true,
-            verified: {
-              $cond: [
-                { $eq: ["$verification.status", "approved"] },
-                true,
-                false,
-              ],
-            },
           },
         },
       ];
@@ -270,11 +263,6 @@ async function routes(app) {
       return {
         ...result.toObject(),
         isOwner: userId !== null && userId.equals(result.ownerId),
-        verified:
-          result.verification && result.verification.status === "approved"
-            ? true
-            : false,
-        verification: null,
       };
     },
   );

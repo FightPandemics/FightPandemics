@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
 import { mq } from "constants/theme";
 import GTM from "constants/gtm-tags";
 import { EmptyInbox } from "components/Inbox/EmptyInbox";
-import VerificationTick from "components/Verification/Tick";
 
 const UserName = styled.h4`
   line-height: 2;
@@ -19,11 +18,6 @@ const UserName = styled.h4`
   overflow-x: hidden;
   text-overflow: ellipsis;
   margin-bottom: -0.3em;
-  .verification-tick {
-    padding: 0.2rem;
-    top: 0.4rem;
-    margin-left: 0.5rem;
-  }
 `;
 const SettingsIcon = styled.img`
   position: absolute;
@@ -105,7 +99,7 @@ export const ChatList = ({
               </Badge>
               <content>
                 <header>
-                  <UserName>{receiver.name}{receiver.verified && <VerificationTick />}</UserName>
+                  <UserName>{receiver.name}</UserName>
                   <h5>
                     {_room.lastMessage
                       ? moment(_room.lastMessage.createdAt).format("MMM. DD")

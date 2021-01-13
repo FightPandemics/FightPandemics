@@ -119,6 +119,7 @@ function onSocketConnect(socket) {
         return res({ code: 500, message: "Internal server error" });
       if (!sender || !receiver)
         return res({ code: 404, message: "User not found" });
+      // let newThread = { participants: [] };
       const newThread = {
         participants: [sender, receiver].map((participant) => ({
           id: participant._id,
@@ -129,7 +130,6 @@ function onSocketConnect(socket) {
           photo: participant.photo,
           status: participant == sender ? "accepted" : "pending",
           type: participant.type,
-          verified: participant.verification && participant.verification.status === "approved",
         })),
       };
       [threadErr, thread] = await this.to(new Thread(newThread).save());

@@ -83,14 +83,6 @@ data "aws_ssm_parameter" "redis_host" {
   name  = "/fp/redis/host"
 }
 
-data "aws_ssm_parameter" "veriff_public_key" {
-  name  = "/fp/veriff/public_key"
-}
-
-data "aws_ssm_parameter" "veriff_private_key" {
-  name  = "/fp/veriff/private_key"
-}
-
 data "aws_ssm_parameter" "cdn_base_url" {
   name = "/fp/cdn/base_url"
 }
@@ -197,14 +189,6 @@ module "main" {
     {
       name  = "S3_CDN_BUCKET"
       value = "fp-${var.fp_context}-cdn"
-    },
-    {
-      name  = "VERIFF_PUBLIC_KEY"
-      value = data.aws_ssm_parameter.veriff_public_key.value
-    },
-    {
-      name  = "VERIFF_PRIVATE_KEY"
-      value = data.aws_ssm_parameter.veriff_private_key.value
     },
     {
       name  = "CDN_BASE_URL"

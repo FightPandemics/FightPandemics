@@ -138,7 +138,7 @@ const PostCard = styled(Card)`
         cursor: pointer;
       }
 
-      svg:not(.verification-tick) {
+      svg {
         circle {
           fill: ${darkGray};
         }
@@ -159,10 +159,6 @@ const PostCard = styled(Card)`
         font-weight: 500;
         .title-wrapper {
           cursor: default;
-        }
-        .verification-tick {
-          vertical-align: sub;
-          top: unset!important;
         }
         > .ant-avatar-circle,
         > img {

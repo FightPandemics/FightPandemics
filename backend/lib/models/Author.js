@@ -33,7 +33,6 @@ const authorSchema = new Schema({
     trim: true,
     type: String,
   },
-  verified: Boolean,
 });
 
 // -- Model

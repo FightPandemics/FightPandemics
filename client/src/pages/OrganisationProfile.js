@@ -34,8 +34,6 @@ import { FeedWrapper } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
-import Verification from "components/Verification/";
-import VerificationTick from "components/Verification/Tick";
 
 import Loader from "components/Feed/StyledLoader";
 import {
@@ -140,15 +138,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const {
-    email,
-    name,
-    location = {},
-    about = "",
-    isOwner,
-    urls = {},
-    verified,
-  } = organisation || {};
+  const { email, name, location = {}, about = "", isOwner, urls = {} } =
+    organisation || {};
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
   if (isOwner) sessionStorage.removeItem("msgModal");
@@ -452,9 +443,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             <UserInfoDesktop>
               <NameDiv>
                 <div className="name-container">
-                  <NamePara>
-                    {name} {verified && <VerificationTick />}
-                  </NamePara>
+                  <NamePara>{name}</NamePara>
                   {address && (
                     <div title={address} className="address-container">
                       <img src={locationIcon} alt={address} />
@@ -486,7 +475,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </IconsContainer>
             </UserInfoDesktop>
           </UserInfoContainer>
-          {isSelf && !verified && <Verification />}
           <WhiteSpace />
           <div>
             <SectionHeader>
