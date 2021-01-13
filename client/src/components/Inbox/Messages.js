@@ -18,6 +18,7 @@ import { mq } from "constants/theme";
 import { AlertBox } from "./AlertBox";
 import { useTranslation } from "react-i18next";
 import GTM from "constants/gtm-tags";
+import { linkify } from "utils/validators";
 const { Text } = Typography;
 
 const GROUP_MESSAGES_TIME_FRAME = 3; // minutes
@@ -72,28 +73,6 @@ const Messages = ({
   }, [getScrollToBottom]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
-
-  const linkify = (text) => {
-    let urlRegex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-    function urlify(text) {
-      if (urlRegex.test(text))
-        return (
-          <a
-            target="_blank"
-            key={Math.random().toString(36)}
-            href={`${text.startsWith("http") ? "" : "//"}${text}`}
-          >
-            {text}
-          </a>
-        );
-      else return text;
-    }
-    let output = [];
-    text.split(/(\s+)/).forEach((word) => {
-      output.push(urlify(word));
-    });
-    return output;
-  };
 
   // messages time grouping
   const shouldShowTime = (messageIndex) => {
