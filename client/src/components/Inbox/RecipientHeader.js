@@ -9,8 +9,10 @@ import { ChatContext } from "context/ChatContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import getRelativeTime from "utils/relativeTime";
 import { AlertBox } from "./AlertBox";
+import VerificationTick from "components/Verification/Tick";
 import { useTranslation } from "react-i18next";
 import GTM from "constants/gtm-tags";
+
 const { Text } = Typography;
 
 const RecipientName = styled.div`
@@ -24,6 +26,11 @@ const RecipientName = styled.div`
   flex-wrap: wrap;
   align-items: center;
   padding-left: 1em;
+  .verification-tick {
+    padding: 0.2rem;
+    top: 0.4rem;
+    margin-left: 0;
+  }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     background-color: #ffffff;
     position: fixed;
@@ -96,7 +103,7 @@ export const RecipientHeader = ({
   archiveThread,
   blockStatus,
   senderIsPending,
-  receiverIsPending
+  receiverIsPending,
 }) => {
   const { t } = useTranslation();
   const { setToggleMobileChatList } = useContext(ChatContext);
@@ -209,7 +216,7 @@ export const RecipientHeader = ({
             <span className={`status-indicator ${status}`}></span>
           </Badge>
           <h4>
-            {participant.name}
+            {participant.name} {participant.verified && <VerificationTick />}
             <LastSeen>
               {status == "online" ? (
                 t("messaging.activeNow")

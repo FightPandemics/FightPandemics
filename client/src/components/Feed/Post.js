@@ -47,6 +47,7 @@ import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
 import PostPlaceHolder from "./PostPlaceHolder";
+import VerificationTick from "components/Verification/Tick";
 import { linkify } from "utils/validators";
 
 // Icons
@@ -61,6 +62,7 @@ import {
   DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import { postsActions } from "reducers/posts";
+import { theme } from "constants/theme";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
@@ -432,6 +434,7 @@ const Post = ({
         <div className="title-wrapper">
           <span className="author">
             <Highlight text={post?.author?.name} highlight={highlightWords} />
+            {post?.author?.verified && <VerificationTick />}
           </span>
           <div
             className="sub-header"
@@ -583,7 +586,7 @@ const Post = ({
             )}
             <div className="pre-header post-page">
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-              <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+              <Tooltip color={theme.colors.darkGray} title={translateISOTimeTitle(post.createdAt)}>
                 <span className="timestamp">
                   {t(
                     `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
@@ -711,7 +714,7 @@ const Post = ({
               )}
               <div className="pre-header">
                 <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-                <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+                <Tooltip color={theme.colors.darkGray} title={translateISOTimeTitle(post.createdAt)}>
                   <span className="timestamp">
                     {t(
                       `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
