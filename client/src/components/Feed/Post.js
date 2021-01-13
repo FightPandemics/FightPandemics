@@ -74,7 +74,7 @@ const URLS = {
 const filters = Object.values(filterOptions);
 
 const Highlight = ({ text = "", highlight = "" }) => {
-  if (!highlight || !highlight.trim()) {
+  if (!highlight || !highlight.trim() || !(typeof text === "string")) {
     return text;
   }
   const regex = highlightSearchRegex(highlight);
@@ -586,7 +586,10 @@ const Post = ({
             )}
             <div className="pre-header post-page">
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-              <Tooltip color={theme.colors.darkGray} title={translateISOTimeTitle(post.createdAt)}>
+              <Tooltip
+                color={theme.colors.darkGray}
+                title={translateISOTimeTitle(post.createdAt)}
+              >
                 <span className="timestamp">
                   {t(
                     `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
@@ -714,7 +717,10 @@ const Post = ({
               )}
               <div className="pre-header">
                 <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-                <Tooltip color={theme.colors.darkGray} title={translateISOTimeTitle(post.createdAt)}>
+                <Tooltip
+                  color={theme.colors.darkGray}
+                  title={translateISOTimeTitle(post.createdAt)}
+                >
                   <span className="timestamp">
                     {t(
                       `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
