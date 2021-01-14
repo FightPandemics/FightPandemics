@@ -40,22 +40,23 @@ const ModalComponent = ({
       question: t("post.whatNeed"),
     },
   ];
-
   // if editing post then set tab to show
-  if (currentPost.objective === "offer"){
-    tabs = [
-      {
-      key: "offer",
-      title: t("post.givingHelp"),
-      question: t("post.whatGiving"),
-      }
-    ]
-  } else {
-    tabs=[{key: "request",
-    title: t("post.gettingHelp"),
-    question: t("post.whatNeed"),
-    }]
-  }
+  if (currentPost){
+    if (currentPost.objective === "offer"){
+      tabs = [
+        {
+        key: "offer",
+        title: t("post.givingHelp"),
+        question: t("post.whatGiving"),
+        }
+      ]
+    } else if (currentPost.objective === 'request') {
+      tabs=[{key: "request",
+      title: t("post.gettingHelp"),
+      question: t("post.whatNeed"),
+      }]
+    }
+}
 
   const [showModal, setShowModal] = useState(true);
   const closeModal = () => (onClose ? onClose() : setShowModal(false));
