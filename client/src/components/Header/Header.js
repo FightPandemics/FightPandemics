@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Zendesk, { ZendeskAPI } from 'react-zendesk';
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
 import { Link, NavLink } from "react-router-dom";
@@ -155,7 +156,7 @@ const Header = ({
   setOrganisationId,
   webSocket,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { rooms } = webSocket;
 
   const index = localStorage.getItem("organisationId");
@@ -190,8 +191,13 @@ const Header = ({
     );
   };
 
+  useEffect(()=>{
+    ZendeskAPI('webWidget', "setLocale", `${i18n.language}`);
+  }, [i18n.language])
+
   return (
     <HeaderWrapper className="header">
+      <Zendesk zendeskKey={"95ac876b-8717-438b-ac57-7a2239714c9b"} />
       <StyledNavBar
         mode="light"
         leftContent={
