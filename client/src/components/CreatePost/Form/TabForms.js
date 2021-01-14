@@ -27,18 +27,31 @@ const ModalComponent = ({
   gtmTagPrefix,
 }) => {
   const { t } = useTranslation();
-  const tabs = [
-    {
+  const tabs = [];
+  const typeOfHelp = {
+    "offer":{
       key: "offer",
       title: t("post.givingHelp"),
       question: t("post.whatGiving"),
     },
-    {
+    "request":{
       key: "request",
       title: t("post.gettingHelp"),
       question: t("post.whatNeed"),
-    },
-  ];
+    }
+  }
+
+  if (currentPost){
+    if (currentPost.objective){
+      // add only specific Tab if there is already an objective "request/offer"
+      tabs.push(typeOfHelp[`${currentPost.objective}`])
+    }
+  } else {
+    // add all keys if no objective is found or is undefined
+    for (let key of Object.keys(typeOfHelp)){
+      tabs.push(typeOfHelp[key])
+    }
+  }
 
   const [showModal, setShowModal] = useState(true);
   const closeModal = () => (onClose ? onClose() : setShowModal(false));
@@ -63,21 +76,21 @@ const ModalComponent = ({
       >
         {currentPost
           ? tabs.map((tab) => (
-              <TabPane tab={tab.title} key={tab.key}>
-                <EditForm
-                  type={tab.key}
-                  textData={{ question: tab.question }}
-                  onClose={onClose}
-                  loadPost={loadPost}
-                  fullContent={fullContent}
-                  dispatchAction={dispatchAction}
-                  currentPost={currentPost}
-                  user={user}
-                  onSelect={handleEditPost}
-                  isAuthenticated={isAuthenticated}
-                  onCancel={handleCloseEditPost}
-                />
-              </TabPane>
+            <TabPane tab={tab.title}>
+            <EditForm
+              type={tab.key}
+              textData={{ question: tab.question }}
+              onClose={onClose}
+              loadPost={loadPost}
+              fullContent={fullContent}
+              dispatchAction={dispatchAction}
+              currentPost={currentPost}
+              user={user}
+              onSelect={handleEditPost}
+              isAuthenticated={isAuthenticated}
+              onCancel={handleCloseEditPost}
+            />
+          </TabPane>
             ))
           : tabs.map((tab) => (
               <TabPane
