@@ -27,36 +27,27 @@ const ModalComponent = ({
   gtmTagPrefix,
 }) => {
   const { t } = useTranslation();
+
   // default tabs
-  let tabs = [
-    {
+  const tabs = [];
+  const typeOfHelp = [
+    {'offer':{
       key: "offer",
       title: t("post.givingHelp"),
       question: t("post.whatGiving"),
-    },
-    {
+  }},
+    {'request':{
       key: "request",
       title: t("post.gettingHelp"),
       question: t("post.whatNeed"),
-    },
-  ];
+  }}]
+
   // if editing post then set tab to show
   if (currentPost){
-    if (currentPost.objective === "offer"){
-      tabs = [
-        {
-        key: "offer",
-        title: t("post.givingHelp"),
-        question: t("post.whatGiving"),
-        }
-      ]
-    } else if (currentPost.objective === 'request') {
-      tabs=[{key: "request",
-      title: t("post.gettingHelp"),
-      question: t("post.whatNeed"),
-      }]
+    if (currentPost.objective){
+      tabs.push(typeOfHelp[`${currentPost.objective}`])
+      }
     }
-}
 
   const [showModal, setShowModal] = useState(true);
   const closeModal = () => (onClose ? onClose() : setShowModal(false));
