@@ -4,9 +4,6 @@ class OfferHelpQuestionPage {
   checkboxOptionOne = "div#OFS1_VO";
   checkboxOptionTwo = "div#OFS1_DI";
   checkboxOptionThree = "div#OFS1_ORG";
-  checkboxOne = "div#OFS1_VO label span input";
-  checkboxTwo = "div#OFS1_DI label span input";
-  checkboxThree = "div#OFS1_ORG label span input";
   nextButtonOne = "a#OF1_NE";
   backButtonOne = "a#OF1_BA";
 
@@ -49,27 +46,15 @@ class OfferHelpQuestionPage {
   }
 
   getCheckboxOptionOne() {
-    return cy.get(this.checkboxOptionOne);
+    return this.checkboxOptionOne;
   }
 
   getCheckboxOptionTwo() {
-    return cy.get(this.checkboxOptionTwo);
+    return this.checkboxOptionTwo;
   }
 
   getCheckboxOptionThree() {
-    return cy.get(this.checkboxOptionThree);
-  }
-
-  getCheckboxOne() {
-    return cy.get(this.checkboxOne);
-  }
-
-  getCheckboxTwo() {
-    return cy.get(this.checkboxTwo);
-  }
-
-  getCheckboxThree() {
-    return cy.get(this.checkboxThree);
+    return this.checkboxOptionThree;
   }
 
   getNextButtonOne() {

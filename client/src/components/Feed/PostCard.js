@@ -231,6 +231,9 @@ const PostCard = styled(Card)`
         line-height: 2rem;
         letter-spacing: -0.03rem;
         -webkit-text-stroke: 0.2px;
+        a {
+            text-decoration: underline;
+        }
       }
 
       &.content-wrapper {

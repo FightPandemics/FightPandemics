@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FEED, PROFILE } from "../templates/RouteWithSubRoutes";
 import { refetchUser } from "actions/authActions";
+import { setOrganisation } from "../actions/profileActions";
 
 import {
   ProfileCompletedButtonsWrapper,
@@ -16,13 +17,22 @@ import {
 import GTM from "constants/gtm-tags";
 import { connect } from "react-redux";
 
-const ProfileCompleted = ({ user, refetchUser }) => {
+const ProfileCompleted = ({ user, refetchUser, setOrganisationId }) => {
   const { t } = useTranslation();
   const location = useLocation();
   useEffect(() => {
     refetchUser();
     // will only run once (on mount) to update navbar org list
   }, [refetchUser]);
+
+  const switchAccountDrawerMenu = () => {
+    if (location?.state?.orgId) {
+      const index = location.state.orgId;
+      localStorage.setItem("organisationId", index);
+      setOrganisationId(index);
+    }
+  };
+
   return (
     <ProfileCompletedWrapper>
       <ProfileCompletedHeader>
@@ -45,6 +55,7 @@ const ProfileCompleted = ({ user, refetchUser }) => {
           <StyledButton
             tertiary={true}
             id={GTM.user.profilePrefix + GTM.profile.viewProfile}
+            onClick={switchAccountDrawerMenu}
           >
             {t("profile.common.viewMyProfile")}
           </StyledButton>
@@ -66,6 +77,7 @@ const ProfileCompleted = ({ user, refetchUser }) => {
 
 const mapDispatchToProps = {
   refetchUser,
+  setOrganisationId: setOrganisation,
 };
 
 export default connect(null, mapDispatchToProps)(ProfileCompleted);

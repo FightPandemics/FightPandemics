@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { WhiteSpace } from "antd-mobile";
 import GetInvButton from "components/Button/GetInvolvedButton";
 import LinkButton from "components/Button/LinkButton";
 import HelpBoardButton from "components/Button/HelpBoardButton";
@@ -18,6 +19,7 @@ import {
   AboutUsLink,
   FlexBox,
   PressContainer,
+  BookCallContainer,
   SocialStyle,
 } from "components/AboutUs/AboutUsContainer";
 // import OurStory from "assets/ourStory.mp4";
@@ -373,7 +375,7 @@ const AboutUs = () => {
         </p>
         <h3>{t("currentPartners")}</h3>
         {/* max-width will change according to number of logos */}
-        <SupportersLogosContainer style={{ maxWidth: "35rem" }}>
+        <SupportersLogosContainer style={{ maxWidth: "35rem" }} id="AU_CP">
           <LogosList supporterLogos={communityPartnersLogos} />
         </SupportersLogosContainer>
       </SupporterContainer>
@@ -428,6 +430,21 @@ const AboutUs = () => {
           </LinkButton>
         </FlexBox>
       </PressContainer>
+
+      <BookCallContainer>
+        <FlexBox direction="column" align="center">
+          <h1>{t("bookCall")}</h1>
+          <p>{t("bookCallInfo")}</p>
+          <WhiteSpace size="xl" />
+          <WhiteSpace size="lg" />
+          <LinkButton
+            href="https://calendly.com/fightpandemics"
+            target="_blank"
+          >
+            {t("bookCallLink")}
+          </LinkButton>
+        </FlexBox>
+      </BookCallContainer>
 
       <SocialStyle>
         <FlexBox direction="column" align="center">

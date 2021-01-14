@@ -8,7 +8,7 @@ class Post {
   postTags = "div.am-card-body";
   postPageLink = 'a[href^="/post/"]';
   modalWindowShareVia = 'div[role="document"]';
-  modalWindowShareViaH4Title = "div.am-modal-body h4";
+  modalWindowShareViaH4Title = "div.am-modal-header div";
   modalWindowCloseButton = "span.am-modal-close-x";
   modalWindowEmailButton = 'button[aria-label="email"]';
   modalWindowFacebookButton = 'button[aria-label="facebook"]';

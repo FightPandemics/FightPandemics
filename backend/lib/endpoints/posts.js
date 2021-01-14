@@ -135,6 +135,9 @@ async function routes(app) {
             { content: keywordsRegex },
             { "author.name": keywordsRegex },
             { types: keywordsRegex },
+            { "author.location.country": keywordsRegex },
+            { "author.location.state": keywordsRegex },
+            { "author.location.city": keywordsRegex },
           ],
         });
       }
@@ -367,8 +370,12 @@ async function routes(app) {
           "author.location.zip": false,
         }),
       );
-      if (postErr) {
-        req.log.error(postErr, "Failed retrieving post");
+      
+      if (postErr){
+        if (postErr instanceof mongoose.Error.CastError){
+            req.log.error(postErr, "Can't find a post with given id");
+            throw app.httpErrors.badRequest();
+        }
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
         throw app.httpErrors.notFound();
@@ -411,11 +418,11 @@ async function routes(app) {
           isEdited: post.isEdited, // keep frontend format
         },
         reportsCount: (post.reportedBy || []).length,
+        commentsCount: commentQuery || 0,
       };
       delete projectedPost.reportedBy;
 
       return {
-        numComments: commentQuery || 0,
         post: projectedPost,
       };
     },

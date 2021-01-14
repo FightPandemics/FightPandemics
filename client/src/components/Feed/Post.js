@@ -47,6 +47,7 @@ import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
 import PostPlaceHolder from "./PostPlaceHolder";
+import { linkify } from "utils/validators";
 
 // Icons
 import SvgIcon from "../Icon/SvgIcon";
@@ -70,7 +71,7 @@ const URLS = {
 
 const filters = Object.values(filterOptions);
 
-const Highlight = ({ text = "", highlight = "" }) => {
+const highlightString = (text, highlight) => {
   if (!highlight || !highlight.trim()) {
     return text;
   }
@@ -81,6 +82,19 @@ const Highlight = ({ text = "", highlight = "" }) => {
     .map((part) =>
       regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
     );
+};
+
+const Highlight = ({ textObj = "", highlight = "" }) => {
+  if (typeof textObj === "string") {
+    return highlightString(textObj, highlight);
+  }
+  // linkify result could be Array
+  if (Array.isArray(textObj)) {
+    return textObj.map((part) =>
+      typeof part === "string" ? highlightString(part, highlight) : part,
+    );
+  }
+  return textObj;
 };
 
 export const CONTENT_LENGTH = 120;
@@ -96,7 +110,6 @@ const Post = ({
   highlightWords,
   includeProfileLink,
   isAuthenticated,
-  numComments,
   onSelect,
   onChange,
   postDelete,
@@ -210,8 +223,8 @@ const Post = ({
           SET_COMMENTS,
           "comments",
           allComments,
-          "numComments",
-          commentCountRes.data.numComments,
+          "commentsCount",
+          commentCountRes.data.post.commentsCount,
         );
       }
 
@@ -275,8 +288,8 @@ const Post = ({
         SET_COMMENTS,
         "comments",
         allComments,
-        "numComments",
-        commentCountRes.data.numComments,
+        "commentsCount",
+        commentCountRes.data.post.commentsCount,
       );
       setComment([]);
     }
@@ -329,8 +342,8 @@ const Post = ({
           SET_COMMENTS,
           "comments",
           filterComments,
-          "numComments",
-          commentCountRes.data.numComments,
+          "commentsCount",
+          commentCountRes.data.post.commentsCount,
         );
       }
     }
@@ -431,7 +444,10 @@ const Post = ({
       title={
         <div className="title-wrapper">
           <span className="author">
-            <Highlight text={post?.author?.name} highlight={highlightWords} />
+            <Highlight
+              textObj={post?.author?.name}
+              highlight={highlightWords}
+            />
           </span>
           <div
             className="sub-header"
@@ -538,7 +554,7 @@ const Post = ({
         postContent={post?.content}
         showComments={showComments}
         numLikes={post?.likesCount}
-        numComments={numComments}
+        commentsCount={commentsCount}
         isAuthenticated={isAuthenticated}
         setShowComments={setShowComments}
         setShowShareModal={setShowShareModal}
@@ -834,10 +850,10 @@ const renderContent = (title, content, highlightWords, showComplete) => {
   return (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        <Highlight text={title} highlight={highlightWords} />
+        <Highlight textObj={linkify(title)} highlight={highlightWords} />
       </Heading>
       <p className="post-description">
-        <Highlight text={finalContent} highlight={highlightWords} />
+        <Highlight textObj={linkify(finalContent)} highlight={highlightWords} />
       </p>
     </Card.Body>
   );

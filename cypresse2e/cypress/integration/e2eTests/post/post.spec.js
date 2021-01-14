@@ -4,7 +4,7 @@ import Post from "../../../elements/pages/post";
 describe("FightPandemics Post for unauthorized user", () => {
   const helpBoard = new HelpBoard();
   const post = new Post();
-  const shareViaModalWindowTitle = "Share via...";
+  const shareViaModalWindowTitle = "Share Post";
 
   context("User opens Help Board", () => {
     beforeEach(() => {
@@ -36,10 +36,7 @@ describe("FightPandemics Post for unauthorized user", () => {
             .getPostTags()
             .children()
             .should(($tags) => {
-              expect($tags).to.have.attr("class").contains("am-tag-disabled");
-              expect($tags.children())
-                .to.have.attr("class")
-                .contains("am-tag-text");
+              expect($tags).to.have.attr("disabled");
             });
         },
       );
