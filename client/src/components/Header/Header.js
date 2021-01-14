@@ -192,7 +192,7 @@ const Header = ({
   };
 
   useEffect(() => {
-    ZendeskAPI("webWidget", "setLocale", i18n.language);
+    ZendeskAPI("webWidget", "setLocale", `${i18n.language}`);
   }, [i18n.language]);
 
   return (
