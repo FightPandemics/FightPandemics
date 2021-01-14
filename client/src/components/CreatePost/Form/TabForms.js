@@ -27,7 +27,8 @@ const ModalComponent = ({
   gtmTagPrefix,
 }) => {
   const { t } = useTranslation();
-  const tabs = [
+  // default tabs
+  let tabs = [
     {
       key: "offer",
       title: t("post.givingHelp"),
@@ -39,6 +40,22 @@ const ModalComponent = ({
       question: t("post.whatNeed"),
     },
   ];
+
+  // if editing post then set tab to show
+  if (currentPost.objective === "offer"){
+    tabs = [
+      {
+      key: "offer",
+      title: t("post.givingHelp"),
+      question: t("post.whatGiving"),
+      }
+    ]
+  } else {
+    tabs=[{key: "request",
+    title: t("post.gettingHelp"),
+    question: t("post.whatNeed"),
+    }]
+  }
 
   const [showModal, setShowModal] = useState(true);
   const closeModal = () => (onClose ? onClose() : setShowModal(false));
@@ -63,21 +80,21 @@ const ModalComponent = ({
       >
         {currentPost
           ? tabs.map((tab) => (
-              <TabPane tab={tab.title} key={tab.key}>
-                <EditForm
-                  type={tab.key}
-                  textData={{ question: tab.question }}
-                  onClose={onClose}
-                  loadPost={loadPost}
-                  fullContent={fullContent}
-                  dispatchAction={dispatchAction}
-                  currentPost={currentPost}
-                  user={user}
-                  onSelect={handleEditPost}
-                  isAuthenticated={isAuthenticated}
-                  onCancel={handleCloseEditPost}
-                />
-              </TabPane>
+            <TabPane tab={tab.title}>
+            <EditForm
+              type={tab.key}
+              textData={{ question: tab.question }}
+              onClose={onClose}
+              loadPost={loadPost}
+              fullContent={fullContent}
+              dispatchAction={dispatchAction}
+              currentPost={currentPost}
+              user={user}
+              onSelect={handleEditPost}
+              isAuthenticated={isAuthenticated}
+              onCancel={handleCloseEditPost}
+            />
+          </TabPane>
             ))
           : tabs.map((tab) => (
               <TabPane
