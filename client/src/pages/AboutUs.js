@@ -438,6 +438,7 @@ const AboutUs = () => {
           <WhiteSpace size="xl" />
           <WhiteSpace size="lg" />
           <LinkButton
+            id="AU_BC"
             href="https://calendly.com/fightpandemics"
             target="_blank"
           >
