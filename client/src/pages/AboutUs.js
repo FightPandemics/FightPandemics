@@ -375,7 +375,10 @@ const AboutUs = () => {
         </p>
         <h3>{t("currentPartners")}</h3>
         {/* max-width will change according to number of logos */}
-        <SupportersLogosContainer style={{ maxWidth: "35rem" }} id="AU_CP">
+        <SupportersLogosContainer
+          style={{ maxWidth: "35rem" }}
+          id={getGTM("currentPartners")}
+        >
           <LogosList supporterLogos={communityPartnersLogos} />
         </SupportersLogosContainer>
       </SupporterContainer>
@@ -396,18 +399,21 @@ const AboutUs = () => {
           {t("companyLogoInfo")}
         </p>
         <h3>{t("lifetimeSupporters")}</h3>
-        <SupportersLogosContainer id="AU_LS">
+        <SupportersLogosContainer id={getGTM("lifetimeSupporters")}>
           <LogosList supporterLogos={supporterLogosLifetime} />
         </SupportersLogosContainer>
         <br />
         <h3>{t("currentSupporters")}</h3>
-        <SupportersLogosContainer id="AU_CS">
+        <SupportersLogosContainer id={getGTM("currentSupporters")}>
           <LogosList supporterLogos={supporterLogosCurrent} />
         </SupportersLogosContainer>
         <br />
         <h4>{t("pastSupporters")}</h4>
         {/* max-width will change according to number of logos */}
-        <SupportersLogosContainer style={{ maxWidth: "35rem" }} id="AU_PS">
+        <SupportersLogosContainer
+          style={{ maxWidth: "35rem" }}
+          id={getGTM("pastSupporters")}
+        >
           <LogosList supporterLogos={supporterLogosPast} />
         </SupportersLogosContainer>
       </SupporterContainer>
@@ -422,7 +428,7 @@ const AboutUs = () => {
             </a>
           </p>
           <LinkButton
-            id="AU_PR"
+            id={getGTM("pressRelease")}
             href="https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5"
             target="_blank"
           >
@@ -438,7 +444,7 @@ const AboutUs = () => {
           <WhiteSpace size="xl" />
           <WhiteSpace size="lg" />
           <LinkButton
-            id="AU_BC"
+            id={getGTM("bookCall")}
             href="https://calendly.com/fightpandemics"
             target="_blank"
           >

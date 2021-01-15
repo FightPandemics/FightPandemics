@@ -192,6 +192,12 @@ module.exports = {
     joinVolunteer: "_GI_JV",
     joinAmbassador: "_GI_JA",
     joinStudentProgram: "_GI_JSP",
+    currentPartners: "_CP",
+    lifetimeSupporters: "_LS",
+    currentSupporters: "_CS",
+    pastSupporters: "_PS",
+    pressRelease: "_PR",
+    bookCall: "_BC",
   },
   notifications: {
     prefix: "NOT",
