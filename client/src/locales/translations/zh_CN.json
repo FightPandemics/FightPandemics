@@ -1,6 +1,6 @@
 {
   "headline": "一个提供和寻求帮助的地方",
-  "tagline": "<0>大流行病将继续发生。</0> <1>我们帮助社区做好准备并做出回应。</1>",
+  "tagline": "<0>大流行病或将继续发生。</0> <1>我们帮助社区做好准备并做出回应。</1>",
   "common": {
     "getHelp": "寻求帮助",
     "giveHelp": "提供帮助",
@@ -42,7 +42,7 @@
     "needHelp": {
       "whatHelp": "您需要什么类型的帮助？",
       "medical": "医疗",
-      "haveCovidSymptoms": "我有COVID-19的症状",
+      "haveCovidSymptoms": "我有COVID-19的症状。",
       "other": "其他帮助",
       "otherDesc": "我需要购买杂货/药品/等方面的帮助。"
     },
@@ -65,7 +65,7 @@
       "title": "筛选",
       "location": {
         "label": "位置",
-        "enterAddress": "输入地址，邮政编码或城市",
+        "enterAddress": "输入地址、邮政编码或城市",
         "shareLocation": "分享我的位置"
       },
       "providers": "提供者",
@@ -238,7 +238,7 @@
       "accountInfo": "帐户信息",
       "profileInfo": "个人信息",
       "address": "地址",
-      "enterAddress": "输入地址，邮政编码或城市",
+      "enterAddress": "输入地址、邮政编码或城市",
       "agreePrivacy": "注册即表示我同意<0>隐私政策</0>",
       "agreeTerms": "签署即表示我同意<0>条款</0>",
       "createProfile": "建立你的个人资料",
@@ -255,7 +255,7 @@
       "savingChanges": "正在保存更改...",
       "submit": "创建个人资料",
       "submitLoading": "正在创建个人资料...",
-      "invalidPassword": "密码必须包含以下至少3个：小写字母，大写字母，数字，特殊字符（例如！@＃$％^＆*）。",
+      "invalidPassword": "密码必须包含以下至少3个：小写字母、大写字母、数字、特殊字符（例如！@＃$％^＆*）。",
       "addressRequired": "地址为必填项。请输入您的地址，然后从下拉列表中选择",
       "emailRequired": "需要电子邮件信息",
       "passwordRequired": "密码是必填项",
@@ -299,7 +299,7 @@
       "shareInformation": "分享资讯",
       "iNeed": "我需要",
       "medical": "医疗帮助",
-      "haveCovidSymptoms": "我有COVID-19的症状",
+      "haveCovidSymptoms": "我有COVID-19的症状。",
       "other": "其他帮助",
       "otherDesc": "我需要购买杂货/药品/等方面的帮助。",
       "editProfile": "编辑个人资料",
@@ -363,7 +363,7 @@
         "活动服务",
         "筹款",
         "政府关系",
-        "健康，保健和健身",
+        "健康、保健和健身",
         "医院与医疗保健",
         "产业领域",
         "信息技术和服务",
@@ -412,7 +412,8 @@
     "passwordMin": "密码必须至少为{{num}}字符。",
     "passwordConfirmationRequired": "需要密码确认。",
     "passwordNotMatch": "密码不匹配",
-    "backHome": "返回主页面"
+    "backHome": "返回主页面",
+    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
   },
   "verifyEmail": {
     "checkInbox": "检查你的收件箱",
@@ -433,7 +434,7 @@
     "heading": "我们希望创造一个人类能更好更快地应对紧急情况的世界",
     "subHeading": "帮助社区更快、更有效地应对危机。",
     "forWhoHeading": "这是给谁的？",
-    "forWho": "需要或想要提供帮助的任何人或任何类型的企业，社区团体，政府或医疗保健组织。",
+    "forWho": "需要或想要提供帮助的任何人或任何类型的企业、社区团体、政府或医疗保健组织。",
     "FightPandemics": "FightPandemics",
     "storyInspired": "受到众人齐心合作的启发，Manuel在启动该项目时牢记着一个使命： <span>确保大家可以及时联系。 </span>",
     "connectPeople": "我们连接人们",
@@ -467,7 +468,10 @@
     "communityPartners": "社区合作伙伴",
     "communityCollaboration": "我们希望通过我们的平台增强世界各地的社区和组织的能力，为了做到这一点，我们需要共同努力！与社区合作伙伴的持续协作使我们能够为他们和其他人构建更好的平台。",
     "becomeCommunityPartner": "您希望你的社区也成为我们的合作伙伴吗？我们非常希望听到您的声音，并开始合作！请联系",
-    "currentPartners": "现在的社区合作伙伴"
+    "currentPartners": "现在的社区合作伙伴",
+    "bookCall": "Book Call",
+    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
+    "bookCallLink": "Book a Call"
   },
   "footer": {
     "faq": "常问问题",
@@ -486,8 +490,8 @@
       [
         "FightPandemics 是什么？",
         "FightPandemics是在COVID-19爆发期间创建的一个平台，旨在成为受疫情影响的人们的首选之地。",
-        "我们的主要任务是在地方和全球范围内，在大流行危机中联系提供和请求帮助的个人和组织。无论您是寻求医疗帮助，口罩，法律帮助，食品杂货，请人遛狗的人还是其他日常活动的帮助，都可以在这里查找：",
-        "我们努力收集高度分散的基本信息，将从事大流行相关问题或项目的个人，社区和组织连接到一个网络中。我们的愿景是通过帮助社区更快，更有效地应对突发卫生事件和人道主义危机，创建一个每个人都对突发事件更具抵抗力的世界。"
+        "我们的主要任务是在地方和全球范围内，在大流行危机中联系提供和请求帮助的个人和组织。无论您是寻求医疗帮助、口罩、法律帮助、食品杂货、请人遛狗的人还是其他日常活动的帮助，都可以在这里查找：",
+        "我们努力收集高度分散的基本信息，将从事大流行相关问题或项目的个人、社区和组织连接到一个网络中。我们的愿景是通过帮助社区更快，更有效地应对突发卫生事件和人道主义危机，创建一个每个人都对突发事件更具抵抗力的世界。"
       ],
       [
         "FightPandemics 是谁？",
@@ -508,7 +512,7 @@
       ],
       [
         "如何了解 FightPandemics 的最新信息？",
-        "请在社交媒体上关注我们！我们定期在<0> Facebook </0> ， <1> Twitter </1> ， <2> LinkedIn </2>和<3> Instagram </3>上更新动态。"
+        "请在社交媒体上关注我们！我们定期在<0> Facebook </0> 、 <1> Twitter </1> 、 <2> LinkedIn </2>和<3> Instagram </3>上更新动态。"
       ],
       [
         "我需要付费才能使用 FightPandemics 吗？",
@@ -573,7 +577,7 @@
       ],
       [
         "我可以向我所在的城市或州提供帮助吗？该帖子显示多长时间？",
-        "提供/接收帮助的帖子可以是在邮政编码，城市，州或国家/地区的不同级别，持续时间为一天，一周，一个月或永远。默认情况下，帖子将设置为城市级别一个月。"
+        "提供/接收帮助的帖子可以是在邮政编码、城市、州或国家/地区的不同级别，持续时间为一天、一周、一个月或永远。默认情况下，帖子将设置为城市级别一个月。"
       ],
       [
         "我的问题未列出。我可以联系谁？",
@@ -628,11 +632,11 @@
       ],
       [
         "我来自出版社/媒体。",
-        "请通过<0> pr@fightpandemics.com </0>与我们联系。"
+        "请通过<0>pr@fightpandemics.com</0>与我们联系。"
       ],
       [
         "我需要技术支持。",
-        "对此我们感到抱歉。发送电子邮件至<0>help@fightpandemics.com</0>由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
+        "对此我们感到抱歉。发送电子邮件至<0>support@fightpandemics.com</0>由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
       ],
       [
         "由于其他原因，我想联系FightPandemics。",
@@ -643,15 +647,15 @@
     "contactsFAQ": [
       [
         "我想成为合作伙伴或赞助商。",
-        "请通过<0> partnerships@fightpandemics.com与我们的合作伙伴团队联系。 </0>"
+        "请通过<0>partnerships@fightpandemics.com</0>与我们的合作伙伴团队联系。"
       ],
       [
         "我来自出版社/媒体。",
-        "请通过<0> pr@fightpandemics.com与我们联系。 </0>"
+        "请通过<0>pr@fightpandemics.com</0>与我们联系。"
       ],
       [
         "我需要技术支持。",
-        "对此我们感到抱歉。发送电子邮件至<0>help@fightpandemics.com。</0>由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
+        "对此我们感到抱歉。发送电子邮件至<0>support@fightpandemics.com</0>。由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
       ],
       [
         "由于其他原因，我想联系FightPandemics。",
@@ -662,7 +666,7 @@
   },
   "cookies": {
     "whatCookies": "什么是 COOKIES？",
-    "whatCookiesContent": "<0>本网站使用“ Cookies”和其他类似机制（以下称为Cookie）。 Cookies是通过网络服务器发送到浏览器的文件，用于记录用户在特定网站或该网站上所有网站，应用程序和/或服务上的活动。 Cookies的首要目的是为用户提供对所提供服务的更快，更个性化的访问。 Cookies仅与匿名用户及其计算机关联，并且不提供允许推断用户个人数据的参考。 </0><1>用户可以配置他/她的浏览器以通知和拒绝安装本网站发送的Cookies，而不会影响用户访问内容的能力。但是，我们注意到，无论如何，网站的性能可能会下降。该网站利用Web Bug，它们是在电子邮件中插入的微小且透明的图像。当用户打开网站的新闻通讯时，该图像将与其余电子邮件内容一起下载，并允许知道是否已打开特定电子邮件以及从中下载的IP地址。 FightPandemics使用此信息来获取统计信息，并对用户接收其电子邮件进行分析研究。 </1>",
+    "whatCookiesContent": "<0>本网站使用“ Cookies”和其他类似机制（以下称为Cookies）。 Cookies是通过网络服务器发送到浏览器的文件，用于记录用户在特定网站或该网站上所有网站，应用程序和/或服务上的活动。 Cookies的首要目的是为用户提供对所提供服务的更快，更个性化的访问。 Cookies仅与匿名用户及其计算机关联，并且不提供允许推断用户个人数据的参考。 </0><1>用户可以配置他/她的浏览器以通知和拒绝安装本网站发送的Cookies，而不会影响用户访问内容的能力。但是，我们注意到，无论如何，网站的性能可能会下降。该网站利用Web Bug，它们是在电子邮件中插入的微小且透明的图像。当用户打开网站的新闻通讯时，该图像将与其余电子邮件内容一起下载，并允许知道是否已打开特定电子邮件以及从中下载的IP地址。 FightPandemics使用此信息来获取统计信息，并对用户接收其电子邮件进行分析研究。 </1>",
     "typeCookies": "COOKIE 的类型、用途和功能",
     "typeCookiesBegin": "Cookies取决于其持久性，可以分为会话Cookies或永久Cookies。当用户关闭浏览器时，前者会过期。后者过期取决于完成它们所服务的目标的时间或何时将它们手动删除。另外，根据您的目标，本网站使用的Cookies可以分类如下：",
     "typeCookiesContent": "<0>技术cookie：这些cookie允许用户浏览网页，平台或应用程序，并使用其中存在的不同选项或服务，例如控制流量和数据通信，识别会话，访问受限访问零件，记住组成订单的元素，进行订单的购买过程，进行注册或参加活动的请求，在导航期间使用安全元素，存储用于传播视频或声音的内容或通过社交网络共享内容。 </0><1>分析cookie：由我们或第三方处理的cookie，它们可以量化用户数量，从而对所提供服务的用户使用情况进行度量和统计分析。为此，将分析您在我们网站上的浏览，以改善我们提供的产品或服务的提供。 </1><2>广告Cookie：由我们或第三方处理的Cookie，使我们能够以最有效的方式管理网站上广告空间的提供，以适应广告的内容所请求服务的内容或您在我们网站上进行的使用。为此，我们可以分析您浏览网页的习惯，并且可以向您显示与您的浏览配置文件相关的广告。 </2><3>行为广告Cookie：通过这些行为，可以以最有效的方式管理广告空间，在适当的情况下，编辑者已将其包含在网页，应用程序或平台中，以该广告空间提供所请求的内容服务。这些cookie存储有关用户行为的信息，这些信息是通过持续观察他们的浏览习惯而获得的，从而允许开发特定的配置文件以基于该配置文件显示广告。 </3>",
@@ -845,14 +849,17 @@
       "imageDimensionTooWide": "抱歉，图像太宽。请使用宽度小于高度两倍的图像重试。",
       "networkError": "抱歉，发生了一些网络错误。"
     },
-    "wrongOldPassword": "当前密码错误"
+    "wrongOldPassword": "当前密码错误",
+    "noEmailAccount": "找不到此电子邮件地址的帐户，请点击“立即加入”以创建帐户。",
+    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "failedLinkAccounts": "链接帐户失败，原因："
   },
   "TEMP: We are not a provider of healthcare services": "我们不是医疗服务提供商",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "这项服务是本着诚意为那些在此次空前的卫生危机下无法获得帮助和资源的人提供的。",
   "TEMP: Please consult your healthcare provider for medical advice": "请咨询医疗专业人员",
   "TEMP: I Understand": "我明白",
   "TEMP: COVID-19 Screening Tool": "COVID-19 筛查工具",
-  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "我们会问您一些有关您的症状，旅行和与他人接触的问题",
+  "TEMP: We will ask you a few questions about your symptoms, travels and contacts with others": "我们会问您一些有关您的症状、旅行和与他人接触的问题",
   "TEMP: Your answers will not be stored or shared. This is just a tool to help the world.": "您的答案不会被存储或共享。这只是帮助大家的工具。",
   "TEMP: For Myself": "我自己",
   "TEMP: For Someone Else": "其他人",
@@ -865,7 +872,7 @@
   "TEMP: Between 18 and 64": "18 至 64 岁之间",
   "TEMP: 65 or older": "65岁或以上",
   "TEMP: Multiple options can be selected": "可以选择多个选项",
-  "TEMP: Fever, chills, or sweating": "发烧，发冷或出汗",
+  "TEMP: Fever, chills, or sweating": "发烧、发冷或出汗",
   "TEMP: New or worsening cough": "新发的或恶化的咳嗽",
   "TEMP: Sore throat": "咽喉痛",
   "TEMP: Vomiting or diarrhea": "呕吐或腹泻",
@@ -933,7 +940,7 @@
     "emptyInbox": {
       "header": "您没有任何消息",
       "p1": "您尚未收到任何消息。",
-      "p2": "返回帮助版面以查找帮助或请求",
+      "p2": "返回帮助版面以查找帮助或请求。",
       "goToHB": "前往帮助版面"
     },
     "selectRoom": {

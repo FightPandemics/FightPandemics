@@ -45,6 +45,9 @@ const StyledComment = styled(Comment)`
           padding: 0 1.5rem 1.5rem;
           font-size: ${medium};
           line-height: 140%;
+          a {
+              text-decoration: underline;
+          }
         }
         .ant-comment-actions {
           position: relative;

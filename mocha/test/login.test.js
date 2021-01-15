@@ -4,7 +4,7 @@ const apiHelper = require("../utils/apiHelper");
 const apiEndPointHelper = require("../utils/apiEndpoints");
 const validator = require("../utils/validators");
 const testData = require("../utils/testData");
-let apiEndPoint = apiEndPointHelper.loginApiEndpoint;
+let apiEndPoint = apiEndPointHelper.loginEndpoint;
 let userCredentialsWithRandomEmailAndRandomPassword =
   testData.userCredentialsWithRandomEmailAndRandomPassword;
 let userCredentialsWithRandomEmail = testData.userCredentialsWithRandomEmail;
@@ -17,19 +17,18 @@ let userCredentialsWithEmailExceeding254Characters =
   testData.userCredentialsWithEmailExceeding254Characters;
 
 describe("POST Login endpoint tests for user that is NOT signed in", function () {
-  describe("401  - unauthorized", function () {
-    it("Unauthorized error - when trying to log in without signed in", async function () {
+  describe("400  - bad request", function () {
+    it("Bad request error - when trying to log in without signed in", async function () {
       let response = await apiHelper.sendPOSTRequest(
         APP_URL,
         apiEndPoint,
         userCredentialsWithRandomEmailAndRandomPassword,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.UNAUTHORIZED,
-        "Unauthorized",
-        "wrongCredentials",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "noEmailAccount",
+      });
     });
   });
 
@@ -43,12 +42,11 @@ describe("POST Login endpoint tests for user that is NOT signed in", function ()
           userCredentialsWithRandomEmail,
         );
       }
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.TOO_MANY_REQUESTS,
-        "Too Many Requests",
-        "maxSignInAttemptsExceeded",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.TOO_MANY_REQUESTS,
+        error: "Too Many Requests",
+        message: "maxSignInAttemptsExceeded",
+      });
     });
   });
 
@@ -59,12 +57,11 @@ describe("POST Login endpoint tests for user that is NOT signed in", function ()
         apiEndPoint,
         userCredentialsWithEmptyEmail,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        'body.email should match format "email"',
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: 'body.email should match format "email"',
+      });
     });
 
     it("Invalid email syntax triggers Bad Request error", async function () {
@@ -73,12 +70,11 @@ describe("POST Login endpoint tests for user that is NOT signed in", function ()
         apiEndPoint,
         userCredentialsWithInvalidEmailNoDomainSpecified,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        'body.email should match format "email"',
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: 'body.email should match format "email"',
+      });
     });
 
     it("Email local part bigger than 64 characters triggers Bad request error", async function () {
@@ -87,12 +83,11 @@ describe("POST Login endpoint tests for user that is NOT signed in", function ()
         apiEndPoint,
         userCredentialsWithEmailLocalExceeding64Characters,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.UNAUTHORIZED,
-        "Unauthorized",
-        "wrongCredentials",
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: "noEmailAccount",
+      });
     });
 
     //following the rules that Auth0 are using the email needs to have 64max for the local part and an overall max of 254 chars
@@ -102,12 +97,11 @@ describe("POST Login endpoint tests for user that is NOT signed in", function ()
         apiEndPoint,
         userCredentialsWithEmailExceeding254Characters,
       );
-      validator.validateStatusCodeErrorAndMessage(
-        response,
-        httpStatus.BAD_REQUEST,
-        "Bad Request",
-        'body.email should match format "email"',
-      );
+      validator.validateResponse(response.body, {
+        statusCode: httpStatus.BAD_REQUEST,
+        error: "Bad Request",
+        message: 'body.email should match format "email"',
+      });
     });
   });
 });

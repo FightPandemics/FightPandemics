@@ -38,7 +38,6 @@ const AutoSize = ({
         autoSize
         value={value}
         onChange={onChange}
-        onPressEnter={onPressEnter}
         placeholder={placeholder}
         maxLength={maxLength}
       />

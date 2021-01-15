@@ -422,6 +422,18 @@ export const PressContainer = styled.div`
   }
 `;
 
+export const BookCallContainer = styled.div`
+  padding: 3.85rem 0;
+  margin: 0 auto;
+  max-width: 50rem;
+  p {
+    font-size: 2rem;
+  }
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    padding: 2.36rem 0;
+  }
+`;
+
 export const SocialContainer = styled.div`
   text-align: left;
   display: flex;

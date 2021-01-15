@@ -7,6 +7,7 @@ import {
   FilterAccordion,
   FilterAccordionPanel,
   AccordionHeader,
+  StyledCheckbox,
 } from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
 import { SET_VALUE } from "hooks/actions/feedActions";
@@ -69,6 +70,9 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
     handleOption,
     location,
     selectedOptions,
+    ignoreUserLocation,
+    isAuthenticated,
+    toggleShowNearMe,
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
@@ -141,6 +145,15 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
       onChange={setActivePanel}
     >
       {renderPanels()}
+      {isAuthenticated && (
+        <StyledCheckbox
+          checked={!ignoreUserLocation}
+          onChange={toggleShowNearMe}
+          mobile
+        >
+          {t("feed.filters.postsNearMe")}
+        </StyledCheckbox>
+      )}
     </FilterAccordion>
   );
 };

@@ -308,7 +308,10 @@ describe("FightPandemics Navigation bar", () => {
     //after clicking style is changed to bold
     language
       .click({ force: true })
+      .get(languageSelector)
       .should("have.attr", "style", "font-weight: bold;");
+      
+
     header.getSignInLink().invoke("text").should("equal", signInText);
     header.getHelpBoardLink().invoke("text").should("equal", helpBoardLink);
   }

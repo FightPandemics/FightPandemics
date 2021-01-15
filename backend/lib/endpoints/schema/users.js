@@ -67,7 +67,8 @@ const getUsersSchema = {
     .prop("keywords", S.string())
     .prop("objective", S.string())
     .prop("skip", S.integer())
-    .prop("includeMeta", S.boolean().default(false)),
+    .prop("includeMeta", S.boolean().default(false))
+    .prop("ignoreUserLocation", S.boolean().default(false)),
 };
 
 const createUserAvatarSchema = {
