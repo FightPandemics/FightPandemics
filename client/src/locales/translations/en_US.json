@@ -142,7 +142,12 @@
         "Request Help": "Requesting Help",
         "Offer Help": "Offering Help"
       },
-      "postsNearMe": "Show results near me"
+      "postsNearMe": "Show results near me",
+      "nearMe": "Results near me",
+      "range500m": "in range 500 m",
+      "range2km": "in range 2 km",
+      "range10km": "in range 10 km",
+      "disableRange": "disable range"
     },
     "filterBy": "Filter by",
     "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",

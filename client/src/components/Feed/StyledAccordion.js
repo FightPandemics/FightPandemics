@@ -94,6 +94,19 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
   }
 `;
 
+export const StyledLabel = styled.div`
+  margin: 1.2rem 0.1rem 0.8rem 0.9rem;
+  padding: 1.6rem 1.29rem;
+  font-size: ${theme.typography.size.large};
+  color: ${(props) =>
+    props?.rangeMeter ? theme.colors.royalBlue : theme.colors.black};
+  font-weight: ${(props) =>
+    props?.rangeMeter ? "bold" : "normal"};
+  :hover {
+    cursor: pointer;
+  }
+`;
+
 export const StyledCheckbox = styled(Checkbox)`
   padding: 1.6rem 1.29rem;
   font-size: ${theme.typography.size.large};

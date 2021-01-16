@@ -13,7 +13,7 @@ import axios from "axios";
 import qs from "query-string";
 
 // Antd
-import { Menu } from "antd";
+import { Menu, Dropdown } from "antd";
 import { WhiteSpace } from "antd-mobile";
 // Local
 import CreatePost from "components/CreatePost/CreatePost";
@@ -30,7 +30,7 @@ import {
   TabsWrapper,
   MobileSearchWrapper,
 } from "components/Feed/FeedWrappers";
-import { StyledCheckbox } from "components/Feed/StyledAccordion";
+import { StyledLabel } from "components/Feed/StyledAccordion";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
@@ -147,6 +147,13 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [searchRangeMeter, setSearchRangeMeter] = useState(0);
+  const radiusMeters = {
+    range500m: 500,
+    range2km: 2000,
+    range10km: 10000,
+    disableRange: 0,
+  };
   const {
     filterModal,
     showCreatePostModal,
@@ -587,6 +594,25 @@ const Feed = (props) => {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    setQueryKeysValue(history, {
+      near_me: searchRangeMeter,
+    });
+  }, [searchRangeMeter]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const menuNearMe = (
+    <Menu
+      onClick={({ key }) => setSearchRangeMeter(radiusMeters[key])}
+      style={{ width: "100%" }}
+    >
+      {Object.keys(radiusMeters).map((key) => (
+        <Menu.Item key={key} style={{ textAlign: "left" }}>
+          {t(`feed.filters.${key}`)}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
 
   const loadNextPage = useCallback(
@@ -692,12 +718,11 @@ const Feed = (props) => {
                     </Menu.Item>
                   ))}
                   {isAuthenticated && (
-                    <StyledCheckbox
-                      checked={!ignoreUserLocation}
-                      onChange={toggleShowNearMe}
-                    >
-                      {t("feed.filters.postsNearMe")}
-                    </StyledCheckbox>
+                    <Dropdown overlay={menuNearMe}>
+                      <StyledLabel rangeMeter={searchRangeMeter}>
+                        {t("feed.filters.nearMe")}
+                      </StyledLabel>
+                    </Dropdown>
                   )}
                 </MenuWrapper>
                 <FiltersWrapper>
