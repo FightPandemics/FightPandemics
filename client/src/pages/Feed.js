@@ -466,9 +466,14 @@ const Feed = (props) => {
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
+    if (
+      (!queryParams.s_category || queryParams.s_category === "POSTS") &&
+      geoSearchRange
+    ) {
+      baseURL = `${baseURL}&geoSearchRange=${geoSearchRange}`;
+    }
     switch (queryParams.s_category) {
       case "POSTS":
-        baseURL = `${baseURL}&geoSearchRange=${geoSearchRange}`;
         break;
       case "INDIVIDUALS":
         baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}&ignoreUserLocation=${
@@ -476,7 +481,9 @@ const Feed = (props) => {
         }`;
         break;
       case "ORGANISATIONS":
-        baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}`;
+        baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}&ignoreUserLocation=${
+          geoSearchRange ? true : false
+        }`;
         break;
       default:
         break;
