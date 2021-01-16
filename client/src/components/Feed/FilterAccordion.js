@@ -70,7 +70,7 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
     handleOption,
     location,
     selectedOptions,
-    ignoreUserLocation,
+    geoSearchRange,
     isAuthenticated,
     toggleShowNearMe,
   } = feedContext;
@@ -147,7 +147,7 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
       {renderPanels()}
       {isAuthenticated && (
         <StyledCheckbox
-          checked={!ignoreUserLocation}
+          checked={!geoSearchRange}
           onChange={toggleShowNearMe}
           mobile
         >

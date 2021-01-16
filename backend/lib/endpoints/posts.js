@@ -173,22 +173,24 @@ async function routes(app) {
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
-      const geoSearchClause = searchDistance
-        ? {
-            $geoNear: {
-              distanceField: "distance",
-              key: "author.location.coordinates",
-              near: {
-                coordinates: location.coordinates,
-                type: "Point",
-              },
-              maxDistance: searchDistance,
-              query: { $and: filters },
-            },
-          }
-        : { $match: { $and: filters } };
       const sortAndFilterSteps = location
-        ? [geoSearchClause, { $sort: { createdAt: -1, distance: 1, _id: -1 } }]
+        ? [
+            searchDistance
+              ? {
+                  $geoNear: {
+                    distanceField: "distance",
+                    key: "author.location.coordinates",
+                    near: {
+                      coordinates: location.coordinates,
+                      type: "Point",
+                    },
+                    maxDistance: searchDistance,
+                    query: { $and: filters },
+                  },
+                }
+              : { $match: { $and: filters } },
+            { $sort: { createdAt: -1, distance: 1, _id: -1 } },
+          ]
         : keywords
         ? [
             { $match: { $and: filters, $text: { $search: keywords } } },

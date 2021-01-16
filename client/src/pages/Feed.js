@@ -30,7 +30,7 @@ import {
   TabsWrapper,
   MobileSearchWrapper,
 } from "components/Feed/FeedWrappers";
-import { StyledLabel } from "components/Feed/StyledAccordion";
+import { StyledLabel, StyledCheckbox } from "components/Feed/StyledAccordion";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
@@ -111,7 +111,7 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
-  ignoreUserLocation: true,
+  geoSearchRange: "",
 };
 
 export const NoPosts = styled.div`
@@ -153,7 +153,7 @@ const Feed = (props) => {
     range5km: "5km",
     range30km: "30km",
     rangeCity: "myCity",
-    rangeState: "mState",
+    rangeState: "myState",
     rangeCountry: "myCountry",
     disableRange: "",
   };
@@ -164,7 +164,7 @@ const Feed = (props) => {
     location,
     applyFilters,
     showFilters,
-    ignoreUserLocation,
+    geoSearchRange,
   } = feedState;
   const filters = Object.values(filterOptions);
   const {
@@ -208,12 +208,8 @@ const Feed = (props) => {
     query.s_category = SEARCH_OPTIONS[query.s_category]?.id || null;
     changeHelpType(query.s_category);
 
-    // ignoreUserLocation
-    if (query.near_me) {
-      dispatchAction(SET_VALUE, "ignoreUserLocation", false);
-    } else {
-      dispatchAction(SET_VALUE, "ignoreUserLocation", true);
-    }
+    // geoSearchRange
+    dispatchAction(SET_VALUE, "geoSearchRange", query.near_me);
 
     // location
     if (query.location) {
@@ -329,7 +325,7 @@ const Feed = (props) => {
 
   const toggleShowNearMe = (e) => {
     setQueryKeysValue(history, {
-      near_me: e.target.checked,
+      near_me: e.target.checked ? rangeSelection.rangeCountry : "",
     });
   };
 
@@ -472,9 +468,12 @@ const Feed = (props) => {
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
     switch (queryParams.s_category) {
       case "POSTS":
+        baseURL = `${baseURL}&geoSearchRange=${geoSearchRange}`;
         break;
       case "INDIVIDUALS":
-        baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}`;
+        baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}&ignoreUserLocation=${
+          geoSearchRange ? true : false
+        }`;
         break;
       case "ORGANISATIONS":
         baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}`;
@@ -482,7 +481,7 @@ const Feed = (props) => {
       default:
         break;
     }
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}`;
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -683,7 +682,7 @@ const Feed = (props) => {
           filterModal,
           activePanel,
           location,
-          ignoreUserLocation,
+          geoSearchRange,
           dispatchAction,
           selectedOptions,
           handleShowFilters,
@@ -715,13 +714,25 @@ const Feed = (props) => {
                       {t(HELP_TYPE[item])}
                     </Menu.Item>
                   ))}
-                  {isAuthenticated && (
-                    <Dropdown overlay={menuNearMe}>
-                      <StyledLabel rangeMeter={searchRange}>
+                  {isAuthenticated &&
+                    (!queryParams.s_category ||
+                      queryParams.s_category === "POSTS") && (
+                      <Dropdown overlay={menuNearMe}>
+                        <StyledLabel rangeMeter={searchRange}>
+                          {t("feed.filters.nearMe")}
+                        </StyledLabel>
+                      </Dropdown>
+                    )}
+                  {isAuthenticated &&
+                    queryParams.s_category &&
+                    queryParams.s_category !== "POSTS" && (
+                      <StyledCheckbox
+                        checked={geoSearchRange ? true : false}
+                        onChange={toggleShowNearMe}
+                      >
                         {t("feed.filters.nearMe")}
-                      </StyledLabel>
-                    </Dropdown>
-                  )}
+                      </StyledCheckbox>
+                    )}
                 </MenuWrapper>
                 <FiltersWrapper>
                   <button
