@@ -147,12 +147,15 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const [searchRangeMeter, setSearchRangeMeter] = useState(0);
-  const radiusMeters = {
-    range500m: 500,
-    range2km: 2000,
-    range10km: 10000,
-    disableRange: 0,
+  const [searchRange, setsearchRange] = useState(0);
+  const rangeSelection = {
+    range2km: "2km",
+    range5km: "5km",
+    range30km: "30km",
+    rangeCity: "myCity",
+    rangeState: "mState",
+    rangeCountry: "myCountry",
+    disableRange: "",
   };
   const {
     filterModal,
@@ -596,19 +599,14 @@ const Feed = (props) => {
 
   useEffect(() => {
     setQueryKeysValue(history, {
-      near_me: searchRangeMeter,
+      near_me: searchRange,
     });
-  }, [searchRangeMeter]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [searchRange]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const menuNearMe = (
-    <Menu
-      onClick={({ key }) => setSearchRangeMeter(radiusMeters[key])}
-      style={{ width: "100%" }}
-    >
-      {Object.keys(radiusMeters).map((key) => (
-        <Menu.Item key={key} style={{ textAlign: "left" }}>
-          {t(`feed.filters.${key}`)}
-        </Menu.Item>
+    <Menu onClick={({ key }) => setsearchRange(rangeSelection[key])}>
+      {Object.keys(rangeSelection).map((key) => (
+        <Menu.Item key={key}>{t(`feed.filters.${key}`)}</Menu.Item>
       ))}
     </Menu>
   );
@@ -719,7 +717,7 @@ const Feed = (props) => {
                   ))}
                   {isAuthenticated && (
                     <Dropdown overlay={menuNearMe}>
-                      <StyledLabel rangeMeter={searchRangeMeter}>
+                      <StyledLabel rangeMeter={searchRange}>
                         {t("feed.filters.nearMe")}
                       </StyledLabel>
                     </Dropdown>

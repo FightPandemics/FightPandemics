@@ -144,10 +144,13 @@
       },
       "postsNearMe": "Show results near me",
       "nearMe": "Results near me",
-      "range500m": "in range 500 m",
       "range2km": "in range 2 km",
-      "range10km": "in range 10 km",
-      "disableRange": "disable range"
+      "range5km": "in range 5 km",
+      "range30km": "in range 30 km",
+      "rangeCity": "in my city",
+      "rangeState": "in my state",
+      "rangeCountry": "in my country",
+      "disableRange": "no range selection"
     },
     "filterBy": "Filter by",
     "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
