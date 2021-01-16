@@ -851,18 +851,10 @@ const renderContent = (title, content, highlightWords, showComplete, linkifyText
   return (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-      {
-        linkifyText ? <Highlight textObj={linkify(title)} highlight={highlightWords} /> :
-        <Highlight textObj={title} highlight={highlightWords} />
-      }
-
+        <Highlight textObj={linkifyText ? linkify(title): title} highlight={highlightWords} />
       </Heading>
       <p className="post-description">
-        {linkifyText ?
-          <Highlight textObj={linkify(finalContent)} highlight={highlightWords} />
-          :
-          <Highlight textObj={finalContent} highlight={highlightWords} />
-        }
+        <Highlight textObj={linkifyText ? linkify(finalContent) : finalContent} highlight={highlightWords} />
       </p>
     </Card.Body>
   );
