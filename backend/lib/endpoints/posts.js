@@ -46,7 +46,7 @@ async function routes(app) {
         actor,
         query: {
           authorId,
-          ignoreUserLocation,
+          geoSearchRange,
           filter,
           keywords,
           limit,
@@ -63,34 +63,57 @@ async function routes(app) {
         { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
       ];
 
-      // prefer location from query filters, then user if authenticated
+      // prefer location from query filters, then user if authenticated and range indicated
       let location;
       if (queryFilters.location) {
         location = queryFilters.location;
-      } else if (actor && !ignoreUserLocation) {
+      } else if (actor && geoSearchRange) {
         location = actor.location;
       }
 
+      // retrieve search distance from 'geoSearchRange'
+      // retrieve search range (city / state / country)
+      let searchDistance;
+      let searchRange;
+      if (location && geoSearchRange) {
+        if (geoSearchRange.endsWith("km")) {
+          searchDistance = geoSearchRange.slice(0, -2) * 1000;
+        } else {
+          searchRange = geoSearchRange;
+        }
+      }
+
       if (location) {
+        const geoFilter = [
+          {
+            visibility: "city",
+            "author.location.country": location.country,
+            "author.location.state": location.state,
+            "author.location.city": location.city,
+          },
+          {
+            visibility: "state",
+            "author.location.country": location.country,
+            "author.location.state": location.state,
+          },
+          {
+            visibility: "country",
+            "author.location.country": location.country,
+          },
+          { visibility: "worldwide" },
+        ];
+
+        // trim geo filter range based on searchRange
+        if (searchRange) {
+          geoFilter.pop(); // pop worldwide
+          if (searchRange !== "myCountry") {
+            geoFilter.pop(); // pop country
+            if (searchRange !== "myState") geoFilter.pop(); // pop state
+          }
+        }
+
         filters.push({
-          $or: [
-            { visibility: "worldwide" },
-            {
-              visibility: "country",
-              "author.location.country": location.country,
-            },
-            {
-              visibility: "state",
-              "author.location.country": location.country,
-              "author.location.state": location.state,
-            },
-            {
-              visibility: "city",
-              "author.location.country": location.country,
-              "author.location.state": location.state,
-              "author.location.city": location.city,
-            },
-          ],
+          $or: geoFilter,
         });
       }
       /* eslint-enable sort-keys */
@@ -150,23 +173,22 @@ async function routes(app) {
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
-      const sortAndFilterSteps = location
-        ? [
-            {
-              $geoNear: {
-                distanceField: "distance",
-                key: "author.location.coordinates",
-                near: {
-                  $geometry: {
-                    coordinates: location.coordinates,
-                    type: "Point",
-                  },
-                },
-                query: { $and: filters },
+      const geoSearchClause = searchDistance
+        ? {
+            $geoNear: {
+              distanceField: "distance",
+              key: "author.location.coordinates",
+              near: {
+                coordinates: location.coordinates,
+                type: "Point",
               },
+              maxDistance: searchDistance,
+              query: { $and: filters },
             },
-            { $sort: { distance: 1, _id: -1 } },
-          ]
+          }
+        : { $match: { $and: filters } };
+      const sortAndFilterSteps = location
+        ? [geoSearchClause, { $sort: { createdAt: -1, distance: 1, _id: -1 } }]
         : keywords
         ? [
             { $match: { $and: filters, $text: { $search: keywords } } },
@@ -370,11 +392,11 @@ async function routes(app) {
           "author.location.zip": false,
         }),
       );
-      
-      if (postErr){
-        if (postErr instanceof mongoose.Error.CastError){
-            req.log.error(postErr, "Can't find a post with given id");
-            throw app.httpErrors.badRequest();
+
+      if (postErr) {
+        if (postErr instanceof mongoose.Error.CastError) {
+          req.log.error(postErr, "Can't find a post with given id");
+          throw app.httpErrors.badRequest();
         }
         throw app.httpErrors.internalServerError();
       } else if (post === null) {

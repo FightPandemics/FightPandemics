@@ -14,7 +14,7 @@ const getPostsSchema = {
     .prop("authorId", S.string())
     .prop("filter", S.string()) // URI encoded JSON; TODO: figure out way to custom validation
     .prop("keywords", S.string())
-    .prop("ignoreUserLocation", S.boolean().default(false))
+    .prop("geoSearchRange", S.string().default(""))
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false)),
