@@ -126,6 +126,7 @@ const Posts = ({
               isHidden={hiddenPosts[posts[index][1]?._id]}
               onPostHide={hidePost}
               onPostUnhide={unhidePost}
+              linkifyText={false}
             />
             <HorizontalRule />
           </>

@@ -122,6 +122,7 @@ const Post = ({
   isHidden,
   onPostHide,
   onPostUnhide,
+  linkifyText,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
@@ -637,7 +638,7 @@ const Post = ({
             </div>
             <WhiteSpace size="md" />
             {renderTags}
-            {renderContent(title, content, highlightWords, showComplete)}
+            {renderContent(title, content, highlightWords, showComplete, linkifyText)}
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
             ) : (
@@ -778,7 +779,7 @@ const Post = ({
                     },
                   }}
                 >
-                  {renderContent(title, content, highlightWords, showComplete)}
+                  {renderContent(title, content, highlightWords, showComplete, linkifyText)}
                 </Link>
               ) : (
                 <>
@@ -792,7 +793,7 @@ const Post = ({
                       style={{ display: "none" }}
                     ></Link>
                   )}
-                  {renderContent(title, content, highlightWords, showComplete)}
+                  {renderContent(title, content, highlightWords, showComplete, linkifyText)}
                 </>
               )}
               {fullPostLength > CONTENT_LENGTH ||
@@ -842,7 +843,7 @@ const Post = ({
     </>
   );
 };
-const renderContent = (title, content, highlightWords, showComplete) => {
+const renderContent = (title, content, highlightWords, showComplete, linkifyText) => {
   let finalContent = content;
   if (finalContent.length > CONTENT_LENGTH && !showComplete) {
     finalContent = `${finalContent.substring(0, CONTENT_LENGTH)} . . .`;
@@ -850,10 +851,18 @@ const renderContent = (title, content, highlightWords, showComplete) => {
   return (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        <Highlight textObj={linkify(title)} highlight={highlightWords} />
+      {
+        linkifyText ? <Highlight textObj={linkify(title)} highlight={highlightWords} /> :
+        <Highlight textObj={title} highlight={highlightWords} />
+      }
+
       </Heading>
       <p className="post-description">
-        <Highlight textObj={linkify(finalContent)} highlight={highlightWords} />
+        {linkifyText ?
+          <Highlight textObj={linkify(finalContent)} highlight={highlightWords} />
+          :
+          <Highlight textObj={finalContent} highlight={highlightWords} />
+        }
       </p>
     </Card.Body>
   );

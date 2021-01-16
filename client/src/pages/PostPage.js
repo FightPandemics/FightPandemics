@@ -319,6 +319,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
                 updateComments={updateComments}
                 fullPostLength={postLength}
                 user={user}
+                linkifyText={true}
               />
               <EditPost
                 user={user}
