@@ -99,9 +99,9 @@ export const StyledLabel = styled.div`
   padding: 1.6rem 1.29rem;
   font-size: ${theme.typography.size.large};
   color: ${(props) =>
-    props?.rangeMeter ? theme.colors.royalBlue : theme.colors.black};
+    props?.searchRange ? theme.colors.royalBlue : theme.colors.black};
   font-weight: ${(props) =>
-    props?.rangeMeter ? "bold" : "normal"};
+    props?.searchRange ? "bold" : "normal"};
   :hover {
     cursor: pointer;
   }

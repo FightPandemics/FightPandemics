@@ -147,7 +147,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const [searchRange, setsearchRange] = useState(0);
+  const [searchRange, setsearchRange] = useState("");
   const rangeSelection = {
     range2km: "2km",
     range5km: "5km",
@@ -609,10 +609,14 @@ const Feed = (props) => {
     });
   }, [searchRange]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const checkmark = "✔  ";
   const menuNearMe = (
     <Menu onClick={({ key }) => setsearchRange(rangeSelection[key])}>
       {Object.keys(rangeSelection).map((key) => (
-        <Menu.Item key={key}>{t(`feed.filters.${key}`)}</Menu.Item>
+        <Menu.Item key={key}>
+          {searchRange === rangeSelection[key] ? checkmark : ""}
+          {t(`feed.filters.${key}`)}
+        </Menu.Item>
       ))}
     </Menu>
   );
@@ -721,16 +725,16 @@ const Feed = (props) => {
                       {t(HELP_TYPE[item])}
                     </Menu.Item>
                   ))}
-                  {isAuthenticated &&
+                  {isAuthenticated && // show range selection for 'POSTS'
                     (!queryParams.s_category ||
                       queryParams.s_category === "POSTS") && (
                       <Dropdown overlay={menuNearMe}>
-                        <StyledLabel rangeMeter={searchRange}>
+                        <StyledLabel searchRange={searchRange}>
                           {t("feed.filters.nearMe")}
                         </StyledLabel>
                       </Dropdown>
                     )}
-                  {isAuthenticated &&
+                  {isAuthenticated && // show simple toggle for other 2
                     queryParams.s_category &&
                     queryParams.s_category !== "POSTS" && (
                       <StyledCheckbox
