@@ -49,7 +49,12 @@ const gtmTagsMap = {
 
 const LOCATION_DISPLAY_LENGTH_MAX = 30;
 
-const FilterBox = ({ gtmPrefix, locationOnly }) => {
+const FilterBox = ({
+  gtmPrefix,
+  locationOnly,
+  searchRange,
+  setSearchRange,
+}) => {
   const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const {
@@ -118,7 +123,12 @@ const FilterBox = ({ gtmPrefix, locationOnly }) => {
         onClose={handleOnClose}
         animationType="slide-up"
       >
-        <FilterAccordion locationOnly={locationOnly} gtmPrefix={gtmPrefix} />
+        <FilterAccordion
+          locationOnly={locationOnly}
+          gtmPrefix={gtmPrefix}
+          searchRange={searchRange}
+          setSearchRange={setSearchRange}
+        />
         <div
           className="confirm-buttons"
           style={{

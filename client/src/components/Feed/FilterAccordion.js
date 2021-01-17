@@ -7,10 +7,10 @@ import {
   FilterAccordion,
   FilterAccordionPanel,
   AccordionHeader,
-  StyledCheckbox,
 } from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
 import { SET_VALUE } from "hooks/actions/feedActions";
+import { StyledDropDownNearMe } from "components/Feed/StyledDropDownNearMe";
 const providersGtmTagsMap = {
   0: GTM.providersFilters.individual,
   1: GTM.providersFilters.startUp,
@@ -59,7 +59,12 @@ const filterOps = (label, idx) => {
     : GTM.post.type + typeGtmTagsMap[idx];
 };
 
-const FilterAccord = ({ gtmPrefix, locationOnly }) => {
+const FilterAccord = ({
+  gtmPrefix,
+  locationOnly,
+  searchRange,
+  setSearchRange,
+}) => {
   const { t } = useTranslation();
   const feedContext = useContext(FeedContext);
   const {
@@ -70,9 +75,7 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
     handleOption,
     location,
     selectedOptions,
-    geoSearchRange,
     isAuthenticated,
-    toggleShowNearMe,
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
@@ -145,15 +148,14 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
       onChange={setActivePanel}
     >
       {renderPanels()}
-      {isAuthenticated && (
-        <StyledCheckbox
-          checked={!geoSearchRange}
-          onChange={toggleShowNearMe}
-          mobile
-        >
-          {t("feed.filters.postsNearMe")}
-        </StyledCheckbox>
-      )}
+      {isAuthenticated && // show range selection for 'POSTS'
+        !locationOnly &&
+        setSearchRange && (
+          <StyledDropDownNearMe
+            searchRange={searchRange}
+            setSearchRange={setSearchRange}
+          />
+        )}
     </FilterAccordion>
   );
 };

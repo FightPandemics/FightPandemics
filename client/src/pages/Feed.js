@@ -13,7 +13,7 @@ import axios from "axios";
 import qs from "query-string";
 
 // Antd
-import { Menu, Dropdown } from "antd";
+import { Menu } from "antd";
 import { WhiteSpace } from "antd-mobile";
 // Local
 import CreatePost from "components/CreatePost/CreatePost";
@@ -30,7 +30,7 @@ import {
   TabsWrapper,
   MobileSearchWrapper,
 } from "components/Feed/FeedWrappers";
-import { StyledLabel, StyledCheckbox } from "components/Feed/StyledAccordion";
+import { StyledDropDownNearMe } from "components/Feed/StyledDropDownNearMe";
 import FilterBox from "components/Feed/FilterBox";
 import FiltersSidebar from "components/Feed/FiltersSidebar";
 import FiltersList from "components/Feed/FiltersList";
@@ -147,16 +147,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const [searchRange, setsearchRange] = useState("");
-  const rangeSelection = {
-    range2km: "2km",
-    range5km: "5km",
-    range30km: "30km",
-    rangeCity: "myCity",
-    rangeState: "myState",
-    rangeCountry: "myCountry",
-    disableRange: "",
-  };
+  const [searchRange, setSearchRange] = useState("");
   const {
     filterModal,
     showCreatePostModal,
@@ -187,6 +178,8 @@ const Feed = (props) => {
     },
     { name: "feed.search.options.people", id: "INDIVIDUALS" },
   ];
+  const showingPosts = // showing Posts currently, not Organisations nor Individuals
+    !queryParams.s_category || queryParams.s_category === "POSTS";
 
   function usePrevious(value) {
     const ref = useRef();
@@ -321,12 +314,6 @@ const Feed = (props) => {
     }, 500);
     // perform soft refetch to only close filter modal etc.. but not actually refetch posts
     refetchPosts(null, null, true);
-  };
-
-  const toggleShowNearMe = (e) => {
-    setQueryKeysValue(history, {
-      near_me: e.target.checked ? rangeSelection.rangeCountry : "",
-    });
   };
 
   const changeHelpType = (selectedValue) => {
@@ -466,24 +453,17 @@ const Feed = (props) => {
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
-    if (
-      (!queryParams.s_category || queryParams.s_category === "POSTS") &&
-      geoSearchRange
-    ) {
+    if (showingPosts && geoSearchRange) {
       baseURL = `${baseURL}&geoSearchRange=${geoSearchRange}`;
     }
     switch (queryParams.s_category) {
       case "POSTS":
         break;
       case "INDIVIDUALS":
-        baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}&ignoreUserLocation=${
-          geoSearchRange ? true : false
-        }`;
+        baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}&ignoreUserLocation=false`;
         break;
       case "ORGANISATIONS":
-        baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}&ignoreUserLocation=${
-          geoSearchRange ? true : false
-        }`;
+        baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}&ignoreUserLocation=false`;
         break;
       default:
         break;
@@ -609,18 +589,6 @@ const Feed = (props) => {
     });
   }, [searchRange]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const checkmark = "✔  ";
-  const menuNearMe = (
-    <Menu onClick={({ key }) => setsearchRange(rangeSelection[key])}>
-      {Object.keys(rangeSelection).map((key) => (
-        <Menu.Item key={key}>
-          {searchRange === rangeSelection[key] ? checkmark : ""}
-          {t(`feed.filters.${key}`)}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
-
   const isItemLoaded = useCallback((index) => !!feedPosts[index], [feedPosts]);
 
   const loadNextPage = useCallback(
@@ -702,7 +670,6 @@ const Feed = (props) => {
           handleQuit,
           handleLocation,
           handleOnClose,
-          toggleShowNearMe,
           showFilters,
           totalPostCount,
         }}
@@ -726,23 +693,12 @@ const Feed = (props) => {
                     </Menu.Item>
                   ))}
                   {isAuthenticated && // show range selection for 'POSTS'
-                    (!queryParams.s_category ||
-                      queryParams.s_category === "POSTS") && (
-                      <Dropdown overlay={menuNearMe}>
-                        <StyledLabel searchRange={searchRange}>
-                          {t("feed.filters.nearMe")}
-                        </StyledLabel>
-                      </Dropdown>
-                    )}
-                  {isAuthenticated && // show simple toggle for other 2
-                    queryParams.s_category &&
-                    queryParams.s_category !== "POSTS" && (
-                      <StyledCheckbox
-                        checked={geoSearchRange ? true : false}
-                        onChange={toggleShowNearMe}
-                      >
-                        {t("feed.filters.nearMe")}
-                      </StyledCheckbox>
+                    showingPosts && (
+                      <StyledDropDownNearMe
+                        searchRange={searchRange}
+                        setSearchRange={setSearchRange}
+                        disabled={queryParams.location ? true : false}
+                      />
                     )}
                 </MenuWrapper>
                 <FiltersWrapper>
@@ -759,12 +715,7 @@ const Feed = (props) => {
                 </FiltersWrapper>
               </>
               <FiltersSidebar
-                locationOnly={
-                  !(
-                    !queryParams.s_category ||
-                    queryParams.s_category === "POSTS"
-                  )
-                }
+                locationOnly={!showingPosts}
                 gtmPrefix={GTM.feed.prefix}
               />
             </SiderWrapper>
@@ -776,8 +727,7 @@ const Feed = (props) => {
                   displayValue={"name"}
                   t={t}
                 />
-                {(!queryParams.s_category ||
-                  queryParams.s_category === "POSTS") && (
+                {showingPosts && (
                   <CreatePostButton
                     id={gtmTag(GTM.post.createPost)}
                     onClick={handleCreatePost}
@@ -801,18 +751,15 @@ const Feed = (props) => {
               {
                 <div>
                   <FilterBox
-                    locationOnly={
-                      !(
-                        !queryParams.s_category ||
-                        queryParams.s_category === "POSTS"
-                      )
-                    }
+                    locationOnly={!showingPosts}
                     gtmPrefix={GTM.feed.prefix}
+                    searchRange={searchRange}
+                    setSearchRange={setSearchRange}
                   />
                 </div>
               }
               <WhiteSpace size={"lg"} />
-              {!queryParams.s_category || queryParams.s_category === "POSTS" ? (
+              {showingPosts ? (
                 <Posts
                   isAuthenticated={isAuthenticated}
                   filteredPosts={postsList}
@@ -849,8 +796,7 @@ const Feed = (props) => {
                 <NoPosts>
                   <Trans
                     i18nKey={
-                      !queryParams.s_category ||
-                      queryParams.s_category === "POSTS"
+                      showingPosts
                         ? "feed.noResultsPosts"
                         : queryParams.s_category === "INDIVIDUALS"
                         ? "feed.noResultsPeople"
@@ -865,8 +811,7 @@ const Feed = (props) => {
                   />
                 </NoPosts>
               ) : (
-                (!queryParams.s_category ||
-                  queryParams.s_category === "POSTS") && (
+                showingPosts && (
                   <CreatePostIcon
                     id={gtmTag(GTM.post.createPost)}
                     src={creatPost}
