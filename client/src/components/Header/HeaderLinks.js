@@ -20,6 +20,26 @@ const activeStyles = {
   color: `${colors.royalBlue}`,
 };
 
+const StyledMenu = styled(Menu)`
+  max-height: 45rem;
+  border-radius: 10px;
+  overflow: auto;
+  a {
+    padding: 0.5em 1em;
+    letter-spacing: 1px;
+  }
+  ::-webkit-scrollbar {
+    width: 0.8rem;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: ${theme.colors.darkGray};
+    cursor: pointer;
+  }
+`;
+
 export const HeaderLinks = ({
   isAuthenticated,
   onFeedbackIconClick,
@@ -35,26 +55,6 @@ export const HeaderLinks = ({
     i18n.changeLanguage(lng);
     window.localStorage.setItem("locale", lng);
   };
-
-  const StyledMenu = styled(Menu)`
-    max-height: 45rem;
-    border-radius: 10px;
-    overflow: auto;
-    a {
-      padding: 0.5em 1em;
-      letter-spacing: 1px;
-    }
-    ::-webkit-scrollbar {
-      width: 0.8rem;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
-      overflow: hidden;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: ${theme.colors.darkGray};
-      cursor: pointer;
-    }
-  `;
 
   const languageMenu = (
     <StyledMenu>
@@ -155,7 +155,7 @@ export const HeaderLinks = ({
             trigger={["click"]}
             getPopupContainer={() =>
               document.getElementsByClassName("am-navbar-right")[0]
-              }
+            }
           >
             <button>
               <SvgIcon id={GTM.nav.prefix + GTM.nav.language} src={globe} />
