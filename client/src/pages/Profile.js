@@ -190,7 +190,7 @@ const Profile = ({
       dispatch(postsActions.fetchPostsBegin());
       try {
         if (userId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
+          const endpoint = `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);

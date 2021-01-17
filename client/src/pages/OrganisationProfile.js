@@ -217,7 +217,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       dispatch(postsActions.fetchPostsBegin());
       try {
         if (organisationId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}${getActorQuery()}`;
+          const endpoint = `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}${getActorQuery()}`;
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
