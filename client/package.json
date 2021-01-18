@@ -5,9 +5,10 @@
   "dependencies": {
     "antd": "^4.2.0",
     "antd-mobile": "^2.3.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "classnames": "^2.2.6",
+    "disposable-email-domains": "^1.0.57",
     "i18next": "^19.6.3",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",

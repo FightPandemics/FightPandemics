@@ -1,5 +1,5 @@
 // Core
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Input, Tooltip, Space } from "antd";
 import { Avatar } from "components/Avatar";
@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { linkify } from "utils/validators";
 
 // Local
 import Loader from "components/Feed/StyledLoader";
@@ -53,14 +54,14 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   const [isComponentVisible, setIsComponentVisible] = useState(false);
   const ref = useRef(false);
 
-  const handleMenuItemClick = async (e) => {  
+  const handleMenuItemClick = async (e) => {
     setVisible(false);
     setIsComponentVisible(!isComponentVisible);
   };
 
   const handleSubMenuClick = (e) => {
     setVisible(true);
-     setIsComponentVisible(!isComponentVisible);
+    setIsComponentVisible(!isComponentVisible);
   };
 
   const renderAvatar = (
@@ -195,16 +196,15 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   };
 
   const commentActions = (
-    <Menu  onClick={handleMenuItemClick}>
-    <Menu.Item   onClick={() => toggleEditComment()} >
-      {t("comment.edit")}
-    </Menu.Item>
-    <Menu.Item   onClick={(e) => handleDeleteComment(e)} >
-      {t("comment.delete")}
-    </Menu.Item>
-  </Menu>
-     
-  ); 
+    <Menu onClick={handleMenuItemClick}>
+      <Menu.Item onClick={() => toggleEditComment()}>
+        {t("comment.edit")}
+      </Menu.Item>
+      <Menu.Item onClick={(e) => handleDeleteComment(e)}>
+        {t("comment.delete")}
+      </Menu.Item>
+    </Menu>
+  );
 
   const editCommentContent = (
     <>
@@ -231,11 +231,21 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
   );
 
   const renderCommentContent = (
-    <Space direction='vertical' > 
-      <span>{editedComment}</span>
-      {actorId === comment.author.id && <span  style={{cursor:'pointer',position:'absolute',top:'10px',right:'10px'}}  >{ <div className="card-header">
+    <Space direction="vertical">
+      <span>{linkify(editedComment)}</span>
+      {actorId === comment.author.id && (
+        <span
+          style={{
+            cursor: "pointer",
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+          }}
+        >
+          {
+            <div className="card-header">
               {isComponentVisible ? (
-                <Dropdown 
+                <Dropdown
                   // style={{ position: "fixed"}}
                   onVisibleChange={handleSubMenuClick}
                   onBlur={() => {
@@ -248,7 +258,7 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
                     className="ant-dropdown-link"
                     onClick={handleSubMenuClick}
                   >
-                    <SubMenuIcon  />
+                    <SubMenuIcon />
                   </div>
                 </Dropdown>
               ) : (
@@ -256,16 +266,18 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
                   <SubMenuIcon />
                 </div>
               )}
-            </div>}</span>}
+            </div>
+          }
+        </span>
+      )}
     </Space>
   );
 
   return (
-    <div >
+    <div>
       {comment ? (
         <StyledComment
           datetime={
-            
             <>
               <Tooltip title={translateISOTimeTitle(comment.createdAt)}>
                 <span>
@@ -295,7 +307,3 @@ const NestedComments = ({ comment, dispatchPostAction, deleteComment }) => {
 };
 
 export default NestedComments;
-
-
-
-

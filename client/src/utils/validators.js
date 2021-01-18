@@ -1,5 +1,9 @@
+import React from 'react';
 import tlds from "tlds";
 import _isEmail from "validator/lib/isEmail";
+import wildcards from "disposable-email-domains";
+
+const wildcardsSet = new Set(wildcards);
 
 const validateTopLevelDomain = (string) => {
   for (const tld of tlds) {
@@ -10,11 +14,20 @@ const validateTopLevelDomain = (string) => {
   return false;
 };
 
+const validateDisposableEmail = (email) => {
+  const emailDomain = email.split("@")[1];
+  return wildcardsSet.has(emailDomain);
+};
+
 export const validateEmail = (email) => {
   let errorMessage = "";
   if (!email) {
     errorMessage = "emailRequired";
-  } else if (!_isEmail(email) || !validateTopLevelDomain(email)) {
+  } else if (
+    !_isEmail(email) ||
+    !validateTopLevelDomain(email) ||
+    validateDisposableEmail(email)
+  ) {
     errorMessage = "emailInvalid";
   }
   if (errorMessage.length != 0) {
@@ -46,3 +59,25 @@ const URL = /^(?:(?:https?):\/\/)?(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!
 export const validateURL = (string) => {
   return URL.test(string) && validateTopLevelDomain(string);
 };
+
+export const linkify = (text) => {
+    let urlRegex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+    function urlify(text) {
+      if (urlRegex.test(text))
+        return (
+          <a
+            target="_blank"
+            key={Math.random().toString(36)}
+            href={`${text.startsWith("http") ? "" : "//"}${text}`}
+          >
+            {text}
+          </a>
+        );
+      else return text;
+    }
+    let output = [];
+    text.split(/(\s+)/).forEach((word) => {
+      output.push(urlify(word));
+    });
+    return output;
+  };
