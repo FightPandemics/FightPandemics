@@ -64,11 +64,13 @@ async function routes(app) {
       ];
 
       // prefer location from query filters, then user if authenticated
+      let searchNearBy = false;
       let location;
       if (queryFilters.location) {
         location = queryFilters.location;
       } else if (actor && !ignoreUserLocation) {
         location = actor.location;
+        searchNearBy = true;
       }
 
       if (location) {
@@ -150,6 +152,7 @@ async function routes(app) {
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
+      const nearBySearchRange = 100000; // 100 km
       const sortAndFilterSteps = location
         ? [
             {
@@ -157,15 +160,18 @@ async function routes(app) {
                 distanceField: "distance",
                 key: "author.location.coordinates",
                 near: {
-                  $geometry: {
-                    coordinates: location.coordinates,
-                    type: "Point",
-                  },
+                  coordinates: location.coordinates,
+                  type: "Point",
                 },
+                maxDistance: searchNearBy ? nearBySearchRange : 0,
                 query: { $and: filters },
               },
             },
-            { $sort: { distance: 1, _id: -1 } },
+            {
+              $sort: searchNearBy
+                ? { _id: -1, distance: 1 } // sort nearby by time
+                : { distance: 1, _id: -1 },
+            },
           ]
         : keywords
         ? [
@@ -370,11 +376,11 @@ async function routes(app) {
           "author.location.zip": false,
         }),
       );
-      
-      if (postErr){
-        if (postErr instanceof mongoose.Error.CastError){
-            req.log.error(postErr, "Can't find a post with given id");
-            throw app.httpErrors.badRequest();
+
+      if (postErr) {
+        if (postErr instanceof mongoose.Error.CastError) {
+          req.log.error(postErr, "Can't find a post with given id");
+          throw app.httpErrors.badRequest();
         }
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
