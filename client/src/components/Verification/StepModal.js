@@ -1,4 +1,6 @@
 import React from "react";
+import steps from "./steps";
+import GTM from "constants/gtm-tags";
 import { Result, Typography } from "antd";
 
 import StyledModal, { StyledButton } from "./StyledModal";
@@ -14,6 +16,7 @@ function StepModal({
   status,
   onNext,
   onCancel,
+  gtmPrefix,
   t,
 }) {
   return (
@@ -23,6 +26,7 @@ function StepModal({
       footer={null}
       centered
       visible={step}
+      id={gtmPrefix + GTM.profile.verifyPopup}
       onCancel={onCancel}
     >
       {step && (
@@ -34,7 +38,11 @@ function StepModal({
             extra={
               <>
                 <p>{t(body)}</p>
-                <StyledButton onClick={onNext} type="primary">
+                <StyledButton
+                  id={gtmPrefix + GTM.profile[steps[step]?.tag]}
+                  onClick={onNext}
+                  type="primary"
+                >
                   {t(actionText)}
                 </StyledButton>
               </>

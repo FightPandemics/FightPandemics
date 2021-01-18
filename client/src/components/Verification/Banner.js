@@ -9,8 +9,9 @@ import StepModal from "./StepModal";
 import steps from "./steps";
 import StyledBanner from "./StyledBanner";
 import { ReactComponent as Arrow } from "assets/verification/arrow.svg";
+import GTM from "constants/gtm-tags";
 
-function Banner({}) {
+function Banner({ gtmPrefix }) {
   const actorOrganisationId = useSelector(selectOrganisationId);
   const [step, setStep] = useState(null);
   const { t } = useTranslation();
@@ -57,7 +58,10 @@ function Banner({}) {
 
   return (
     <>
-      <StyledBanner onClick={() => startVerification()}>
+      <StyledBanner
+        id={gtmPrefix + GTM.profile.verifyAccount}
+        onClick={() => startVerification()}
+      >
         {t("verification.verifyTitle")}
         <p>{t("verification.verifyBody")}</p>
         <Arrow />
@@ -65,6 +69,7 @@ function Banner({}) {
       {step && (
         <StepModal
           step={step}
+          gtmPrefix={gtmPrefix}
           header={steps[step]?.header}
           icon={steps[step]?.icon}
           status={steps[step]?.status}

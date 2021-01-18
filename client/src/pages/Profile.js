@@ -423,7 +423,9 @@ const Profile = ({
           </UserInfoDesktop>
         </UserInfoContainer>
         <WhiteSpace />
-        {isSelf && !verified && <Verification />}
+        {isSelf && !verified && (
+          <Verification gtmPrefix={GTM.user.profilePrefix} />
+        )}
         <WhiteSpace />
         <div>
           <SectionHeader>

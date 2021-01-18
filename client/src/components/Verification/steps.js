@@ -8,6 +8,7 @@ export default {
     header: "verification.stepStartTitle",
     body: "verification.stepStartBody",
     actionText: "verification.stepStartAction",
+    tag: "getVerify",
   },
   finish: {
     icon: null,
@@ -15,6 +16,7 @@ export default {
     header: "verification.stepSuccessTitle",
     body: "verification.stepSuccessBody",
     actionText: "verification.stepSuccessAction",
+    tag: "accountVerified",
   },
   cancel: {
     icon: null,
@@ -22,5 +24,6 @@ export default {
     header: "verification.stepCancelTitle",
     body: "verification.stepCancelBody",
     actionText: "verification.stepCancelAction",
+    tag: "cancelVerify",
   },
 };

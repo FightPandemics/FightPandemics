@@ -4,6 +4,7 @@ import { Tooltip } from "antd";
 import { theme, mq } from "constants/theme";
 import { ReactComponent as TickSvg } from "assets/verification/tick.svg";
 import { useTranslation } from "react-i18next";
+import GTM from "constants/gtm-tags";
 
 const { colors } = theme;
 
@@ -24,6 +25,7 @@ function VerificationTick() {
       placement="right"
       color={colors.darkGray}
       title={t("verification.verified")}
+      id={GTM.user.profilePrefix + GTM.profile.checkBadge}
     >
       <Tick className={"verification-tick"} />
     </Tooltip>
