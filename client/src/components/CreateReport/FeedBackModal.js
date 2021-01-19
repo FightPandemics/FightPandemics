@@ -9,14 +9,12 @@ import { theme } from "constants/theme";
 import { Footer, Submit } from "components/CreateReport/Body";
 const { colors, typography } = theme;
 
-const ReportFinished = ({
+const FeedBackModal = ({
   setCallReport,
   isComment,
   reportSuccess,
   postId,
   fromPage,
-  forModerator,
-  changeType,
 }) => {
   const [showModal, setShowModal] = useState(true);
   const { t } = useTranslation();
@@ -24,9 +22,7 @@ const ReportFinished = ({
   const closeModal = () => {
     setShowModal(false);
     setCallReport(false);
-    if (forModerator?.remove) return changeType("ACCEPTED");
-    if (forModerator?.keep) return changeType("REJECTED");
-    if (fromPage && !forModerator) return (window.location = "/feed");
+    if (fromPage) return (window.location = "/feed");
     dispatch(postsActions.setReported({ postId }));
   };
   const ModalWrapper = styled(Modal)`
@@ -64,25 +60,14 @@ const ReportFinished = ({
     display: flex;
     align-items: center;
   `;
-
-  const modalTitle = forModerator?.remove
-    ? t("moderation.reportAcceptedTitle")
-    : forModerator?.keep
-    ? t("moderation.reportRejectedTitle")
-    : t("moderation.reportPostSuccessTitle");
-
-  const modalBodyText = forModerator?.remove
-    ? t("moderation.reportAcceptedBody")
-    : forModerator?.keep
-    ? t("moderation.reportRejectedBody")
-    : t("moderation.reportPostSuccess");
-
   return (
     <div className="create-report">
       <ModalWrapper
         footer={null}
         title={
-          reportSuccess ? modalTitle : t("moderation.reportPostErrorTitle")
+          reportSuccess
+            ? t("moderation.reportPostSuccessTitle")
+            : t("moderation.reportPostErrorTitle")
         }
         visible={showModal}
         destroyOnClose={true}
@@ -90,7 +75,7 @@ const ReportFinished = ({
       >
         <Body>
           {reportSuccess ? (
-            <>{modalBodyText}</>
+            <>{t("moderation.reportPostSuccess")}</>
           ) : (
             <>{t("moderation.reportPostError")}</>
           )}
@@ -105,4 +90,4 @@ const ReportFinished = ({
   );
 };
 
-export default ReportFinished;
+export default FeedBackModal;

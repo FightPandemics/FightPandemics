@@ -143,6 +143,7 @@ const Post = ({
     page,
     didReport,
     reportsCount,
+    status,
     objective,
   } = post || {};
 
@@ -575,7 +576,7 @@ const Post = ({
   );
 
   const [showComplete, setShowComplete] = useState(true);
-  const isSuspected = reportsCount >= 5;
+  const isSuspected = status === "flagged" && reportsCount >= 5;
   const isOwner =
     isAuthenticated &&
     (isAuthorUser(user, post) || isAuthorOrg(user?.organisations, post.author));

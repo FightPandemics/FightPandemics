@@ -199,10 +199,13 @@ module.exports = {
     share: "_SH",
     comment: "_CM",
     settings: "_SET",
+    report: "_RP",
   },
   moderation: {
     hide: "_HIP",
     unhide: "_UHIP",
-    report: "_RP",
+    reportEventName: "CREATE_REPORT",
+    keepPostEventName: "MOD_KEEP_POST",
+    removePostEventName: "MOD_REMOVE_POST",
   },
 };
