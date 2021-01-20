@@ -99,7 +99,7 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       // Additional filters
-      const { providers, type } = queryFilters; // from filterOptions.js
+      const { providers, type } = queryFilters;
       if (authorId) {
         filters.push({ "author.id": mongoose.Types.ObjectId(authorId) });
       }
