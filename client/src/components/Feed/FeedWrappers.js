@@ -74,6 +74,7 @@ export const FiltersWrapper = styled.div`
 
 export const MenuWrapper = styled(Menu)`
   &.ant-menu {
+    ${({ isDashboard }) => (isDashboard ? "height: 100%;" : "")}
     border: none;
     .ant-menu-item {
       height: 3rem;

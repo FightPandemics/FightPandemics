@@ -213,6 +213,7 @@ class DatabaseHelper {
               this.instantUnreadLookbackInterval,
             ),
           },
+          action: { $in: Object.values(NotificationAction) },
         },
       },
       {
@@ -257,6 +258,7 @@ class DatabaseHelper {
             createdAt: {
               $gt: DateHelper.subtractDays(new Date(), intervalDays),
             },
+            action: { $in: Object.values(NotificationAction) },
           },
         },
         {
