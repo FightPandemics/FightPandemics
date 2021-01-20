@@ -375,10 +375,7 @@ const AboutUs = () => {
         </p>
         <h3>{t("currentPartners")}</h3>
         {/* max-width will change according to number of logos */}
-        <SupportersLogosContainer
-          style={{ maxWidth: "35rem" }}
-          id={getGTM("currentPartners")}
-        >
+        <SupportersLogosContainer style={{ maxWidth: "35rem" }} id="AU_CP">
           <LogosList supporterLogos={communityPartnersLogos} />
         </SupportersLogosContainer>
       </SupporterContainer>
@@ -399,21 +396,18 @@ const AboutUs = () => {
           {t("companyLogoInfo")}
         </p>
         <h3>{t("lifetimeSupporters")}</h3>
-        <SupportersLogosContainer id={getGTM("lifetimeSupporters")}>
+        <SupportersLogosContainer id="AU_LS">
           <LogosList supporterLogos={supporterLogosLifetime} />
         </SupportersLogosContainer>
         <br />
         <h3>{t("currentSupporters")}</h3>
-        <SupportersLogosContainer id={getGTM("currentSupporters")}>
+        <SupportersLogosContainer id="AU_CS">
           <LogosList supporterLogos={supporterLogosCurrent} />
         </SupportersLogosContainer>
         <br />
         <h4>{t("pastSupporters")}</h4>
         {/* max-width will change according to number of logos */}
-        <SupportersLogosContainer
-          style={{ maxWidth: "35rem" }}
-          id={getGTM("pastSupporters")}
-        >
+        <SupportersLogosContainer style={{ maxWidth: "35rem" }} id="AU_PS">
           <LogosList supporterLogos={supporterLogosPast} />
         </SupportersLogosContainer>
       </SupporterContainer>
