@@ -64,35 +64,46 @@ async function routes(app) {
       ];
 
       // prefer location from query filters, then user if authenticated
-      let searchNearBy = false;
       let location;
       if (queryFilters.location) {
         location = queryFilters.location;
       } else if (actor && !ignoreUserLocation) {
         location = actor.location;
-        searchNearBy = true;
       }
 
+      // determine if search around (smller range than city),
+      let searchAround = false;
       if (location) {
+        let locationFilter = [
+          { visibility: "worldwide" },
+          {
+            visibility: "country",
+            "author.location.country": location.country,
+          },
+          {
+            visibility: "state",
+            "author.location.country": location.country,
+            "author.location.state": location.state,
+          },
+          {
+            visibility: "city",
+            "author.location.country": location.country,
+            "author.location.state": location.state,
+            "author.location.city": location.city,
+          },
+        ];
+
+        // search particular on city/state/country
+        if (location.country && !location.state)
+          locationFilter = locationFilter.slice(1);
+        else if (location.state && !location.city)
+          locationFilter = locationFilter.slice(2);
+        else if (location.city && !location.neighborhood)
+          locationFilter = locationFilter.slice(3);
+        else searchAround = true;
+
         filters.push({
-          $or: [
-            { visibility: "worldwide" },
-            {
-              visibility: "country",
-              "author.location.country": location.country,
-            },
-            {
-              visibility: "state",
-              "author.location.country": location.country,
-              "author.location.state": location.state,
-            },
-            {
-              visibility: "city",
-              "author.location.country": location.country,
-              "author.location.state": location.state,
-              "author.location.city": location.city,
-            },
-          ],
+          $or: locationFilter,
         });
       }
       /* eslint-enable sort-keys */
@@ -129,7 +140,7 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       // if location is defined, use simple regex text query, in order to use $geoNear
-      if (location && keywords) {
+      if (searchAround && keywords) {
         const keywordsRegex = createSearchRegex(keywords);
         filters.push({
           $or: [
@@ -152,8 +163,8 @@ async function routes(app) {
       // _id starts with seconds timestamp so newer posts will sort together first
       // then in a determinate order (required for proper pagination)
       /* eslint-disable sort-keys */
-      const nearBySearchRange = 100000; // 100 km
-      const sortAndFilterSteps = location
+      const nearBySearchRange = 50000; // 50 km
+      const sortAndFilterSteps = searchAround
         ? [
             {
               $geoNear: {
@@ -163,14 +174,12 @@ async function routes(app) {
                   coordinates: location.coordinates,
                   type: "Point",
                 },
-                maxDistance: searchNearBy ? nearBySearchRange : 0,
+                maxDistance: nearBySearchRange,
                 query: { $and: filters },
               },
             },
             {
-              $sort: searchNearBy
-                ? { _id: -1, distance: 1 } // sort nearby by time
-                : { distance: 1, _id: -1 },
+              $sort: { _id: -1, distance: 1 }, // sort nearby by time
             },
           ]
         : keywords
