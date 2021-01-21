@@ -15,6 +15,19 @@ const FACILITY_RADIUS_BY_TYPE = {
   hospital: 50000,
   pharmacy: 5000,
 };
+const INVALID_PARTIAL_NAMES_BY_TYPE = [
+  {
+    type: "pharmacy",
+    invPartialNames: [
+      "Journal of Pharmacy",
+      "Society of ",
+      " Llc",
+      " LLC",
+      "Pharmaceuticals Inc",
+      "Pharmaceuticals Co"
+    ]
+  }
+];
 const FACILITY_DETAILS_FIELDS = [
   "formatted_address",
   "geometry",
@@ -77,9 +90,30 @@ const getNearbyPlacesByType = async (lat, lng, type) => {
       type,
     },
   });
-  return data.results.length > 0
-    ? data.results.slice(0, MAX_FACILITIES).map((place) => ({ ...place, type }))
-    : data.results;
+  let results = [];
+
+  //Eliminate most invalid establishment category entries based on incorrect input by google business users
+  const invPartNamesByType = INVALID_PARTIAL_NAMES_BY_TYPE.filter( item => item.type === type );
+  if ((data.results.length > 0) && (invPartNamesByType.length > 0)) {
+    results = data.results.filter(place =>  
+      validPlaceNameForType(place.name, invPartNamesByType[0].invPartialNames) 
+    );
+  } else {
+    results = data.results;
+  };
+
+  return results.length > 0
+    ? results.slice(0, MAX_FACILITIES).map((place) => ({ ...place, type }))
+    : results;
+};
+
+const validPlaceNameForType = (placeName, invPartialNames) => {
+  for (var i = 0; i < invPartialNames.length; i++) {
+    if (placeName.includes(invPartialNames[i])) {
+      return false;
+    }; 
+  };
+  return true;
 };
 
 const getPlaceDetails = async (place) => {
@@ -133,13 +167,34 @@ const getPlacesDistances = async (lat, lng, places) => {
   });
 };
 
+const sortPlacesByDistance = async (places) => {
+  //Sort by distance based on meters, kilometers, or no distance supplied.  
+  let placesWithKilometers = [];
+  if (places.length > 0) {
+    placesWithKilometers =  places.map((place) => {
+      return {...place, kilometers: getKilometersForPlace(place.distance) };
+    });
+    return placesWithKilometers.sort((a, b) => a.kilometers - b.kilometers);
+  } else {
+    return places;
+  };
+};
+
+const getKilometersForPlace = (placeDistance) => {
+  if (placeDistance.includes(" m")) { return placeDistance.split(" ")[0] * 0.001 };
+  if (placeDistance.includes(" km")) { return placeDistance.split(" ")[0] };
+  return 2000;
+};
+
 const getHealthFacilityPlaces = async (lat, lng, type) => {
   const places = await getNearbyPlacesByType(lat, lng, type);
   if (places.length === 0) return places;
 
   const placesWithDetails = await Promise.all(places.map(getPlaceDetails));
 
-  return getPlacesDistances(lat, lng, placesWithDetails);
+  const placesWithDistances = await getPlacesDistances(lat, lng, placesWithDetails);
+
+  return placesSortedByDistance = await sortPlacesByDistance(placesWithDistances);
 };
 
 module.exports = {

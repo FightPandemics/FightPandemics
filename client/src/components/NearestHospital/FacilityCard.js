@@ -160,7 +160,10 @@ const FacilityCard = (props) => {
       <WhiteSpace size="lg" />
       <FacilityTypeCard
         full
-        style={{ width: cardWidth, backgroundColor: "white" }}
+        style={{
+          width: cardWidth,
+          backgroundColor: "rgba(255, 255, 255, 1.0)",
+        }}
       >
         <Card.Header
           title={facilityName}

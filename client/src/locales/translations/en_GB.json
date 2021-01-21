@@ -714,7 +714,8 @@
     "healthEval": "Health Evaluation",
     "chkSymptoms": "Check Symptoms",
     "forDirAndMore": "For directions and more info",
-    "localEmergencyNumber": "Local emergency number"
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "For more results for this facility type and location"
   },
   "feedback": {
     "poorly": "Poorly",

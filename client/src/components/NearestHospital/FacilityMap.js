@@ -42,9 +42,10 @@ const MarkerContainer = styled.div`
 `;
 
 const InfoWindowStyle = styled.div`
-  position: relative;
+  position: absolute;
   left: -100px;
   white-space: wrap;
+  z-index: 99;
 `;
 
 const FacilityMapUserMarker = ({ text, tooltip }) => (

@@ -159,6 +159,19 @@ const ModeLabel = styled.div`
   color: ${white};
 `;
 
+const urlStyles = {
+  paddingTop: ".8rem",
+  fontWeight: "500",
+  color: royalBlue,
+};
+
+const moreResultsUrlStyles = {
+  paddingTop: "0",
+  paddingLeft: "2rem",
+  fontWeight: "500",
+  color: royalBlue,
+};
+
 const NearestHealthFacilities = () => {
   const { t } = useTranslation();
   const facilityTypes = [
@@ -280,6 +293,24 @@ const NearestHealthFacilities = () => {
     [facilityModeTypes],
   );
 
+  const renderDirectToGoogleMapsURL = () => {
+    const moreResultsUrl = `https://www.google.com/maps/search/${selectedType}/@${sourceLocation.current.coordinates[1]},${sourceLocation.current.coordinates[0]},13z`;
+    const forMoreResults = t("nearestHsp.forMoreResults");
+
+    return (
+      sourceLocation.current && (
+        <a
+          href={moreResultsUrl}
+          key={"forMoreResults"}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {forMoreResults}
+        </a>
+      )
+    );
+  };
+
   if (loadingPlaces) return <Spin size="medium" />;
 
   return (
@@ -354,6 +385,9 @@ const NearestHealthFacilities = () => {
                 <h2>
                   {facilityTypes.find((o) => o.type === selectedType).label}
                 </h2>
+                <div style={moreResultsUrlStyles}>
+                  {renderDirectToGoogleMapsURL()}
+                </div>
                 {apiError && <InputError>{apiError}</InputError>}
                 {!apiError &&
                   (facilitiesData && facilitiesData.length > 0 ? (
