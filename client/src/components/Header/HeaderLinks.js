@@ -8,11 +8,13 @@ import i18n from "../../i18n";
 import SvgIcon from "../Icon/SvgIcon";
 import feedback from "assets/icons/feedback.svg";
 import globe from "assets/icons/globe.svg";
+import moderator from "assets/icons/moderator-badge.svg";
 import { languages } from "locales/languages";
 import GTM from "constants/gtm-tags";
 import { ProfileMenu } from "./ProfileMenu";
 import { theme } from "../../constants/theme";
 import { NotificationDropDown } from "components/Notifications/NotificationDropDown";
+import { SCOPES } from "constants/permissions";
 
 const { colors } = theme;
 const activeStyles = {
@@ -116,6 +118,14 @@ export const HeaderLinks = ({
                 organisationId={organisationId}
               />
             </li>
+            {!organisationId && Boolean(user.permissions) && (
+              <li>
+                <NavLink activeStyle={activeStyles} to="/dashboard">
+                  <SvgIcon src={moderator}></SvgIcon>
+                </NavLink>
+              </li>
+            )}
+
             <li>
               <ProfileMenu
                 user={user}
