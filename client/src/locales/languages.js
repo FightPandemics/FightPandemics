@@ -24,7 +24,7 @@ export const localization = {
   ru: "ru",
   "te-IN": "te-IN",
   th: "th",
-  "tr-TR": "tr-TR",
+  tr: "tr",
   uk: "uk",
   vi: "vi",
   "zh-CN": "zh-CN",
