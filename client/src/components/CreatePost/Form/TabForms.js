@@ -29,27 +29,25 @@ const ModalComponent = ({
   const { t } = useTranslation();
   const tabs = [];
   const typeOfHelp = {
-    "offer":{
-      key:"offer",
+    offer: {
+      key: "offer",
       title: t("post.givingHelp"),
       question: t("post.whatGiving"),
     },
-    "request":{
-      key:"request",
+    request: {
+      key: "request",
       title: t("post.gettingHelp"),
       question: t("post.whatNeed"),
-    }
-  }
+    },
+  };
 
-  if (currentPost){
-    if (currentPost.objective){
-      // add only specific tab if there is already one assigned
-      tabs.push(typeOfHelp[`${currentPost.objective}`])
-    }
+  if (currentPost?.objective) {
+    // add only specific tab if there is already one assigned
+    tabs.push(typeOfHelp[`${currentPost.objective}`]);
   } else {
     // add all tab keys if no post was found
-    for ( let key of Object.keys(typeOfHelp)){
-      tabs.push(typeOfHelp[key])
+    for (let key of Object.keys(typeOfHelp)) {
+      tabs.push(typeOfHelp[key]);
     }
   }
 
