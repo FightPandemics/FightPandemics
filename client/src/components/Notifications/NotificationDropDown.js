@@ -9,6 +9,7 @@ import commentpost from "assets/icons/notification-icons/comment-post.svg";
 import cmntflwpost from "../../assets/icons/notification-icons/comment-following-post.svg";
 import likeheart from "../../assets/icons/notification-icons/like-heart.svg";
 import sharedpost from "../../assets/icons/notification-icons/shared-post.svg";
+import reportedpost from "../../assets/icons/notification-icons/report-red.svg";
 import bell from "../../assets/icons/notification-icons/header-bell.svg";
 import amt from "../../assets/icons/notification-icons/notification-amt.svg";
 import gear from "../../assets/icons/notification-icons/gear-logo.svg";
@@ -358,6 +359,11 @@ export const NotificationDropDown = ({
       text: "notifications.shared",
       icon: sharedpost,
       gtmId: GTM.notifications.prefix + GTM.notifications.share,
+    },
+    report: {
+      text: "notifications.reported",
+      icon: reportedpost,
+      gtmId: GTM.notifications.prefix + GTM.notifications.report,
     },
   };
 
