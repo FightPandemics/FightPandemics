@@ -20,6 +20,7 @@ const {
   updateCommentSchema,
   updatePostSchema,
 } = require("./schema/posts");
+const { NotExtended } = require("http-errors");
 
 /*
  * /api/posts
@@ -172,8 +173,9 @@ async function routes(app) {
           ]
         : keywords
         ? [
-            { $match: { $and: filters, $text: { $search: keywords } } },
-            { $sort: { score: { $meta: "textScore" } } },
+            { $match: { $and: filters, content: { $regex: keywords, $options: "i" } } },
+            // add a new field word-count, get count sort by count
+            { $sort: { word_count: -1 } }
           ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
@@ -267,7 +269,7 @@ async function routes(app) {
       const totalResultsAggregationPipeline = await Post.aggregate(
         keywords && !location
           ? [
-              { $match: { $and: filters, $text: { $search: keywords } } },
+             { $match: { $and: filters, content: { $regex: `${keywords}`, $options: "i" } } },
               { $group: { _id: null, count: { $sum: 1 } } },
             ]
           : [
@@ -302,6 +304,7 @@ async function routes(app) {
           data: response,
         };
       };
+
 
       if (postsErr) {
         req.log.error(postsErr, "Failed requesting posts");
