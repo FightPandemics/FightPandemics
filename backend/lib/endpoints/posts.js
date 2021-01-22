@@ -53,9 +53,13 @@ async function routes(app) {
           objective,
           skip,
           includeMeta,
+          remote,
         },
       } = req;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
+
+      console.log('queryFilters', queryFilters);
+      console.log('queryFilters req.query', req.query  );
 
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
@@ -108,6 +112,11 @@ async function routes(app) {
       }
       if (type) {
         filters.push({ types: { $in: type } });
+      }
+
+      //remote work filter
+      if (remote){
+        filters.push({ "remote": "yes" });
       }
 
       // Unlogged user limitation for post content size
@@ -243,6 +252,7 @@ async function routes(app) {
             title: true,
             types: true,
             visibility: true,
+            remote: true,
             createdAt: true,
             updatedAt: true,
           },
@@ -370,7 +380,7 @@ async function routes(app) {
           "author.location.zip": false,
         }),
       );
-      
+
       if (postErr){
         if (postErr instanceof mongoose.Error.CastError){
             req.log.error(postErr, "Can't find a post with given id");

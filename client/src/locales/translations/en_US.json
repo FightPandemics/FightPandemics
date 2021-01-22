@@ -178,6 +178,7 @@
     "addTags": "Add tags to make your post more visible",
     "whatVisibility": "What is the visibility of your post?",
     "postVisible": "The post will be visible to",
+    "workRemote": "Can you work/volunteer remotely?",
     "success": "Success",
     "viewPost": "View Your Post",
     "like": "Like",
@@ -204,6 +205,10 @@
       "helpTypes": {
         "request": "Requesting help",
         "offer": "Offering help"
+      },
+      "remote": {
+        "yes": "Yes",
+        "no": "No"
       }
     },
     "post": "Post",

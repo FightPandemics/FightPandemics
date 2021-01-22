@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";
+import Fourth from "./FourthSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 
@@ -93,6 +94,13 @@ const EditModalComponent = ({
       setFormData({ ...formData, shareWith: shareWith.default.value });
     }
   };
+  const setWorkRemote = (workRemote) => {
+    if (workRemote) {
+      setFormData({ ...formData, workRemote });
+    } else {
+      setFormData({ ...formData, workRemote: workRemote.default.value });
+    }
+  };
 
   const handleSubmit = async () => {
     populateErrors();
@@ -142,6 +150,10 @@ const EditModalComponent = ({
         formData={formData}
         onShareWithChange={setShareWith}
         onExpirationChange={setExpiration}
+      />
+      <Fourth
+        formData={formData}
+        onWorkRemoteChange={setWorkRemote}
       />
       <Footer>
         <Submit

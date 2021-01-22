@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";
+import Fourth from "./FourthSection";
 import { CreatePostContext } from "components/CreatePost/CreatePost";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 import createPostSettings from "assets/data/createPostSettings";
@@ -11,7 +12,7 @@ import axios from "axios";
 import { formDataToPost } from "assets/data/formToPostMappings";
 import GTM from "constants/gtm-tags";
 
-const { shareWith, expires, helpTypes } = createPostSettings;
+const { shareWith, expires, helpTypes, workRemote } = createPostSettings;
 
 const initialState = {
   formData: {
@@ -21,6 +22,7 @@ const initialState = {
     shareWith: shareWith.default.value,
     expires: expires.default.value,
     help: helpTypes.default.value,
+    workRemote: workRemote.default.value,
   },
   errors: [],
 };
@@ -116,6 +118,10 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
         formData={formData}
         onShareWithChange={(val) => handleSelectorChange("shareWith", val)}
         onExpirationChange={(val) => handleSelectorChange("expires", val)}
+      />
+      <Fourth
+        formData={formData}
+        onWorkRemoteChange={(val) => handleSelectorChange("workRemote", val)}
       />
       <Footer>
         <Submit

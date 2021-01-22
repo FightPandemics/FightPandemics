@@ -211,6 +211,14 @@ const Feed = (props) => {
       dispatchAction(SET_VALUE, "location", query.location);
     } else dispatchAction(SET_VALUE, "location", "");
 
+    //remote
+    console.log('query.remote', query.remote);
+    if (query.remote === 'yes') {
+      //query.remote = JSON.parse(atob(query.remote));
+      dispatchAction(SET_VALUE, "remote", query.remote);
+    } else dispatchAction(SET_VALUE, "remote", "");
+
+
     // filters / help type (objective)
     if (query.filters || query.objective) {
       let selectedFilters = {};
@@ -244,6 +252,7 @@ const Feed = (props) => {
   };
 
   const setQueryFromState = () => {
+    console.log("queryParams", queryParams);
     const newQuery = {};
     const oldFiltersLength =
       (queryParams.filters?.type || []).length +
@@ -254,6 +263,9 @@ const Feed = (props) => {
     if (applyFilters && location) {
       newQuery.location = btoa(JSON.stringify(location));
     }
+    console.log(queryParams);
+    console.log(newQuery);
+    console.log(selectedOptions);
     if (applyFilters && selectedOptions.lookingFor?.length) {
       const selectedType =
         (selectedOptions["lookingFor"][1] ||
@@ -278,6 +290,7 @@ const Feed = (props) => {
       }
     } else if (queryParams.filters && !newFiltersLength)
       newQuery.filters = null;
+    // console.log('newQuery', JSON.parse(atob(newQuery.filters)));
     setQueryKeysValue(history, newQuery);
   };
 
@@ -315,6 +328,14 @@ const Feed = (props) => {
     }, 500);
     // perform soft refetch to only close filter modal etc.. but not actually refetch posts
     refetchPosts(null, null, true);
+  };
+
+  const onRemoteChange = (e) => {
+    console.log(e.target.checked);
+    setQueryKeysValue(history, {
+      remote: e.target.checked ? 'yes': 'no',
+    });
+    console.log(history);
   };
 
   const toggleShowNearMe = (e) => {
@@ -419,11 +440,14 @@ const Feed = (props) => {
   };
 
   const loadPosts = async () => {
+    console.log('in Load posts');
     if (!applyFilters) return;
     dispatchAction(SET_VALUE, "applyFilters", false);
     const filterURL = () => {
       const filterObj = { ...(queryParams.filters || {}) };
+      console.log('in Load posts filterURL - ', filterObj);
       delete filterObj["lookingFor"];
+      console.log('in Load posts location - ', location);
       if (location) filterObj.location = location;
       return Object.keys(filterObj).length === 0
         ? ""
@@ -450,13 +474,14 @@ const Feed = (props) => {
           return "";
       }
     };
+    console.log('in Load posts objectiveURL - ', objectiveURL);
     const searchKeyword = queryParams.s_keyword;
     const searchURL = () => {
       if (searchKeyword)
         return `&keywords=${encodeURIComponent(searchKeyword)}`;
       else return "";
     };
-
+    console.log('searchURL - ', searchKeyword);
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
@@ -472,7 +497,8 @@ const Feed = (props) => {
       default:
         break;
     }
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}&remote=yes`;
+    console.log('endpoint', endpoint);
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -671,6 +697,7 @@ const Feed = (props) => {
           toggleShowNearMe,
           showFilters,
           totalPostCount,
+          onRemoteChange,
         }}
       >
         <FeedWrapper>

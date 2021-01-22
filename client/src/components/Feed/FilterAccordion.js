@@ -11,6 +11,9 @@ import {
 } from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
 import { SET_VALUE } from "hooks/actions/feedActions";
+import StyledCheckboxCheck from "components/Input/Checkbox";
+import { theme } from "constants/theme";
+
 const providersGtmTagsMap = {
   0: GTM.providersFilters.individual,
   1: GTM.providersFilters.startUp,
@@ -50,6 +53,8 @@ const gtmTagsMap = {
   providers: GTM.post.providers,
 };
 
+const { royalBlue } = theme.colors;
+
 const filterOps = (label, idx) => {
   if (label === "lookingFor") {
     return `_${requestOrOffer[idx]}`;
@@ -73,6 +78,7 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
     ignoreUserLocation,
     isAuthenticated,
     toggleShowNearMe,
+    onRemoteChange,
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
@@ -100,6 +106,12 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
               includeNavigator={true}
               gtmPrefix={gtmTag(GTM.post.location)}
             />
+            <StyledCheckboxCheck
+              style={{ fontSize: "1.2rem", borderColor: royalBlue }}
+              onChange={onRemoteChange}
+            >
+              {t("Remote")}
+            </StyledCheckboxCheck>
           </FilterAccordionPanel>
         );
       } else if (!locationOnly) {

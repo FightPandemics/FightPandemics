@@ -47,7 +47,8 @@ export const typeToTag = (type) => {
   }
 };
 
-export const postToFormData = (post) => ({
+export const postToFormData = (post) => (
+ {
   title: post.title,
   description: post.content,
   tags: post.types.map((type) => typeToTag(type)),
@@ -55,6 +56,7 @@ export const postToFormData = (post) => ({
   expires: `${
     post.expireAt !== null ? translateISOToString(post.expireAt) : forever
   }`,
+  workRemote: `${post.remote[0].toUpperCase()}${post.remote.slice(1)}`,
   help: post.objective,
   author: post.author,
   language: post.language,
@@ -67,6 +69,7 @@ export const formDataToPost = (formData) => ({
   types: formData.tags.map((tag) => tagToType(tag)),
   visibility: formData.shareWith.toLowerCase(),
   expireAt: formData.expires.toLowerCase(),
+  remote: formData.workRemote.toLowerCase(),
   objective: formData.help,
   author: formData.author,
   language: formData.language,
@@ -78,6 +81,7 @@ export const formDataToPostPatch = (formData) => ({
   content: formData.description,
   types: formData.tags.map((tag) => tagToType(tag)),
   visibility: formData.shareWith.toLowerCase(),
+  remote: formData.workRemote.toLowerCase(),
   expireAt: formData.expires.toLowerCase(),
   objective: formData.help,
 });
