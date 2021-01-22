@@ -9,8 +9,10 @@ const {
   getUsersSchema,
   createUserAvatarSchema,
   createUserSchema,
+  setUserPermissionsSchema,
   updateUserSchema,
 } = require("./schema/users");
+const { SCOPES, ROLES } = require("../constants");
 
 /*
  * /api/users
@@ -85,7 +87,7 @@ async function routes(app) {
 
       // if location is defined, use simple regex text query, in order to use $geoNear
       if (location && keywords) {
-        const keywordsRegex = createSearchRegex(keywords)
+        const keywordsRegex = createSearchRegex(keywords);
         filters.push({
           $or: [
             { name: keywordsRegex },
@@ -237,6 +239,7 @@ async function routes(app) {
       objectives,
       organisations,
       urls,
+      permissions,
       photo,
       notifyPrefs,
       usesPassword,
@@ -254,6 +257,7 @@ async function routes(app) {
       organisations,
       photo,
       urls,
+      permissions,
       notifyPrefs,
       usesPassword,
     };
@@ -358,7 +362,7 @@ async function routes(app) {
         objectives,
         photo,
         urls,
-        usesPassword
+        usesPassword,
       } = user;
 
       let { location } = user;
@@ -382,7 +386,7 @@ async function routes(app) {
         ownUser,
         photo,
         urls,
-        usesPassword: ownUser ? usesPassword : undefined
+        usesPassword: ownUser ? usesPassword : undefined,
       };
     },
   );
@@ -489,10 +493,9 @@ async function routes(app) {
     "/",
     { preValidation: [app.authenticate], schema: createUserSchema },
     async (req) => {
-      const {
-        email,
-        email_verified: emailVerified,
-      } = await Auth0.getUser(getCookieToken(req));
+      const { email, email_verified: emailVerified } = await Auth0.getUser(
+        getCookieToken(req),
+      );
       if (!emailVerified) {
         throw app.httpErrors.forbidden("emailUnverified");
       }
@@ -515,7 +518,7 @@ async function routes(app) {
       return {
         ...user.toObject(),
         organisations: [],
-      }
+      };
     },
   );
 
@@ -529,7 +532,7 @@ async function routes(app) {
         throw app.httpErrors.badRequest("token is invalid");
       }
       decoded = payload;
-    })
+    });
 
     const { userId, exp } = decoded;
     if (exp * 1000 < Date.now()) {
@@ -551,7 +554,7 @@ async function routes(app) {
     { schema: updateNotifyPrefsSchema },
     async (req) => {
       const { headers, body } = req;
-      
+
       let decoded = {};
       jwt.verify(headers.token, config.auth.secretKey, (err, payload) => {
         if (err) {
@@ -559,8 +562,8 @@ async function routes(app) {
           throw app.httpErrors.badRequest("token is invalid");
         }
         decoded = payload;
-      })
-      
+      });
+
       const { userId, expireDate } = decoded;
       if (expireDate < Date.now()) {
         throw app.httpErrors.badRequest("token is expired");
@@ -578,6 +581,92 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
       return updatedUser.notifyPrefs;
+    },
+  );
+
+  app.patch(
+    "/:userId/permissions",
+    {
+      preValidation: [
+        app.authenticate,
+        app.setActor,
+        app.checkScopes([SCOPES.MANAGE_USERS]),
+      ],
+      schema: setUserPermissionsSchema
+    },
+    async (req) => {
+      const {
+        params: { userId },
+        body: { role },
+      } = req;
+
+      if (ROLES[role] === undefined) throw app.httpErrors.badRequest("invalid role");
+
+      const [updatedErr, updatedUser] = await app.to(
+        User.findOneAndUpdate(
+          { _id: userId },
+          { $set: { permissions: ROLES[role] } },
+          { new: true },
+        ),
+      );
+
+      if (updatedErr) {
+        req.log.error(updatedErr, "Failed to add permission");
+        throw app.httpErrors.internalServerError();
+      }
+      return {
+        success: true,
+      };
+    },
+  );
+
+  app.get(
+    "/roles",
+    {
+      preValidation: [
+        app.authenticate,
+        app.setActor,
+        app.checkScopes([SCOPES.MANAGE_USERS]),
+      ],
+    },
+    async (req) => {
+      const aggregationPipeline = [
+        {
+          $match: {
+            permissions: { $gt: SCOPES.NONE },
+          },
+        },
+        {
+          $set: {
+            name: {
+              $concat: ["$firstName", " ", "$lastName"],
+            },
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            name: 1,
+            permissions: 1,
+            photo: 1,
+          },
+        },
+        {
+          $sort: {
+            permissions: -1,
+          },
+        },
+      ];
+      const [errUsers, users] = await app.to(
+        User.aggregate(aggregationPipeline),
+      );
+      if (errUsers) {
+        req.log.error(updateErr, "Failed to get users");
+        throw app.httpErrors.internalServerError();
+      }
+      return {
+        users,
+      };
     },
   );
 }

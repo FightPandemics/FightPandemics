@@ -319,6 +319,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
                 updateComments={updateComments}
                 fullPostLength={postLength}
                 user={user}
+                convertTextToURL={true}
               />
               <EditPost
                 user={user}

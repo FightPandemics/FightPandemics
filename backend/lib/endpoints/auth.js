@@ -12,6 +12,7 @@ const {
   config: { auth: authConfig },
 } = require("../../config");
 const { getCookieToken } = require("../utils");
+const { SCOPES } = require("../constants");
 
 /*
  * /api/auth
@@ -46,6 +47,7 @@ async function routes(app) {
           firstName,
           lastName,
           organisations,
+          permissions = SCOPES.NONE,
           photo,
           usesPassword,
         } = dbUser;
@@ -55,6 +57,7 @@ async function routes(app) {
           id: userId,
           lastName,
           organisations,
+          permissions,
           photo,
           usesPassword,
         };
@@ -199,6 +202,7 @@ async function routes(app) {
             lastName,
             organisations,
             photo,
+            permissions = SCOPES.NONE,
             usesPassword,
           } = dbUser;
           user = {
@@ -207,6 +211,7 @@ async function routes(app) {
             id: userId,
             lastName,
             organisations,
+            permissions,
             photo,
             usesPassword,
           };

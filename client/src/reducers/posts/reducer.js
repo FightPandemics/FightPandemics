@@ -35,6 +35,9 @@ const postsReducer = (state = innitialState, action) => {
     }
     case POSTS_ACTIONS.NEXT_PAGE:
       return { ...state, page: state.page + 1 };
+    case POSTS_ACTIONS.SET_PAGE:
+      const { payload } = action;
+      return { ...state, page: payload.page };
     case POSTS_ACTIONS.RESET_PAGE: {
       const { payload } = action;
       return {

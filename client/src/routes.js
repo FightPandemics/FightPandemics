@@ -18,6 +18,7 @@ import EditAccount from "./pages/EditAccount";
 import EditNotifications from "./pages/EditNotifications";
 import NotFoundPage from "./pages/NotFoundPage";
 import Feed from "./containers/FeedContainer";
+import DashBoard from "./pages/DashBoard";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import NearestHospital from "./pages/NearestHospital";
@@ -30,6 +31,8 @@ import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
+
+import { SCOPES } from "constants/permissions";
 
 const routes = [
   {
@@ -165,6 +168,16 @@ const routes = [
     },
   },
   {
+    path: "/dashboard",
+    exact: true,
+    component: DashBoard,
+    props: {
+      navSearch: true,
+      permRequired: true,
+      hideFooter: true,
+    },
+  },
+  {
     path: "/feed/:id",
     component: Feed,
     props: {
@@ -262,6 +275,7 @@ const routes = [
     component: Unsubscribe,
     layout: "logo",
   },
+
   {
     path: "*",
     component: NotFoundPage,

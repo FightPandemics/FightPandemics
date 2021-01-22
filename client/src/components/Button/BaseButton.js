@@ -15,6 +15,15 @@ const BaseButton = styled(Button)`
         ${button.secondary}
       }
     `}
+    ${(props) =>
+      props.forModerator?.remove &&
+      css`
+        ${button.primary}
+
+        &:hover, &:active, &:focus {
+          ${button.secondaryRed}
+        }
+      `}
 
   ${(props) =>
     props.primarylight &&
