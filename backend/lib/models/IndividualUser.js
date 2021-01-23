@@ -1,5 +1,6 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
+const { ROLES } = require( "../constants");
 
 const INDIVIDUAL_USER_TYPES = ["Individual"];
 function fullName(firstName, lastName) {
@@ -43,6 +44,11 @@ const individualUserSchema = new Schema(
       linkedin: String,
       twitter: String,
       website: String,
+    },
+    permissions: {
+      type: Number,
+      required: true,
+      default: ROLES.user,
     }
   },
   { collection: "users" },
