@@ -3,6 +3,7 @@ import resources from "./index";
 export const localization = {
   ar: "ar",
   de: "de",
+  el: "el",
   en: "en-US",
   "en-US": "en-US",
   "en-GB": "en-GB",
@@ -11,6 +12,7 @@ export const localization = {
   fr: "fr",
   he: "he",
   "hi-IN": "hi-IN",
+  "hu-HU": "hu-HU",
   id: "id",
   it: "it",
   "kn-IN": "kn-IN",
@@ -34,6 +36,7 @@ export const localization = {
 export const MENU_MAP = {
   ar: { value: "العربية", text: "Arabic (العربية)" },
   de: { value: "Deutsch", text: "German (Deutsch)" },
+  el: { value: "Ελληνικά", text: "Greek (Ελληνικά)" },
   "en-US": { value: "American English", text: "English (American English)" },
   "en-GB": { value: "British English", text: "English (British English)" },
   "es-ES": { value: "Español", text: "Spanish (Español de España)" },
@@ -41,6 +44,7 @@ export const MENU_MAP = {
   fr: { value: "Français", text: "French (Français)" },
   he: { value: "עברית", text: "Hebrew (עברית)" },
   "hi-IN": { value: "हिंदी", text: "Hindi (हिंदी)" },
+  "hu-HU": { value: "Magyar", text: "Hungarian (Magyar)" },
   id: { value: "Bahasa Indonesia", text: "Indonesian (Bahasa Indonesia)" },
   it: { value: "Italiano", text: "Italian (Italiano)" },
   nl: { value: "Nederlands", text: "Dutch (Nederlands)" },
