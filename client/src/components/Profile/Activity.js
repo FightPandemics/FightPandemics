@@ -60,7 +60,6 @@ const Activity = ({
     [hiddenPosts],
   );
 
-
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
@@ -82,6 +81,7 @@ const Activity = ({
             isHidden={hiddenPosts[posts[index][1]?._id]}
             onPostHide={hidePost}
             onPostUnhide={unhidePost}
+            convertTextToURL={false}
           />
         );
       }
@@ -107,10 +107,13 @@ const Activity = ({
       handleEditPost,
       handlePostDelete,
       hasNextPage,
+      hiddenPosts,
+      hidePost,
       isItemLoaded,
       postDelete,
       postDispatch,
       posts,
+      unhidePost,
       updateComments,
       user,
     ],

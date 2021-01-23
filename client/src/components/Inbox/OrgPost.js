@@ -55,7 +55,7 @@ const Post = styled.div`
 export const OrgPost = ({ postRef }) => {
   const { t } = useTranslation();
   return (
-    <Post>
+    <Post convertTextToURL={false}>
       <header>
         <div className="post-type">{t(`feed.${postRef.objective}`)}</div>
         <span>.</span>

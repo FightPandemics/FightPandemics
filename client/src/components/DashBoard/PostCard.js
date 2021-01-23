@@ -6,121 +6,16 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
 const { colors, typography } = theme;
-const { royalBlue, darkGray } = colors;
+const { royalBlue, darkGray, selago } = colors;
 const { xsmall, small, medium, large, xxlarge } = typography.size;
 
 const PostCard = styled(Card)`
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   padding: 2rem 2rem 0rem 2rem;
   overflow-wrap: break-word;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  ${({ unClickable }) =>
-    unClickable
-      ? `
-   * {
-     pointer-events: none;
-     user-select: none;
-   }
-   `
-      : ""}
-
-  .blur-overlay {
-    border: 0.05rem solid rgba(0, 0, 0, 0.5);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - 4rem);
-    z-index: 1;
-    background: rgba(243, 244, 254, 0.3);
-    backdrop-filter: blur(12px);
-    font-weight: 600;
-    font-size: ${medium};
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    span {
-      margin-top: 4rem;
-      display: block;
-      color: #425af2;
-      font-weight: 500;
-      cursor: pointer;
-      pointer-events: auto;
-    }
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      border: unset !important;
-      height: 100%;
-    }
-  }
-
-  ${({ unClickable }) =>
-    unClickable
-      ? `
-   * {
-     pointer-events: none;
-     user-select: none;
-   }
-   `
-      : ""}
-
-  .blur-overlay {
-    border: 0.05rem solid rgba(0, 0, 0, 0.5);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - 4rem);
-    z-index: 1;
-    background: rgba(243, 244, 254, 0.3);
-    backdrop-filter: blur(12px);
-    font-weight: 600;
-    font-size: ${medium};
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    span {
-      margin-top: 4rem;
-      display: block;
-      color: #425af2;
-      font-weight: 500;
-      cursor: pointer;
-      pointer-events: auto;
-    }
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      border: unset !important;
-      height: 100%;
-    }
-  }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     border: unset !important;
-  }
-
-  .pre-header {
-    max-width: calc(100% - 4rem);
-    position: absolute;
-    top: 0;
-    padding: 1rem 0;
-    margin-top: 1rem;
-    font-family: "Work Sans";
-    font-size: ${small};
-    font-weight: 400;
-    color: ${colors.royalBlue};
-    -webkit-text-stroke: 0.2px;
-    &.post-page {
-      position: relative;
-      top: unset;
-      margin-top: -1rem;
-    }
-    .timestamp {
-      padding-left: 1rem;
-      font-size: ${small};
-      color: ${colors.darkishGray};
-    }
   }
 
   &.am-card {
@@ -129,22 +24,14 @@ const PostCard = styled(Card)`
     }
 
     @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-      border: 0.01rem solid #e4e4e4;
+      border: 0.05rem solid rgba(0, 0, 0, 0.5);
       border-radius: 0.2rem;
       padding: 2rem 2.4rem;
-      padding-bottom: 0.2rem;
     }
 
     body .feed-posts & {
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
-        position: unset;
-        border: 0.01rem solid #e4e4e4;
-      }
-    }
-    body .activity & {
-      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
-        position: unset;
-        border: 0.01rem solid #e4e4e4;
+        border: 0.05rem solid rgba(0, 0, 0, 0.5);
       }
     }
 
@@ -154,8 +41,8 @@ const PostCard = styled(Card)`
 
     .highlighted {
       font-weight: bold;
-      color: #425af2;
-      background: #f3f4fe;
+      color: ${royalBlue};
+      background: ${selago};
     }
 
     .card-header {
@@ -171,10 +58,6 @@ const PostCard = styled(Card)`
       > .card-submenu {
         flex: 0 0 auto;
         margin-left: 3rem;
-        margin-top: -3.45rem;
-        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-          margin-top: -3.25rem;
-        }
         cursor: pointer;
       }
 
@@ -193,12 +76,10 @@ const PostCard = styled(Card)`
         position: relative;
         display: block;
         min-height: 4rem;
-        padding-left: 5rem;
         font-size: ${medium};
-        color: ${colors.darkerGray};
-        font-weight: 500;
         .title-wrapper {
           cursor: default;
+          padding-top: 1.5rem;
         }
         > .ant-avatar-circle,
         > img {
@@ -221,17 +102,15 @@ const PostCard = styled(Card)`
         }
 
         .author {
-          font-size: ${large};
+          font-size: ${medium};
           cursor: pointer;
         }
 
         .location-status {
           position: relative;
           padding-left: 1.4rem;
-          font-weight: 500;
-          font-family: "Work Sans";
-          font-size: ${small};
-          color: ${colors.darkishGray};
+          font-size: ${xsmall};
+          color: #888;
           img {
             position: absolute;
             top: 0.5rem;
@@ -242,14 +121,19 @@ const PostCard = styled(Card)`
           }
         }
       }
+      .timestamp {
+        padding-left: 1.4rem;
+        font-size: ${medium};
+        color: ${darkGray};
+      }
     }
 
     .am-card-body {
       border-top: unset;
       padding: 0;
-      color: ${colors.darkerGray};
-      font-family: "Work Sans";
+      color: black;
       white-space: pre-line;
+      max-width: calc(100% - 4rem);
 
       &::before {
         content: none;
@@ -267,13 +151,8 @@ const PostCard = styled(Card)`
 
       .post-description {
         font-weight: 400;
-        font-size: ${large};
+        font-size: ${medium};
         line-height: 2rem;
-        letter-spacing: -0.03rem;
-        -webkit-text-stroke: 0.2px;
-        a {
-          text-decoration: underline;
-        }
       }
 
       &.content-wrapper {
@@ -285,8 +164,7 @@ const PostCard = styled(Card)`
 
       &.view-more-wrapper {
         @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-          border-bottom: 0.2rem solid ${colors.lightGray};
-          margin-bottom: 1.6rem;
+          margin-bottom: 1.3rem;
         }
       }
 
@@ -301,9 +179,7 @@ const PostCard = styled(Card)`
           font-weight: 600;
         }
       }
-      .am-card-footer {
-        padding-bottom: 2rem;
-      }
+
       .social-icons {
         display: flex;
 

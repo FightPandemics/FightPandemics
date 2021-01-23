@@ -38,7 +38,7 @@ const Form = ({ onChangeDescription }) => {
         onChange={onChangeDescription()}
         rows={4}
         placeholder={t("moderation.enterDetails")}
-        maxLength={512}
+        maxLength={500}
       />
     </Section>
   );

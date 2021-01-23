@@ -249,6 +249,7 @@ module.exports = {
   POST_TYPES,
   VISIBILITY_OPTIONS,
   REMOTE_OPTIONS,
+  POST_STATUS,
   model: Post,
   schema: postSchema,
 };
