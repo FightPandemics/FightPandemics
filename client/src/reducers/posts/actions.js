@@ -4,6 +4,7 @@ export const POSTS_ACTIONS = {
   FETCH_POSTS_BEGIN: "FETCH_POSTS_BEGIN",
   FETCH_POSTS_ERROR: "FETCH_POSTS_ERROR",
   NEXT_PAGE: "NEXT_PAGE",
+  SET_PAGE: "SET_PAGE",
   RESET_PAGE: "RESET_PAGE",
   SET_LIKE: "SET_LIKE",
   SET_LOADING: "SET_LOADING",
@@ -50,7 +51,7 @@ export const setNextPageAction = () => ({
 });
 
 export const setPageAction = (page) => ({
-  type: POSTS_ACTIONS.NEXT_PAGE,
+  type: POSTS_ACTIONS.SET_PAGE,
   payload: { page },
 });
 
