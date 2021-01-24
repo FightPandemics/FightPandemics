@@ -5,6 +5,9 @@ class HelpBoard {
   firstPostOnHelpBoard =
     "div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)";
   helpBoard = "div.feed-posts";
+  keywordSearchButton = "#SearchContainer > div > img";
+  keywordSearchLink = "#SCH_IN";
+  authorTitle = "div.title-wrapper";
 
   constructor() {}
 
@@ -42,6 +45,18 @@ class HelpBoard {
 
   getHelpBoardSelector() {
     return this.helpBoard;
+  }
+
+  getKeywordSearchButton() {
+    return this.keywordSearchButton;
+  }
+
+  getKeywordSearchLink() {
+    return this.keywordSearchLink;
+  }
+
+  getAuthorTitle() {
+    return this.authorTitle;
   }
 }
 

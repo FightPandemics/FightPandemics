@@ -6,6 +6,23 @@ Cypress.Commands.add("checkFpLogoIsVisibleAndClickable", (fpLogoLocator) => {
     .click();
 });
 
+/*Cypress.Commands.add(
+  "keywordSearchIconIsVisibleAndClickable",
+  (keywordSearchButton) => {
+    var searchIcon = cy.get(keywordSearchButton);
+    searchIcon
+      .should("be.visible")
+      .and("have.attr", "alt", "Icon")
+      .click({ multiple: true, force: true });
+  },
+);*/
+
+Cypress.Commands.add("keywordSearchLinkIsOpen", (keywordSearchLink) => {
+  var searchLink = cy.get(keywordSearchLink);
+  searchLink.should("be.visible").and("have.attr", "type", "text");
+  //.contains("Search Posts,People & Orgs");
+});
+
 Cypress.Commands.add(
   "pageContainsHeadingAndImage",
   (pageHeadingLocator, heading, pageImageLocator) => {
@@ -57,8 +74,5 @@ Cypress.Commands.overwrite("visit", (visit, url) => {
 });
 
 Cypress.Commands.add("checkAnyKindOfLinks", (element, link) => {
-  cy.get(element)
-    .should("be.visible")
-    .and("have.attr", "href", link);
+  cy.get(element).should("be.visible").and("have.attr", "href", link);
 });
-
