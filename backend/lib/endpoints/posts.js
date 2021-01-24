@@ -58,8 +58,7 @@ async function routes(app) {
       } = req;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
 
-      console.log('queryFilters', queryFilters);
-      console.log('queryFilters req.query', req.query  );
+      console.log('queryFilters remote', remote);
 
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */

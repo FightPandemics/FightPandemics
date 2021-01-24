@@ -130,7 +130,8 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
           disabled={
             !formData.title ||
             !formData.description ||
-            formData.tags.length === 0
+            formData.tags.length === 0 ||
+            formData.workRemote === workRemote.default.value
           }
           id={gtmPrefix + GTM.post.button}
         >

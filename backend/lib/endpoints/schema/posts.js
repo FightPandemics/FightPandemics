@@ -18,7 +18,8 @@ const getPostsSchema = {
     .prop("ignoreUserLocation", S.boolean().default(false))
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("skip", S.integer())
-    .prop("includeMeta", S.boolean().default(false)),
+    .prop("includeMeta", S.boolean().default(false))
+    .prop("remote", S.string()),
 };
 
 const createPostSchema = {
