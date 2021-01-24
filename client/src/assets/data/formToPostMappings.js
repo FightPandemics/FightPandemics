@@ -47,8 +47,7 @@ export const typeToTag = (type) => {
   }
 };
 
-export const postToFormData = (post) => (
- {
+export const postToFormData = (post) => ({
   title: post.title,
   description: post.content,
   tags: post.types.map((type) => typeToTag(type)),
@@ -56,7 +55,9 @@ export const postToFormData = (post) => (
   expires: `${
     post.expireAt !== null ? translateISOToString(post.expireAt) : forever
   }`,
-  workRemote: `${post.remote[0].toUpperCase()}${post.remote.slice(1)}`,
+  workRemote: post.remote
+    ? `${post.remote[0].toUpperCase()}${post.remote.slice(1)}`
+    : "no",
   help: post.objective,
   author: post.author,
   language: post.language,
