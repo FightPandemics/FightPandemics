@@ -24,7 +24,7 @@ describe("FightPandemics Help Board Page for unauthorized user", () => {
     });
 
     it("keyword search Icon is visible and clickable", () => {
-      var searchIcon = cy.get(helpBoard.keywordSearchButton);
+      var searchIcon = cy.get(helpBoard.getKeywordSearchButton());
       searchIcon
         .should("be.visible")
         .and("have.attr", "alt", "Icon")
@@ -33,7 +33,7 @@ describe("FightPandemics Help Board Page for unauthorized user", () => {
     });
 
     it(" clicking on search icon, link for typing opens", () => {
-      var searchIcon = cy.get(helpBoard.keywordSearchButton);
+      var searchIcon = cy.get(helpBoard.getKeywordSearchButton());
       searchIcon
         .should("be.visible")
         .and("have.attr", "alt", "Icon")
@@ -42,13 +42,13 @@ describe("FightPandemics Help Board Page for unauthorized user", () => {
     });
 
     it("Unauthorized user can search posts by typing name of an user", () => {
-      var search = cy.get(helpBoard.keywordSearchLink);
+      var search = cy.get(helpBoard.getKeywordSearchLink());
       search.type(feedData.searchByName);
       cy.get(helpBoard.keywordSearchButton).click({
         multiple: true,
         force: true,
       });
-      cy.get(helpBoard.authorTitle).contains(authorTitleText);
+      cy.get(helpBoard.getAuthorTitle()).contains(authorTitleText);
 
       //helpBoard.getAuthorTitle().contains(authorTitleText);
     });
