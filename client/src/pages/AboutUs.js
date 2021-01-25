@@ -422,7 +422,7 @@ const AboutUs = () => {
             </a>
           </p>
           <LinkButton
-            id="AU_PR"
+            id={getGTM("pressRelease")}
             href="https://www.notion.so/fightpandemics/Press-Kit-7146b85a49c848ec8395c0cadf3371b5"
             target="_blank"
           >
@@ -438,6 +438,7 @@ const AboutUs = () => {
           <WhiteSpace size="xl" />
           <WhiteSpace size="lg" />
           <LinkButton
+            id={getGTM("bookCall")}
             href="https://calendly.com/fightpandemics"
             target="_blank"
           >
