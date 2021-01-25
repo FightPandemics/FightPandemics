@@ -3,7 +3,7 @@ import createPostSettings from "assets/data/createPostSettings";
 import filterOptions from "assets/data/filterOptions";
 
 const { type: typeFilter } = filterOptions;
-const { expires } = createPostSettings;
+const { expires, workRemote } = createPostSettings;
 
 const day = expires.options[0].value;
 const week = expires.options[1].value;
@@ -57,7 +57,7 @@ export const postToFormData = (post) => ({
   }`,
   workRemote: post.remote
     ? `${post.remote[0].toUpperCase()}${post.remote.slice(1)}`
-    : "no",
+    : workRemote.options[1],
   help: post.objective,
   author: post.author,
   language: post.language,
