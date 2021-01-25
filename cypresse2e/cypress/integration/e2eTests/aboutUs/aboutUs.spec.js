@@ -115,7 +115,7 @@ describe("FightPandemics About Us page", () => {
   }
 
   function bookACallButtonIsVisibleAndPointToAppropriateLink() {
-    cy.checkAnyKindOfLinksXpath(aboutUs.bookACallButton, aboutUs.bookACallLink);
+    cy.checkAnyKindOfLinks(aboutUs.bookACallButton, aboutUs.bookACallLink);
   }
 
   function partnershipEmailLinkIsVisibleAndPointToAppropriateLink() {

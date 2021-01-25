@@ -19,7 +19,7 @@ class AboutUs {
   lifetimeSupportersContainer = "#AU_LS";
   currentSupportersContainer = "#AU_CS";
   pastSupportersContainer = "#AU_PS";
-  bookACallButton = "//*[@id=\"root\"]/div/div/div[3]/main/div/div[11]/div/a";
+  bookACallButton = "#AU_BC";
   bookACallLink = "https://calendly.com/fightpandemics"
 
 

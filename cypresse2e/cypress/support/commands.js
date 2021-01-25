@@ -62,8 +62,4 @@ Cypress.Commands.add("checkAnyKindOfLinks", (element, link) => {
     .and("have.attr", "href", link);
 });
 
-Cypress.Commands.add("checkAnyKindOfLinksXpath", (element, link) => {
-  cy.xpath(element)
-    .should("be.visible")
-    .and("have.attr", "href", link);
-});
+
