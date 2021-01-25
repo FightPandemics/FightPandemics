@@ -327,6 +327,10 @@ export default class SocketManager extends React.Component {
           postTitle: n.post.title,
           shareMedium: n.sharedVia,
         });
+      case "report":
+        return i18n.t("notifications.reported", {
+          postTitle: n.post.title,
+        });
         return;
     }
   };

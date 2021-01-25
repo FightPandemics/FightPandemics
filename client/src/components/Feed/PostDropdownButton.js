@@ -139,7 +139,6 @@ const PostDropdownButton = ({
           <Menu.Item
             onClick={onReport}
             key="report"
-            id={GTM.post.prefix + GTM.moderation.report}
           >
             <Item>
               <ReportIcon />

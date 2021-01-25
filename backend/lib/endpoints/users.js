@@ -10,8 +10,10 @@ const {
   getUsersSchema,
   createUserAvatarSchema,
   createUserSchema,
+  setUserPermissionsSchema,
   updateUserSchema,
 } = require("./schema/users");
+const { SCOPES, ROLES } = require("../constants");
 
 /*
  * /api/users
@@ -245,6 +247,7 @@ async function routes(app) {
       objectives,
       organisations,
       urls,
+      permissions,
       photo,
       notifyPrefs,
       usesPassword,
@@ -263,6 +266,7 @@ async function routes(app) {
       organisations,
       photo,
       urls,
+      permissions,
       notifyPrefs,
       usesPassword,
       verified: verification && verification.status === "approved",
@@ -592,6 +596,93 @@ async function routes(app) {
     },
   );
 
+  app.patch(
+    "/:userId/permissions",
+    {
+      preValidation: [
+        app.authenticate,
+        app.setActor,
+        app.checkScopes([SCOPES.MANAGE_USERS]),
+      ],
+      schema: setUserPermissionsSchema,
+    },
+    async (req) => {
+      const {
+        params: { userId },
+        body: { role },
+      } = req;
+
+      if (ROLES[role] === undefined)
+        throw app.httpErrors.badRequest("invalid role");
+
+      const [updatedErr, updatedUser] = await app.to(
+        User.findOneAndUpdate(
+          { _id: userId },
+          { $set: { permissions: ROLES[role] } },
+          { new: true },
+        ),
+      );
+
+      if (updatedErr) {
+        req.log.error(updatedErr, "Failed to add permission");
+        throw app.httpErrors.internalServerError();
+      }
+      return {
+        success: true,
+      };
+    },
+  );
+
+  app.get(
+    "/roles",
+    {
+      preValidation: [
+        app.authenticate,
+        app.setActor,
+        app.checkScopes([SCOPES.MANAGE_USERS]),
+      ],
+    },
+    async (req) => {
+      const aggregationPipeline = [
+        {
+          $match: {
+            permissions: { $gt: SCOPES.NONE },
+          },
+        },
+        {
+          $set: {
+            name: {
+              $concat: ["$firstName", " ", "$lastName"],
+            },
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            name: 1,
+            permissions: 1,
+            photo: 1,
+          },
+        },
+        {
+          $sort: {
+            permissions: -1,
+          },
+        },
+      ];
+      const [errUsers, users] = await app.to(
+        User.aggregate(aggregationPipeline),
+      );
+      if (errUsers) {
+        req.log.error(updateErr, "Failed to get users");
+        throw app.httpErrors.internalServerError();
+      }
+      return {
+        users,
+      };
+    },
+  );
+
   app.get(
     "/verification",
     { preValidation: [app.authenticate, app.setActor] },
@@ -636,7 +727,10 @@ async function routes(app) {
         if (userErr || user === null) {
           // ALWAYS return true (200 code) when responding to the webhook event
           // Otherwise Veriff will keep sending the same event which results in spamming the Logs with errors.
-          req.log.error(userErr, `Failed getting user ${userId} for verification id: [${id}]`);
+          req.log.error(
+            userErr,
+            `Failed getting user ${userId} for verification id: [${id}]`,
+          );
           return true;
         }
 
@@ -659,15 +753,15 @@ async function routes(app) {
           if (updateErr) {
             // ALWAYS return true (200 code) when responding to the webhook event
             // Otherwise Veriff will keep sending the same event which results in spamming the Logs with errors.
-            req.log.error(updateErr, `Failed saving verification [${id}] for user ${userId}`);
+            req.log.error(
+              updateErr,
+              `Failed saving verification [${id}] for user ${userId}`,
+            );
             return true;
           }
         } else if (status === "approved") {
           const {
-            document: {
-              country,
-              type,
-            },
+            document: { country, type },
           } = verification;
 
           const verificationObject = {
@@ -690,7 +784,10 @@ async function routes(app) {
           if (updateErr) {
             // ALWAYS return true (200 code) when responding to the webhook event
             // Otherwise Veriff will keep sending the same event which results in spamming the Logs with errors.
-            req.log.error(updateErr, `Failed saving verification [${id}] for user ${userId}`);
+            req.log.error(
+              updateErr,
+              `Failed saving verification [${id}] for user ${userId}`,
+            );
             return true;
           }
         }
