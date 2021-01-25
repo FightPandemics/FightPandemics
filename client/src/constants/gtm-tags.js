@@ -77,6 +77,12 @@ module.exports = {
     continueToFeed: "_CF",
     modify: "_MOD",
     uploadAvatar: "_UA",
+    verifyAccount: "_VA",
+    verifyPopup: "_VAV",
+    getVerify: "_VAV_GV",
+    cancelVerify: "_CV",
+    accountVerified: "_AV",
+    checkBadge: "_AV_CB"
   },
   sign: {
     inPrefix: "SI",
@@ -192,6 +198,8 @@ module.exports = {
     joinVolunteer: "_GI_JV",
     joinAmbassador: "_GI_JA",
     joinStudentProgram: "_GI_JSP",
+    pressRelease: "_PR",
+    bookCall: "_BC",
   },
   notifications: {
     prefix: "NOT",
