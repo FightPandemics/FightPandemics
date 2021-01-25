@@ -52,10 +52,10 @@ const validateWebhookEvent = async (req, reply) => {
   const incomingXAuthClient = req.headers["x-auth-client"];
   // reject if "x-auth-client" is not equal to PUBLIC_KEY
   if (PUBLIC_KEY !== incomingXAuthClient) {
-    req.log.err(`staging debug: 403 details 1 - ${PUBLIC_KEY}, ${incomingXAuthClient}`);
+    req.log.error(`staging debug: 403 details 1 - ${PUBLIC_KEY}, ${incomingXAuthClient}`);
     throw false;
   }
-  req.log.err(`staging debug: working 1 - ${PUBLIC_KEY}, ${incomingXAuthClient}`);
+  req.log.error(`staging debug: working 1 - ${PUBLIC_KEY}, ${incomingXAuthClient}`);
 
   // use rawBody + PRIVATE_KEY to build the xSignature
   // and compare it to "x-signature" header.
@@ -64,10 +64,10 @@ const validateWebhookEvent = async (req, reply) => {
   const xSignature = await generateXSignature(rawBody);
 
   if (xSignature != incomingXSignature) {
-    req.log.err(`staging debug: 403 details 2 - ${xSignature}, ${incomingXSignature}`);
+    req.log.error(`staging debug: 403 details 2 - ${xSignature}, ${incomingXSignature}`);
     throw false;
   }
-  req.log.err(`staging debug: working 2 - ${xSignature}, ${incomingXSignature}`);
+  req.log.error(`staging debug: working 2 - ${xSignature}, ${incomingXSignature}`);
 };
 
 module.exports = {
