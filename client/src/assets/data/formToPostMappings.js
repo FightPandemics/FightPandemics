@@ -57,7 +57,7 @@ export const postToFormData = (post) => ({
   }`,
   workRemote: post.remote
     ? `${post.remote[0].toUpperCase()}${post.remote.slice(1)}`
-    : workRemote.options[1],
+    : workRemote.options[1].value,
   help: post.objective,
   author: post.author,
   language: post.language,
