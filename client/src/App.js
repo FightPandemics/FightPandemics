@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
+import TagManager from "react-gtm-module";
 import { useTranslation } from "react-i18next";
 import Zendesk, { ZendeskAPI } from "react-zendesk";
 
@@ -10,6 +11,7 @@ import AppMetaContainer from "components/Meta/AppMetaContainer";
 import RouteWithSubRoutes from "./templates/RouteWithSubRoutes";
 import history from "./utils/history";
 import ScrollToTop from "components/Scroll/ScrollTop";
+import { getLang } from "i18n";
 
 const App = (props) => {
   const { i18n } = useTranslation();
@@ -18,6 +20,16 @@ const App = (props) => {
     props.initAuth();
   }, [props]);
 
+  useEffect(() => {
+    const { language, systemLang } = getLang();
+    TagManager.dataLayer({
+      dataLayer: {
+        systemLang,
+        language,
+      },
+    });
+  }, []);
+  
   useEffect(() => {
     ZendeskAPI("webWidget", "setLocale", `${i18n.language}`);
   }, [i18n.language]);
