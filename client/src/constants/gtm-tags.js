@@ -134,6 +134,7 @@ module.exports = {
     el: "_EL",
     "zh-CN": "_ZN_CN",
     fr: "_FR",
+    hr: "_HR",
     tr: "_TR",
     "hi-IN": "_HI_IN",
     "hu-HU": "_HU_HU",
