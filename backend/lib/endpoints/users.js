@@ -1,4 +1,5 @@
 const Auth0 = require("../components/Auth0");
+const Veriff = require("../components/Veriff");
 const { uploadUserAvatar } = require("../components/CDN");
 const { getCookieToken, createSearchRegex } = require("../utils");
 const { config } = require("../../config");
@@ -158,6 +159,13 @@ async function routes(app) {
             objectives: true,
             needs: true,
             photo: true,
+            verified: {
+              $cond: [
+                { $eq: ["$verification.status", "approved"] },
+                true,
+                false,
+              ],
+            },
           },
         },
         {
@@ -243,6 +251,7 @@ async function routes(app) {
       photo,
       notifyPrefs,
       usesPassword,
+      verification,
     } = user;
     return {
       about,
@@ -260,6 +269,7 @@ async function routes(app) {
       permissions,
       notifyPrefs,
       usesPassword,
+      verified: verification && verification.status === "approved",
     };
   });
 
@@ -363,6 +373,7 @@ async function routes(app) {
         photo,
         urls,
         usesPassword,
+        verification,
       } = user;
 
       let { location } = user;
@@ -387,6 +398,7 @@ async function routes(app) {
         photo,
         urls,
         usesPassword: ownUser ? usesPassword : undefined,
+        verified: verification && verification.status === "approved",
       };
     },
   );
@@ -592,7 +604,7 @@ async function routes(app) {
         app.setActor,
         app.checkScopes([SCOPES.MANAGE_USERS]),
       ],
-      schema: setUserPermissionsSchema
+      schema: setUserPermissionsSchema,
     },
     async (req) => {
       const {
@@ -600,7 +612,8 @@ async function routes(app) {
         body: { role },
       } = req;
 
-      if (ROLES[role] === undefined) throw app.httpErrors.badRequest("invalid role");
+      if (ROLES[role] === undefined)
+        throw app.httpErrors.badRequest("invalid role");
 
       const [updatedErr, updatedUser] = await app.to(
         User.findOneAndUpdate(
@@ -667,6 +680,152 @@ async function routes(app) {
       return {
         users,
       };
+    },
+  );
+
+  app.get(
+    "/verification",
+    { preValidation: [app.authenticate, app.setActor] },
+    async (req) => {
+      const { actor, userId } = req;
+      const [userErr, user] = await app.to(
+        BaseUser.findById(actor ? actor._id : userId),
+      );
+      if (userErr) {
+        req.log.error(userErr, "Failed retrieving user");
+        throw app.httpErrors.internalServerError();
+      } else if (user === null) {
+        req.log.error(userErr, "User does not exist");
+        throw app.httpErrors.notFound();
+      }
+      const sessionUrl = await Veriff.createSessionUrl(user);
+      return {
+        sessionUrl,
+      };
+    },
+  );
+
+  // Veriff decision webhook listener
+  app.post(
+    "/verification/decision",
+    { preValidation: [Veriff.validateWebhookEvent] },
+    async (req) => {
+      const {
+        body: { verification },
+      } = req;
+
+      if (verification && verification.vendorData) {
+        const {
+          id,
+          status,
+          vendorData: userId,
+          decisionTime,
+          reasonCode,
+        } = verification;
+
+        const [userErr, user] = await app.to(BaseUser.findById(userId));
+        if (userErr || user === null) {
+          // ALWAYS return true (200 code) when responding to the webhook event
+          // Otherwise Veriff will keep sending the same event which results in spamming the Logs with errors.
+          req.log.error(
+            userErr,
+            `Failed getting user ${userId} for verification id: [${id}]`,
+          );
+          return true;
+        }
+
+        if (status !== "approved") {
+          // resubmission_requested, declined, expired, abandoned
+          const verificationObject = {
+            verification: {
+              id,
+              status,
+              reasonCode,
+              decisionTime,
+              vendor: "veriff",
+            },
+          };
+          const [updateErr, updatedUser] = await app.to(
+            BaseUser.findByIdAndUpdate(user._id, {
+              $set: verificationObject,
+            }),
+          );
+          if (updateErr) {
+            // ALWAYS return true (200 code) when responding to the webhook event
+            // Otherwise Veriff will keep sending the same event which results in spamming the Logs with errors.
+            req.log.error(
+              updateErr,
+              `Failed saving verification [${id}] for user ${userId}`,
+            );
+            return true;
+          }
+        } else if (status === "approved") {
+          const {
+            document: { country, type },
+          } = verification;
+
+          const verificationObject = {
+            verification: {
+              id,
+              status,
+              document: {
+                country,
+                type,
+              },
+              decisionTime,
+              vendor: "veriff",
+            },
+          };
+          const [updateErr, updatedUser] = await app.to(
+            BaseUser.findByIdAndUpdate(user._id, {
+              $set: verificationObject,
+            }),
+          );
+          if (updateErr) {
+            // ALWAYS return true (200 code) when responding to the webhook event
+            // Otherwise Veriff will keep sending the same event which results in spamming the Logs with errors.
+            req.log.error(
+              updateErr,
+              `Failed saving verification [${id}] for user ${userId}`,
+            );
+            return true;
+          }
+        }
+
+        // update Ref
+        const [postErr] = await app.to(
+          Post.updateMany(
+            { "author.id": user._id },
+            { "author.verified": status === "approved" },
+          ),
+        );
+        if (postErr) {
+          req.log.error(postErr, "Failed updating author refs at posts");
+        }
+
+        const [commentErr] = await app.to(
+          Comment.updateMany(
+            { "author.id": user._id },
+            { "author.verified": status === "approved" },
+          ),
+        );
+        if (commentErr) {
+          req.log.error(commentErr, "Failed updating author refs at comments");
+        }
+        const [threadErr] = await app.to(
+          Thread.updateMany(
+            { "participants.id": user._id },
+            {
+              "participants.$[userToUpdate].verified": status === "approved",
+            },
+            { arrayFilters: [{ "userToUpdate.id": user._id }] },
+          ),
+        );
+        if (threadErr) {
+          req.log.error(threadErr, "Failed updating refs at threads");
+        }
+      }
+      return true;
     },
   );
 }

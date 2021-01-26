@@ -18,7 +18,7 @@ const BaseSelector = ({
     filterOptions={filterOptions}
     onChange={onChange}
     getPopupContainer={() =>
-      document.getElementsByClassName("ant-modal-body")[0]
+      document.getElementsByClassName("ant-tabs-content-holder")[0]
     }
     minWidth={minWidth}
   >
