@@ -53,7 +53,7 @@ Follow the MongoDB [installation instructions](https://docs.mongodb.com/manual/i
 Follow the Redis installation instructions for your operating system.
 ##### Linux
 
-- ubuntu: Follow [this guide](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04) to install redis server on ubuntu. 
+- ubuntu: Follow [this guide](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04) to install redis server on ubuntu.
 - other: Follow these [installation instructions](https://redis.io/topics/quickstart).
 ##### windows
 Follow the [installation instructions](https://redislabs.com/blog/redis-on-windows-8-1-and-previous-versions/) for windows.
@@ -176,9 +176,13 @@ We collaborate closely with the design and product team. The design team provide
 
 ### Git Branching Model
 
-- When a Github issue is started, create a branch with the `feature/` prefix. Every push to branches with this prefix will automatically deploy to the review AWS environment. See the [Review branches](#review-branches) section for details on how to access this build.
+- When a Github issue is started, create a branch with either the `feature/` or `service/` prefix. Most branches will use `feature/` prefix, but if you are developing a microservice, you must use the `service/` prefix.
 
-- After a pull request for a `feature/` branch is approved, it is merged into the `staging` branch. This will trigger an automatic deployment to the staging AWS environment. Note that changes may take several minutes to take effect. The staging app is accessible at https://staging.fightpandemics.work.
+- Every push to branches with the `feature/` prefix will automatically deploy to the review AWS environment. See the [Review branches](#review-branches) section for details on how to access this build.
+
+- Every push to branches with the `service/` prefix will deploy the appropriate microservice to the review environment, depending on where the code change is located. Be careful not to have multiple branches open for the same microservice, as deployments can clobber each other (there is only one instance of the microservice in the review environment). All microservice code is located in the `services` folder in this repo.
+
+- After a pull request for a `feature/` or `service/` branch is approved, it is merged into the `staging` branch. This will trigger an automatic deployment to the staging AWS environment. Note that changes may take several minutes to take effect. The staging app is accessible at https://staging.fightpandemics.work.
 
 - When we are ready to release to production, a pull request is opened to merge the `staging` branch to `production`. After this pull request is approved and merged, it will trigger an automatic deployment to the production AWS environment. Note that changes may take several minutes to take effect. The production app is accessible at https://fightpandemics.com
 
@@ -203,6 +207,17 @@ Example:
 - Update Readme
 - Update Github workflows
 - Update PR template
+```
+If there are too many Github ticket numbers to include in the title of the commit, make a list of ticket numbers in the body.
+Example:
+```
+Adding dummy feature
+
+Resolves:
+#1234
+#1235
+#1236
+#1237
 ```
 - When merging `staging` into `production`, and vice versa, the `Create a merge commit` merge method should be used to preserve commit history.
 

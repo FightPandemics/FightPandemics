@@ -47,6 +47,7 @@ import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
 import PostPlaceHolder from "./PostPlaceHolder";
+import VerificationTick from "components/Verification/Tick";
 import { linkify } from "utils/validators";
 
 // Icons
@@ -61,6 +62,7 @@ import {
   DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import { postsActions } from "reducers/posts";
+import { theme } from "constants/theme";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
@@ -450,6 +452,7 @@ const Post = ({
               textObj={post?.author?.name}
               highlight={highlightWords}
             />
+            {post?.author?.verified && <VerificationTick />}
           </span>
           <div
             className="sub-header"
@@ -588,7 +591,7 @@ const Post = ({
         //Post in post's page.
         <>
           <StyledPostPagePostCard>
-            {!isOwner && isSuspected && (
+            {!isOwner && isSuspected && !Boolean(user.permissions) && (
               <div className="blur-overlay">
                 <SvgIcon src={eyeHide} />
                 {t("moderation.postSuspected")}
@@ -601,7 +604,10 @@ const Post = ({
             )}
             <div className="pre-header post-page">
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-              <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+              <Tooltip
+                color={theme.colors.darkGray}
+                title={translateISOTimeTitle(post.createdAt)}
+              >
                 <span className="timestamp">
                   {t(
                     `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
@@ -639,7 +645,13 @@ const Post = ({
             </div>
             <WhiteSpace size="md" />
             {renderTags}
-            {renderContent(title, content, highlightWords, showComplete, convertTextToURL)}
+            {renderContent(
+              title,
+              content,
+              highlightWords,
+              showComplete,
+              convertTextToURL,
+            )}
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
             ) : (
@@ -729,7 +741,10 @@ const Post = ({
               )}
               <div className="pre-header">
                 <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-                <Tooltip title={translateISOTimeTitle(post.createdAt)}>
+                <Tooltip
+                  color={theme.colors.darkGray}
+                  title={translateISOTimeTitle(post.createdAt)}
+                >
                   <span className="timestamp">
                     {t(
                       `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
@@ -780,7 +795,13 @@ const Post = ({
                     },
                   }}
                 >
-                  {renderContent(title, content, highlightWords, showComplete, convertTextToURL)}
+                  {renderContent(
+                    title,
+                    content,
+                    highlightWords,
+                    showComplete,
+                    convertTextToURL,
+                  )}
                 </Link>
               ) : (
                 <>
@@ -794,7 +815,13 @@ const Post = ({
                       style={{ display: "none" }}
                     ></Link>
                   )}
-                  {renderContent(title, content, highlightWords, showComplete, convertTextToURL)}
+                  {renderContent(
+                    title,
+                    content,
+                    highlightWords,
+                    showComplete,
+                    convertTextToURL,
+                  )}
                 </>
               )}
               {fullPostLength > CONTENT_LENGTH ||
@@ -844,7 +871,13 @@ const Post = ({
     </>
   );
 };
-const renderContent = (title, content, highlightWords, showComplete, convertTextToURL) => {
+const renderContent = (
+  title,
+  content,
+  highlightWords,
+  showComplete,
+  convertTextToURL,
+) => {
   let finalContent = content;
   if (finalContent.length > CONTENT_LENGTH && !showComplete) {
     finalContent = `${finalContent.substring(0, CONTENT_LENGTH)} . . .`;
@@ -852,10 +885,16 @@ const renderContent = (title, content, highlightWords, showComplete, convertText
   return (
     <Card.Body className="content-wrapper">
       <Heading level={4} className="h4">
-        <Highlight textObj={convertTextToURL ? linkify(title): title} highlight={highlightWords} />
+        <Highlight
+          textObj={convertTextToURL ? linkify(title) : title}
+          highlight={highlightWords}
+        />
       </Heading>
       <p className="post-description">
-        <Highlight textObj={convertTextToURL ? linkify(finalContent) : finalContent} highlight={highlightWords} />
+        <Highlight
+          textObj={convertTextToURL ? linkify(finalContent) : finalContent}
+          highlight={highlightWords}
+        />
       </p>
     </Card.Body>
   );

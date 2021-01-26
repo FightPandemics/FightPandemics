@@ -77,6 +77,12 @@ module.exports = {
     continueToFeed: "_CF",
     modify: "_MOD",
     uploadAvatar: "_UA",
+    verifyAccount: "_VA",
+    verifyPopup: "_VAV",
+    getVerify: "_VAV_GV",
+    cancelVerify: "_CV",
+    accountVerified: "_AV",
+    checkBadge: "_AV_CB",
   },
   sign: {
     inPrefix: "SI",
@@ -192,6 +198,8 @@ module.exports = {
     joinVolunteer: "_GI_JV",
     joinAmbassador: "_GI_JA",
     joinStudentProgram: "_GI_JSP",
+    pressRelease: "_PR",
+    bookCall: "_BC",
   },
   notifications: {
     prefix: "NOT",
@@ -205,7 +213,8 @@ module.exports = {
     hide: "_HIP",
     unhide: "_UHIP",
     reportEventName: "CREATE_REPORT",
-    keepPostEventName: "MOD_KEEP_POST",
-    removePostEventName: "MOD_REMOVE_POST",
+    keepPostEventName: "DS_PE_KP",
+    removePostEventName: "DS_PE_RM",
+    keepInRemoveTabEventName: "DS_RS_KP",
   },
 };
