@@ -15,6 +15,7 @@ const CreateReport = ({
   callReport,
   fromPage,
   forModerator,
+  inPendingTab,
   changeType,
 }) => {
   const post = currentPost || undefined;
@@ -69,6 +70,7 @@ const CreateReport = ({
             postId={postId}
             postReportedBy={post?.reportedBy}
             forModerator={forModerator}
+            inPendingTab={inPendingTab}
           />
         </ModalWrapper>
       )}
