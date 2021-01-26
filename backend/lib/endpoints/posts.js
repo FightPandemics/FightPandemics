@@ -58,8 +58,6 @@ async function routes(app) {
       } = req;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
 
-      console.log('queryFilters remote', remote);
-
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       const filters = [
@@ -330,6 +328,11 @@ async function routes(app) {
     },
     async (req, reply) => {
       const { actor, body: postProps } = req;
+      if(postProps.types && postProps.types.length > 0){
+        if(postProps.remote == 'yes'){
+          postProps.types.push('Remote Work');
+        }
+      }
 
       // Creates embedded author document
       postProps.author = {
@@ -510,6 +513,13 @@ async function routes(app) {
       const [, author] = await app.to(User.findById(post.author.id));
       if (!(userId.equals(author.id) || userId.equals(author.ownerId))) {
         throw app.httpErrors.forbidden();
+      }
+
+      if(body.remote == 'yes'){
+        body.types.push('Remote Work');
+      }
+      else if (body.types.includes('Remote Work') && body.remote == 'no'){
+        body.types = body.types.filter((val) => val != 'Remote Work');
       }
 
       // ExpireAt needs to calculate the date
