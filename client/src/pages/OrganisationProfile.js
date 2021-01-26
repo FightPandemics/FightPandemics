@@ -166,6 +166,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
+  const veriffEn = localStorage.getItem("veriffEn");
 
   function usePrevious(value) {
     const ref = useRef();
@@ -486,7 +487,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </IconsContainer>
             </UserInfoDesktop>
           </UserInfoContainer>
-          {isSelf && !verified && <Verification />}
+          {isSelf && (!verified && veriffEn) && <Verification />}
           <WhiteSpace />
           <div>
             <SectionHeader>

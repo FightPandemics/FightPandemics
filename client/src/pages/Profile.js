@@ -151,6 +151,7 @@ const Profile = ({
   const organisationId = useSelector(selectOrganisationId);
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
+  const veriffEn = localStorage.getItem("veriffEn");
 
   function usePrevious(value) {
     const ref = useRef();
@@ -423,7 +424,7 @@ const Profile = ({
           </UserInfoDesktop>
         </UserInfoContainer>
         <WhiteSpace />
-        {isSelf && !verified && (
+        {isSelf && (!verified && veriffEn) && (
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
