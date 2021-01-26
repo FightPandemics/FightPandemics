@@ -123,7 +123,7 @@ async function routes(app) {
         : keywords
         ? [
             { $match: { $and: filters, $text: { $search: keywords } } },
-            { $sort: { score: { $meta: "textScore" } } },
+            { $sort: { score: { $meta: "textScore" }, _id: -1 } },
           ]
         : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
 
