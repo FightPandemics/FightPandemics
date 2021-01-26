@@ -43,6 +43,7 @@ const participantSchema = new Schema({
     trim: true,
     type: String,
   },
+  verified: Boolean,
 });
 
 const threadSchema = new Schema(

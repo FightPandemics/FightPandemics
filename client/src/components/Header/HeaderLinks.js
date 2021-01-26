@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Menu, Dropdown, Button } from "antd";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import TagManager from "react-gtm-module";
 
 import i18n from "../../i18n";
 import SvgIcon from "../Icon/SvgIcon";
@@ -33,9 +34,14 @@ export const HeaderLinks = ({
 }) => {
   const { t } = useTranslation();
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    window.localStorage.setItem("locale", lng);
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+    window.localStorage.setItem("locale", language);
+    TagManager.dataLayer({
+      dataLayer: {
+        language,
+      },
+    });
   };
 
   const StyledMenu = styled(Menu)`

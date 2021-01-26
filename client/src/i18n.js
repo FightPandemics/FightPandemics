@@ -12,11 +12,13 @@ export function getLang() {
     ? localization[systemLang]
     : "en-US";
   let res = "en-US";
-
   const language = window.localStorage.getItem("locale") || primaryLang;
   if (resources[language]) res = language;
   window.localStorage.setItem("locale", res);
-  return res;
+  return {
+    language: res,
+    systemLang,
+  };
 }
 
 function setGlobalMomentLocale() {
@@ -32,7 +34,7 @@ function setGlobalMomentLocale() {
 i18n.use(initReactI18next).init(
   {
     resources,
-    lng: getLang(),
+    lng: getLang().language,
     fallbackLng: "en-US",
     interpolation: {
       escapeValue: false,
