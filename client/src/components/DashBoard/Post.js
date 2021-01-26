@@ -186,6 +186,7 @@ const Post = ({
                 currentPost={post}
                 fromPage={true}
                 forModerator={forModerator}
+                inPendingTab={activeTab === "PENDING"}
                 changeType={changeType}
               />
             ) : null}

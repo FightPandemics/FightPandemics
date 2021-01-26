@@ -82,7 +82,7 @@ module.exports = {
     getVerify: "_VAV_GV",
     cancelVerify: "_CV",
     accountVerified: "_AV",
-    checkBadge: "_AV_CB"
+    checkBadge: "_AV_CB",
   },
   sign: {
     inPrefix: "SI",
@@ -215,5 +215,6 @@ module.exports = {
     reportEventName: "CREATE_REPORT",
     keepPostEventName: "DS_PE_KP",
     removePostEventName: "DS_PE_RM",
+    keepInRemoveTabEventName: "DS_RS_KP",
   },
 };
