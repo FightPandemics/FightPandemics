@@ -213,7 +213,7 @@ module.exports = {
     hide: "_HIP",
     unhide: "_UHIP",
     reportEventName: "CREATE_REPORT",
-    keepPostEventName: "MOD_KEEP_POST",
-    removePostEventName: "MOD_REMOVE_POST",
+    keepPostEventName: "DS_PE_KP",
+    removePostEventName: "DS_PE_RM",
   },
 };
