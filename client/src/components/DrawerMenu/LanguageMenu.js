@@ -2,6 +2,7 @@ import React from "react";
 import { WhiteSpace } from "antd-mobile";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import TagManager from "react-gtm-module";
 
 import { MENU_STATE } from "./constants";
 import { Divider, NavItem, CustomSvgIcon } from "./components";
@@ -38,6 +39,11 @@ export const LanguageMenu = ({ setMenuState }) => {
 const onLanguageChange = (language) => {
   i18n.changeLanguage(language);
   localStorage.setItem("locale", language);
+  TagManager.dataLayer({
+    dataLayer: {
+      language,
+    },
+  });
 };
 
 export const LanguageItem = ({ current: { key, label } }) => {

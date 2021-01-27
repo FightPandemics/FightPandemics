@@ -13,6 +13,15 @@ const StyledComment = styled(Comment)`
     font-family: ${display};
     display: inline-block;
     overflow-wrap: break-word;
+    .verification-tick {
+      vertical-align: sub;
+      margin-left: 0.1rem!important;
+      padding: 0.28rem 0 0.2rem;
+      @media screen and (max-width: ${mq.tablet.wide.maxWidth}) {
+        padding: 0.2rem 0;
+        top: 0.1rem!important;
+      }
+    }
     .ant-comment-inner {
       padding: 1rem 0;
       .ant-comment-content {
@@ -24,14 +33,14 @@ const StyledComment = styled(Comment)`
         .ant-comment-content-author-time {
           cursor: default;
           color: ${darkGray};
-          display:flex
+          display: flex;
         }
         .ant-comment-content-author {
-          display:revert;
+          display: revert;
           border-top-left-radius: 1.5rem;
           border-top-right-radius: 1.5rem;
           margin-bottom: 0;
-          padding: 1rem 0 0.5rem 1.5rem;         
+          padding: 1rem 0 0.5rem 1.5rem;
           .ant-comment-content-author-name > * {
             color: black;
             font-weight: 500;

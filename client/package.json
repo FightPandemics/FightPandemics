@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@veriff/incontext-sdk": "^1.1.0",
     "antd": "^4.2.0",
     "antd-mobile": "^2.3.1",
     "axios": "^0.21.1",
@@ -33,6 +34,7 @@
     "react-step-wizard": "^5.3.2",
     "react-transition-group": "^4.4.1",
     "react-virtualized": "^9.21.2",
+    "react-zendesk": "^0.1.10",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "snyk": "^1.319.2",

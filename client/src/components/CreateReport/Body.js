@@ -72,6 +72,7 @@ const Body = ({
   onSuccess,
   postReportedBy,
   forModerator,
+  inPendingTab,
 }) => {
   const [reasonData, setReasonData] = useState([]);
   const [description, setDescription] = useState("");
@@ -118,7 +119,9 @@ const Body = ({
         dataLayer: {
           event: forModerator
             ? forModerator.keep
-              ? GTM.moderation.keepPostEventName
+              ? inPendingTab
+                ? GTM.moderation.keepPostEventName
+                : GTM.moderation.keepInRemoveTabEventName
               : GTM.moderation.removePostEventName
             : GTM.moderation.reportEventName,
           reasons: reasonData,
