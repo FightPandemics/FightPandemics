@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "Potrzebuję pomocy",
         "Offer Help": "Oferuję pomoc"
-      }
+      },
+      "postsNearMe": "Pokaż wyniki w pobliżu"
     },
     "filterBy": "Filtruj według",
     "noResults": "Przepraszamy, nie ma obecnie odpowiednich postów. Proszę spróbować użyć innego filtru lub <0>utworzyć wpis</0>",
@@ -213,7 +214,7 @@
     "viewMore": "Zobacz więcej",
     "deletePostConfirmation": "Czy na pewno chcesz usunąć ten wpis?",
     "deleteCommentConfirmation": "Jesteś pewien, że chcesz usunąć ten komentarz?",
-    "shareVia": "Udostępnij przez...",
+    "shareVia": "Udostępnij post",
     "others": "Inne",
     "expireTitle": "Ups...",
     "expire": "Post, którego szukasz, wygasł. Więcej takich postów można znaleźć na naszej tablicy pomocy.",
@@ -231,7 +232,8 @@
     "hideAction": "Ukryj wpis",
     "hideCaption": "To mnie nie dotyczy",
     "reportAction": "Zgłoś wpis",
-    "reportCaption": "Do recenzji moderatorów"
+    "reportCaption": "Do recenzji moderatorów",
+    "copyUrl": "Kopiuj adres URL"
   },
   "profile": {
     "common": {
@@ -413,7 +415,7 @@
     "passwordConfirmationRequired": "Wymagane jest potwierdzenie hasła",
     "passwordNotMatch": "Podane hasła nie pasują do siebie",
     "backHome": "Powrót do ekranu głównego",
-    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
+    "linkAccountsSuccess": "Twoje konto zostało połączone z istniejącym już kontem e-mail. Zaloguj się ponownie za pomocą dowolnego z nich."
   },
   "verifyEmail": {
     "checkInbox": "Sprawdź swoją skrzynkę odbiorczą",
@@ -469,9 +471,9 @@
     "communityCollaboration": "Za pośrednictwem naszej platformy chcemy wzmocnić pozycję społeczności i organizacji na całym świecie i aby to zrobić, musimy współpracować! Stała współpraca z naszymi partnerami społecznościowymi pozwala nam budować lepszą platformę dla nich i dla innych.",
     "becomeCommunityPartner": "Czy chciałbyś, aby Twoja społeczność była również naszym partnerem? Chcielibyśmy usłyszeć to od Ciebie i rozpocząć współpracę! Napisz na adres ",
     "currentPartners": "Wspierają nas obecnie",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "bookCall": "Zarezerwuj rozmowę",
+    "bookCallInfo": "Chcesz mieć osobiste doświadczenie z naszym produktem? Umów się z nami na rozmowę!",
+    "bookCallLink": "Zarezerwuj rozmowę"
   },
   "footer": {
     "faq": "FAQ",
@@ -636,7 +638,7 @@
       ],
       [
         "Potrzebuję wsparcia technicznego.",
-        "Przykro nam z tego powodu. Wyślij do nas wiadomość e-mail na adres <0>support@fightpandemics.com.</0> Jako że wszyscy jesteśmy wolontariuszami, prosimy spodziewać się co najmniej 48 godzin na odpowiedź."
+        "Przepraszamy za to. Wyślij do nas e-mail na adres <0>support@fightpandemics.com.</0> Ponieważ wszyscy jesteśmy wolontariuszami, prosimy spodziewać się co najmniej 48 godzin na odpowiedź."
       ],
       [
         "Chcę skontaktować się z FightPandemics z innych powodów.",
@@ -850,9 +852,9 @@
       "networkError": "Przepraszamy, wystąpił błąd sieci."
     },
     "wrongOldPassword": "Nieprawidłowe aktualne hasło",
-    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
-    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "noEmailAccount": "Nie znaleziono konta z tym adresem e-mail. Kliknij „Dołącz teraz”, aby utworzyć konto.",
+    "registeredAccount": "Na ten adres e-mail zostało zarejestrowane konto społecznościowe. Proszę kliknąć \"Dołącz teraz\", aby utworzyć bezpośrednie konto e-mail i hasło.",
+    "failedLinkAccounts": "Nieudane łączenie kont, przyczyna:"
   },
   "TEMP: We are not a provider of healthcare services": "Nie jesteśmy dostawcą usług opieki zdrowotnej",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Usługa ta jest świadczona w dobrej wierze dla tych, którzy w przeciwnym razie nie byliby w stanie uzyskać pomocy i środków w tej bezprecedensowej sytuacji zagrożenia zdrowia publicznego.",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Prześlij",
     "cancelBtn": "Anuluj",
-    "tryAgainBtn": "Spróbuj ponownie"
+    "tryAgainBtn": "Spróbuj ponownie",
+    "remove": "Usuń Awatar",
+    "uploadNew": "Prześlij nowy",
+    "edit": "Edytuj awatar"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0> {{username}} </0> polubił Twój post <1> {{postTitle}} </1>",
     "commented": "<0> {{username}} </0> skomentował Twój post <1> {{postTitle}} </1>",
     "shared": "<0> {{username}} </0> udostępnił Twój post <1> {{postTitle}} </1> w <1> {{shareMedium}} </1>",
-    "empty": "Nie ma więcej powiadomień"
+    "empty": "Nie ma więcej powiadomień",
+    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
   },
   "moderation": {
     "report": "Raport",
@@ -1033,6 +1039,32 @@
     "showAnyway": "Pokaż mimo wszystko",
     "postHidden": "Zdecydowałeś się ukryć ten wpis",
     "unhide": "Odkryj",
-    "youReported": "Zgłosiłeś ten post. Nie będzie już widoczny w Twoim kanale"
+    "youReported": "Zgłosiłeś ten post. Nie będzie już widoczny w Twoim kanale",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Verify your account!",
+    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
+    "verified": "Verified by Veriff",
+    "stepStartTitle": "Verify your account with Veriff",
+    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
+    "stepStartAction": "Get Verified",
+    "stepSuccessTitle": "Thanks for verifying your account!",
+    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
+    "stepSuccessAction": "Awesome!",
+    "stepCancelTitle": "You canceled the verification process",
+    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "stepCancelAction": "Zamknij"
   }
 }

@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "請求幫助",
         "Offer Help": "提供幫助"
-      }
+      },
+      "postsNearMe": "顯示我附近的結果"
     },
     "filterBy": "過濾",
     "noResults": "抱歉，目前沒有相關貼文。請嘗試使用其他過濾器搜索或<0>創建貼文</0> 。",
@@ -231,7 +232,8 @@
     "hideAction": "隱藏貼文",
     "hideCaption": "這與我無關",
     "reportAction": "舉報貼文",
-    "reportCaption": "供版主審查"
+    "reportCaption": "供版主審查",
+    "copyUrl": "複製網址"
   },
   "profile": {
     "common": {
@@ -413,7 +415,7 @@
     "passwordConfirmationRequired": "需要密碼確認。",
     "passwordNotMatch": "密碼不匹配",
     "backHome": "返回主畫面",
-    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
+    "linkAccountsSuccess": "您的帳戶已l鏈接到您現在相同的電郵帳戶。請使用任何一個重新登入。"
   },
   "verifyEmail": {
     "checkInbox": "檢查您的收件箱",
@@ -469,9 +471,9 @@
     "communityCollaboration": "我們希望通過我們的平台增強全球社群和機構組織的能力，為此，我們需要共同努力！與社群合作夥伴的持續合作使我們能夠為他們和其他人建立更好的平台。",
     "becomeCommunityPartner": "您是否也希望您的社群成為我們的合作夥伴？我們樂於傾聽您的聲音，並開始合作！即聯繫",
     "currentPartners": "目前的社群合作夥伴",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "bookCall": "預訂通話",
+    "bookCallInfo": "想要獲得我們的產品的個人體驗？與我們安排通話!",
+    "bookCallLink": "預訂通話"
   },
   "footer": {
     "faq": "常問問題",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "上传",
     "cancelBtn": "取消",
-    "tryAgainBtn": "再試一次"
+    "tryAgainBtn": "再試一次",
+    "remove": "刪除虛擬替身",
+    "uploadNew": "上傳新的",
+    "edit": "編輯虛擬替身"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0>{{username}}</0> 在您的貼文 <1>{{postTitle}}</1> 按讚",
     "commented": "<0>{{username}}</0> 在您的貼文 <1>{{postTitle}}</1> 留言",
     "shared": "<0>{{username}}</0>在 <1>{{shareMedium}}</1> 共享您的貼文 <1>{{postTitle}}</1>",
-    "empty": "沒有更多通知"
+    "empty": "沒有更多通知",
+    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
   },
   "moderation": {
     "report": "舉報",
@@ -1033,6 +1039,32 @@
     "showAnyway": "仍然顯示",
     "postHidden": "您已選擇隱藏該貼文",
     "unhide": "取消隱藏",
-    "youReported": "您已舉報該貼文。它在您的動態消息上中再出現"
+    "youReported": "您已舉報該貼文。它在您的動態消息上中再出現",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Verify your account!",
+    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
+    "verified": "Verified by Veriff",
+    "stepStartTitle": "Verify your account with Veriff",
+    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
+    "stepStartAction": "Get Verified",
+    "stepSuccessTitle": "Thanks for verifying your account!",
+    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
+    "stepSuccessAction": "Awesome!",
+    "stepCancelTitle": "You canceled the verification process",
+    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "stepCancelAction": "關閉"
   }
 }
