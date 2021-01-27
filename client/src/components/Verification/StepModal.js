@@ -26,7 +26,6 @@ function StepModal({
       footer={null}
       centered
       visible={step}
-      id={gtmPrefix + GTM.profile.verifyPopup}
       onCancel={onCancel}
     >
       {step && (
