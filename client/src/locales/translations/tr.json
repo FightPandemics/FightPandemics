@@ -36,7 +36,7 @@
       "shareLocation": "Konumumu paylaş",
       "showAnywhere": "Bana tüm gönderileri göster",
       "whatEmail": "E-posta adresiniz nedir?",
-      "respectPrivacy": "Gizliliğinize saygı duyuyoruz. Lütfen <1> Gizlilik Politikamızı </1> ve <3> Şartlar ve Koşullarımızı okuyun. </3>",
+      "respectPrivacy": "Gizliliğinize saygı duyuyoruz. Lütfen <1> Gizlilik Politikamızı </1> ve <3> Şartlar & Koşullarımızı okuyun. </3>",
       "enterEmail": "E-posta adresinizi giriniz..."
     },
     "needHelp": {
@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "Yardım İstekleri",
         "Offer Help": "Yardım Teklifleri"
-      }
+      },
+      "postsNearMe": "Yakınımdaki sonuçları göster"
     },
     "filterBy": "Filtre uygula",
     "noResults": "Üzgünüz, şu anda aramanıza uygun bir gönderi mevcut değil. Lütfen farklı bir filtre kullanarak aramayı deneyin veya <0>bir gönderi oluşturun</0>.",
@@ -213,7 +214,7 @@
     "viewMore": "Daha fazla göster",
     "deletePostConfirmation": "Gönderiyi silmek istediğinizden emin misiniz?",
     "deleteCommentConfirmation": "Yorumu silmek istediğinizden emin misiniz?",
-    "shareVia": "Üzerinden paylaşın...",
+    "shareVia": "Gönderiyi paylaş",
     "others": "Diğerleri",
     "expireTitle": "Ahh ... tuh!",
     "expire": "Aradığınız gönderinin süresi doldu. Lütfen bu tür gönderiler için Yardım Panomuzu kontrol edin.",
@@ -231,7 +232,8 @@
     "hideAction": "Gönderiyi gizle",
     "hideCaption": "Benim için uygun değil.",
     "reportAction": "Şikayet et",
-    "reportCaption": "Moderatörler için"
+    "reportCaption": "Moderatörler için",
+    "copyUrl": "URL'yi kopyala"
   },
   "profile": {
     "common": {
@@ -413,7 +415,7 @@
     "passwordConfirmationRequired": "Parolayı onaylamanız gerekmektedir",
     "passwordNotMatch": "Şifre eşleşmedi",
     "backHome": "Ana Sayfaya Dön",
-    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
+    "linkAccountsSuccess": "Hesabınız mevcut e-posta hesabınıza bağlandı. Lütfen bunlardan herhangi biriyle tekrar giriş yapın."
   },
   "verifyEmail": {
     "checkInbox": "Gelen kutunuzu kontrol edin",
@@ -469,9 +471,9 @@
     "communityCollaboration": "Platformumuz aracılığıyla dünyanın dört bir yanındaki toplulukları ve kuruluşları güçlendirmek istiyoruz ve bunu yapabilmek için birlikte çalışmamız gerekiyor! Topluluk ortaklarımızla devam eden işbirliğimiz, onlar ve başkaları için daha iyi bir platform oluşturmamıza olanak sağlamaktadır.",
     "becomeCommunityPartner": "Topluluğunuzun da ortağımız olmasını ister misiniz? Bu konu hakkındaki görüşlerinizi bilmek ve işbirliği yapmaya başlamak isteriz! Bize şuradan ulaşın",
     "currentPartners": "Mevcut Topluluk Ortakları",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "bookCall": "Bir görüşme ayarla",
+    "bookCallInfo": "Ürünümüzle kullanmak mı istiyorsunuz? Bizimle bir görüşme ayarlayın!",
+    "bookCallLink": "Bir görüşme ayarla"
   },
   "footer": {
     "faq": "SSS",
@@ -850,9 +852,9 @@
       "networkError": "Üzgünüz, ağda bir sorun oluştu."
     },
     "wrongOldPassword": "Yanlış şifre",
-    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
-    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "noEmailAccount": "Bu e-posta adresine kayıtlı bir hesap bulunamadı, lütfen bir hesap oluşturmak için 'Şimdi Katıl'ı tıklayın.",
+    "registeredAccount": "Bu e-posta adresiyle bir sosyal hesap oluşturuldu. Doğrudan bir e-posta ve şifre şle hesap oluşturmak için lütfen 'Şimdi Katıl'ı tıklayın.",
+    "failedLinkAccounts": "Hesaplar arasında bağlantı kurulamadı, nedeni:"
   },
   "TEMP: We are not a provider of healthcare services": "Biz sağlık hizmetleri sunan bir organizasyon değiliz",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Bu hizmet, şuan yaşamakta olduğumuz halk sağlığını tehdit eden bu olagan üstü durum sırasında, yardım alamayan ve temel kaynaklarından yoksun kalan insanlara yardım etmek amacıyla verilmektedir.",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Gönder",
     "cancelBtn": "İptal",
-    "tryAgainBtn": "Tekrar deneyiniz."
+    "tryAgainBtn": "Tekrar deneyiniz.",
+    "remove": "Avatarı Kaldır",
+    "uploadNew": "Yeni Yükle",
+    "edit": "Avatarı düzenle"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0> {{username}} </0> gönderinizi beğendi <1> {{postTitle}} </1>",
     "commented": "<0>{{username}}</0> gönderinize yorum yaptı <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> gönderinizi<1>{{postTitle}}</1> <1>{{shareMedium}}</1> 'de paylaştı",
-    "empty": "Başka bildirim yok"
+    "empty": "Başka bildirim yok",
+    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
   },
   "moderation": {
     "report": "Şikayet et",
@@ -1033,6 +1039,32 @@
     "showAnyway": "Yine de göster",
     "postHidden": "Bu gönderiyi gizlediniz.",
     "unhide": "Göster",
-    "youReported": "Bu gönderiyi şikayet ettiniz. Artık sizin haber akışınızda görünmeyecek."
+    "youReported": "Bu gönderiyi şikayet ettiniz. Artık sizin haber akışınızda görünmeyecek.",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Verify your account!",
+    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
+    "verified": "Verified by Veriff",
+    "stepStartTitle": "Verify your account with Veriff",
+    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
+    "stepStartAction": "Get Verified",
+    "stepSuccessTitle": "Thanks for verifying your account!",
+    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
+    "stepSuccessAction": "Awesome!",
+    "stepCancelTitle": "You canceled the verification process",
+    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "stepCancelAction": "Kapat"
   }
 }

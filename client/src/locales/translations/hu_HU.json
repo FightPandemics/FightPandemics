@@ -1052,5 +1052,19 @@
     "reportRejectedTitle": "A jelentést elutasítottuk!",
     "reportAcceptedBody": "Ezt a bejegyzést sikeresen eltávolítottuk!",
     "reportRejectedBody": "Ezt a bejegyzést nem távolítottuk el!"
+  },
+  "verification": {
+    "verifyTitle": "Hitelesítse fiókját!",
+    "verifyBody": "Észrevettük, hogy nem hitelesítette a fiókját. Kattintson ide a kezdéshez.",
+    "verified": "Veriff hitelesítette",
+    "stepStartTitle": "Hitelesítse fiókját a Veriff szolgáltatással",
+    "stepStartBody": "A FightPandemics biztosítani akarja a közösség nyitottságát, becsületességét, és biztonságosságát. A felhasználó neve melletti kék ellenőrzött jelvény tudatja az emberekkel, hogy a fiók hiteles.",
+    "stepStartAction": "Legyen ellenőrzött",
+    "stepSuccessTitle": "Köszönjük, hogy igazolta fiókját!",
+    "stepSuccessBody": "Az ellenőrző jelvénynek néhány percen belül meg kell jelennie a profilján",
+    "stepSuccessAction": "Nagyszerű!",
+    "stepCancelTitle": "Megszakította az ellenőrzési folyamatot",
+    "stepCancelBody": "Bármikor visszaléphet, és bármikor igazolhatja fiókját!",
+    "stepCancelAction": "Bezárás"
   }
 }
