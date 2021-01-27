@@ -168,6 +168,30 @@ const authPlugin = async (app) => {
     req[key] = token;
     req.log.info(msg.ok);
   });
+
+  app.decorate("checkScopes", (scopesArray) => {
+    return async (req, res, done) => {
+      // just in case someone forgot to pass the array
+      if (!scopesArray || !scopesArray.length) throw app.httpErrors.forbidden();
+      // must come after "authenticate"
+      const { actor } = req;
+
+      const requiredPerms = scopesArray.reduce(
+        (total, perm) => total | perm,
+        0,
+      );
+
+      // only IndividualUser can have permissions
+      if (
+        !actor ||
+        !actor.permissions ||
+        !(requiredPerms & actor.permissions)
+      ) {
+        req.log.error(`Not authorized to act as ${requiredPerms}`);
+        throw app.httpErrors.forbidden();
+      }
+    };
+  });
 };
 
 module.exports = fp(authPlugin);

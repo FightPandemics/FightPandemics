@@ -36,7 +36,7 @@
       "shareLocation": "Compartir mi ubicación",
       "showAnywhere": "Muéstrame publicaciones desde cualquier lugar",
       "whatEmail": "¿Cuál es tu dirección de correo electrónico?",
-      "respectPrivacy": "Respetamos tu derecho a la privacidad. Por favor, lee estos dos <1>Política de Privacidad</1> y <3>Términos y Condiciones.</3>",
+      "respectPrivacy": "Respetamos tu derecho a la privacidad. Por favor, lee nuestra <1>Política de Privacidad</1> y <3>Términos y Condiciones.</3>",
       "enterEmail": "Ingrese su dirección de correo electrónico ..."
     },
     "needHelp": {
@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "Solicitando ayuda",
         "Offer Help": "Ofreciendo ayuda"
-      }
+      },
+      "postsNearMe": "Mostrar resultados cerca de mí"
     },
     "filterBy": "Filtrar por",
     "noResults": "Lo sentimos, no hay publicaciones relevantes disponibles en este momento. Por favor, intenta usar un filtro de búsqueda diferente o <0>crea una publicación</0>.",
@@ -231,7 +232,8 @@
     "hideAction": "Ocultar publicación",
     "hideCaption": "No es relevante para mí",
     "reportAction": "Reportar un Post",
-    "reportCaption": "Para la revisión de los moderadores"
+    "reportCaption": "Para la revisión de los moderadores",
+    "copyUrl": "Copiar URL"
   },
   "profile": {
     "common": {
@@ -413,7 +415,7 @@
     "passwordConfirmationRequired": "Se requiere confirmación de contraseña.",
     "passwordNotMatch": "Las contraseñas no coinciden",
     "backHome": "Volver a la pantalla de inicio",
-    "linkAccountsSuccess": "Su cuenta ha sido vinculada con su misma cuenta de correo electrónico. Por favor, vuelve a iniciar sesión con cualquiera de ellas."
+    "linkAccountsSuccess": "Su cuenta ha sido vinculada con su correo electrónico. Por favor, vuelva a iniciar sesión con cualquiera de ellas."
   },
   "verifyEmail": {
     "checkInbox": "Revisa su correo",
@@ -469,9 +471,9 @@
     "communityCollaboration": "Queremos apoderar a las comunidades y organizaciones de todo el mundo a través de nuestra plataforma,  para hacerlo, ¡necesitamos trabajar juntos! La colaboración continua con nuestros socios de la comunidad nos permite construir una mejor plataforma ellos y  para otros.",
     "becomeCommunityPartner": "¿Le gustaría que su comunidad también fuera nuestro socio? ¡Nos encantaría saber de usted y empezar a colaborar! Puede comunicarse a",
     "currentPartners": "Socios comunitarios actuales",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "bookCall": "Reservar llamada",
+    "bookCallInfo": "¿Quieres tener una experiencia personal con nuestro producto? ¡Programa una llamada con nosotros!",
+    "bookCallLink": "Reservar una llamada"
   },
   "footer": {
     "faq": "FAQ",
@@ -496,7 +498,7 @@
       [
         "¿Quién es FightPandemics?",
         "FightPandemics es un equipo global de voluntarios con la misión de servir como un lugar de ayuda. Nuestro equipo está formado por más de 150 voluntarios comprometidos de más de 70 países que se esfuerzan por marcar la diferencia. La plataforma fue construida en un innovador esfuerzo colaborativo, reuniendo a un grupo diverso de solucionadores de problemas con una amplia gama de habilidades dispuestas a co-crear y aprender entre sí.",
-        "¿Desea  unirse a nuestra iniciativa? Comuníquese con <0> hr@fightpandemics.com </0>"
+        "¿Desea unirse a nuestra iniciativa? Comuníquese con <0> hr@fightpandemics.com </0>"
       ],
       [
         "¿En qué ciudades opera FightPandemics?",
@@ -666,7 +668,7 @@
   },
   "cookies": {
     "whatCookies": "¿QUÉ SON LAS COOKIES?",
-    "whatCookiesContent": "<0> Este Sitio Web utiliza ¨Cookies¨, y otros mecanismos similares (en adelante, Cookies). Las cookies son archivos enviados a un navegador a través de un servidor web para registrar las actividades del Usuario en un sitio web específico o en todos los sitios web, aplicaciones y / o servicios de este sitio web. El primer objetivo de las Cookies es proporcionar al Usuario un acceso más rápido y personalizado a los servicios ofrecidos. Las cookies se asocian únicamente con un Usuario anónimo y su ordenador y no proporcionan referencias que permitan deducir los datos personales del Usuario. </0> <1> El Usuario podrá configurar su navegador para notificar y rechazar la instalación de las Cookies enviadas por este sitio web, sin perjuicio de la posibilidad de que el Usuario acceda a los Contenidos. Sin embargo, observamos que, en cualquier caso, el rendimiento del sitio web puede disminuir. Este sitio web hace uso de Web Bugs, que son imágenes diminutas y transparentes que se insertan en los correos electrónicos. Cuando el Usuario abre una newsletter del Sitio Web, esta imagen se descarga junto con el resto del contenido del correo electrónico y permite saber si se ha abierto o no un determinado correo, así como la dirección IP desde la que se descargó. FightPandemics utiliza esta información para obtener estadísticas y realizar estudios analíticos sobre la recepción de sus correos electrónicos por parte de los Usuarios. </1>",
+    "whatCookiesContent": "<0> Este Sitio Web utiliza ¨Cookies¨, y otros mecanismos similares (en adelante, Cookies). Las cookies son archivos enviados a un navegador a través de un servidor web para registrar las actividades del Usuario en un sitio web específico o en todos los sitios web, aplicaciones y / o servicios de este sitio web. El primer objetivo de las Cookies es proporcionar al Usuario un acceso más rápido y personalizado a los servicios ofrecidos. Las cookies se asocian únicamente con un Usuario anónimo y su ordenador y no proporcionan referencias que permitan deducir los datos personales del Usuario. </0> <1> El Usuario podrá configurar su navegador para notificar y rechazar la instalación de las Cookies enviadas por este sitio web, sin perjuicio de la posibilidad de que el Usuario acceda a los Contenidos. Sin embargo, observamos que, en cualquier caso, el rendimiento del sitio web puede disminuir. Este sitio web hace uso de Web Bugs, que son imágenes diminutas y transparentes que se insertan en los correos electrónicos. Cuando el Usuario abre una newsletter del Sitio Web, esta imagen se descarga junto con el resto del contenido del correo electrónico y permite saber si se ha abierto o no un determinado correo, así como la dirección IP desde la que se descargó. FightPandemics utiliza esta información para obtener estadísticas y realizar estudios analíticos sobre la recepción de sus correos electrónicos por parte de los Usuarios. </1><0> Este Sitio Web utiliza \"Cookies\", y otros mecanismos similares (en adelante, Cookies). Las cookies son archivos enviados a un navegador a través de un servidor web para registrar las actividades del Usuario en un sitio web específico o en todos los sitios web, aplicaciones y/o servicios de este sitio web. El primer objetivo de las Cookies es proporcionar al Usuario un acceso más rápido y personalizado a los servicios ofrecidos. Las cookies se asocian únicamente con un Usuario anónimo y su ordenador y no proporcionan referencias que permitan deducir los datos personales del Usuario. </0> <1> El Usuario podrá configurar su navegador para notificar y rechazar la instalación de las Cookies enviadas por este sitio web, sin perjuicio de la posibilidad de que el Usuario acceda a los Contenidos. Sin embargo, observamos que, en cualquier caso, el rendimiento del sitio web puede disminuir. Este sitio web hace uso de Web Bugs, que son imágenes diminutas y transparentes que se insertan en los correos electrónicos. Cuando el Usuario abre una newsletter del Sitio Web, esta imagen se descarga junto con el resto del contenido del correo electrónico y permite saber si se ha abierto o no un determinado correo, así como la dirección IP desde la que se descargó. FightPandemics utiliza esta información para obtener estadísticas y realizar estudios analíticos sobre la recepción de sus correos electrónicos por parte de los Usuarios. </1>",
     "typeCookies": "TIPO, FINALIDAD Y FUNCIONAMIENTO DE LAS COOKIES",
     "typeCookiesBegin": "Las Cookies, según su permanencia, se pueden dividir en Cookies de sesión o permanentes. Los primeros caducan cuando el Usuario cierra el navegador. Las segundas caducan en función de cuando se cumpla el objetivo para el que sirven o cuando se borren manualmente. Adicionalmente, dependiendo de su objetivo, las Cookies utilizadas por este Sitio Web se pueden clasificar de la siguiente manera:",
     "typeCookiesContent": "<0> cookies técnicas: Permiten al usuario navegar por una página web, plataforma o aplicación y utilizar las diferentes opciones o servicios que existen allí, como, por ejemplo, controlar el tráfico y la comunicación de datos, identificar la sesión, acceder a partes de acceso restringido, recordar los elementos que componen un pedido, realizar el proceso de compra de un pedido, realizar la solicitud de inscripción o participación en un evento, utilizar elementos de seguridad durante la navegación, almacenar contenidos para la difusión de vídeos o sonido o compartir contenidos a través de redes sociales.</0> <1>El análisis de análisis: Son acciones que son procesadas por nosotros o por terceros, que permiten cuantificar el número de usuarios y así realizar la medición y análisis estadístico del uso que hacen los usuarios de los servicios ofrecidos. Para ello, se analiza su navegación en nuestra página web con el fin de mejorar la oferta de productos o servicios que ofrecemos.</1> <2> Cookies publicitarias: Son a son a son acciones que son procesadas por nosotros o por terceros, permitiéndonos gestionar de la forma más eficiente posible la oferta de los espacios publicitarios que se encuentran en el sitio web, adaptando el contenido del anuncio al contenido del servicio solicitado o al uso que realice desde nuestra página web. Para ello podemos analizar sus hábitos de navegación en Internet, y podemos mostrarle publicidad relacionada con su perfil de navegación.</2> <3> Cookies de publicidad de gestión: Permiten la gestión, de la forma más eficaz posible, de los espacios publicitarios que, en su caso, el editor haya incluido en una página web, aplicación o plataforma desde la que presta el servicio solicitado. Estas cookies almacenan información sobre el comportamiento de los usuarios obtenida a través de la observación continuada de sus hábitos de navegación, lo que permite desarrollar un perfil específico para mostrar publicidad basada en el misma.</3>",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Enviar",
     "cancelBtn": "Cancelar",
-    "tryAgainBtn": "Vuelve a intentarlo"
+    "tryAgainBtn": "Vuelve a intentarlo",
+    "remove": "Eliminar avatar",
+    "uploadNew": "Subir nuevo",
+    "edit": "Editar Avatar"
   },
   "dates": {
     "monthsShort": {
@@ -1010,8 +1015,9 @@
     "header": "Notificaciones",
     "liked": "<0> {{username}} </0> le gustó tu publicación <1> {{postTitle}} </1>",
     "commented": "<0> {{username}} </0> comentó en tu publicación <1> {{postTitle}} </1>",
-    "shared": "<0>{{username}}</0> ha compartido tu publicación <1>{{postTitle}}</1> el <1>{{shareMedium}}</1>",
-    "empty": "Sin notificaciones"
+    "shared": "<0>{{username}}</0> ha compartido tu publicación <1>{{postTitle}}</1> en <1>{{shareMedium}}</1>",
+    "empty": "Sin notificaciones",
+    "reported": "Tu publicación {{postTitle}} viola nuestra política de contenidos y, por lo tanto, se eliminó."
   },
   "moderation": {
     "report": "Reportar un Post",
@@ -1033,6 +1039,32 @@
     "showAnyway": "Mostrar de todos modos",
     "postHidden": "Has elegido ocultar esta publicación.",
     "unhide": "Mostrar",
-    "youReported": "Usted ha reportado este post. Ya no será visible en su feed."
+    "youReported": "Usted ha reportado este post. Ya no será visible en su feed.",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "¡Verifique su cuenta!",
+    "verifyBody": "Hemos notado que no has verificado tu cuenta. Haga clic aquí para comenzar.",
+    "verified": "Verificado por Veriff",
+    "stepStartTitle": "Verifique su cuenta con Veriff",
+    "stepStartBody": "FightPandemics quiere mantener nuestra comunidad abierta, honesta y segura. La insignia azul verificada junto al nombre del usuario les permite a las personas saber que una cuenta es auténtica.",
+    "stepStartAction": "Obtenga verificación",
+    "stepSuccessTitle": "¡Gracias por verificar su cuenta!",
+    "stepSuccessBody": "Su insignia de verificación debería aparecer en su perfil en unos momentos",
+    "stepSuccessAction": "¡Increíble!",
+    "stepCancelTitle": "Canceló el proceso de verificación",
+    "stepCancelBody": "Puedes verificar tu cuenta en cualquier momento",
+    "stepCancelAction": "Cerrar"
   }
 }

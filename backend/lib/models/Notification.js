@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const notificationSchema = new Schema(
   {
     action: {
-      enum: ["like", "comment", "share"],
+      enum: ["like", "comment", "share", "report"],
       required: true,
       type: String,
     },
@@ -40,6 +40,7 @@ const notificationSchema = new Schema(
       type: String,
     },
     commentText: String,
+    justification: String,
     triggeredBy: {
       id: {
         ref: "User",
@@ -51,6 +52,7 @@ const notificationSchema = new Schema(
       type: {
         type: String,
       },
+      verified: Boolean,
     },
     isCleared: {
       type: Boolean,

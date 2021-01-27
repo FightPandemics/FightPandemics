@@ -14,6 +14,46 @@ const PostCard = styled(Card)`
   padding: 2rem 2rem 0rem 2rem;
   overflow-wrap: break-word;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  ${({ unClickable }) =>
+    unClickable
+      ? `
+   * {
+     pointer-events: none;
+     user-select: none;
+   }
+   `
+      : ""}
+
+  .blur-overlay {
+    border: 0.05rem solid rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 4rem);
+    z-index: 1;
+    background: rgba(243, 244, 254, 0.3);
+    backdrop-filter: blur(12px);
+    font-weight: 600;
+    font-size: ${medium};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    span {
+      margin-top: 4rem;
+      display: block;
+      color: #425af2;
+      font-weight: 500;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      border: unset !important;
+      height: 100%;
+    }
+  }
 
   ${({ unClickable }) =>
     unClickable
@@ -138,7 +178,7 @@ const PostCard = styled(Card)`
         cursor: pointer;
       }
 
-      svg {
+      svg:not(.verification-tick) {
         circle {
           fill: ${darkGray};
         }
@@ -159,6 +199,10 @@ const PostCard = styled(Card)`
         font-weight: 500;
         .title-wrapper {
           cursor: default;
+        }
+        .verification-tick {
+          vertical-align: sub;
+          top: unset!important;
         }
         > .ant-avatar-circle,
         > img {

@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "मदत विनंती करीत आहे",
         "Offer Help": "मदत देणे"
-      }
+      },
+      "postsNearMe": "माझ्या जवळचे परिणाम दर्शवा"
     },
     "filterBy": "फिल्टर बाय",
     "noResults": "क्षमस्व, सध्या कोणतीही संबंधित पोस्ट उपलब्ध नाहीत. कृपया भिन्न फिल्टर शोध वापरुन पहा किंवा <0> एक पोस्ट </0> तयार > .",
@@ -231,7 +232,8 @@
     "hideAction": "पोस्ट लपवा",
     "hideCaption": "हे माझ्याशी संबंधित नाही",
     "reportAction": "रिपोर्ट पोस्ट",
-    "reportCaption": "नियंत्रकांच्या पुनरावलोकनासाठी"
+    "reportCaption": "नियंत्रकांच्या पुनरावलोकनासाठी",
+    "copyUrl": "URL कॉपी करा"
   },
   "profile": {
     "common": {
@@ -413,7 +415,7 @@
     "passwordConfirmationRequired": "संकेतशब्द पुष्टीकरण आवश्यक आहे.",
     "passwordNotMatch": "संकेतशब्द जुळत नाहीत",
     "backHome": "मुख्यपृष्ठ स्क्रीनवर परत",
-    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
+    "linkAccountsSuccess": "तुमचे खाते तुमच्या विद्यमान ईमेल खात्याशी जोडले गेले आहे. कृपया त्यांच्यापैकी कोणत्याही बरोबर पुन्हा लॉगइन करा."
   },
   "verifyEmail": {
     "checkInbox": "आपला इनबॉक्स तपासा",
@@ -469,9 +471,9 @@
     "communityCollaboration": "आम्हाला आपल्या व्यासपीठाच्या माध्यमातून जगभरातील समुदायांना आणि संस्थांना सक्षम करायचे आहे आणि त्यासाठी आपण एकत्र काम केले पाहिजे! आपल्या समाजातील भागीदारांसोबत सतत सहकार्य केल्याने आपण त्यांच्यासाठी आणि इतरांसाठी एक चांगले व्यासपीठ निर्माण करू शकतो.",
     "becomeCommunityPartner": "आपले समुदाय देखील आमचे भागीदार व्हायला आवडेल का? आम्हाला तुमच्याकडून ऐकायला आणि सहकार्य करायला आवडेल! संपर्क साधा:",
     "currentPartners": "वर्तमान सामुदायिक भागीदार",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "bookCall": "एक कॉल बुक करा",
+    "bookCallInfo": "आपल्या उत्पादनाचा वैयक्तिक अनुभव घेण्याच्या विचारात आहे का? आमच्याशी कॉल बुक करा",
+    "bookCallLink": "एक कॉल बुक करा"
   },
   "footer": {
     "faq": "सामान्य प्रश्न",
@@ -850,9 +852,9 @@
       "networkError": "क्षमस्व, काही नेटवर्क त्रुटी आली."
     },
     "wrongOldPassword": "चुकीचा चालू संकेतशब्द",
-    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
-    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "noEmailAccount": "या ईमेल पत्त्यासह कोणतेही खाते आढळले नाही, कृपया खाते तयार करण्यासाठी 'जॉइन नाऊ'वर क्लिक करा.",
+    "registeredAccount": "या ईमेल पत्त्यासह एका सामाजिक खात्याची नोंदणी करण्यात आली आहे. थेट ईमेल आणि पासवर्ड खाते तयार करण्यासाठी कृपया 'जॉइन नाऊ'वर क्लिक करा.",
+    "failedLinkAccounts": "खाते लिंक करण्यात अपयशी, कारण:"
   },
   "TEMP: We are not a provider of healthcare services": "आम्ही आरोग्य सेवा प्रदाता नाही",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "या अभूतपूर्व सार्वजनिक आरोग्य आणीबाणीच्या काळात ज्यांना मदत आणि संसाधने मिळू शकत नाहीत त्यांच्यासाठी ही सेवा चांगल्या विश्वासाने पुरवली जाते.",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "प्रस्तुत करा",
     "cancelBtn": "रद्द करा",
-    "tryAgainBtn": "पुन्हा प्रयत्न करा"
+    "tryAgainBtn": "पुन्हा प्रयत्न करा",
+    "remove": "अवतार काढून टाका",
+    "uploadNew": "नविन अपलोड करा",
+    "edit": "अवतार संपादित करा"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0> {{username}} </0>ला आपले <1> {{postTitle}} </1> पोस्ट आवडले",
     "commented": "<0>{{username}}</0> आपल्या <1> {{postTitle}} </1> पोस्टवर टिप्पणी दिली",
     "shared": "<0> {{username}} </0> ने आपले पोस्ट <1> {{postTitle}} </1>  <1> {{shareMedium}} </1> वर शेअर केली आहे",
-    "empty": "अधिक सूचना नाहीत"
+    "empty": "अधिक सूचना नाहीत",
+    "reported": "तुमचे पद <1>{{पोस्टशीर्षक}</1> आमच्या सामग्री धोरणाचे उल्लंघन करते आणि म्हणून ते काढून टाकण्यात आले"
   },
   "moderation": {
     "report": "अहवाल द्या (रिपोर्ट)",
@@ -1033,6 +1039,32 @@
     "showAnyway": "तरीही दाखवा",
     "postHidden": "आपण ही पोस्ट लपवण्याचा निर्णय घेतला आहे",
     "unhide": "अनहाइड करा(समोर आणा)",
-    "youReported": "आपण या पोस्टचा अहवाल दिला आहे. हे यापुढे आपल्या फीडवर दिसणार नाही"
+    "youReported": "आपण या पोस्टचा अहवाल दिला आहे. हे यापुढे आपल्या फीडवर दिसणार नाही",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Verify your account!",
+    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
+    "verified": "Verified by Veriff",
+    "stepStartTitle": "Verify your account with Veriff",
+    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
+    "stepStartAction": "Get Verified",
+    "stepSuccessTitle": "Thanks for verifying your account!",
+    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
+    "stepSuccessAction": "Awesome!",
+    "stepCancelTitle": "You canceled the verification process",
+    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "stepCancelAction": "बंद करा"
   }
 }

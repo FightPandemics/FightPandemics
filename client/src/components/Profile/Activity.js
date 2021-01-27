@@ -82,6 +82,7 @@ const Activity = ({
             isHidden={hiddenPosts[posts[index][1]?._id]}
             onPostHide={hidePost}
             onPostUnhide={unhidePost}
+            convertTextToURL={false}
           />
         );
       }

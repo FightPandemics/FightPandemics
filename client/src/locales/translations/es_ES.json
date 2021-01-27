@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "Solicitando Ayuda",
         "Offer Help": "Ofreciendo Ayuda"
-      }
+      },
+      "postsNearMe": "Mostrar resultados cerca de mí"
     },
     "filterBy": "Filtrar por",
     "noResults": "Lo sentimos, actualmente no hay publicaciones relevantes disponibles. Intenta utilizar un filtro de búsqueda diferente o <0>crea una publicación</0>.",
@@ -227,11 +228,12 @@
     "deletePostConfirmationTitle": "Confirmar borrar post",
     "deleteCommentConfirmationTitle": "Confirmar borrar comentario",
     "deleteConfirmation": "Eliminar",
-    "edit": "Edit post",
-    "hideAction": "Hide post",
-    "hideCaption": "It is not relevant to me",
-    "reportAction": "Report Post",
-    "reportCaption": "For moderators review"
+    "edit": "Editar publicación",
+    "hideAction": "Ocultar publicación",
+    "hideCaption": "No me interesa",
+    "reportAction": "Denunciar publicación",
+    "reportCaption": "Para revisión por parte de los moderadores",
+    "copyUrl": "Copiar URL"
   },
   "profile": {
     "common": {
@@ -413,7 +415,7 @@
     "passwordConfirmationRequired": "Se requiere confirmación de contraseña",
     "passwordNotMatch": "Las contraseñas no son iguales",
     "backHome": "Volver a la pantalla de inicio",
-    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
+    "linkAccountsSuccess": "Se ha vinculado tu cuenta con tu correo electrónico. Inicia sesión con cualquiera de los dos."
   },
   "verifyEmail": {
     "checkInbox": "Revisa tu correo",
@@ -465,13 +467,13 @@
     "press": "Prensa",
     "pressInfo": "Si eres miembro de la prensa, contáctanos en",
     "pressKitLink": "Ir al Kit de Prensa",
-    "communityPartners": "Community Partners",
-    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
-    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
-    "currentPartners": "Current Community Partners",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "communityPartners": "Socios comunitarios",
+    "communityCollaboration": "Queremos usar nuestra plataforma para empoderar a comunidades y organizaciones de todo el mundo y, para conseguirlo, necesitamos trabajar en equipo. La colaboración continua con nuestros socios comunitarios nos permite crear una plataforma mejor para ellos y para todos.",
+    "becomeCommunityPartner": "¿Te gustaría que tu comunidad colaborara con nosotros? Escríbenos y estaremos encantados de hacerlo. Puedes contactarnos a través de",
+    "currentPartners": "Socios comunitarios actuales",
+    "bookCall": "Concertar una llamada",
+    "bookCallInfo": "Puedes concertar una llamada con nosotros para tener una experiencia más personal con nuestro producto",
+    "bookCallLink": "Concertar una llamada"
   },
   "footer": {
     "faq": "Preguntas Frecuentes",
@@ -850,9 +852,9 @@
       "networkError": "Lo siento, se produjo un error de red."
     },
     "wrongOldPassword": "Contraseña actual incorrecta",
-    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
-    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "noEmailAccount": "No hay ninguna cuenta asociada a ese correo electrónico, haz clic en «unirse» para crear una cuenta.",
+    "registeredAccount": "Se ha asociado una cuenta con este correo electrónico. Haz clic en «unirse» para crear un correo electrónico y contraseña.",
+    "failedLinkAccounts": "Error de vinculación, motivo:"
   },
   "TEMP: We are not a provider of healthcare services": "No somos proveedores de servicios de salud",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Este servicio se brinda de buena fe para aquellos que de otro modo no podrían obtener ayuda ni recursos durante esta emergencia de salud pública sin precedentes",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Enviar",
     "cancelBtn": "Cancelar",
-    "tryAgainBtn": "Inténtalo de nuevo."
+    "tryAgainBtn": "Inténtalo de nuevo.",
+    "remove": "Eliminar avatar",
+    "uploadNew": "Cambiar avatar",
+    "edit": "Editar avatar"
   },
   "dates": {
     "monthsShort": {
@@ -1011,28 +1016,55 @@
     "liked": "<0>{{username}}</0> le gustó tu publicación <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> comentó en tu publicación <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> compartió tu publicación <1>{{postTitle}}</1> en <1>{{shareMedium}}</1>",
-    "empty": "No hay más notificaciones"
+    "empty": "No hay más notificaciones",
+    "reported": "Se ha eliminado tu publicación <1>{{postTitle}}</1> porque infringe nuestra política de contenido"
   },
   "moderation": {
-    "report": "Report",
+    "report": "Denunciar",
     "cancel": "Cancelar",
-    "finish": "Finish",
-    "reason": "Reason for reporting:",
-    "additionalDetails": "Additional details (optional)",
-    "enterDetails": "Please enter more details here...",
-    "reportPost": "Report Post",
-    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
-    "reportPostError": "Oops! something went wrong...",
-    "reportPostSuccessTitle": "Report Received",
-    "reportPostErrorTitle": "Oops!",
+    "finish": "Terminar",
+    "reason": "Motivo de la denuncia:",
+    "additionalDetails": "Información adicional (opcional)",
+    "enterDetails": "Añade más información aquí...",
+    "reportPost": "Denunciar publicación",
+    "reportPostSuccess": "¡Gracias por denunciar! Esta publicación será sometida a revisión.",
+    "reportPostError": "¡Ups! Algo salió mal",
+    "reportPostSuccessTitle": "Informe recibido",
+    "reportPostErrorTitle": "¡Ups!",
     "spam": "Spam",
-    "inappropriateContent": "Inappropriate Content",
-    "violatesTerms": "Violates Terms",
+    "inappropriateContent": "Contenido inapropiado",
+    "violatesTerms": "Incumple los términos",
     "other": "Otros",
-    "postSuspected": "This post received multiple reports and was held for review",
-    "showAnyway": "Show anyway",
-    "postHidden": "You have chosen to hide this post",
-    "unhide": "Unhide",
-    "youReported": "You have reported this post. It will no longer be visible on your feed"
+    "postSuspected": "Esta publicación ha recibido varias denuncias y está a la espera de revisión",
+    "showAnyway": "Mostrar",
+    "postHidden": "Has elegido ocultar esta publicación",
+    "unhide": "Mostrar",
+    "youReported": "Has denunciado esta publicación, ya no aparecerá en tu feed.",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "¡Verifica tu cuenta!",
+    "verifyBody": "Parece que aún no has verificado tu cuenta. Haz clic aquí para comenzar.",
+    "verified": "Verificado por Veriff",
+    "stepStartTitle": "Verifica tu cuenta con Veriff",
+    "stepStartBody": "FightPandemics quiere que su comunidad sea abierta, honesta y segura. La insignia azul de verificación que aparece al lado del nombre de usuario indica que se trata de una cuenta real.",
+    "stepStartAction": "Obtener verificación",
+    "stepSuccessTitle": "¡Gracias por verificar tu cuenta!",
+    "stepSuccessBody": "Tu insignia de verificación aparecerá en tu perfil en breve",
+    "stepSuccessAction": "¡Fantástico!",
+    "stepCancelTitle": "Has cancelado el proceso de verificación",
+    "stepCancelBody": "Puedes verificar tu cuenta en cualquier momento",
+    "stepCancelAction": "Cerrar"
   }
 }

@@ -21,6 +21,8 @@ import UploadPic from "../components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
+import Verification from "components/Verification/";
+import VerificationTick from "components/Verification/Tick";
 
 import {
   ProfileLayout,
@@ -129,6 +131,7 @@ const Profile = ({
     ownUser,
     urls = {},
     usesPassword = false,
+    verified,
   } = user || {};
   const needHelp = Object.values(needs).some((val) => val === true);
   const offerHelp = Object.values(objectives).some((val) => val === true);
@@ -148,6 +151,7 @@ const Profile = ({
   const organisationId = useSelector(selectOrganisationId);
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
+  const veriffEn = localStorage.getItem("veriffEn");
 
   function usePrevious(value) {
     const ref = useRef();
@@ -364,6 +368,7 @@ const Profile = ({
               <div className="name-container">
                 <NamePara>
                   {firstName} {lastName}
+                  {verified && <VerificationTick/>}
                 </NamePara>
                 {address && (
                   <div title={address} className="address-container">
@@ -418,6 +423,10 @@ const Profile = ({
             </IconsContainer>
           </UserInfoDesktop>
         </UserInfoContainer>
+        <WhiteSpace />
+        {isSelf && (!verified && veriffEn) && (
+          <Verification gtmPrefix={GTM.user.profilePrefix} />
+        )}
         <WhiteSpace />
         <div>
           <SectionHeader>
