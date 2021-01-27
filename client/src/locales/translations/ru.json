@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "Просьбы о помощи",
         "Offer Help": "Предложения помощи"
-      }
+      },
+      "postsNearMe": "Показать результаты рядом со мной"
     },
     "filterBy": "Отфильтровать по",
     "noResults": "К сожалению, в настоящее время нет подходящих сообщений. Пожалуйста, попробуйте использовать другие критерии поиска или <0>создайте новое сообщение</0>.",
@@ -231,7 +232,8 @@
     "hideAction": "Скрыть объявление",
     "hideCaption": "Это не имеет ко мне отношения",
     "reportAction": "Пожаловаться на объявление",
-    "reportCaption": "Для рассмотрения модераторам"
+    "reportCaption": "Для рассмотрения модераторам",
+    "copyUrl": "Копировать URL"
   },
   "profile": {
     "common": {
@@ -429,7 +431,7 @@
     "ourIdea": "Наша цель",
     "ourSupporters": "Нас поддерживают",
     "followUs": "Присоединяйтесь к нам в социальных сетях",
-    "contactUs": "Свяжитесь с нами по адресу",
+    "contactUs": "Свяжитесь с нами по адресу ",
     "contactEmail": "contact@fightpandemics.com",
     "heading": "Мы хотим создать мир, в котором люди будут лучше справляться с чрезвычайными ситуациями",
     "subHeading": "помогая обществу быстрее и эффективнее реагировать на кризисы.",
@@ -443,8 +445,8 @@
     "helpBoard": "Доска объявлений",
     "helpBoardDetail": "Социальная платформа для частных лиц и организаций для публикации просьб о помощи и предложений помощи.",
     "localGlobal": "По соседству и во всём мире",
-    "localGlobalDetail": "Предлагайте и запрашивайте помощь в своём сообществе и по всему миру.",
-    "relevantContent": "Соответствующий контент",
+    "localGlobalDetail": "Обращайтесь к людям по соседству и во всём мире",
+    "relevantContent": "Актуальная информация",
     "relevantContentDetail": "Срок годности гарантирует, что Доска Объявлений всегда в актуальном состоянии.",
     "goToHelpBoard": "Открыть Доску Объявлений",
     "supporters": "Нас поддерживают",
@@ -469,9 +471,9 @@
     "communityCollaboration": "С помощью нашей платформы, мы хотим дать новые возможности сообществам и организациям по всему миру, и для этого нам надо работать вместе! Постоянное сотрудничество с нашими партнерами позволяет нам делать нашу платформу лучше для них и для других пользователей.",
     "becomeCommunityPartner": "Хотели бы вы, чтобы ваше сообщество тоже было нашим партнером? Мы будем рады начать сотрудничество! Пишите нам по адресу",
     "currentPartners": "Нынешние партнерские сообщества",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "bookCall": "Заказать звонок",
+    "bookCallInfo": "Хотите лично познакомиться с нашим продуктом? Запланируйте звонок с нами!",
+    "bookCallLink": "Забронировать звонок"
   },
   "footer": {
     "faq": "Вопросы и ответы",
@@ -721,29 +723,29 @@
   },
   "relativeTime": {
     "second": "секунда",
-    "second_plural": "секунды",
+    "second_plural": "сек.",
     "secondWithCount": "{{count}} секунду назад",
-    "secondWithCount_plural": "{{count}} секунд назад",
+    "secondWithCount_plural": "{{count}} сек. назад",
     "minute": "минута",
-    "minute_plural": "минут",
-    "minuteWithCount": "{{count}} минут назад",
-    "minuteWithCount_plural": "{{count}} минут назад",
+    "minute_plural": "мин.",
+    "minuteWithCount": "{{count}} мин. назад",
+    "minuteWithCount_plural": "{{count}} мин. назад",
     "hour": "час",
-    "hour_plural": "часов",
+    "hour_plural": "ч.",
     "hourWithCount": "{{count}} час назад",
-    "hourWithCount_plural": "{{count}} часов назад",
+    "hourWithCount_plural": "{{count}} ч. назад",
     "day": "день",
-    "day_plural": "дней",
-    "dayWithCount": "{{count}} день назад",
-    "dayWithCount_plural": "{{count}} дней назад",
+    "day_plural": "дн.",
+    "dayWithCount": "{{count}} дн. назад",
+    "dayWithCount_plural": "{{count}} дн. назад",
     "week": "неделя",
     "week_plural": "недель",
     "weekWithCount": "{{count}} неделю назад",
     "weekWithCount_plural": "{{count}} недель назад",
     "month": "месяц",
-    "month_plural": "месяцев",
+    "month_plural": "мес.",
     "monthWithCount": "{{count}} месяц назад",
-    "monthWithCount_plural": "{{count}} месяцев назад",
+    "monthWithCount_plural": "{{count}} мес. назад",
     "year": "год",
     "year_plural": "лет",
     "yearWithCount": "{{count}} год назад",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Отправить",
     "cancelBtn": "Отмена",
-    "tryAgainBtn": "Попробуйте ещё раз"
+    "tryAgainBtn": "Попробуйте ещё раз",
+    "remove": "Удалить аватар",
+    "uploadNew": "Загрузить новый",
+    "edit": "Изменить аватар"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "Пользователю <0>{{username}}</0> понравилось ваше сообщение <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> оставил(а) комментарий к вашему сообщению <1>{{postTitle}}</1>",
     "shared": "Пользователь <0>{{username}}</0> поделился вашим объявлением <1>{{postTitle}}</1> в <1>{{shareMedium}}</1>",
-    "empty": "Уведомлений больше нет"
+    "empty": "Уведомлений больше нет",
+    "reported": "Ваше сообщение <1>{{postTitle}}</1> нарушает наши правила и поэтому было удалено."
   },
   "moderation": {
     "report": "Жалоба",
@@ -1033,6 +1039,32 @@
     "showAnyway": "Показать в любом случае",
     "postHidden": "Вы решили скрыть это объявление",
     "unhide": "Показать",
-    "youReported": "Вы пожаловались на это объявление. Оно больше не будет отображаться в вашей ленте."
+    "youReported": "Вы пожаловались на это объявление. Оно больше не будет отображаться в вашей ленте.",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Верифицируйте свою учётную запись!",
+    "verifyBody": "Вы ещё не верифицировали свою учетную запись. Нажмите здесь, чтобы начать процесс.",
+    "verified": "Проверено Veriff",
+    "stepStartTitle": "Верифицировать свою учётную запись с помощью Veriff",
+    "stepStartBody": "FightPandemics хочет, чтобы наше сообщество было открытым, честным и безопасным. Синий значок верификации рядом с именем пользователя показывает, что учётная запись является подлинной.",
+    "stepStartAction": "Верифицировать",
+    "stepSuccessTitle": "Спасибо, что верифицировали свою учётную запись!",
+    "stepSuccessBody": "Значок верификации должен появиться в вашем профиле в ближайшее время.",
+    "stepSuccessAction": "Замечательно!",
+    "stepCancelTitle": "Верификация отменена",
+    "stepCancelBody": "Вы всегда можете вернуться и верифицировать свою учётную запись!",
+    "stepCancelAction": "Закрыть"
   }
 }

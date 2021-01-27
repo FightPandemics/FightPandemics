@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "मदद का अनुरोध",
         "Offer Help": "मदद की पेशकश"
-      }
+      },
+      "postsNearMe": "Show results near me"
     },
     "filterBy": "के द्वारा फ़िल्टर करें",
     "noResults": "क्षमा करें, वर्तमान में कोई अनुरूप पोस्ट उपलब्ध नहीं हैं। कृपया एक भिन्न फ़िल्टर खोज या <0> पोस्ट बनाने का प्रयास करें </0> ।",
@@ -231,7 +232,8 @@
     "hideAction": "पोस्ट छिपाएं",
     "hideCaption": "यह मेरे अनुरूप नहीं है",
     "reportAction": "रिपोर्ट पोस्ट",
-    "reportCaption": "मध्यस्थों के पुनरावलोकन के लिए"
+    "reportCaption": "मध्यस्थों के पुनरावलोकन के लिए",
+    "copyUrl": "Copy URL"
   },
   "profile": {
     "common": {
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "जमा करें",
     "cancelBtn": "रद्द करना",
-    "tryAgainBtn": "फिर कोशिश करो"
+    "tryAgainBtn": "फिर कोशिश करो",
+    "remove": "Remove Avatar",
+    "uploadNew": "Upload New",
+    "edit": "Edit Avatar"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0> {{username}} </0> को आपकी पोस्ट <1> {{postTitle}} </1> पसंद आई",
     "commented": "<0> {{username}} </0> ने आपकी पोस्ट <1> {{postTitle}} </1> पर टिप्पणी की है",
     "shared": "<0> {{username}} </0> ने <1> {{shareMedium}} </1> पर आपकी पोस्ट <1> {{postTitle}} </1> शेयर की हैा",
-    "empty": "कोई और सूचनाएं नहीं"
+    "empty": "कोई और सूचनाएं नहीं",
+    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
   },
   "moderation": {
     "report": "रिपोर्ट",
@@ -1033,6 +1039,32 @@
     "showAnyway": "फिर भी दिखाएं",
     "postHidden": "आपने इस पोस्ट को छुपाने का निर्णय लिया है",
     "unhide": "सामने लाएँ",
-    "youReported": "आपने इस पोस्ट की रिपोर्ट की है। यह अब आपके फ़ीड पर दिखाई नहीं देगी"
+    "youReported": "आपने इस पोस्ट की रिपोर्ट की है। यह अब आपके फ़ीड पर दिखाई नहीं देगी",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Verify your account!",
+    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
+    "verified": "Verified by Veriff",
+    "stepStartTitle": "Verify your account with Veriff",
+    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
+    "stepStartAction": "Get Verified",
+    "stepSuccessTitle": "Thanks for verifying your account!",
+    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
+    "stepSuccessAction": "Awesome!",
+    "stepCancelTitle": "You canceled the verification process",
+    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "stepCancelAction": "बंद करे"
   }
 }

@@ -1,6 +1,6 @@
 {
   "headline": "Un luogo per offrire e richiedere aiuto",
-  "tagline": "<0>Le pandemie continueranno a verificarsi.</0>\n<1>Aiutiamo le comunità a prepararsi e affrontarle.</1>",
+  "tagline": "<0>Le pandemie continueranno a verificarsi.</0><1>Aiutiamo le comunità a prepararsi e ad affrontarle.</1>",
   "common": {
     "getHelp": "Richiedi aiuto",
     "giveHelp": "Offri aiuto",
@@ -34,9 +34,9 @@
       "relevantResults": "Vogliamo mostrarti i risultati più rilevanti",
       "enterAddress": "Inserisci Indirizzo, Codice postale o Città",
       "shareLocation": "Condividi la mia posizione",
-      "showAnywhere": "Mostrare pubblicazioni ovunque",
+      "showAnywhere": "Mostra tutti gli annunci",
       "whatEmail": "Qual è la tua email?",
-      "respectPrivacy": "Rispettiamo la tua privacy. Per favore leggi i nostri Termini e Condizioni",
+      "respectPrivacy": "Rispettiamo la tua privacy. Leggi la nostra <1>Informativa sulla Privacy</1> e i nostri <3>Termini e Condizioni.</3>",
       "enterEmail": "Inserisci l'indirizzo email"
     },
     "needHelp": {
@@ -57,7 +57,7 @@
     "title": "Bacheca di aiuto",
     "all": "Tutti i post",
     "request": "Richiedo aiuto",
-    "offer": "Offro aiuto",
+    "offer": "Offerte di aiuto",
     "quit": "Elimina filtri",
     "apply": "Applica filtri",
     "getOrGive": "Offri o richiedi aiuto",
@@ -97,9 +97,9 @@
         "Altro",
         "Servizi per l'infanzia",
         "Traduzioni",
-        "Fare volontariato",
+        "Volontariato",
         "Staff (pagato)",
-        "Lavoro a distanza"
+        "Lavoro da remoto"
       ],
       "labels": {
         "location": "Posizione",
@@ -134,14 +134,15 @@
         "Housing": "Alloggi",
         "Childcare": "Servizi per l'infanzia",
         "Translations": "Traduzioni",
-        "Volunteer": "Fare volontariato",
+        "Volunteer": "Volontariato",
         "Staff (paid)": "Staff (pagato)",
-        "Remote Work": "Lavoro a distanza"
+        "Remote Work": "Lavoro da remoto"
       },
       "lookingForOptions": {
-        "Request Help": "Richiesta di aiuto",
-        "Offer Help": "Offro aiuto"
-      }
+        "Request Help": "Richieste di aiuto",
+        "Offer Help": "Offerte di aiuto"
+      },
+      "postsNearMe": "Mostra i risultati vicino a me"
     },
     "filterBy": "Filtra per",
     "noResults": "Spiacenti, al momento non ci sono post rilevanti disponibili. Si prega di provare a utilizzare un filtro di ricerca diverso o di <0>creare un post</0>.",
@@ -168,7 +169,7 @@
     "continueAs": "Continua a pubblicare come",
     "individual": "Individuo",
     "organisation": "Organizzazione",
-    "givingHelp": "Offro aiuto",
+    "givingHelp": "Offerte di aiuto",
     "gettingHelp": "Richiedo aiuto",
     "writePostHere": "Scrivi qui il tuo post",
     "title": "Titolo",
@@ -201,8 +202,8 @@
         "day": "Per un giorno"
       },
       "helpTypes": {
-        "request": "Cerco aiuto",
-        "offer": "Offro aiuto"
+        "request": "Richiedere aiuto",
+        "offer": "Offerte di aiuto"
       }
     },
     "post": "Pubblicare",
@@ -213,13 +214,13 @@
     "viewMore": "Visualizza altro",
     "deletePostConfirmation": "Sei sicuro di voler eliminare il post?",
     "deleteCommentConfirmation": "Sei sicuro di voler eliminare il commento?",
-    "shareVia": "Condividi tramite...",
+    "shareVia": "Condividi post",
     "others": "Altri",
     "expireTitle": "Ahh... cavolo!",
     "expire": "Il post che stavi cercando è scaduto. Si prega di controllare la nostra bacheca per ulteriori post di questo tipo.",
     "noActivity": "Nessuna attività trovata",
     "share": "Condividi",
-    "delete": "Elimina",
+    "delete": "Elimina post",
     "cancel": "Annulla",
     "confirm": "Conferma",
     "edited": "modificato",
@@ -227,11 +228,12 @@
     "deletePostConfirmationTitle": "Elimina conferma post",
     "deleteCommentConfirmationTitle": "Elimina conferma commento",
     "deleteConfirmation": "Elimina",
-    "edit": "Edit post",
-    "hideAction": "Hide post",
-    "hideCaption": "It is not relevant to me",
-    "reportAction": "Report Post",
-    "reportCaption": "For moderators review"
+    "edit": "Modifica post",
+    "hideAction": "Nascondi post",
+    "hideCaption": "Non è rilevante per me",
+    "reportAction": "Segnala post",
+    "reportCaption": "Per la recensione dei moderatori",
+    "copyUrl": "Copia URL"
   },
   "profile": {
     "common": {
@@ -246,7 +248,7 @@
       "thankyou": "Grazie per esserti unito alla nostra comunità!",
       "viewProfile": "Il mio profilo",
       "continuePosting": "Continua a pubblicare",
-      "viewFeed": "Visualizza la bacheca",
+      "viewFeed": "Visualizza la bacheca di aiuto",
       "viewMyProfile": "Visualizza il mio profilo",
       "loading": "Caricamento in corso",
       "invalidEmail": "Email non valida",
@@ -257,7 +259,7 @@
       "submitLoading": "Creazione del profilo...",
       "invalidPassword": "La password deve contenere almeno 3 di questi: una lettera minuscola, una lettera maiuscola, un numero, un carattere speciale (come !@#$%^&*).",
       "addressRequired": "L'indirizzo è richiesto. Inserisci il tuo indirizzo e selezionalo dal menù a tendina",
-      "emailRequired": "È richiesto un indirizzo e-mail",
+      "emailRequired": "È richiesto un indirizzo email",
       "passwordRequired": "È richiesta la password",
       "maxCharacters": "Massimo {{maxNum}} caratteri.",
       "minCharacters": "Minimo {{minNum}} caratteri.",
@@ -280,11 +282,11 @@
       "changePassword": "Cambia password",
       "notificationInfo": "Impostazioni notifiche",
       "emailNotification": "Impostazioni notifiche email",
-      "instant": "Instant",
+      "instant": "Istantaneo",
       "daily": "Tutti i giorni",
       "weekly": "Settimanale",
       "biweekly": "Bisettimanale",
-      "digest": "Digest",
+      "digest": "Raccolta",
       "on": "On",
       "off": "Off"
     },
@@ -328,10 +330,10 @@
       "editAccount": "Modifica Account"
     },
     "org": {
-      "title": "Creare un profilo Organizzazione",
+      "title": "Crea un Profilo Organizzazione",
       "editOrgProfile": "Modifica Profilo Organizzazione",
       "name": "Nome Organizzazione",
-      "email": "Contatto email Organizzazione",
+      "email": "Contatto email dell'Organizzazione",
       "invalidEmail": "L'email non è valida",
       "globalOrg": "Siamo un'organizzazione mondiale",
       "seeking": "Stiamo cercando",
@@ -413,7 +415,7 @@
     "passwordConfirmationRequired": "È richiesta la conferma della password.",
     "passwordNotMatch": "Le password non corrispondono",
     "backHome": "Torna alla schermata principale",
-    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
+    "linkAccountsSuccess": "Il tuo account è stato collegato allo stesso account email esistente. Effettua nuovamente il login con uno di essi."
   },
   "verifyEmail": {
     "checkInbox": "Controlla la tua casella di posta",
@@ -438,17 +440,17 @@
     "FightPandemics": "FightPandemics",
     "storyInspired": "Ispirato dalla collaborazione di tanti, Manuel ha lanciato il progetto con una missione in mente: far <span>sì che altri possano connettersi tempestivamente.</span>",
     "connectPeople": "Mettiamo in contatto le persone",
-    "connect": "Una piattaforma altruistica per connettere chi ha bisogno di aiuto con chi può fornirlo.",
+    "connect": "Una piattaforma altruistica che mette in contatto chi ha bisogno di aiuto con chi può fornirlo.",
     "howWork": "Come funziona?",
     "helpBoard": "Bacheca di aiuto",
-    "helpBoardDetail": "Una piattaforma comunitaria per individui e organizzazioni per offrire e richiedere aiuto.",
+    "helpBoardDetail": "Una piattaforma comunitaria per persone e organizzazioni che vogliono offrire e richiedere aiuto.",
     "localGlobal": "Locale e Globale",
-    "localGlobalDetail": "Offri e richiedi aiuto all'interno della mia comunità e in tutto il mondo.",
+    "localGlobalDetail": "Offri e richiedi aiuto all'interno della tua comunità e in tutto il mondo.",
     "relevantContent": "Contenuto rilevante",
     "relevantContentDetail": "I periodi di scadenza assicurano che la bacheca sia sempre aggiornata.",
     "goToHelpBoard": "Vai alla bacheca di aiuto",
     "supporters": "Sostenitori",
-    "thanksSupporters": "Un grazie ai nostri sostenitori, senza i quali non potremmo aiutare altre comunità a preparasi e affrontare le pandemie.",
+    "thanksSupporters": "Un sentito ringraziamento ai nostri sostenitori, senza i quali non potremmo aiutare altre comunità a preparasi alle pandemie e ad affrontarle.",
     "becomeSupporter": "Per saperne di più su come la tua attività può sostenere la nostra causa, contatta il nostro team di partnership all'indirizzo",
     "becomePartnerEmail": "partnerships@fightpandemics.com",
     "companyLogoInfo": "Clicca sul logo dell'azienda qui sotto per andare sul sito web del sostenitore.",
@@ -465,13 +467,13 @@
     "press": "Stampa",
     "pressInfo": "Se sei un membro stampa, contattaci al",
     "pressKitLink": "Vai al Kit Stampa",
-    "communityPartners": "Community Partners",
-    "communityCollaboration": "We want to empower communities and organizations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
-    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
-    "currentPartners": "Current Community Partners",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "communityPartners": "Partner della comunità",
+    "communityCollaboration": "Attraverso la nostra piattaforma vogliamo responsabilizzare le comunità e le organizzazioni di tutto il mondo e, per farlo, dobbiamo lavorare insieme! La collaborazione continua con i nostri partner ci consente di costruire una piattaforma migliore per loro e per gli altri.",
+    "becomeCommunityPartner": "Desideri che anche la tua comunità diventi nostro partner? Ci piacerebbe sentirti e iniziare a collaborare! Contattaci all'indirizzo",
+    "currentPartners": "Attuali partner della comunità",
+    "bookCall": "Prenota chiamata",
+    "bookCallInfo": "Vuoi vivere un'esperienza personale con il nostro prodotto? Fissa una telefonata con noi!",
+    "bookCallLink": "Prenota una chiamata"
   },
   "footer": {
     "faq": "FAQ",
@@ -491,7 +493,7 @@
         "Cos'è FightPandemics?",
         "FightPandemics è una piattaforma creata durante l'epidemia di COVID-19 con l'obiettivo di essere un punto di riferimento per le persone colpite in diversi modi dalla pandemia.",
         "La nostra missione principale è quella di connettere individui e organizzazioni che offrono e richiedono aiuto durante una crisi pandemica, a livello locale e globale. Non importa se cerchi aiuto medico, maschere facciali, assistenza legale, generi alimentari, qualcuno che porti a spasso il tuo cane o ti aiuti con qualsiasi altra attività quotidiana, puoi cercarlo qui:",
-        "Cerchiamo di raccogliere informazioni essenziali che siano altamente frammentate, collegando in una rete individui, comunità e organizzazioni che lavorano su questioni o progetti legati alla pandemia. La nostra visione è creare un mondo in cui tutti siano più resilienti alle emergenze, aiutando le comunità a rispondere più rapidamente ed efficacemente alle emergenze sanitarie e alle crisi umanitarie."
+        "Cerchiamo di raccogliere informazioni essenziali che siano altamente frammentate, collegando in un'unica rete individui, comunità e organizzazioni che lavorano su questioni o progetti legati alla pandemia. La nostra visione è quella di creare un mondo in cui tutti siano più resilienti alle emergenze, aiutando le comunità a rispondere in maniera più rapida ed efficace alle emergenze sanitarie e alle crisi umanitarie."
       ],
       [
         "Chi è FightPandemics?",
@@ -520,12 +522,12 @@
       ],
       [
         "Che tipo di aiuto posso offrire / richiedere su FightPandemics?",
-        "Puoi chiedere e offrire qualsiasi tipo di aiuto per supportare le persone e le organizzazioni a far fronte alla pandemia COVID-19. Ecco un elenco con alcuni esempi di aiuto che puoi offrire o richiedere:",
+        "Puoi richiedere e offrire qualsiasi tipo di aiuto per supportare le persone e le organizzazioni a far fronte alla pandemia da COVID-19. Ecco un elenco con alcuni esempi di aiuto che puoi offrire o richiedere:",
         "<0>Generi alimentari</0> <1>Forniture mediche</1> <2>Assistenza legale</2> <3>Supporto tecnico</3> <4>Informazioni</4> <5>Finanziamenti</5> <6>Eventi e attività</6> <7>Educazione</7> <8>Benessere</8> <9>Ricerca e sviluppo</9>"
       ],
       [
         "Come posso trovare aiuto?",
-        "Dalla home page di FightPandemics, seleziona \"Cerco aiuto\". Se scegli \"Altro aiuto\", inserirai la tua posizione e verrai indirizzato ad una pagina con le offerte di aiuto nell'area selezionata. Potrai quindi filtrare i messaggi che desideri visualizzare anche per fornitore e tipo. In alternativa, puoi selezionare \"Visualizza gli annunci della community\" dalla pagina principale per visualizzare tutti gli annunci e applicare i filtri desiderati."
+        "Dalla homepage di FightPandemics, seleziona \"Cerco aiuto\". Se scegli \"Altro aiuto\", inserirai la tua posizione e verrai indirizzato ad una pagina con le offerte di aiuto nell'area selezionata. Potrai quindi filtrare i messaggi che desideri visualizzare anche per fornitore e tipo. In alternativa, potrai selezionare \"Visualizza gli annunci della community\" dalla pagina principale per visualizzare tutti gli annunci e applicare i filtri desiderati."
       ],
       [
         "Come posso offrire aiuto?",
@@ -541,11 +543,11 @@
       ],
       [
         "Devo essere registrato come individuo per creare profili di organizzazione?",
-        "Sì, una volta registrato come individuo, puoi creare uno o più profili di organizzazione collegati al tuo account."
+        "Sì, una volta registrato come individuo, potrai creare uno o più profili di organizzazione collegati al tuo account."
       ],
       [
-        "Il mio nome/nome dell'organizzazione verrà visualizzato agli altri utenti?",
-        "Quando crei post che offrono o cercano aiuto, il tuo nome / il nome della tua organizzazione viene mostrato a chiunque visualizzi la bacheca di aiuto."
+        "Il mio nome/nome dell'organizzazione verrà mostrato agli altri utenti?",
+        "Quando crei post che offrono o ricercano aiuto, il tuo nome/ il nome della tua organizzazione viene mostrato a chiunque visualizzi la bacheca di aiuto."
       ],
       [
         "Come posso fidarmi che i post siano affidabili?",
@@ -573,7 +575,7 @@
       ],
       [
         "Quali informazioni memorizzate?",
-        "FightPandemics raccoglie ed elabora i dati personali degli utenti solo per gli scopi descritti nella nostra <0> informativa sulla privacy. </0> In nessun caso forniremo l'accesso o condivideremo i tuoi dati personali con terze parti, ad eccezione delle persone rilevanti stabilite in questa informativa."
+        "FightPandemics raccoglie ed elabora i dati personali degli utenti solo per gli scopi descritti nella nostra <0>informativa sulla privacy.</0> In nessun caso forniremo l'accesso o condivideremo i tuoi dati personali con terze parti, ad eccezione delle persone rilevanti stabilite in questa informativa."
       ],
       [
         "Posso dare / ricevere aiuto dalla mia città o stato? Per quanto tempo sarà visibile il post?",
@@ -587,23 +589,23 @@
     "accountFAQ": [
       [
         "Come posso iscrivermi?",
-        "<0> Per unirti alla comunità come utente, fai clic sul pulsante \"Menu\" e selezionare l'opzione \"Partecipa ora / Accedi\". Lì sarai in grado di unirti con la tua e-mail o credenziali di social media. </0> <1> Quando ti unisci alla comunità, avrai accesso illimitato per visualizzare e creare post e commenti sulla piattaforma FightPandemics. </1>"
+        "<0>Per unirti alla comunità come utente, fai clic sul pulsante \"Menu\" e selezionare l'opzione \"Partecipa ora / Accedi\". Lì sarai in grado di unirti con la tua email o credenziali di social media.</0> <1>Quando ti unisci alla comunità, avrai accesso illimitato per visualizzare e creare post e commenti sulla piattaforma FightPandemics.</1>"
       ],
       [
         "Come posso modificare il mio profilo individuale in un profilo di organizzazione?",
-        "Il profilo di un'organizzazione è legato al tuo profilo individuale. Dopo aver creato il tuo profilo individuale, puoi aggiungere tutti i profili di organizzazione che desideri collegare a quel profilo individuale. Le tue credenziali di accesso continueranno a essere l'email e la password che hai utilizzato per iscriverti al profilo individuale."
+        "Il profilo di organizzazione è legato al tuo profilo individuale. Dopo aver creato il tuo profilo individuale, potrai aggiungere tutti i profili di organizzazione che desideri collegati a quello individuale. Le tue credenziali di accesso continueranno a essere l'email e la password che hai utilizzato per iscriverti come profilo individuale."
       ],
       [
         "Come posso modificare il profilo della mia organizzazione in un profilo individuale?",
-        "Non è possibile modificare il profilo di un' organizzazione in un profilo individuale. Per creare un profilo per un' organizzazione, è necessario disporre di un profilo individuale. Dopo aver creato il tuo profilo individuale, puoi aggiungere tutti i profili di organizzazione che vuoi, legati a quel profilo individuale. Le tue credenziali di accesso continueranno ad essere l'email e la password che hai utilizzato per iscriverti al profilo individuale."
+        "Non è possibile modificare il profilo di organizzazione in un profilo individuale. Per creare un profilo di organizzazione è necessario disporre di uno individuale. Dopo aver creato il tuo profilo individuale, potrai aggiungere tutti i profili di organizzazione che desideri, collegati a quello individuale. Le tue credenziali di accesso continueranno a essere l'email e la password che hai utilizzato per iscriverti come profilo individuale."
       ],
       [
         "Come posso reimpostare la mia password?",
-        "Cliccare su \"Accedi\" dalla homepage e poi cliccare su \"Password dimenticata\" e seguire le istruzioni"
+        "Clicca su \"Accedi\" dalla homepage e poi su \"Password dimenticata\" e segui le istruzioni"
       ],
       [
         "Perché la mia password non è valida?",
-        "Controlla se la tua password ha almeno 8 lettere. Se hai già un account ma hai dimenticato la password di accesso, fai clic su \"Accedi\" dalla home page e poi vai su \"Password dimenticata\"."
+        "Controlla se la tua password contiene almeno 8 caratteri. Se possiedi già un account ma hai dimenticato la password di accesso, fai clic su \"Accedi\" dalla homepage e poi vai su \"Password dimenticata\"."
       ],
       [
         "Mi sono registrato/a e non ho ricevuto l'email di conferma. Cosa faccio?",
@@ -614,7 +616,7 @@
       ],
       [
         "Come elimino / cancello il mio account?",
-        "Se desideri eliminare il tuo account, contattaci a <0> support@fightpandemics.com. </0>"
+        "Se desideri eliminare il tuo account, contattaci a <0>support@fightpandemics.com.</0>"
       ],
       [
         "Come posso aggiornare le informazioni del mio profilo?",
@@ -622,7 +624,7 @@
       ],
       [
         "Come posso segnalare un post errato o offensivo?",
-        "Se trovi un post che non è corretto o viola il codice di condotta di FightPandemics, inviaci un'e-mail a <0> support@fightpandemics.com. </0>"
+        "Se trovi un post che non è corretto o viola il codice di condotta di FightPandemics, inviaci un'email a <0>support@fightpandemics.com.</0>"
       ]
     ],
     "contectsFAQ": [
@@ -636,7 +638,7 @@
       ],
       [
         "Ho bisogno di supporto tecnico.",
-        "Ci dispiace per questo. Inviaci un'e-mail a <0>support@fightpandemics.com. </0> Dato che siamo un team di soli volontari, aspettati almeno 48 ore per una risposta."
+        "Ci dispiace per questo. Inviaci un'email a <0>support@fightpandemics.com.</0> Dato che siamo un team di soli volontari, aspettati almeno 48 ore per una risposta."
       ],
       [
         "Voglio contattare FightPandemics per altri motivi.",
@@ -655,7 +657,7 @@
       ],
       [
         "Ho bisogno di supporto tecnico.",
-        "Ci dispiace per questo. Inviaci un'e-mail a <0>support@fightpandemics.com</0>. Dato che siamo un team di soli volontari, ci potrebbero volere almeno 48 ore per una risposta."
+        "Ci dispiace per questo. Inviaci un'email a <0>support@fightpandemics.com</0>. Dato che siamo un team di soli volontari, ci potrebbero volere almeno 48 ore per una risposta."
       ],
       [
         "Voglio contattare FightPandemics per altri motivi.",
@@ -675,7 +677,7 @@
     "disableCookiesContent": "Normalmente è possibile smettere di accettare i cookie del browser o smettere di accettare cookie da un particolare servizio. Tutti i browser moderni consentono di modificare la configurazione dei Cookies. Queste impostazioni si trovano di solito nelle \"opzioni\" o nelle \"Preferenze\" del menu del browser. È inoltre possibile configurare il browser o il gestore di posta elettronica, nonché installare componenti aggiuntivi gratuiti per impedire il download di Web Bugs all'apertura di un'e-mail. Utilizzate le seguenti istruzioni in base al vostro browser internet per modificare le preferenze dei cookie:",
     "updateCookies": "AGGIORNAMENTO DELLA POLICY SULL'USO DEI COOKIE",
     "updateCookiesContent": "FightPandemics può modificare la presente Policy sull'uso dei cookie in base a requisiti legislativi, normativi o con lo scopo di adattare detta policy alle istruzioni emesse dall'Agenzia Spagnola per la Protezione dei Dati, pertanto si consiglia agli utenti di visitare periodicamente questa pagina per conoscere i cambiamenti subiti in essa. In caso di modifiche significative nella presente Cookie Policy, gli Utenti verranno avvisati tramite web o tramite posta elettronica agli Utenti registrati al servizio di newsletter.",
-    "cookieAlert": "Questo sito utilizza i cookie per fornire il nostro servizio e per mostrarti informazioni rilevanti. Utilizzando il nostro sito, confermi di aver letto e compreso la nostra <0>Policy sull'uso dei Cookie  </0> , <1> Informativa sulla privacy </1> e i nostri <2> Termini e condizioni </2> . L'utilizzo dei prodotti FightPandemics è soggetto a queste informative e termini."
+    "cookieAlert": "Questo sito utilizza i cookie per fornire il nostro servizio e per mostrarti informazioni rilevanti. Utilizzando il nostro sito, confermi di aver letto e compreso la nostra <0>Informativa sull'uso dei Cookie </0>, <1>Informativa sulla privacy</1> e i nostri <2>Termini e condizioni</2>. L'utilizzo dei prodotti FightPandemics è soggetto a queste informative e termini."
   },
   "comment": {
     "writeAComment": "Scrivi un commento",
@@ -811,10 +813,10 @@
       "Proxy Authentication Required": "Autenticazione proxy richiesta",
       "Request Timeout": "Richiesta scaduta",
       "Conflict": "Conflitto",
-      "Gone": "Andato",
+      "Gone": "Rimosso",
       "Length Required": "Lunghezza richiesta",
       "Precondition Failed": "Precondizione fallita",
-      "Payload Too Large": "Remunerazione troppo alta",
+      "Payload Too Large": "Entità richiesta troppo grande",
       "URI Too Long": "URI troppo lungo",
       "Unsupported Media Type": "Media non supportato",
       "Range Not Satisfiable": "Intervallo non raggiungibile",
@@ -836,7 +838,7 @@
       "Service Unavailable": "Servizio non disponibile",
       "Gateway Timeout": "Portale scaduto",
       "HTTP Version Not Supported": "Versione HTTP non supportata",
-      "Variant Also Negotiates": "La variante negozia anche",
+      "Variant Also Negotiates": "Variante Negozia anche la variante",
       "Insufficient Storage": "Spazio insufficiente",
       "Loop Detected": "Rilevato loop",
       "Not Extended": "Non esteso",
@@ -850,9 +852,9 @@
       "networkError": "Spiacenti, si è verificato un errore di rete."
     },
     "wrongOldPassword": "Password attuale errata",
-    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
-    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "noEmailAccount": "Non è stato trovato nessun account con questo indirizzo email, clicca su 'Iscriviti ora' per creare un account.",
+    "registeredAccount": "Un account social è stato registrato con questo indirizzo email. Clicca su \"Iscriviti ora\" per creare un account di posta elettronica e una password diretti.",
+    "failedLinkAccounts": "Collegamento degli account non riuscito, motivo:"
   },
   "TEMP: We are not a provider of healthcare services": "Non forniamo servizi sanitari",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Questo servizio è fornito in buona fede per coloro che non riuscirebbero a ottenere aiuto e risorse in altro modo durante questa emergenza di sanità pubblica senza precedenti.",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Invia",
     "cancelBtn": "Annulla",
-    "tryAgainBtn": "Riprova"
+    "tryAgainBtn": "Riprova",
+    "remove": "Rimuovi Avatar",
+    "uploadNew": "Carica nuovo",
+    "edit": "Modifica Avatar"
   },
   "dates": {
     "monthsShort": {
@@ -965,7 +970,7 @@
     "sendSuccessHeader": "Il tuo messaggio è stato inviato con successo",
     "sendSuccessText": "Il tuo messaggio a {{username}} riguardo \"{{title}}\" è stato inviato con successo.",
     "sendSuccessTextNoPost": "Il tuo messaggio a {{username}} è stato inviato con successo.",
-    "sendFailedHeader": "Oops! Qualcosa è andato storto",
+    "sendFailedHeader": "Ops, qualcosa è andato storto",
     "sendFailedText": "Il tuo messaggio a {{username}} riguardo \"{{title}}\" non è stato consegnato.",
     "sendFailedTextNoPost": "Il tuo messaggio a {{username}} non è stato consegnato.",
     "ignoreDialogTitle": "Ignorare la richiesta di messaggio da {{username}}?",
@@ -1008,31 +1013,58 @@
       "success": "Impostazioni delle notifiche aggiornate"
     },
     "header": "Notifiche",
-    "liked": "<0>{{username}}</0> ha messo Mi piace al tuo post <1>{{postTitle}}</1>",
+    "liked": "A <0>{{username}}</0> piace il tuo post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> ha commentato il tuo post <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> ha condiviso il tuo post <1>{{postTitle}}</1> su <1>{{shareMedium}}</1>",
-    "empty": "Non ci sono altre notifiche"
+    "empty": "Non ci sono altre notifiche",
+    "reported": "Il tuo post <1>{{postTitle}}</1> viola la nostra politica dei contenuti e pertanto è stato rimosso"
   },
   "moderation": {
-    "report": "Report",
+    "report": "Segnala",
     "cancel": "Annulla",
-    "finish": "Finish",
-    "reason": "Reason for reporting:",
-    "additionalDetails": "Additional details (optional)",
-    "enterDetails": "Please enter more details here...",
-    "reportPost": "Report Post",
-    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
-    "reportPostError": "Oops! something went wrong...",
-    "reportPostSuccessTitle": "Report Received",
-    "reportPostErrorTitle": "Oops!",
+    "finish": "Termina",
+    "reason": "Motivo della segnalazione:",
+    "additionalDetails": "Ulteriori dettagli (opzionale)",
+    "enterDetails": "Inserisci maggiori dettagli qui...",
+    "reportPost": "Segnala post",
+    "reportPostSuccess": "Grazie per la tua segnalazione! Questo post verrà sottoposto a revisione.",
+    "reportPostError": "Ops! qualcosa è andato storto...",
+    "reportPostSuccessTitle": "Segnalazione ricevuta",
+    "reportPostErrorTitle": "Ops!",
     "spam": "Spam",
-    "inappropriateContent": "Inappropriate Content",
-    "violatesTerms": "Violates Terms",
+    "inappropriateContent": "Contenuto inappropriato",
+    "violatesTerms": "Viola i termini",
     "other": "Altro",
-    "postSuspected": "This post received multiple reports and was held for review",
-    "showAnyway": "Show anyway",
-    "postHidden": "You have chosen to hide this post",
-    "unhide": "Unhide",
-    "youReported": "You have reported this post. It will no longer be visible on your feed"
+    "postSuspected": "Questo post ha ricevuto diverse segnalazioni ed è stato trattenuto per la revisione",
+    "showAnyway": "Mostra comunque",
+    "postHidden": "Hai scelto di nascondere questo post",
+    "unhide": "Mostra",
+    "youReported": "Hai segnalato questo post. Non sarà più visibile sul tuo feed",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Verifica il tuo account!",
+    "verifyBody": "Abbiamo notato che non hai verificato il tuo account. Clicca qui per iniziare.",
+    "verified": "Verificato da Veriff",
+    "stepStartTitle": "Verifica il tuo account con Veriff",
+    "stepStartBody": "FightPandemics vuole mantenere la nostra comunità aperta, onesta e sicura. Il badge blu di account verificato posto accanto al nome dell'utente, permette alle persone di sapere che un account è autentico.",
+    "stepStartAction": "Verificato",
+    "stepSuccessTitle": "Grazie per aver verificato il tuo account!",
+    "stepSuccessBody": "Il tuo badge di verifica dovrebbe apparire sul tuo profilo in pochi istanti",
+    "stepSuccessAction": "Fantastico!",
+    "stepCancelTitle": "Hai annullato il processo di autenticazione",
+    "stepCancelBody": "Puoi tornare indietro e verificare il tuo account in qualsiasi momento!",
+    "stepCancelAction": "Chiudi"
   }
 }

@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "Hilfe anfordern",
         "Offer Help": "Hilfe bieten"
-      }
+      },
+      "postsNearMe": "Ergebnisse in meiner Nähe anzeigen"
     },
     "filterBy": "Filtern nach",
     "noResults": "Derzeit sind leider keine relevanten Beiträge verfügbar. Bitte versuche es mit einer anderen Filtersuche oder <0>erstelle einen Beitrag</0>.",
@@ -231,7 +232,8 @@
     "hideAction": "Beitrag ausblenden",
     "hideCaption": "Es ist für mich nicht relevant.",
     "reportAction": "Beitrag melden",
-    "reportCaption": "Für die Überprüfung von Moderatoren"
+    "reportCaption": "Für die Überprüfung von Moderatoren",
+    "copyUrl": "URL kopieren"
   },
   "profile": {
     "common": {
@@ -413,7 +415,7 @@
     "passwordConfirmationRequired": "Eine Passwortbestätigung ist erforderlich.",
     "passwordNotMatch": "Passwörter stimmen nicht überein",
     "backHome": "Zurück zum Startbildschirm",
-    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
+    "linkAccountsSuccess": "Dein Konto wurde mit deinem bestehenden gleichen E-Mail-Konto verknüpft. Bitte melde dich erneut mit einem der beiden an."
   },
   "verifyEmail": {
     "checkInbox": "Überprüfe deinen Posteingang",
@@ -469,9 +471,9 @@
     "communityCollaboration": "Wir möchten Gemeinschaften und Organisationen auf der ganzen Welt über unsere Plattform stärken, und dazu müssen wir zusammenarbeiten! Durch die kontinuierliche Zusammenarbeit mit unseren Community-Partnern können wir eine bessere Plattform für sie und andere schaffen.",
     "becomeCommunityPartner": "Möchtest du, dass deine Community auch zum Partner wird? Wir würden uns freuen, von dir zu hören und zusammenzuarbeiten! Erreiche uns unter ",
     "currentPartners": "Aktuelle Community-Partner",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "bookCall": "Anruf buchen",
+    "bookCallInfo": "Möchtest du eine persönliche Erfahrung mit unserem Produkt machen? Vereinbare einen Anruf mit uns!",
+    "bookCallLink": "Anruf buchen"
   },
   "footer": {
     "faq": "Häufig gestellte Fragen",
@@ -850,9 +852,9 @@
       "networkError": "Ein Netzwerkfehler ist aufgetreten."
     },
     "wrongOldPassword": "Falsches aktuelles Passwort",
-    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
-    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "noEmailAccount": "Es wurde kein Konto mit dieser E-Mail-Adresse gefunden. Bitte klicke auf 'Jetzt anmelden', um ein Konto zu erstellen.",
+    "registeredAccount": "Ein soziales Konto wurde mit dieser E-Mail-Adresse registriert. Bitte klicke auf 'Jetzt anmelden', um ein direktes E-Mail- und Passwort-Konto zu erstellen.",
+    "failedLinkAccounts": "Fehler beim Verknüpfen von Konten, Grund:"
   },
   "TEMP: We are not a provider of healthcare services": "Wir sind kein Gesundheitsdienstleister",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Dieser Service wird als hilfreiche Option für jene angeboten,\ndie zur Zeit nicht in der Lage sind anderweitig Resourcen \noder Hilfe zu erlangen.",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Weiter",
     "cancelBtn": "Abbrechen",
-    "tryAgainBtn": "Erneut versuchen"
+    "tryAgainBtn": "Erneut versuchen",
+    "remove": "Avatar entfernen",
+    "uploadNew": "Avatar hochladen",
+    "edit": "Avatar bearbeiten"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0>{{username}}</0> gefiel dein Beitrag <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> hat deinen Beitrag <1>{{postTitle}}</1> kommentiert",
     "shared": "<0>{{username}}</0> hat deinen Beitrag <1>{{postTitle}}</1> auf <1>{{shareMedium}}</1> geteilt",
-    "empty": "Keine Benachrichtigungen mehr"
+    "empty": "Keine Benachrichtigungen mehr",
+    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
   },
   "moderation": {
     "report": "Melden",
@@ -1033,6 +1039,32 @@
     "showAnyway": "Trotzdem anzeigen",
     "postHidden": "Du hast diesen Beitrag ausgeblendet",
     "unhide": "Einblenden",
-    "youReported": "Du hast diesen Beitrag gemeldet. Es wird in deinem Feed nicht mehr angezeigt"
+    "youReported": "Du hast diesen Beitrag gemeldet. Es wird in deinem Feed nicht mehr angezeigt",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Verify your account!",
+    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
+    "verified": "Verified by Veriff",
+    "stepStartTitle": "Verify your account with Veriff",
+    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
+    "stepStartAction": "Get Verified",
+    "stepSuccessTitle": "Thanks for verifying your account!",
+    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
+    "stepSuccessAction": "Awesome!",
+    "stepCancelTitle": "You canceled the verification process",
+    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "stepCancelAction": "Schließen"
   }
 }

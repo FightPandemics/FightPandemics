@@ -16,7 +16,7 @@ export default {
     header: "verification.stepSuccessTitle",
     body: "verification.stepSuccessBody",
     actionText: "verification.stepSuccessAction",
-    tag: "accountVerified",
+    tag: "checkBadge",
   },
   cancel: {
     icon: null,

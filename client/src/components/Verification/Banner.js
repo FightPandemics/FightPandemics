@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createVeriffFrame, MESSAGES } from "@veriff/incontext-sdk";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,7 @@ import steps from "./steps";
 import StyledBanner from "./StyledBanner";
 import { ReactComponent as Arrow } from "assets/verification/arrow.svg";
 import GTM from "constants/gtm-tags";
+import TagManager from "react-gtm-module";
 
 function Banner({ gtmPrefix }) {
   const actorOrganisationId = useSelector(selectOrganisationId);
@@ -55,6 +56,36 @@ function Banner({ gtmPrefix }) {
       },
     });
   };
+
+  const triggerGTMForModelSwitch = (step) => {
+    const eventName =
+      step === "start"
+        ? GTM.profile.verifyPopup
+        : step === "cancel"
+        ? GTM.profile.cancelVerify
+        : step === "finish"
+        ? GTM.profile.accountVerified
+        : null;
+    if (eventName) {
+      TagManager.dataLayer({
+        dataLayer: {
+          event: gtmPrefix + eventName,
+        },
+      });
+    }
+    // clear dataLayer
+    TagManager.dataLayer({
+      dataLayer: {
+        event: null,
+      },
+    });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      triggerGTMForModelSwitch(step);
+    }, 200);
+  }, [step]);
 
   return (
     <>
