@@ -57,7 +57,7 @@ function Banner({ gtmPrefix }) {
     });
   };
 
-  useEffect(() => {
+  const triggerGTMForModelSwitch = (step) => {
     const eventName =
       step === "start"
         ? GTM.profile.verifyPopup
@@ -79,6 +79,12 @@ function Banner({ gtmPrefix }) {
         event: null,
       },
     });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      triggerGTMForModelSwitch(step);
+    }, 200);
   }, [step]);
 
   return (
