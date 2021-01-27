@@ -6,8 +6,9 @@ describe("FightPandemics Help Board Page for unauthorized user", () => {
   const helpBoard = new HelpBoard();
   const logo = new Logo();
   var noPostsAvailableText =
-    "Sorry, there are currently no relevant posts available. Please try using a different filter search or";
+    "Sorry, there are currently no relevant posts available. Please try using a different filter search or ";
   var authorTitleText = "Sourced by FightPandemics";
+  var errorMessageText = "Min. 2 characters";
 
   context("User opens Help Board", () => {
     beforeEach(() => {
@@ -33,24 +34,42 @@ describe("FightPandemics Help Board Page for unauthorized user", () => {
     });
 
     it(" clicking on search icon, link for typing opens", () => {
-      var searchIcon = cy.get(helpBoard.getKeywordSearchButton());
-      searchIcon
+      searchIcon().click({ multiple: true, force: true });
+      cy.get(helpBoard.getKeywordSearchLink())
         .should("be.visible")
-        .and("have.attr", "alt", "Icon")
-        .click({ multiple: true, force: true });
-      cy.keywordSearchLinkIsOpen(helpBoard.getKeywordSearchLink());
+        .and("have.attr", "type", "text");
     });
 
     it("Unauthorized user can search posts by typing name of an user", () => {
-      var search = cy.get(helpBoard.getKeywordSearchLink());
-      search.type(feedData.searchByName);
-      cy.get(helpBoard.keywordSearchButton).click({
+      searchLinkForPosts().type(feedData.searchByName);
+      searchIcon().click({
         multiple: true,
         force: true,
       });
       cy.get(helpBoard.getAuthorTitle()).contains(authorTitleText);
+    });
 
-      //helpBoard.getAuthorTitle().contains(authorTitleText);
+    it.skip("Unauthorized user if type single character for search", () => {
+      searchLinkForPosts().type(feedData.searchBySingleCharacter);
+      searchIcon().click({
+        multiple: true,
+        force: true,
+      });
+      //cy.get(helpBoard.getAuthorTitle()).contains(authorTitleText);
+      cy.get(helpBoard.getErrorMessage()).contains("small", errorMessageText);
+    });
+
+    it.skip("No post appear if unauthorized user search posts by typing misspelled name", () => {
+      searchLinkForPosts().type(feedData.searchByMisspelledText);
+      searchIcon().click({
+        multiple: true,
+        force: true,
+      });
+      //cy.get(helpBoard.getAuthorTitle()).contains(authorTitleText);
+      //cy.get(helpBoard.getAddPostLinkElement());
+      cy.get(helpBoard.getNoPostsAvailableTextElement()).contains(
+        noPostsAvailableText,
+      );
     });
 
     it.skip("Help Board is empty - Unauthorized user is redirected to SignIn page when clicking Add Post link", () => {
@@ -62,15 +81,15 @@ describe("FightPandemics Help Board Page for unauthorized user", () => {
     });
   });
 
-  /* function searchIcon() {
-    var searchIcon = cy.get(helpBoard.keywordSearchButton);
+  function searchIcon() {
+    var searchIcon = cy.get(helpBoard.getKeywordSearchButton());
     searchIcon.should("be.visible").and("have.attr", "alt", "Icon");
     return searchIcon;
   }
 
   function searchLinkForPosts() {
-    var searchLink = cy.get(helpBoard.keywordSearchLink);
+    var searchLink = cy.get(helpBoard.getKeywordSearchLink());
     searchLink.should("be.visible").and("have.attr", "type", "text");
     return searchLink;
-  }*/
+  }
 });

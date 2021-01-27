@@ -8,6 +8,7 @@ class HelpBoard {
   keywordSearchButton = "#SearchContainer > div > img";
   keywordSearchLink = "#SCH_IN";
   authorTitle = "div.title-wrapper";
+  errorMessage = "#SearchContainer > small";
 
   constructor() {}
 
@@ -57,6 +58,10 @@ class HelpBoard {
 
   getAuthorTitle() {
     return this.authorTitle;
+  }
+
+  getErrorMessage() {
+    return this.errorMessage;
   }
 }
 

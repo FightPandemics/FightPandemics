@@ -1,4 +1,6 @@
 {
   "location": "New York",
-  "searchByName": "Sourced by FightPandemics"
+  "searchByName": "Sourced by FightPandemics",
+  "searchByMisspelledText": "mariana",
+  "searchBySingleCharacter": "w"
 }
