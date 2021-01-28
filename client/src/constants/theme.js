@@ -112,6 +112,11 @@ const theme = {
       color: ROYAL_BLUE,
       border: `0.1rem solid ${ROYAL_BLUE} !important`,
     },
+    secondaryRed: {
+      backgroundColor: WHITE,
+      color: ORANGE_RED,
+      border: `0.1rem solid ${ORANGE_RED} !important`,
+    },
     tertiary: {
       fontSize: "1.6rem",
       fontWeight: "500",

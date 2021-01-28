@@ -8,7 +8,7 @@ _Please be concise and link any related issue(s):_
 
 - [ ] I have checked that no one else is working on similar changes.
 - [ ] I have read the latest [**README**](README.md) and understand the development workflow.
-- [ ] The name of this branch is: **`feature/<branch_name>`**, or **`hotfix/<branch_name>`** if this is a hotfix, where `<branch_name>` briefly describes the issue(s) resolved and is prefixed with the issue number(s) (e.g. `1127-1130-update-git-branching-model`). The branch is created in a cloned version of this repo, **not a forked repo**.
+- [ ] The name of this branch is: **`feature/<branch_name>`** for a regular feature, **`hotfix/<branch_name>`** for a hotfix, and **`service/<branch_name>`** for a microservice, where `<branch_name>` briefly describes the issue(s) resolved and is prefixed with the issue number(s) (e.g. `1127-1130-update-git-branching-model`). The branch is created in a cloned version of this repo, **not a forked repo**.
 - [ ] This branch is rebased/merged with the **latest staging** (or the **latest production** if it is a hotfix).
 - [ ] There are no merge conflicts.
 - [ ] There are no console warnings and errors.

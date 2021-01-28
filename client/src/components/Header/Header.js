@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavBar } from "antd-mobile";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { Badge } from "antd";
@@ -156,6 +156,7 @@ const Header = ({
   webSocket,
 }) => {
   const { t } = useTranslation();
+  const history = useHistory();
   const { rooms } = webSocket;
 
   const index = localStorage.getItem("organisationId");
@@ -201,7 +202,14 @@ const Header = ({
             </BrandLink>
             <NavSearch>
               {navSearch && (
-                <FeedSearch placeholder={t("feed.search.placeholder")} t={t} />
+                <FeedSearch
+                  placeholder={
+                    history.location.pathname !== "/feed"
+                      ? "Search"
+                      : t("feed.search.placeholder")
+                  }
+                  t={t}
+                />
               )}
             </NavSearch>
           </>

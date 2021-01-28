@@ -79,6 +79,11 @@ const getUserByIdSchema = {
   params: strictSchema().prop("userId", S.string().required()),
 };
 
+const setUserPermissionsSchema = {
+  body: strictSchema().prop("role", S.string().maxLength(100)),
+  params: strictSchema().prop("userId", S.string().required()),
+};
+
 const updateUserSchema = {
   body: strictSchema()
     .prop("about", S.string().maxLength(160))
@@ -98,5 +103,6 @@ module.exports = {
   createUserSchema,
   getUserByIdSchema,
   getUsersSchema,
+  setUserPermissionsSchema,
   updateUserSchema,
 };

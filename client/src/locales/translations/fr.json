@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "Demander de l'aide",
         "Offer Help": "Offrir de l'aide"
-      }
+      },
+      "postsNearMe": "Show results near me"
     },
     "filterBy": "Filtrer par",
     "noResults": "Désolé, il n'y a actuellement aucun article pertinent disponible. Veuillez essayer d'utiliser un autre filtre de recherche ou <0> créer une publication </0>.",
@@ -231,7 +232,8 @@
     "hideAction": "Masquer le poste",
     "hideCaption": "non intéressé",
     "reportAction": "Signaler le poste",
-    "reportCaption": "Pour l'examen"
+    "reportCaption": "Pour l'examen",
+    "copyUrl": "Copy URL"
   },
   "profile": {
     "common": {
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Envoyer",
     "cancelBtn": "Annuler",
-    "tryAgainBtn": "Réessayer"
+    "tryAgainBtn": "Réessayer",
+    "remove": "Remove Avatar",
+    "uploadNew": "Upload New",
+    "edit": "Edit Avatar"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0>{{username}}</0> avez aimé votre publication <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commenté sur votre publication <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> a partagé votre publication <1>{{postTitle}}</1> sur <1>{{shareMedium}}</1>",
-    "empty": "Plus de notifications"
+    "empty": "Plus de notifications",
+    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
   },
   "moderation": {
     "report": "Signaler",
@@ -1033,6 +1039,32 @@
     "showAnyway": "Montrer quand même",
     "postHidden": "Vous avez choisi de cacher ce poste",
     "unhide": "Afficher",
-    "youReported": "Vous avez signalé ce poste. Il ne sera plus visible sur votre flux"
+    "youReported": "Vous avez signalé ce poste. Il ne sera plus visible sur votre flux",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Verify your account!",
+    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
+    "verified": "Verified by Veriff",
+    "stepStartTitle": "Verify your account with Veriff",
+    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
+    "stepStartAction": "Get Verified",
+    "stepSuccessTitle": "Thanks for verifying your account!",
+    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
+    "stepSuccessAction": "Awesome!",
+    "stepCancelTitle": "You canceled the verification process",
+    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "stepCancelAction": "Fermer"
   }
 }

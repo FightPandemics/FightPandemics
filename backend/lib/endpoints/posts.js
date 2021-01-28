@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
-
+const { SCOPES } = require("../constants");
 const {
   setElapsedTimeText,
   createSearchRegex,
@@ -60,7 +60,10 @@ async function routes(app) {
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       const filters = [
-        { $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }] },
+        {
+          $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }],
+          status: { $ne: "removed" },
+        },
       ];
 
       // prefer location from query filters, then user if authenticated
@@ -218,6 +221,7 @@ async function routes(app) {
             "author.name": true,
             "author.photo": true,
             "author.type": true,
+            "author.verified": true,
             commentsCount: {
               $size: { $ifNull: ["$comments", []] },
             },
@@ -240,6 +244,7 @@ async function routes(app) {
             reportsCount: {
               $size: { $ifNull: ["$reportedBy", []] },
             },
+            status: true,
             title: true,
             types: true,
             visibility: true,
@@ -325,6 +330,7 @@ async function routes(app) {
         name: actor.name,
         photo: actor.photo,
         type: actor.type,
+        verified: actor.verification && actor.verification.status === "approved"
       };
 
       // ExpireAt needs to calculate the date
@@ -381,15 +387,24 @@ async function routes(app) {
         throw app.httpErrors.notFound();
       }
 
-      if (actor) {
-        // user shouldn't see reported posts on post page
+      // if user is not a "reader" (with dashboard read access)
+      if (
+        actor &&
+        (!actor.permissions || !(actor.permissions & SCOPES.REPORT_READ))
+      ) {
+        if (post.status === "removed") throw app.httpErrors.notFound();
+        // user shouldn't see posts reported by them, even if public.
         const didReport = post.reportedBy
           ? post.reportedBy.find(
               (r) => r.id.toString() === actor._id.toString(),
             )
           : false;
         if (didReport) throw app.httpErrors.notFound();
+      } else if (!actor) {
+        // none logged in user shouldn't see removed posts on post page
+        if (post.status === "removed") throw app.httpErrors.notFound();
       }
+      
 
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
@@ -664,6 +679,7 @@ async function routes(app) {
         name: actor.name,
         photo: actor.photo,
         type: actor.type,
+        verified: actor.verification && actor.verification.status === "approved"
       };
 
       // Initial empty likes array

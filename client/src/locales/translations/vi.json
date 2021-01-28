@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "Yêu cầu trợ giúp",
         "Offer Help": "Cung cấp trợ giúp"
-      }
+      },
+      "postsNearMe": "Hiện kết quả gần tôi"
     },
     "filterBy": "Lọc bởi",
     "noResults": "Xin lỗi, hiện tại không có bài viết nào có liên quan. Vui lòng thử sử dụng tìm kiếm bộ lọc khác hoặc <0> tạo bài đăng</0> .",
@@ -213,7 +214,7 @@
     "viewMore": "Xem thêm",
     "deletePostConfirmation": "Bạn có chắc bạn muốn xóa bỏ bài đăng này không?",
     "deleteCommentConfirmation": "Bạn có chắc bạn muốn xóa bỏ nhận xét này không?",
-    "shareVia": "Chia sẻ qua...",
+    "shareVia": "Chia sẻ bài đăng",
     "others": "Cái khác",
     "expireTitle": "Ahh... Snap!",
     "expire": "Bài đăng bạn đang tìm kiếm đã hết hạn. Vui lòng kiểm tra Bảng Trợ giúp của chúng tôi để biết thêm các bài viết như vậy.",
@@ -231,7 +232,8 @@
     "hideAction": "Ẩn bài đăng",
     "hideCaption": "Nó không liên quan đến tôi",
     "reportAction": "Báo cáo về bài đăng",
-    "reportCaption": "Để người kiểm duyệt xem xét"
+    "reportCaption": "Để người kiểm duyệt xem xét",
+    "copyUrl": "Sao CHÉP URL"
   },
   "profile": {
     "common": {
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Gửi",
     "cancelBtn": "Huỷ bỏ",
-    "tryAgainBtn": "Thử lại"
+    "tryAgainBtn": "Thử lại",
+    "remove": "Xóa hình đại diện",
+    "uploadNew": "Tải lên mới",
+    "edit": "Sửa Hình đại diện"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0> {{username}} </0> thích bài đăng của bạn <1> {{postTitle}} </1>",
     "commented": "<0> {{username}} </0> đã nhận xét về bài đăng của bạn <1> {{postTitle}} </1>",
     "shared": "<0> {{username}} </0> đã chia sẻ bài đăng của bạn <1> {{postTitle}} </1> trên <1> {{shareMedium}} </1>",
-    "empty": "Không có thêm thông báo"
+    "empty": "Không có thêm thông báo",
+    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
   },
   "moderation": {
     "report": "Báo cáo",
@@ -1033,6 +1039,32 @@
     "showAnyway": "Vẫn hiển thị",
     "postHidden": "Bạn đã chọn ẩn bài đăng này",
     "unhide": "Bỏ ẩn",
-    "youReported": "Bạn đã báo cáo bài đăng này. Nó sẽ không còn hiển thị trên nguồn cấp dữ liệu của bạn nữa"
+    "youReported": "Bạn đã báo cáo bài đăng này. Nó sẽ không còn hiển thị trên nguồn cấp dữ liệu của bạn nữa",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Xác minh tài khoản của bạn!",
+    "verifyBody": "Chúng tôi nhận thấy rằng bạn chưa xác minh tài khoản của mình. Nhấp vào đây để bắt đầu.",
+    "verified": "Được xác minh bởi Veriff",
+    "stepStartTitle": "Xác minh tài khoản của bạn với Veriff",
+    "stepStartBody": "FightPandemics muốn giữ cho cộng đồng của chúng ta cởi mở, trung thực và an toàn. Huy hiệu đã xác minh màu xanh lam bên cạnh tên người dùng cho phép mọi người biết rằng tài khoản là xác thực.",
+    "stepStartAction": "Nhận xác minh",
+    "stepSuccessTitle": "Cảm ơn bạn đã xác minh tài khoản của mình!",
+    "stepSuccessBody": "Huy hiệu xác minh của bạn sẽ xuất hiện trên hồ sơ của bạn trong giây lát",
+    "stepSuccessAction": "Tuyệt vời!",
+    "stepCancelTitle": "Bạn đã hủy quy trình xác minh",
+    "stepCancelBody": "Bạn luôn có thể quay lại và xác minh tài khoản của mình bất cứ lúc nào!",
+    "stepCancelAction": "Đóng"
   }
 }

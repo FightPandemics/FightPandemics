@@ -54,11 +54,13 @@ class Notifier {
       },
       sharedVia: details.sharedVia,
       commentText: details.commentText,
+      justification: details.justification,
       triggeredBy: {
         id: triggeredBy._id,
         name: triggeredBy.name,
         photo: triggeredBy.photo,
         type: triggeredBy.type,
+        verified: triggeredBy.verification && triggeredBy.verification.status === "approved",
       },
       isCleared: false,
     };

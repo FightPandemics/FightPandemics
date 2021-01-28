@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "Барање Помош",
         "Offer Help": "Нуди Помош"
-      }
+      },
+      "postsNearMe": "Show results near me"
     },
     "filterBy": "Филтрирај според",
     "noResults": "За жал, во моментов нема достапни релевантни објави. Обидете се да користите различно пребарување филтер или <0> создадете објава </0> .",
@@ -231,7 +232,8 @@
     "hideAction": "Скриј објава",
     "hideCaption": "Не е релевантно за мене",
     "reportAction": "Пријави пост",
-    "reportCaption": "За преглед на модераторите"
+    "reportCaption": "За преглед на модераторите",
+    "copyUrl": "Copy URL"
   },
   "profile": {
     "common": {
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "Поднесете",
     "cancelBtn": "Откажи",
-    "tryAgainBtn": "Обиди се повторно"
+    "tryAgainBtn": "Обиди се повторно",
+    "remove": "Remove Avatar",
+    "uploadNew": "Upload New",
+    "edit": "Edit Avatar"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0> {{username}} </0> и/му се допадна вашата објава <1> {{postTitle}} </1>",
     "commented": "<0> {{username}} </0> коментираше на вашата објава <1> {{postTitle}} </1>",
     "shared": "<0> {{username}} </0> ја сподели вашата објава <1> {{postTitle}} </1> на <1> {{shareMedium}} </1>",
-    "empty": "Нема повеќе известувања"
+    "empty": "Нема повеќе известувања",
+    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
   },
   "moderation": {
     "report": "Пријави",
@@ -1033,6 +1039,32 @@
     "showAnyway": "Сепак прикажи",
     "postHidden": "Избравте да го скриете овој пост",
     "unhide": "Откриј",
-    "youReported": "Го пријавивте овој пост. Веќе нема да биде видлив на вашиот извор"
+    "youReported": "Го пријавивте овој пост. Веќе нема да биде видлив на вашиот извор",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "Verify your account!",
+    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
+    "verified": "Verified by Veriff",
+    "stepStartTitle": "Verify your account with Veriff",
+    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
+    "stepStartAction": "Get Verified",
+    "stepSuccessTitle": "Thanks for verifying your account!",
+    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
+    "stepSuccessAction": "Awesome!",
+    "stepCancelTitle": "You canceled the verification process",
+    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "stepCancelAction": "Затвори"
   }
 }
