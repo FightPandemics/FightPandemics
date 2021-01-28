@@ -108,7 +108,8 @@ module.exports = {
     prefix: "HB",
   },
   nearestHospital: {
-    prefix: "_NH",
+    prefix: "NH",
+    facilityType: "_FT",
     locationChange: "_LC",
     locationShare: "_LS",
   },

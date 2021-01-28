@@ -28,6 +28,11 @@ const INVALID_PARTIAL_NAMES_BY_TYPE = [
     ]
   }
 ];
+const IMPERIAL_SYSTEM_COUNTRIES = [
+  "LR",
+  "MM",
+  "US",
+];
 const FACILITY_DETAILS_FIELDS = [
   "formatted_address",
   "geometry",
@@ -151,12 +156,15 @@ const getPlacesDistances = async (lat, lng, places) => {
   const destinationLocations = places.map(
     (place) => place.geometry_location, 
   );
-
+  //need to get country in order to specify correct distance units
+  const sourceLocation = await getLocationByLatLng(lat, lng);
+  const units = IMPERIAL_SYSTEM_COUNTRIES.includes(sourceLocation.location.country) ? "imperial" : "metric";
   const { data } = await client.distancematrix({
     params: {
       destinations: destinationLocations,
       key: geo.googleMapsApiKey,
       origins: [location],
+      units: units,
     },
   });
 
@@ -168,7 +176,7 @@ const getPlacesDistances = async (lat, lng, places) => {
 };
 
 const sortPlacesByDistance = async (places) => {
-  //Sort by distance based on meters, kilometers, or no distance supplied.  
+  //Sort by distance based on meters, kilometers, miles or no distance supplied.  
   let placesWithKilometers = [];
   if (places.length > 0) {
     placesWithKilometers =  places.map((place) => {
@@ -181,6 +189,7 @@ const sortPlacesByDistance = async (places) => {
 };
 
 const getKilometersForPlace = (placeDistance) => {
+  if (placeDistance.includes(" mi")) { return placeDistance.split(" ")[0] * 1.6 };
   if (placeDistance.includes(" m")) { return placeDistance.split(" ")[0] * 0.001 };
   if (placeDistance.includes(" km")) { return placeDistance.split(" ")[0] };
   return 2000;

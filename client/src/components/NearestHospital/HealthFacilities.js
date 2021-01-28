@@ -355,6 +355,11 @@ const NearestHealthFacilities = () => {
                     handleTypeClick(e, type);
                   }}
                   label={label}
+                  id={
+                    GTM.nearestHospital.prefix +
+                    GTM.nearestHospital.facilityType +
+                    idx
+                  }
                   key={idx}
                 >
                   {label}
