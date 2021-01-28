@@ -141,7 +141,8 @@
       "lookingForOptions": {
         "Request Help": "寻求帮助",
         "Offer Help": "提供帮助"
-      }
+      },
+      "postsNearMe": "显示我附近的结果"
     },
     "filterBy": "筛选",
     "noResults": "抱歉，目前没有相关帖子。请尝试使用其他关键字搜索或<0>创建帖子</0> 。",
@@ -231,7 +232,8 @@
     "hideAction": "隐藏帖子",
     "hideCaption": "与我无关",
     "reportAction": "举报帖子",
-    "reportCaption": "供版主审核"
+    "reportCaption": "供版主审核",
+    "copyUrl": "复制链接"
   },
   "profile": {
     "common": {
@@ -413,7 +415,7 @@
     "passwordConfirmationRequired": "需要密码确认。",
     "passwordNotMatch": "密码不匹配",
     "backHome": "返回主页面",
-    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
+    "linkAccountsSuccess": "您的帐户已与您现有的相同电子邮件帐户关联。请使用任何一个重新登录。"
   },
   "verifyEmail": {
     "checkInbox": "检查你的收件箱",
@@ -469,9 +471,9 @@
     "communityCollaboration": "我们希望通过我们的平台增强世界各地的社区和组织的能力，为了做到这一点，我们需要共同努力！与社区合作伙伴的持续协作使我们能够为他们和其他人构建更好的平台。",
     "becomeCommunityPartner": "您希望你的社区也成为我们的合作伙伴吗？我们非常希望听到您的声音，并开始合作！请联系",
     "currentPartners": "现在的社区合作伙伴",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "bookCall": "预约电话",
+    "bookCallInfo": "想要获得我们的产品的个人体验？请与我们预约电话！",
+    "bookCallLink": "预约电话"
   },
   "footer": {
     "faq": "常问问题",
@@ -525,7 +527,7 @@
       ],
       [
         "我如何寻求帮助？",
-        "从FightPandemics主页中，选择“需要帮助”。如果选择“其他帮助”，则将输入您的位置，并被定向到一个包含所选区域中的帮助内容的页面。然后，您可以按提供者和类型过滤要查看的帖子。或者，您可以从主页上选择“查看社区帖子”以查看所有帖子并筛选帖子。"
+        "从FightPandemics主页中，选择“需要帮助”。如果选择“其他帮助”，则您将需要输入位置，并被定向到一个包含所选区域中的帮助内容的页面。然后，您可以按提供者和类型过滤要查看的帖子。或者，您可以从主页上选择“查看社区帖子”以查看所有帖子并筛选帖子。"
       ],
       [
         "如何提供帮助？",
@@ -636,7 +638,7 @@
       ],
       [
         "我需要技术支持。",
-        "对此我们感到抱歉。发送电子邮件至<0>support@fightpandemics.com</0>由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
+        "对此我们感到抱歉。请发送电子邮件至<0>support@fightpandemics.com</0>由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
       ],
       [
         "由于其他原因，我想联系FightPandemics。",
@@ -655,7 +657,7 @@
       ],
       [
         "我需要技术支持。",
-        "对此我们感到抱歉。发送电子邮件至<0>support@fightpandemics.com</0>。由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
+        "对此我们感到抱歉。请发送电子邮件至<0>support@fightpandemics.com</0>。由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
       ],
       [
         "由于其他原因，我想联系FightPandemics。",
@@ -851,7 +853,7 @@
     },
     "wrongOldPassword": "当前密码错误",
     "noEmailAccount": "找不到此电子邮件地址的帐户，请点击“立即加入”以创建帐户。",
-    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
+    "registeredAccount": "已有社交帐户使用了此邮件。请点击“立即加入”注册一个使用邮箱密码登录的帐户。",
     "failedLinkAccounts": "链接帐户失败，原因："
   },
   "TEMP: We are not a provider of healthcare services": "我们不是医疗服务提供商",
@@ -898,7 +900,10 @@
   "avatar": {
     "submitBtn": "提交",
     "cancelBtn": "取消",
-    "tryAgainBtn": "再试一次"
+    "tryAgainBtn": "再试一次",
+    "remove": "删除头像",
+    "uploadNew": "新头像",
+    "edit": "编辑头像"
   },
   "dates": {
     "monthsShort": {
@@ -1011,7 +1016,8 @@
     "liked": "<0>{{username}}</0>点赞了您的帖子<1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0>评论了您的帖子<1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0>在<1>{{shareMedium}}</1>上分享了您的帖子<1>{{postTitle}}</1>",
-    "empty": "没有更多通知了"
+    "empty": "没有更多通知了",
+    "reported": "您的帖子<1> {{postTitle}} </1>违反了我们的内容政策，因此已被删除"
   },
   "moderation": {
     "report": "举报",
@@ -1033,6 +1039,32 @@
     "showAnyway": "仍然显示",
     "postHidden": "您已选择隐藏此帖子",
     "unhide": "取消隐藏",
-    "youReported": "您已举报此帖子。它在您的版面将不再可见"
+    "youReported": "您已举报此帖子。它在您的版面将不再可见",
+    "buttonRemove": "Remove",
+    "buttonKeep": "Keep",
+    "removePostTitle": "Remove Post Confirmation",
+    "keepPostTitle": "Keep Post Confirmation",
+    "reportDetails": "Additional details provided by users:",
+    "userReported": "Users reported this post for:",
+    "removeReason": "Reason(s) for removing:",
+    "keepPostConfirm": "Are you sure you want to keep this post?",
+    "reportAcceptedTitle": "Report was accepted!",
+    "reportRejectedTitle": "Report was rejected!",
+    "reportAcceptedBody": "This post was succesfully removed!",
+    "reportRejectedBody": "This post was not removed!"
+  },
+  "verification": {
+    "verifyTitle": "验证您的帐户！",
+    "verifyBody": "我们注意到您尚未验证您的帐户。点击这里开始。",
+    "verified": "由 Veriff 验证",
+    "stepStartTitle": "使用 Veriff 验证您的帐户",
+    "stepStartBody": "FightPandemics希望保持我们的社区开放，诚实和安全。用户名旁边的蓝色已验证徽章可让人们知道帐户是真实的。",
+    "stepStartAction": "获得验证",
+    "stepSuccessTitle": "感谢您验证您的帐户！",
+    "stepSuccessBody": "您的验证徽章应该会很快出现在您的个人资料中",
+    "stepSuccessAction": "太棒了！",
+    "stepCancelTitle": "您取消了验证过程",
+    "stepCancelBody": "您随时可以随时返回并验证您的帐户！",
+    "stepCancelAction": "关闭"
   }
 }

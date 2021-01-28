@@ -367,7 +367,7 @@ const Profile = ({
               <div className="name-container">
                 <NamePara>
                   {firstName} {lastName}
-                  {verified && <VerificationTick/>}
+                  {verified && <VerificationTick />}
                 </NamePara>
                 {address && (
                   <div title={address} className="address-container">
