@@ -24,7 +24,7 @@ async function routes(app) {
   const ORGS_PAGE_SIZE = 10;
 
   app.get(
-    "/",
+    "/" || "/search",
     {
       preValidation: [app.authenticateOptional],
       schema: searchOrganisationsSchema,
