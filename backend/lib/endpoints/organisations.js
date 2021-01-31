@@ -24,7 +24,7 @@ async function routes(app) {
   const ORGS_PAGE_SIZE = 10;
 
   app.get(
-    "/search",
+    "/",
     {
       preValidation: [app.authenticateOptional],
       schema: searchOrganisationsSchema,
@@ -241,15 +241,6 @@ async function routes(app) {
       return { deletedOrganisation, success: true };
     },
   );
-
-  app.get("/", { schema: getOrganisationsSchema }, async (req) => {
-    const { ownerId } = req.params;
-    const filter = ownerId ? { ownerId } : {};
-    const sortedOrganisations = await Organisation.find(filter).sort({
-      name: 1,
-    });
-    return sortedOrganisations;
-  });
 
   app.get(
     "/:organisationId",
