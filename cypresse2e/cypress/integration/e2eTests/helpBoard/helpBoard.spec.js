@@ -7,8 +7,6 @@ describe("FightPandemics Help Board Page for unauthorized user", () => {
   const helpBoard = new HelpBoard();
   const logo = new Logo();
   var authorTitleText = "Sourced by";
-  // var noPostsAvailableText =
-  //"Sorry, there are currently no relevant posts available. Please try using a different filter search or";
 
   context("User opens Help Board", () => {
     beforeEach(() => {
@@ -70,7 +68,6 @@ describe("FightPandemics Help Board Page for unauthorized user", () => {
       helpBoard
         .getNoPostsAvailableTextElement()
         .contains(errorMessages.noPostsAvailableText);
-      helpBoard.getAddPostLinkElement();
       var addPostLink = helpBoard.getAddPostLinkElement();
       addPostLink.click({ force: true });
       cy.validateCorrectScreenIsOpen("auth/login");
