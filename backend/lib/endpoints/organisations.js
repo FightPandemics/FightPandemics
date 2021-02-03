@@ -22,7 +22,7 @@ async function routes(app) {
   const Thread = app.mongo.model("Thread");
 
   const ORGS_PAGE_SIZE = 10;
-
+  
   app.get(
     "/",
     {
