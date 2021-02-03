@@ -11,8 +11,10 @@ import {
 } from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
 import { SET_VALUE } from "hooks/actions/feedActions";
-import StyledCheckboxCheck from "components/Input/Checkbox";
+// import StyledCheckboxCheck from "components/Input/Checkbox";
 import { theme } from "constants/theme";
+import { Checkbox } from "antd";
+import styled from "styled-components";
 
 const providersGtmTagsMap = {
   0: GTM.providersFilters.individual,
@@ -51,9 +53,48 @@ const gtmTagsMap = {
   type: GTM.post.type,
   location: GTM.post.location,
   providers: GTM.post.providers,
+  remote: GTM.post.remote,
 };
 
 const { royalBlue } = theme.colors;
+
+const chkStyle = {
+  fontSize: `${theme.typography.size.medium}`,
+  "&.ant-checkbox-inner": `{
+      borderColor: ${royalBlue} !important;
+    }`,
+};
+
+const StyledCheckboxCheck = styled(Checkbox)`
+  margin-left: 0.6rem;
+  fontsize: ${theme.typography.size.medium};
+
+  ${({ checked }) =>
+    checked
+      ? `
+      color: ${theme.colors.royalBlue};
+      font-weight: bold;
+  `
+      : ""}
+  .ant-checkbox-inner {
+    border-color: ${royalBlue};
+    margin-right: 0.2rem;
+    width: ${theme.typography.size.medium};
+    height: ${theme.typography.size.medium};
+    &:hover {
+      border-color: ${royalBlue};
+    }
+  }
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: ${(props) => props.color || "#6076ef"};
+    border-color: ${royalBlue};
+  }
+  .ant-checkbox-checked .ant-checkbox-inner::after {
+    transform: rotate(45deg) scale(1.5) translate(-40%, -45%);
+    -webkit-transform: rotate(45deg) scale(1.5) translate(-40%, -45%);
+    -ms-transform: rotate(45deg) scale(1.5) translate(-40%, -45%);
+  }
+`;
 
 const filterOps = (label, idx) => {
   if (label === "lookingFor") {
@@ -79,6 +120,7 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
     isAuthenticated,
     toggleShowNearMe,
     onRemoteChange,
+    remote,
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
@@ -107,10 +149,11 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
               gtmPrefix={gtmTag(GTM.post.location)}
             />
             <StyledCheckboxCheck
-              style={{ fontSize: "1.2rem", borderColor: royalBlue }}
+              checked={remote === "yes" ? true : false}
+              id={GTM.post.prefix + GTM.post.remote}
               onChange={onRemoteChange}
             >
-              {t("Remote")}
+              {t("Remote Work")}
             </StyledCheckboxCheck>
           </FilterAccordionPanel>
         );

@@ -111,6 +111,7 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
+  remote: null,
   ignoreUserLocation: true,
 };
 
@@ -155,6 +156,7 @@ const Feed = (props) => {
     applyFilters,
     showFilters,
     ignoreUserLocation,
+    remote,
   } = feedState;
   const filters = Object.values(filterOptions);
   const {
@@ -193,7 +195,6 @@ const Feed = (props) => {
 
   const getStateFromQuery = () => {
     const query = qs.parse(history.location.search);
-
     // search category (Tab)
     query.s_category = SEARCH_OPTIONS[query.s_category]?.id || null;
     changeHelpType(query.s_category);
@@ -212,10 +213,9 @@ const Feed = (props) => {
     } else dispatchAction(SET_VALUE, "location", "");
 
     //remote
-    // console.log('query.remote', query.remote);
-    if (query.remote === "yes") {
+    if (query.remote) {
       //query.remote = JSON.parse(atob(query.remote));
-      dispatchAction(SET_VALUE, "remote", query.remote);
+      dispatchAction(SET_VALUE, "remote", query.remote === "yes" ? "yes" : "");
     } else dispatchAction(SET_VALUE, "remote", "");
 
     // filters / help type (objective)
@@ -251,7 +251,6 @@ const Feed = (props) => {
   };
 
   const setQueryFromState = () => {
-    console.log("queryParams", queryParams);
     const newQuery = {};
     const oldFiltersLength =
       (queryParams.filters?.type || []).length +
@@ -279,6 +278,9 @@ const Feed = (props) => {
         });
         return;
       }
+    }
+    if (applyFilters && remote) {
+      newQuery.remote = remote;
     }
     if (newFiltersLength) {
       if (applyFilters || oldFiltersLength > newFiltersLength) {
@@ -318,6 +320,10 @@ const Feed = (props) => {
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
     dispatchAction(SET_VALUE, "location", null);
     setQueryKeysValue(history, { location: null });
+
+    dispatchAction(SET_VALUE, "remote", "");
+    setQueryKeysValue(history, { remote: "" });
+
     setTimeout(() => {
       dispatchAction(SET_VALUE, "activePanel", null);
     }, 500);
@@ -326,9 +332,25 @@ const Feed = (props) => {
   };
 
   const onRemoteChange = (e) => {
-    // console.log(e.target.checked);
-    setQueryKeysValue(history, {
-      remote: e.target.checked ? "yes" : "no",
+    if (!e) {
+      dispatchAction(SET_VALUE, "remote", "no");
+      setQueryKeysValue(history, { remote: "" });
+    } else {
+      dispatchAction(SET_VALUE, "remote", e.target.checked ? "yes" : "no");
+    }
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "RMT_WRK_CHK",
+        rmtClickId: GTM.post.prefix + GTM.post.remote,
+      },
+    });
+    // clear dataLayer
+    TagManager.dataLayer({
+      dataLayer: {
+        event: null,
+        rmtClickId: null,
+      },
     });
   };
 
@@ -487,10 +509,11 @@ const Feed = (props) => {
         break;
     }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
-    if (queryParams.remote && queryParams.remote == "yes") {
-      endpoint += `&remote=${queryParams.remote}`;
+    // if (queryParams.remote && queryParams.remote == "yes") {
+    if (remote && remote == "yes") {
+      endpoint += `&remote=${remote}`;
     }
-    console.log("endpoint", endpoint);
+    // console.log("endpoint", endpoint);
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -584,7 +607,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     setQueryFromState();
-  }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [applyFilters, selectedOptions, location, remote]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
@@ -690,6 +713,7 @@ const Feed = (props) => {
           showFilters,
           totalPostCount,
           onRemoteChange,
+          remote,
         }}
       >
         <FeedWrapper>

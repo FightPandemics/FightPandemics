@@ -57,6 +57,7 @@ module.exports = {
     button: "_PO",
     delete: "_DEL",
     edit: "_EDT",
+    remote: "_RMW",
   },
   user: {
     completedPrefix: "PC",
