@@ -39,7 +39,7 @@ const FiltersList = () => {
           className="tag-closable"
           onClick={() => onRemoteChange(null)}
         >
-          {"Remote Work"}
+          {t("feed.filters.typesOptions.Remote Work")}
         </ButtonTag>
       )}
       {Object.keys(selectedOptions).map((filter) => {

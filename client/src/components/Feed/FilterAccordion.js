@@ -153,7 +153,7 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
               id={GTM.post.prefix + GTM.post.remote}
               onChange={onRemoteChange}
             >
-              {t("Remote Work")}
+              {t("feed.filters.typesOptions.Remote Work")}
             </StyledCheckboxCheck>
           </FilterAccordionPanel>
         );
