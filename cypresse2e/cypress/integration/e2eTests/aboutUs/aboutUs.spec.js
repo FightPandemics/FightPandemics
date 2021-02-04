@@ -40,6 +40,10 @@ describe("FightPandemics About Us page", () => {
       goToPressKitButtonIsVisibleAndPointToAppropriateLink();
     });
 
+    it("Check if Book a Call button visible and get us to the appropriate link", () => {
+      bookACallButtonIsVisibleAndPointToAppropriateLink();
+    });
+
     it("Check if FightPandemics email links are working", () => {
       partnershipEmailLinkIsVisibleAndPointToAppropriateLink();
       prEmailLinkIsVisibleAndPointToAppropriateLink();
@@ -108,6 +112,10 @@ describe("FightPandemics About Us page", () => {
 
   function goToPressKitButtonIsVisibleAndPointToAppropriateLink() {
     cy.checkAnyKindOfLinks(aboutUs.getToPressKitButton, aboutUs.goToPressKitLink);
+  }
+
+  function bookACallButtonIsVisibleAndPointToAppropriateLink() {
+    cy.checkAnyKindOfLinks(aboutUs.bookACallButton, aboutUs.bookACallLink);
   }
 
   function partnershipEmailLinkIsVisibleAndPointToAppropriateLink() {
