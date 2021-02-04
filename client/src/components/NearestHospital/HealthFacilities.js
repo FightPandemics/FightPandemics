@@ -16,7 +16,7 @@ import { Spin } from "antd";
 
 const { colors, typography } = theme;
 const { darkerGray, white, royalBlue, black } = colors;
-const { xxlarge, medium, small } = typography.size;
+const { xxlarge, large, medium, small } = typography.size;
 
 const NearestLocationContainer = styled.div`
   display: flex;
@@ -34,7 +34,8 @@ const HealthFacilitiesContainer = styled.div`
   flex-basis: 55%;
   align-self: flex-start;
   padding-top: 2rem;
-  overflow-y: hidden;
+  overflow-y: auto;
+  height: 600px;
   h2 {
     font-weight: bold;
     color: ${darkerGray};
@@ -159,17 +160,12 @@ const ModeLabel = styled.div`
   color: ${white};
 `;
 
-const urlStyles = {
-  paddingTop: ".8rem",
-  fontWeight: "500",
-  color: royalBlue,
-};
-
 const moreResultsUrlStyles = {
-  paddingTop: "0",
+  paddingTop: "2rem",
   paddingLeft: "2rem",
   fontWeight: "500",
   color: royalBlue,
+  fontSize: large,
 };
 
 const NearestHealthFacilities = () => {
@@ -390,9 +386,6 @@ const NearestHealthFacilities = () => {
                 <h2>
                   {facilityTypes.find((o) => o.type === selectedType).label}
                 </h2>
-                <div style={moreResultsUrlStyles}>
-                  {renderDirectToGoogleMapsURL()}
-                </div>
                 {apiError && <InputError>{apiError}</InputError>}
                 {!apiError &&
                   (facilitiesData && facilitiesData.length > 0 ? (
@@ -415,6 +408,9 @@ const NearestHealthFacilities = () => {
                       <span>{t("nearestHsp.tryAdjusting")}</span>
                     </NoResultsContainer>
                   ))}
+                <div style={moreResultsUrlStyles}>
+                  {renderDirectToGoogleMapsURL()}
+                </div>
               </HealthFacilitiesContainer>
             ) : (
               <WhiteSpace />
