@@ -86,6 +86,8 @@ import websiteIcon from "assets/icons/website-icon.svg";
 
 import locationIcon from "assets/icons/status-indicator.svg";
 
+import BasicTabs from "components/Tabs/BasicTabs";
+
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
   instagram: [instagramIcon, INSTAGRAM_URL],
@@ -428,6 +430,7 @@ const Profile = ({
         )}
         <WhiteSpace />
         <div>
+          <BasicTabs />
           <SectionHeader>
             {isSelf
               ? t("profile.individual.myActivity")
