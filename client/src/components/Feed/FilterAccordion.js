@@ -76,15 +76,16 @@ const StyledCheckboxCheck = styled(Checkbox)`
       font-weight: bold;
   `
       : ""}
-  .ant-checkbox-inner {
+
+  .ant-checkbox .ant-checkbox-inner {
     border-color: ${royalBlue};
-    margin-right: 0.2rem;
-    width: ${theme.typography.size.medium};
-    height: ${theme.typography.size.medium};
+    width: ${theme.typography.size.large};
+    height: ${theme.typography.size.large};
     &:hover {
       border-color: ${royalBlue};
     }
   }
+
   .ant-checkbox-checked .ant-checkbox-inner {
     background-color: ${(props) => props.color || "#6076ef"};
     border-color: ${royalBlue};
