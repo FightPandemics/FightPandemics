@@ -19,6 +19,8 @@ class AboutUs {
   lifetimeSupportersContainer = "#AU_LS";
   currentSupportersContainer = "#AU_CS";
   pastSupportersContainer = "#AU_PS";
+  bookACallButton = "#AU_BC";
+  bookACallLink = "https://calendly.com/fightpandemics"
 
 
   constructor() {

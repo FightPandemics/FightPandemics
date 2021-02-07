@@ -62,3 +62,4 @@ Cypress.Commands.add("checkAnyKindOfLinks", (element, link) => {
     .and("have.attr", "href", link);
 });
 
+
