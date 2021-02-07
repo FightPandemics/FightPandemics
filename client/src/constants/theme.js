@@ -41,7 +41,7 @@ const theme = {
       xxxlarge: "2.6rem",
     },
     heading: {
-      font: "Poppins",
+      font: '"Poppins", sans-serif',
       one: "4.2rem",
       two: "3.2rem",
       three: "2.6rem",
