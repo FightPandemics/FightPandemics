@@ -1,4 +1,5 @@
 import { WhiteSpace } from "antd-mobile";
+import { Tabs } from "antd";
 import axios from "axios";
 import React, {
   useContext,
@@ -87,6 +88,7 @@ import websiteIcon from "assets/icons/website-icon.svg";
 import locationIcon from "assets/icons/status-indicator.svg";
 
 import BasicTabs from "components/Tabs/BasicTabs";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -96,6 +98,15 @@ const URLS = {
   github: [githubIcon, GITHUB_URL],
   website: [websiteIcon],
 };
+const { TabPane } = Tabs;
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const PAGINATION_LIMIT = 10;
@@ -122,6 +133,10 @@ const Profile = ({
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { error, loading, user } = userProfileState;
+  const [view, setView] = useState("posts");
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions(),
+  );
   const {
     id: userId,
     about,
@@ -311,6 +326,16 @@ const Profile = ({
       }
     }
   };
+  useEffect(() => {
+    function resize() {
+      setWindowDimensions(getWindowDimensions());
+      console.log(windowDimensions);
+    }
+    window.addEventListener("resize", resize);
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  });
 
   const handlePostDelete = () => {
     deleteModalDispatch({
@@ -337,6 +362,25 @@ const Profile = ({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
         visibility: true,
       });
+    }
+  };
+
+  const handleView = (key) => {
+    console.log(key === 2);
+    switch (key) {
+      case "1":
+        setView("activity");
+        break;
+      case "2":
+        console.log("Posts");
+        setView("posts");
+        break;
+      case "3":
+        setView("thanks");
+        break;
+      case "4":
+        setView("badge");
+        break;
     }
   };
 
@@ -430,66 +474,78 @@ const Profile = ({
         )}
         <WhiteSpace />
         <div>
-          <BasicTabs />
-          <SectionHeader>
-            {isSelf
-              ? t("profile.individual.myActivity")
-              : t("profile.individual.userActivity")}
-            <PlaceholderIcon />
-            {isSelf && (
-              <>
-                <CreatePostIcon
-                  id={GTM.user.profilePrefix + GTM.post.createPost}
-                  src={createPost}
-                  onClick={onToggleCreatePostDrawer}
+          <Tabs
+            tabPosition={windowDimensions.width <= 450 ? "top" : "left"}
+            defaultActiveKey="2"
+            onChange={handleView}
+          >
+            <TabPane tab="Activity" disabled key="1">
+              {/* Activity goes here */}
+            </TabPane>
+            <TabPane tab="Posts" key="2">
+              <SectionHeader>
+                {isSelf
+                  ? t("profile.individual.myActivity")
+                  : t("profile.individual.userActivity")}
+                <PlaceholderIcon />
+                {isSelf && (
+                  <>
+                    <CreatePostIcon
+                      id={GTM.user.profilePrefix + GTM.post.createPost}
+                      src={createPost}
+                      onClick={onToggleCreatePostDrawer}
+                    />
+                    <CreatePostButton
+                      onClick={onToggleCreatePostDrawer}
+                      id={GTM.user.profilePrefix + GTM.post.createPost}
+                      inline={true}
+                      icon={<PlusIcon />}
+                    >
+                      {t("post.create")}
+                    </CreatePostButton>
+                  </>
+                )}
+              </SectionHeader>
+              <FeedWrapper isProfile>
+                <Activity
+                  postDispatch={dispatch}
+                  filteredPosts={postsList}
+                  user={user}
+                  postDelete={postDelete}
+                  handlePostDelete={handlePostDelete}
+                  handleEditPost={handleEditPost}
+                  deleteModalVisibility={deleteModalVisibility}
+                  handleCancelPostDelete={handleCancelPostDelete}
+                  loadNextPage={loadNextPage}
+                  isNextPageLoading={isLoading}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoaded}
+                  hasNextPage={loadMore}
+                  totalPostCount={totalPostCount}
                 />
-                <CreatePostButton
-                  onClick={onToggleCreatePostDrawer}
-                  id={GTM.user.profilePrefix + GTM.post.createPost}
-                  inline={true}
-                  icon={<PlusIcon />}
-                >
-                  {t("post.create")}
-                </CreatePostButton>
-              </>
-            )}
-          </SectionHeader>
-          <FeedWrapper isProfile>
-            <Activity
-              postDispatch={dispatch}
-              filteredPosts={postsList}
-              user={user}
-              postDelete={postDelete}
-              handlePostDelete={handlePostDelete}
-              handleEditPost={handleEditPost}
-              deleteModalVisibility={deleteModalVisibility}
-              handleCancelPostDelete={handleCancelPostDelete}
-              loadNextPage={loadNextPage}
-              isNextPageLoading={isLoading}
-              itemCount={itemCount}
-              isItemLoaded={isItemLoaded}
-              hasNextPage={loadMore}
-              totalPostCount={totalPostCount}
-            />
-            {postsError && (
-              <ErrorAlert
-                message={t([
-                  `error.${postsError.message}`,
-                  `error.http.${postsError.message}`,
-                ])}
-              />
-            )}
-            {emptyFeed() && <></>}
-            {isSelf && (
-              <CreatePost
-                onCancel={onToggleCreatePostDrawer}
-                loadPosts={refetchPosts}
-                visible={modal}
-                user={user}
-                gtmPrefix={GTM.user.profilePrefix}
-              />
-            )}
-          </FeedWrapper>
+                {postsError && (
+                  <ErrorAlert
+                    message={t([
+                      `error.${postsError.message}`,
+                      `error.http.${postsError.message}`,
+                    ])}
+                  />
+                )}
+                {emptyFeed() && <></>}
+                {isSelf && (
+                  <CreatePost
+                    onCancel={onToggleCreatePostDrawer}
+                    loadPosts={refetchPosts}
+                    visible={modal}
+                    user={user}
+                    gtmPrefix={GTM.user.profilePrefix}
+                  />
+                )}
+              </FeedWrapper>
+            </TabPane>
+            <TabPane tab="Thanks" key="3"></TabPane>
+            <TabPane tab="Badge" disabled key="4"></TabPane>
+          </Tabs>
         </div>
         {isSelf && (
           <CustomDrawer
