@@ -26,9 +26,6 @@ const SearchContainer = styled.span`
   width: 100%;
   display: block;
   transition: 0.4s;
-  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
-    margin-left: 8.5rem;
-  }
   &.expanded {
     input {
       width: calc(100% - 10rem);
@@ -73,7 +70,7 @@ const SearchWrapper = styled.div`
   border-radius: 4rem;
   padding: 5px 0;
   height: 4rem;
-  width: 30rem;
+  width: 28rem;
   position: relative;
   z-index: 1;
   transition: 0.4s;

@@ -104,8 +104,8 @@ const NavLinks = styled.div`
         height: ${navbarHeight};
         color: ${colors.darkerGray};
         text-decoration: none;
-        padding-left: 1.4rem;
-        padding-right: 1.4rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
         transition: all 0.2s;
         border-bottom: 0.3rem solid transparent;
       }
