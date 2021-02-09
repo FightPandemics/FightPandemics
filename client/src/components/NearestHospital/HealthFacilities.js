@@ -34,8 +34,6 @@ const HealthFacilitiesContainer = styled.div`
   flex-basis: 55%;
   align-self: flex-start;
   padding-top: 2rem;
-  overflow-y: auto;
-  height: 600px;
   h2 {
     font-weight: bold;
     color: ${darkerGray};
@@ -47,6 +45,11 @@ const HealthFacilitiesContainer = styled.div`
       margin-right: 0;
     }
   }
+`;
+
+const HealthFacilitiesListContainer = styled.div`
+  overflow-y: auto;
+  height: 100vh;
 `;
 
 const ShareLocationContainer = styled.div`
@@ -150,8 +153,8 @@ const ModeContainer = styled.button`
   height: 3rem;
   border-radius: 4rem;
   background-color: ${black};
-  position: fixed;
-  top: 60rem;
+  position: sticky;
+  top: 50rem;
   left: 38%;
   z-index: 10;
 `;
@@ -386,31 +389,33 @@ const NearestHealthFacilities = () => {
                 <h2>
                   {facilityTypes.find((o) => o.type === selectedType).label}
                 </h2>
-                {apiError && <InputError>{apiError}</InputError>}
-                {!apiError &&
-                  (facilitiesData && facilitiesData.length > 0 ? (
-                    facilitiesData.map((data, idx) => (
-                      <FacilityCard
-                        key={idx + 1}
-                        facilityName={data.name}
-                        facilityAddress={data.formatted_address}
-                        contactNo={data.international_phone_number}
-                        distance={data.distance}
-                        isOpen={data.open_now}
-                        periods={data.opening_hours_periods}
-                        floating={false}
-                        url={data.url}
-                      />
-                    ))
-                  ) : (
-                    <NoResultsContainer>
-                      <h1>{t("nearestHsp.noResults")}</h1>
-                      <span>{t("nearestHsp.tryAdjusting")}</span>
-                    </NoResultsContainer>
-                  ))}
-                <div style={moreResultsUrlStyles}>
-                  {renderDirectToGoogleMapsURL()}
-                </div>
+                <HealthFacilitiesListContainer>
+                  {apiError && <InputError>{apiError}</InputError>}
+                  {!apiError &&
+                    (facilitiesData && facilitiesData.length > 0 ? (
+                      facilitiesData.map((data, idx) => (
+                        <FacilityCard
+                          key={idx + 1}
+                          facilityName={data.name}
+                          facilityAddress={data.formatted_address}
+                          contactNo={data.international_phone_number}
+                          distance={data.distance}
+                          isOpen={data.open_now}
+                          periods={data.opening_hours_periods}
+                          floating={false}
+                          url={data.url}
+                        />
+                      ))
+                    ) : (
+                      <NoResultsContainer>
+                        <h1>{t("nearestHsp.noResults")}</h1>
+                        <span>{t("nearestHsp.tryAdjusting")}</span>
+                      </NoResultsContainer>
+                    ))}
+                  <div style={moreResultsUrlStyles}>
+                    {renderDirectToGoogleMapsURL()}
+                  </div>
+                </HealthFacilitiesListContainer>
               </HealthFacilitiesContainer>
             ) : (
               <WhiteSpace />
