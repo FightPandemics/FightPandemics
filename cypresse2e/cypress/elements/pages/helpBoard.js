@@ -5,6 +5,12 @@ class HelpBoard {
   firstPostOnHelpBoard =
     "div.feed-posts > div:nth-child(1) > div > div > div:nth-child(1)";
   helpBoard = "div.feed-posts";
+  // keywordSearchButton = "#SearchContainer > div > img:nth-child(1)";
+  searchContainerDiv = "div[role='button'] span#SearchContainer ";
+  keywordSearchInput = "div[role='button'] input#SCH_IN";
+  searchCancelButton = "#SearchContainer > div > img:nth-child(3)";
+  authorTitle = "div.title-wrapper span.author";
+  errorMessage = "#SearchContainer > small";
 
   constructor() {}
 
@@ -42,6 +48,26 @@ class HelpBoard {
 
   getHelpBoardSelector() {
     return this.helpBoard;
+  }
+
+  getSearchContainerDiv() {
+    return cy.get(this.searchContainerDiv);
+  }
+
+  getKeywordSearchInput() {
+    return cy.get(this.keywordSearchInput);
+  }
+
+  getSearchCancelButton() {
+    return cy.get(this.searchCancelButton);
+  }
+
+  getAuthorTitle() {
+    return cy.get(this.authorTitle);
+  }
+
+  getErrorMessage() {
+    return cy.get(this.errorMessage);
   }
 }
 
