@@ -80,6 +80,7 @@ const SearchWrapper = styled.div`
   }
   @media screen and (max-width: ${mq.desktop.small.minWidth}) {
     width: 5.4rem;
+    margin-left: 8rem;
     img:last-child {
       position: absolute;
       display: none;
