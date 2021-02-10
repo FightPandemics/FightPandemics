@@ -48,8 +48,9 @@ const HealthFacilitiesContainer = styled.div`
 `;
 
 const HealthFacilitiesListContainer = styled.div`
-  overflow-y: auto;
+  overflow-y: scroll;
   height: 100vh;
+  scroll-behavior: smooth;
 `;
 
 const ShareLocationContainer = styled.div`
