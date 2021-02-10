@@ -131,8 +131,13 @@ a {
   z-index: 1 !important;
   @media screen and (max-width: ${mq.tablet.wide.minWidth}) {
     bottom: 1.85rem !important;
-    left: 0.5rem !important;
     transform: scale(0.95) !important;
+  }
+}
+
+#launcher{
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}){
+    left: 0.5rem !important;
   }
 }
 `;
