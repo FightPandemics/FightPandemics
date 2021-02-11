@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
+import SideMenu from "components/Profile/SideMenu";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import { FeedWrapper } from "components/Feed/FeedWrappers";
@@ -366,19 +367,17 @@ const Profile = ({
   };
 
   const handleView = (key) => {
-    console.log(key === 2);
     switch (key) {
-      case "1":
+      case "0":
         setView("activity");
         break;
-      case "2":
-        console.log("Posts");
+      case "1":
         setView("posts");
         break;
-      case "3":
+      case "2":
         setView("thanks");
         break;
-      case "4":
+      case "3":
         setView("badge");
         break;
     }
@@ -474,78 +473,72 @@ const Profile = ({
         )}
         <WhiteSpace />
         <div>
-          <Tabs
-            tabPosition={windowDimensions.width <= 450 ? "top" : "left"}
-            defaultActiveKey="2"
-            onChange={handleView}
-          >
-            <TabPane tab="Activity" disabled key="1">
-              {/* Activity goes here */}
-            </TabPane>
-            <TabPane tab="Posts" key="2">
-              <SectionHeader>
-                {isSelf
-                  ? t("profile.individual.myActivity")
-                  : t("profile.individual.userActivity")}
-                <PlaceholderIcon />
-                {isSelf && (
-                  <>
-                    <CreatePostIcon
-                      id={GTM.user.profilePrefix + GTM.post.createPost}
-                      src={createPost}
-                      onClick={onToggleCreatePostDrawer}
-                    />
-                    <CreatePostButton
-                      onClick={onToggleCreatePostDrawer}
-                      id={GTM.user.profilePrefix + GTM.post.createPost}
-                      inline={true}
-                      icon={<PlusIcon />}
-                    >
-                      {t("post.create")}
-                    </CreatePostButton>
-                  </>
-                )}
-              </SectionHeader>
-              <FeedWrapper isProfile>
-                <Activity
-                  postDispatch={dispatch}
-                  filteredPosts={postsList}
-                  user={user}
-                  postDelete={postDelete}
-                  handlePostDelete={handlePostDelete}
-                  handleEditPost={handleEditPost}
-                  deleteModalVisibility={deleteModalVisibility}
-                  handleCancelPostDelete={handleCancelPostDelete}
-                  loadNextPage={loadNextPage}
-                  isNextPageLoading={isLoading}
-                  itemCount={itemCount}
-                  isItemLoaded={isItemLoaded}
-                  hasNextPage={loadMore}
-                  totalPostCount={totalPostCount}
+          <BasicTabs
+            callback={handleView}
+            tabs={["Activity", "Posts", "Thanks", "Badge"]}
+            position={"top"}
+            def={"2"}
+            disabled={[true, false, false, true]}
+          />
+          <SectionHeader>
+            {isSelf
+              ? t("profile.individual.myActivity")
+              : t("profile.individual.userActivity")}
+            <PlaceholderIcon />
+            {isSelf && (
+              <>
+                <CreatePostIcon
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  src={createPost}
+                  onClick={onToggleCreatePostDrawer}
                 />
-                {postsError && (
-                  <ErrorAlert
-                    message={t([
-                      `error.${postsError.message}`,
-                      `error.http.${postsError.message}`,
-                    ])}
-                  />
-                )}
-                {emptyFeed() && <></>}
-                {isSelf && (
-                  <CreatePost
-                    onCancel={onToggleCreatePostDrawer}
-                    loadPosts={refetchPosts}
-                    visible={modal}
-                    user={user}
-                    gtmPrefix={GTM.user.profilePrefix}
-                  />
-                )}
-              </FeedWrapper>
-            </TabPane>
-            <TabPane tab="Thanks" key="3"></TabPane>
-            <TabPane tab="Badge" disabled key="4"></TabPane>
-          </Tabs>
+                <CreatePostButton
+                  onClick={onToggleCreatePostDrawer}
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  inline={true}
+                  icon={<PlusIcon />}
+                >
+                  {t("post.create")}
+                </CreatePostButton>
+              </>
+            )}
+          </SectionHeader>
+          <FeedWrapper isProfile>
+            <Activity
+              postDispatch={dispatch}
+              filteredPosts={postsList}
+              user={user}
+              postDelete={postDelete}
+              handlePostDelete={handlePostDelete}
+              handleEditPost={handleEditPost}
+              deleteModalVisibility={deleteModalVisibility}
+              handleCancelPostDelete={handleCancelPostDelete}
+              loadNextPage={loadNextPage}
+              isNextPageLoading={isLoading}
+              itemCount={itemCount}
+              isItemLoaded={isItemLoaded}
+              hasNextPage={loadMore}
+              totalPostCount={totalPostCount}
+            />
+            {postsError && (
+              <ErrorAlert
+                message={t([
+                  `error.${postsError.message}`,
+                  `error.http.${postsError.message}`,
+                ])}
+              />
+            )}
+            {emptyFeed() && <></>}
+            {isSelf && (
+              <CreatePost
+                onCancel={onToggleCreatePostDrawer}
+                loadPosts={refetchPosts}
+                visible={modal}
+                user={user}
+                gtmPrefix={GTM.user.profilePrefix}
+              />
+            )}
+          </FeedWrapper>
         </div>
         {isSelf && (
           <CustomDrawer

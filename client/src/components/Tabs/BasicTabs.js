@@ -3,40 +3,27 @@ import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
-const BasicTabs = (props) => {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions(),
-  );
-
+const BasicTabs = ({ callback, tabs, position, def, disabled }) => {
   useEffect(() => {
-    function resize() {
-      setWindowDimensions(getWindowDimensions());
-      console.log(windowDimensions);
-    }
-    window.addEventListener("resize", resize);
-    return () => {
-      window.removeEventListener("resize", resize);
-    };
+    console.log(tabs);
   });
 
   return (
     <Tabs
-      tabPosition={windowDimensions.width <= 450 ? "top" : "left"}
-      defaultActiveKey="2"
-      onChange={props.callback}
+      tabPosition={position ? position : "top"}
+      defaultActiveKey={def ? def : "0"}
+      onChange={callback}
     >
-      <TabPane tab="Activity" disabled key="1"></TabPane>
-      <TabPane tab="Posts" key="2"></TabPane>
-      <TabPane tab="Thanks" key="3"></TabPane>
-      <TabPane tab="Badge" disabled key="4"></TabPane>
+      {tabs.map((e, index) => {
+        if (disabled) {
+          if (disabled[index] === true) {
+            return <TabPane tab={e} disabled key={index}></TabPane>;
+          } else {
+            return <TabPane tab={e} key={index}></TabPane>;
+          }
+        }
+        return <TabPane tab={e} key={index}></TabPane>;
+      })}
     </Tabs>
   );
 };
