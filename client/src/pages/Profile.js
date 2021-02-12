@@ -86,6 +86,7 @@ import githubIcon from "assets/icons/social-github.svg";
 import websiteIcon from "assets/icons/website-icon.svg";
 
 import locationIcon from "assets/icons/status-indicator.svg";
+import SideMenu from "components/Profile/SideMenu";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -447,12 +448,10 @@ const Profile = ({
         )}
         <WhiteSpace />
         <div>
-          <ProfileTabs
+          <SideMenu
             callback={handleView}
             tabs={["Activity", "Posts", "Thanks", "Badge"]}
-            position={"top"}
             def={"1"}
-            disabled={[true, false, true, true]}
           />
           <SectionHeader>
             {isSelf
