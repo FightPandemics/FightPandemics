@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const PolicyContainer = styled.div`
-  margin: 3rem 0;
+  margin: 3rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
