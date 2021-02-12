@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
+import ProfileTabs from "components/Profile/ProfileTabs";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import { FeedWrapper } from "components/Feed/FeedWrappers";
@@ -114,6 +115,7 @@ const Profile = ({
   const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  const [view, setView] = useState("posts");
   const { t } = useTranslation();
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
@@ -338,6 +340,23 @@ const Profile = ({
     }
   };
 
+  const handleView = (key) => {
+    switch (key) {
+      case "0":
+        setView("activity");
+        break;
+      case "1":
+        setView("posts");
+        break;
+      case "2":
+        setView("thanks");
+        break;
+      case "3":
+        setView("badge");
+        break;
+    }
+  };
+
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -428,6 +447,13 @@ const Profile = ({
         )}
         <WhiteSpace />
         <div>
+          <ProfileTabs
+            callback={handleView}
+            tabs={["Activity", "Posts", "Thanks", "Badge"]}
+            position={"top"}
+            def={"1"}
+            disabled={[true, false, true, true]}
+          />
           <SectionHeader>
             {isSelf
               ? t("profile.individual.myActivity")
