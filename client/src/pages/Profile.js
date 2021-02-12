@@ -115,8 +115,8 @@ const Profile = ({
   const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
-  const [view, setView] = useState("posts");
   const { t } = useTranslation();
+  const [view, setView] = useState(t("profile.views.posts"));
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
@@ -340,19 +340,27 @@ const Profile = ({
     }
   };
 
+  const tabsArray = [
+    t("profile.views.activity"),
+    t("profile.views.posts"),
+    t("profile.views.organizations"),
+    t("profile.views.badges"),
+    t("profile.views.thanks"),
+  ];
+
   const handleView = (key) => {
     switch (key) {
       case "0":
-        setView("activity");
+        setView(tabsArray[0]);
         break;
       case "1":
-        setView("posts");
+        setView(tabsArray[1]);
         break;
       case "2":
-        setView("thanks");
+        setView(tabsArray[2]);
         break;
       case "3":
-        setView("badge");
+        setView(tabsArray[3]);
         break;
     }
   };

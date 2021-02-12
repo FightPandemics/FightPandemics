@@ -393,6 +393,13 @@
       "global": "Global",
       "editOrgAccount": "Edit Organization Account",
       "editOrgNotification": "Edit Organization Notification"
+    },
+    "views": {
+      "activity": "Activity",
+      "posts": "Posts",
+      "organizations": "Organizations",
+      "badges": "Badges",
+      "thanks": "Thanks"
     }
   },
   "auth": {
