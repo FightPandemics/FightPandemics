@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import Activity from "components/Profile/Activity";
-import SideMenu from "components/Profile/SideMenu";
+import ProfileTabs from "components/Profile/ProfileTabs";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import { FeedWrapper } from "components/Feed/FeedWrappers";
@@ -473,12 +473,12 @@ const Profile = ({
         )}
         <WhiteSpace />
         <div>
-          <BasicTabs
+          <ProfileTabs
             callback={handleView}
             tabs={["Activity", "Posts", "Thanks", "Badge"]}
             position={"top"}
-            def={"2"}
-            disabled={[true, false, false, true]}
+            def={"1"}
+            disabled={[true, false, true, true]}
           />
           <SectionHeader>
             {isSelf
