@@ -193,6 +193,7 @@ const LocationInput = ({
         notFoundContent={loadingPredictions ? <Spin size="small" /> : null}
         bordered={false}
         filterOption={false}
+        showAction={"focus"}
       >
         {predictedAddresses.map((pa) => (
           <Option key={pa.value}>{pa.text}</Option>

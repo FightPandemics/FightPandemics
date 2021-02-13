@@ -26,8 +26,8 @@ const theme = {
       family: {
         display:
           'Poppins, Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
-        body: "Work Sans",
-        button: "DM Sans",
+        body: '"Work Sans", sans-serif',
+        button: '"DM Sans", sans-serif',
       },
     },
     size: {
@@ -41,7 +41,7 @@ const theme = {
       xxxlarge: "2.6rem",
     },
     heading: {
-      font: "Poppins",
+      font: '"Poppins", sans-serif',
       one: "4.2rem",
       two: "3.2rem",
       three: "2.6rem",
@@ -83,7 +83,7 @@ const theme = {
     ghostWhite: GHOST_WHITE,
   },
   button: {
-    fontFamily: "DM Sans",
+    fontFamily: '"DM Sans", sans-serif',
     border: {
       width: "0",
       radius: "2.4rem",
@@ -94,7 +94,7 @@ const theme = {
       vertical: "1rem",
     },
     regular: {
-      fontFamily: "Poppins",
+      fontFamily: '"Poppins", sans-serif',
       fontSize: "1.8rem",
       fontWeight: "bold",
       borderRadius: "4.6rem",
