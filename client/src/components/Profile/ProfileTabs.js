@@ -26,9 +26,10 @@ const StyledTabs = styled.div`
   }
   .ant-tabs-nav-list {
     margin: auto;
-    width: 90%;
+    width: 800px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    overflow: visible;
   }
 `;
 

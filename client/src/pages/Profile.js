@@ -340,7 +340,7 @@ const Profile = ({
     }
   };
 
-  const tabsArray = [
+  const viewsArray = [
     t("profile.views.activity"),
     t("profile.views.posts"),
     t("profile.views.organizations"),
@@ -349,20 +349,7 @@ const Profile = ({
   ];
 
   const handleView = (key) => {
-    switch (key) {
-      case "0":
-        setView(tabsArray[0]);
-        break;
-      case "1":
-        setView(tabsArray[1]);
-        break;
-      case "2":
-        setView(tabsArray[2]);
-        break;
-      case "3":
-        setView(tabsArray[3]);
-        break;
-    }
+    setView(viewsArray[key]);
   };
 
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
@@ -457,10 +444,10 @@ const Profile = ({
         <div>
           <ProfileTabs
             callback={handleView}
-            tabs={["Activity", "Posts", "Thanks", "Badge"]}
+            tabs={viewsArray}
             position={"top"}
             def={"1"}
-            disabled={[true, false, true, true]}
+            disabled={[true, false, true, true, true]}
           />
           <SectionHeader>
             {isSelf
