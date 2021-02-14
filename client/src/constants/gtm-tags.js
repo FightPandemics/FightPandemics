@@ -83,6 +83,8 @@ module.exports = {
     cancelVerify: "_CV",
     accountVerified: "_AV",
     checkBadge: "_AV_CB",
+    requests: "_RQS",
+    offers: "_OFS",
   },
   sign: {
     inPrefix: "SI",

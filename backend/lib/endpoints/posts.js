@@ -52,19 +52,31 @@ async function routes(app) {
           limit,
           objective,
           skip,
+          postMode,
           includeMeta,
         },
       } = req;
+      console.log("postProps modeURL", objective, postMode);
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
 
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
-      const filters = [
+      let filters = [
         {
           $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }],
           status: { $ne: "removed" },
         },
       ];
+      // "IA" stands for InActive or Archived
+      //In future we will also have "D" for Drafts
+      if(postMode === 'IA'){
+        filters = [
+          {
+            $and: [{ expireAt: {$ne : null }}, { expireAt: { $lt: new Date() } }],
+            status: { $ne: "removed" },
+          },
+        ];
+      }
 
       // prefer location from query filters, then user if authenticated
       let location;
