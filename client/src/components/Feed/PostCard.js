@@ -199,10 +199,11 @@ const PostCard = styled(Card)`
         font-weight: 500;
         .title-wrapper {
           cursor: default;
+          word-break: break-all;
         }
         .verification-tick {
           vertical-align: sub;
-          top: unset!important;
+          top: unset !important;
         }
         > .ant-avatar-circle,
         > img {
@@ -276,7 +277,7 @@ const PostCard = styled(Card)`
         letter-spacing: -0.03rem;
         -webkit-text-stroke: 0.2px;
         a {
-            text-decoration: underline;
+          text-decoration: underline;
         }
       }
 
