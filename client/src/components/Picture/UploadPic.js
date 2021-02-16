@@ -232,10 +232,10 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
                   {t("avatar.submitBtn")}
                 </CustomSubmitButton>
               ) : (
-                <CustomSubmitButton key="retry" onClick={retry}>
-                  {t("avatar.tryAgainBtn")}
-                </CustomSubmitButton>
-              )
+                  <CustomSubmitButton key="retry" onClick={retry}>
+                    {t("avatar.tryAgainBtn")}
+                  </CustomSubmitButton>
+                )
             ) : null}
           </div>
         }
@@ -249,31 +249,35 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
             {uploadError ? (
               <h3>{uploadError}</h3>
             ) : (
-              <ReactCrop
-                src={photoURL}
-                crop={crop}
-                minHeight={250}
-                minWidth={250}
-                circularCrop={true}
-                ruleOfThirds
-                keepSelection={true}
-                onImageLoaded={imageLoaded}
-                onChange={(newCrop) => setCrop(newCrop)}
-              />
-            )}
+                <ReactCrop
+                  src={photoURL}
+                  crop={crop}
+                  minHeight={250}
+                  minWidth={250}
+                  circularCrop={true}
+                  ruleOfThirds
+                  keepSelection={true}
+                  onImageLoaded={imageLoaded}
+                  onChange={(newCrop) => setCrop(newCrop)}
+                />
+              )}
           </div>
         ) : (
-          <div
-            style={{
-              textAlign: "center",
-            }}
-          >
-            <img
-              style={{ borderRadius: "50%" }}
-              src={user && user.photo ? user.photo : null}
-            ></img>
-          </div>
-        )}
+            <div
+              style={{
+                textAlign: "center",
+              }}
+            >
+              {uploadError ? (
+                <h3>{uploadError}</h3>
+              ) : (
+                  <img
+                    style={{ borderRadius: "50%" }}
+                    src={user && user.photo ? user.photo : null}
+                  ></img>
+                )}
+            </div>
+          )}
       </AvatarModal>
     );
   };

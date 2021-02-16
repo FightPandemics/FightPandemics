@@ -126,6 +126,17 @@ describe("FightPandemics Navigation bar", () => {
       );
     });
 
+    it("User can click on Global International Languages icon and choose Croatian (Hrvatski) ", () => {
+      selectAndValidateSpecificLanguage(
+        header.getGlobeIconLanguages(),
+        "div#NAV_LS_HR",
+        "Croatian (Hrvatski)",
+        "Prijavi se",
+        "Odbor za pomoć",
+        "normal",
+      );
+    });
+
     it("User can click on Global International Languages icon and choose German (Deutsch) ", () => {
       selectAndValidateSpecificLanguage(
         header.getGlobeIconLanguages(),
@@ -133,6 +144,39 @@ describe("FightPandemics Navigation bar", () => {
         "German (Deutsch)",
         "Anmelden",
         "Hilfebrett",
+        "normal",
+      );
+    });
+
+    it("User can click on Global International Languages icon and choose Greek (Ελληνικά) ", () => {
+      selectAndValidateSpecificLanguage(
+        header.getGlobeIconLanguages(),
+        "div#NAV_LS_EL",
+        "Greek (Ελληνικά)",
+        "Συνδεθείτε",
+        "Πίνακας Βοήθειας",
+        "normal",
+      );
+    });
+
+    it("User can click on Global International Languages icon and choose Hindi (हिंदी) ", () => {
+      selectAndValidateSpecificLanguage(
+        header.getGlobeIconLanguages(),
+        "div#NAV_LS_HI_IN",
+        "Hindi (हिंदी)",
+        "साइन इन करें",
+        "हेल्प बोर्ड",
+        "normal",
+      );
+    });
+
+    it("User can click on Global International Languages icon and choose Hungarian (Magyar) ", () => {
+      selectAndValidateSpecificLanguage(
+        header.getGlobeIconLanguages(),
+        "div#NAV_LS_HU_HU",
+        "Hungarian (Magyar)",
+        "Bejelentkezés",
+        "Segítségfolyam",
         "normal",
       );
     });
@@ -177,6 +221,17 @@ describe("FightPandemics Navigation bar", () => {
         "Macedonian (македонски)",
         "Најави се",
         "Одбор за помош",
+        "normal",
+      );
+    });
+
+    it("User can click on Global International Languages icon and choose Marathi (मराठी) ", () => {
+      selectAndValidateSpecificLanguage(
+        header.getGlobeIconLanguages(),
+        "div#NAV_LS_MR_IN",
+        "Marathi (मराठी)",
+        "साइन इन करा",
+        "हेल्प  बोर्ड",
         "normal",
       );
     });
@@ -232,6 +287,17 @@ describe("FightPandemics Navigation bar", () => {
         "Spanish (Español de España)",
         "Iniciar sesión",
         "Tablero de ayuda",
+        "normal",
+      );
+    });
+
+    it("User can click on Global International Languages icon and choose Spanish (Español Latinoamericano) ", () => {
+      selectAndValidateSpecificLanguage(
+        header.getGlobeIconLanguages(),
+        "div#NAV_LS_ES_419",
+        "Spanish (Español Latinoamericano)",
+        "Inicia sesión",
+        "Tablero de Ayuda",
         "normal",
       );
     });
@@ -314,7 +380,6 @@ describe("FightPandemics Navigation bar", () => {
       .click({ force: true })
       .get(languageSelector)
       .should("have.attr", "style", "font-weight: bold;");
-      
 
     header.getSignInLink().invoke("text").should("equal", signInText);
     header.getHelpBoardLink().invoke("text").should("equal", helpBoardLink);

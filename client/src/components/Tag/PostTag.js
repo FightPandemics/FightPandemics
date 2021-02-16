@@ -13,7 +13,7 @@ export const PostTag = styled.span`
   color: ${royalBlue};
   background: ${selago};
   border-radius: 4px;
-  font-family: "Work Sans";
+  font-family: "Work Sans", sans-serif;
   font-weight: 400;
   -webkit-text-stroke: 0.2px;
 
