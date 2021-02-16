@@ -106,7 +106,7 @@ const PostCard = styled(Card)`
     top: 0;
     padding: 1rem 0;
     margin-top: 1rem;
-    font-family: "Work Sans";
+    font-family: "Work Sans", sans-serif;
     font-size: ${small};
     font-weight: 400;
     color: ${colors.royalBlue};
