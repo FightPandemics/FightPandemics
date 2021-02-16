@@ -19,6 +19,9 @@ const Fourth = ({ onWorkModeChange, formData }) => {
     <Section>
       <Head number={4} title={t("post.workMode")} />
       <div className="buttons visibility-post">
+        <SubTitle className="visibility-post--info">
+          {t("post.workFullfillment")}
+        </SubTitle>
         <div className="visibility-post--selector">
           <Selector
             suffixIcon={
@@ -31,7 +34,7 @@ const Fourth = ({ onWorkModeChange, formData }) => {
             defaultValue={formData ? formData.workMode : workMode.default.value}
             filterOption={false}
             options={translateOptions(workMode.options)}
-            minWidth="11rem"
+            minWidth="13rem"
           />
         </div>
       </div>

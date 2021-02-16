@@ -106,7 +106,7 @@
         "providers": "Providers",
         "type": "Types",
         "lookingFor": "Offer or Request Help",
-        "workMode": "Remote Work"
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Individual",
@@ -180,6 +180,7 @@
     "whatVisibility": "What is the visibility of your post?",
     "postVisible": "The post will be visible to",
     "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
     "success": "Success",
     "viewPost": "View Your Post",
     "like": "Like",

@@ -489,11 +489,15 @@ const Post = ({
   const renderTags = (
     <Card.Body>
       {post?.types &&
-        post?.types.map((tag, idx) => (
-          <PostTag key={idx} disabled={true} selected={false}>
-            {t(getOptionText(filters, "type", typeToTag(tag)))}
-          </PostTag>
-        ))}
+        post?.types.map((tag, idx) =>
+          tag !== "Remote Work" ? (
+            <PostTag key={idx} disabled={true} selected={false}>
+              {t(getOptionText(filters, "type", typeToTag(tag)))}
+            </PostTag>
+          ) : (
+            ""
+          ),
+        )}
     </Card.Body>
   );
 
@@ -609,7 +613,9 @@ const Post = ({
                 {t(
                   workMode && workMode !== "both"
                     ? `${workMode[0].toUpperCase()}${workMode.slice(1)}`
-                    : "Remote & In-Person",
+                    : !workMode && post.types.includes("Remote Work")
+                    ? "Remote"
+                    : "Remote & In-person",
                 )}
                 &nbsp;&nbsp;•
               </span>
@@ -755,6 +761,8 @@ const Post = ({
                   {t(
                     workMode && workMode !== "both"
                       ? `${workMode[0].toUpperCase()}${workMode.slice(1)}`
+                      : !workMode && post.types.includes("Remote Work")
+                      ? "Remote"
                       : "Remote & In-person",
                   )}
                   &nbsp;&nbsp;•

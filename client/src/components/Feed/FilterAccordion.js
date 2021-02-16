@@ -161,22 +161,24 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
             key={idx}
           >
             {Object.values(filter.options).map(({ text, value }, idx) => {
-              const tagClassName = `tag-selectable ${
-                selectedOptions[filter.label] &&
-                selectedOptions[filter.label].includes(value)
-                  ? "tag-selected"
-                  : ""
-              }`;
-              return (
-                <ButtonTag
-                  id={gtmPrefix + filterOps(filter.label, idx)}
-                  key={idx}
-                  onClick={handleOption(filter.label, value)}
-                  className={tagClassName}
-                >
-                  {t(text)}
-                </ButtonTag>
-              );
+              if (value !== "Remote Work") {
+                const tagClassName = `tag-selectable ${
+                  selectedOptions[filter.label] &&
+                  selectedOptions[filter.label].includes(value)
+                    ? "tag-selected"
+                    : ""
+                }`;
+                return (
+                  <ButtonTag
+                    id={gtmPrefix + filterOps(filter.label, idx)}
+                    key={idx}
+                    onClick={handleOption(filter.label, value)}
+                    className={tagClassName}
+                  >
+                    {t(text)}
+                  </ButtonTag>
+                );
+              }
             })}
           </FilterAccordionPanel>
         );

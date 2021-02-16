@@ -57,6 +57,8 @@ export const postToFormData = (post) => ({
   }`,
   workMode: post.workMode
     ? `${post.workMode[0].toUpperCase()}${post.workMode.slice(1)}`
+    : post.types.includes("Remote Work")
+    ? workMode.options[1].value
     : workMode.options[2].value,
   help: post.objective,
   author: post.author,
