@@ -3,7 +3,7 @@ import createPostSettings from "assets/data/createPostSettings";
 import filterOptions from "assets/data/filterOptions";
 
 const { type: typeFilter } = filterOptions;
-const { expires, workRemote } = createPostSettings;
+const { expires, workMode } = createPostSettings;
 
 const day = expires.options[0].value;
 const week = expires.options[1].value;
@@ -55,9 +55,9 @@ export const postToFormData = (post) => ({
   expires: `${
     post.expireAt !== null ? translateISOToString(post.expireAt) : forever
   }`,
-  workRemote: post.remote
-    ? `${post.remote[0].toUpperCase()}${post.remote.slice(1)}`
-    : workRemote.options[1].value,
+  workMode: post.workMode
+    ? `${post.workMode[0].toUpperCase()}${post.workMode.slice(1)}`
+    : workMode.options[2].value,
   help: post.objective,
   author: post.author,
   language: post.language,
@@ -70,7 +70,7 @@ export const formDataToPost = (formData) => ({
   types: formData.tags.map((tag) => tagToType(tag)),
   visibility: formData.shareWith.toLowerCase(),
   expireAt: formData.expires.toLowerCase(),
-  remote: formData.workRemote.toLowerCase(),
+  workMode: formData.workMode.toLowerCase(),
   objective: formData.help,
   author: formData.author,
   language: formData.language,
@@ -82,7 +82,7 @@ export const formDataToPostPatch = (formData) => ({
   content: formData.description,
   types: formData.tags.map((tag) => tagToType(tag)),
   visibility: formData.shareWith.toLowerCase(),
-  remote: formData.workRemote.toLowerCase(),
+  workMode: formData.workMode.toLowerCase(),
   expireAt: formData.expires.toLowerCase(),
   objective: formData.help,
 });

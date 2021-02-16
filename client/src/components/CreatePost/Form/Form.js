@@ -12,7 +12,7 @@ import axios from "axios";
 import { formDataToPost } from "assets/data/formToPostMappings";
 import GTM from "constants/gtm-tags";
 
-const { shareWith, expires, helpTypes, workRemote } = createPostSettings;
+const { shareWith, expires, helpTypes, workMode } = createPostSettings;
 
 const initialState = {
   formData: {
@@ -22,7 +22,7 @@ const initialState = {
     shareWith: shareWith.default.value,
     expires: expires.default.value,
     help: helpTypes.default.value,
-    workRemote: workRemote.default.value,
+    workMode: workMode.default.value,
   },
   errors: [],
 };
@@ -121,7 +121,7 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
       />
       <Fourth
         formData={formData}
-        onWorkRemoteChange={(val) => handleSelectorChange("workRemote", val)}
+        onWorkModeChange={(val) => handleSelectorChange("workMode", val)}
       />
       <Footer>
         <Submit
@@ -131,7 +131,7 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
             !formData.title ||
             !formData.description ||
             formData.tags.length === 0 ||
-            formData.workRemote === workRemote.default.value
+            formData.workMode === workMode.default.value
           }
           id={gtmPrefix + GTM.post.button}
         >

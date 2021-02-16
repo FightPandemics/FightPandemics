@@ -53,7 +53,7 @@ const gtmTagsMap = {
   type: GTM.post.type,
   location: GTM.post.location,
   providers: GTM.post.providers,
-  remote: GTM.post.remote,
+  workMode: GTM.post.workMode,
 };
 
 const { royalBlue } = theme.colors;
@@ -120,8 +120,6 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
     ignoreUserLocation,
     isAuthenticated,
     toggleShowNearMe,
-    onRemoteChange,
-    remote,
   } = feedContext;
 
   const gtmTag = (tag) => gtmPrefix + tag;
@@ -149,13 +147,6 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
               includeNavigator={true}
               gtmPrefix={gtmTag(GTM.post.location)}
             />
-            <StyledCheckboxCheck
-              checked={remote === "yes" ? true : false}
-              id={GTM.post.prefix + GTM.post.remote}
-              onChange={onRemoteChange}
-            >
-              {t("feed.filters.typesOptions.Remote Work")}
-            </StyledCheckboxCheck>
           </FilterAccordionPanel>
         );
       } else if (!locationOnly) {

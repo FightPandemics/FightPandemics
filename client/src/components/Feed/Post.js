@@ -148,8 +148,8 @@ const Post = ({
     reportsCount,
     status,
     objective,
+    workMode,
   } = post || {};
-
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
   const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
@@ -604,6 +604,15 @@ const Post = ({
             )}
             <div className="pre-header post-page">
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+              <span>
+                &nbsp;&nbsp;
+                {t(
+                  workMode && workMode !== "both"
+                    ? `${workMode[0].toUpperCase()}${workMode.slice(1)}`
+                    : "Remote & In-Person",
+                )}
+                &nbsp;&nbsp;•
+              </span>
               <Tooltip
                 color={theme.colors.darkGray}
                 title={translateISOTimeTitle(post.createdAt)}
@@ -741,6 +750,15 @@ const Post = ({
               )}
               <div className="pre-header">
                 <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+                <span>
+                  &nbsp;&nbsp;
+                  {t(
+                    workMode && workMode !== "both"
+                      ? `${workMode[0].toUpperCase()}${workMode.slice(1)}`
+                      : "Remote & In-person",
+                  )}
+                  &nbsp;&nbsp;•
+                </span>
                 <Tooltip
                   color={theme.colors.darkGray}
                   title={translateISOTimeTitle(post.createdAt)}

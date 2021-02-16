@@ -26,11 +26,12 @@ const POST_SETTINGS = {
       { text: "post.options.expires.offer", value: "offer" },
     ],
   },
-  workRemote: {
+  workMode: {
     default: { text: "select", value: "Select an option" },
     options: [
-      { text: "post.options.remote.yes", value: "Yes" },
-      { text: "post.options.remote.no", value: "No" },
+      { text: "post.options.workMode.inPerson", value: "In-person" },
+      { text: "post.options.workMode.remote", value: "Remote" },
+      { text: "post.options.workMode.both", value: "Both" },
     ],
   },
 };

@@ -105,7 +105,8 @@
         "location": "Location",
         "providers": "Providers",
         "type": "Types",
-        "lookingFor": "Offer or Request Help"
+        "lookingFor": "Offer or Request Help",
+        "workMode": "Remote Work"
       },
       "providersOptions": {
         "Individual": "Individual",
@@ -178,7 +179,7 @@
     "addTags": "Add tags to make your post more visible",
     "whatVisibility": "What is the visibility of your post?",
     "postVisible": "The post will be visible to",
-    "workRemote": "Can you work/volunteer remotely?",
+    "workMode": "How can this post be fulfilled?",
     "success": "Success",
     "viewPost": "View Your Post",
     "like": "Like",
@@ -206,9 +207,10 @@
         "request": "Requesting help",
         "offer": "Offering help"
       },
-      "remote": {
-        "yes": "Yes",
-        "no": "No"
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Post",

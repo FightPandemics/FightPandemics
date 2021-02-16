@@ -7,9 +7,9 @@ import SvgIcon from "components/Icon/SvgIcon";
 import downArrowSlim from "assets/icons/down-arrow-slim.svg";
 import createPostSettings from "assets/data/createPostSettings";
 
-const { workRemote } = createPostSettings;
+const { workMode } = createPostSettings;
 
-const Fourth = ({ onWorkRemoteChange, formData }) => {
+const Fourth = ({ onWorkModeChange, formData }) => {
   const { t } = useTranslation();
 
   const translateOptions = (options) =>
@@ -17,7 +17,7 @@ const Fourth = ({ onWorkRemoteChange, formData }) => {
 
   return (
     <Section>
-      <Head number={4} title={t("post.workRemote")} />
+      <Head number={4} title={t("post.workMode")} />
       <div className="buttons visibility-post">
         <div className="visibility-post--selector">
           <Selector
@@ -27,12 +27,10 @@ const Fourth = ({ onWorkRemoteChange, formData }) => {
                 style={{ width: "1.5rem", height: "auto" }}
               />
             }
-            onChange={onWorkRemoteChange}
-            defaultValue={
-              formData ? formData.workRemote : workRemote.default.value
-            }
+            onChange={onWorkModeChange}
+            defaultValue={formData ? formData.workMode : workMode.default.value}
             filterOption={false}
-            options={translateOptions(workRemote.options)}
+            options={translateOptions(workMode.options)}
             minWidth="11rem"
           />
         </div>

@@ -18,8 +18,6 @@ const FiltersList = () => {
     location,
     selectedOptions,
     filters,
-    remote,
-    onRemoteChange,
   } = feedContext;
 
   return (
@@ -32,14 +30,6 @@ const FiltersList = () => {
           {location?.address?.length > LOCATION_DISPLAY_LENGTH_MAX
             ? `${location?.address?.substr(0, LOCATION_DISPLAY_LENGTH_MAX)}…`
             : location?.address}
-        </ButtonTag>
-      )}
-      {remote === "yes" && (
-        <ButtonTag
-          className="tag-closable"
-          onClick={() => onRemoteChange(null)}
-        >
-          {t("feed.filters.typesOptions.Remote Work")}
         </ButtonTag>
       )}
       {Object.keys(selectedOptions).map((filter) => {

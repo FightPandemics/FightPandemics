@@ -19,6 +19,7 @@ import { WhiteSpace } from "antd-mobile";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import filterOptions from "assets/data/filterOptions";
+import createPostSettings from "assets/data/createPostSettings";
 import {
   FeedWrapper,
   SiderWrapper,
@@ -111,7 +112,6 @@ const initialState = {
   applyFilters: false,
   activePanel: null,
   location: null,
-  remote: null,
   ignoreUserLocation: true,
 };
 
@@ -156,9 +156,9 @@ const Feed = (props) => {
     applyFilters,
     showFilters,
     ignoreUserLocation,
-    remote,
   } = feedState;
   const filters = Object.values(filterOptions);
+  const workMode = Object.values(createPostSettings.workMode);
   const {
     error: postsError,
     isLoading,
@@ -212,12 +212,6 @@ const Feed = (props) => {
       dispatchAction(SET_VALUE, "location", query.location);
     } else dispatchAction(SET_VALUE, "location", "");
 
-    //remote
-    if (query.remote) {
-      //query.remote = JSON.parse(atob(query.remote));
-      dispatchAction(SET_VALUE, "remote", query.remote === "yes" ? "yes" : "");
-    } else dispatchAction(SET_VALUE, "remote", "");
-
     // filters / help type (objective)
     if (query.filters || query.objective) {
       let selectedFilters = {};
@@ -250,14 +244,17 @@ const Feed = (props) => {
     setQueryParams(query);
   };
 
+  //Sets query state for filters
   const setQueryFromState = () => {
     const newQuery = {};
     const oldFiltersLength =
       (queryParams.filters?.type || []).length +
-      (queryParams.filters?.providers || []).length;
+      (queryParams.filters?.providers || []).length +
+      (queryParams.filters?.workMode || []).length;
     const newFiltersLength =
       (selectedOptions?.type || []).length +
-      (selectedOptions?.providers || []).length;
+      (selectedOptions?.providers || []).length +
+      (selectedOptions?.workMode || []).length;
     if (applyFilters && location) {
       newQuery.location = btoa(JSON.stringify(location));
     }
@@ -279,15 +276,14 @@ const Feed = (props) => {
         return;
       }
     }
-    if (applyFilters && remote) {
-      newQuery.remote = remote;
-    }
+
     if (newFiltersLength) {
       if (applyFilters || oldFiltersLength > newFiltersLength) {
         newQuery.filters = btoa(JSON.stringify(selectedOptions));
       }
     } else if (queryParams.filters && !newFiltersLength)
       newQuery.filters = null;
+
     setQueryKeysValue(history, newQuery);
   };
 
@@ -321,9 +317,6 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "location", null);
     setQueryKeysValue(history, { location: null });
 
-    dispatchAction(SET_VALUE, "remote", "");
-    setQueryKeysValue(history, { remote: "" });
-
     setTimeout(() => {
       dispatchAction(SET_VALUE, "activePanel", null);
     }, 500);
@@ -331,7 +324,8 @@ const Feed = (props) => {
     refetchPosts(null, null, true);
   };
 
-  const onRemoteChange = (e) => {
+  /* //Aditi Do I need this */
+  /*   const onRemoteChange = (e) => {
     if (!e) {
       dispatchAction(SET_VALUE, "remote", "no");
       setQueryKeysValue(history, { remote: "" });
@@ -342,7 +336,7 @@ const Feed = (props) => {
     TagManager.dataLayer({
       dataLayer: {
         event: "RMT_WRK_CHK",
-        rmtClickId: GTM.post.prefix + GTM.post.remote,
+        rmtClickId: GTM.post.prefix + GTM.post.workMode,
       },
     });
     // clear dataLayer
@@ -352,7 +346,7 @@ const Feed = (props) => {
         rmtClickId: null,
       },
     });
-  };
+  }; */
 
   const toggleShowNearMe = (e) => {
     setQueryKeysValue(history, {
@@ -509,11 +503,7 @@ const Feed = (props) => {
         break;
     }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
-    // if (queryParams.remote && queryParams.remote == "yes") {
-    if (remote && remote == "yes") {
-      endpoint += `&remote=${remote}`;
-    }
-    // console.log("endpoint", endpoint);
+
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -607,7 +597,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     setQueryFromState();
-  }, [applyFilters, selectedOptions, location, remote]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
@@ -712,8 +702,7 @@ const Feed = (props) => {
           toggleShowNearMe,
           showFilters,
           totalPostCount,
-          onRemoteChange,
-          remote,
+          workMode,
         }}
       >
         <FeedWrapper>

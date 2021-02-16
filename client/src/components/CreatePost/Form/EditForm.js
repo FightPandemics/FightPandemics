@@ -94,11 +94,11 @@ const EditModalComponent = ({
       setFormData({ ...formData, shareWith: shareWith.default.value });
     }
   };
-  const setWorkRemote = (workRemote) => {
-    if (workRemote) {
-      setFormData({ ...formData, workRemote });
+  const setWorkMode = (workMode) => {
+    if (workMode) {
+      setFormData({ ...formData, workMode });
     } else {
-      setFormData({ ...formData, workRemote: workRemote.default.value });
+      setFormData({ ...formData, workMode: workMode.default.value });
     }
   };
 
@@ -151,10 +151,7 @@ const EditModalComponent = ({
         onShareWithChange={setShareWith}
         onExpirationChange={setExpiration}
       />
-      <Fourth
-        formData={formData}
-        onWorkRemoteChange={setWorkRemote}
-      />
+      <Fourth formData={formData} onWorkModeChange={setWorkMode} />
       <Footer>
         <Submit
           primary="true"

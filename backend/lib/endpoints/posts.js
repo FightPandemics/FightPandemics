@@ -53,11 +53,9 @@ async function routes(app) {
           objective,
           skip,
           includeMeta,
-          remote,
         },
       } = req;
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
-
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       const filters = [
@@ -100,7 +98,7 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       // Additional filters
-      const { providers, type } = queryFilters; // from filterOptions.js
+      const { providers, type, workMode } = queryFilters; // from filterOptions.js
       if (authorId) {
         filters.push({ "author.id": mongoose.Types.ObjectId(authorId) });
       }
@@ -114,9 +112,15 @@ async function routes(app) {
         filters.push({ types: { $in: type } });
       }
 
-      //remote work filter
-      if (remote){
-        filters.push({ "remote": "yes" });
+      //workMode filter
+      if (workMode){
+        const workModes = workMode.map(mode => mode.toLowerCase())
+        if(workModes.includes('both')){
+          filters.push({ $or: [ { workMode: null }, {workMode: { $in: workModes } }] });
+        }
+        else {
+          filters.push({ workMode: { $in: workModes } });
+        }
       }
 
       // Unlogged user limitation for post content size
@@ -254,7 +258,7 @@ async function routes(app) {
             title: true,
             types: true,
             visibility: true,
-            remote: true,
+            workMode: true,
             createdAt: true,
             updatedAt: true,
           },
@@ -329,11 +333,6 @@ async function routes(app) {
     },
     async (req, reply) => {
       const { actor, body: postProps } = req;
-      if(postProps.types && postProps.types.length > 0){
-        if(postProps.remote == 'yes'){
-          postProps.types.push('Remote Work');
-        }
-      }
 
       // Creates embedded author document
       postProps.author = {
@@ -515,13 +514,6 @@ async function routes(app) {
       const [, author] = await app.to(User.findById(post.author.id));
       if (!(userId.equals(author.id) || userId.equals(author.ownerId))) {
         throw app.httpErrors.forbidden();
-      }
-
-      if(body.remote == 'yes'){
-        body.types.push('Remote Work');
-      }
-      else if (body.types.includes('Remote Work') && body.remote == 'no'){
-        body.types = body.types.filter((val) => val != 'Remote Work');
       }
 
       // ExpireAt needs to calculate the date

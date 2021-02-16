@@ -4,7 +4,7 @@ const { Schema, model, ObjectId } = require("mongoose");
 const EXPIRATION_OPTIONS = ["day", "week", "month", "forever"];
 const VISIBILITY_OPTIONS = ["city", "country", "state", "worldwide"];
 const POST_OBJECTIVES = ["request", "offer"];
-const REMOTE_OPTIONS = ["yes", "no"];
+const REMOTE_OPTIONS = ["in-person", "remote", "both"];
 const POST_TYPES = [
   "Business",
   "Education",
@@ -103,7 +103,7 @@ const postSchema = new Schema(
       trim: true,
       type: String,
     },
-    remote: {
+    workMode: {
       enum: REMOTE_OPTIONS,
       lowercase: true,
       trim: true,
