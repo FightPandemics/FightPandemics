@@ -154,6 +154,7 @@ const ModeContainer = styled.button`
   height: 3rem;
   border-radius: 4rem;
   background-color: ${black};
+  position: -webkit-sticky;
   position: sticky;
   top: 50rem;
   left: 38%;
@@ -206,6 +207,13 @@ const NearestHealthFacilities = () => {
 
     if (window.screen.width <= parseInt(mq.phone.wide.maxWidth)) {
       setIsMobile(true);
+      if (!(navigator.userAgent.toLowerCase().indexOf("iphone") === -1)) {
+        window.scrollTo({
+          top: 1,
+          left: 1,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
