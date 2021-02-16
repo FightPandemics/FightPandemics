@@ -324,10 +324,10 @@ const SeeAll = ({
     fetchPosts();
   }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
+  /* useEffect(() => {
     console.log("is Mobile");
     refetchPosts();
-  }, [isMobile, refetchPosts]);
+  }, [isMobile]); */
 
   const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
 
