@@ -4,10 +4,6 @@ import { Tabs } from "antd";
 const { TabPane } = Tabs;
 
 const BasicTabs = ({ callback, tabs, position, def, disabled }) => {
-  useEffect(() => {
-    console.log(tabs);
-  });
-
   return (
     <Tabs
       tabPosition={position ? position : "top"}
