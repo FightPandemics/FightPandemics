@@ -131,6 +131,11 @@ module.exports = {
     tech: "_TC",
     other: "_OT",
   },
+  workModeFilter: {
+    inPerson: "_IP",
+    remote: "_RM",
+    both: "_IPR",
+  },
   language: {
     "en-US": "_EN_US",
     "en-GB": "_EN_GB",

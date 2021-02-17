@@ -15,6 +15,7 @@ import { SET_VALUE } from "hooks/actions/feedActions";
 import { theme } from "constants/theme";
 import { Checkbox } from "antd";
 import styled from "styled-components";
+import { filter } from "tlds";
 
 const providersGtmTagsMap = {
   0: GTM.providersFilters.individual,
@@ -41,6 +42,12 @@ const typeGtmTagsMap = {
   9: GTM.typeFilter.researchAndDevelopment,
   10: GTM.typeFilter.tech,
   11: GTM.typeFilter.other,
+};
+
+const workModeGtmTagsMap = {
+  0: GTM.workModeFilter.inPerson,
+  1: GTM.workModeFilter.remote,
+  2: GTM.workModeFilter.both,
 };
 
 const requestOrOffer = {
@@ -103,7 +110,9 @@ const filterOps = (label, idx) => {
   }
   return label === "providers"
     ? GTM.post.providers + providersGtmTagsMap[idx]
-    : GTM.post.type + typeGtmTagsMap[idx];
+    : label === "type"
+    ? GTM.post.type + typeGtmTagsMap[idx]
+    : GTM.post.workMode + workModeGtmTagsMap[idx];
 };
 
 const FilterAccord = ({ gtmPrefix, locationOnly }) => {
@@ -127,6 +136,8 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
   const setActivePanel = (activePanelKey) => {
     dispatchAction(SET_VALUE, "activePanel", activePanelKey);
   };
+
+  console.log("filters", filters, gtmPrefix);
 
   const renderPanels = () => {
     return filters.map((filter, idx) => {
@@ -161,6 +172,7 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
             key={idx}
           >
             {Object.values(filter.options).map(({ text, value }, idx) => {
+              console.log("idx", idx);
               if (value !== "Remote Work") {
                 const tagClassName = `tag-selectable ${
                   selectedOptions[filter.label] &&

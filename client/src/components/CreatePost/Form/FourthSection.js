@@ -6,6 +6,7 @@ import { SubTitle, Section, Selector } from "components/CreatePost/StyledModal";
 import SvgIcon from "components/Icon/SvgIcon";
 import downArrowSlim from "assets/icons/down-arrow-slim.svg";
 import createPostSettings from "assets/data/createPostSettings";
+import { post } from "constants/gtm-tags";
 
 const { workMode } = createPostSettings;
 
@@ -24,6 +25,9 @@ const Fourth = ({ onWorkModeChange, formData }) => {
         </SubTitle>
         <div className="visibility-post--selector">
           <Selector
+            id={
+              post.prefix + post.createPost + post.workMode
+            } /* id added to assign id to fullfillment dropdown to track gtm tag in create post */
             suffixIcon={
               <SvgIcon
                 src={downArrowSlim}
