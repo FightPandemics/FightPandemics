@@ -86,7 +86,7 @@ import githubIcon from "assets/icons/social-github.svg";
 import websiteIcon from "assets/icons/website-icon.svg";
 
 import locationIcon from "assets/icons/status-indicator.svg";
-import SideMenu from "components/Profile/SideMenu";
+import useWindowDimensions from "../utils/windowSize";
 import { position } from "polished";
 
 const URLS = {
@@ -108,6 +108,7 @@ const Profile = ({
     params: { id: pathUserId },
   },
 }) => {
+  const window = useWindowDimensions();
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [deleteModal, deleteModalDispatch] = useReducer(
@@ -349,13 +350,14 @@ const Profile = ({
     return <ErrorAlert message={error} type="error" />;
   }
   if (loading) return <Loader />;
+
   const tabViews = {
     defaultView: "1",
-    position: "top",
+    position: window.width < 800 ? "top" : "left",
     tabs: [
       {
         tabName: t("profile.views.activity"),
-        display: false,
+        display: true,
         tabView: `contents of activity`,
       },
       {
@@ -427,17 +429,17 @@ const Profile = ({
       },
       {
         tabName: t("profile.views.organizations"),
-        display: false,
+        display: true,
         tabView: `contents of orgs`,
       },
       {
         tabName: t("profile.views.badges"),
-        display: false,
+        display: true,
         tabView: `contents of badges`,
       },
       {
         tabName: t("profile.views.thanks"),
-        display: false,
+        display: true,
         tabView: `contents of thanks`,
       },
     ],
@@ -523,7 +525,6 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
-
         <ProfileTabs tabData={tabViews} />
         {isSelf && (
           <CustomDrawer
