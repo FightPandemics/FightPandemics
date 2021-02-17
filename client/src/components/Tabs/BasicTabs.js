@@ -8,15 +8,8 @@ const BasicTabs = ({ tabData }) => {
   return (
     <Tabs tabPosition={position} defaultActiveKey={defaultView}>
       {tabs.map((e, index) => {
-        if (e.display) {
-          return (
-            <TabPane tab={e.tabName} key={index}>
-              {e.tabView}
-            </TabPane>
-          );
-        }
         return (
-          <TabPane tab={e.tabName} key={index} disabled>
+          <TabPane tab={e.tabName} key={index} disabled={!e.display}>
             {e.tabView}
           </TabPane>
         );
