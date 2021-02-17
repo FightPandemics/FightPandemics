@@ -34,16 +34,13 @@ const HealthFacilitiesContainer = styled.div`
   flex-basis: 55%;
   align-self: flex-start;
   padding-top: 2rem;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin: 20rem 0 0 0;
+  }
   h2 {
     font-weight: bold;
     color: ${darkerGray};
     margin-left: 2rem;
-  }
-  div {
-    margin-right: 2rem;
-    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-      margin-right: 0;
-    }
   }
 `;
 
@@ -96,6 +93,9 @@ const ChangeLocOrTypeContainer = styled.div`
   cursor: pointer;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: flow-root;
+    position: fixed;
+    top: 5rem;
+    z-index: 10;
   }
   &:hover {
     color: ${royalBlue};
@@ -155,7 +155,7 @@ const ModeContainer = styled.button`
   border-radius: 4rem;
   background-color: ${black};
   position: -webkit-sticky;
-  position: sticky;
+  position: fixed;
   top: 50rem;
   left: 38%;
   z-index: 10;
