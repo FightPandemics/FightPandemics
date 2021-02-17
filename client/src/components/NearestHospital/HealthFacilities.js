@@ -35,7 +35,7 @@ const HealthFacilitiesContainer = styled.div`
   align-self: flex-start;
   padding-top: 2rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin: 20rem 0 0 0;
+    margin: 30rem 0 0 0;
   }
   h2 {
     font-weight: bold;
@@ -156,7 +156,7 @@ const ModeContainer = styled.button`
   background-color: ${black};
   position: -webkit-sticky;
   position: fixed;
-  top: 50rem;
+  top: 40rem;
   left: 38%;
   z-index: 10;
 `;
