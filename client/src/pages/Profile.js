@@ -87,6 +87,7 @@ import websiteIcon from "assets/icons/website-icon.svg";
 
 import locationIcon from "assets/icons/status-indicator.svg";
 import SideMenu from "components/Profile/SideMenu";
+import { position } from "polished";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -116,7 +117,6 @@ const Profile = ({
   const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
-  const [view, setView] = useState("posts");
   const { t } = useTranslation();
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
@@ -341,23 +341,6 @@ const Profile = ({
     }
   };
 
-  const handleView = (key) => {
-    switch (key) {
-      case "0":
-        setView("activity");
-        break;
-      case "1":
-        setView("posts");
-        break;
-      case "2":
-        setView("thanks");
-        break;
-      case "3":
-        setView("badge");
-        break;
-    }
-  };
-
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -366,6 +349,99 @@ const Profile = ({
     return <ErrorAlert message={error} type="error" />;
   }
   if (loading) return <Loader />;
+  const tabViews = {
+    defaultView: "1",
+    position: "top",
+    tabs: [
+      {
+        tabName: t("profile.views.activity"),
+        display: false,
+        tabView: `contents of activity`,
+      },
+      {
+        tabName: t("profile.views.posts"),
+        display: true,
+        tabView: (
+          <div>
+            <SectionHeader>
+              {isSelf
+                ? t("profile.individual.myActivity")
+                : t("profile.individual.userActivity")}
+              <PlaceholderIcon />
+              {isSelf && (
+                <>
+                  <CreatePostIcon
+                    id={GTM.user.profilePrefix + GTM.post.createPost}
+                    src={createPost}
+                    onClick={onToggleCreatePostDrawer}
+                  />
+                  <CreatePostButton
+                    onClick={onToggleCreatePostDrawer}
+                    id={GTM.user.profilePrefix + GTM.post.createPost}
+                    inline={true}
+                    icon={<PlusIcon />}
+                  >
+                    {t("post.create")}
+                  </CreatePostButton>
+                </>
+              )}
+            </SectionHeader>
+            <FeedWrapper isProfile>
+              <Activity
+                postDispatch={dispatch}
+                filteredPosts={postsList}
+                user={user}
+                postDelete={postDelete}
+                handlePostDelete={handlePostDelete}
+                handleEditPost={handleEditPost}
+                deleteModalVisibility={deleteModalVisibility}
+                handleCancelPostDelete={handleCancelPostDelete}
+                loadNextPage={loadNextPage}
+                isNextPageLoading={isLoading}
+                itemCount={itemCount}
+                isItemLoaded={isItemLoaded}
+                hasNextPage={loadMore}
+                totalPostCount={totalPostCount}
+              />
+              {postsError && (
+                <ErrorAlert
+                  message={t([
+                    `error.${postsError.message}`,
+                    `error.http.${postsError.message}`,
+                  ])}
+                />
+              )}
+              {emptyFeed() && <></>}
+              {isSelf && (
+                <CreatePost
+                  onCancel={onToggleCreatePostDrawer}
+                  loadPosts={refetchPosts}
+                  visible={modal}
+                  user={user}
+                  gtmPrefix={GTM.user.profilePrefix}
+                />
+              )}
+            </FeedWrapper>
+          </div>
+        ),
+      },
+      {
+        tabName: t("profile.views.organizations"),
+        display: false,
+        tabView: `contents of orgs`,
+      },
+      {
+        tabName: t("profile.views.badges"),
+        display: false,
+        tabView: `contents of badges`,
+      },
+      {
+        tabName: t("profile.views.thanks"),
+        display: false,
+        tabView: `contents of thanks`,
+      },
+    ],
+  };
   return (
     <>
       <ProfileBackgroup />
@@ -447,72 +523,8 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
-        <div>
-          <SideMenu
-            callback={handleView}
-            tabs={["Activity", "Posts", "Thanks", "Badge"]}
-            def={"1"}
-          />
-          <SectionHeader>
-            {isSelf
-              ? t("profile.individual.myActivity")
-              : t("profile.individual.userActivity")}
-            <PlaceholderIcon />
-            {isSelf && (
-              <>
-                <CreatePostIcon
-                  id={GTM.user.profilePrefix + GTM.post.createPost}
-                  src={createPost}
-                  onClick={onToggleCreatePostDrawer}
-                />
-                <CreatePostButton
-                  onClick={onToggleCreatePostDrawer}
-                  id={GTM.user.profilePrefix + GTM.post.createPost}
-                  inline={true}
-                  icon={<PlusIcon />}
-                >
-                  {t("post.create")}
-                </CreatePostButton>
-              </>
-            )}
-          </SectionHeader>
-          <FeedWrapper isProfile>
-            <Activity
-              postDispatch={dispatch}
-              filteredPosts={postsList}
-              user={user}
-              postDelete={postDelete}
-              handlePostDelete={handlePostDelete}
-              handleEditPost={handleEditPost}
-              deleteModalVisibility={deleteModalVisibility}
-              handleCancelPostDelete={handleCancelPostDelete}
-              loadNextPage={loadNextPage}
-              isNextPageLoading={isLoading}
-              itemCount={itemCount}
-              isItemLoaded={isItemLoaded}
-              hasNextPage={loadMore}
-              totalPostCount={totalPostCount}
-            />
-            {postsError && (
-              <ErrorAlert
-                message={t([
-                  `error.${postsError.message}`,
-                  `error.http.${postsError.message}`,
-                ])}
-              />
-            )}
-            {emptyFeed() && <></>}
-            {isSelf && (
-              <CreatePost
-                onCancel={onToggleCreatePostDrawer}
-                loadPosts={refetchPosts}
-                visible={modal}
-                user={user}
-                gtmPrefix={GTM.user.profilePrefix}
-              />
-            )}
-          </FeedWrapper>
-        </div>
+
+        <ProfileTabs tabData={tabViews} />
         {isSelf && (
           <CustomDrawer
             placement="bottom"

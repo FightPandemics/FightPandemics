@@ -268,10 +268,14 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
               textAlign: "center",
             }}
           >
-            <img
-              style={{ borderRadius: "50%" }}
-              src={user && user.photo ? user.photo : null}
-            ></img>
+            {uploadError ? (
+              <h3>{uploadError}</h3>
+            ) : (
+              <img
+                style={{ borderRadius: "50%" }}
+                src={user && user.photo ? user.photo : null}
+              ></img>
+            )}
           </div>
         )}
       </AvatarModal>
