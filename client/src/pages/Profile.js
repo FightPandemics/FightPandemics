@@ -357,7 +357,7 @@ const Profile = ({
     tabs: [
       {
         tabName: t("profile.views.activity"),
-        display: true,
+        display: false,
         tabView: `contents of activity`,
       },
       {
@@ -429,17 +429,17 @@ const Profile = ({
       },
       {
         tabName: t("profile.views.organizations"),
-        display: true,
+        display: false,
         tabView: `contents of orgs`,
       },
       {
         tabName: t("profile.views.badges"),
-        display: true,
+        display: false,
         tabView: `contents of badges`,
       },
       {
         tabName: t("profile.views.thanks"),
-        display: true,
+        display: false,
         tabView: `contents of thanks`,
       },
     ],
