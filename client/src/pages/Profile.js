@@ -11,6 +11,7 @@ import React, {
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { theme, mq } from "constants/theme";
 
 import Activity from "components/Profile/Activity";
 import ProfileTabs from "components/Profile/ProfileTabs";
@@ -354,7 +355,7 @@ const Profile = ({
   const tabViews = {
     defaultView: "1",
     isSelf: isSelf,
-    position: window.width < 767 ? "top" : "left",
+    position: window.width <= parseInt(mq.phone.wide.maxWidth) ? "top" : "left",
     tabs: [
       {
         tabName: t("profile.views.activity"),
