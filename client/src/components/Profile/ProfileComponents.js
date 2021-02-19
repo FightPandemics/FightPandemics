@@ -261,3 +261,24 @@ export const DescriptionDesktop = styled.div`
   line-height: 2rem;
   color: ${colors.darkerGray};
 `;
+export const MobileLocation = styled.div`
+  color: #939393;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 1.6rem);
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
+`;
+export const  DesktopLocation = styled.div`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+`;

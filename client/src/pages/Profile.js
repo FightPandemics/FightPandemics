@@ -45,6 +45,8 @@ import {
   PhotoUploadButton,
   AvatarPhotoContainer,
   NamePara,
+  DesktopLocation,
+  MobileLocation,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -450,7 +452,7 @@ const Profile = ({
             <ProfilePic
               user={user}
               initials={getInitialsFromFullName(`${firstName} ${lastName}`)}
-            />
+            /> 
             <PhotoUploadButton>
               {isSelf && (
                 <UploadPic gtmPrefix={GTM.user.profilePrefix} user={user} />
@@ -464,12 +466,14 @@ const Profile = ({
                   {firstName} {lastName}
                   {verified && <VerificationTick />}
                 </NamePara>
-                {address && (
-                  <div title={address} className="address-container">
-                    <img src={locationIcon} alt={address} />
-                    {address}
-                  </div>
-                )}
+                  <DesktopLocation>
+                    {address && (
+                      <div title={address} className="address-container">
+                        <img src={locationIcon} alt={address} />
+                        {address}
+                      </div>
+                    )}
+                  </DesktopLocation>
               </div>
               {isSelf && (
                 <EditIcon
@@ -490,6 +494,14 @@ const Profile = ({
             </NameDiv>
             {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
             <IconsContainer>
+              <MobileLocation>
+                {address && (
+                    <div title={address} className="address-container">
+                      <img src={locationIcon} alt={address} />
+                      {address}
+                    </div>
+                  )}
+                </MobileLocation>
               <HelpContainer>
                 {needHelp && <div>{t("profile.individual.needHelp")}</div>}
                 {offerHelp && <div> {t("profile.individual.wantHelp")}</div>}
