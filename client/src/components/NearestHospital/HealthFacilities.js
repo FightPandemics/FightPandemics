@@ -30,12 +30,13 @@ const NearestLocationContainer = styled.div`
   }
 `;
 
+let isIPhone = false;
 const HealthFacilitiesContainer = styled.div`
   flex-basis: 55%;
   align-self: flex-start;
   padding-top: 2rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin: 35rem 0 0 0;
+    margin: ${(props) => (props.isIPhone ? "35rem 0 0 0" : "20rem 0 0 0")};
   }
   h2 {
     font-weight: bold;
@@ -95,7 +96,7 @@ const ChangeLocOrTypeContainer = styled.div`
     display: flow-root;
     position: fixed;
     top: 5rem;
-    z-index: 10;
+    z-index: 3;
   }
   &:hover {
     color: ${royalBlue};
@@ -156,13 +157,14 @@ const ModeContainer = styled.button`
   background-color: ${black};
   position: -webkit-sticky;
   position: fixed;
-  top: 45rem;
+  bottom: 8rem;
   left: 38%;
-  z-index: 10;
+  z-index: 3;
 `;
 
 const ModeLabel = styled.div`
   color: ${white};
+  white-space: nowrap;
 `;
 
 const moreResultsUrlStyles = {
@@ -208,11 +210,7 @@ const NearestHealthFacilities = () => {
     if (window.screen.width <= parseInt(mq.phone.wide.maxWidth)) {
       setIsMobile(true);
       if (!(navigator.userAgent.toLowerCase().indexOf("iphone") === -1)) {
-        window.scrollTo({
-          top: 1,
-          left: 1,
-          behavior: "smooth",
-        });
+        isIPhone = true;
       }
     }
   };
@@ -394,7 +392,7 @@ const NearestHealthFacilities = () => {
         sourceLocation.current ? (
           <NearestLocationContainer>
             {!isMobile || (isMobile && facilityMode.type === "list") ? (
-              <HealthFacilitiesContainer>
+              <HealthFacilitiesContainer isIPhone={isIPhone}>
                 <h2>
                   {facilityTypes.find((o) => o.type === selectedType).label}
                 </h2>
