@@ -73,6 +73,9 @@ import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import WithSummitBanner from "components/WithSummitBanner";
 import SortSelector from "../components/Feed/SortSelector";
+import BaseSelector from "../components/Selector/Selector";
+import SvgIcon from "components/Icon/SvgIcon";
+import downArrowSlim from "assets/icons/down-arrow-slim.svg";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -418,6 +421,9 @@ const Feed = (props) => {
       visibility: DELETE_MODAL_HIDE,
     });
   };
+  function handleChange(value) {
+    console.log(`selected ${value}`);
+  }
 
   const loadPosts = async () => {
     if (!applyFilters) return;
@@ -734,7 +740,23 @@ const Feed = (props) => {
                   displayValue={"name"}
                   t={t}
                 />
-                <SortSelector />
+                <BaseSelector
+                  suffixIcon={
+                    <SvgIcon
+                      src={downArrowSlim}
+                      style={{ width: "1.5rem", height: "auto" }}
+                    />
+                  }
+                  defaultValue={"request"}
+                  options={[
+                    {
+                      text: "post.options.helpTypes.request",
+                      value: "request",
+                    },
+                    { text: "post.options.expires.offer", value: "offer" },
+                  ]}
+                  onChange={handleChange}
+                />
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
                   <CreatePostButton
