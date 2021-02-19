@@ -2,8 +2,7 @@ import qs from "query-string";
 const INDIVIDUAL_AUTHOR_TYPE = "Individual";
 
 export const authorProfileLink = (post) =>
-  `/${
-    post.author.type === INDIVIDUAL_AUTHOR_TYPE ? "profile" : "organisation"
+  `/${post.author.type === INDIVIDUAL_AUTHOR_TYPE ? "profile" : "organisation"
   }/${post.author.id}`;
 
 export const buildLocationString = ({ city = "", country }) => {
@@ -24,18 +23,17 @@ export const highlightSearchRegex = (text) => {
     .replace(/\\./g, " ");
   let isLatin = /^[a-zA-Z .*+?^${}()|[\]\\\.]+$/.test(cleanKeywords);
   const regex = new RegExp(
-    `(${
-      cleanKeywords
-        .split(/[ \/,=$%#()-]/gi)
-        .filter((key) => key && key.length > 1)
-        .map((key) =>
-          isLatin && key.length <= 3
-            ? "\\b" + key + "\\b"
-            : isLatin
+    `(${cleanKeywords
+      .split(/[ \/,=$%#()-]/gi)
+      .filter((key) => key && key.length > 1)
+      .map((key) =>
+        isLatin && key.length <= 3
+          ? "\\b" + key + "\\b"
+          : isLatin
             ? "\\b" + key
             : key,
-        )
-        .join("|") || "\\b\\B"
+      )
+      .join("|") || "\\b\\B"
     })`,
     "ig",
   );
@@ -56,3 +54,14 @@ export const setQueryKeysValue = (history, newQuery) => {
     search: stringifiedQuery,
   });
 };
+
+export const formatDate = function (dateString) {
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  const date = new Date(dateString);
+  const dateStr = date.getDate();
+  const monthStr = monthNames[date.getMonth()];
+  const yearStr = date.getFullYear();
+  return `${monthStr} ${dateStr}, ${yearStr}`
+}
