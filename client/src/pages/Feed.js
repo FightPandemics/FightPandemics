@@ -72,6 +72,7 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import WithSummitBanner from "components/WithSummitBanner";
+import SortSelector from "../components/Feed/SortSelector";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -649,7 +650,9 @@ const Feed = (props) => {
   };
 
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
-
+  const handleSortDropdown = () => {
+    console.log("Sorted");
+  };
   return (
     <WithSummitBanner>
       <FeedContext.Provider
@@ -731,6 +734,7 @@ const Feed = (props) => {
                   displayValue={"name"}
                   t={t}
                 />
+                <SortSelector />
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
                   <CreatePostButton
