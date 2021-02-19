@@ -13,6 +13,15 @@
     "addOrg": "Add Organization",
     "logout": "Sign Out",
     "organisations": "Organizations",
+    "language": "Language",
+    "switchAccount": "Switch Account",
+    "myOrganisation": "My Organizations",
+    "willRefresh": "The current page will refresh.",
+    "stayOnPageHeader": "Stay on the current page?",
+    "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
     "nearestHsp": "Health Aid"
   },
   "onboarding": {
