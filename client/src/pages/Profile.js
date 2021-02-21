@@ -11,6 +11,7 @@ import React, {
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { theme, mq } from "constants/theme";
 
 import Activity from "components/Profile/Activity";
 import ProfileTabs from "components/Profile/ProfileTabs";
@@ -86,6 +87,7 @@ import githubIcon from "assets/icons/social-github.svg";
 import websiteIcon from "assets/icons/website-icon.svg";
 
 import locationIcon from "assets/icons/status-indicator.svg";
+import useWindowDimensions from "../utils/windowSize";
 import { position } from "polished";
 
 const URLS = {
@@ -107,6 +109,7 @@ const Profile = ({
     params: { id: pathUserId },
   },
 }) => {
+  const window = useWindowDimensions();
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   const [deleteModal, deleteModalDispatch] = useReducer(
@@ -348,18 +351,51 @@ const Profile = ({
     return <ErrorAlert message={error} type="error" />;
   }
   if (loading) return <Loader />;
+
   const tabViews = {
     defaultView: "1",
-    position: "top",
+    isSelf: isSelf,
+    position: window.width <= parseInt(mq.phone.wide.maxWidth) ? "top" : "left",
     tabs: [
       {
         tabName: t("profile.views.activity"),
-        display: false,
+        disabled: true,
         tabView: `contents of activity`,
       },
       {
+        tabName: t("profile.views.organizations"),
+        disabled: true,
+        tabView: `contents of orgs`,
+      },
+      {
+        tabName: t("profile.views.badges"),
+        disabled: true,
+        tabView: `contents of badges`,
+      },
+      {
+        tabName: t("profile.views.thanks"),
+        disabled: true,
+        tabView: `contents of thanks`,
+      },
+    ],
+  };
+  const isSelfViews = (TabViews, isSelf) => {
+    if (isSelf) {
+      TabViews.tabs.splice(1, 0, {
+        tabName: t("requests"),
+        disabled: false,
+        tabView: `contents of requests`,
+      });
+      TabViews.tabs.splice(2, 0, {
+        tabName: t("offers"),
+        disabled: false,
+        tabView: `contents of offers`,
+      });
+    } else {
+      TabViews.tabs.splice(1, 0, {
         tabName: t("profile.views.posts"),
-        display: true,
+        disable: false,
+        showOthers: true,
         tabView: (
           <div>
             <SectionHeader>
@@ -423,23 +459,9 @@ const Profile = ({
             </FeedWrapper>
           </div>
         ),
-      },
-      {
-        tabName: t("profile.views.organizations"),
-        display: false,
-        tabView: `contents of orgs`,
-      },
-      {
-        tabName: t("profile.views.badges"),
-        display: false,
-        tabView: `contents of badges`,
-      },
-      {
-        tabName: t("profile.views.thanks"),
-        display: false,
-        tabView: `contents of thanks`,
-      },
-    ],
+      });
+    }
+    return TabViews;
   };
   return (
     <>
@@ -522,7 +544,7 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
-        <ProfileTabs tabData={tabViews} />
+        <ProfileTabs tabData={isSelfViews(tabViews, isSelf)} />
         {isSelf && (
           <CustomDrawer
             placement="bottom"
