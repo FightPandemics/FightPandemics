@@ -3,13 +3,17 @@ import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
 
-const BasicTabs = ({ tabData }) => {
+const BasicTabs = ({ tabData, onChange }) => {
   const { defaultView, position, tabs } = tabData;
   return (
-    <Tabs tabPosition={position} defaultActiveKey={defaultView}>
+    <Tabs
+      tabPosition={position}
+      defaultActiveKey={defaultView}
+      onChange={onChange}
+    >
       {tabs.map((e, index) => {
         return (
-          <TabPane tab={e.tabName} key={index} disabled={!e.display}>
+          <TabPane tab={e.tabName} key={e.tabName} disabled={!e.display}>
             {e.tabView}
           </TabPane>
         );

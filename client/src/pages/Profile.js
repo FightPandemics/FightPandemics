@@ -16,7 +16,11 @@ import Activity from "components/Profile/Activity";
 import ProfileTabs from "components/Profile/ProfileTabs";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import { FeedWrapper } from "components/Feed/FeedWrappers";
+import {
+  FeedWrapper,
+  SeeAllTabsWrapper,
+  SeeAllContentWrapper,
+} from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
@@ -24,6 +28,8 @@ import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
+import SeeAllComp from "components/Profile/SeeAllComponent";
+import { Tabs } from "antd";
 
 import {
   ProfileLayout,
@@ -53,10 +59,10 @@ import {
   TWITTER_URL,
   GITHUB_URL,
 } from "constants/urls";
-import {
+/* import {
   deletePostModalreducer,
   deletePostState,
-} from "hooks/reducers/feedReducers";
+} from "hooks/reducers/feedReducers"; */
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import { selectPosts, postsActions } from "reducers/posts";
 import {
@@ -88,6 +94,7 @@ import websiteIcon from "assets/icons/website-icon.svg";
 import locationIcon from "assets/icons/status-indicator.svg";
 import { position } from "polished";
 
+const { TabPane } = Tabs;
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
   instagram: [instagramIcon, INSTAGRAM_URL],
@@ -109,10 +116,10 @@ const Profile = ({
 }) => {
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const [deleteModal, deleteModalDispatch] = useReducer(
+  /* const [deleteModal, deleteModalDispatch] = useReducer(
     deletePostModalreducer,
     deletePostState,
-  );
+  ); */
   const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -121,6 +128,7 @@ const Profile = ({
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [currentTab, setCurrentTab] = useState("POSTS");
   const { error, loading, user } = userProfileState;
   const {
     id: userId,
@@ -145,7 +153,7 @@ const Profile = ({
     posts: postsList,
     error: postsError,
   } = posts;
-  const { deleteModalVisibility } = deleteModal;
+  /* const { deleteModalVisibility } = deleteModal; */
   if (ownUser) sessionStorage.removeItem("msgModal");
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
@@ -188,7 +196,7 @@ const Profile = ({
     })();
   }, [pathUserId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const fetchPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
@@ -250,7 +258,7 @@ const Profile = ({
       }
     };
     fetchPosts();
-  }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps */
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -261,7 +269,7 @@ const Profile = ({
 
   const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
 
-  const loadNextPage = useCallback(
+  /* const loadNextPage = useCallback(
     ({ stopIndex }) => {
       if (
         !isLoading &&
@@ -278,13 +286,13 @@ const Profile = ({
       }
     },
     [dispatch, isLoading, loadMore, userPosts.length],
-  );
+  ); */
 
   useEffect(() => {
     setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
   }, [loadMore, userPosts.length]);
 
-  const postDelete = async (post) => {
+  /* const postDelete = async (post) => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
     if (user && (user._id === post.author.id || user.id === post.author.id)) {
@@ -310,9 +318,9 @@ const Profile = ({
         });
       }
     }
-  };
+  }; */
 
-  const handlePostDelete = () => {
+  /* const handlePostDelete = () => {
     deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
       visibility: DELETE_MODAL_POST,
@@ -339,10 +347,19 @@ const Profile = ({
       });
     }
   };
-
-  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
+  */
+  /* const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading; */
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
+
+  const handleTabChange = (e) => {
+    console.log("handleTabChange", e);
+    const tabKey = e.toUpperCase();
+    if (tabKey === "POSTS" || tabKey === "REQUESTS" || tabKey === "OFFERS") {
+      console.log("In tab change");
+      setCurrentTab(tabKey);
+    }
+  };
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -354,38 +371,63 @@ const Profile = ({
     tabs: [
       {
         tabName: t("profile.views.activity"),
-        display: false,
+        display: true,
         tabView: `contents of activity`,
       },
-      {
+      !isSelf && {
+        tabName: t("profile.views.offers"),
+        display: true,
+        tabView: (
+          <div>
+            <SeeAllTabsWrapper>
+              <SeeAllContentWrapper>
+                <FeedWrapper>
+                  <WhiteSpace size={"xl"}></WhiteSpace>
+                  <SeeAllComp
+                    profileId={pathUserId}
+                    user={user}
+                    isOrg={false}
+                    isAuthenticated={isAuthenticated}
+                    menuView={currentTab.toUpperCase()}
+                    isMobile={false}
+                    defaultKey={"ACTIVE"}
+                  ></SeeAllComp>
+                </FeedWrapper>
+              </SeeAllContentWrapper>
+            </SeeAllTabsWrapper>
+          </div>
+        ),
+      },
+      !isSelf && {
+        tabName: t("profile.views.requests"),
+        display: true,
+        tabView: (
+          <div>
+            <SeeAllTabsWrapper>
+              <SeeAllContentWrapper>
+                <FeedWrapper>
+                  <WhiteSpace size={"xl"}></WhiteSpace>
+                  <SeeAllComp
+                    profileId={pathUserId}
+                    user={user}
+                    isOrg={false}
+                    isAuthenticated={isAuthenticated}
+                    menuView={currentTab.toUpperCase()}
+                    isMobile={false}
+                    defaultKey={"ACTIVE"}
+                  ></SeeAllComp>
+                </FeedWrapper>
+              </SeeAllContentWrapper>
+            </SeeAllTabsWrapper>
+          </div>
+        ),
+      },
+      isSelf && {
         tabName: t("profile.views.posts"),
         display: true,
         tabView: (
           <div>
-            <SectionHeader>
-              {isSelf
-                ? t("profile.individual.myActivity")
-                : t("profile.individual.userActivity")}
-              <PlaceholderIcon />
-              {isSelf && (
-                <>
-                  <CreatePostIcon
-                    id={GTM.user.profilePrefix + GTM.post.createPost}
-                    src={createPost}
-                    onClick={onToggleCreatePostDrawer}
-                  />
-                  <CreatePostButton
-                    onClick={onToggleCreatePostDrawer}
-                    id={GTM.user.profilePrefix + GTM.post.createPost}
-                    inline={true}
-                    icon={<PlusIcon />}
-                  >
-                    {t("post.create")}
-                  </CreatePostButton>
-                </>
-              )}
-            </SectionHeader>
-            <FeedWrapper isProfile>
+            {/* <FeedWrapper isProfile>
               <Activity
                 postDispatch={dispatch}
                 filteredPosts={postsList}
@@ -401,7 +443,8 @@ const Profile = ({
                 isItemLoaded={isItemLoaded}
                 hasNextPage={loadMore}
                 totalPostCount={totalPostCount}
-              />
+              /> 
+              
               {postsError && (
                 <ErrorAlert
                   message={t([
@@ -420,7 +463,24 @@ const Profile = ({
                   gtmPrefix={GTM.user.profilePrefix}
                 />
               )}
-            </FeedWrapper>
+            </FeedWrapper>*/}
+            <SeeAllTabsWrapper>
+              <SeeAllContentWrapper>
+                <FeedWrapper>
+                  <span>Posts</span>
+                  <WhiteSpace size={"xl"}></WhiteSpace>
+                  <SeeAllComp
+                    profileId={pathUserId}
+                    user={user}
+                    isOrg={false}
+                    isAuthenticated={isAuthenticated}
+                    menuView={currentTab.toUpperCase()}
+                    isMobile={false}
+                    defaultKey={"REQUESTS"}
+                  ></SeeAllComp>
+                </FeedWrapper>
+              </SeeAllContentWrapper>
+            </SeeAllTabsWrapper>
           </div>
         ),
       },
@@ -522,7 +582,50 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
-        <ProfileTabs tabData={tabViews} />
+        <SectionHeader>
+          {isSelf
+            ? t("profile.individual.myActivity")
+            : t("profile.individual.userActivity")}
+          <PlaceholderIcon />
+          {isSelf && (
+            <>
+              <CreatePostIcon
+                id={GTM.user.profilePrefix + GTM.post.createPost}
+                src={createPost}
+                onClick={onToggleCreatePostDrawer}
+              />
+              <CreatePostButton
+                onClick={onToggleCreatePostDrawer}
+                id={GTM.user.profilePrefix + GTM.post.createPost}
+                inline={true}
+                visibility={modal}
+                icon={<PlusIcon />}
+              >
+                {t("post.create")}
+              </CreatePostButton>
+            </>
+          )}
+        </SectionHeader>
+        <>
+          {isSelf && (
+            <CreatePost
+              onCancel={onToggleCreatePostDrawer}
+              loadPosts={refetchPosts}
+              visible={modal}
+              user={user}
+              gtmPrefix={GTM.user.profilePrefix}
+            />
+          )}
+        </>
+        {<ProfileTabs onChange={handleTabChange} tabData={tabViews} />}
+        {/*  <Tabs onTabClick={handleTabChange}>
+          <TabPane tab="Tab 1" key="1">
+          <p>Content of Tab Pane 1</p>
+          </TabPane>
+          <TabPane tab="Tab 2" key="2">
+          <p>Content of Tab Pane 1</p>
+          </TabPane>
+        </Tabs> */}
         {isSelf && (
           <CustomDrawer
             placement="bottom"

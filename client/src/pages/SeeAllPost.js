@@ -52,7 +52,7 @@ import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId, selectActorId } from "reducers/session";
 import Activity from "components/Profile/Activity";
 import CreatePost from "components/CreatePost/CreatePost";
-import ErrorAlert from "../components/Alert/ErrorAlert";
+
 import Posts from "components/Feed/Posts";
 import { lowerCase } from "lodash";
 import { theme, mq } from "constants/theme";
@@ -171,15 +171,52 @@ const SeeAll = ({
   },
 }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   let orgId = "";
   const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
   if (isOrg) {
     orgId = pathUserId;
   }
 
-  let [queryParams, setQueryParams] = useState(
-    "POSTS",
-  ); /* useState("REQUESTS"); */
+  const { userProfileState, userProfileDispatch } = useContext(UserContext);
+  const { error, loading, user } = userProfileState;
+  const {
+    id: userId,
+    about,
+    firstName,
+    lastName,
+    location = {},
+    needs = {},
+    objectives = {},
+    ownUser,
+    urls = {},
+    usesPassword = false,
+    verified,
+  } = user || {};
+
+  let [queryParams, setQueryParams] = useState("POSTS");
+
+  useEffect(() => {
+    dispatch(postsActions.resetPageAction({}));
+    (async function fetchProfile() {
+      userProfileDispatch(fetchUser());
+      try {
+        const res = await axios.get(`/api/users/${pathUserId}`);
+        userProfileDispatch(fetchUserSuccess(res.data));
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
+        userProfileDispatch(
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
+        );
+      }
+    })();
+  }, [pathUserId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleViewChange = (e) => {
     setQueryParams(e.key);
@@ -198,13 +235,15 @@ const SeeAll = ({
         <WhiteSpace size={"lg"} />
         <SeeAllComp
           profileId={pathUserId}
+          user={user}
           isOrg={isOrg}
           isAuthenticated={isAuthenticated}
           menuView={"OFFERS"}
+          isMobile={true}
         ></SeeAllComp>
       </LayoutWrapper>
     </FeedWrapper>
   );
 };
 
-export default withOrganisationContext(withUserContext(SeeAll));
+export default withUserContext(withOrganisationContext(SeeAll));

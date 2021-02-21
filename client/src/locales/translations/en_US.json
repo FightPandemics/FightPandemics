@@ -397,6 +397,8 @@
     "views": {
       "activity": "Activity",
       "posts": "Posts",
+      "requests": "Requests",
+      "offers": "Offers",
       "organizations": "Organizations",
       "badges": "Badges",
       "thanks": "Thanks"

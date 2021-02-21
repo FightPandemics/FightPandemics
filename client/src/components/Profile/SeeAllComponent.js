@@ -12,31 +12,42 @@ import styled from "styled-components";
 import axios from "axios";
 import { Menu } from "antd";
 
-import { ContentWrapper } from "components/Feed/FeedWrappers";
+import { SeeAllWrapper } from "components/Feed/FeedWrappers";
 
-import {
+/* import {
   fetchUser,
   fetchUserError,
   fetchUserSuccess,
-} from "hooks/actions/userActions";
-import {
+} from "hooks/actions/userActions"; */
+/* import {
   fetchOrganisation,
   fetchOrganisationError,
   fetchOrganisationSuccess,
-} from "hooks/actions/organisationActions";
+} from "hooks/actions /organisationActions";*/
 import { UserContext, withUserContext } from "context/UserContext";
-import {
+/* import {
   OrganisationContext,
   withOrganisationContext,
 } from "context/OrganisationContext";
-
+ */
+import {
+  deletePostModalreducer,
+  deletePostState,
+} from "hooks/reducers/feedReducers";
 import GTM from "constants/gtm-tags";
 import { selectPosts, postsActions } from "reducers/posts";
+import {
+  SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
+} from "hooks/actions/feedActions";
+
 import { selectOrganisationId, selectActorId } from "reducers/session";
 import Activity from "components/Profile/Activity";
-import CreatePost from "components/CreatePost/CreatePost";
+import ErrorAlert from "components/Alert/ErrorAlert";
 import { lowerCase } from "lodash";
 import { theme, mq } from "constants/theme";
+import { WhiteSpace } from "antd-mobile";
 
 const gtmTagsMap = {
   // ALL: GTM.post.allPost,
@@ -46,66 +57,93 @@ const gtmTagsMap = {
 
 const gtmTag = (tag) => GTM.profile.viewProfilePrefix + tag;
 
-let TAB_TYPE = {
+const TAB_TYPE = {
   POSTS: {
     REQUESTS: "Requests",
     OFFERS: "Offers",
   },
-  REQS_OFFRS: {
-    ACTIVE: "Active",
-    ARCHIVED: "Archived",
-    DRAFTS: "Drafts",
+  // REQS_OFFRS: {
+  //   ACTIVE: "Active",
+  //   ARCHIVED: "Archived",
+  //   DRAFTS: "Drafts",
+  // },
+  REQUESTS: {
+    ACTIVE_REQS: "Active",
+    ARCHIVED_REQS: "Archived",
+    DRAFTS_REQS: "Drafts",
+  },
+  OFFERS: {
+    ACTIVE_OFRS: "Active",
+    ARCHIVED_OFRS: "Archived",
+    DRAFTS_OFRS: "Drafts",
   },
 };
 
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-
+// const isMobile = true;
 export const MenuWrapper = styled(Menu)`
-  line-height: 40px;
-  width: 54rem;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
 
   &.ant-menu {
-    border-top: 0.2rem solid ${theme.colors.lightGray};
-    border-bottom: 0.2rem solid ${theme.colors.lighterGray};
+    ${({ isMobile }) =>
+      isMobile
+        ? `
+      border-top: 0.2rem solid ${theme.colors.lightGray};
+      width: 100%;
+      border-bottom: 0.2rem solid ${theme.colors.lightGray};
+  `
+        : `border-bottom: 0.2rem solid ${theme.colors.darkGray};`}
 
     li.ant-menu-item {
+      margin: 0.8rem 0;
       height: 3rem;
-      padding-bottom: 1rem;
-      border-left: 0.5rem solid ${theme.colors.white};
+      padding-bottom: 0rem;
+
       color: ${theme.colors.darkerGray};
       font-size: ${theme.typography.size.large};
       line-height: 21px;
-
+      width: 50%;
       &:hover {
         color: ${theme.colors.darkerGray};
       }
+      text-align: center;
     }
 
     &.ant-menu .ant-menu-item-selected {
       background-color: transparent;
-      border-bottom: solid 0.2rem #282828;
+      border-bottom: 0.2rem solid ${theme.colors.black};
       font-weight: bold;
     }
   }
 `;
 
+let currentActiveTab = "";
+
 const SeeAll = ({
   isAuthenticated,
   isOrg,
   profileId: pathUserId,
+  user,
   menuView,
+  isMobile,
 }) => {
   const { t } = useTranslation();
   let orgId = "";
-  const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
+  // const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
   if (isOrg) {
     orgId = pathUserId;
   }
-  console.log("In See All Component", isMobile, pathUserId);
-  const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const { orgProfileState: organisation, orgProfileDispatch } = useContext(
+  // console.log("In See All Component menuView - ", menuView);
+  /* const { userProfileState, userProfileDispatch } = useContext(UserContext); */
+  /* const { orgProfileState: organisation, orgProfileDispatch } = useContext(
     OrganisationContext,
+  ); */
+  const [deleteModal, deleteModalDispatch] = useReducer(
+    deletePostModalreducer,
+    deletePostState,
   );
   const posts = useSelector(selectPosts);
   const dispatch = useDispatch();
@@ -114,7 +152,7 @@ const SeeAll = ({
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const { error, loading, user } = userProfileState;
+  //const { error, loading, user } = userProfileState;
   const {
     id: userId,
     about,
@@ -135,6 +173,7 @@ const SeeAll = ({
     page,
     posts: postsList,
   } = posts;
+  const { deleteModalVisibility } = deleteModal;
 
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
@@ -144,18 +183,25 @@ const SeeAll = ({
   const isSelf = actorId === userId;
 
   const getviewType = () => {
-    if (menuView === "REQUESTS" || menuView === "OFFERS") {
+    /* if (menuView === "REQUESTS" || menuView === "OFFERS") {
       return "REQS_OFFRS";
-    }
+    } */
     return menuView;
   };
 
   const viewType = getviewType();
 
-  let defaultState = menuView === "POSTS" ? "REQUESTS" : "ACTIVE";
-  console.log("menuView defaultState changed", menuView, defaultState);
+  /* const defaultState = menuView === "POSTS" ? "REQUESTS" : "ACTIVE"; */
+  const defaultState = useCallback(() => {
+    if (menuView === "POSTS") return "REQUESTS";
+    else if (menuView === "REQUESTS") return "ACTIVE_REQS";
+    else return "ACTIVE_OFRS";
+  });
+  // console.log("menuView defaultState changed", menuView, defaultState);
 
-  let [queryParams, setQueryParams] = useState(defaultState);
+  const [queryParams, setQueryParams] = useState(defaultState);
+  console.log("queryParams", queryParams);
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -169,67 +215,38 @@ const SeeAll = ({
   };
 
   const handleTabChange = (e) => {
+    console.log("calling handleTabChange queryParams", e.key, queryParams);
     setQueryParams(e.key);
+    currentActiveTab = e.key;
+    console.log(
+      "calling after handleTabChange queryParams",
+      e.key,
+      currentActiveTab,
+    );
+    console.log("menuView - ", menuView, queryParams);
+    console.log("viewType", viewType);
   };
 
   useEffect(() => {
-    dispatch(postsActions.resetPageAction({}));
-    if (!isOrg) {
-      (async function fetchProfile() {
-        userProfileDispatch(fetchUser());
-        try {
-          const res = await axios.get(`/api/users/${pathUserId}`);
-          userProfileDispatch(fetchUserSuccess(res.data));
-        } catch (err) {
-          const message = err.response?.data?.message || err.message;
-          const translatedErrorMessage = t([
-            `error.${message}`,
-            `error.http.${message}`,
-          ]);
-          userProfileDispatch(
-            fetchUserError(
-              `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
-            ),
-          );
-        }
-      })();
-    } else {
-      (async function fetchOrgProfile() {
-        orgProfileDispatch(fetchOrganisation());
-        userProfileDispatch(fetchUser());
-        try {
-          const res = await axios.get(`/api/organisations/${orgId}`);
-          orgProfileDispatch(fetchOrganisationSuccess(res.data));
-        } catch (err) {
-          const message = err.response?.data?.message || err.message;
-          const translatedErrorMessage = t([
-            `error.${message}`,
-            `error.http.${message}`,
-          ]);
-          orgProfileDispatch(
-            fetchOrganisationError(
-              `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
-            ),
-          );
-        }
-      })();
-    }
-  }, [pathUserId, orgId, userProfileDispatch, orgProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+    console.log("calling menuview", menuView);
+    /* menuView === "POSTS" ? setQueryParams("REQUESTS") : setQueryParams("ACTIVE"); */
+    setQueryParams(defaultState);
+  }, [defaultState, menuView]);
 
   useEffect(() => {
-    console.log("Useeddfect");
+    // console.log("Useeddfect");
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
   }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    console.log("in fetch posts useeffects");
+    console.log("in fetch posts useeffects", currentActiveTab);
+    console.log("queryParams", queryParams);
     const fetchPosts = async () => {
-      console.log("in fetch posts");
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
       dispatch(postsActions.fetchPostsBegin());
       try {
-        console.log("in fetch posts try userId", userId, isOrg, orgId);
+        // console.log("in fetch posts try userId", userId, isOrg, orgId);
         if (userId || (isOrg && orgId)) {
           console.log("In If");
           if (isOrg) {
@@ -240,29 +257,23 @@ const SeeAll = ({
             baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${orgId}${getActorQuery()}`;
           }
 
-          console.log("queryParams", queryParams, isMobile);
+          // console.log("queryParams", queryParams);
           const view =
             viewType !== "POSTS"
               ? lowerCase(menuView).slice(0, -1)
               : lowerCase(queryParams).slice(0, -1);
 
-          let objURL = "";
-          /* if(viewType === 'POSTS'){ */
-          objURL = `&objective=${view}`;
-          /*  } */
+          const objURL = `&objective=${view}`;
 
-          console.log("TAB TYpe", viewType, view, TAB_TYPE[viewType].ACTIVE);
+          // console.log("TAB TYpe", viewType, view, queryParams);
           const mode =
             viewType !== "POSTS" &&
-            lowerCase(queryParams) === lowerCase(TAB_TYPE[viewType].ARCHIVED)
+            /* lowerCase(queryParams) === lowerCase(TAB_TYPE[viewType].ARCHIVED_REQS) */
+            lowerCase(queryParams).includes("archive")
               ? "IA"
               : "D";
-          console.log(
-            "mode",
-            lowerCase(queryParams),
-            lowerCase(TAB_TYPE[viewType].ARCHIVED),
-            mode,
-          );
+          //console.log("mode",lowerCase(queryParams),lowerCase(TAB_TYPE[viewType].ARCHIVED),mode,);
+
           const modeURL = `&postMode=${mode}`;
           const endpoint = `${baseURL}${objURL}${modeURL}`;
           console.log("endpoint", endpoint);
@@ -270,7 +281,7 @@ const SeeAll = ({
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
-
+          // console.log("Done");
           if (prevUserId !== userId) {
             dispatch(
               postsActions.fetchPostsSuccess({
@@ -324,11 +335,6 @@ const SeeAll = ({
     fetchPosts();
   }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  /* useEffect(() => {
-    console.log("is Mobile");
-    refetchPosts();
-  }, [isMobile]); */
-
   const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
 
   const refetchPosts = useCallback((isLoading, loadMore) => {
@@ -362,26 +368,58 @@ const SeeAll = ({
     setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
   }, [loadMore, userPosts.length]);
 
-  // useEffect(() => {
-  //     getStateFromQuery();
-  //   }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  const postDelete = async (post) => {
+    let deleteResponse;
+    const endPoint = `/api/posts/${post._id}`;
+    if (user && (user._id === post.author.id || user.id === post.author.id)) {
+      try {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          const allPosts = {
+            ...postsList,
+          };
+          delete allPosts[post._id];
+          setTotalPostCount(totalPostCount - 1);
+          if (totalPostCount <= PAGINATION_LIMIT) {
+            const isLoading = true;
+            const loadMore = false;
+            refetchPosts(isLoading, loadMore);
+          } else {
+            refetchPosts();
+          }
+        }
+      } catch (error) {
+        console.log({
+          error,
+        });
+      }
+    }
+  };
+
+  const handlePostDelete = () => {
+    deleteModalDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_POST,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    deleteModalDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_HIDE,
+    });
+  };
 
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
 
   return (
-    <div>
-      {/* // <LayoutWrapper> */}
-      {/* <SiderWrapper
-            breakpoint="md"
-            className="site-layout-background"
-            width="29rem"
-            
-          > */}
+    <SeeAllWrapper isMobile={isMobile}>
       <MenuWrapper
         defaultSelectedKeys={[defaultState]}
         selectedKeys={[queryParams || defaultState]}
         onClick={handleTabChange}
         mode="horizontal"
+        isMobile={isMobile}
       >
         {Object.keys(TAB_TYPE[viewType]).map((item, index) => (
           <Menu.Item id={gtmTag(gtmTagsMap[item])} key={item}>
@@ -389,28 +427,34 @@ const SeeAll = ({
           </Menu.Item>
         ))}
       </MenuWrapper>
-
-      {/* </SiderWrapper> */}
-      <ContentWrapper>
-        {/* <FeedWrapper isProfile> */}
-        {/* <HeaderWrapper>Request/Offers</HeaderWrapper> */}
-        <Activity
-          postDispatch={dispatch}
-          filteredPosts={postsList}
-          user={user}
-          // postDelete={postDelete}
-          // handlePostDelete={handlePostDelete}
-          // handleEditPost={handleEditPost}
-          // deleteModalVisibility={deleteModalVisibility}
-          // handleCancelPostDelete={handleCancelPostDelete}
-          loadNextPage={loadNextPage}
-          isNextPageLoading={isLoading}
-          itemCount={itemCount}
-          isItemLoaded={isItemLoaded}
-          hasNextPage={loadMore}
-          totalPostCount={totalPostCount}
+      <WhiteSpace size={"lg"}></WhiteSpace>
+      {/* <ContentWrapper> */}
+      {/* <HeaderWrapper>Request/Offers</HeaderWrapper> */}
+      <Activity
+        postDispatch={dispatch}
+        filteredPosts={postsList}
+        user={user}
+        postDelete={postDelete}
+        handlePostDelete={handlePostDelete}
+        // handleEditPost={handleEditPost}
+        deleteModalVisibility={deleteModalVisibility}
+        handleCancelPostDelete={handleCancelPostDelete}
+        loadNextPage={loadNextPage}
+        isNextPageLoading={isLoading}
+        itemCount={itemCount}
+        isItemLoaded={isItemLoaded}
+        hasNextPage={loadMore}
+        totalPostCount={totalPostCount}
+      />
+      {postsError && (
+        <ErrorAlert
+          message={t([
+            `error.${postsError.message}`,
+            `error.http.${postsError.message}`,
+          ])}
         />
-        {/* <Posts
+      )}
+      {/* <Posts
                 isAuthenticated={true}
                 filteredPosts={postsList}
                 
@@ -429,20 +473,8 @@ const SeeAll = ({
                 // highlightWords={queryParams.s_keyword}
                 page={page}
               /> */}
-        {emptyFeed() && <>"No Posts."</>}
-        {isSelf && (
-          <CreatePost
-            // onCancel={onToggleCreatePostDrawer}
-            // loadPosts={refetchPosts}
-            // visible={modal}
-            user={user}
-            gtmPrefix={GTM.user.profilePrefix}
-          />
-        )}
-        {/* </FeedWrapper> */}
-      </ContentWrapper>
-      {/* </LayoutWrapper> */}
-    </div>
+      {emptyFeed() && <>"No Posts matching your crieteria."</>}
+    </SeeAllWrapper>
   );
 };
 
