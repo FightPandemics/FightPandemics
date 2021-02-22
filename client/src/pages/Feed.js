@@ -421,9 +421,6 @@ const Feed = (props) => {
       visibility: DELETE_MODAL_HIDE,
     });
   };
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
 
   const loadPosts = async () => {
     if (!applyFilters) return;
@@ -656,8 +653,8 @@ const Feed = (props) => {
   };
 
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
-  const handleSortDropdown = () => {
-    console.log("Sorted");
+  const handleSortDropdown = (value) => {
+    console.log(value);
   };
   return (
     <WithSummitBanner>
@@ -770,7 +767,7 @@ const Feed = (props) => {
                         value: "mostLiked",
                       },
                     ]}
-                    onChange={handleChange}
+                    onChange={handleSortDropdown}
                     minWidth="13rem"
                     minHeight="5rem"
                   />
