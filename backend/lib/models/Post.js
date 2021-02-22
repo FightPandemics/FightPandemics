@@ -69,6 +69,16 @@ const postSchema = new Schema(
       ref: "User",
       type: [ObjectId],
     },
+    views: {
+      default: [],
+      ref: "User",
+      type: [ObjectId],
+    },
+    shares: {
+      default: [],
+      ref: "User",
+      type: [ObjectId],
+    },
     objective: {
       enum: POST_OBJECTIVES,
       lowercase: true,
