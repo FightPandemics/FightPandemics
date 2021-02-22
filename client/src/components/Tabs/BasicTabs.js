@@ -5,6 +5,7 @@ const { TabPane } = Tabs;
 
 const BasicTabs = ({ tabData, onChange }) => {
   const { defaultView, position, tabs } = tabData;
+
   return (
     <Tabs
       tabPosition={position}
@@ -13,7 +14,7 @@ const BasicTabs = ({ tabData, onChange }) => {
     >
       {tabs.map((e, index) => {
         return (
-          <TabPane tab={e.tabName} key={e.tabName} disabled={!e.display}>
+          <TabPane tab={e.tabName} key={e.tabName} disabled={e.disabled}>
             {e.tabView}
           </TabPane>
         );

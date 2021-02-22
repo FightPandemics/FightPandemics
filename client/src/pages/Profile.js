@@ -11,6 +11,7 @@ import React, {
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { theme, mq } from "constants/theme";
 
 import Activity from "components/Profile/Activity";
 import ProfileTabs from "components/Profile/ProfileTabs";
@@ -92,6 +93,7 @@ import githubIcon from "assets/icons/social-github.svg";
 import websiteIcon from "assets/icons/website-icon.svg";
 
 import locationIcon from "assets/icons/status-indicator.svg";
+import useWindowDimensions from "../utils/windowSize";
 import { position } from "polished";
 
 const { TabPane } = Tabs;
@@ -114,6 +116,7 @@ const Profile = ({
     params: { id: pathUserId },
   },
 }) => {
+  const window = useWindowDimensions();
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
   /* const [deleteModal, deleteModalDispatch] = useReducer(
@@ -365,66 +368,94 @@ const Profile = ({
     return <ErrorAlert message={error} type="error" />;
   }
   if (loading) return <Loader />;
+
   const tabViews = {
     defaultView: "1",
-    position: "top",
+    isSelf: isSelf,
+    position: window.width <= parseInt(mq.phone.wide.maxWidth) ? "top" : "left",
     tabs: [
       {
         tabName: t("profile.views.activity"),
         display: true,
         tabView: `contents of activity`,
       },
-      !isSelf && {
-        tabName: t("profile.views.offers"),
-        display: true,
-        tabView: (
-          <div>
-            <SeeAllTabsWrapper>
-              <SeeAllContentWrapper>
-                <FeedWrapper>
-                  <WhiteSpace size={"xl"}></WhiteSpace>
-                  <SeeAllComp
-                    profileId={pathUserId}
-                    user={user}
-                    isOrg={false}
-                    isAuthenticated={isAuthenticated}
-                    menuView={currentTab.toUpperCase()}
-                    isMobile={false}
-                    defaultKey={"ACTIVE"}
-                  ></SeeAllComp>
-                </FeedWrapper>
-              </SeeAllContentWrapper>
-            </SeeAllTabsWrapper>
-          </div>
-        ),
-      },
-      !isSelf && {
-        tabName: t("profile.views.requests"),
-        display: true,
-        tabView: (
-          <div>
-            <SeeAllTabsWrapper>
-              <SeeAllContentWrapper>
-                <FeedWrapper>
-                  <WhiteSpace size={"xl"}></WhiteSpace>
-                  <SeeAllComp
-                    profileId={pathUserId}
-                    user={user}
-                    isOrg={false}
-                    isAuthenticated={isAuthenticated}
-                    menuView={currentTab.toUpperCase()}
-                    isMobile={false}
-                    defaultKey={"ACTIVE"}
-                  ></SeeAllComp>
-                </FeedWrapper>
-              </SeeAllContentWrapper>
-            </SeeAllTabsWrapper>
-          </div>
-        ),
-      },
       isSelf && {
+        disabled: true,
+        tabView: `contents of activity`,
+      },
+      {
+        tabName: t("profile.views.organizations"),
+        disabled: true,
+        tabView: `contents of orgs`,
+      },
+      {
+        tabName: t("profile.views.badges"),
+        disabled: true,
+        tabView: `contents of badges`,
+      },
+      {
+        tabName: t("profile.views.thanks"),
+        disabled: true,
+        tabView: `contents of thanks`,
+      },
+    ],
+  };
+  const isSelfViews = (TabViews, isSelf) => {
+    if (isSelf) {
+      TabViews.tabs.splice(1, 0, {
+        tabName: t("Requests"),
+        disabled: false,
+        tabView: (
+          <div>
+            <span>Requests</span>
+            <SeeAllTabsWrapper>
+              <SeeAllContentWrapper>
+                <FeedWrapper>
+                  <WhiteSpace size={"xl"}></WhiteSpace>
+                  <SeeAllComp
+                    profileId={pathUserId}
+                    user={user}
+                    isOrg={false}
+                    isAuthenticated={isAuthenticated}
+                    menuView={currentTab.toUpperCase()}
+                    isMobile={false}
+                    defaultKey={"ACTIVE"}
+                  ></SeeAllComp>
+                </FeedWrapper>
+              </SeeAllContentWrapper>
+            </SeeAllTabsWrapper>
+          </div>
+        ),
+      });
+      TabViews.tabs.splice(2, 0, {
+        tabName: t("Offers"),
+        disabled: false,
+        tabView: (
+          <div>
+            <SeeAllTabsWrapper>
+              <SeeAllContentWrapper>
+                <FeedWrapper>
+                  <WhiteSpace size={"xl"}></WhiteSpace>
+                  <SeeAllComp
+                    profileId={pathUserId}
+                    user={user}
+                    isOrg={false}
+                    isAuthenticated={isAuthenticated}
+                    menuView={currentTab.toUpperCase()}
+                    isMobile={false}
+                    defaultKey={"ACTIVE"}
+                  ></SeeAllComp>
+                </FeedWrapper>
+              </SeeAllContentWrapper>
+            </SeeAllTabsWrapper>
+          </div>
+        ),
+      });
+    } else {
+      TabViews.tabs.splice(1, 0, {
         tabName: t("profile.views.posts"),
-        display: true,
+        disable: false,
+        showOthers: true,
         tabView: (
           <div>
             {/* <FeedWrapper isProfile>
@@ -483,23 +514,9 @@ const Profile = ({
             </SeeAllTabsWrapper>
           </div>
         ),
-      },
-      {
-        tabName: t("profile.views.organizations"),
-        display: false,
-        tabView: `contents of orgs`,
-      },
-      {
-        tabName: t("profile.views.badges"),
-        display: false,
-        tabView: `contents of badges`,
-      },
-      {
-        tabName: t("profile.views.thanks"),
-        display: false,
-        tabView: `contents of thanks`,
-      },
-    ],
+      });
+    }
+    return TabViews;
   };
   return (
     <>
@@ -617,7 +634,12 @@ const Profile = ({
             />
           )}
         </>
-        {<ProfileTabs onChange={handleTabChange} tabData={tabViews} />}
+        {
+          <ProfileTabs
+            onChange={handleTabChange}
+            tabData={isSelfViews(tabViews, isSelf)}
+          />
+        }
         {/*  <Tabs onTabClick={handleTabChange}>
           <TabPane tab="Tab 1" key="1">
           <p>Content of Tab Pane 1</p>
@@ -626,6 +648,7 @@ const Profile = ({
           <p>Content of Tab Pane 1</p>
           </TabPane>
         </Tabs> */}
+
         {isSelf && (
           <CustomDrawer
             placement="bottom"
