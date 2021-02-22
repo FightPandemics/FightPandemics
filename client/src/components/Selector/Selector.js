@@ -10,17 +10,20 @@ const BaseSelector = ({
   suffixIcon,
   filterOptions,
   defaultValue,
-  minWidth
+  minWidth,
+  minHeight,
+  popUpContainer,
 }) => (
   <StyledSelector
     suffixIcon={suffixIcon}
     defaultValue={defaultValue}
     filterOptions={filterOptions}
     onChange={onChange}
-    getPopupContainer={() =>
-      document.getElementsByClassName("ant-tabs-content-holder")[0]
+    getPopupContainer={
+      popUpContainer ? () => popUpContainer : () => document.body
     }
     minWidth={minWidth}
+    minHeight={minHeight}
   >
     {options.map((item) => (
       <Option {...optionProps} key={item.value} value={item.value}>
@@ -29,4 +32,5 @@ const BaseSelector = ({
     ))}
   </StyledSelector>
 );
+
 export default BaseSelector;
