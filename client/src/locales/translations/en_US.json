@@ -68,6 +68,11 @@
         "enterAddress": "Enter address, zip code, or city",
         "shareLocation": "Share My Location"
       },
+      "sortBy": "Sort by",
+      "trending": "Trending",
+      "mostViewed": "Most Viewed",
+      "latest": "Latest",
+      "mostLiked": "Most Liked",
       "providers": "Providers",
       "providersList": [
         "Individual",
