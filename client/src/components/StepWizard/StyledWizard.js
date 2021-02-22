@@ -8,7 +8,7 @@ const StyledWizard = styled(StepWizard)`
   display: flex;
   flex-direction: column-reverse;
   align-self: flex-start;
-  transition: 0.5s;
+  transition: 0.5s; 
   opacity: ${({ status }) => {
     switch (status) {
       case "entering":
