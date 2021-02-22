@@ -11,6 +11,7 @@ const BaseSelector = ({
   filterOptions,
   defaultValue,
   minWidth,
+  minHeight,
   popUpContainer,
 }) => {
   // const checkPopUp = () =>{
@@ -26,8 +27,11 @@ const BaseSelector = ({
       defaultValue={defaultValue}
       filterOptions={filterOptions}
       onChange={onChange}
-      getPopupContainer={popUpContainer ? popUpContainer : document.body}
+      getPopupContainer={
+        popUpContainer ? () => popUpContainer : () => document.body
+      }
       minWidth={minWidth}
+      minHeight={minHeight}
     >
       {options.map((item) => (
         <Option {...optionProps} key={item.value} value={item.value}>

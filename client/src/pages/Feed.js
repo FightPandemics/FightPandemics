@@ -733,30 +733,49 @@ const Feed = (props) => {
               />
             </SiderWrapper>
             <ContentWrapper>
-              <HeaderWrapper empty={emptyFeed()}>
+              <HeaderWrapper
+                empty={emptyFeed()}
+                style={{ justifyContent: "flex-end" }}
+              >
                 <TabsWrapper
                   options={SEARCH_OPTIONS}
                   showOptions={!!queryParams.s_keyword}
                   displayValue={"name"}
                   t={t}
                 />
-                <BaseSelector
-                  suffixIcon={
-                    <SvgIcon
-                      src={downArrowSlim}
-                      style={{ width: "1.5rem", height: "auto" }}
-                    />
-                  }
-                  defaultValue={"request"}
-                  options={[
-                    {
-                      text: "post.options.helpTypes.request",
-                      value: "request",
-                    },
-                    { text: "post.options.expires.offer", value: "offer" },
-                  ]}
-                  onChange={handleChange}
-                />
+                <div className="visibility-post--selector">
+                  <BaseSelector
+                    suffixIcon={
+                      <SvgIcon
+                        src={downArrowSlim}
+                        style={{ width: "1.5rem", height: "auto" }}
+                      />
+                    }
+                    defaultValue={t("feed.filters.sortBy")}
+                    options={[
+                      {
+                        text: t("feed.filters.latest"),
+                        value: "latest",
+                      },
+                      {
+                        text: t("feed.filters.trending"),
+                        value: "trending",
+                      },
+                      {
+                        text: t("feed.filters.mostViewed"),
+                        value: "mostViewed",
+                      },
+                      {
+                        text: t("feed.filters.mostLiked"),
+                        value: "mostLiked",
+                      },
+                    ]}
+                    onChange={handleChange}
+                    minWidth="13rem"
+                    minHeight="5rem"
+                  />
+                </div>
+
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
                   <CreatePostButton

@@ -68,6 +68,11 @@
         "enterAddress": "Enter address, zip code, or city",
         "shareLocation": "Share My Location"
       },
+      "sortBy": "Sort by",
+      "trending": "Trending",
+      "mostViewed": "Most Viewed",
+      "latest": "Latest",
+      "mostLiked": "Most Liked",
       "providers": "Providers",
       "providersList": [
         "Individual",
@@ -144,7 +149,6 @@
       },
       "postsNearMe": "Show results near me"
     },
-    "filterBy": "Filter by",
     "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
     "allPosts": "All posts",
     "allPeople": "All people",
