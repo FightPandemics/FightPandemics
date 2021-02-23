@@ -765,7 +765,7 @@ const Post = ({
                   {t(getWkMode(workMode))}
                   &nbsp;•
                 </span>
-                {isMobile && <br />}
+                {/* {isMobile && <br />} */}
                 <Tooltip
                   color={theme.colors.darkGray}
                   title={translateISOTimeTitle(post.createdAt)}
@@ -785,6 +785,7 @@ const Post = ({
               </div>
               <WhiteSpace size={"xl"} />
               <WhiteSpace size={"md"} />
+              {isMobile && <br />}
               <div className="card-header">
                 {includeProfileLink ? renderHeaderWithLink : renderHeader}
                 {isAuthenticated && (

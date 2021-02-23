@@ -111,7 +111,6 @@ const PostCard = styled(Card)`
     font-weight: 400;
     color: ${colors.royalBlue};
     -webkit-text-stroke: 0.2px;
-    width: 86%;
     &.post-page {
       position: relative;
       top: unset;
@@ -121,12 +120,6 @@ const PostCard = styled(Card)`
       padding-left: 1rem;
       font-size: ${small};
       color: ${colors.darkishGray};
-      overflow-wrap: break-word;
-      @media screen and (max-width: ${mq.tablet.narrow.maxWidth}) {
-        float: right;
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
     }
   }
 
