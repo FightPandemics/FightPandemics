@@ -137,8 +137,6 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
     dispatchAction(SET_VALUE, "activePanel", activePanelKey);
   };
 
-  console.log("filters", filters, gtmPrefix);
-
   const renderPanels = () => {
     return filters.map((filter, idx) => {
       if (filter.label === "location") {
@@ -172,7 +170,6 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
             key={idx}
           >
             {Object.values(filter.options).map(({ text, value }, idx) => {
-              console.log("idx", idx);
               if (value !== "Remote Work") {
                 const tagClassName = `tag-selectable ${
                   selectedOptions[filter.label] &&

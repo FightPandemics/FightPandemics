@@ -116,11 +116,9 @@ async function routes(app) {
       if (workMode){
         const workModes = workMode.map(mode => mode.toLowerCase())
         if(workModes.includes('both')){
-          console.log("In both")
           filters.push({ $or: [ { $and: [ { workMode: null }, {types: { $nin : ['Remote Work'] } } ] }, {workMode: { $in: workModes } }] });
         }
         else if(workModes.includes('remote')) {
-          console.log("In remote")
           filters.push({ $or: [ { $and: [ { workMode: null }, {types: { $in : ['Remote Work'] } } ] }, {workMode: { $in: workModes } }] });
         }
         else {

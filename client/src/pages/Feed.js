@@ -324,30 +324,6 @@ const Feed = (props) => {
     refetchPosts(null, null, true);
   };
 
-  /* //Aditi Do I need this */
-  /*   const onRemoteChange = (e) => {
-    if (!e) {
-      dispatchAction(SET_VALUE, "remote", "no");
-      setQueryKeysValue(history, { remote: "" });
-    } else {
-      dispatchAction(SET_VALUE, "remote", e.target.checked ? "yes" : "no");
-    }
-
-    TagManager.dataLayer({
-      dataLayer: {
-        event: "RMT_WRK_CHK",
-        rmtClickId: GTM.post.prefix + GTM.post.workMode,
-      },
-    });
-    // clear dataLayer
-    TagManager.dataLayer({
-      dataLayer: {
-        event: null,
-        rmtClickId: null,
-      },
-    });
-  }; */
-
   const toggleShowNearMe = (e) => {
     setQueryKeysValue(history, {
       near_me: e.target.checked,

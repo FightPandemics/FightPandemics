@@ -62,7 +62,7 @@ import {
   DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import { postsActions } from "reducers/posts";
-import { theme } from "constants/theme";
+import { mq, theme } from "constants/theme";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
@@ -482,6 +482,8 @@ const Post = ({
     />
   );
 
+  const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
+
   const renderHeaderWithLink = (
     <Link to={authorProfileLink(post)}>{renderHeader}</Link>
   );
@@ -588,6 +590,13 @@ const Post = ({
   const isOwner =
     isAuthenticated &&
     (isAuthorUser(user, post) || isAuthorOrg(user?.organisations, post.author));
+  const getWkMode = (workMode) => {
+    return workMode && workMode !== "both"
+      ? `post.${workMode}`
+      : !workMode && post.types.includes("Remote Work")
+      ? "post.remote"
+      : "post.both";
+  };
 
   return (
     <>
@@ -610,15 +619,10 @@ const Post = ({
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
               <span>
                 &nbsp;&nbsp;
-                {t(
-                  workMode && workMode !== "both"
-                    ? `${workMode[0].toUpperCase()}${workMode.slice(1)}`
-                    : !workMode && post.types.includes("Remote Work")
-                    ? "Remote"
-                    : "Remote & In-person",
-                )}
+                {t(getWkMode(workMode))}
                 &nbsp;&nbsp;•
               </span>
+
               <Tooltip
                 color={theme.colors.darkGray}
                 title={translateISOTimeTitle(post.createdAt)}
@@ -757,16 +761,11 @@ const Post = ({
               <div className="pre-header">
                 <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
                 <span>
-                  &nbsp;&nbsp;
-                  {t(
-                    workMode && workMode !== "both"
-                      ? `${workMode[0].toUpperCase()}${workMode.slice(1)}`
-                      : !workMode && post.types.includes("Remote Work")
-                      ? "Remote"
-                      : "Remote & In-person",
-                  )}
-                  &nbsp;&nbsp;•
+                  &nbsp;
+                  {t(getWkMode(workMode))}
+                  &nbsp;•
                 </span>
+                {isMobile && <br />}
                 <Tooltip
                   color={theme.colors.darkGray}
                   title={translateISOTimeTitle(post.createdAt)}
@@ -778,6 +777,7 @@ const Post = ({
                         count: post?.elapsedTimeText?.created?.count,
                       },
                     )}
+
                     {post?.elapsedTimeText?.isEdited &&
                       ` · ${t("post.edited")}`}
                   </span>
