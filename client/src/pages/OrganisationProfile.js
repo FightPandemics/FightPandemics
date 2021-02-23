@@ -167,6 +167,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
 
+  const [editOrgBookMode, setEditOrgBookMode] = useState("create");
+  const [orgBookLinkLabel, setOrgBookLinkLabel] = useState(
+    t("profile.org.createOrgBook").toString(),
+  );
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -178,6 +183,15 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     return actorOrganisationId ? `&actorId=${actorOrganisationId}` : "";
   };
 
+  const setOrgBookState = (orgBookPages = null) => {
+    setEditOrgBookMode(orgBookPages ? "edit" : "create");
+    setOrgBookLinkLabel(
+      orgBookPages
+        ? t("profile.org.editOrgBook")
+        : t("profile.org.createOrgBook"),
+    );
+  };
+
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
     (async function fetchOrgProfile() {
@@ -186,6 +200,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
+        setOrgBookState(res.data.orgBookPages);
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
@@ -569,6 +584,13 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <DrawerHeader>
                 <Link to={`/edit-organisation-notifications/${organisationId}`}>
                   {t("profile.org.editOrgNotification")}{" "}
+                </Link>
+              </DrawerHeader>
+              <DrawerHeader>
+                <Link
+                  to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                >
+                  {orgBookLinkLabel}{" "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>

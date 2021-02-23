@@ -7,6 +7,7 @@ import OrganisationProfile from "./pages/OrganisationProfile";
 import EditOrganisationProfile from "./pages/EditOrganisationProfile";
 import EditOrganisationAccount from "./pages/EditOrganisationAccount";
 import EditOrganisationNotifications from "./pages/EditOrganisationNotifications";
+import OrgBookEditor from "./pages/OrgBook/OrgBookEditor";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -129,6 +130,13 @@ const routes = [
   {
     path: "/edit-organisation-notifications",
     component: EditOrganisationNotifications,
+    props: {
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/orgbook-editor",
+    component: OrgBookEditor,
     props: {
       loggedInOnly: true,
     },

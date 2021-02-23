@@ -392,8 +392,20 @@
       "orgNameRequired": "Organisation name is required",
       "global": "Global",
       "editOrgAccount": "Edit Organisation Account",
-      "editOrgNotification": "Edit Organisation Notification"
+      "editOrgNotification": "Edit Organisation Notification",
+      "editOrgBook": "Edit OrgBook",
+      "createOrgBook": "Create OrgBook"
     }
+  },
+  "orgBook": {
+    "editorSpaceTOCHeader": "Org Editor Space",
+    "newOrgBook": "New OrgBook",
+    "pageName": "Page Name",
+    "pleaseEnterPageNameCreate": "Please enter the page name for the first page in your OrgBook.",
+    "page1": "Page 1",
+    "create": "Create",
+    "cancel": "Cancel",
+    "maxPageName": "Page name must be maximum 25 characters."
   },
   "auth": {
     "signIn": "Sign In",
