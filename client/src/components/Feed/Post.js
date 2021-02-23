@@ -765,7 +765,7 @@ const Post = ({
                   {t(getWkMode(workMode))}
                   &nbsp;•
                 </span>
-                {/* {isMobile && <br />} */}
+
                 <Tooltip
                   color={theme.colors.darkGray}
                   title={translateISOTimeTitle(post.createdAt)}
