@@ -473,7 +473,7 @@ const Feed = (props) => {
         baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}`;
         break;
       case "ORGANISATIONS":
-        baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}`;
+        baseURL = `/api/organisations/?includeMeta=true&limit=${limit}&skip=${skip}`;
         break;
       default:
         break;
