@@ -17,7 +17,7 @@ const MapContainer = styled.div`
   margin: 2% auto;
   width: 100%;
   height: 100vh;
-  minheight: 30rem;
+  min-height: 30rem;
   overflow: visible;
 `;
 
