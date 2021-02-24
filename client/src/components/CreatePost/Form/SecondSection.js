@@ -4,7 +4,10 @@ import Head from "./Head";
 import { Section } from "components/CreatePost/StyledModal";
 import filterOptions from "assets/data/filterOptions";
 
-const types = Object.values(filterOptions)[2].options;
+let types = Object.values(filterOptions)[2].options;
+types = types.filter((val) => {
+  return val.value !== "Remote Work";
+});
 
 const Second = ({ addTag, selectedTags, title, renderError }) => {
   return (
