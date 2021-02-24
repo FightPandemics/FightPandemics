@@ -277,12 +277,12 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       <Container>
         <Title>{t("post.expireTitle")}</Title>
         <Body>{t("post.expire")}</Body>
-          <StyledLink
-            id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
-            to="/feed"
-          >
-            {t("feed.title")}
-          </StyledLink>
+        <StyledLink
+          id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
+          to="/feed"
+        >
+          {t("feed.title")}
+        </StyledLink>
       </Container>
     );
   return (

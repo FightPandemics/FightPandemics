@@ -105,7 +105,8 @@
         "location": "Location",
         "providers": "Providers",
         "type": "Types",
-        "lookingFor": "Offer or Request Help"
+        "lookingFor": "Offer or Request Help",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Individual",
@@ -178,6 +179,8 @@
     "addTags": "Add tags to make your post more visible",
     "whatVisibility": "What is the visibility of your post?",
     "postVisible": "The post will be visible to",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
     "success": "Success",
     "viewPost": "View Your Post",
     "like": "Like",
@@ -204,6 +207,11 @@
       "helpTypes": {
         "request": "Requesting help",
         "offer": "Offering help"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Post",
@@ -224,6 +232,9 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "edited": "edited",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person",
     "share_plural": "Shares",
     "deletePostConfirmationTitle": "Delete post confirmation",
     "deleteCommentConfirmationTitle": "Delete comment confirmation",
@@ -425,7 +436,7 @@
   },
   "aboutUs": {
     "ourStory": "Our Story",
-    "story": "is the brainchild of Manuel Gonzalez Alzuru, who was infected with COVID-19 in France. Upon returning home to Barcelona, he found he was unable to get help even though there were people who wanted to provide it.",
+    "story": "is the brainchild of Manuel Gonzalez Alzuru, who was infected with COVID-19 in France. Upon returning home to Barcelona, he found that he was unable to get help even though there were people who wanted to help.",
     "ourCommunity": "Our Community",
     "community": "We are built by a team of 1100+ volunteer developers, designers, scientists, health experts, and product managers from around the world.",
     "ourIdea": "Our Idea",

@@ -106,7 +106,7 @@ const PostCard = styled(Card)`
     top: 0;
     padding: 1rem 0;
     margin-top: 1rem;
-    font-family: "Work Sans";
+    font-family: "Work Sans", sans-serif;
     font-size: ${small};
     font-weight: 400;
     color: ${colors.royalBlue};
@@ -202,7 +202,7 @@ const PostCard = styled(Card)`
         }
         .verification-tick {
           vertical-align: sub;
-          top: unset!important;
+          top: unset !important;
         }
         > .ant-avatar-circle,
         > img {
@@ -276,7 +276,7 @@ const PostCard = styled(Card)`
         letter-spacing: -0.03rem;
         -webkit-text-stroke: 0.2px;
         a {
-            text-decoration: underline;
+          text-decoration: underline;
         }
       }
 
