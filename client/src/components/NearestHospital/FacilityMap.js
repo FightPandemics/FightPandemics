@@ -119,7 +119,7 @@ const FacilityMap = (props) => {
     });
   };
 
-  const FacilityMarkers = facilities.map((facility) => {
+  const FacilityMarkers = facilities?.map((facility) => {
     return (
       <FacilityMapMarker
         key={facility.place_id}
