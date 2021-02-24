@@ -49,6 +49,7 @@ import {
   deletePostModalreducer,
   deletePostState,
 } from "hooks/reducers/feedReducers";
+import { isAuthorUser, isAuthorOrg } from "utils/userInfo";
 
 // ICONS
 import { CreatePostIcon } from "../components/Profile/ProfileComponents";
@@ -72,21 +73,6 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import WithSummitBanner from "components/WithSummitBanner";
-
-export const isAuthorOrg = (organisations, author) => {
-  const isValid = organisations?.some(
-    (organisation) => organisation.name === author.name,
-  );
-  return isValid;
-};
-
-export const isAuthorUser = (user, post) => {
-  return (
-    user?._id === post?.author?.id ||
-    (user?.id === post?.author?.id &&
-      (user.ownUser === undefined || user.ownUser))
-  );
-};
 
 const gtmTagsMap = {
   ALL: GTM.post.allPost,
@@ -733,15 +719,15 @@ const Feed = (props) => {
                 />
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
-                  <CreatePostButton
-                    id={gtmTag(GTM.post.createPost)}
-                    onClick={handleCreatePost}
-                    inline={true}
-                    icon={<PlusIcon />}
-                  >
-                    {t("post.create")}
-                  </CreatePostButton>
-                )}
+                    <CreatePostButton
+                      id={gtmTag(GTM.post.createPost)}
+                      onClick={handleCreatePost}
+                      inline={true}
+                      icon={<PlusIcon />}
+                    >
+                      {t("post.create")}
+                    </CreatePostButton>
+                  )}
               </HeaderWrapper>
               <MobileSearchWrapper>
                 <FeedSearch
@@ -787,29 +773,29 @@ const Feed = (props) => {
                   page={page}
                 />
               ) : (
-                <Users
-                  isAuthenticated={isAuthenticated}
-                  filteredUsers={postsList}
-                  user={user}
-                  isNextPageLoading={isLoading}
-                  loadNextPage={loadNextPage}
-                  itemCount={itemCount}
-                  isItemLoaded={isItemLoaded}
-                  hasNextPage={loadMore}
-                  totalUsersCount={totalPostCount}
-                  highlightWords={queryParams.s_keyword}
-                />
-              )}
+                  <Users
+                    isAuthenticated={isAuthenticated}
+                    filteredUsers={postsList}
+                    user={user}
+                    isNextPageLoading={isLoading}
+                    loadNextPage={loadNextPage}
+                    itemCount={itemCount}
+                    isItemLoaded={isItemLoaded}
+                    hasNextPage={loadMore}
+                    totalUsersCount={totalPostCount}
+                    highlightWords={queryParams.s_keyword}
+                  />
+                )}
               {emptyFeed() ? (
                 <NoPosts>
                   <Trans
                     i18nKey={
                       !queryParams.s_category ||
-                      queryParams.s_category === "POSTS"
+                        queryParams.s_category === "POSTS"
                         ? "feed.noResultsPosts"
                         : queryParams.s_category === "INDIVIDUALS"
-                        ? "feed.noResultsPeople"
-                        : "feed.noResultsOrgs"
+                          ? "feed.noResultsPeople"
+                          : "feed.noResultsOrgs"
                     }
                     components={[
                       <a
@@ -820,16 +806,16 @@ const Feed = (props) => {
                   />
                 </NoPosts>
               ) : (
-                (!queryParams.s_category ||
-                  queryParams.s_category === "POSTS") && (
-                  <CreatePostIcon
-                    id={gtmTag(GTM.post.createPost)}
-                    src={creatPost}
-                    onClick={handleCreatePost}
-                    className="create-post"
-                  />
-                )
-              )}
+                  (!queryParams.s_category ||
+                    queryParams.s_category === "POSTS") && (
+                    <CreatePostIcon
+                      id={gtmTag(GTM.post.createPost)}
+                      src={creatPost}
+                      onClick={handleCreatePost}
+                      className="create-post"
+                    />
+                  )
+                )}
             </ContentWrapper>
           </LayoutWrapper>
           <CreatePost
