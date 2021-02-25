@@ -15,7 +15,7 @@ import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
 import PostMetaContainer from "components/Meta/PostMetaContainer";
 import { typeToTag } from "assets/data/formToPostMappings";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "utils/userInfo";
 import { postReducer, postState } from "hooks/reducers/postReducers";
 import { selectOrganisationId, selectActorId } from "reducers/session";
 import GTM from "constants/gtm-tags";

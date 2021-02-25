@@ -41,8 +41,11 @@ import {
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
 import { authorProfileLink, buildLocationString } from "./utils";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
-import { getInitialsFromFullName } from "utils/userInfo";
+import {
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser,
+} from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
@@ -760,12 +763,6 @@ const Post = ({
               )}
               <div className="pre-header">
                 <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-                <span>
-                  &nbsp;
-                  {t(getWkMode(workMode))}
-                  &nbsp;•
-                </span>
-
                 <Tooltip
                   color={theme.colors.darkGray}
                   title={translateISOTimeTitle(post.createdAt)}
@@ -777,7 +774,6 @@ const Post = ({
                         count: post?.elapsedTimeText?.created?.count,
                       },
                     )}
-
                     {post?.elapsedTimeText?.isEdited &&
                       ` · ${t("post.edited")}`}
                   </span>
@@ -785,7 +781,6 @@ const Post = ({
               </div>
               <WhiteSpace size={"xl"} />
               <WhiteSpace size={"md"} />
-              {isMobile && <br />}
               <div className="card-header">
                 {includeProfileLink ? renderHeaderWithLink : renderHeader}
                 {isAuthenticated && (

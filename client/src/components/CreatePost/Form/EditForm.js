@@ -7,7 +7,7 @@ import Second from "./SecondSection";
 import Third from "./ThirdSection";
 import Fourth from "./FourthSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "utils/userInfo";
 
 import { SET_POST, RESET_POST } from "hooks/actions/postActions";
 
