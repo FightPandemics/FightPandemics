@@ -166,7 +166,7 @@ function Stats({ stats }) {
                 axis: "x",
                 callbacks: {
                   label: function (tooltipItem, data) {
-                    var value = tooltipItem.yLabel;
+                    let value = tooltipItem.yLabel;
                     return `${data.datasets[tooltipItem.datasetIndex].label}: ${
                       value < 0 ? -value : value
                     } posts`;
