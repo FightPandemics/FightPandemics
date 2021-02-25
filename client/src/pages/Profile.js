@@ -191,7 +191,7 @@ const Profile = ({
     return organisationId ? `&actorId=${organisationId}` : "";
   };
 
-  useEffect(() => {
+  const createMenu = () => {
     const tempMenu = [...navMenu];
     if (isSelf) {
       tempMenu.splice(1, 0, {
@@ -209,7 +209,11 @@ const Profile = ({
       });
     }
     setNavMenu(tempMenu);
-  }, [isSelf, navMenu, t]);
+  };
+
+  useEffect(() => {
+    createMenu();
+  }, [createMenu]);
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
