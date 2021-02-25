@@ -212,7 +212,7 @@ const Profile = ({
       setSectionView(t("profile.views.posts"));
     }
     setNavMenu(tempMenu);
-  }, [isSelf, loadMore, navMenu, t]);
+  }, [isSelf, loadMenu, navMenu, t]);
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
