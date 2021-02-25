@@ -214,7 +214,7 @@ const Profile = ({
   };
   useEffect(() => {
     buildNavMenu();
-  }, [buildNavMenu, isSelf]);
+  }, [buildNavMenu, isSelf]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
