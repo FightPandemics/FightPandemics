@@ -36,7 +36,7 @@ const HealthFacilitiesContainer = styled.div`
   align-self: flex-start;
   padding-top: 2rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin: ${(props) => (props.isIPhone ? "24rem 0 0 0" : "20rem 0 0 0")};
+    margin: ${(props) => (props.isIPhone ? "22rem 0 0 0" : "20rem 0 0 0")};
   }
   h2 {
     font-weight: bold;
