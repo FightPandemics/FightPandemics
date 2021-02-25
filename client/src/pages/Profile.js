@@ -24,6 +24,8 @@ import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
 
+import ThankButton from "components/Button/ThankButton";
+
 import {
   ProfileLayout,
   ProfileBackgroup,
@@ -44,6 +46,8 @@ import {
   PhotoUploadButton,
   AvatarPhotoContainer,
   NamePara,
+  DesktopLocation,
+  MobileLocation,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -369,12 +373,14 @@ const Profile = ({
                   {firstName} {lastName}
                   {verified && <VerificationTick />}
                 </NamePara>
-                {address && (
-                  <div title={address} className="address-container">
-                    <img src={locationIcon} alt={address} />
-                    {address}
-                  </div>
-                )}
+                <DesktopLocation>
+                    {address && (
+                      <div title={address} className="address-container">
+                        <img src={locationIcon} alt={address} />
+                        {address}
+                      </div>
+                    )}
+                </DesktopLocation>
               </div>
               {isSelf && (
                 <EditIcon
@@ -384,6 +390,7 @@ const Profile = ({
                 />
               )}
               {!ownUser && (
+                <>
                 <MessageModal
                   isAuthenticated={isAuthenticated}
                   isFromUserCard={"USER"}
@@ -391,14 +398,25 @@ const Profile = ({
                   postAuthorName={`${firstName} ${lastName}`}
                   authorId={userId}
                 />
+                {/* <ThankButton>Thanks</ThankButton> */}
+
+                </>
               )}
             </NameDiv>
             {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
             <IconsContainer>
-              <HelpContainer>
+              <MobileLocation>
+                {address && (
+                    <div title={address} className="address-container">
+                      <img src={locationIcon} alt={address} />
+                      {address}
+                    </div>
+                  )}
+              </MobileLocation>
+              {/* <HelpContainer>
                 {needHelp && <div>{t("profile.individual.needHelp")}</div>}
                 {offerHelp && <div> {t("profile.individual.wantHelp")}</div>}
-              </HelpContainer>
+              </HelpContainer> */}
               <div className="social-icons">
                 {Object.entries(urls).map(([name, url]) => {
                   return (

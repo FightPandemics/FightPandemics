@@ -15,6 +15,7 @@ import { WebSocketContext } from "context/WebsocketContext";
 import { useTranslation } from "react-i18next";
 import TagManager from "react-gtm-module";
 import GTM from "constants/gtm-tags";
+import { MailruShareButton } from "react-share";
 
 const OrgPostRef = ({ title, content, postAuthorName, avatar }) => {
   const { t } = useTranslation();
@@ -70,6 +71,15 @@ const MessageModal = ({
     sessionStorage.removeItem("msgModal");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // const envelopeColor = () => {
+  //   var mail = document.getElementsByClassName("envelopeIcon"); 
+  //   if (/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+  //     mail.src = "https://p1.hiclipart.com/preview/973/318/419/email-icon-inbox-icon-letter-icon-message-icon-text-icon-logo-line-arrow-symbol-blackandwhite-png-clipart.jpg"
+  //   } else {
+  //     mail.src = 'activeemail'
+  //   }
+  // }
 
   const showModal = async () => {
     await setVisible(true);
@@ -161,7 +171,7 @@ const MessageModal = ({
             isFromUserCard={isFromUserCard}
             id={gtmId}
           >
-            <img src={activeemail} alt={"message-icon"} />
+            <img src={activeemail} className='envelopeIcon' alt={"message-icon"} />
             <span>{t("messaging.message")}</span>
           </PrivateMessageContainer>
           <MsgModal

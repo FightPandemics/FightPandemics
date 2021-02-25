@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { mq, theme } from "constants/theme";
 
 const primaryColor = theme?.colors?.royalBlue;
+const whiteColor = theme?.colors?.offWhite;
 
 export const MsgModal = styled(Modal)`
   min-width: 580px;
@@ -221,7 +222,11 @@ export const FailedModal = styled(SuccessModal)`
 `;
 
 export const PrivateMessageContainer = styled.div`
+  position: relative;
   cursor: pointer;
+  font-family: "Poppins",sans-serif;
+
+
   :hover {
     color: #939393;
   }
@@ -231,13 +236,31 @@ export const PrivateMessageContainer = styled.div`
     top: 0.28rem;
   }
   span {
-    position: relative;
-    left: 0.7rem;
-    color: #939393;
+    font-family: Poppins;
+    position: static;
+    left: 39.47%;
+    right: 18.42%;
+    top: 20%;
+    bottom: 30%;
+    font-size: 2rem;
+    color: white;
+    font-weight: 500;
+    line-height: 20px;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       display: none;
     }
   }
+  img.envelopeIcon {
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      position: absolute;
+      top: 22%;
+      right: 22%;
+      width: 30px;
+      display: block;
+
+    }
+  }
+  
 
   img,
   span {
@@ -247,34 +270,35 @@ export const PrivateMessageContainer = styled.div`
   ${(props) =>
     props.isFromUserCard
       ? `
-    margin-left: 7.4rem;
+    // margin-left: 7.4rem;
   `
       : ""}
 
   ${(props) =>
     props.isFromProfile
       ? `
-      display: flex;
-      align-items: center;
-      border: 0.1rem solid ${theme.colors.royalBlue};
+      position: absolute;
+      top: -33px;
+      right: 50px;
+      background: #425AF2;
+      border: 6px solid #FFFFFF;
+      border-radius: 46px;
       box-sizing: border-box;
       border-radius: 4.6rem;
       padding: 0.8rem 2.8rem;
-      margin-left: 0;
-
+     
       @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        margin-top: 1rem;
         justify-content: center;
+        width: 36px;
+        height: 55px;
+        position: absolute;
+        top: -23px;
+        right: 50px;
+        background: ${whiteColor};
+        border: none;
+        box-shadow: 3px 3px 3px lightgrey;
       }
-
-        span {
-          font-size: 1.4rem;
-          color: ${theme.colors.royalBlue};
-          font-weight: 500;
-          @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-            display: block;
-          }
-        }
+    }
       `
       : ""}
 `;

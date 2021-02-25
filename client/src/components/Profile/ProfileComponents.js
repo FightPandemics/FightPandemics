@@ -116,13 +116,28 @@ export const NamePara = styled.p`
   overflow-wrap: break-word;
   margin: 0 !important;
   text-align: left;
-  max-width: 90%;
+  max-width: 70%;
   margin-top: 1rem;
+  font-family: Poppins;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 26px;
+  line-height: 28px;
+  color: #282828;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     padding: 0;
-    font-size: 2.2rem;
-    line-height: 2.8rem;
+    overflow-wrap: break-word;
+    margin: 0 !important;
+    text-align: left;
+    max-width: 90%;
+    margin-top: 1rem;
+    font-family: Poppins;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.4px;
   }
 `;
 
@@ -210,14 +225,17 @@ export const HelpContainer = styled.div`
 export const UserInfoContainer = styled.div`
   background-color: ${colors.white};
   box-shadow: 0px 0.2rem 2rem rgba(0, 0, 0, 0.01);
-  max-width: 80rem;
+  max-width: 1173px;
   width: 100%;
+  height: 222px;
   z-index: 1;
   flex-direction: column;
   display: flex;
   align-items: center;
   position: relative;
-  border-radius: 0.8rem;
+  border-radius: 8px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
 `;
 
 export const AvatarPhotoContainer = styled.fieldset`
@@ -257,7 +275,53 @@ export const UserInfoDesktop = styled.div`
 
 export const DescriptionDesktop = styled.div`
   margin-top: 2.4rem;
-  font-size: 1.4rem;
-  line-height: 2rem;
-  color: ${colors.darkerGray};
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 140%;
+  color: #939393;;
+  
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    margin-top: 2.4rem;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #282828;
+  }
+`;
+export const MobileLocation = styled.div`
+  color: #939393;
+  width: 124px;
+  height: 14px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 140%;
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 1.6rem);
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
+`;
+export const  DesktopLocation = styled.div`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    width: auto;
+    height: 13.93px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+  }
 `;
