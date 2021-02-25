@@ -9,8 +9,6 @@ import { mq, theme } from "../../constants/theme";
 
 const { colors } = theme;
 
-const { SubMenu } = Menu;
-
 export const CustomDrawer = styled(Drawer)`
   .ant-drawer-content {
     border-top-left-radius: 1rem;
@@ -272,7 +270,7 @@ export const MobileMenuWrapper = styled(Menu)`
   &.ant-menu {
     width: 100%;
     background-color: transparent;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 0.063rem solid #e0e0e0;
     height: 4.5rem;
     display: flex;
     justify-content: space-between;
@@ -291,7 +289,7 @@ export const MobileMenuWrapper = styled(Menu)`
 
     color: ${theme.colors.darkerGray};
     font-size: ${theme.typography.size.large};
-    line-height: 21px;
+    line-height: 1.313rem;
     &:hover {
       color: ${theme.colors.darkerGray};
     }
@@ -313,7 +311,7 @@ export const DesktopMenuWrapper = styled(Menu)`
     background-color: transparent;
     display: flex;
     flex-direction: column;
-    padding-left: 0pt;
+    padding-left: 0rem;
   }
   li.ant-menu-item {
     margin: 0.8rem 0;
@@ -322,7 +320,7 @@ export const DesktopMenuWrapper = styled(Menu)`
     text-align: left;
     color: ${theme.colors.darkerGray};
     font-size: ${theme.typography.size.large};
-    line-height: 21px;
+    line-height: 1.313rem;
     &:hover {
       color: ${theme.colors.darkerGray};
     }

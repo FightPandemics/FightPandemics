@@ -401,7 +401,6 @@ const Profile = ({
 
   const handleMenuToggle = (e) => {
     setSectionView(e.key);
-    console.log("click ", e);
   };
 
   return (
