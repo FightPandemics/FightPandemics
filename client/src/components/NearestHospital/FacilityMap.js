@@ -17,7 +17,7 @@ const MapContainer = styled.div`
   margin: 2% auto;
   width: 100%;
   height: 100vh;
-  minheight: 30rem;
+  min-height: 30rem;
   overflow: visible;
 `;
 
@@ -119,7 +119,7 @@ const FacilityMap = (props) => {
     });
   };
 
-  const FacilityMarkers = facilities.map((facility) => {
+  const FacilityMarkers = facilities?.map((facility) => {
     return (
       <FacilityMapMarker
         key={facility.place_id}

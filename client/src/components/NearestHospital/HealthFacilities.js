@@ -36,7 +36,7 @@ const HealthFacilitiesContainer = styled.div`
   align-self: flex-start;
   padding-top: 2rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin: ${(props) => (props.isIPhone ? "32rem 0 0 0" : "20rem 0 0 0")};
+    margin: ${(props) => (props.isIPhone ? "30rem 0 0 0" : "20rem 0 0 0")};
   }
   h2 {
     font-weight: bold;
@@ -96,7 +96,7 @@ const ChangeLocOrTypeContainer = styled.div`
     display: flow-root;
     position: fixed;
     top: 5rem;
-    z-index: 3;
+    z-index: 2;
   }
   &:hover {
     color: ${royalBlue};
