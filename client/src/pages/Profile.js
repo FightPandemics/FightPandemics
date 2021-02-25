@@ -129,6 +129,7 @@ const Profile = ({
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { error, loading, user } = userProfileState;
   const [sectionView, setSectionView] = useState(t("requests"));
+  const [loadMenu, setLoadMenu] = useState(true);
   const [navMenu, setNavMenu] = useState([
     {
       name: t("profile.views.activity"),
@@ -191,29 +192,27 @@ const Profile = ({
     return organisationId ? `&actorId=${organisationId}` : "";
   };
 
-  const createMenu = () => {
+  useEffect(() => {
     const tempMenu = [...navMenu];
     if (isSelf) {
       tempMenu.splice(1, 0, {
-        name: t("requests"),
+        name: t("profile.views.requests"),
         disabled: false,
       });
       tempMenu.splice(2, 0, {
-        name: t("offers"),
+        name: t("profile.views.offers"),
         disabled: false,
       });
+      setSectionView(t("profile.views.requests"));
     } else {
       tempMenu.splice(1, 0, {
         name: t("profile.views.posts"),
         disable: false,
       });
+      setSectionView(t("profile.views.posts"));
     }
     setNavMenu(tempMenu);
-  };
-
-  useEffect(() => {
-    createMenu();
-  }, [createMenu]);
+  }, [isSelf, loadMenu, navMenu, t]);
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
