@@ -46,6 +46,7 @@ import {
   PhotoUploadButton,
   AvatarPhotoContainer,
   NamePara,
+  MobileMenuWrapper,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -125,6 +126,25 @@ const Profile = ({
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { error, loading, user } = userProfileState;
+  const [sectionView, setSectionView] = useState(t("requests"));
+  const [navMenu, setNavMenu] = useState([
+    {
+      name: t("profile.views.activity"),
+      disabled: true,
+    },
+    {
+      name: t("profile.views.organizations"),
+      disabled: true,
+    },
+    {
+      name: t("profile.views.badges"),
+      disabled: true,
+    },
+    {
+      name: t("profile.views.thanks"),
+      disabled: true,
+    },
+  ]);
   const {
     id: userId,
     about,
@@ -168,6 +188,26 @@ const Profile = ({
   const getActorQuery = () => {
     return organisationId ? `&actorId=${organisationId}` : "";
   };
+
+  useEffect(() => {
+    const tempMenu = [...navMenu];
+    if (isSelf) {
+      tempMenu.splice(1, 0, {
+        name: t("requests"),
+        disabled: false,
+      });
+      tempMenu.splice(2, 0, {
+        name: t("offers"),
+        disabled: false,
+      });
+    } else {
+      tempMenu.splice(1, 0, {
+        name: t("profile.views.posts"),
+        disable: false,
+      });
+    }
+    setNavMenu(tempMenu);
+  }, [isSelf, navMenu, t]);
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
@@ -352,117 +392,117 @@ const Profile = ({
   }
   if (loading) return <Loader />;
 
-  const tabViews = {
-    defaultView: "1",
-    isSelf: isSelf,
-    position: window.width <= parseInt(mq.phone.wide.maxWidth) ? "top" : "left",
-    tabs: [
-      {
-        tabName: t("profile.views.activity"),
-        disabled: true,
-        tabView: `contents of activity`,
-      },
-      {
-        tabName: t("profile.views.organizations"),
-        disabled: true,
-        tabView: `contents of orgs`,
-      },
-      {
-        tabName: t("profile.views.badges"),
-        disabled: true,
-        tabView: `contents of badges`,
-      },
-      {
-        tabName: t("profile.views.thanks"),
-        disabled: true,
-        tabView: `contents of thanks`,
-      },
-    ],
+  const handleMenuToggle = (e) => {
+    console.log("click ", e);
   };
-  const isSelfViews = (TabViews, isSelf) => {
-    if (isSelf) {
-      TabViews.tabs.splice(1, 0, {
-        tabName: t("requests"),
-        disabled: false,
-        tabView: `contents of requests`,
-      });
-      TabViews.tabs.splice(2, 0, {
-        tabName: t("offers"),
-        disabled: false,
-        tabView: `contents of offers`,
-      });
-    } else {
-      TabViews.tabs.splice(1, 0, {
-        tabName: t("profile.views.posts"),
-        disable: false,
-        showOthers: true,
-        tabView: (
-          <div>
-            <SectionHeader>
-              {isSelf
-                ? t("profile.individual.myActivity")
-                : t("profile.individual.userActivity")}
-              <PlaceholderIcon />
-              {isSelf && (
-                <>
-                  <CreatePostIcon
-                    id={GTM.user.profilePrefix + GTM.post.createPost}
-                    src={createPost}
-                    onClick={onToggleCreatePostDrawer}
-                  />
-                  <CreatePostButton
-                    onClick={onToggleCreatePostDrawer}
-                    id={GTM.user.profilePrefix + GTM.post.createPost}
-                    inline={true}
-                    icon={<PlusIcon />}
-                  >
-                    {t("post.create")}
-                  </CreatePostButton>
-                </>
-              )}
-            </SectionHeader>
-            <FeedWrapper isProfile>
-              <Activity
-                postDispatch={dispatch}
-                filteredPosts={postsList}
-                user={user}
-                postDelete={postDelete}
-                handlePostDelete={handlePostDelete}
-                handleEditPost={handleEditPost}
-                deleteModalVisibility={deleteModalVisibility}
-                handleCancelPostDelete={handleCancelPostDelete}
-                loadNextPage={loadNextPage}
-                isNextPageLoading={isLoading}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalPostCount={totalPostCount}
-              />
-              {postsError && (
-                <ErrorAlert
-                  message={t([
-                    `error.${postsError.message}`,
-                    `error.http.${postsError.message}`,
-                  ])}
-                />
-              )}
-              {emptyFeed() && <></>}
-              {isSelf && (
-                <CreatePost
-                  onCancel={onToggleCreatePostDrawer}
-                  loadPosts={refetchPosts}
-                  visible={modal}
-                  user={user}
-                  gtmPrefix={GTM.user.profilePrefix}
-                />
-              )}
-            </FeedWrapper>
-          </div>
-        ),
-      });
-    }
-    return TabViews;
-  };
+
+  // const tabViews = {
+  //   defaultView: "1",
+  //   isSelf: isSelf,
+  //   position: window.width <= parseInt(mq.phone.wide.maxWidth) ? "top" : "left",
+  //   tabs: [
+  //     {
+  //       tabName: t("profile.views.activity"),
+  //       disabled: true,
+  //     },
+  //     {
+  //       tabName: t("profile.views.organizations"),
+  //       disabled: true,
+  //     },
+  //     {
+  //       tabName: t("profile.views.badges"),
+  //       disabled: true,
+  //     },
+  //     {
+  //       tabName: t("profile.views.thanks"),
+  //       disabled: true,
+  //     },
+  //   ],
+  // };
+  // const isSelfViews = (TabViews, isSelf) => {
+  //   if (isSelf) {
+  //     TabViews.tabs.splice(1, 0, {
+  //       tabName: t("requests"),
+  //       disabled: false,
+  //       tabView: `contents of requests`,
+  //     });
+  //     TabViews.tabs.splice(2, 0, {
+  //       tabName: t("offers"),
+  //       disabled: false,
+  //       tabView: `contents of offers`,
+  //     });
+  //   } else {
+  //     TabViews.tabs.splice(1, 0, {
+  //       tabName: t("profile.views.posts"),
+  //       disable: false,
+  //       showOthers: true,
+  //       tabView: (
+  //         <div>
+  //           <SectionHeader>
+  //             {isSelf
+  //               ? t("profile.individual.myActivity")
+  //               : t("profile.individual.userActivity")}
+  //             <PlaceholderIcon />
+  //             {isSelf && (
+  //               <>
+  //                 <CreatePostIcon
+  //                   id={GTM.user.profilePrefix + GTM.post.createPost}
+  //                   src={createPost}
+  //                   onClick={onToggleCreatePostDrawer}
+  //                 />
+  //                 <CreatePostButton
+  //                   onClick={onToggleCreatePostDrawer}
+  //                   id={GTM.user.profilePrefix + GTM.post.createPost}
+  //                   inline={true}
+  //                   icon={<PlusIcon />}
+  //                 >
+  //                   {t("post.create")}
+  //                 </CreatePostButton>
+  //               </>
+  //             )}
+  //           </SectionHeader>
+  //           <FeedWrapper isProfile>
+  //             <Activity
+  //               postDispatch={dispatch}
+  //               filteredPosts={postsList}
+  //               user={user}
+  //               postDelete={postDelete}
+  //               handlePostDelete={handlePostDelete}
+  //               handleEditPost={handleEditPost}
+  //               deleteModalVisibility={deleteModalVisibility}
+  //               handleCancelPostDelete={handleCancelPostDelete}
+  //               loadNextPage={loadNextPage}
+  //               isNextPageLoading={isLoading}
+  //               itemCount={itemCount}
+  //               isItemLoaded={isItemLoaded}
+  //               hasNextPage={loadMore}
+  //               totalPostCount={totalPostCount}
+  //             />
+  //             {postsError && (
+  //               <ErrorAlert
+  //                 message={t([
+  //                   `error.${postsError.message}`,
+  //                   `error.http.${postsError.message}`,
+  //                 ])}
+  //               />
+  //             )}
+  //             {emptyFeed() && <></>}
+  //             {isSelf && (
+  //               <CreatePost
+  //                 onCancel={onToggleCreatePostDrawer}
+  //                 loadPosts={refetchPosts}
+  //                 visible={modal}
+  //                 user={user}
+  //                 gtmPrefix={GTM.user.profilePrefix}
+  //               />
+  //             )}
+  //           </FeedWrapper>
+  //         </div>
+  //       ),
+  //     });
+  //   }
+  //   return TabViews;
+  // };
   return (
     <>
       <ProfileBackgroup />
@@ -544,7 +584,26 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
-        <ProfileTabs tabData={isSelfViews(tabViews, isSelf)} />
+        {/* <MobileMenuWrapper
+          defaultSelectedKeys={menuesItems[1]}
+          selectedKeys={viewSection}
+          onClick={handleMenuToggle}
+        >
+          {menu.map((item, index) => (
+            <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
+              {item.tabName}
+            </Menu.Item>
+          ))}
+          {isAuthenticated && (
+            <StyledCheckbox
+              checked={!ignoreUserLocation}
+              onChange={toggleShowNearMe}
+            >
+              {t("feed.filters.postsNearMe")}
+            </StyledCheckbox>
+          )}
+        </MobileMenuWrapper> */}
+        {/* <ProfileTabs tabData={isSelfViews(tabViews, isSelf)} /> */}
         {isSelf && (
           <CustomDrawer
             placement="bottom"

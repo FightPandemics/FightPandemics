@@ -1,4 +1,5 @@
-import { Drawer } from "antd";
+import { Drawer, Menu } from "antd";
+
 import styled from "styled-components";
 
 import Heading from "../Typography/Heading";
@@ -7,6 +8,8 @@ import TextLabel from "components/Typography/TextLabel";
 import { mq, theme } from "../../constants/theme";
 
 const { colors } = theme;
+
+const { SubMenu } = Menu;
 
 export const CustomDrawer = styled(Drawer)`
   .ant-drawer-content {
@@ -261,3 +264,5 @@ export const DescriptionDesktop = styled.div`
   line-height: 2rem;
   color: ${colors.darkerGray};
 `;
+
+export const MobileMenuWrapper = styled(Menu)``;
