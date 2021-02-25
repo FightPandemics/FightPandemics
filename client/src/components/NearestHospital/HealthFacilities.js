@@ -36,7 +36,7 @@ const HealthFacilitiesContainer = styled.div`
   align-self: flex-start;
   padding-top: 2rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    margin: ${(props) => (props.isIPhone ? "30rem 0 0 0" : "20rem 0 0 0")};
+    margin: ${(props) => (props.isIPhone ? "24rem 0 0 0" : "20rem 0 0 0")};
   }
   h2 {
     font-weight: bold;
@@ -157,7 +157,7 @@ const ModeContainer = styled.button`
   background-color: ${black};
   position: -webkit-sticky;
   position: fixed;
-  bottom: 8rem;
+  bottom: 4rem;
   left: 38%;
   z-index: 3;
 `;
