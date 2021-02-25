@@ -404,52 +404,6 @@ const Profile = ({
     console.log("click ", e);
   };
 
-  // const tabViews = {
-  //   defaultView: "1",
-  //   isSelf: isSelf,
-  //   position: window.width <= parseInt(mq.phone.wide.maxWidth) ? "top" : "left",
-  //   tabs: [
-  //     {
-  //       tabName: t("profile.views.activity"),
-  //       disabled: true,
-  //     },
-  //     {
-  //       tabName: t("profile.views.organizations"),
-  //       disabled: true,
-  //     },
-  //     {
-  //       tabName: t("profile.views.badges"),
-  //       disabled: true,
-  //     },
-  //     {
-  //       tabName: t("profile.views.thanks"),
-  //       disabled: true,
-  //     },
-  //   ],
-  // };
-  // const isSelfViews = (TabViews, isSelf) => {
-  //   if (isSelf) {
-  //     TabViews.tabs.splice(1, 0, {
-  //       tabName: t("requests"),
-  //       disabled: false,
-  //       tabView: `contents of requests`,
-  //     });
-  //     TabViews.tabs.splice(2, 0, {
-  //       tabName: t("offers"),
-  //       disabled: false,
-  //       tabView: `contents of offers`,
-  //     });
-  //   } else {
-  //     TabViews.tabs.splice(1, 0, {
-  //       tabName: t("profile.views.posts"),
-  //       disable: false,
-  //       showOthers: true,
-  //       tabView: (
-  //       ),
-  //     });
-  //   }
-  //   return TabViews;
-  // };
   return (
     <>
       <ProfileBackgroup />
@@ -531,18 +485,34 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
-        <MobileMenuWrapper
-          defaultSelectedKeys={[sectionView]}
-          selectedKeys={sectionView}
-          onClick={handleMenuToggle}
-        >
-          {navMenu.map((item, index) => (
-            <Menu.Item key={item.name} disabled={item.disabled}>
-              {item.name}
-            </Menu.Item>
-          ))}
-        </MobileMenuWrapper>
-        {sectionView === "posts" ? (
+        {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
+          <MobileMenuWrapper
+            defaultSelectedKeys={[sectionView]}
+            selectedKeys={sectionView}
+            onClick={handleMenuToggle}
+          >
+            {navMenu.map((item, index) => (
+              <Menu.Item key={item.name} disabled={item.disabled}>
+                {item.name}
+              </Menu.Item>
+            ))}
+          </MobileMenuWrapper>
+        ) : null}
+        {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
+          <DesktopMenuWrapper
+            defaultSelectedKeys={[sectionView]}
+            selectedKeys={sectionView}
+            onClick={handleMenuToggle}
+          >
+            {navMenu.map((item, index) => (
+              <Menu.Item key={item.name} disabled={item.disabled}>
+                {item.name}
+              </Menu.Item>
+            ))}
+          </DesktopMenuWrapper>
+        )}
+
+        {sectionView === "Posts" ? (
           <div>
             <SectionHeader>
               {isSelf
@@ -605,17 +575,6 @@ const Profile = ({
             </FeedWrapper>
           </div>
         ) : null}
-        <DesktopMenuWrapper
-          defaultSelectedKeys={[sectionView]}
-          selectedKeys={sectionView}
-          onClick={handleMenuToggle}
-        >
-          {navMenu.map((item, index) => (
-            <Menu.Item key={item.name} disabled={item.disabled}>
-              {item.name}
-            </Menu.Item>
-          ))}
-        </DesktopMenuWrapper>
 
         {/* <ProfileTabs tabData={isSelfViews(tabViews, isSelf)} /> */}
         {isSelf && (
