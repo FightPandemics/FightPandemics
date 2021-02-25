@@ -265,4 +265,40 @@ export const DescriptionDesktop = styled.div`
   color: ${colors.darkerGray};
 `;
 
-export const MobileMenuWrapper = styled(Menu)``;
+export const MobileMenuWrapper = styled(Menu)`
+  &.ant-menu {
+    width: 100%;
+    background-color: transparent;
+    border-bottom: 1px solid #e0e0e0;
+    height: 4rem;
+    display: flex;
+    justify-content: space-between;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  li.ant-menu-item {
+    margin: 0.8rem 0;
+    height: 3rem;
+    padding-bottom: 0rem;
+    overflow: visible;
+
+    color: ${theme.colors.darkerGray};
+    font-size: ${theme.typography.size.large};
+    line-height: 21px;
+    &:hover {
+      color: ${theme.colors.darkerGray};
+    }
+    text-align: center;
+  }
+
+  &.ant-menu .ant-menu-item-selected {
+    background-color: transparent;
+    border-bottom: 0.2rem solid ${theme.colors.black};
+    font-weight: bold;
+    overflow: visible;
+  }
+`;
