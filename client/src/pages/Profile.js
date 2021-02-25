@@ -1,4 +1,5 @@
 import { WhiteSpace } from "antd-mobile";
+import { Menu } from "antd";
 import axios from "axios";
 import React, {
   useContext,
@@ -393,6 +394,7 @@ const Profile = ({
   if (loading) return <Loader />;
 
   const handleMenuToggle = (e) => {
+    setSectionView(e.key);
     console.log("click ", e);
   };
 
@@ -584,25 +586,17 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
-        {/* <MobileMenuWrapper
-          defaultSelectedKeys={menuesItems[1]}
-          selectedKeys={viewSection}
+        <MobileMenuWrapper
+          defaultSelectedKeys={[sectionView]}
+          selectedKeys={sectionView}
           onClick={handleMenuToggle}
         >
-          {menu.map((item, index) => (
-            <Menu.Item key={item} id={gtmTag(gtmTagsMap[item])}>
-              {item.tabName}
+          {navMenu.map((item, index) => (
+            <Menu.Item key={item.name} disabled={item.disabled}>
+              {item.name}
             </Menu.Item>
           ))}
-          {isAuthenticated && (
-            <StyledCheckbox
-              checked={!ignoreUserLocation}
-              onChange={toggleShowNearMe}
-            >
-              {t("feed.filters.postsNearMe")}
-            </StyledCheckbox>
-          )}
-        </MobileMenuWrapper> */}
+        </MobileMenuWrapper>
         {/* <ProfileTabs tabData={isSelfViews(tabViews, isSelf)} /> */}
         {isSelf && (
           <CustomDrawer
