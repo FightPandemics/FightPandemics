@@ -11,6 +11,7 @@ import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
 import qs from "query-string";
+import { mq } from "constants/theme";
 
 // Antd
 import { Menu } from "antd";
@@ -73,9 +74,7 @@ import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import WithSummitBanner from "components/WithSummitBanner";
 import SortSelector from "../components/Feed/SortSelector";
-import BaseSelector from "../components/Selector/Selector";
-import SvgIcon from "components/Icon/SvgIcon";
-import downArrowSlim from "assets/icons/down-arrow-slim.svg";
+import useWindowDimensions from "../utils/windowSize";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -133,6 +132,7 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const Feed = (props) => {
+  const window = useWindowDimensions();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -740,39 +740,9 @@ const Feed = (props) => {
                   displayValue={"name"}
                   t={t}
                 />
-                <div className="visibility-post--selector">
-                  <BaseSelector
-                    suffixIcon={
-                      <SvgIcon
-                        src={downArrowSlim}
-                        style={{ width: "1.5rem", height: "auto" }}
-                      />
-                    }
-                    defaultValue={t("feed.filters.sortBy")}
-                    options={[
-                      {
-                        text: t("feed.filters.latest"),
-                        value: "latest",
-                      },
-                      {
-                        text: t("feed.filters.trending"),
-                        value: "trending",
-                      },
-                      {
-                        text: t("feed.filters.mostViewed"),
-                        value: "mostViewed",
-                      },
-                      {
-                        text: t("feed.filters.mostLiked"),
-                        value: "mostLiked",
-                      },
-                    ]}
-                    onChange={handleSortDropdown}
-                    minWidth="13rem"
-                    minHeight="5rem"
-                  />
-                </div>
-
+                {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
+                  <SortSelector handleSortDropdown={handleSortDropdown} />
+                )}
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
                   <CreatePostButton
@@ -796,7 +766,7 @@ const Feed = (props) => {
                 />
               </MobileSearchWrapper>
               {
-                <div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   <FilterBox
                     locationOnly={
                       !(
@@ -806,6 +776,9 @@ const Feed = (props) => {
                     }
                     gtmPrefix={GTM.feed.prefix}
                   />
+                  {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
+                    <SortSelector handleSortDropdown={handleSortDropdown} />
+                  ) : null}
                 </div>
               }
               <WhiteSpace size={"lg"} />
