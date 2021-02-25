@@ -171,8 +171,8 @@ const OrgBookEditor = () => {
       name: formData.pagename,
       pageGroupNumber: 1,
       status: PAGE_CATEGORIES.draftCategory,
-      createdBy: organisation.ownerId, //this will have to be filled in by be when editors exist
-      createdAt: new Date().toLocaleString().replace(",", ""),
+      created_by: organisation.ownerId, //this will have to be filled in by be when editors exist
+      created_at: new Date().toLocaleString().replace(",", ""),
     };
     newPages.push(newOrgBookPage);
     let orgBookPages = {
