@@ -130,24 +130,7 @@ const Profile = ({
   const { error, loading, user } = userProfileState;
   const [sectionView, setSectionView] = useState(t("requests"));
   const [loadMenu, setLoadMenu] = useState(true);
-  const [navMenu, setNavMenu] = useState([
-    {
-      name: t("profile.views.activity"),
-      disabled: true,
-    },
-    {
-      name: t("profile.views.organizations"),
-      disabled: true,
-    },
-    {
-      name: t("profile.views.badges"),
-      disabled: true,
-    },
-    {
-      name: t("profile.views.thanks"),
-      disabled: true,
-    },
-  ]);
+  const [navMenu, setNavMenu] = useState([]);
   const {
     id: userId,
     about,
@@ -191,28 +174,47 @@ const Profile = ({
   const getActorQuery = () => {
     return organisationId ? `&actorId=${organisationId}` : "";
   };
-
-  useEffect(() => {
-    const tempMenu = [...navMenu];
+  const buildNavMenu = () => {
+    const baseMenu = [
+      {
+        name: t("profile.views.activity"),
+        disabled: true,
+      },
+      {
+        name: t("profile.views.organizations"),
+        disabled: true,
+      },
+      {
+        name: t("profile.views.badges"),
+        disabled: true,
+      },
+      {
+        name: t("profile.views.thanks"),
+        disabled: true,
+      },
+    ];
     if (isSelf) {
-      tempMenu.splice(1, 0, {
+      baseMenu.splice(1, 0, {
         name: t("profile.views.requests"),
         disabled: false,
       });
-      tempMenu.splice(2, 0, {
+      baseMenu.splice(2, 0, {
         name: t("profile.views.offers"),
         disabled: false,
       });
       setSectionView(t("profile.views.requests"));
     } else {
-      tempMenu.splice(1, 0, {
+      baseMenu.splice(1, 0, {
         name: t("profile.views.posts"),
         disable: false,
       });
       setSectionView(t("profile.views.posts"));
     }
-    setNavMenu(tempMenu);
-  }, [isSelf, loadMenu, navMenu, t]);
+    setNavMenu(baseMenu);
+  };
+  useEffect(() => {
+    buildNavMenu();
+  }, [buildNavMenu, isSelf]);
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
@@ -443,67 +445,6 @@ const Profile = ({
   //       disable: false,
   //       showOthers: true,
   //       tabView: (
-  //         <div>
-  //           <SectionHeader>
-  //             {isSelf
-  //               ? t("profile.individual.myActivity")
-  //               : t("profile.individual.userActivity")}
-  //             <PlaceholderIcon />
-  //             {isSelf && (
-  //               <>
-  //                 <CreatePostIcon
-  //                   id={GTM.user.profilePrefix + GTM.post.createPost}
-  //                   src={createPost}
-  //                   onClick={onToggleCreatePostDrawer}
-  //                 />
-  //                 <CreatePostButton
-  //                   onClick={onToggleCreatePostDrawer}
-  //                   id={GTM.user.profilePrefix + GTM.post.createPost}
-  //                   inline={true}
-  //                   icon={<PlusIcon />}
-  //                 >
-  //                   {t("post.create")}
-  //                 </CreatePostButton>
-  //               </>
-  //             )}
-  //           </SectionHeader>
-  //           <FeedWrapper isProfile>
-  //             <Activity
-  //               postDispatch={dispatch}
-  //               filteredPosts={postsList}
-  //               user={user}
-  //               postDelete={postDelete}
-  //               handlePostDelete={handlePostDelete}
-  //               handleEditPost={handleEditPost}
-  //               deleteModalVisibility={deleteModalVisibility}
-  //               handleCancelPostDelete={handleCancelPostDelete}
-  //               loadNextPage={loadNextPage}
-  //               isNextPageLoading={isLoading}
-  //               itemCount={itemCount}
-  //               isItemLoaded={isItemLoaded}
-  //               hasNextPage={loadMore}
-  //               totalPostCount={totalPostCount}
-  //             />
-  //             {postsError && (
-  //               <ErrorAlert
-  //                 message={t([
-  //                   `error.${postsError.message}`,
-  //                   `error.http.${postsError.message}`,
-  //                 ])}
-  //               />
-  //             )}
-  //             {emptyFeed() && <></>}
-  //             {isSelf && (
-  //               <CreatePost
-  //                 onCancel={onToggleCreatePostDrawer}
-  //                 loadPosts={refetchPosts}
-  //                 visible={modal}
-  //                 user={user}
-  //                 gtmPrefix={GTM.user.profilePrefix}
-  //               />
-  //             )}
-  //           </FeedWrapper>
-  //         </div>
   //       ),
   //     });
   //   }
@@ -601,6 +542,69 @@ const Profile = ({
             </Menu.Item>
           ))}
         </MobileMenuWrapper>
+        {sectionView === "posts" ? (
+          <div>
+            <SectionHeader>
+              {isSelf
+                ? t("profile.individual.myActivity")
+                : t("profile.individual.userActivity")}
+              <PlaceholderIcon />
+              {isSelf && (
+                <>
+                  <CreatePostIcon
+                    id={GTM.user.profilePrefix + GTM.post.createPost}
+                    src={createPost}
+                    onClick={onToggleCreatePostDrawer}
+                  />
+                  <CreatePostButton
+                    onClick={onToggleCreatePostDrawer}
+                    id={GTM.user.profilePrefix + GTM.post.createPost}
+                    inline={true}
+                    icon={<PlusIcon />}
+                  >
+                    {t("post.create")}
+                  </CreatePostButton>
+                </>
+              )}
+            </SectionHeader>
+            <FeedWrapper isProfile>
+              <Activity
+                postDispatch={dispatch}
+                filteredPosts={postsList}
+                user={user}
+                postDelete={postDelete}
+                handlePostDelete={handlePostDelete}
+                handleEditPost={handleEditPost}
+                deleteModalVisibility={deleteModalVisibility}
+                handleCancelPostDelete={handleCancelPostDelete}
+                loadNextPage={loadNextPage}
+                isNextPageLoading={isLoading}
+                itemCount={itemCount}
+                isItemLoaded={isItemLoaded}
+                hasNextPage={loadMore}
+                totalPostCount={totalPostCount}
+              />
+              {postsError && (
+                <ErrorAlert
+                  message={t([
+                    `error.${postsError.message}`,
+                    `error.http.${postsError.message}`,
+                  ])}
+                />
+              )}
+              {emptyFeed() && <></>}
+              {isSelf && (
+                <CreatePost
+                  onCancel={onToggleCreatePostDrawer}
+                  loadPosts={refetchPosts}
+                  visible={modal}
+                  user={user}
+                  gtmPrefix={GTM.user.profilePrefix}
+                />
+              )}
+            </FeedWrapper>
+          </div>
+        ) : null}
         <DesktopMenuWrapper
           defaultSelectedKeys={[sectionView]}
           selectedKeys={sectionView}
