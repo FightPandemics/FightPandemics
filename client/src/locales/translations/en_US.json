@@ -412,7 +412,9 @@
       "offers": "Offers",
       "organizations": "Organizations",
       "badges": "Badges",
-      "thanks": "Thanks"
+      "thanks": "Thanks",
+      "requests": "Requests",
+      "offers": "Offers"
     }
   },
   "auth": {
