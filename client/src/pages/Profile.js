@@ -48,6 +48,7 @@ import {
   AvatarPhotoContainer,
   NamePara,
   MobileMenuWrapper,
+  DesktopMenuWrapper,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -597,6 +598,18 @@ const Profile = ({
             </Menu.Item>
           ))}
         </MobileMenuWrapper>
+        <DesktopMenuWrapper
+          defaultSelectedKeys={[sectionView]}
+          selectedKeys={sectionView}
+          onClick={handleMenuToggle}
+        >
+          {navMenu.map((item, index) => (
+            <Menu.Item key={item.name} disabled={item.disabled}>
+              {item.name}
+            </Menu.Item>
+          ))}
+        </DesktopMenuWrapper>
+
         {/* <ProfileTabs tabData={isSelfViews(tabViews, isSelf)} /> */}
         {isSelf && (
           <CustomDrawer

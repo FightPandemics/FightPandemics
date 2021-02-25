@@ -266,11 +266,14 @@ export const DescriptionDesktop = styled.div`
 `;
 
 export const MobileMenuWrapper = styled(Menu)`
+  &.ant-menu-vertical {
+    border-right: none;
+  }
   &.ant-menu {
     width: 100%;
     background-color: transparent;
     border-bottom: 1px solid #e0e0e0;
-    height: 4rem;
+    height: 4.5rem;
     display: flex;
     justify-content: space-between;
     overflow: auto;
@@ -300,5 +303,33 @@ export const MobileMenuWrapper = styled(Menu)`
     border-bottom: 0.2rem solid ${theme.colors.black};
     font-weight: bold;
     overflow: visible;
+  }
+`;
+export const DesktopMenuWrapper = styled(Menu)`
+  &.ant-menu-vertical {
+    border-right: none;
+  }
+  &.ant-menu {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0pt;
+  }
+  li.ant-menu-item {
+    margin: 0.8rem 0;
+    height: 3rem;
+    padding-bottom: 0rem;
+    text-align: left;
+    color: ${theme.colors.darkerGray};
+    font-size: ${theme.typography.size.large};
+    line-height: 21px;
+    &:hover {
+      color: ${theme.colors.darkerGray};
+    }
+  }
+
+  &.ant-menu .ant-menu-item-selected {
+    background-color: transparent;
+    font-weight: bold;
   }
 `;
