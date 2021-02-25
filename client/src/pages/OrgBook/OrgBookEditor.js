@@ -19,6 +19,9 @@ import {
   fetchOrganisation,
   fetchOrganisationError,
   fetchOrganisationSuccess,
+  updateOrganisation,
+  updateOrganisationError,
+  updateOrganisationSuccess,
 } from "hooks/actions/organisationActions";
 import axios from "axios";
 import {
@@ -40,6 +43,10 @@ const {
 } = colors;
 const ORGBOOK_CREATE_MODE = "create";
 const ORGBOOK_EDIT_MODE = "edit";
+const PAGE_CATEGORIES = {
+  liveCategory: "live",
+  draftCategory: "draft",
+};
 
 const OrgBookEditorContainer = styled.div`
   width: 100%;
@@ -69,7 +76,7 @@ const OrgBookEditorContentBox = styled.div`
 `;
 
 const OrgBookEditor = () => {
-  let url = window.location.pathname.split("/");
+  const url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
   const editOrgBookMode = url[url.length - 2];
 
@@ -133,7 +140,7 @@ const OrgBookEditor = () => {
         <TableOfContentsSidebar>
           <OrgBookTableOfContents
             organisation={organisation}
-            editOrgBookMode={editOrgBookMode}
+            editOrgBookMode={currentEditOrgBookMode}
           ></OrgBookTableOfContents>
         </TableOfContentsSidebar>
       );
@@ -148,14 +155,65 @@ const OrgBookEditor = () => {
     );
   };
 
-  const handleOnCreate = (values) => {
+  const handleOnCreate = (formData) => {
     //console.log("in orgbook editorReceived values of form: ", values);
-    console.log("pagename received is: " + values.pagename);
-    //createFormRef.resetFields();
+    console.log("pagename received is: " + formData.pagename);
 
-    setCurrentEditOrgBookMode(ORGBOOK_EDIT_MODE);
-
+    if (currentEditOrgBookMode === ORGBOOK_CREATE_MODE) {
+      addFirstOrgBookDraftPage(formData);
+    }
     setCreateFormVisible(false);
+  };
+
+  const addFirstOrgBookDraftPage = async (formData) => {
+    let newPages = [];
+    const newOrgBookPage = {
+      name: formData.pagename,
+      pageGroupNumber: 1,
+      status: PAGE_CATEGORIES.draftCategory,
+      createdBy: organisation.ownerId, //this will have to be filled in by be when editors exist
+      createdAt: new Date().toLocaleString().replace(",", ""),
+    };
+    newPages.push(newOrgBookPage);
+    let orgBookPages = {
+      orgBookPages: newPages,
+    };
+
+    console.log("orgBookPages: " + JSON.stringify(orgBookPages));
+
+    orgProfileDispatch(updateOrganisation());
+    try {
+      const res = await axios.patch(
+        `/api/organisations/${organisationId}`,
+        orgBookPages,
+      );
+      console.log(
+        "res.data in addFirstOrgBookDraftPage" + JSON.stringify(res.data),
+      );
+      setCurrentEditOrgBookMode(ORGBOOK_EDIT_MODE);
+      orgProfileDispatch(updateOrganisationSuccess(res.data));
+
+      // handleSuccess(true);
+      // setTimeout(() => {
+      //   handleSuccess(false);
+      // }, 10000);
+      // handleUpdateError(false);
+      // refetchUser();
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      console.log("err message: " + message);
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
+      // handleUpdateError(true);
+      // handleSuccess(false);
+      orgProfileDispatch(
+        updateOrganisationError(
+          `${t("error.failedUpdatingOrgProfile")} ${translatedErrorMessage}`,
+        ),
+      );
+    }
   };
 
   const handleOnCancel = () => {
