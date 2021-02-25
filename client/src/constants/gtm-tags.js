@@ -57,6 +57,7 @@ module.exports = {
     button: "_PO",
     delete: "_DEL",
     edit: "_EDT",
+    workMode: "_WM",
   },
   user: {
     completedPrefix: "PC",
@@ -131,6 +132,11 @@ module.exports = {
     researchAndDevelopment: "_RD",
     tech: "_TC",
     other: "_OT",
+  },
+  workModeFilter: {
+    inPerson: "_IP",
+    remote: "_RM",
+    both: "_IPR",
   },
   language: {
     "en-US": "_EN_US",

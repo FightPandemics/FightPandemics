@@ -26,6 +26,14 @@ const POST_SETTINGS = {
       { text: "post.options.expires.offer", value: "offer" },
     ],
   },
+  workMode: {
+    default: { text: "select", value: "Select an option" },
+    options: [
+      { text: "post.options.workMode.inPerson", value: "In-person" },
+      { text: "post.options.workMode.remote", value: "Remote" },
+      { text: "post.options.workMode.both", value: "Both" },
+    ],
+  },
 };
 
 export default POST_SETTINGS;

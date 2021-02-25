@@ -122,6 +122,16 @@ const FILTER_OPTIONS = {
       },
     ],
   },
+  workMode: {
+    label: "workMode",
+    className: "filter-5",
+    default: { text: "select", value: "Select an option" },
+    options: [
+      { text: "post.options.workMode.inPerson", value: "In-person" },
+      { text: "post.options.workMode.remote", value: "Remote" },
+      { text: "post.options.workMode.both", value: "Both" },
+    ],
+  },
 };
 
 export default FILTER_OPTIONS;

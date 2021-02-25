@@ -58,7 +58,6 @@ async function routes(app) {
       } = req;
       console.log("postProps modeURL", objective, postMode);
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
-
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       let filters = [
@@ -111,7 +110,7 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       // Additional filters
-      const { providers, type } = queryFilters; // from filterOptions.js
+      const { providers, type, workMode } = queryFilters; // from filterOptions.js
       if (authorId) {
         filters.push({ "author.id": mongoose.Types.ObjectId(authorId) });
       }
@@ -123,6 +122,20 @@ async function routes(app) {
       }
       if (type) {
         filters.push({ types: { $in: type } });
+      }
+
+      //workMode filter
+      if (workMode){
+        const workModes = workMode.map(mode => mode.toLowerCase())
+        if(workModes.includes('both')){
+          filters.push({ $or: [ { $and: [ { workMode: null }, {types: { $nin : ['Remote Work'] } } ] }, {workMode: { $in: workModes } }] });
+        }
+        else if(workModes.includes('remote')) {
+          filters.push({ $or: [ { $and: [ { workMode: null }, {types: { $in : ['Remote Work'] } } ] }, {workMode: { $in: workModes } }] });
+        }
+        else {
+          filters.push({ workMode: { $in: workModes } });
+        }
       }
 
       // Unlogged user limitation for post content size
@@ -260,6 +273,7 @@ async function routes(app) {
             title: true,
             types: true,
             visibility: true,
+            workMode: true,
             createdAt: true,
             updatedAt: true,
           },
@@ -388,7 +402,7 @@ async function routes(app) {
           "author.location.zip": false,
         }),
       );
-      
+
       if (postErr){
         if (postErr instanceof mongoose.Error.CastError){
             req.log.error(postErr, "Can't find a post with given id");
