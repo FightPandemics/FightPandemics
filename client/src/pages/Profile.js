@@ -532,20 +532,20 @@ const Profile = ({
             gtmPrefix={GTM.user.profilePrefix}
           />
         )}
+        {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
+          <MobileMenuWrapper
+            defaultSelectedKeys={[sectionView]}
+            selectedKeys={sectionView}
+            onClick={handleMenuToggle}
+          >
+            {navMenu.map((item, index) => (
+              <Menu.Item key={item.name} disabled={item.disabled}>
+                {item.name}
+              </Menu.Item>
+            ))}
+          </MobileMenuWrapper>
+        ) : null}
         <div style={{ display: "flex" }}>
-          {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
-            <MobileMenuWrapper
-              defaultSelectedKeys={[sectionView]}
-              selectedKeys={sectionView}
-              onClick={handleMenuToggle}
-            >
-              {navMenu.map((item, index) => (
-                <Menu.Item key={item.name} disabled={item.disabled}>
-                  {item.name}
-                </Menu.Item>
-              ))}
-            </MobileMenuWrapper>
-          ) : null}
           {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
             <DesktopMenuWrapper
               defaultSelectedKeys={[sectionView]}
@@ -563,7 +563,7 @@ const Profile = ({
           {sectionView === "Requests" ||
           sectionView === "Offers" ||
           sectionView === "Posts" ? (
-            <div>
+            <div style={{ width: "100%" }}>
               {/* <Activity
                 postDispatch={dispatch}
                 filteredPosts={postsList}

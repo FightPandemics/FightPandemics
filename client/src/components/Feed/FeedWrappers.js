@@ -167,26 +167,21 @@ export const SeeAllWrapper = styled(Content)`
       ""
   `
       : `width: 86%`}
-}
 `;
 
 export const SeeAllTabsWrapper = styled(Content)`
-  
   background: ${white};
   width: 935px;
 
   border-radius: 1rem;
-}
 `;
 
 export const SeeAllContentWrapper = styled(Content)`
-  
   overflow-x: visible !important;
 
   background: ${white};
   width: 800px;
   margin-left: 5rem;
-  
+
   margin-right: 4rem;
-}
 `;
