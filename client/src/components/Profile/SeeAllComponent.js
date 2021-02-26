@@ -61,6 +61,7 @@ const ARBITRARY_LARGE_NUM = 10000;
 
 export const MenuWrapper = styled(Menu)`
   height: 4rem;
+  margin: 0rem 1rem;
   display: flex;
   justify-content: space-between;
 

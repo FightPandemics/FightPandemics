@@ -158,7 +158,7 @@ export const MobileSearchWrapper = styled.div`
 `;
 
 export const SeeAllWrapper = styled(Content)`
-  margin: 0 1rem;
+  /* margin: 0 1rem; */
   overflow-x: visible !important;
   background: ${white};
   ${({ isMobile }) =>
@@ -166,27 +166,17 @@ export const SeeAllWrapper = styled(Content)`
       ? `
       ""
   `
-      : `width: 86%`}
-}
+      : `width: 100%`}
 `;
 
 export const SeeAllTabsWrapper = styled(Content)`
-  
   background: ${white};
-  width: 935px;
-
   border-radius: 1rem;
-}
 `;
 
 export const SeeAllContentWrapper = styled(Content)`
-  
   overflow-x: visible !important;
-
+  width: 95%;
+  margin: auto;
   background: ${white};
-  width: 800px;
-  margin-left: 5rem;
-  
-  margin-right: 4rem;
-}
 `;

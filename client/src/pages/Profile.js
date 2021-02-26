@@ -319,9 +319,6 @@ const Profile = ({
         )}
         <WhiteSpace />
         <SectionHeader>
-          {isSelf
-            ? t("profile.individual.myActivity")
-            : t("profile.individual.userActivity")}
           <PlaceholderIcon />
           {isSelf && (
             <>
@@ -381,7 +378,7 @@ const Profile = ({
               {sectionView === "Requests" ||
               sectionView === "Offers" ||
               sectionView === "Posts" ? (
-                <div>
+                <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>
                       <FeedWrapper isProfile>
