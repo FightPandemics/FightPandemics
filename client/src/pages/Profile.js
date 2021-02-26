@@ -397,7 +397,6 @@ const Profile = ({
       });
     }
   };
-
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -501,6 +500,38 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
+        <SectionHeader>
+          {isSelf
+            ? t("profile.individual.myActivity")
+            : t("profile.individual.userActivity")}
+          <PlaceholderIcon />
+          {isSelf && (
+            <>
+              <CreatePostIcon
+                id={GTM.user.profilePrefix + GTM.post.createPost}
+                src={createPost}
+                onClick={onToggleCreatePostDrawer}
+              />
+              <CreatePostButton
+                onClick={onToggleCreatePostDrawer}
+                id={GTM.user.profilePrefix + GTM.post.createPost}
+                inline={true}
+                icon={<PlusIcon />}
+              >
+                {t("post.create")}
+              </CreatePostButton>
+            </>
+          )}
+        </SectionHeader>
+        {isSelf && (
+          <CreatePost
+            onCancel={onToggleCreatePostDrawer}
+            loadPosts={refetchPosts}
+            visible={modal}
+            user={user}
+            gtmPrefix={GTM.user.profilePrefix}
+          />
+        )}
         {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
           <MobileMenuWrapper
             defaultSelectedKeys={[sectionView]}
@@ -528,33 +559,9 @@ const Profile = ({
           </DesktopMenuWrapper>
         )}
 
-        {sectionView === "Posts" ? (
+        {sectionView === "Requests" || sectionView === "Offers" ? (
           <div>
-            <SectionHeader>
-              {isSelf
-                ? t("profile.individual.myActivity")
-                : t("profile.individual.userActivity")}
-              <PlaceholderIcon />
-              {isSelf && (
-                <>
-                  <CreatePostIcon
-                    id={GTM.user.profilePrefix + GTM.post.createPost}
-                    src={createPost}
-                    onClick={onToggleCreatePostDrawer}
-                  />
-                  <CreatePostButton
-                    onClick={onToggleCreatePostDrawer}
-                    id={GTM.user.profilePrefix + GTM.post.createPost}
-                    inline={true}
-                    icon={<PlusIcon />}
-                  >
-                    {t("post.create")}
-                  </CreatePostButton>
-                </>
-              )}
-            </SectionHeader>
-            <FeedWrapper isProfile>
-              <Activity
+            {/* <Activity
                 postDispatch={dispatch}
                 filteredPosts={postsList}
                 user={user}
@@ -569,17 +576,35 @@ const Profile = ({
                 isItemLoaded={isItemLoaded}
                 hasNextPage={loadMore}
                 totalPostCount={totalPostCount}
+              /> */}
+            <div>
+              <SeeAllTabsWrapper>
+                <SeeAllContentWrapper>
+                  <FeedWrapper isProfile>
+                    <WhiteSpace size={"xl"}></WhiteSpace>
+                    <SeeAllComp
+                      profileId={pathUserId}
+                      user={user}
+                      isOrg={false}
+                      isAuthenticated={isAuthenticated}
+                      menuView={sectionView.toUpperCase()}
+                      isMobile={false}
+                      defaultKey={"ACTIVE"}
+                    ></SeeAllComp>
+                  </FeedWrapper>
+                </SeeAllContentWrapper>
+              </SeeAllTabsWrapper>
+            </div>
+            {postsError && (
+              <ErrorAlert
+                message={t([
+                  `error.${postsError.message}`,
+                  `error.http.${postsError.message}`,
+                ])}
               />
-              {postsError && (
-                <ErrorAlert
-                  message={t([
-                    `error.${postsError.message}`,
-                    `error.http.${postsError.message}`,
-                  ])}
-                />
-              )}
-              {emptyFeed() && <></>}
-              {isSelf && (
+            )}
+            {emptyFeed() && <></>}
+            {/* {isSelf && (
                 <CreatePost
                   onCancel={onToggleCreatePostDrawer}
                   loadPosts={refetchPosts}
@@ -587,8 +612,7 @@ const Profile = ({
                   user={user}
                   gtmPrefix={GTM.user.profilePrefix}
                 />
-              )}
-            </FeedWrapper>
+              )} */}
           </div>
         ) : null}
 

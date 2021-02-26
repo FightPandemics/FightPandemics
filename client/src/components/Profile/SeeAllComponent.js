@@ -241,6 +241,9 @@ const SeeAll = ({
   useEffect(() => {
     console.log("in fetch posts useeffects", currentActiveTab);
     console.log("queryParams", queryParams);
+    let _isMounted = false;
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
     const fetchPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
@@ -282,57 +285,68 @@ const SeeAll = ({
             data: { data: posts, meta },
           } = await axios.get(endpoint);
           // console.log("Done");
-          if (prevUserId !== userId) {
-            dispatch(
-              postsActions.fetchPostsSuccess({
-                posts: [],
-              }),
-            );
-          }
-          if (posts.length && meta.total) {
-            if (prevTotalPostCount !== meta.total) {
-              setTotalPostCount(meta.total);
+          if (!_isMounted) {
+            if (prevUserId !== userId) {
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: [],
+                }),
+              );
             }
-            if (posts.length < limit) {
-              dispatch(postsActions.finishLoadingAction());
-            } else if (meta.total === limit) {
-              dispatch(postsActions.finishLoadingAction());
-            }
-            const loadedPosts = posts.reduce((obj, item) => {
-              obj[item._id] = item;
-              return obj;
-            }, {});
+            if (posts.length && meta.total) {
+              if (prevTotalPostCount !== meta.total) {
+                setTotalPostCount(meta.total);
+              }
+              if (posts.length < limit) {
+                dispatch(postsActions.finishLoadingAction());
+              } else if (meta.total === limit) {
+                dispatch(postsActions.finishLoadingAction());
+              }
+              const loadedPosts = posts.reduce((obj, item) => {
+                obj[item._id] = item;
+                return obj;
+              }, {});
 
-            if (prevUserId === userId && postsList) {
+              if (prevUserId === userId && postsList) {
+                dispatch(
+                  postsActions.fetchPostsSuccess({
+                    posts: { ...postsList, ...loadedPosts },
+                  }),
+                );
+              } else {
+                dispatch(
+                  postsActions.fetchPostsSuccess({
+                    posts: { ...loadedPosts },
+                  }),
+                );
+              }
+            } else if (prevUserId === userId && posts) {
               dispatch(
                 postsActions.fetchPostsSuccess({
-                  posts: { ...postsList, ...loadedPosts },
+                  posts: { ...postsList },
                 }),
               );
+              dispatch(postsActions.finishLoadingAction());
             } else {
-              dispatch(
-                postsActions.fetchPostsSuccess({
-                  posts: { ...loadedPosts },
-                }),
-              );
+              dispatch(postsActions.finishLoadingAction());
             }
-          } else if (prevUserId === userId && posts) {
-            dispatch(
-              postsActions.fetchPostsSuccess({
-                posts: { ...postsList },
-              }),
-            );
-            dispatch(postsActions.finishLoadingAction());
-          } else {
-            dispatch(postsActions.finishLoadingAction());
           }
         }
       } catch (error) {
         console.log("Error - ", error);
         dispatch(postsActions.fetchPostsError(error));
+        if (axios.isCancel(error)) {
+          console.log(`request cancelled:${error.message}`);
+        } else {
+          console.log("another error happened:" + error.message);
+        }
       }
     };
     fetchPosts();
+    return () => {
+      _isMounted = true;
+      source.cancel("Cancelling is cleanup");
+    };
   }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
