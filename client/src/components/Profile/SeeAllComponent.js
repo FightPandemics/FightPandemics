@@ -366,11 +366,17 @@ const SeeAll = ({
         mode="horizontal"
         isMobile={isMobile}
       >
-        {Object.keys(TAB_TYPE[viewType]).map((item, index) => (
-          <Menu.Item id={gtmTag(gtmTagsMap[item])} key={item}>
-            {t(TAB_TYPE[viewType][item])}
-          </Menu.Item>
-        ))}
+        {Object.keys(TAB_TYPE[viewType]).map((item, index) =>
+          TAB_TYPE[viewType][item] === "Drafts" ? (
+            <Menu.Item id={gtmTag(gtmTagsMap[item])} key={item} disabled>
+              {t(TAB_TYPE[viewType][item])}
+            </Menu.Item>
+          ) : (
+            <Menu.Item id={gtmTag(gtmTagsMap[item])} key={item}>
+              {t(TAB_TYPE[viewType][item])}
+            </Menu.Item>
+          ),
+        )}
       </MenuWrapper>
       <WhiteSpace size={"lg"}></WhiteSpace>
       <Activity
