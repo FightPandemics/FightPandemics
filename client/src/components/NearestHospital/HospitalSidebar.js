@@ -1,20 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
-import SearchInput from "../Input/SearchInput";
+import CheckSymptomsBox from "./CheckSymptomsBox";
 import LocalEmergencyNumber from "./LocalEmergencyNumber";
 
-import { theme } from "constants/theme";
-const { darkerGray } = theme.colors;
-
-const SearchBarContainer = styled.div`
-  padding: 5rem 0;
-`;
-
 const NavBar = styled.div`
-  border-top: 0.2px solid rgba(0, 0, 0, 0.5);
-  border-bottom: 0.2px solid rgba(0, 0, 0, 0.5);
-  color: ${darkerGray};
   ul {
     list-style-type: none;
     padding: 1rem 0;
@@ -34,27 +23,10 @@ const NavBar = styled.div`
 `;
 
 const HospitalSidebar = (props) => {
-  const [searchValue, setSearchValue] = useState("");
-
-  const onSearchInputChange = (value) => {
-    setSearchValue(value);
-    console.log(searchValue);
-  };
-  const clearSearch = () => {
-    setSearchValue("");
-  };
-
   return (
     <div>
-      <SearchBarContainer>
-        <SearchInput
-          value={searchValue}
-          placeholder=""
-          onClear={clearSearch}
-          onChange={onSearchInputChange}
-        />
-      </SearchBarContainer>
       <NavBar>{props.children}</NavBar>
+      <CheckSymptomsBox />
       <LocalEmergencyNumber />
     </div>
   );

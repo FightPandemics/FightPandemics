@@ -11,6 +11,8 @@ module.exports = {
     language: "_LS",
     switch: "_SWC",
     notifications: "_NOT",
+    nearestHsp: "_NH",
+    checkSymp: "_CS",
   },
   homePage: {
     prefix: "HP",
@@ -107,6 +109,12 @@ module.exports = {
   },
   feed: {
     prefix: "HB",
+  },
+  nearestHospital: {
+    prefix: "NH",
+    facilityType: "_FT",
+    locationChange: "_LC",
+    locationShare: "_LS",
   },
   providersFilters: {
     individual: "_IN",

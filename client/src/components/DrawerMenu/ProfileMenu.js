@@ -54,6 +54,9 @@ export const ProfileMenu = ({
       <Link id={GTM.nav.prefix + GTM.nav.aboutUs} to="/about-us">
         <NavItem size={"big"}>{t("common.aboutUs")}</NavItem>
       </Link>
+      <Link id={GTM.nav.prefix + GTM.nav.nearestHsp} to="/nearest-hospital">
+        <NavItem size={"big"}>{t("common.nearestHsp")}</NavItem>
+      </Link>
       <Divider />
       {isAuthenticated && (
         <NavItem

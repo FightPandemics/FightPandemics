@@ -3,7 +3,6 @@ import React, {
   useReducer,
   useState,
   useCallback,
-  useContext,
   useRef,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,22 +13,6 @@ import { Menu } from "antd";
 
 import { SeeAllWrapper } from "components/Feed/FeedWrappers";
 
-/* import {
-  fetchUser,
-  fetchUserError,
-  fetchUserSuccess,
-} from "hooks/actions/userActions"; */
-/* import {
-  fetchOrganisation,
-  fetchOrganisationError,
-  fetchOrganisationSuccess,
-} from "hooks/actions /organisationActions";*/
-import { UserContext, withUserContext } from "context/UserContext";
-/* import {
-  OrganisationContext,
-  withOrganisationContext,
-} from "context/OrganisationContext";
- */
 import {
   deletePostModalreducer,
   deletePostState,
@@ -50,7 +33,6 @@ import { theme, mq } from "constants/theme";
 import { WhiteSpace } from "antd-mobile";
 
 const gtmTagsMap = {
-  // ALL: GTM.post.allPost,
   REQUESTS: `${GTM.profile.requests}`,
   OFFERS: `${GTM.profile.offers}`,
 };
@@ -62,11 +44,6 @@ const TAB_TYPE = {
     REQUESTS: "Requests",
     OFFERS: "Offers",
   },
-  // REQS_OFFRS: {
-  //   ACTIVE: "Active",
-  //   ARCHIVED: "Archived",
-  //   DRAFTS: "Drafts",
-  // },
   REQUESTS: {
     ACTIVE_REQS: "Active",
     ARCHIVED_REQS: "Archived",
@@ -81,7 +58,7 @@ const TAB_TYPE = {
 
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-// const isMobile = true;
+
 export const MenuWrapper = styled(Menu)`
   height: 4rem;
   margin: 0rem 1rem;
@@ -133,15 +110,10 @@ const SeeAll = ({
 }) => {
   const { t } = useTranslation();
   let orgId = "";
-  // const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
   if (isOrg) {
     orgId = pathUserId;
   }
-  // console.log("In See All Component menuView - ", menuView);
-  /* const { userProfileState, userProfileDispatch } = useContext(UserContext); */
-  /* const { orgProfileState: organisation, orgProfileDispatch } = useContext(
-    OrganisationContext,
-  ); */
+
   const [deleteModal, deleteModalDispatch] = useReducer(
     deletePostModalreducer,
     deletePostState,
@@ -153,20 +125,8 @@ const SeeAll = ({
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  //const { error, loading, user } = userProfileState;
-  const {
-    id: userId,
-    about,
-    firstName,
-    lastName,
-    location = {},
-    needs = {},
-    objectives = {},
-    ownUser,
-    urls = {},
-    usesPassword = false,
-    verified,
-  } = user || {};
+
+  const { id: userId } = user || {};
   const {
     error: postsError,
     isLoading,
@@ -184,24 +144,18 @@ const SeeAll = ({
   const isSelf = actorId === userId;
 
   const getviewType = () => {
-    /* if (menuView === "REQUESTS" || menuView === "OFFERS") {
-      return "REQS_OFFRS";
-    } */
     return menuView;
   };
 
   const viewType = getviewType();
 
-  /* const defaultState = menuView === "POSTS" ? "REQUESTS" : "ACTIVE"; */
   const defaultState = useCallback(() => {
     if (menuView === "POSTS") return "REQUESTS";
     else if (menuView === "REQUESTS") return "ACTIVE_REQS";
     else return "ACTIVE_OFRS";
   });
-  // console.log("menuView defaultState changed", menuView, defaultState);
 
   const [queryParams, setQueryParams] = useState(defaultState);
-  console.log("queryParams", queryParams);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -216,52 +170,34 @@ const SeeAll = ({
   };
 
   const handleTabChange = (e) => {
-    console.log("calling handleTabChange queryParams", e.key, queryParams);
     setQueryParams(e.key);
     currentActiveTab = e.key;
-    console.log(
-      "calling after handleTabChange queryParams",
-      e.key,
-      currentActiveTab,
-    );
-    console.log("menuView - ", menuView, queryParams);
-    console.log("viewType", viewType);
   };
 
   useEffect(() => {
-    console.log("calling menuview", menuView);
-    /* menuView === "POSTS" ? setQueryParams("REQUESTS") : setQueryParams("ACTIVE"); */
     setQueryParams(defaultState);
   }, [menuView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // console.log("Useeddfect");
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
   }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    console.log("in fetch posts useeffects", currentActiveTab);
-    console.log("queryParams", queryParams);
     let _isMounted = false;
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
+
     const fetchPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
       dispatch(postsActions.fetchPostsBegin());
       try {
-        // console.log("in fetch posts try userId", userId, isOrg, orgId);
         if (userId || (isOrg && orgId)) {
-          console.log("In If");
-          if (isOrg) {
-            console.log("Is Org");
-          }
           let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
           if (orgId) {
             baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${orgId}${getActorQuery()}`;
           }
 
-          // console.log("queryParams", queryParams);
           const view =
             viewType !== "POSTS"
               ? lowerCase(menuView).slice(0, -1)
@@ -269,23 +205,18 @@ const SeeAll = ({
 
           const objURL = `&objective=${view}`;
 
-          // console.log("TAB TYpe", viewType, view, queryParams);
           const mode =
-            viewType !== "POSTS" &&
-            /* lowerCase(queryParams) === lowerCase(TAB_TYPE[viewType].ARCHIVED_REQS) */
-            lowerCase(queryParams).includes("archive")
+            viewType !== "POSTS" && lowerCase(queryParams).includes("archive")
               ? "IA"
               : "D";
-          //console.log("mode",lowerCase(queryParams),lowerCase(TAB_TYPE[viewType].ARCHIVED),mode,);
 
           const modeURL = `&postMode=${mode}`;
           const endpoint = `${baseURL}${objURL}${modeURL}`;
-          console.log("endpoint", endpoint);
 
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
-          // console.log("Done");
+
           if (!_isMounted) {
             if (prevUserId !== userId) {
               dispatch(
@@ -339,7 +270,7 @@ const SeeAll = ({
         if (axios.isCancel(error)) {
           console.log(`request cancelled:${error.message}`);
         } else {
-          console.log("another error happened:" + error.message);
+          console.log("Error:" + error.message);
         }
       }
     };
@@ -353,7 +284,6 @@ const SeeAll = ({
   const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
 
   const refetchPosts = useCallback((isLoading, loadMore) => {
-    console.log("In refetch Posts");
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
@@ -443,8 +373,6 @@ const SeeAll = ({
         ))}
       </MenuWrapper>
       <WhiteSpace size={"lg"}></WhiteSpace>
-      {/* <ContentWrapper> */}
-      {/* <HeaderWrapper>Request/Offers</HeaderWrapper> */}
       <Activity
         postDispatch={dispatch}
         filteredPosts={postsList}
@@ -469,25 +397,6 @@ const SeeAll = ({
           ])}
         />
       )}
-      {/* <Posts
-                isAuthenticated={true}
-                filteredPosts={postsList}
-                
-                postDispatch={dispatch}
-                user={user}
-                // postDelete={postDelete}
-                //deleteModalVisibility={deleteModalVisibility}
-                // handlePostDelete={handlePostDelete}
-                // handleCancelPostDelete={handleCancelPostDelete} 
-                isNextPageLoading={isLoading}
-                loadNextPage={loadNextPage}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalPostCount={totalPostCount}
-                // highlightWords={queryParams.s_keyword}
-                page={page}
-              /> */}
       {emptyFeed() && <>"No Posts matching your crieteria."</>}
     </SeeAllWrapper>
   );

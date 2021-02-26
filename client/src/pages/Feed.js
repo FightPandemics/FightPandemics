@@ -196,7 +196,11 @@ const Feed = (props) => {
     if (query.location) {
       query.location = JSON.parse(atob(query.location));
       dispatchAction(SET_VALUE, "location", query.location);
-    } else dispatchAction(SET_VALUE, "location", "");
+      sessionStorage.setItem("feedLocation", JSON.stringify(query.location));
+    } else {
+      dispatchAction(SET_VALUE, "location", "");
+      sessionStorage.removeItem("feedLocation");
+    }
 
     // filters / help type (objective)
     if (query.filters || query.objective) {
@@ -301,6 +305,7 @@ const Feed = (props) => {
     e.preventDefault();
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
     dispatchAction(SET_VALUE, "location", null);
+    sessionStorage.removeItem("feedLocation");
     setQueryKeysValue(history, { location: null });
 
     setTimeout(() => {
@@ -343,8 +348,9 @@ const Feed = (props) => {
       dispatch(postsActions.resetPageAction({}));
     }
     dispatchAction(SET_VALUE, "location", value);
-    if (!value && queryParams.location)
+    if (!value && queryParams.location) {
       setQueryKeysValue(history, { location: null });
+    }
   };
 
   const handleOption = (label, option) => (e) => {
