@@ -501,9 +501,6 @@ const Profile = ({
         )}
         <WhiteSpace />
         <SectionHeader>
-          {isSelf
-            ? t("profile.individual.myActivity")
-            : t("profile.individual.userActivity")}
           <PlaceholderIcon />
           {isSelf && (
             <>
