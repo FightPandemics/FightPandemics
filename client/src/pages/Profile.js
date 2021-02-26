@@ -63,17 +63,17 @@ import {
   TWITTER_URL,
   GITHUB_URL,
 } from "constants/urls";
-import {
+/* import {
   deletePostModalreducer,
   deletePostState,
-} from "hooks/reducers/feedReducers";
-import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
+} from "hooks/reducers/feedReducers"; */
+/* import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions"; */
 import { selectPosts, postsActions } from "reducers/posts";
-import {
+/* import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
-} from "hooks/actions/feedActions";
+} from "hooks/actions/feedActions"; */
 import {
   fetchUser,
   fetchUserError,
@@ -122,10 +122,10 @@ const Profile = ({
   const window = useWindowDimensions();
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const [deleteModal, deleteModalDispatch] = useReducer(
+  /* const [deleteModal, deleteModalDispatch] = useReducer(
     deletePostModalreducer,
     deletePostState,
-  );
+  ); */
   const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -162,7 +162,7 @@ const Profile = ({
     posts: postsList,
     error: postsError,
   } = posts;
-  const { deleteModalVisibility } = deleteModal;
+  /* const { deleteModalVisibility } = deleteModal; */
   if (ownUser) sessionStorage.removeItem("msgModal");
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
@@ -186,7 +186,7 @@ const Profile = ({
     const baseMenu = [
       {
         name: t("profile.views.activity"),
-        disabled: true,
+        disabled: false,
       },
       {
         name: t("profile.views.organizations"),
@@ -342,7 +342,7 @@ const Profile = ({
     setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
   }, [loadMore, userPosts.length]);
 
-  const postDelete = async (post) => {
+  /* const postDelete = async (post) => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
     if (user && (user._id === post.author.id || user.id === post.author.id)) {
@@ -396,8 +396,8 @@ const Profile = ({
         visibility: true,
       });
     }
-  };
-  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
+  }; */
+  /* const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading; */
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
 
@@ -532,36 +532,39 @@ const Profile = ({
             gtmPrefix={GTM.user.profilePrefix}
           />
         )}
-        {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
-          <MobileMenuWrapper
-            defaultSelectedKeys={[sectionView]}
-            selectedKeys={sectionView}
-            onClick={handleMenuToggle}
-          >
-            {navMenu.map((item, index) => (
-              <Menu.Item key={item.name} disabled={item.disabled}>
-                {item.name}
-              </Menu.Item>
-            ))}
-          </MobileMenuWrapper>
-        ) : null}
-        {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
-          <DesktopMenuWrapper
-            defaultSelectedKeys={[sectionView]}
-            selectedKeys={sectionView}
-            onClick={handleMenuToggle}
-          >
-            {navMenu.map((item, index) => (
-              <Menu.Item key={item.name} disabled={item.disabled}>
-                {item.name}
-              </Menu.Item>
-            ))}
-          </DesktopMenuWrapper>
-        )}
+        <div style={{ display: "flex" }}>
+          {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
+            <MobileMenuWrapper
+              defaultSelectedKeys={[sectionView]}
+              selectedKeys={sectionView}
+              onClick={handleMenuToggle}
+            >
+              {navMenu.map((item, index) => (
+                <Menu.Item key={item.name} disabled={item.disabled}>
+                  {item.name}
+                </Menu.Item>
+              ))}
+            </MobileMenuWrapper>
+          ) : null}
+          {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
+            <DesktopMenuWrapper
+              defaultSelectedKeys={[sectionView]}
+              selectedKeys={sectionView}
+              onClick={handleMenuToggle}
+            >
+              {navMenu.map((item, index) => (
+                <Menu.Item key={item.name} disabled={item.disabled}>
+                  {item.name}
+                </Menu.Item>
+              ))}
+            </DesktopMenuWrapper>
+          )}
 
-        {sectionView === "Requests" || sectionView === "Offers" ? (
-          <div>
-            {/* <Activity
+          {sectionView === "Requests" ||
+          sectionView === "Offers" ||
+          sectionView === "Posts" ? (
+            <div>
+              {/* <Activity
                 postDispatch={dispatch}
                 filteredPosts={postsList}
                 user={user}
@@ -577,7 +580,7 @@ const Profile = ({
                 hasNextPage={loadMore}
                 totalPostCount={totalPostCount}
               /> */}
-            <div>
+
               <SeeAllTabsWrapper>
                 <SeeAllContentWrapper>
                   <FeedWrapper isProfile>
@@ -589,22 +592,21 @@ const Profile = ({
                       isAuthenticated={isAuthenticated}
                       menuView={sectionView.toUpperCase()}
                       isMobile={false}
-                      defaultKey={"ACTIVE"}
                     ></SeeAllComp>
                   </FeedWrapper>
                 </SeeAllContentWrapper>
               </SeeAllTabsWrapper>
-            </div>
-            {postsError && (
-              <ErrorAlert
-                message={t([
-                  `error.${postsError.message}`,
-                  `error.http.${postsError.message}`,
-                ])}
-              />
-            )}
-            {emptyFeed() && <></>}
-            {/* {isSelf && (
+
+              {postsError && (
+                <ErrorAlert
+                  message={t([
+                    `error.${postsError.message}`,
+                    `error.http.${postsError.message}`,
+                  ])}
+                />
+              )}
+              {/* {emptyFeed() && <></>} */}
+              {/* {isSelf && (
                 <CreatePost
                   onCancel={onToggleCreatePostDrawer}
                   loadPosts={refetchPosts}
@@ -613,8 +615,9 @@ const Profile = ({
                   gtmPrefix={GTM.user.profilePrefix}
                 />
               )} */}
-          </div>
-        ) : null}
+            </div>
+          ) : null}
+        </div>
 
         {/* <ProfileTabs tabData={isSelfViews(tabViews, isSelf)} /> */}
         {isSelf && (

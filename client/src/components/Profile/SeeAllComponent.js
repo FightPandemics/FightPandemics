@@ -231,7 +231,7 @@ const SeeAll = ({
     console.log("calling menuview", menuView);
     /* menuView === "POSTS" ? setQueryParams("REQUESTS") : setQueryParams("ACTIVE"); */
     setQueryParams(defaultState);
-  }, [defaultState, menuView]);
+  }, [menuView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     // console.log("Useeddfect");
