@@ -379,23 +379,6 @@ const Profile = ({
               sectionView === "Offers" ||
               sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
-                  {/* <Activity
-                postDispatch={dispatch}
-                filteredPosts={postsList}
-                user={user}
-                postDelete={postDelete}
-                handlePostDelete={handlePostDelete}
-                handleEditPost={handleEditPost}
-                deleteModalVisibility={deleteModalVisibility}
-                handleCancelPostDelete={handleCancelPostDelete}
-                loadNextPage={loadNextPage}
-                isNextPageLoading={isLoading}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalPostCount={totalPostCount}
-              /> */}
-
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>
                       <FeedWrapper isProfile>
