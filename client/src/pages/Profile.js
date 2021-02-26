@@ -532,7 +532,7 @@ const Profile = ({
             gtmPrefix={GTM.user.profilePrefix}
           />
         )}
-        <div style={{ display: "flex" }}>
+        <div>
           {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
             <MobileMenuWrapper
               defaultSelectedKeys={[sectionView]}
@@ -547,7 +547,7 @@ const Profile = ({
             </MobileMenuWrapper>
           ) : null}
           {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
-            <div>
+            <div style={{ display: "flex" }}>
               <DesktopMenuWrapper
                 defaultSelectedKeys={[sectionView]}
                 selectedKeys={sectionView}
