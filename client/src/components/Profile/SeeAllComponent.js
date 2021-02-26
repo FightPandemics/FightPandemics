@@ -154,7 +154,7 @@ const SeeAll = ({
     else return "ACTIVE_OFRS";
   });
 
-  const [queryParams, setQueryParams] = useState(defaultState);
+  const [childTab, setChildTab] = useState(defaultState);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -169,17 +169,17 @@ const SeeAll = ({
   };
 
   const handleTabChange = (e) => {
-    setQueryParams(e.key);
+    setChildTab(e.key);
     currentActiveTab = e.key;
   };
 
   useEffect(() => {
-    setQueryParams(defaultState);
+    setChildTab(defaultState);
   }, [menuView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
-  }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [childTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     let _isMounted = false;
@@ -200,12 +200,12 @@ const SeeAll = ({
           const view =
             viewType !== "POSTS"
               ? lowerCase(menuView).slice(0, -1)
-              : lowerCase(queryParams).slice(0, -1);
+              : lowerCase(childTab).slice(0, -1);
 
           const objURL = `&objective=${view}`;
 
           const mode =
-            viewType !== "POSTS" && lowerCase(queryParams).includes("archive")
+            viewType !== "POSTS" && lowerCase(childTab).includes("archive")
               ? "IA"
               : "D";
 
@@ -360,13 +360,17 @@ const SeeAll = ({
     <SeeAllWrapper isMobile={isMobile}>
       <MenuWrapper
         defaultSelectedKeys={[defaultState]}
-        selectedKeys={[queryParams || defaultState]}
+        selectedKeys={[childTab || defaultState]}
         onClick={handleTabChange}
         mode="horizontal"
         isMobile={isMobile}
       >
         {Object.keys(TAB_TYPE[viewType]).map((item, index) => (
-          <Menu.Item id={gtmTag(gtmTagsMap[item])} key={item}>
+          <Menu.Item
+            id={gtmTag(gtmTagsMap[item])}
+            key={item}
+            disabled={item.toLowerCase().includes("draft")}
+          >
             {t(TAB_TYPE[viewType][item])}
           </Menu.Item>
         ))}
