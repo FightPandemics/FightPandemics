@@ -532,22 +532,9 @@ const Profile = ({
             gtmPrefix={GTM.user.profilePrefix}
           />
         )}
-        {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
-          <MobileMenuWrapper
-            defaultSelectedKeys={[sectionView]}
-            selectedKeys={sectionView}
-            onClick={handleMenuToggle}
-          >
-            {navMenu.map((item, index) => (
-              <Menu.Item key={item.name} disabled={item.disabled}>
-                {item.name}
-              </Menu.Item>
-            ))}
-          </MobileMenuWrapper>
-        ) : null}
-        <div style={{ display: "flex" }}>
-          {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
-            <DesktopMenuWrapper
+        <div>
+          {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
+            <MobileMenuWrapper
               defaultSelectedKeys={[sectionView]}
               selectedKeys={sectionView}
               onClick={handleMenuToggle}
@@ -557,14 +544,27 @@ const Profile = ({
                   {item.name}
                 </Menu.Item>
               ))}
-            </DesktopMenuWrapper>
-          )}
+            </MobileMenuWrapper>
+          ) : null}
+          {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
+            <div style={{ display: "flex" }}>
+              <DesktopMenuWrapper
+                defaultSelectedKeys={[sectionView]}
+                selectedKeys={sectionView}
+                onClick={handleMenuToggle}
+              >
+                {navMenu.map((item, index) => (
+                  <Menu.Item key={item.name} disabled={item.disabled}>
+                    {item.name}
+                  </Menu.Item>
+                ))}
+              </DesktopMenuWrapper>
 
-          {sectionView === "Requests" ||
-          sectionView === "Offers" ||
-          sectionView === "Posts" ? (
-            <div style={{ width: "100%" }}>
-              {/* <Activity
+              {sectionView === "Requests" ||
+              sectionView === "Offers" ||
+              sectionView === "Posts" ? (
+                <div style={{ width: "100%" }}>
+                  {/* <Activity
                 postDispatch={dispatch}
                 filteredPosts={postsList}
                 user={user}
@@ -581,32 +581,32 @@ const Profile = ({
                 totalPostCount={totalPostCount}
               /> */}
 
-              <SeeAllTabsWrapper>
-                <SeeAllContentWrapper>
-                  <FeedWrapper isProfile>
-                    <WhiteSpace size={"xl"}></WhiteSpace>
-                    <SeeAllComp
-                      profileId={pathUserId}
-                      user={user}
-                      isOrg={false}
-                      isAuthenticated={isAuthenticated}
-                      menuView={sectionView.toUpperCase()}
-                      isMobile={false}
-                    ></SeeAllComp>
-                  </FeedWrapper>
-                </SeeAllContentWrapper>
-              </SeeAllTabsWrapper>
+                  <SeeAllTabsWrapper>
+                    <SeeAllContentWrapper>
+                      <FeedWrapper isProfile>
+                        <WhiteSpace size={"xl"}></WhiteSpace>
+                        <SeeAllComp
+                          profileId={pathUserId}
+                          user={user}
+                          isOrg={false}
+                          isAuthenticated={isAuthenticated}
+                          menuView={sectionView.toUpperCase()}
+                          isMobile={false}
+                        ></SeeAllComp>
+                      </FeedWrapper>
+                    </SeeAllContentWrapper>
+                  </SeeAllTabsWrapper>
 
-              {postsError && (
-                <ErrorAlert
-                  message={t([
-                    `error.${postsError.message}`,
-                    `error.http.${postsError.message}`,
-                  ])}
-                />
-              )}
-              {/* {emptyFeed() && <></>} */}
-              {/* {isSelf && (
+                  {postsError && (
+                    <ErrorAlert
+                      message={t([
+                        `error.${postsError.message}`,
+                        `error.http.${postsError.message}`,
+                      ])}
+                    />
+                  )}
+                  {/* {emptyFeed() && <></>} */}
+                  {/* {isSelf && (
                 <CreatePost
                   onCancel={onToggleCreatePostDrawer}
                   loadPosts={refetchPosts}
@@ -615,8 +615,10 @@ const Profile = ({
                   gtmPrefix={GTM.user.profilePrefix}
                 />
               )} */}
+                </div>
+              ) : null}
             </div>
-          ) : null}
+          )}
         </div>
 
         {/* <ProfileTabs tabData={isSelfViews(tabViews, isSelf)} /> */}
