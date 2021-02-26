@@ -14,13 +14,6 @@ const BaseSelector = ({
   minHeight,
   popUpContainer,
 }) => {
-  // const checkPopUp = () =>{
-  //   if(typeof document.getElementsByClassName("ant-tabs-content-holder")[0] === undefined){
-  //     window.body
-  //   }else{
-  //     return document.getElementsByClassName("ant-tabs-content-holder")[0]
-  //   }
-  // }
   return (
     <StyledSelector
       suffixIcon={suffixIcon}
