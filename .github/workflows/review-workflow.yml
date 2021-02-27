@@ -24,8 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - if: matrix.app == 'client'
+        env:
+          FE_GOOGLE_MAPS_API_KEY: ${{ secrets.REVIEW_FE_GOOGLE_MAPS_API_KEY }}
         run: >
-          rm ./client/.env
+          echo "REACT_APP_GOOGLE_MAPS_API_KEY=${FE_GOOGLE_MAPS_API_KEY}" > ./client/.env
       - id: get-branch-name
         uses: ypicard/get-branch-name-github-action@v1
       - id: get-branch-name-sanitized
