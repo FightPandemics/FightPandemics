@@ -25,9 +25,11 @@ jobs:
       - uses: actions/checkout@v2
       - if: matrix.app == 'client'
         env:
+          GTM_ID: ${{ secrets.STAGING_GTM_ID }}
           FE_GOOGLE_MAPS_API_KEY: ${{ secrets.REVIEW_FE_GOOGLE_MAPS_API_KEY }}
-        run: >
-          echo "REACT_APP_GOOGLE_MAPS_API_KEY=${FE_GOOGLE_MAPS_API_KEY}" > ./client/.env
+        run: |
+          echo "REACT_APP_GTM_ID=${GTM_ID}" > ./client/.env
+          echo "REACT_APP_GOOGLE_MAPS_API_KEY=${FE_GOOGLE_MAPS_API_KEY}" >> ./client/.env
       - id: get-branch-name
         uses: ypicard/get-branch-name-github-action@v1
       - id: get-branch-name-sanitized
