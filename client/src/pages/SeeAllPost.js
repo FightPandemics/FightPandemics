@@ -21,7 +21,6 @@ import {
   FeedWrapper,
   SiderWrapper,
   FiltersWrapper,
-  /* MenuWrapper, */
   LayoutWrapper,
   ContentWrapper,
   HeaderWrapper,
@@ -45,16 +44,10 @@ import {
   withOrganisationContext,
 } from "context/OrganisationContext";
 
-/* import { mq } from "constants/theme"; */
 import GTM from "../constants/gtm-tags";
-import { setQueryKeysValue } from "components/Feed/utils";
 import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId, selectActorId } from "reducers/session";
-import Activity from "components/Profile/Activity";
-import CreatePost from "components/CreatePost/CreatePost";
 
-import Posts from "components/Feed/Posts";
-import { lowerCase } from "lodash";
 import { theme, mq } from "constants/theme";
 import SeeAllComp from "components/Profile/SeeAllComponent";
 
@@ -79,7 +72,6 @@ let VIEW_TYPE = {
 
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-// const [queryParams, setQueryParams] = useState({});
 
 export const MenuWrapper = styled(Menu)`
   line-height: 40px;
@@ -169,6 +161,7 @@ const SeeAll = ({
   match: {
     params: { id: pathUserId },
   },
+  viewType = "OFFERS",
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -194,8 +187,6 @@ const SeeAll = ({
     verified,
   } = user || {};
 
-  let [queryParams, setQueryParams] = useState("POSTS");
-
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
     (async function fetchProfile() {
@@ -218,10 +209,6 @@ const SeeAll = ({
     })();
   }, [pathUserId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleViewChange = (e) => {
-    setQueryParams(e.key);
-  };
-
   return (
     <FeedWrapper>
       <LayoutWrapper>
@@ -229,7 +216,7 @@ const SeeAll = ({
 
         <Link to={`/profile/${pathUserId}`} style={{ "margin-left": "29px" }}>
           <SvgIcon src={backIcon} title="Navigate to the profile page" />
-          <BackText>{t(VIEW_TYPE["OFFERS"])}</BackText>
+          <BackText>{t(VIEW_TYPE[viewType])}</BackText>
         </Link>
 
         <WhiteSpace size={"lg"} />
@@ -238,7 +225,7 @@ const SeeAll = ({
           user={user}
           isOrg={isOrg}
           isAuthenticated={isAuthenticated}
-          menuView={"OFFERS"}
+          menuView={viewType}
           isMobile={true}
         ></SeeAllComp>
       </LayoutWrapper>
