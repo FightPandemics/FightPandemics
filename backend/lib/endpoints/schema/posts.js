@@ -80,12 +80,6 @@ const likeUnlikeCommentSchema = {
     .prop("commentId", S.string().required()),
 };
 
-const sharePostSchema = {
-  params: strictSchema()
-    .prop("actorId", S.string().required())
-    .prop("postId", S.string().required()),
-};
-
 const deletePostSchema = {
   params: strictSchema().prop("postId", S.string().required()),
 };
@@ -126,7 +120,6 @@ module.exports = {
   getPostsSchema,
   likeUnlikeCommentSchema,
   likeUnlikePostSchema,
-  sharePostSchema,
   updateCommentSchema,
   updatePostSchema,
 };

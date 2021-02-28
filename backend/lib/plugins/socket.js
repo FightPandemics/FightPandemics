@@ -461,6 +461,8 @@ function onSocketConnect(socket) {
     const { userId } = socket;
     const [errPost, post] = await this.to(Post.findById(data.postId));
     if (errPost || !post) return;
+    post.shares += 1;
+    await post.save();
     const decodedToken = this.jwt.decode(socket.request.cookies.token);
     const authUserId = decodedToken.payload[auth.jwtMongoIdKey];
     // action, post, actorId, authUserId, {sharedVia}

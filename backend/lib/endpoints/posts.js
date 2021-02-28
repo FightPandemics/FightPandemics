@@ -17,7 +17,6 @@ const {
   deletePostSchema,
   likeUnlikeCommentSchema,
   likeUnlikePostSchema,
-  sharePostSchema,
   updateCommentSchema,
   updatePostSchema,
 } = require("./schema/posts");
@@ -405,20 +404,8 @@ async function routes(app) {
         // none logged in user shouldn't see removed posts on post page
         if (post.status === "removed") throw app.httpErrors.notFound();
       }
-
-      const [updateErr, updatedPost] = await app.to(
-        Post.findOneAndUpdate(
-          { _id: postId },
-          { $push: { views: actor._id } },
-          { new: true },
-        ),
-      );
-      if (updateErr) {
-        req.log.error(updateErr, "Failed updating post views");
-        throw app.httpErrors.internalServerError();
-      } else if (updatedPost === null) {
-        throw app.httpErrors.notFound();
-      }
+      post.views += 1;
+      post.save();
 
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
@@ -574,44 +561,6 @@ async function routes(app) {
       return {
         likes: updatedPost.likes,
         likesCount: updatedPost.likes.length,
-      };
-    },
-  );
-
-  //Update "Share"
-  app.put(
-    "/:postId/shares/:actorId",
-    {
-      preValidation: [app.authenticate, app.setActor],
-      schema: sharePostSchema,
-    },
-    async (req) => {
-      const {
-        actor,
-        userId,
-        params: { postId },
-      } = req;
-
-      const [updateErr, updatedPost] = await app.to(
-        Post.findOneAndUpdate(
-          { _id: postId },
-          { $push: { shares: actor._id } },
-          { new: true },
-        ),
-      );
-      if (updateErr) {
-        req.log.error(updateErr, "Failed sharing post");
-        throw app.httpErrors.internalServerError();
-      } else if (updatedPost === null) {
-        throw app.httpErrors.notFound();
-      }
-
-      // action, post, actorId (triggredBy), authUserId, details
-      app.notifier.notify("shares", updatedPost, actor._id, userId);
-
-      return {
-        shares: updatedPost.shares,
-        sharesCount: updatedPost.shares.length,
       };
     },
   );
