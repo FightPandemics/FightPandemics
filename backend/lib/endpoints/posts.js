@@ -405,7 +405,7 @@ async function routes(app) {
         if (post.status === "removed") throw app.httpErrors.notFound();
       }
       post.views += 1;
-      post.save();
+      await post.save();
 
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
