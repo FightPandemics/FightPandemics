@@ -48,6 +48,8 @@ async function routes(app) {
           authorId,
           ignoreUserLocation,
           filter,
+          sort,
+          order,
           keywords,
           limit,
           objective,
@@ -175,7 +177,11 @@ async function routes(app) {
             { $match: { $and: filters, $text: { $search: keywords } } },
             { $sort: { score: { $meta: "textScore" } } },
           ]
-          : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+          : sort
+            ? [
+              { $sort: { [sort]: order === "asc" ? 1 : -1 } }
+            ]
+            : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
 
       /* eslint-disable sort-keys */
@@ -250,6 +256,8 @@ async function routes(app) {
             visibility: true,
             createdAt: true,
             updatedAt: true,
+            views: true,
+            shares: true,
           },
         },
       ];
