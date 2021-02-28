@@ -86,7 +86,7 @@ export const NameDiv = styled(TextLabel)`
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     padding: 0;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     flex-direction: column;
   }
 
@@ -121,8 +121,8 @@ export const NamePara = styled.p`
   font-family: Poppins;
   font-weight: bold;
   font-style: normal;
-  font-size: 26px;
-  line-height: 28px;
+  font-size: 2.7rem;
+  line-height: 3rem;
   color: #282828;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -135,9 +135,9 @@ export const NamePara = styled.p`
     font-family: Poppins;
     font-weight: 700;
     font-style: normal;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.4px;
+    font-size: 1.9rem;
+    line-height: 1.9rem;
+    letter-spacing: 0.05rem;
   }
 `;
 
@@ -184,7 +184,7 @@ export const IconsContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2.4rem;
+  margin-top: 1rem;
   ${(props) => (props.inCard ? `padding-bottom: 2rem;` : "")}
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     flex-direction: ${(props) => (props.inCard ? "row" : "column")};
@@ -212,7 +212,6 @@ export const HelpContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin-bottom: 1.6rem;
   }
-
   & > div {
     background: #f3f4fe;
     border-radius: 4px;
@@ -225,9 +224,9 @@ export const HelpContainer = styled.div`
 export const UserInfoContainer = styled.div`
   background-color: ${colors.white};
   box-shadow: 0px 0.2rem 2rem rgba(0, 0, 0, 0.01);
-  max-width: 1173px;
+  max-width: 80rem;
   width: 100%;
-  height: 222px;
+  height: 23rem;
   z-index: 1;
   flex-direction: column;
   display: flex;
@@ -274,32 +273,32 @@ export const UserInfoDesktop = styled.div`
 `;
 
 export const DescriptionDesktop = styled.div`
-  margin-top: 2.4rem;
+  margin-top: 2rem;
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 1.2rem;
   line-height: 140%;
-  color: #939393;;
+  color: #939393;
   
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-    margin-top: 2.4rem;
+    margin-top: 2rem;
     font-family: Work Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 1.5rem;
+    line-height: 2rem;
     color: #282828;
   }
 `;
 export const MobileLocation = styled.div`
   color: #939393;
-  width: 124px;
-  height: 14px;
+  width: 70rem;
+  height: 1.3rem;
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
-  font-size: 10px;
+  font-size: 1rem;
   line-height: 140%;
   display: flex;
   white-space: nowrap;
@@ -315,13 +314,13 @@ export const  DesktopLocation = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: initial;
     width: auto;
-    height: 13.93px;
+    height: 1.5rem;
     white-space: nowrap;
     overflow: hidden;
     font-family: Poppins;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 1.1rem;
+    line-height: 1rem;
   }
 `;

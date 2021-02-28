@@ -245,7 +245,7 @@ export const PrivateMessageContainer = styled.div`
     font-size: 2rem;
     color: white;
     font-weight: 500;
-    line-height: 20px;
+    line-height: 1.25rem;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       display: none;
     }
@@ -255,7 +255,7 @@ export const PrivateMessageContainer = styled.div`
       position: absolute;
       top: 22%;
       right: 22%;
-      width: 30px;
+      width: 3rem;
       display: block;
 
     }
@@ -266,37 +266,28 @@ export const PrivateMessageContainer = styled.div`
   span {
     pointer-events: none;
   }
-
-  ${(props) =>
-    props.isFromUserCard
-      ? `
-    // margin-left: 7.4rem;
-  `
-      : ""}
-
   ${(props) =>
     props.isFromProfile
       ? `
       position: absolute;
-      top: -33px;
-      right: 50px;
+      top: -3rem;
+      right: 5rem;
       background: #425AF2;
       border: 6px solid #FFFFFF;
-      border-radius: 46px;
       box-sizing: border-box;
       border-radius: 4.6rem;
       padding: 0.8rem 2.8rem;
      
       @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
         justify-content: center;
-        width: 36px;
-        height: 55px;
+        width: 3.1rem;
+        height: 5.4rem;
         position: absolute;
-        top: -23px;
-        right: 50px;
+        top: -2.5rem;
+        right: 5rem;
         background: ${whiteColor};
         border: none;
-        box-shadow: 3px 3px 3px lightgrey;
+        box-shadow: 0.2rem 0.2rem 0.2rem lightgrey;
       }
     }
       `

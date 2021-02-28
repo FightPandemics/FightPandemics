@@ -10,7 +10,6 @@ const InitialDiv = styled.div`
   margin-bottom: 1rem;
   border-radius: 50%;
   border: none;
-  border: ${(props) => (props.hasPhoto ? "none" : "none")}
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
   color: #425af2;
   font-size: 3rem;
