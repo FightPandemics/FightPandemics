@@ -97,6 +97,15 @@ export const FilterAccordionPanel = styled(Accordion.Panel)`
 export const StyledCheckbox = styled(Checkbox)`
   padding: 1.6rem 1.29rem;
   font-size: ${theme.typography.size.large};
+  line-height: 1.5rem;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  :hover {
+    overflow: visible;
+    z-index: 1;
+  }
   ${({ checked }) =>
     checked
       ? `
