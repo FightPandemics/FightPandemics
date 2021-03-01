@@ -176,13 +176,11 @@ async function routes(app) {
           ? [
             { $match: { $and: filters, $text: { $search: keywords } } },
             { $sort: { score: { $meta: "textScore" } } },
-          ]
-          : sort
-            ? [
-              { $sort: { [sort]: order === "asc" ? 1 : -1 } }
-            ]
-            : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+          ] : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
+      if (sort) {
+        sortAndFilterSteps.push({ $sort: { [sort]: order === "asc" ? 1 : -1 } })
+      }
 
       /* eslint-disable sort-keys */
       const paginationSteps =
