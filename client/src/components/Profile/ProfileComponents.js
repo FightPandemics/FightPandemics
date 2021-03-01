@@ -142,7 +142,7 @@ export const ProfileBackgroup = styled.div`
   width: 100vw;
   height: 21rem;
   z-index: 0;
-  border-radius: 0px 0px 6rem 0px;
+  border-radius: 0px 0px 6rem 6rem;
 `;
 
 export const ProfileLayout = styled.div`
