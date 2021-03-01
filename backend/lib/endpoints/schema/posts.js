@@ -4,6 +4,8 @@ const { strictSchema, strictQueryStringSchema } = require("./utils");
 const {
   EXPIRATION_OPTIONS,
   POST_OBJECTIVES,
+  SORT_OPTIONS,
+  ORDER_OPTIONS,
   POST_TYPES,
   VISIBILITY_OPTIONS,
 } = require("../../models/Post");
@@ -13,8 +15,8 @@ const getPostsSchema = {
     .prop("actorId", S.string())
     .prop("authorId", S.string())
     .prop("filter", S.string()) // URI encoded JSON; TODO: figure out way to custom validation
-    .prop("sort", S.string()) // Sorting posts by likes, updatedAt, views and shares
-    .prop("order", S.string()) // descending or ascending
+    .prop("sort", S.string().enum(SORT_OPTIONS)) // Sorting posts by likes, updatedAt, views and shares
+    .prop("order", S.string().enum(ORDER_OPTIONS)) // descending or ascending
     .prop("keywords", S.string())
     .prop("ignoreUserLocation", S.boolean().default(false))
     .prop("objective", S.string().enum(POST_OBJECTIVES))
