@@ -225,6 +225,7 @@ export const PrivateMessageContainer = styled.div`
   position: relative;
   cursor: pointer;
   font-family: "Poppins",sans-serif;
+  
 
 
   :hover {
@@ -235,13 +236,11 @@ export const PrivateMessageContainer = styled.div`
     position: relative;
     top: 0.28rem;
   }
-  span {
+  span.message {
     font-family: Poppins;
-    position: static;
-    left: 39.47%;
-    right: 18.42%;
-    top: 20%;
-    bottom: 30%;
+    position: relative;
+    left: 1.8rem;
+    bottom: 0.3rem;
     font-size: 2rem;
     color: white;
     font-weight: 500;
@@ -250,14 +249,25 @@ export const PrivateMessageContainer = styled.div`
       display: none;
     }
   }
-  img.envelopeIcon {
+  img.blueenvelope {
+    position: absolute;
+    top: 22%;
+    right: 72%;
+    width: 2.7rem;
+    display: block;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: none;
+    }
+  }
+  img.whiteenvelope {
+    display: none;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       position: absolute;
+      display:inline-block;
       top: 22%;
       right: 22%;
       width: 3rem;
       display: block;
-
     }
   }
   

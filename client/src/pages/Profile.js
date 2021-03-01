@@ -24,8 +24,6 @@ import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
 
-import ThankButton from "components/Button/ThankButton";
-
 import {
   ProfileLayout,
   ProfileBackgroup,
@@ -398,8 +396,6 @@ const Profile = ({
                   postAuthorName={`${firstName} ${lastName}`}
                   authorId={userId}
                 />
-                {/* <ThankButton>Thanks</ThankButton> */}
-
                 </>
               )}
             </NameDiv>
