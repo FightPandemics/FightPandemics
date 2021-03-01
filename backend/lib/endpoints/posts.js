@@ -56,7 +56,7 @@ async function routes(app) {
           includeMeta,
         },
       } = req;
-      console.log("postProps modeURL", objective, postMode);
+      
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */

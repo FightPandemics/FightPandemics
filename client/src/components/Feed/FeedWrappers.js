@@ -158,7 +158,6 @@ export const MobileSearchWrapper = styled.div`
 `;
 
 export const SeeAllWrapper = styled(Content)`
-  /* margin: 0 1rem; */
   overflow-x: visible !important;
   background: ${white};
   ${({ isMobile }) =>
