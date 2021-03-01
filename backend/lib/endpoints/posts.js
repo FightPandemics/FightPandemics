@@ -404,8 +404,22 @@ async function routes(app) {
         // none logged in user shouldn't see removed posts on post page
         if (post.status === "removed") throw app.httpErrors.notFound();
       }
-      post.views += 1;
-      await post.save();
+
+      //updating views each time an user click on a post to see detail
+      const [updateErr, updatedPost] = await app.to(
+        post.update({
+          $inc: {
+            views: 1
+          }
+        })
+      );
+
+      if (updateErr) {
+        req.log.error(updateErr, "Failed updating post view");
+        throw app.httpErrors.internalServerError();
+      } else if (updatedPost === null) {
+        throw app.httpErrors.notFound();
+      }
 
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
