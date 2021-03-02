@@ -66,9 +66,14 @@ export const CreatePostDiv = styled.div`
 
 export const SocialIcon = styled(SvgIcon)`
   align-self: flex-end;
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   margin-right: 1.6rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    margin-top: 1rem;
+    width: 3rem;
+    height: 3rem;
+  }
 `;
 
 export const NameDiv = styled(TextLabel)`
@@ -205,6 +210,7 @@ export const IconsContainer = styled.div`
     a:last-child img {
       margin-right: 0;
     }
+    
   }
 `;
 export const HelpContainer = styled.div`
@@ -273,7 +279,7 @@ export const UserInfoDesktop = styled.div`
 `;
 
 export const DescriptionDesktop = styled.div`
-  margin-top: 2rem;
+  margin-top: 1rem;
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;

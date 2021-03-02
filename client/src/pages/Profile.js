@@ -400,8 +400,7 @@ const Profile = ({
               )}
             </NameDiv>
             {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-            <IconsContainer>
-              <MobileLocation>
+            <MobileLocation>
                 {address && (
                     <div title={address} className="address-container">
                       <img src={locationIcon} alt={address} />
@@ -409,6 +408,7 @@ const Profile = ({
                     </div>
                   )}
               </MobileLocation>
+            <IconsContainer>
               <div className="social-icons">
                 {Object.entries(urls).map(([name, url]) => {
                   return (
