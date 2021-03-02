@@ -261,7 +261,7 @@ export const PrivateMessageContainer = styled.div`
   }
   img.blueenvelope {
     position: absolute;
-    top: 25.5%;
+    top: 26%;
     right: 70%;
     width: 2.1rem;
     display: block;

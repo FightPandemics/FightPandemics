@@ -104,6 +104,7 @@ export const NameDiv = styled(TextLabel)`
   .address-container {
     color: #939393;
     font-weight: 400;
+    margin-top: auto;
     font-size: 1.4rem;
     line-height: 1.8rem;
     white-space: nowrap;
@@ -232,7 +233,6 @@ export const UserInfoContainer = styled.div`
   box-shadow: 0px 0.2rem 2rem rgba(0, 0, 0, 0.01);
   max-width: 80rem;
   width: 100%;
-  height: 23rem;
   z-index: 1;
   flex-direction: column;
   display: flex;
@@ -300,7 +300,7 @@ export const DescriptionDesktop = styled.div`
 export const MobileLocation = styled.div`
   color: #939393;
   width: 70rem;
-  height: 1.3rem;
+  margin-top: 0.5rem;
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
