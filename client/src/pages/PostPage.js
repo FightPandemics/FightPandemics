@@ -334,8 +334,8 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
               />
             </>
           ) : (
-              <Loader />
-            )}
+            <Loader />
+          )}
         </PostContext.Provider>
       )}
     </StyledPostPage>

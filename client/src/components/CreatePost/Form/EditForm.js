@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";
+import Fourth from "./FourthSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 import { isAuthorOrg, isAuthorUser } from "utils/userInfo";
 
@@ -93,6 +94,13 @@ const EditModalComponent = ({
       setFormData({ ...formData, shareWith: shareWith.default.value });
     }
   };
+  const setWorkMode = (workMode) => {
+    if (workMode) {
+      setFormData({ ...formData, workMode });
+    } else {
+      setFormData({ ...formData, workMode: workMode.default.value });
+    }
+  };
 
   const handleSubmit = async () => {
     populateErrors();
@@ -143,6 +151,7 @@ const EditModalComponent = ({
         onShareWithChange={setShareWith}
         onExpirationChange={setExpiration}
       />
+      <Fourth formData={formData} onWorkModeChange={setWorkMode} />
       <Footer>
         <Submit
           primary="true"

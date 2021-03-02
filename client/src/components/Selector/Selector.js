@@ -3,6 +3,7 @@ import StyledSelector from "./StyledSelector";
 const { Option } = StyledSelector;
 
 const BaseSelector = ({
+  id /* added to assign id to fullfillment dropdown to track gtm tag in create post */,
   options,
   key = "text",
   optionProps,
@@ -10,9 +11,12 @@ const BaseSelector = ({
   suffixIcon,
   filterOptions,
   defaultValue,
-  minWidth
+  minWidth,
 }) => (
   <StyledSelector
+    id={
+      id
+    } /* added to assign id to fullfillment dropdown to track gtm tag in create post */
     suffixIcon={suffixIcon}
     defaultValue={defaultValue}
     filterOptions={filterOptions}

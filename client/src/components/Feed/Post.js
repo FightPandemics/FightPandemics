@@ -41,7 +41,11 @@ import {
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
 import { authorProfileLink, buildLocationString } from "./utils";
-import { getInitialsFromFullName, isAuthorOrg, isAuthorUser } from "utils/userInfo";
+import {
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser,
+} from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
@@ -61,7 +65,7 @@ import {
   DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import { postsActions } from "reducers/posts";
-import { theme } from "constants/theme";
+import { mq, theme } from "constants/theme";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
@@ -147,8 +151,8 @@ const Post = ({
     reportsCount,
     status,
     objective,
+    workMode,
   } = post || {};
-
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
   const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
@@ -186,10 +190,12 @@ const Post = ({
     let commentCountRes;
     let previousComments = [...comments];
     const skip = 0;
-    const endPoint = `/api/posts/${postId}/comments?limit=${limit.current * page
-      }&skip=${skip}`;
-    const totalCommentCountEndPoint = `/api/posts/${postId}${actorId ? `?actorId=${actorId}` : ""
-      }`;
+    const endPoint = `/api/posts/${postId}/comments?limit=${
+      limit.current * page
+    }&skip=${skip}`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}${
+      actorId ? `?actorId=${actorId}` : ""
+    }`;
 
     dispatchPostAction(SET_LOADING);
 
@@ -266,8 +272,9 @@ const Post = ({
     let commentCountRes;
     const postId = post._id;
     const endPoint = `/api/posts/${postId}/comments`;
-    const totalCommentCountEndPoint = `/api/posts/${postId}${actorId ? `?actorId=${actorId}` : ""
-      }`;
+    const totalCommentCountEndPoint = `/api/posts/${postId}${
+      actorId ? `?actorId=${actorId}` : ""
+    }`;
     const newComment = {
       actorId,
       content: comment,
@@ -323,8 +330,9 @@ const Post = ({
     const commentId = comment._id;
     if (actorId === comment.author.id) {
       const endPoint = `/api/posts/${postId}/comments/${commentId}`;
-      const totalCommentCountEndPoint = `/api/posts/${postId}${actorId ? `?actorId=${actorId}` : ""
-        }`;
+      const totalCommentCountEndPoint = `/api/posts/${postId}${
+        actorId ? `?actorId=${actorId}` : ""
+      }`;
 
       try {
         response = await axios.delete(endPoint);
@@ -383,19 +391,19 @@ const Post = ({
               <span className="view-more">{t("post.viewLess")}</span>
             </>
           ) : (
-              <span
-                id={GTM.post.prefix + GTM.post.viewMore}
-                className="view-more"
-              >
-                {t("post.viewMore")}
-              </span>
-            )}
+            <span
+              id={GTM.post.prefix + GTM.post.viewMore}
+              className="view-more"
+            >
+              {t("post.viewMore")}
+            </span>
+          )}
         </div>
       ) : (
-          <span id={gtmTag("viewMore", GTM.feed.prefix)} className="view-more">
-            {t("post.viewMore")}
-          </span>
-        )}
+        <span id={gtmTag("viewMore", GTM.feed.prefix)} className="view-more">
+          {t("post.viewMore")}
+        </span>
+      )}
     </Card.Body>
   );
 
@@ -418,24 +426,24 @@ const Post = ({
         <ViewMore />
       </Link>
     ) : (
-        <>
-          {isAuthenticated ? (
+      <>
+        {isAuthenticated ? (
+          <ViewMore loadContent={showComplete} />
+        ) : (
+          <Link
+            onClick={() =>
+              sessionStorage.setItem("postredirect", `/post/${post._id}`)
+            }
+            to={{
+              pathname: LOGIN,
+              state: { from: window.location.href },
+            }}
+          >
             <ViewMore loadContent={showComplete} />
-          ) : (
-              <Link
-                onClick={() =>
-                  sessionStorage.setItem("postredirect", `/post/${post._id}`)
-                }
-                to={{
-                  pathname: LOGIN,
-                  state: { from: window.location.href },
-                }}
-              >
-                <ViewMore loadContent={showComplete} />
-              </Link>
-            )}
-        </>
-      );
+          </Link>
+        )}
+      </>
+    );
   };
 
   const renderHeader = (
@@ -462,8 +470,8 @@ const Post = ({
                 {buildLocationString(post.author.location)}
               </span>
             ) : (
-                ""
-              )}
+              ""
+            )}
           </div>
         </div>
       }
@@ -471,11 +479,13 @@ const Post = ({
         post?.author?.photo ? (
           post.author.photo
         ) : (
-            <TextAvatar>{AvatarName}</TextAvatar>
-          )
+          <TextAvatar>{AvatarName}</TextAvatar>
+        )
       }
     />
   );
+
+  const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
 
   const renderHeaderWithLink = (
     <Link to={authorProfileLink(post)}>{renderHeader}</Link>
@@ -484,11 +494,15 @@ const Post = ({
   const renderTags = (
     <Card.Body>
       {post?.types &&
-        post?.types.map((tag, idx) => (
-          <PostTag key={idx} disabled={true} selected={false}>
-            {t(getOptionText(filters, "type", typeToTag(tag)))}
-          </PostTag>
-        ))}
+        post?.types.map((tag, idx) =>
+          tag !== "Remote Work" ? (
+            <PostTag key={idx} disabled={true} selected={false}>
+              {t(getOptionText(filters, "type", typeToTag(tag)))}
+            </PostTag>
+          ) : (
+            ""
+          ),
+        )}
     </Card.Body>
   );
 
@@ -506,8 +520,8 @@ const Post = ({
           maxLength={2048}
         />
       ) : (
-          <div>{t("comment.onlyAuthenticated")}</div>
-        )}
+        <div>{t("comment.onlyAuthenticated")}</div>
+      )}
       {isAuthenticated ? (
         <>
           <Comments
@@ -523,17 +537,17 @@ const Post = ({
                 {isLoading ? t("comment.loading") : t("comment.showMore")}
               </StyledLoadMoreButton>
             ) : (
-                <StyledLoadMoreButton
-                  disabled={isLoading}
-                  onClick={showLessComments}
-                >
-                  {isLoading ? t("comment.loading") : t("comment.showLess")}
-                </StyledLoadMoreButton>
-              ))}
+              <StyledLoadMoreButton
+                disabled={isLoading}
+                onClick={showLessComments}
+              >
+                {isLoading ? t("comment.loading") : t("comment.showLess")}
+              </StyledLoadMoreButton>
+            ))}
         </>
       ) : (
-          ""
-        )}
+        ""
+      )}
     </Card.Body>
   );
 
@@ -579,6 +593,13 @@ const Post = ({
   const isOwner =
     isAuthenticated &&
     (isAuthorUser(user, post) || isAuthorOrg(user?.organisations, post.author));
+  const getWkMode = (workMode) => {
+    return workMode && workMode !== "both"
+      ? `post.${workMode}`
+      : !workMode && post.types.includes("Remote Work")
+      ? "post.remote"
+      : "post.both";
+  };
 
   return (
     <>
@@ -599,6 +620,12 @@ const Post = ({
             )}
             <div className="pre-header post-page">
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+              <span>
+                &nbsp;&nbsp;
+                {t(getWkMode(workMode))}
+                &nbsp;&nbsp;•
+              </span>
+
               <Tooltip
                 color={theme.colors.darkGray}
                 title={translateISOTimeTitle(post.createdAt)}
@@ -650,10 +677,10 @@ const Post = ({
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
             ) : (
-                <Card.Body className="view-more-wrapper">
-                  {renderExternalLinks()}
-                </Card.Body>
-              )}
+              <Card.Body className="view-more-wrapper">
+                {renderExternalLinks()}
+              </Card.Body>
+            )}
             {renderSocialIcons}
             <ShareModal
               showShareModal={showShareModal}
@@ -702,167 +729,167 @@ const Post = ({
           />
         </>
       ) : (
-          //Post in feed.
-          <>
-            {didReport ? (
-              <PostPlaceHolder />
-            ) : (
-                <PostCard unClickable={!isOwner && (isSuspected || isHidden)}>
-                  {!isOwner && (isHidden || isSuspected) && (
-                    <div className="blur-overlay">
-                      <SvgIcon src={eyeHide} />
-                      {isHidden && !isSuspected && (
-                        <>
-                          {t("moderation.postHidden")}
-                          <span
-                            id={GTM.post.prefix + GTM.moderation.unhide}
-                            onClick={() => onPostUnhide(_id)}
-                          >
-                            {t("moderation.unhide")}
-                          </span>
-                        </>
-                      )}
-                      {isSuspected && !isOwner && (
-                        <>
-                          {t("moderation.postSuspected")}
-                          {/* removed for now
+        //Post in feed.
+        <>
+          {didReport ? (
+            <PostPlaceHolder />
+          ) : (
+            <PostCard unClickable={!isOwner && (isSuspected || isHidden)}>
+              {!isOwner && (isHidden || isSuspected) && (
+                <div className="blur-overlay">
+                  <SvgIcon src={eyeHide} />
+                  {isHidden && !isSuspected && (
+                    <>
+                      {t("moderation.postHidden")}
+                      <span
+                        id={GTM.post.prefix + GTM.moderation.unhide}
+                        onClick={() => onPostUnhide(_id)}
+                      >
+                        {t("moderation.unhide")}
+                      </span>
+                    </>
+                  )}
+                  {isSuspected && !isOwner && (
+                    <>
+                      {t("moderation.postSuspected")}
+                      {/* removed for now
                       <span onClick={() => onPostShowAnyway(_id)}>
                         {t("moderation.showAnyway")}
                       </span>
                       */}
-                        </>
-                      )}
-                    </div>
+                    </>
                   )}
-                  <div className="pre-header">
-                    <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
-                    <Tooltip
-                      color={theme.colors.darkGray}
-                      title={translateISOTimeTitle(post.createdAt)}
-                    >
-                      <span className="timestamp">
-                        {t(
-                          `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
-                          {
-                            count: post?.elapsedTimeText?.created?.count,
-                          },
-                        )}
-                        {post?.elapsedTimeText?.isEdited &&
-                          ` · ${t("post.edited")}`}
-                      </span>
-                    </Tooltip>
-                  </div>
-                  <WhiteSpace size={"xl"} />
-                  <WhiteSpace size={"md"} />
-                  <div className="card-header">
-                    {includeProfileLink ? renderHeaderWithLink : renderHeader}
-                    {isAuthenticated && (
-                      <div className="card-submenu">
-                        <PostDropdownButton
-                          onHide={handleHide}
-                          onReport={handleReport}
-                          onEdit={onSelect}
-                          onDelete={handleDelete}
-                          post={post}
-                          user={user}
-                          postId={postId}
-                          isSelf={isAuthenticated && actorId === post.author.id}
-                          isOwner={isOwner}
-                        />
-                      </div>
+                </div>
+              )}
+              <div className="pre-header">
+                <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+                <Tooltip
+                  color={theme.colors.darkGray}
+                  title={translateISOTimeTitle(post.createdAt)}
+                >
+                  <span className="timestamp">
+                    {t(
+                      `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
+                      {
+                        count: post?.elapsedTimeText?.created?.count,
+                      },
                     )}
+                    {post?.elapsedTimeText?.isEdited &&
+                      ` · ${t("post.edited")}`}
+                  </span>
+                </Tooltip>
+              </div>
+              <WhiteSpace size={"xl"} />
+              <WhiteSpace size={"md"} />
+              <div className="card-header">
+                {includeProfileLink ? renderHeaderWithLink : renderHeader}
+                {isAuthenticated && (
+                  <div className="card-submenu">
+                    <PostDropdownButton
+                      onHide={handleHide}
+                      onReport={handleReport}
+                      onEdit={onSelect}
+                      onDelete={handleDelete}
+                      post={post}
+                      user={user}
+                      postId={postId}
+                      isSelf={isAuthenticated && actorId === post.author.id}
+                      isOwner={isOwner}
+                    />
                   </div>
-                  <WhiteSpace size="md" />
-                  {renderTags}
-                  <WhiteSpace />
-                  {post && isAuthenticated ? (
-                    <Link
-                      to={{
-                        pathname: `/post/${_id}`,
-                        state: {
-                          post: post,
-                          postId: _id,
-                          from: window.location.href,
-                          user,
-                          keepScrollIndex,
-                          keepPageState,
-                          keepPostsState,
-                        },
-                      }}
-                    >
-                      {renderContent(
-                        title,
-                        content,
-                        highlightWords,
-                        showComplete,
-                        convertTextToURL,
-                      )}
-                    </Link>
-                  ) : (
-                      <>
-                        {/*
+                )}
+              </div>
+              <WhiteSpace size="md" />
+              {renderTags}
+              <WhiteSpace />
+              {post && isAuthenticated ? (
+                <Link
+                  to={{
+                    pathname: `/post/${_id}`,
+                    state: {
+                      post: post,
+                      postId: _id,
+                      from: window.location.href,
+                      user,
+                      keepScrollIndex,
+                      keepPageState,
+                      keepPostsState,
+                    },
+                  }}
+                >
+                  {renderContent(
+                    title,
+                    content,
+                    highlightWords,
+                    showComplete,
+                    convertTextToURL,
+                  )}
+                </Link>
+              ) : (
+                <>
+                  {/*
                 Include hidden link for meta crawler but not on
                 profiles to avoid duplicate crawling of same posts
               */}
-                        {includeProfileLink && (
-                          <Link
-                            to={`/post/${_id}`}
-                            style={{ display: "none" }}
-                          ></Link>
-                        )}
-                        {renderContent(
-                          title,
-                          content,
-                          highlightWords,
-                          showComplete,
-                          convertTextToURL,
-                        )}
-                      </>
-                    )}
-                  {fullPostLength > CONTENT_LENGTH ||
-                    (post?.content?.length > CONTENT_LENGTH ? (
-                      <RenderViewMore />
-                    ) : (
-                        <Card.Body className="view-more-wrapper" />
-                      ))}
-                  {renderSocialIcons}
-                  <ShareModal
-                    showShareModal={showShareModal}
-                    setShowShareModal={setShowShareModal}
-                    id={post._id}
-                    postTitle={post.title}
-                    postContent={post.content}
-                  />
-                  <DeleteModal
-                    title={<p>{t("post.deletePostConfirmationTitle")}</p>}
-                    visible={
-                      !!deleteModalVisibility &&
-                      deleteModalVisibility !== DELETE_MODAL_HIDE &&
-                      toDelete === post._id
-                    }
-                    onOk={() => handleDeleteOk()}
-                    onCancel={handleCancelPostDelete}
-                    okText={t("post.deleteConfirmation")}
-                    cancelText={t("post.cancel")}
-                    okButtonProps={{ id: GTM.post.prefix + GTM.post.delete }}
-                  >
-                    {deleteModalVisibility === DELETE_MODAL_POST ? (
-                      <p>{t("post.deletePostConfirmation")}</p>
-                    ) : (
-                        <p>{t("post.deleteCommentConfirmation")}</p>
-                      )}
-                  </DeleteModal>
-                  {callReport ? (
-                    <CreateReport
-                      callReport={callReport}
-                      setCallReport={setCallReport}
-                      postId={post._id}
-                    />
-                  ) : null}
-                </PostCard>
+                  {includeProfileLink && (
+                    <Link
+                      to={`/post/${_id}`}
+                      style={{ display: "none" }}
+                    ></Link>
+                  )}
+                  {renderContent(
+                    title,
+                    content,
+                    highlightWords,
+                    showComplete,
+                    convertTextToURL,
+                  )}
+                </>
               )}
-          </>
-        )}
+              {fullPostLength > CONTENT_LENGTH ||
+                (post?.content?.length > CONTENT_LENGTH ? (
+                  <RenderViewMore />
+                ) : (
+                  <Card.Body className="view-more-wrapper" />
+                ))}
+              {renderSocialIcons}
+              <ShareModal
+                showShareModal={showShareModal}
+                setShowShareModal={setShowShareModal}
+                id={post._id}
+                postTitle={post.title}
+                postContent={post.content}
+              />
+              <DeleteModal
+                title={<p>{t("post.deletePostConfirmationTitle")}</p>}
+                visible={
+                  !!deleteModalVisibility &&
+                  deleteModalVisibility !== DELETE_MODAL_HIDE &&
+                  toDelete === post._id
+                }
+                onOk={() => handleDeleteOk()}
+                onCancel={handleCancelPostDelete}
+                okText={t("post.deleteConfirmation")}
+                cancelText={t("post.cancel")}
+                okButtonProps={{ id: GTM.post.prefix + GTM.post.delete }}
+              >
+                {deleteModalVisibility === DELETE_MODAL_POST ? (
+                  <p>{t("post.deletePostConfirmation")}</p>
+                ) : (
+                  <p>{t("post.deleteCommentConfirmation")}</p>
+                )}
+              </DeleteModal>
+              {callReport ? (
+                <CreateReport
+                  callReport={callReport}
+                  setCallReport={setCallReport}
+                  postId={post._id}
+                />
+              ) : null}
+            </PostCard>
+          )}
+        </>
+      )}
     </>
   );
 };

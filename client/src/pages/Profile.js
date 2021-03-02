@@ -14,11 +14,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { theme, mq } from "constants/theme";
 
-import Activity from "components/Profile/Activity";
-import ProfileTabs from "components/Profile/ProfileTabs";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import { FeedWrapper } from "components/Feed/FeedWrappers";
+import {
+  FeedWrapper,
+  SeeAllTabsWrapper,
+  SeeAllContentWrapper,
+} from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
@@ -26,6 +28,8 @@ import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
+import SeeAllComp from "components/Profile/SeeAllComponent";
+import { Tabs } from "antd";
 
 import {
   ProfileLayout,
@@ -57,17 +61,9 @@ import {
   TWITTER_URL,
   GITHUB_URL,
 } from "constants/urls";
-import {
-  deletePostModalreducer,
-  deletePostState,
-} from "hooks/reducers/feedReducers";
-import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
+
 import { selectPosts, postsActions } from "reducers/posts";
-import {
-  SET_DELETE_MODAL_VISIBILITY,
-  DELETE_MODAL_POST,
-  DELETE_MODAL_HIDE,
-} from "hooks/actions/feedActions";
+
 import {
   fetchUser,
   fetchUserError,
@@ -91,7 +87,6 @@ import websiteIcon from "assets/icons/website-icon.svg";
 
 import locationIcon from "assets/icons/status-indicator.svg";
 import useWindowDimensions from "../utils/windowSize";
-import { position } from "polished";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -103,8 +98,6 @@ const URLS = {
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
-const PAGINATION_LIMIT = 10;
-const ARBITRARY_LARGE_NUM = 10000;
 
 const Profile = ({
   isAuthenticated,
@@ -115,10 +108,7 @@ const Profile = ({
   const window = useWindowDimensions();
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
-  const [deleteModal, deleteModalDispatch] = useReducer(
-    deletePostModalreducer,
-    deletePostState,
-  );
+
   const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -126,10 +116,8 @@ const Profile = ({
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
-  const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
   const { error, loading, user } = userProfileState;
   const [sectionView, setSectionView] = useState(t("requests"));
-  const [loadMenu, setLoadMenu] = useState(true);
   const [navMenu, setNavMenu] = useState([]);
   const {
     id: userId,
@@ -154,31 +142,18 @@ const Profile = ({
     posts: postsList,
     error: postsError,
   } = posts;
-  const { deleteModalVisibility } = deleteModal;
+
   if (ownUser) sessionStorage.removeItem("msgModal");
-  const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
-  const prevUserId = usePrevious(userId);
-  const organisationId = useSelector(selectOrganisationId);
+
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
 
-  function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
-
-  const getActorQuery = () => {
-    return organisationId ? `&actorId=${organisationId}` : "";
-  };
   const buildNavMenu = () => {
     const baseMenu = [
       {
         name: t("profile.views.activity"),
-        disabled: true,
+        disabled: false,
       },
       {
         name: t("profile.views.organizations"),
@@ -212,6 +187,7 @@ const Profile = ({
     }
     setNavMenu(baseMenu);
   };
+
   useEffect(() => {
     buildNavMenu();
   }, [isSelf]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -238,70 +214,6 @@ const Profile = ({
     })();
   }, [pathUserId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const limit = PAGINATION_LIMIT;
-      const skip = page * limit;
-      dispatch(postsActions.fetchPostsBegin());
-      try {
-        if (userId) {
-          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
-          const {
-            data: { data: posts, meta },
-          } = await axios.get(endpoint);
-
-          if (prevUserId !== userId) {
-            dispatch(
-              postsActions.fetchPostsSuccess({
-                posts: [],
-              }),
-            );
-          }
-          if (posts.length && meta.total) {
-            if (prevTotalPostCount !== meta.total) {
-              setTotalPostCount(meta.total);
-            }
-            if (posts.length < limit) {
-              dispatch(postsActions.finishLoadingAction());
-            } else if (meta.total === limit) {
-              dispatch(postsActions.finishLoadingAction());
-            }
-            const loadedPosts = posts.reduce((obj, item) => {
-              obj[item._id] = item;
-              return obj;
-            }, {});
-
-            if (prevUserId === userId && postsList) {
-              dispatch(
-                postsActions.fetchPostsSuccess({
-                  posts: { ...postsList, ...loadedPosts },
-                }),
-              );
-            } else {
-              dispatch(
-                postsActions.fetchPostsSuccess({
-                  posts: { ...loadedPosts },
-                }),
-              );
-            }
-          } else if (prevUserId === userId && posts) {
-            dispatch(
-              postsActions.fetchPostsSuccess({
-                posts: { ...postsList },
-              }),
-            );
-            dispatch(postsActions.finishLoadingAction());
-          } else {
-            dispatch(postsActions.finishLoadingAction());
-          }
-        }
-      } catch (error) {
-        dispatch(postsActions.fetchPostsError(error));
-      }
-    };
-    fetchPosts();
-  }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
@@ -309,88 +221,10 @@ const Profile = ({
     }
   };
 
-  const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
-
-  const loadNextPage = useCallback(
-    ({ stopIndex }) => {
-      if (
-        !isLoading &&
-        loadMore &&
-        stopIndex >= userPosts.length &&
-        userPosts.length
-      ) {
-        return new Promise((resolve) => {
-          dispatch(postsActions.setNextPageAction());
-          resolve();
-        });
-      } else {
-        return Promise.resolve();
-      }
-    },
-    [dispatch, isLoading, loadMore, userPosts.length],
-  );
-
   useEffect(() => {
     setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
   }, [loadMore, userPosts.length]);
 
-  const postDelete = async (post) => {
-    let deleteResponse;
-    const endPoint = `/api/posts/${post._id}`;
-    if (user && (user._id === post.author.id || user.id === post.author.id)) {
-      try {
-        deleteResponse = await axios.delete(endPoint);
-        if (deleteResponse && deleteResponse.data.success === true) {
-          const allPosts = {
-            ...postsList,
-          };
-          delete allPosts[post._id];
-          setTotalPostCount(totalPostCount - 1);
-          if (totalPostCount <= PAGINATION_LIMIT) {
-            const isLoading = true;
-            const loadMore = false;
-            refetchPosts(isLoading, loadMore);
-          } else {
-            refetchPosts();
-          }
-        }
-      } catch (error) {
-        console.log({
-          error,
-        });
-      }
-    }
-  };
-
-  const handlePostDelete = () => {
-    deleteModalDispatch({
-      type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: DELETE_MODAL_POST,
-    });
-  };
-
-  const handleCancelPostDelete = () => {
-    deleteModalDispatch({
-      type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: DELETE_MODAL_HIDE,
-    });
-  };
-
-  const handleEditPost = () => {
-    if (deleteModal.editPostModalVisibility) {
-      deleteModalDispatch({
-        type: SET_EDIT_POST_MODAL_VISIBILITY,
-        visibility: false,
-      });
-    } else {
-      deleteModalDispatch({
-        type: SET_EDIT_POST_MODAL_VISIBILITY,
-        visibility: true,
-      });
-    }
-  };
-
-  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
 
@@ -484,98 +318,97 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
-        {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
-          <MobileMenuWrapper
-            defaultSelectedKeys={[sectionView]}
-            selectedKeys={sectionView}
-            onClick={handleMenuToggle}
-          >
-            {navMenu.map((item, index) => (
-              <Menu.Item key={item.name} disabled={item.disabled}>
-                {item.name}
-              </Menu.Item>
-            ))}
-          </MobileMenuWrapper>
-        ) : null}
-        {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
-          <DesktopMenuWrapper
-            defaultSelectedKeys={[sectionView]}
-            selectedKeys={sectionView}
-            onClick={handleMenuToggle}
-          >
-            {navMenu.map((item, index) => (
-              <Menu.Item key={item.name} disabled={item.disabled}>
-                {item.name}
-              </Menu.Item>
-            ))}
-          </DesktopMenuWrapper>
-        )}
-
-        {sectionView === "Posts" ? (
-          <div>
-            <SectionHeader>
-              {isSelf
-                ? t("profile.individual.myActivity")
-                : t("profile.individual.userActivity")}
-              <PlaceholderIcon />
-              {isSelf && (
-                <>
-                  <CreatePostIcon
-                    id={GTM.user.profilePrefix + GTM.post.createPost}
-                    src={createPost}
-                    onClick={onToggleCreatePostDrawer}
-                  />
-                  <CreatePostButton
-                    onClick={onToggleCreatePostDrawer}
-                    id={GTM.user.profilePrefix + GTM.post.createPost}
-                    inline={true}
-                    icon={<PlusIcon />}
-                  >
-                    {t("post.create")}
-                  </CreatePostButton>
-                </>
-              )}
-            </SectionHeader>
-            <FeedWrapper isProfile>
-              <Activity
-                postDispatch={dispatch}
-                filteredPosts={postsList}
-                user={user}
-                postDelete={postDelete}
-                handlePostDelete={handlePostDelete}
-                handleEditPost={handleEditPost}
-                deleteModalVisibility={deleteModalVisibility}
-                handleCancelPostDelete={handleCancelPostDelete}
-                loadNextPage={loadNextPage}
-                isNextPageLoading={isLoading}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalPostCount={totalPostCount}
+        <SectionHeader>
+          <PlaceholderIcon />
+          {isSelf && (
+            <>
+              <CreatePostIcon
+                id={GTM.user.profilePrefix + GTM.post.createPost}
+                src={createPost}
+                onClick={onToggleCreatePostDrawer}
               />
-              {postsError && (
-                <ErrorAlert
-                  message={t([
-                    `error.${postsError.message}`,
-                    `error.http.${postsError.message}`,
-                  ])}
-                />
-              )}
-              {emptyFeed() && <></>}
-              {isSelf && (
-                <CreatePost
-                  onCancel={onToggleCreatePostDrawer}
-                  loadPosts={refetchPosts}
-                  visible={modal}
-                  user={user}
-                  gtmPrefix={GTM.user.profilePrefix}
-                />
-              )}
-            </FeedWrapper>
-          </div>
-        ) : null}
+              <CreatePostButton
+                onClick={onToggleCreatePostDrawer}
+                id={GTM.user.profilePrefix + GTM.post.createPost}
+                inline={true}
+                icon={<PlusIcon />}
+              >
+                {t("post.create")}
+              </CreatePostButton>
+            </>
+          )}
+        </SectionHeader>
+        {isSelf && (
+          <CreatePost
+            onCancel={onToggleCreatePostDrawer}
+            loadPosts={refetchPosts}
+            visible={modal}
+            user={user}
+            gtmPrefix={GTM.user.profilePrefix}
+          />
+        )}
+        <div>
+          {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
+            <MobileMenuWrapper
+              defaultSelectedKeys={[sectionView]}
+              selectedKeys={sectionView}
+              onClick={handleMenuToggle}
+            >
+              {navMenu.map((item, index) => (
+                <Menu.Item key={item.name} disabled={item.disabled}>
+                  {item.name}
+                </Menu.Item>
+              ))}
+            </MobileMenuWrapper>
+          ) : null}
+          {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
+            <div style={{ display: "flex" }}>
+              <DesktopMenuWrapper
+                defaultSelectedKeys={[sectionView]}
+                selectedKeys={sectionView}
+                onClick={handleMenuToggle}
+              >
+                {navMenu.map((item, index) => (
+                  <Menu.Item key={item.name} disabled={item.disabled}>
+                    {item.name}
+                  </Menu.Item>
+                ))}
+              </DesktopMenuWrapper>
 
-        {/* <ProfileTabs tabData={isSelfViews(tabViews, isSelf)} /> */}
+              {sectionView === "Requests" ||
+              sectionView === "Offers" ||
+              sectionView === "Posts" ? (
+                <div style={{ width: "100%" }}>
+                  <SeeAllTabsWrapper>
+                    <SeeAllContentWrapper>
+                      <FeedWrapper isProfile>
+                        <WhiteSpace size={"xl"}></WhiteSpace>
+                        <SeeAllComp
+                          profileId={pathUserId}
+                          user={user}
+                          isOrg={false}
+                          isAuthenticated={isAuthenticated}
+                          menuView={sectionView.toUpperCase()}
+                          isMobile={false}
+                        ></SeeAllComp>
+                      </FeedWrapper>
+                    </SeeAllContentWrapper>
+                  </SeeAllTabsWrapper>
+
+                  {postsError && (
+                    <ErrorAlert
+                      message={t([
+                        `error.${postsError.message}`,
+                        `error.http.${postsError.message}`,
+                      ])}
+                    />
+                  )}
+                </div>
+              ) : null}
+            </div>
+          )}
+        </div>
+
         {isSelf && (
           <CustomDrawer
             placement="bottom"

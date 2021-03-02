@@ -118,6 +118,8 @@ const Posts = ({
       );
     },
     [
+      activeTab,
+      changeType,
       filteredPosts,
       hasNextPage,
       highlightWords,

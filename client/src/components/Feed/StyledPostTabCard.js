@@ -14,7 +14,7 @@ export const StyledCardHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-`
+`;
 
 export const StyledCardBody = styled.div`
   border-top: unset;
@@ -24,33 +24,33 @@ export const StyledCardBody = styled.div`
   white-space: pre-line;
   font-weight: 400;
   width: 100%;
-`
+`;
 
 export const StyledUpdateAt = styled.p`
   font-size: ${xxsmall};
   line-height: 1.4rem;
   color: #939393;
   margin: 0.8rem 0 0 0;
-`
+`;
 
 export const StyledTitlePostCard = styled.h5`
   font-weight: 700;
   line-height: 1.72rem;
   font-size: ${medium};
   margin: 0.4rem 0 0.6rem 0;
-`
+`;
 
 export const StyledDescription = styled.p`
   font-size: ${xsmall};
   line-height: 1.68rem;
-  letter-spacing: -0.03rem;  
+  letter-spacing: -0.03rem;
   margin-top: 0;
-`
+`;
 
 export const LineBreak = styled.div`
   border-bottom: 0.1rem solid ${colors.lightGray};
   margin-bottom: 0.9rem;
-`
+`;
 
 export const Container = styled.div`
   width: 100%;
@@ -74,7 +74,7 @@ export const Container = styled.div`
   div.am-tabs-default-bar-underline {
     border: 0.1rem #282828 solid;
   }
-`
+`;
 
 export const StyledCardFooter = styled.a`
   font-size: ${medium};
@@ -84,7 +84,7 @@ export const StyledCardFooter = styled.a`
   text-align: center;
   padding: 0.2rem 0 0 0.9rem;
   margin: 0;
-`
+`;
 
 export const StyledDropDown = styled.div`
   .card-submenu {
@@ -99,4 +99,4 @@ export const StyledDropDown = styled.div`
     }
     transform: scale(0.5);
   }
-`
+`;

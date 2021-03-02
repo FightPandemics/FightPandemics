@@ -58,7 +58,11 @@ import {
   NamePara,
   ProfileBackgroup,
 } from "../components/Profile/ProfileComponents";
-import { getInitialsFromFullName, isAuthorOrg, isAuthorUser } from "utils/userInfo";
+import {
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser,
+} from "utils/userInfo";
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
