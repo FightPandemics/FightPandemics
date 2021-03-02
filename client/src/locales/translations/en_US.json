@@ -414,8 +414,9 @@
       "organizations": "Organizations",
       "badges": "Badges",
       "thanks": "Thanks",
-      "requests": "Requests",
-      "offers": "Offers"
+      "active": "Active",
+      "archived": "Archived",
+      "drafts": "drafts"
     }
   },
   "auth": {
@@ -1038,7 +1039,7 @@
     "edited": "Edited",
     "saveEdit": "Save changes",
     "didDelete": "You deleted this message.",
-    "wasDeleted": "This message was deleted.",
+    "wasDeleted": "This promessage was deleted.",
     "loadMore": "Load More...",
     "justNow": "Just now",
     "lastSeen": "Last seen",

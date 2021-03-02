@@ -41,18 +41,18 @@ const gtmTag = (tag) => GTM.profile.viewProfilePrefix + tag;
 
 const TAB_TYPE = {
   POSTS: {
-    REQUESTS: "Requests",
-    OFFERS: "Offers",
+    REQUESTS: "requests",
+    OFFERS: "offers",
   },
   REQUESTS: {
-    ACTIVE_REQS: "Active",
-    ARCHIVED_REQS: "Archived",
-    DRAFTS_REQS: "Drafts",
+    ACTIVE_REQS: "active",
+    ARCHIVED_REQS: "archived",
+    DRAFTS_REQS: "drafts",
   },
   OFFERS: {
-    ACTIVE_OFRS: "Active",
-    ARCHIVED_OFRS: "Archived",
-    DRAFTS_OFRS: "Drafts",
+    ACTIVE_OFRS: "active",
+    ARCHIVED_OFRS: "archived",
+    DRAFTS_OFRS: "drafts",
   },
 };
 
@@ -372,7 +372,7 @@ const SeeAll = ({
             key={item}
             disabled={item.toLowerCase().includes("draft")}
           >
-            {t(TAB_TYPE[viewType][item])}
+            {t(`profile.views.${TAB_TYPE[viewType][item]}`)}
           </Menu.Item>
         ))}
       </MenuWrapper>
