@@ -21,7 +21,8 @@
     "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
     "yes": "Yes",
     "no": "No",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Location",
         "providers": "Providers",
         "type": "Types",
-        "lookingFor": "Offer or Request Help"
+        "lookingFor": "Offer or Request Help",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Individual",
@@ -178,6 +180,8 @@
     "addTags": "Add tags to make your post more visible",
     "whatVisibility": "What is the visibility of your post?",
     "postVisible": "The post will be visible to",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
     "success": "Success",
     "viewPost": "View Your Post",
     "like": "Like",
@@ -204,6 +208,11 @@
       "helpTypes": {
         "request": "Requesting help",
         "offer": "Offering help"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Post",
@@ -224,6 +233,9 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "edited": "edited",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person",
     "share_plural": "Shares",
     "deletePostConfirmationTitle": "Delete post confirmation",
     "deleteCommentConfirmationTitle": "Delete comment confirmation",
@@ -700,6 +712,33 @@
     "check": "Symptoms Check",
     "findHelp": "Find Help"
   },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Location",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
+  },
   "feedback": {
     "poorly": "Poorly",
     "well": "Very well",
@@ -802,6 +841,7 @@
     "failedLogin": "Login failed, reason:",
     "failedSignup": "Signup failed, reason:",
     "failedPasswordRecovery": "Password recovery failed, reason:",
+    "failedHealthFacPlaces": "Failed getting health facilities.",
     "http": {
       "Bad Request": "Bad Request",
       "Unauthorized": "Unauthorized",

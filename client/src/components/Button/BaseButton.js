@@ -16,14 +16,14 @@ const BaseButton = styled(Button)`
       }
     `}
     ${(props) =>
-      props.forModerator?.remove &&
-      css`
-        ${button.primary}
+    props.forModerator?.remove &&
+    css`
+      ${button.primary}
 
-        &:hover, &:active, &:focus {
-          ${button.secondaryRed}
-        }
-      `}
+      &:hover, &:active, &:focus {
+        ${button.secondaryRed}
+      }
+    `}
 
   ${(props) =>
     props.primarylight &&

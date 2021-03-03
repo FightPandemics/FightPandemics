@@ -136,10 +136,7 @@ const PostDropdownButton = ({
               </Item>
             </Menu.Item>
           )}
-          <Menu.Item
-            onClick={onReport}
-            key="report"
-          >
+          <Menu.Item onClick={onReport} key="report">
             <Item>
               <ReportIcon />
               <Label>

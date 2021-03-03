@@ -81,10 +81,7 @@ const Options = ({
           .map((report) => report?.reason)
           .join("|")
           .split("|")
-          .filter(
-            (e) =>
-              options.map((reason) => reason.stateKey).includes(e),
-          )
+          .filter((e) => options.map((reason) => reason.stateKey).includes(e))
           .map((reason, idx) => (
             <ReasonTag key={idx} disabled={true} selected={false}>
               {reason}
