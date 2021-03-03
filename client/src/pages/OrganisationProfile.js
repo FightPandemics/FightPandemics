@@ -184,9 +184,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   };
 
   const setOrgBookState = (orgBookPages = null) => {
-    setEditOrgBookMode(orgBookPages ? "edit" : "create");
+    setEditOrgBookMode(
+      orgBookPages && orgBookPages.length > 0 ? "edit" : "create",
+    );
     setOrgBookLinkLabel(
-      orgBookPages
+      orgBookPages && orgBookPages.length > 0
         ? t("profile.org.editOrgBook")
         : t("profile.org.createOrgBook"),
     );

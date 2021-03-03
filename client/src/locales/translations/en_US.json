@@ -400,12 +400,18 @@
   "orgBook": {
     "editorSpaceTOCHeader": "Org Editor Space",
     "newOrgBook": "New OrgBook",
+    "newOrgBookPage": "New OrgBook Page",
+    "page": "Page ",
     "pageName": "Page Name",
     "pleaseEnterPageNameCreate": "Please enter the page name for the first page in your OrgBook.",
+    "pleaseEnterPageNameAdd": "Please enter the page name for the new page in your OrgBook.",
     "page1": "Page 1",
+    "add": "Add",
     "create": "Create",
     "cancel": "Cancel",
-    "maxPageName": "Page name must be maximum 25 characters."
+    "maxPageName": "Page name must be maximum 25 characters.",
+    "updateSuccess": "OrgBook successfully updated",
+    "addNewPage": "Add New Page"
   },
   "auth": {
     "signIn": "Sign In",
