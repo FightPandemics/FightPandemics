@@ -11,6 +11,12 @@ import {
 } from "./StyledAccordion";
 import GTM from "constants/gtm-tags";
 import { SET_VALUE } from "hooks/actions/feedActions";
+// import StyledCheckboxCheck from "components/Input/Checkbox";
+import { theme } from "constants/theme";
+import { Checkbox } from "antd";
+import styled from "styled-components";
+import { filter } from "tlds";
+
 const providersGtmTagsMap = {
   0: GTM.providersFilters.individual,
   1: GTM.providersFilters.startUp,
@@ -38,6 +44,12 @@ const typeGtmTagsMap = {
   11: GTM.typeFilter.other,
 };
 
+const workModeGtmTagsMap = {
+  0: GTM.workModeFilter.inPerson,
+  1: GTM.workModeFilter.remote,
+  2: GTM.workModeFilter.both,
+};
+
 const requestOrOffer = {
   0: GTM.requestHelp.prefix,
   1: GTM.offerHelp.prefix,
@@ -48,7 +60,49 @@ const gtmTagsMap = {
   type: GTM.post.type,
   location: GTM.post.location,
   providers: GTM.post.providers,
+  workMode: GTM.post.workMode,
 };
+
+const { royalBlue } = theme.colors;
+
+const chkStyle = {
+  fontSize: `${theme.typography.size.medium}`,
+  "&.ant-checkbox-inner": `{
+      borderColor: ${royalBlue} !important;
+    }`,
+};
+
+const StyledCheckboxCheck = styled(Checkbox)`
+  margin-left: 0.6rem;
+  fontsize: ${theme.typography.size.medium};
+
+  ${({ checked }) =>
+    checked
+      ? `
+      color: ${theme.colors.royalBlue};
+      font-weight: bold;
+  `
+      : ""}
+
+  .ant-checkbox .ant-checkbox-inner {
+    border-color: ${royalBlue};
+    width: ${theme.typography.size.large};
+    height: ${theme.typography.size.large};
+    &:hover {
+      border-color: ${royalBlue};
+    }
+  }
+
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: ${(props) => props.color || "#6076ef"};
+    border-color: ${royalBlue};
+  }
+  .ant-checkbox-checked .ant-checkbox-inner::after {
+    transform: rotate(45deg) scale(1.5) translate(-40%, -45%);
+    -webkit-transform: rotate(45deg) scale(1.5) translate(-40%, -45%);
+    -ms-transform: rotate(45deg) scale(1.5) translate(-40%, -45%);
+  }
+`;
 
 const filterOps = (label, idx) => {
   if (label === "lookingFor") {
@@ -56,7 +110,9 @@ const filterOps = (label, idx) => {
   }
   return label === "providers"
     ? GTM.post.providers + providersGtmTagsMap[idx]
-    : GTM.post.type + typeGtmTagsMap[idx];
+    : label === "type"
+    ? GTM.post.type + typeGtmTagsMap[idx]
+    : GTM.post.workMode + workModeGtmTagsMap[idx];
 };
 
 const FilterAccord = ({ gtmPrefix, locationOnly }) => {
@@ -114,22 +170,24 @@ const FilterAccord = ({ gtmPrefix, locationOnly }) => {
             key={idx}
           >
             {Object.values(filter.options).map(({ text, value }, idx) => {
-              const tagClassName = `tag-selectable ${
-                selectedOptions[filter.label] &&
-                selectedOptions[filter.label].includes(value)
-                  ? "tag-selected"
-                  : ""
-              }`;
-              return (
-                <ButtonTag
-                  id={gtmPrefix + filterOps(filter.label, idx)}
-                  key={idx}
-                  onClick={handleOption(filter.label, value)}
-                  className={tagClassName}
-                >
-                  {t(text)}
-                </ButtonTag>
-              );
+              if (value !== "Remote Work") {
+                const tagClassName = `tag-selectable ${
+                  selectedOptions[filter.label] &&
+                  selectedOptions[filter.label].includes(value)
+                    ? "tag-selected"
+                    : ""
+                }`;
+                return (
+                  <ButtonTag
+                    id={gtmPrefix + filterOps(filter.label, idx)}
+                    key={idx}
+                    onClick={handleOption(filter.label, value)}
+                    className={tagClassName}
+                  >
+                    {t(text)}
+                  </ButtonTag>
+                );
+              }
             })}
           </FilterAccordionPanel>
         );

@@ -38,13 +38,34 @@ describe("FightPandemics Help Board Filters", () => {
       seeAndClickElement(helpBoardFilter.getBackButton());
     });
 
-    it("Remove selected tags from first filter panel", () => {
+    it("Remove selected tags from Providers filter panel", () => {
       seeAndClickElement(helpBoardFilter.getFilterButton());
       toggleFilterHeadingOpen(
         helpBoardFilter.getHbProvidersHeading(),
         "Providers",
       );
       selectFilterTags(helpBoardFilter.getHbProvidersTags());
+      closeCookieBanner();
+      seeAndClickElement(helpBoardFilter.getApplyFiltersButton());
+      unselectFilterTags(helpBoardFilter.getCloseSelectedTags());
+    });
+
+    it("Remove selected tags from Types filter panel", () => {
+      seeAndClickElement(helpBoardFilter.getFilterButton());
+      toggleFilterHeadingOpen(helpBoardFilter.getHbTypeHeading(), "Types");
+      selectFilterTags(helpBoardFilter.getHbTypeTags());
+      closeCookieBanner();
+      seeAndClickElement(helpBoardFilter.getApplyFiltersButton());
+      unselectFilterTags(helpBoardFilter.getCloseSelectedTags());
+    });
+
+    it("Remove selected tags from Post Fulfillment filter panel", () => {
+      seeAndClickElement(helpBoardFilter.getFilterButton());
+      toggleFilterHeadingOpen(
+        helpBoardFilter.getHbPostFulfillmentHeading(),
+        "Post fulfillment",
+      );
+      selectFilterTags(helpBoardFilter.getHbPostFulfillmentTags());
       closeCookieBanner();
       seeAndClickElement(helpBoardFilter.getApplyFiltersButton());
       unselectFilterTags(helpBoardFilter.getCloseSelectedTags());
@@ -108,6 +129,21 @@ describe("FightPandemics Help Board Filters", () => {
 
         selectFilterTags(helpBoardFilter.getHbTypeTags());
         unselectFilterTags(helpBoardFilter.getHbTypeTags());
+      });
+
+      it("PostFulfillment filter is expandable and collapsible, select and unselect PostFulfillment tags", () => {
+        toggleFilterHeadingOpen(
+          helpBoardFilter.getHbPostFulfillmentHeading(),
+          "Post fulfillment",
+        );
+        toggleFilterHeadingClose(helpBoardFilter.getHbPostFulfillmentHeading());
+        toggleFilterHeadingOpen(
+          helpBoardFilter.getHbPostFulfillmentHeading(),
+          "Post fulfillment",
+        );
+
+        selectFilterTags(helpBoardFilter.getHbPostFulfillmentTags());
+        unselectFilterTags(helpBoardFilter.getHbPostFulfillmentTags());
       });
 
       it("Apply Filters button is visible and clickable", () => {
