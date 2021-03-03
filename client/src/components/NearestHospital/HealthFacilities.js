@@ -270,6 +270,7 @@ const NearestHealthFacilities = () => {
       TagManager.dataLayer({
         dataLayer: {
           event: "NH_LOCATION",
+          type: selectedType,
           infor: sourceLocation.current,
         },
       });
@@ -277,6 +278,7 @@ const NearestHealthFacilities = () => {
       TagManager.dataLayer({
         dataLayer: {
           event: -1,
+          type: -1,
           infor: -1,
         },
       });
