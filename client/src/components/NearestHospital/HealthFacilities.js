@@ -13,6 +13,7 @@ import ConfirmedCases from "./ConfirmedCases";
 import { useTranslation } from "react-i18next";
 import { WhiteSpace } from "antd-mobile";
 import { Spin } from "antd";
+import TagManager from "react-gtm-module";
 
 const { colors, typography } = theme;
 const { darkerGray, white, royalBlue, black } = colors;
@@ -266,6 +267,19 @@ const NearestHealthFacilities = () => {
   const handleLocationChange = async (location) => {
     sourceLocation.current = location;
     if (sourceLocation.current) {
+      TagManager.dataLayer({
+        dataLayer: {
+          event: "NH_LOCATION",
+          infor: sourceLocation.current,
+        },
+      });
+      // clear the DataLayer
+      TagManager.dataLayer({
+        dataLayer: {
+          event: -1,
+          infor: -1,
+        },
+      });
       await loadData(sourceLocation.current, selectedType);
     }
   };
