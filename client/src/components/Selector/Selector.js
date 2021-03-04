@@ -12,25 +12,27 @@ const BaseSelector = ({
   filterOptions,
   defaultValue,
   minWidth,
-}) => (
-  <StyledSelector
-    id={
-      id
-    } /* added to assign id to fullfillment dropdown to track gtm tag in create post */
-    suffixIcon={suffixIcon}
-    defaultValue={defaultValue}
-    filterOptions={filterOptions}
-    onChange={onChange}
-    getPopupContainer={() =>
-      document.getElementsByClassName("ant-tabs-content-holder")[0]
-    }
-    minWidth={minWidth}
-  >
-    {options.map((item) => (
-      <Option {...optionProps} key={item.value} value={item.value}>
-        {item[key]}
-      </Option>
-    ))}
-  </StyledSelector>
-);
+  minHeight,
+  popUpContainer,
+}) => {
+  return (
+    <StyledSelector
+      suffixIcon={suffixIcon}
+      defaultValue={defaultValue}
+      filterOptions={filterOptions}
+      onChange={onChange}
+      getPopupContainer={
+        popUpContainer ? () => popUpContainer : () => document.body
+      }
+      minWidth={minWidth}
+      minHeight={minHeight}
+    >
+      {options.map((item) => (
+        <Option {...optionProps} key={item.value} value={item.value}>
+          {item[key]}
+        </Option>
+      ))}
+    </StyledSelector>
+  );
+};
 export default BaseSelector;
