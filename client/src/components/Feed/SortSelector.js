@@ -19,19 +19,19 @@ export default function SortSelector({ handleSortDropdown }) {
         options={[
           {
             text: t("feed.filters.latest"),
-            value: "latest",
+            value: "updatedAt",
           },
           {
             text: t("feed.filters.trending"),
-            value: "trending",
+            value: "shares",
           },
           {
             text: t("feed.filters.mostViewed"),
-            value: "mostViewed",
+            value: "views",
           },
           {
             text: t("feed.filters.mostLiked"),
-            value: "mostLiked",
+            value: "likes",
           },
         ]}
         onChange={handleSortDropdown}

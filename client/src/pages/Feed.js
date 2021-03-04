@@ -152,6 +152,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [sort, setSort] = useState(false);
   const {
     filterModal,
     showCreatePostModal,
@@ -476,6 +477,9 @@ const Feed = (props) => {
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
+
+    const sortQuery = () => (sort ? `&sort=${sort}` : "");
+
     switch (queryParams.s_category) {
       case "POSTS":
         break;
@@ -488,8 +492,8 @@ const Feed = (props) => {
       default:
         break;
     }
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
-
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}${sortQuery()}`;
+    console.log(endpoint);
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -587,7 +591,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
-  }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [queryParams, sort]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -668,6 +672,23 @@ const Feed = (props) => {
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const handleSortDropdown = (value) => {
     console.log(value);
+    setSort(value);
+    // switch (value) {
+    //   case "trending":
+    //     setSort("shares")
+    //     break;
+    //   case "mostViewed":
+    //     setSort("views")
+    //     break;
+    //   case "LATEST":
+    //     setSort("updatedAt")
+    //     break;
+    //   case "MOSTLIKED":
+    //     setSort("likes")
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
   return (
     <WithSummitBanner>
