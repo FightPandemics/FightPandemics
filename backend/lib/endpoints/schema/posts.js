@@ -9,6 +9,7 @@ const {
   REMOTE_OPTIONS,
 } = require("../../models/Post");
 
+
 const getPostsSchema = {
   querystring: strictQueryStringSchema()
     .prop("actorId", S.string())
