@@ -254,6 +254,8 @@ const Post = model("Post", postSchema);
 module.exports = {
   EXPIRATION_OPTIONS,
   POST_OBJECTIVES,
+  SORT_OPTIONS,
+  ORDER_OPTIONS,
   POST_TYPES,
   VISIBILITY_OPTIONS,
   REMOTE_OPTIONS,
