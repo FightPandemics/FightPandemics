@@ -102,6 +102,9 @@ export const StyledCheckbox = styled(Checkbox)`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  span {
+    font-family: ${display};
+  }
   :hover {
     overflow: visible;
     z-index: 1;
