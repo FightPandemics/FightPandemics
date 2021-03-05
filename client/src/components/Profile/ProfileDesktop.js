@@ -49,6 +49,10 @@ const ProfileDesktop = ({
   menuView: viewType,
   profilePost,
   postDispatch,
+  postDelete,
+  handlePostDelete,
+  deleteModalVisibility,
+  handleCancelPostDelete,
   loadNextPage,
   isLoading,
   isItemLoaded,
@@ -67,15 +71,14 @@ const ProfileDesktop = ({
   const [childTab, setChildTab] = useState(defaultState);
 
   const handleTabChange = (e) => {
-    console.log("tab Change", e.key);
+    // console.log("tab Change", e.key);
     setChildTab(e.key);
     setInternalTab(e.key);
-    // currentActiveTab = e.key;
   };
 
   useEffect(() => {
     setChildTab(defaultState);
-    // setInternalTab(defaultState);
+    setInternalTab(defaultState);
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -102,11 +105,11 @@ const ProfileDesktop = ({
         postDispatch={postDispatch}
         filteredPosts={profilePost}
         user={user}
-        // postDelete={postDelete}
-        // handlePostDelete={handlePostDelete}
+        postDelete={postDelete}
+        handlePostDelete={handlePostDelete}
         // // handleEditPost={handleEditPost}
-        // deleteModalVisibility={deleteModalVisibility}
-        // handleCancelPostDelete={handleCancelPostDelete}
+        deleteModalVisibility={deleteModalVisibility}
+        handleCancelPostDelete={handleCancelPostDelete}
         loadNextPage={loadNextPage}
         isNextPageLoading={isLoading}
         itemCount={itemCount}

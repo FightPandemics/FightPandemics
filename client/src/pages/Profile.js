@@ -89,6 +89,17 @@ import locationIcon from "assets/icons/status-indicator.svg";
 import useWindowDimensions from "../utils/windowSize";
 import { lowerCase } from "lodash";
 
+//delete post
+import {
+  deletePostModalreducer,
+  deletePostState,
+} from "hooks/reducers/feedReducers";
+import {
+  SET_DELETE_MODAL_VISIBILITY,
+  DELETE_MODAL_POST,
+  DELETE_MODAL_HIDE,
+} from "hooks/actions/feedActions";
+
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
   instagram: [instagramIcon, INSTAGRAM_URL],
@@ -175,6 +186,12 @@ const Profile = ({
   } = posts;
 
   if (ownUser) sessionStorage.removeItem("msgModal");
+  const [deleteModal, deleteModalDispatch] = useReducer(
+    deletePostModalreducer,
+    deletePostState,
+  );
+  const { deleteModalVisibility } = deleteModal;
+
   const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
@@ -393,6 +410,48 @@ const Profile = ({
     setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
   }, [loadMore, userPosts.length]);
 
+  const postDelete = async (post) => {
+    let deleteResponse;
+    const endPoint = `/api/posts/${post._id}`;
+    if (user && (user._id === post.author.id || user.id === post.author.id)) {
+      try {
+        deleteResponse = await axios.delete(endPoint);
+        if (deleteResponse && deleteResponse.data.success === true) {
+          const allPosts = {
+            ...postsList,
+          };
+          delete allPosts[post._id];
+          setTotalPostCount(totalPostCount - 1);
+          if (totalPostCount <= PAGINATION_LIMIT) {
+            const isLoading = true;
+            const loadMore = false;
+            refetchPosts(isLoading, loadMore);
+          } else {
+            refetchPosts();
+          }
+        }
+      } catch (error) {
+        console.log({
+          error,
+        });
+      }
+    }
+  };
+
+  const handlePostDelete = () => {
+    deleteModalDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_POST,
+    });
+  };
+
+  const handleCancelPostDelete = () => {
+    deleteModalDispatch({
+      type: SET_DELETE_MODAL_VISIBILITY,
+      visibility: DELETE_MODAL_HIDE,
+    });
+  };
+
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
 
@@ -408,6 +467,8 @@ const Profile = ({
   const setTab = (childTab) => {
     setInternalTab(childTab);
   };
+
+  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
 
   return (
     <>
@@ -558,13 +619,18 @@ const Profile = ({
                         <ProfileDesktop
                           setInternalTab={setTab}
                           // profileId={pathUserId}
-                          postDispatch={dispatch}
-                          profilePost={postsList}
-                          user={user}
                           isOrg={false}
                           isAuthenticated={isAuthenticated}
                           menuView={sectionView.toUpperCase()}
                           isMobile={false}
+                          postDispatch={dispatch}
+                          profilePost={postsList}
+                          user={user}
+                          postDelete={postDelete}
+                          handlePostDelete={handlePostDelete}
+                          // // handleEditPost={handleEditPost}
+                          deleteModalVisibility={deleteModalVisibility}
+                          handleCancelPostDelete={handleCancelPostDelete}
                           loadNextPage={loadNextPage}
                           isNextPageLoading={isLoading}
                           itemCount={itemCount}
@@ -584,7 +650,7 @@ const Profile = ({
                       ])}
                     />
                   )}
-                  {/* {emptyFeed() && <>"No Posts matching your crieteria."</>} */}
+                  {emptyFeed() && <>"No Posts to display."</>}
                 </div>
               ) : null}
             </div>
