@@ -28,7 +28,7 @@ import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
-import SeeAllComp from "components/Profile/SeeAllComponent";
+import ProfileDesktop from "components/Profile/ProfileDesktop";
 import { Tabs } from "antd";
 
 import {
@@ -87,6 +87,7 @@ import websiteIcon from "assets/icons/website-icon.svg";
 
 import locationIcon from "assets/icons/status-indicator.svg";
 import useWindowDimensions from "../utils/windowSize";
+import { lowerCase } from "lodash";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -98,6 +99,32 @@ const URLS = {
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
+
+const TAB_TYPE = {
+  POSTS: {
+    REQUESTS: "Requests",
+    OFFERS: "Offers",
+  },
+  REQUESTS: {
+    ACTIVE_REQS: "Active",
+    ARCHIVED_REQS: "Archived",
+    DRAFTS_REQS: "Drafts",
+  },
+  OFFERS: {
+    ACTIVE_OFRS: "Active",
+    ARCHIVED_OFRS: "Archived",
+    DRAFTS_OFRS: "Drafts",
+  },
+};
+const PAGINATION_LIMIT = 10;
+const ARBITRARY_LARGE_NUM = 10000;
+
+const gtmTagsMap = {
+  REQUESTS: `${GTM.profile.requests}`,
+  OFFERS: `${GTM.profile.offers}`,
+};
+
+const gtmTag = (tag) => GTM.profile.viewProfilePrefix + tag;
 
 const Profile = ({
   isAuthenticated,
@@ -113,12 +140,16 @@ const Profile = ({
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const { t } = useTranslation();
+
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
+  const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+
   const { error, loading, user } = userProfileState;
   const [sectionView, setSectionView] = useState(t("requests"));
   const [navMenu, setNavMenu] = useState([]);
+  const [internalTab, setInternalTab] = useState("Requests");
   const {
     id: userId,
     about,
@@ -144,10 +175,15 @@ const Profile = ({
   } = posts;
 
   if (ownUser) sessionStorage.removeItem("msgModal");
+  const prevTotalPostCount = usePrevious(totalPostCount);
   const userPosts = Object.entries(postsList);
+  const prevUserId = usePrevious(userId);
+  const organisationId = useSelector(selectOrganisationId);
 
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
+
+  const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
 
   const buildNavMenu = () => {
     const baseMenu = [
@@ -192,6 +228,115 @@ const Profile = ({
     buildNavMenu();
   }, [isSelf]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  const getActorQuery = () => {
+    return organisationId ? `&actorId=${organisationId}` : "";
+  };
+
+  useEffect(() => {
+    let _isMounted = false;
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const fetchPosts = async () => {
+      const limit = PAGINATION_LIMIT;
+      const skip = page * limit;
+      dispatch(postsActions.fetchPostsBegin());
+      try {
+        if (userId) {
+          let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
+          // const childTab = "Requests";
+          const view =
+            sectionView.toUpperCase() !== "POSTS"
+              ? lowerCase(sectionView).slice(0, -1)
+              : lowerCase(internalTab).slice(0, -1);
+
+          const objURL = `&objective=${view}`;
+
+          const mode =
+            sectionView.toUpperCase() !== "POSTS" &&
+            lowerCase(internalTab).includes("archive")
+              ? "IA"
+              : "D";
+
+          const modeURL = `&postMode=${mode}`;
+          const endpoint = `${baseURL}${objURL}${modeURL}`;
+
+          const {
+            data: { data: posts, meta },
+          } = await axios.get(endpoint);
+
+          if (!_isMounted) {
+            if (prevUserId !== userId) {
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: [],
+                }),
+              );
+            }
+            if (posts.length && meta.total) {
+              if (prevTotalPostCount !== meta.total) {
+                setTotalPostCount(meta.total);
+              }
+              if (posts.length < limit) {
+                dispatch(postsActions.finishLoadingAction());
+              } else if (meta.total === limit) {
+                dispatch(postsActions.finishLoadingAction());
+              }
+              const loadedPosts = posts.reduce((obj, item) => {
+                obj[item._id] = item;
+                return obj;
+              }, {});
+
+              if (prevUserId === userId && postsList) {
+                dispatch(
+                  postsActions.fetchPostsSuccess({
+                    posts: { ...postsList, ...loadedPosts },
+                  }),
+                );
+              } else {
+                dispatch(
+                  postsActions.fetchPostsSuccess({
+                    posts: { ...loadedPosts },
+                  }),
+                );
+              }
+            } else if (prevUserId === userId && posts) {
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: { ...postsList },
+                }),
+              );
+              dispatch(postsActions.finishLoadingAction());
+            } else {
+              dispatch(postsActions.finishLoadingAction());
+            }
+          }
+        }
+      } catch (error) {
+        console.log("Error - ", error);
+        dispatch(postsActions.fetchPostsError(error));
+        if (axios.isCancel(error)) {
+          console.log(`request cancelled:${error.message}`);
+        } else {
+          console.log("Error:" + error.message);
+        }
+      }
+    };
+    fetchPosts();
+    return () => {
+      _isMounted = true;
+      source.cancel("Cancelling is cleanup");
+    };
+  }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
     (async function fetchProfile() {
@@ -214,12 +359,35 @@ const Profile = ({
     })();
   }, [pathUserId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
+  }, [internalTab]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
       setToggleRefetch(!toggleRefetch);
     }
   };
+
+  const loadNextPage = useCallback(
+    ({ stopIndex }) => {
+      if (
+        !isLoading &&
+        loadMore &&
+        stopIndex >= userPosts.length &&
+        userPosts.length
+      ) {
+        return new Promise((resolve) => {
+          dispatch(postsActions.setNextPageAction());
+          resolve();
+        });
+      } else {
+        return Promise.resolve();
+      }
+    },
+    [dispatch, isLoading, loadMore, userPosts.length],
+  );
 
   useEffect(() => {
     setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
@@ -235,6 +403,10 @@ const Profile = ({
 
   const handleMenuToggle = (e) => {
     setSectionView(e.key);
+  };
+
+  const setTab = (childTab) => {
+    setInternalTab(childTab);
   };
 
   return (
@@ -383,14 +555,23 @@ const Profile = ({
                     <SeeAllContentWrapper>
                       <FeedWrapper isProfile>
                         <WhiteSpace size={"xl"}></WhiteSpace>
-                        <SeeAllComp
-                          profileId={pathUserId}
+                        <ProfileDesktop
+                          setInternalTab={setTab}
+                          // profileId={pathUserId}
+                          postDispatch={dispatch}
+                          profilePost={postsList}
                           user={user}
                           isOrg={false}
                           isAuthenticated={isAuthenticated}
                           menuView={sectionView.toUpperCase()}
                           isMobile={false}
-                        ></SeeAllComp>
+                          loadNextPage={loadNextPage}
+                          isNextPageLoading={isLoading}
+                          itemCount={itemCount}
+                          isItemLoaded={isItemLoaded}
+                          hasNextPage={loadMore}
+                          totalPostCount={totalPostCount}
+                        ></ProfileDesktop>
                       </FeedWrapper>
                     </SeeAllContentWrapper>
                   </SeeAllTabsWrapper>
@@ -403,6 +584,7 @@ const Profile = ({
                       ])}
                     />
                   )}
+                  {/* {emptyFeed() && <>"No Posts matching your crieteria."</>} */}
                 </div>
               ) : null}
             </div>
