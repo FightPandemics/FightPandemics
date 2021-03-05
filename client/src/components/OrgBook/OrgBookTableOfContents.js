@@ -96,12 +96,13 @@ const OrgBookTableOfContents = (props) => {
     handleNewPageClick,
     showAddNewPage,
     selectPage,
+    preSelectedPage,
   } = props;
   const { t } = useTranslation();
-  const [selectedPage, setSelectedPage] = useState(null);
+  const [selectedPage, setSelectedPage] = useState(preSelectedPage || null);
 
   const LIVE_PAGE_VIEW_TYPES = {
-    //correspond to private, public
+    //correspond to private, public for live pages only
     orgView: "org",
     publicView: "public",
   };
@@ -109,6 +110,15 @@ const OrgBookTableOfContents = (props) => {
     liveCategory: "live",
     draftCategory: "draft",
   };
+
+  const initialize = () => {
+    if (preSelectedPage) {
+      setSelectedPage(preSelectedPage);
+      selectPage(preSelectedPage);
+    }
+  };
+
+  useEffect(initialize, []);
 
   const handlePageClick = (page) => (e) => {
     setSelectedPage(page);

@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
-//import ReactDOM from "react-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -24,6 +21,7 @@ import {
 import { Alert } from "antd";
 import SuccessAlert from "../../components/Alert/SuccessAlert";
 import OrgBookTableOfContents from "../../components/OrgBook/OrgBookTableOfContents";
+import OrgBookEditorSpace from "../../components/OrgBook/OrgBookEditorSpace";
 import OrgBookModal from "../../components/OrgBook/OrgBookModal";
 import { ORANGE_RED, WHITE } from "../../constants/colors";
 
@@ -68,8 +66,9 @@ const TableOfContentsSidebar = styled.div`
 
 const OrgBookEditorContentBox = styled.div`
   background-color: ${white};
-  min-height: 100vh;
-  padding-right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 70%;
 `;
 
 const ErrorAlert = styled(Alert)`
@@ -180,7 +179,7 @@ const OrgBookEditor = () => {
   };
 
   const getContentForNewPage = (pagename) => {
-    return `<p><span style="font-size:11pt;font-family: Arial;">${pagename}</span></p>`;
+    return `<p><span style="display: block; text-align: center; font-size: 24px;font-family: Arial;">${pagename}</span></p><p>&nbsp;</p>`;
   };
 
   const addFirstOrgBookDraftPage = (formData) => {
@@ -197,6 +196,7 @@ const OrgBookEditor = () => {
       created_at: new Date().toLocaleString().replace(",", ""),
     };
     newPages.push(newOrgBookPage);
+    setSelectedPage(newOrgBookPage);
     let orgBookPages = {
       orgBookPages: newPages,
     };
@@ -228,6 +228,7 @@ const OrgBookEditor = () => {
       created_at: new Date().toLocaleString().replace(",", ""),
     };
     currentOrgBookPages.push(newOrgBookPage);
+    setSelectedPage(newOrgBookPage);
     let orgBookPages = {
       orgBookPages: currentOrgBookPages,
     };
@@ -309,6 +310,7 @@ const OrgBookEditor = () => {
             handleNewPageClick={handleNewPageClick}
             showAddNewPage={showAddNewPage}
             selectPage={handleSelectPage}
+            preSelectedPage={selectedPage}
           ></OrgBookTableOfContents>
         </TableOfContentsSidebar>
       );
@@ -316,13 +318,15 @@ const OrgBookEditor = () => {
   };
 
   const renderEditorSpace = () => {
-    if (!selectedPage) return "";
-
-    return (
-      <div>
-        <h1>selected page: {selectedPage.name}</h1>
-      </div>
-    );
+    if (organisation) {
+      return (
+        <OrgBookEditorSpace
+          organisation={organisation}
+          selectedPage={selectedPage || null}
+          PAGE_CATEGORIES={PAGE_CATEGORIES}
+        ></OrgBookEditorSpace>
+      );
+    }
   };
 
   const renderNewPageModal = () => {

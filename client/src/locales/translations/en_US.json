@@ -423,7 +423,17 @@
     "cancel": "Cancel",
     "maxPageName": "Page name must be maximum 25 characters.",
     "updateSuccess": "OrgBook successfully updated",
-    "addNewPage": "Add New Page"
+    "addNewPage": "Add New Page",
+    "clickPageOnLeft": "Click a page on the left or Add New Page to start editing.",
+    "draft": "Draft",
+    "live": "Live",
+    "seePreview": "See Preview",
+    "renamePage": "Rename Page",
+    "saveProgress": "Save Progress",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "deleteDraft": "Delete Draft",
+    "republish": "Republish"
   },
   "auth": {
     "signIn": "Sign In",
