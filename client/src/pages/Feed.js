@@ -152,7 +152,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const [sortValue, setSortValue] = useState("Sort By");
+  const [sortValue, setSortValue] = useState(t("feed.filters.sortBy"));
   const {
     filterModal,
     showCreatePostModal,
@@ -475,7 +475,7 @@ const Feed = (props) => {
     const sortQuery = () => {
       if (sortValue === "proximity") {
         return `&ignoreUserLocation=${ignoreUserLocation}`;
-      } else if (sortValue === "Sort By") {
+      } else if (sortValue === t("feed.filters.sortBy")) {
         return "";
       } else if (sortValue === "relevance") {
         if (searchKeyword)
@@ -602,7 +602,7 @@ const Feed = (props) => {
     } else if (!ignoreUserLocation) {
       setSortValue("proximity");
     } else {
-      setSortValue("Sort By");
+      setSortValue(t("feed.filters.sortBy"));
     }
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
   }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps

@@ -74,6 +74,8 @@
       "mostViewed": "Most Viewed",
       "latest": "Latest",
       "mostLiked": "Most Liked",
+      "proximity": "Proximity",
+      "relevance": "Relevance",
       "providers": "Providers",
       "providersList": [
         "Individual",

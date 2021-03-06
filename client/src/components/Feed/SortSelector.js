@@ -36,13 +36,13 @@ export default function SortSelector({
     );
     if (!ignoreUserLocation) {
       stagedOptions.push({
-        text: "proximity",
+        text: t("feed.filters.proximity"),
         value: "proximity",
       });
     }
     if (keywordUsed) {
       stagedOptions.push({
-        text: "relevance",
+        text: t("feed.filters.relevance"),
         value: "relevance",
       });
     }
