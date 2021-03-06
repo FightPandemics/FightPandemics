@@ -34,15 +34,6 @@ export default function SortSelector({
     const stagedOptions = options.filter(
       (e) => e.value !== "proximity" && e.value !== "relevance",
     );
-    const hasProximity = options.some(
-      (option) => option["value"] === "proximity",
-    );
-    const hasRelevance = options.some(
-      (option) => option["value"] === "relevance",
-    );
-    console.log(keywordUsed);
-    console.log(hasProximity);
-    console.log(stagedOptions);
     if (!ignoreUserLocation) {
       stagedOptions.push({
         text: "proximity",
@@ -57,16 +48,6 @@ export default function SortSelector({
     }
     setOptions(stagedOptions);
   }, [ignoreUserLocation, keywordUsed]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // const getValue = () =>{
-  //   if (ignoreUserLocation ) {
-  //     console.log("no location")
-  //     return "Sort by"
-  //    }else{
-  //      console.log("location");
-  //     return "proximity"
-  //    }
-  // }
 
   return (
     <div className="visibility-post--selector">

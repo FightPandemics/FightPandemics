@@ -468,9 +468,6 @@ const Feed = (props) => {
       }
     };
     const searchKeyword = queryParams.s_keyword;
-    // // const searchURL = () => {
-
-    // };
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
@@ -502,7 +499,6 @@ const Feed = (props) => {
         break;
     }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${sortQuery()}`;
-    console.log(endpoint);
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -693,7 +689,6 @@ const Feed = (props) => {
 
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const handleSortDropdown = (value) => {
-    console.log(value);
     setSortValue(value);
   };
   return (
