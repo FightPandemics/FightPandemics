@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StyledSelector from "./StyledSelector";
 const { Option } = StyledSelector;
 
@@ -14,13 +14,16 @@ const BaseSelector = ({
   minWidth,
   minHeight,
   popUpContainer,
+  value,
 }) => {
+  const [defaultValueState, setDefaultValueState] = useState(defaultValue);
   return (
     <StyledSelector
       suffixIcon={suffixIcon}
-      defaultValue={defaultValue}
       filterOptions={filterOptions}
       onChange={onChange}
+      defaultValue={defaultValue ? defaultValue : null}
+      value={value ? value : null}
       getPopupContainer={
         popUpContainer ? () => popUpContainer : () => document.body
       }

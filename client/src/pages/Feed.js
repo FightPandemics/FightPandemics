@@ -152,7 +152,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const [sort, setSort] = useState(false);
+  const [sortValue, setSortValue] = useState("Sort By");
   const {
     filterModal,
     showCreatePostModal,
@@ -292,7 +292,6 @@ const Feed = (props) => {
       }
     } else if (queryParams.filters && !newFiltersLength)
       newQuery.filters = null;
-
     setQueryKeysValue(history, newQuery);
   };
 
@@ -469,17 +468,27 @@ const Feed = (props) => {
       }
     };
     const searchKeyword = queryParams.s_keyword;
-    const searchURL = () => {
-      if (searchKeyword)
-        return `&keywords=${encodeURIComponent(searchKeyword)}`;
-      else return "";
-    };
+    // // const searchURL = () => {
+
+    // };
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
 
-    const sortQuery = () => (sort ? `&sort=${sort}` : "");
-
+    const sortQuery = () => {
+      if (sortValue === "proximity") {
+        return `&ignoreUserLocation=${ignoreUserLocation}`;
+      } else if (sortValue === "Sort By") {
+        return "";
+      } else if (sortValue === "relevance") {
+        if (searchKeyword)
+          return `&keywords=${encodeURIComponent(searchKeyword)}`;
+        else return "";
+      } else {
+        return `&sort=${sortValue}`;
+      }
+    };
+    // ${searchURL()}&ignoreUserLocation=${ignoreUserLocation}
     switch (queryParams.s_category) {
       case "POSTS":
         break;
@@ -492,7 +501,7 @@ const Feed = (props) => {
       default:
         break;
     }
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}${sortQuery()}`;
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${sortQuery()}`;
     console.log(endpoint);
     dispatch(postsActions.fetchPostsBegin());
 
@@ -581,6 +590,8 @@ const Feed = (props) => {
     }
   };
 
+  useEffect(() => {}, [ignoreUserLocation]);
+
   useEffect(() => {
     getStateFromQuery();
   }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -590,8 +601,19 @@ const Feed = (props) => {
   }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    if (typeof queryParams.s_keyword !== "undefined") {
+      setSortValue("relevance");
+    } else if (!ignoreUserLocation) {
+      setSortValue("proximity");
+    } else {
+      setSortValue("Sort By");
+    }
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
-  }, [queryParams, sort]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
+  }, [sortValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -672,23 +694,7 @@ const Feed = (props) => {
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const handleSortDropdown = (value) => {
     console.log(value);
-    setSort(value);
-    // switch (value) {
-    //   case "trending":
-    //     setSort("shares")
-    //     break;
-    //   case "mostViewed":
-    //     setSort("views")
-    //     break;
-    //   case "LATEST":
-    //     setSort("updatedAt")
-    //     break;
-    //   case "MOSTLIKED":
-    //     setSort("likes")
-    //     break;
-    //   default:
-    //     break;
-    // }
+    setSortValue(value);
   };
   return (
     <WithSummitBanner>
@@ -776,7 +782,12 @@ const Feed = (props) => {
                   t={t}
                 />
                 {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
-                  <SortSelector handleSortDropdown={handleSortDropdown} />
+                  <SortSelector
+                    handleSortDropdown={handleSortDropdown}
+                    ignoreUserLocation={ignoreUserLocation}
+                    keywordUsed={typeof queryParams.s_keyword !== "undefined"}
+                    sortValue={sortValue}
+                  />
                 )}
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
