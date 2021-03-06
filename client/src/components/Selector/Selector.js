@@ -22,8 +22,8 @@ const BaseSelector = ({
       suffixIcon={suffixIcon}
       filterOptions={filterOptions}
       onChange={onChange}
-      defaultValue={defaultValue ? defaultValue : null}
-      value={value ? value : null}
+      defaultValue={defaultValue}
+      value={value}
       getPopupContainer={
         popUpContainer ? () => popUpContainer : () => document.body
       }
