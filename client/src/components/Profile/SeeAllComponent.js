@@ -13,6 +13,8 @@ import { Menu } from "antd";
 
 import { SeeAllWrapper } from "components/Feed/FeedWrappers";
 
+import { ChildMenuWrapper } from "components/Profile/ProfileComponents";
+
 import {
   deletePostModalreducer,
   deletePostState,
@@ -29,7 +31,7 @@ import { selectOrganisationId, selectActorId } from "reducers/session";
 import Activity from "components/Profile/Activity";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import { lowerCase } from "lodash";
-import { theme, mq } from "constants/theme";
+
 import { WhiteSpace } from "antd-mobile";
 
 const gtmTagsMap = {
@@ -59,7 +61,7 @@ const TAB_TYPE = {
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
-export const MenuWrapper = styled(Menu)`
+/* export const MenuWrapper = styled(Menu)`
   height: 4rem;
   margin: 0rem 1rem;
   display: flex;
@@ -97,7 +99,7 @@ export const MenuWrapper = styled(Menu)`
     }
   }
 `;
-
+ */
 let currentActiveTab = "";
 
 const SeeAll = ({
@@ -359,7 +361,7 @@ const SeeAll = ({
 
   return (
     <SeeAllWrapper isMobile={isMobile}>
-      <MenuWrapper
+      <ChildMenuWrapper
         defaultSelectedKeys={[defaultState]}
         selectedKeys={[childTab || defaultState]}
         onClick={handleTabChange}
@@ -375,7 +377,7 @@ const SeeAll = ({
             {t(`profile.views.${TAB_TYPE[viewType][item]}`)}
           </Menu.Item>
         ))}
-      </MenuWrapper>
+      </ChildMenuWrapper>
       <WhiteSpace size={"lg"}></WhiteSpace>
       <Activity
         postDispatch={dispatch}
