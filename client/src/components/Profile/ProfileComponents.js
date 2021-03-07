@@ -331,3 +331,42 @@ export const DesktopMenuWrapper = styled(Menu)`
     font-weight: bold;
   }
 `;
+
+export const ChildMenuWrapper = styled(Menu)`
+  height: 4rem;
+  margin: 0rem 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  &.ant-menu {
+    ${({ isMobile }) =>
+      isMobile
+        ? `
+      border-top: 0.2rem solid ${theme.colors.lightGray};
+      width: 100%;
+      border-bottom: 0.2rem solid ${theme.colors.lightGray};
+  `
+        : `border-bottom: 0.2rem solid ${theme.colors.darkGray};`}
+
+    li.ant-menu-item {
+      margin: 0.8rem 0;
+      height: 3rem;
+      padding-bottom: 0rem;
+
+      color: ${theme.colors.darkerGray};
+      font-size: ${theme.typography.size.large};
+      line-height: 21px;
+      width: 50%;
+      &:hover {
+        color: ${theme.colors.darkerGray};
+      }
+      text-align: center;
+    }
+
+    &.ant-menu .ant-menu-item-selected {
+      background-color: transparent;
+      border-bottom: 0.2rem solid ${theme.colors.black};
+      font-weight: bold;
+    }
+  }
+`;
