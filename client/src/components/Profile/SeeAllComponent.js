@@ -44,7 +44,7 @@ const gtmTagsMap = {
   DRAFTS_REQS: `${GTM.profile.requests + GTM.profile.draft}`,
   DRAFTS_OFRS: `${GTM.profile.offers + GTM.profile.draft}`,
 };
-
+// run this for the tags
 const gtmTag = (tag) => GTM.user.profilePrefix + tag;
 
 const TAB_TYPE = {

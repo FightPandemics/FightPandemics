@@ -598,7 +598,7 @@ const Profile = ({
                 <Menu.Item
                   key={item.name}
                   disabled={item.disabled}
-                  id={GTM.user.profilePrefix + GTM.profile.item.gtm}
+                  id={GTM.user.profilePrefix + GTM.profile[item.gtm]}
                 >
                   {item.name}
                 </Menu.Item>
