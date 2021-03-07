@@ -153,35 +153,42 @@ const Profile = ({
     const baseMenu = [
       {
         name: t("profile.views.activity"),
-        disabled: false,
+        disabled: true,
+        gtm: "activity",
       },
       {
         name: t("profile.views.organizations"),
         disabled: true,
+        gtm: "organizations",
       },
       {
         name: t("profile.views.badges"),
         disabled: true,
+        gtm: "badges",
       },
       {
         name: t("profile.views.thanks"),
         disabled: true,
+        gtm: "thanks",
       },
     ];
     if (isSelf) {
       baseMenu.splice(1, 0, {
         name: t("profile.views.requests"),
         disabled: false,
+        gtm: "requests",
       });
       baseMenu.splice(2, 0, {
         name: t("profile.views.offers"),
         disabled: false,
+        gtm: "offers",
       });
       setSectionView(t("profile.views.requests"));
     } else {
       baseMenu.splice(1, 0, {
         name: t("profile.views.posts"),
         disable: false,
+        gtm: "posts",
       });
       setSectionView(t("profile.views.posts"));
     }
@@ -355,7 +362,11 @@ const Profile = ({
               onClick={handleMenuToggle}
             >
               {navMenu.map((item, index) => (
-                <Menu.Item key={item.name} disabled={item.disabled}>
+                <Menu.Item
+                  key={item.name}
+                  disabled={item.disabled}
+                  id={GTM.user.profilePrefix + GTM.profile.item.gtm}
+                >
                   {item.name}
                 </Menu.Item>
               ))}
@@ -369,7 +380,11 @@ const Profile = ({
                 onClick={handleMenuToggle}
               >
                 {navMenu.map((item, index) => (
-                  <Menu.Item key={item.name} disabled={item.disabled}>
+                  <Menu.Item
+                    key={item.name}
+                    disabled={item.disabled}
+                    id={GTM.user.profilePrefix + GTM.profile[item.gtm]}
+                  >
                     {item.name}
                   </Menu.Item>
                 ))}

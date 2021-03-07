@@ -33,11 +33,17 @@ import { theme, mq } from "constants/theme";
 import { WhiteSpace } from "antd-mobile";
 
 const gtmTagsMap = {
-  REQUESTS: `${GTM.profile.requests}`,
-  OFFERS: `${GTM.profile.offers}`,
+  REQUESTS: `${GTM.profile.posts + GTM.profile.requests}`,
+  OFFERS: `${GTM.profile.posts + GTM.profile.offers}`,
+  ACTIVE_OFRS: `${GTM.profile.offers + GTM.profile.active}`,
+  ACTIVE_REQS: `${GTM.profile.requests + GTM.profile.active}`,
+  ARCHIVED_OFRS: `${GTM.profile.offers + GTM.profile.archived}`,
+  ARCHIVED_REQS: `${GTM.profile.offers + GTM.profile.archived}`,
+  DRAFTS_REQS: `${GTM.profile.requests + GTM.profile.draft}`,
+  DRAFTS_OFRS: `${GTM.profile.offers + GTM.profile.draft}`,
 };
 
-const gtmTag = (tag) => GTM.profile.viewProfilePrefix + tag;
+const gtmTag = (tag) => GTM.user.profilePrefix + tag;
 
 const TAB_TYPE = {
   POSTS: {
