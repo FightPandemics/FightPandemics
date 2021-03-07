@@ -99,6 +99,8 @@ import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
+import JoinOrgButton from "components/OrganisationProfile/JoinOrgButton";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -488,6 +490,22 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           </UserInfoContainer>
           {isSelf && !verified && <Verification />}
           <WhiteSpace />
+          {// Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
+          }
+          <Link
+            onClick={
+              () => sessionStorage.setItem("postredirect", window.location.pathname)
+            }
+            to={isAuthenticated ? "/positions" :
+              {
+                pathname: LOGIN,
+                state: { from: window.location.pathname },
+              }}>
+            <JoinOrgButton
+              id={GTM.organisation.joinOrg}>
+              {t("profile.individual.joinOrg") + ` ${name}`}
+            </JoinOrgButton>
+          </Link>
           <div>
             <SectionHeader>
               {t("profile.org.activity")}

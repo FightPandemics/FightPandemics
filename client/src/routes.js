@@ -31,6 +31,7 @@ import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
+import Positions from "./pages/Positions";
 
 import { SCOPES } from "constants/permissions";
 
@@ -271,7 +272,13 @@ const routes = [
     component: Unsubscribe,
     layout: "logo",
   },
-
+  {
+    path: "/positions",
+    component: Positions,
+    props: {
+      // loggedInOnly: true,
+    }
+  },
   {
     path: "*",
     component: NotFoundPage,
