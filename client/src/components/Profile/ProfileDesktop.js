@@ -39,7 +39,7 @@ const gtmTagsMap = {
   ACTIVE_OFRS: `${GTM.profile.offers + GTM.profile.active}`,
   ACTIVE_REQS: `${GTM.profile.requests + GTM.profile.active}`,
   ARCHIVED_OFRS: `${GTM.profile.offers + GTM.profile.archived}`,
-  ARCHIVED_REQS: `${GTM.profile.offers + GTM.profile.archived}`,
+  ARCHIVED_REQS: `${GTM.profile.requests + GTM.profile.archived}`,
   DRAFTS_REQS: `${GTM.profile.requests + GTM.profile.draft}`,
   DRAFTS_OFRS: `${GTM.profile.offers + GTM.profile.draft}`,
 };
