@@ -3,6 +3,12 @@ export const POSTS_ACTIONS = {
   FETCH_POSTS_SUCCESS: "FETCH_POSTS_SUCCESS",
   FETCH_POSTS_BEGIN: "FETCH_POSTS_BEGIN",
   FETCH_POSTS_ERROR: "FETCH_POSTS_ERROR",
+  FETCH_REQUESTS_ACTIVE_SUCCESS: "FETCH_REQUESTS_ACTIVE_SUCCESS",
+  FETCH_REQUESTS_INACTIVE_SUCCESS: "FETCH_REQUESTS_INACTIVE_SUCCESS",
+  FETCH_OFFERS_ACTIVE_SUCCESS: "FETCH_OFFERS_ACTIVE_SUCCESS",
+  FETCH_OFFERS_INACTIVE_SUCCESS: "FETCH_OFFERS_INACTIVE_SUCCESS",
+  FETCH_POSTS_REQUESTS_SUCCESS: "FETCH_POSTS_REQUESTS_SUCCESS",
+  FETCH_POSTS_OFFERS_SUCCESS: "FETCH_POSTS_OFFERS_SUCCESS",
   NEXT_PAGE: "NEXT_PAGE",
   SET_PAGE: "SET_PAGE",
   RESET_PAGE: "RESET_PAGE",
@@ -36,6 +42,36 @@ export const fetchPostsSuccess = ({ posts }) => ({
   type: POSTS_ACTIONS.FETCH_POSTS_SUCCESS,
   payload: posts,
 });
+
+export const fetchRequestsActiveSuccess = ({ posts, userId }) => ({
+  type: POSTS_ACTIONS.FETCH_REQUESTS_ACTIVE_SUCCESS,
+  payload: { posts, userId },
+})
+
+export const fetchRequestsInactiveSuccess = ({ posts, userId }) => ({
+  type: POSTS_ACTIONS.FETCH_REQUESTS_INACTIVE_SUCCESS,
+  payload: { posts, userId },
+})
+
+export const fetchOffersActiveSuccess = ({ posts, userId }) => ({
+  type: POSTS_ACTIONS.FETCH_OFFERS_ACTIVE_SUCCESS,
+  payload: { posts, userId },
+})
+
+export const fetchOffersInactiveSuccess = ({ posts, userId }) => ({
+  type: POSTS_ACTIONS.FETCH_OFFERS_INACTIVE_SUCCESS,
+  payload: { posts, userId },
+})
+
+export const fetchPostsRequestsSuccess = ({ posts, userId }) => ({
+  type: POSTS_ACTIONS.FETCH_POSTS_REQUESTS_SUCCESS,
+  payload: { posts, userId },
+})
+
+export const fetchPostsOffersSuccess = ({ posts, userId }) => ({
+  type: POSTS_ACTIONS.FETCH_POSTS_OFFERS_SUCCESS,
+  payload: { posts, userId },
+})
 
 export const fetchPostsError = (error) => ({
   type: POSTS_ACTIONS.FETCH_POSTS_ERROR,
@@ -75,6 +111,12 @@ export const postsActions = {
   setLikeAction,
   fetchPostsBegin,
   fetchPostsSuccess,
+  fetchRequestsActiveSuccess,
+  fetchRequestsInactiveSuccess,
+  fetchOffersActiveSuccess,
+  fetchOffersInactiveSuccess,
+  fetchPostsRequestsSuccess,
+  fetchPostsOffersSuccess,
   fetchPostsError,
   finishLoadingAction,
   setLoadingAction,

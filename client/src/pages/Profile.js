@@ -23,12 +23,14 @@ import {
 } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
+import PostTabCard from "components/Feed/PostTabCard";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
 import ProfileDesktop from "components/Profile/ProfileDesktop";
+import { isExpired } from "components/Feed/utils";
 import { Tabs } from "antd";
 
 import {
@@ -53,6 +55,7 @@ import {
   NamePara,
   MobileMenuWrapper,
   DesktopMenuWrapper,
+  StyledMobileMenuContainer,
 } from "../components/Profile/ProfileComponents";
 import {
   FACEBOOK_URL,
@@ -160,7 +163,7 @@ const Profile = ({
   const { error, loading, user } = userProfileState;
   const [sectionView, setSectionView] = useState(t("requests"));
   const [navMenu, setNavMenu] = useState([]);
-  const [internalTab, setInternalTab] = useState("Requests");
+  const [internalTab, setInternalTab] = useState("Active");
   const {
     id: userId,
     about,
@@ -188,7 +191,7 @@ const Profile = ({
   if (ownUser) sessionStorage.removeItem("msgModal");
   const [deleteModal, deleteModalDispatch] = useReducer(
     deletePostModalreducer,
-    deletePostState,
+    deletePostState
   );
   const { deleteModalVisibility } = deleteModal;
 
@@ -267,6 +270,23 @@ const Profile = ({
     return organisationId ? `&actorId=${organisationId}` : "";
   };
 
+  const getView = () => {
+    return sectionView.toUpperCase() !== "POSTS"
+      ? lowerCase(sectionView).slice(0, -1)
+      : lowerCase(internalTab).slice(0, -1);
+  };
+
+  const getMode = () => {
+    if (sectionView.toUpperCase() !== "POSTS") {
+      return lowerCase(internalTab).includes("archived")
+        ? "IA"
+        : lowerCase(internalTab).includes("active")
+        ? "A"
+        : "D";
+    }
+    return undefined;
+  };
+
   useEffect(() => {
     let _isMounted = false;
     const CancelToken = axios.CancelToken;
@@ -280,18 +300,11 @@ const Profile = ({
         if (userId) {
           let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
           // const childTab = "Requests";
-          const view =
-            sectionView.toUpperCase() !== "POSTS"
-              ? lowerCase(sectionView).slice(0, -1)
-              : lowerCase(internalTab).slice(0, -1);
+          const view = getView();
 
           const objURL = `&objective=${view}`;
 
-          const mode =
-            sectionView.toUpperCase() !== "POSTS" &&
-            lowerCase(internalTab).includes("archive")
-              ? "IA"
-              : "D";
+          const mode = getMode();
 
           const modeURL = `&postMode=${mode}`;
           const endpoint = `${baseURL}${objURL}${modeURL}`;
@@ -301,11 +314,62 @@ const Profile = ({
           } = await axios.get(endpoint);
 
           if (!_isMounted) {
+            //mobile fetch
+            if (view === "request") {
+              if (mode === "A") {
+                dispatch(
+                  postsActions.fetchRequestsActiveSuccess({
+                    posts,
+                    userId,
+                  })
+                );
+              } else if (mode === "IA") {
+                dispatch(
+                  postsActions.fetchRequestsInactiveSuccess({
+                    posts,
+                    userId,
+                  })
+                );
+              } else {
+                dispatch(
+                  postsActions.fetchPostsRequestsSuccess({
+                    posts,
+                    userId,
+                  })
+                );
+              }
+            }
+            if (view === "offer") {
+              if (mode === "A") {
+                dispatch(
+                  postsActions.fetchOffersActiveSuccess({
+                    posts,
+                    userId,
+                  })
+                );
+              } else if (mode === "IA") {
+                dispatch(
+                  postsActions.fetchOffersInactiveSuccess({
+                    posts,
+                    userId,
+                  })
+                );
+              } else {
+                dispatch(
+                  postsActions.fetchPostsOffersSuccess({
+                    posts,
+                    userId,
+                  })
+                );
+              }
+            }
+
+            //desktop fetch
             if (prevUserId !== userId) {
               dispatch(
                 postsActions.fetchPostsSuccess({
                   posts: [],
-                }),
+                })
               );
             }
             if (posts.length && meta.total) {
@@ -326,20 +390,20 @@ const Profile = ({
                 dispatch(
                   postsActions.fetchPostsSuccess({
                     posts: { ...postsList, ...loadedPosts },
-                  }),
+                  })
                 );
               } else {
                 dispatch(
                   postsActions.fetchPostsSuccess({
                     posts: { ...loadedPosts },
-                  }),
+                  })
                 );
               }
             } else if (prevUserId === userId && posts) {
               dispatch(
                 postsActions.fetchPostsSuccess({
                   posts: { ...postsList },
-                }),
+                })
               );
               dispatch(postsActions.finishLoadingAction());
             } else {
@@ -379,8 +443,8 @@ const Profile = ({
         ]);
         userProfileDispatch(
           fetchUserError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
-          ),
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
+          )
         );
       }
     })();
@@ -388,12 +452,36 @@ const Profile = ({
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
-  }, [internalTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
-      setToggleRefetch(!toggleRefetch);
+      const view = getView();
+      const mode = getMode();
+      if (view === "request") {
+        if (mode === "A" && !posts.profilePosts[userId]?.requests?.active) {
+          setToggleRefetch(!toggleRefetch);
+        } else if (
+          mode === "IA" &&
+          !posts.profilePosts[userId]?.requests?.inactive
+        ) {
+          setToggleRefetch(!toggleRefetch);
+        } else if (!mode && !posts.profilePosts[userId]?.requests?.all) {
+          setToggleRefetch(!toggleRefetch);
+        }
+      } else if (view === "offer") {
+        if (mode === "A" && !posts.profilePosts[userId]?.offers?.active) {
+          setToggleRefetch(!toggleRefetch);
+        } else if (
+          mode === "IA" &&
+          !posts.profilePosts[userId]?.offers?.inactive
+        ) {
+          setToggleRefetch(!toggleRefetch);
+        } else if (!mode && !posts.profilePosts[userId]?.offers?.all) {
+          setToggleRefetch(!toggleRefetch);
+        }
+      }
     }
   };
 
@@ -413,7 +501,7 @@ const Profile = ({
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, userPosts.length],
+    [dispatch, isLoading, loadMore, userPosts.length]
   );
 
   useEffect(() => {
@@ -478,7 +566,51 @@ const Profile = ({
     setInternalTab(childTab);
   };
 
-  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
+  const convertToObjectPost = (postArray) => {
+    return postArray.reduce((map, obj) => {
+      map[obj._id] = obj;
+      return map;
+    }, {});
+  };
+
+  const getPostBasedOnModeAndView = () => {
+    const mode = getMode();
+    const view = getView();
+    if (view === "request") {
+      if (mode === "A") {
+        return convertToObjectPost(
+          posts.profilePosts[userId]?.requests?.active ?? []
+        );
+      } else if (mode === "IA") {
+        return convertToObjectPost(
+          posts.profilePosts[userId]?.requests?.inactive ?? []
+        );
+      } else {
+        return convertToObjectPost(
+          posts.profilePosts[userId]?.requests?.all ?? []
+        );
+      }
+    } else if (view === "offer") {
+      if (mode === "A") {
+        return convertToObjectPost(
+          posts.profilePosts[userId]?.offers?.active ?? []
+        );
+      } else if (mode === "IA") {
+        return convertToObjectPost(
+          posts.profilePosts[userId]?.offers?.inactive ?? []
+        );
+      } else {
+        return convertToObjectPost(
+          posts.profilePosts[userId]?.offers?.all ?? []
+        );
+      }
+    }
+
+    return {};
+  };
+
+  const emptyFeed = () =>
+    Object.keys(getPostBasedOnModeAndView()).length < 1 && !isLoading;
 
   return (
     <>
@@ -592,21 +724,79 @@ const Profile = ({
         )}
         <div>
           {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
-            <MobileMenuWrapper
-              defaultSelectedKeys={[sectionView]}
-              selectedKeys={sectionView}
-              onClick={handleMenuToggle}
-            >
-              {navMenu.map((item, index) => (
-                <Menu.Item
-                  key={item.name}
-                  disabled={item.disabled}
-                  id={GTM.user.profilePrefix + GTM.profile[item.gtm]}
-                >
-                  {item.name}
-                </Menu.Item>
-              ))}
-            </MobileMenuWrapper>
+            <StyledMobileMenuContainer>
+              <MobileMenuWrapper
+                defaultSelectedKeys={[sectionView]}
+                selectedKeys={sectionView}
+                onClick={handleMenuToggle}
+              >
+                {navMenu.map((item, index) => (
+                  <Menu.Item
+                    key={item.name}
+                    disabled={item.disabled}
+                    id={GTM.user.profilePrefix + GTM.profile[item.gtm]}
+                  >
+                    {item.name}
+                  </Menu.Item>
+                ))}
+              </MobileMenuWrapper>
+              <div style={{ width: "100%" }}>
+                {sectionView === "Requests" && (
+                  <PostTabCard
+                    cardContents={[
+                      {
+                        title: "Active",
+                        posts:
+                          posts.profilePosts[userId]?.requests?.active ?? [],
+                      },
+                      {
+                        title: "Archived",
+                        posts:
+                          posts.profilePosts[userId]?.requests?.inactive ?? [],
+                      },
+                    ]}
+                    user={user}
+                    isAuthenticated={isAuthenticated}
+                    onTabClick={setTab}
+                  />
+                )}
+                {sectionView === "Offers" && (
+                  <PostTabCard
+                    cardContents={[
+                      {
+                        title: "Active",
+                        posts: posts.profilePosts[userId]?.offers?.active ?? [],
+                      },
+                      {
+                        title: "Archived",
+                        posts:
+                          posts.profilePosts[userId]?.offers?.inactive ?? [],
+                      },
+                    ]}
+                    user={user}
+                    isAuthenticated={isAuthenticated}
+                    onTabClick={setTab}
+                  />
+                )}
+                {sectionView === "Posts" && (
+                  <PostTabCard
+                    cardContents={[
+                      {
+                        title: "Requests",
+                        posts: posts.profilePosts[userId]?.requests?.all ?? [],
+                      },
+                      {
+                        title: "Offers",
+                        posts: posts.profilePosts[userId]?.offers?.all ?? [],
+                      },
+                    ]}
+                    user={user}
+                    isAuthenticated={isAuthenticated}
+                    onTabClick={setTab}
+                  />
+                )}
+              </div>
+            </StyledMobileMenuContainer>
           ) : null}
           {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
             <div style={{ display: "flex" }}>
@@ -636,17 +826,15 @@ const Profile = ({
                         <WhiteSpace size={"xl"}></WhiteSpace>
                         <ProfileDesktop
                           setInternalTab={setTab}
-                          // profileId={pathUserId}
                           isOrg={false}
                           isAuthenticated={isAuthenticated}
                           menuView={sectionView.toUpperCase()}
                           isMobile={false}
                           postDispatch={dispatch}
-                          profilePost={postsList}
+                          profilePost={getPostBasedOnModeAndView()}
                           user={user}
                           postDelete={postDelete}
                           handlePostDelete={handlePostDelete}
-                          // // handleEditPost={handleEditPost}
                           deleteModalVisibility={deleteModalVisibility}
                           handleCancelPostDelete={handleCancelPostDelete}
                           loadNextPage={loadNextPage}

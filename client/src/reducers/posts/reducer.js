@@ -6,6 +6,7 @@ const innitialState = {
   error: null,
   isLoading: false,
   loadMore: true,
+  profilePosts: {},
 };
 
 const postsReducer = (state = innitialState, action) => {
@@ -21,6 +22,114 @@ const postsReducer = (state = innitialState, action) => {
         ...state,
         error: null,
         posts: payload,
+        isLoading: false,
+      };
+    }
+    case POSTS_ACTIONS.FETCH_REQUESTS_ACTIVE_SUCCESS: {
+      const { payload } = action;
+      return {
+        ...state,
+        error: null,
+        profilePosts: {
+          ...state.profilePosts,
+          [payload.userId]: {
+            ...state.profilePosts[payload.userId],
+            requests: {
+              ...state.profilePosts[payload.userId]?.requests,
+              active: payload.posts,
+            }
+          }
+        },
+        isLoading: false,
+      };
+    }
+    case POSTS_ACTIONS.FETCH_REQUESTS_INACTIVE_SUCCESS: {
+      const { payload } = action;
+      return {
+        ...state,
+        error: null,
+        profilePosts: {
+          ...state.profilePosts,
+          [payload.userId]: {
+            ...state.profilePosts[payload.userId],
+            requests: {
+              ...state.profilePosts[payload.userId]?.requests,
+              inactive: payload.posts,
+            }
+          }
+        },
+        isLoading: false,
+      };
+    }
+    case POSTS_ACTIONS.FETCH_OFFERS_ACTIVE_SUCCESS: {
+      const { payload } = action;
+      return {
+        ...state,
+        error: null,
+        profilePosts: {
+          ...state.profilePosts,
+          [payload.userId]: {
+            ...state.profilePosts[payload.userId],
+            offers: {
+              ...state.profilePosts[payload.userId]?.offers,
+              active: payload.posts,
+            }
+          }
+        },
+        isLoading: false,
+      };
+    }
+    case POSTS_ACTIONS.FETCH_OFFERS_INACTIVE_SUCCESS: {
+      const { payload } = action;
+      return {
+        ...state,
+        error: null,
+        profilePosts: {
+          ...state.profilePosts,
+          [payload.userId]: {
+            ...state.profilePosts[payload.userId],
+            offers: {
+              ...state.profilePosts[payload.userId]?.offers,
+              inactive: payload.posts,
+            }
+          }
+        },
+        isLoading: false,
+      };
+    }
+    case POSTS_ACTIONS.FETCH_POSTS_REQUESTS_SUCCESS: {
+      const { payload } = action;
+      return {
+        ...state,
+        error: null,
+        profilePosts: {
+          ...state.profilePosts,
+          [payload.userId]: {
+            ...state.profilePosts[payload.userId],
+            requests: {
+              ...state.profilePosts[payload.userId]?.requests,
+              all: payload.posts,
+            }
+          }
+        },
+        isLoading: false,
+      };
+    }
+    case POSTS_ACTIONS.FETCH_POSTS_OFFERS_SUCCESS: {
+      const { payload } = action;
+      return {
+        ...state,
+        error: null,
+        profilePosts: {
+          ...state.profilePosts,
+          [payload.userId]: {
+            ...state.profilePosts[payload.userId],
+            offers: {
+              ...state.profilePosts[payload.userId]?.offers,
+              all: payload.posts,
+            }
+          }
+        },
         isLoading: false,
       };
     }

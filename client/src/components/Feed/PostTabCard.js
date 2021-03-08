@@ -118,11 +118,15 @@ const PostTabCard = ({
   fromPage = true,
   handlePostDelete,
   isAuthenticated,
+  onTabClick,
 }) => {
   const tabs = cardContents.map((item) => ({ title: item.title }));
   return (
     <Container>
-      <Tabs tabs={tabs} initialPage={1}>
+      <Tabs
+        tabs={tabs}
+        onTabClick={(tab) => onTabClick(tab.title)}
+      >
         {cardContents.map((tab) => (
           <PostContent
             posts={tab.posts}

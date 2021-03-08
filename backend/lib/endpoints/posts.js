@@ -56,7 +56,7 @@ async function routes(app) {
           includeMeta,
         },
       } = req;
-      
+
       const queryFilters = filter ? JSON.parse(decodeURIComponent(filter)) : {};
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
@@ -68,10 +68,20 @@ async function routes(app) {
       ];
       // "IA" stands for InActive or Archived
       //In future we will also have "D" for Drafts
-      if(postMode === 'IA'){
+      if (postMode === 'IA') {
         filters = [
           {
-            $and: [{ expireAt: {$ne : null }}, { expireAt: { $lt: new Date() } }],
+            $and: [{ expireAt: { $ne: null } }, { expireAt: { $lt: new Date() } }],
+            status: { $ne: "removed" },
+          },
+        ];
+      }
+
+      // "A" stands for Active or Active
+      if (postMode === 'A') {
+        filters = [
+          {
+            $or: [{ expireAt: { $eq: null } }, { expireAt: { $gt: new Date() } }],
             status: { $ne: "removed" },
           },
         ];
@@ -125,13 +135,13 @@ async function routes(app) {
       }
 
       //workMode filter
-      if (workMode){
+      if (workMode) {
         const workModes = workMode.map(mode => mode.toLowerCase())
-        if(workModes.includes('both')){
-          filters.push({ $or: [ { $and: [ { workMode: null }, {types: { $nin : ['Remote Work'] } } ] }, {workMode: { $in: workModes } }] });
+        if (workModes.includes('both')) {
+          filters.push({ $or: [{ $and: [{ workMode: null }, { types: { $nin: ['Remote Work'] } }] }, { workMode: { $in: workModes } }] });
         }
-        else if(workModes.includes('remote')) {
-          filters.push({ $or: [ { $and: [ { workMode: null }, {types: { $in : ['Remote Work'] } } ] }, {workMode: { $in: workModes } }] });
+        else if (workModes.includes('remote')) {
+          filters.push({ $or: [{ $and: [{ workMode: null }, { types: { $in: ['Remote Work'] } }] }, { workMode: { $in: workModes } }] });
         }
         else {
           filters.push({ workMode: { $in: workModes } });
@@ -180,45 +190,45 @@ async function routes(app) {
       /* eslint-disable sort-keys */
       const sortAndFilterSteps = location
         ? [
-            {
-              $geoNear: {
-                distanceField: "distance",
-                key: "author.location.coordinates",
-                near: {
-                  $geometry: {
-                    coordinates: location.coordinates,
-                    type: "Point",
-                  },
+          {
+            $geoNear: {
+              distanceField: "distance",
+              key: "author.location.coordinates",
+              near: {
+                $geometry: {
+                  coordinates: location.coordinates,
+                  type: "Point",
                 },
-                query: { $and: filters },
               },
+              query: { $and: filters },
             },
-            { $sort: { distance: 1, _id: -1 } },
-          ]
+          },
+          { $sort: { distance: 1, _id: -1 } },
+        ]
         : keywords
-        ? [
+          ? [
             { $match: { $and: filters, $text: { $search: keywords } } },
             { $sort: { score: { $meta: "textScore" } } },
           ]
-        : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+          : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
 
       /* eslint-disable sort-keys */
       const paginationSteps =
         limit === -1
           ? [
-              {
-                $skip: skip || 0,
-              },
-            ]
+            {
+              $skip: skip || 0,
+            },
+          ]
           : [
-              {
-                $skip: skip || 0,
-              },
-              {
-                $limit: limit || POST_PAGE_SIZE,
-              },
-            ];
+            {
+              $skip: skip || 0,
+            },
+            {
+              $limit: limit || POST_PAGE_SIZE,
+            },
+          ];
       /* eslint-enable sort-keys */
 
       /* eslint-disable sort-keys */
@@ -293,13 +303,13 @@ async function routes(app) {
       const totalResultsAggregationPipeline = await Post.aggregate(
         keywords && !location
           ? [
-              { $match: { $and: filters, $text: { $search: keywords } } },
-              { $group: { _id: null, count: { $sum: 1 } } },
-            ]
+            { $match: { $and: filters, $text: { $search: keywords } } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ]
           : [
-              { $match: { $and: filters } },
-              { $group: { _id: null, count: { $sum: 1 } } },
-            ],
+            { $match: { $and: filters } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ],
       );
       /* eslint-enable sort-keys */
 
@@ -403,10 +413,10 @@ async function routes(app) {
         }),
       );
 
-      if (postErr){
-        if (postErr instanceof mongoose.Error.CastError){
-            req.log.error(postErr, "Can't find a post with given id");
-            throw app.httpErrors.badRequest();
+      if (postErr) {
+        if (postErr instanceof mongoose.Error.CastError) {
+          req.log.error(postErr, "Can't find a post with given id");
+          throw app.httpErrors.badRequest();
         }
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
@@ -422,15 +432,15 @@ async function routes(app) {
         // user shouldn't see posts reported by them, even if public.
         const didReport = post.reportedBy
           ? post.reportedBy.find(
-              (r) => r.id.toString() === actor._id.toString(),
-            )
+            (r) => r.id.toString() === actor._id.toString(),
+          )
           : false;
         if (didReport) throw app.httpErrors.notFound();
       } else if (!actor) {
         // none logged in user shouldn't see removed posts on post page
         if (post.status === "removed") throw app.httpErrors.notFound();
       }
-      
+
 
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
