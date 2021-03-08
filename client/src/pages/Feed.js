@@ -819,7 +819,15 @@ const Feed = (props) => {
                     gtmPrefix={GTM.feed.prefix}
                   />
                   {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
-                    <SortSelector handleSortDropdown={handleSortDropdown} />
+                    <SortSelector
+                      handleSortDropdown={handleSortDropdown}
+                      ignoreUserLocation={ignoreUserLocation}
+                      filterLocation={
+                        typeof queryParams.location !== "undefined"
+                      }
+                      keywordUsed={typeof queryParams.s_keyword !== "undefined"}
+                      sortValue={sortValue}
+                    />
                   ) : null}
                 </div>
               }
