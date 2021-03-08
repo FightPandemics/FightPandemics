@@ -25,12 +25,12 @@ const TAB_TYPE = {
   REQUESTS: {
     ACTIVE_REQS: "Active",
     ARCHIVED_REQS: "Archived",
-    DRAFTS_REQS: "Drafts",
+    // DRAFTS_REQS: "Drafts",
   },
   OFFERS: {
     ACTIVE_OFRS: "Active",
     ARCHIVED_OFRS: "Archived",
-    DRAFTS_OFRS: "Drafts",
+    // DRAFTS_OFRS: "Drafts",
   },
 };
 const gtmTagsMap = {
