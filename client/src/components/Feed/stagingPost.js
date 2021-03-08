@@ -41,11 +41,8 @@ import {
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
 import { authorProfileLink, buildLocationString } from "./utils";
-import {
-  getInitialsFromFullName,
-  isAuthorOrg,
-  isAuthorUser,
-} from "utils/userInfo";
+import { isAuthorOrg, isAuthorUser } from "pages/Feed";
+import { getInitialsFromFullName } from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
@@ -780,6 +777,7 @@ const Post = ({
                         count: post?.elapsedTimeText?.created?.count,
                       },
                     )}
+
                     {post?.elapsedTimeText?.isEdited &&
                       ` · ${t("post.edited")}`}
                   </span>
