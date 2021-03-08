@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 export default function SortSelector({
   handleSortDropdown,
   ignoreUserLocation,
+  filterLocation,
   keywordUsed,
   sortValue,
 }) {
@@ -34,7 +35,7 @@ export default function SortSelector({
     const stagedOptions = options.filter(
       (e) => e.value !== "proximity" && e.value !== "relevance",
     );
-    if (!ignoreUserLocation) {
+    if (!ignoreUserLocation || filterLocation) {
       stagedOptions.push({
         text: t("feed.filters.proximity"),
         value: "proximity",
@@ -47,7 +48,7 @@ export default function SortSelector({
       });
     }
     setOptions(stagedOptions);
-  }, [ignoreUserLocation, keywordUsed]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ignoreUserLocation, keywordUsed, filterLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="visibility-post--selector">

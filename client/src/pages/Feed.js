@@ -586,7 +586,7 @@ const Feed = (props) => {
     }
   };
 
-  useEffect(() => {}, [ignoreUserLocation]);
+  // useEffect(() => {}, [ignoreUserLocation]);
 
   useEffect(() => {
     getStateFromQuery();
@@ -599,7 +599,7 @@ const Feed = (props) => {
   useEffect(() => {
     if (typeof queryParams.s_keyword !== "undefined") {
       setSortValue("relevance");
-    } else if (!ignoreUserLocation) {
+    } else if (!ignoreUserLocation || queryParams.location) {
       setSortValue("proximity");
     } else {
       setSortValue(t("feed.filters.sortBy"));
@@ -780,6 +780,7 @@ const Feed = (props) => {
                   <SortSelector
                     handleSortDropdown={handleSortDropdown}
                     ignoreUserLocation={ignoreUserLocation}
+                    filterLocation={typeof queryParams.location !== "undefined"}
                     keywordUsed={typeof queryParams.s_keyword !== "undefined"}
                     sortValue={sortValue}
                   />

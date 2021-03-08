@@ -192,6 +192,7 @@ async function routes(app) {
           ] : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
       if (sort) {
+        sortAndFilterSteps.push({ $match: { $and: filters } })
         sortAndFilterSteps.push({ $sort: { [sort]: order === "asc" ? 1 : -1 } })
       }
 
