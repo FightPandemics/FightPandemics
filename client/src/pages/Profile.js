@@ -74,7 +74,7 @@ import {
 } from "hooks/actions/userActions";
 import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
-import GTM from "constants/gtm-tags";
+import GTM, { post } from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
 import { selectOrganisationId, selectActorId } from "reducers/session";
 
@@ -196,14 +196,39 @@ const Profile = ({
   const { deleteModalVisibility } = deleteModal;
 
   const prevTotalPostCount = usePrevious(totalPostCount);
-  const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
   const organisationId = useSelector(selectOrganisationId);
 
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
+  let filteredPost = [];
 
-  const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
+  const convertToObjectPost = useCallback((postArray) => {
+    let temp = postArray.reduce((map, obj) => {
+      map[obj._id] = obj;
+      return map;
+    }, {});
+    return temp;
+  }, [posts.profilePosts, sectionView, internalTab, user]);
+
+  const getView = useCallback(() => {
+    return sectionView.toUpperCase() !== "POSTS"
+      ? lowerCase(sectionView).slice(0, -1)
+      : lowerCase(internalTab).slice(0, -1);
+  }, [sectionView, internalTab]);
+
+  const getMode = useCallback(() => {
+    if (sectionView.toUpperCase() !== "POSTS") {
+      return lowerCase(internalTab).includes("archived")
+        ? "IA"
+        : lowerCase(internalTab).includes("active")
+          ? "A"
+          : "D";
+    }
+    return undefined;
+  }, [sectionView, internalTab]);
+
+  const isItemLoaded = useCallback((index) => !!filteredPost[index], [posts]);
 
   const buildNavMenu = () => {
     if (typeof isSelf === "undefined") {
@@ -270,23 +295,6 @@ const Profile = ({
     return organisationId ? `&actorId=${organisationId}` : "";
   };
 
-  const getView = () => {
-    return sectionView.toUpperCase() !== "POSTS"
-      ? lowerCase(sectionView).slice(0, -1)
-      : lowerCase(internalTab).slice(0, -1);
-  };
-
-  const getMode = () => {
-    if (sectionView.toUpperCase() !== "POSTS") {
-      return lowerCase(internalTab).includes("archived")
-        ? "IA"
-        : lowerCase(internalTab).includes("active")
-        ? "A"
-        : "D";
-    }
-    return undefined;
-  };
-
   useEffect(() => {
     let _isMounted = false;
     const CancelToken = axios.CancelToken;
@@ -319,21 +327,21 @@ const Profile = ({
               if (mode === "A") {
                 dispatch(
                   postsActions.fetchRequestsActiveSuccess({
-                    posts,
+                    posts: [...filteredPost, ...posts],
                     userId,
                   })
                 );
               } else if (mode === "IA") {
                 dispatch(
                   postsActions.fetchRequestsInactiveSuccess({
-                    posts,
+                    posts: [...filteredPost, ...posts],
                     userId,
                   })
                 );
               } else {
                 dispatch(
                   postsActions.fetchPostsRequestsSuccess({
-                    posts,
+                    posts: [...filteredPost, ...posts],
                     userId,
                   })
                 );
@@ -343,21 +351,21 @@ const Profile = ({
               if (mode === "A") {
                 dispatch(
                   postsActions.fetchOffersActiveSuccess({
-                    posts,
+                    posts: [...filteredPost, ...posts],
                     userId,
                   })
                 );
               } else if (mode === "IA") {
                 dispatch(
                   postsActions.fetchOffersInactiveSuccess({
-                    posts,
+                    posts: [...filteredPost, ...posts],
                     userId,
                   })
                 );
               } else {
                 dispatch(
                   postsActions.fetchPostsOffersSuccess({
-                    posts,
+                    posts: [...filteredPost, ...posts],
                     userId,
                   })
                 );
@@ -490,8 +498,8 @@ const Profile = ({
       if (
         !isLoading &&
         loadMore &&
-        stopIndex >= userPosts.length &&
-        userPosts.length
+        stopIndex >= filteredPost.length &&
+        filteredPost.length
       ) {
         return new Promise((resolve) => {
           dispatch(postsActions.setNextPageAction());
@@ -501,13 +509,9 @@ const Profile = ({
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, userPosts.length]
+    [dispatch, isLoading, loadMore, filteredPost.length]
   );
-
-  useEffect(() => {
-    setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
-  }, [loadMore, userPosts.length]);
-
+  
   const postDelete = async (post) => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
@@ -553,6 +557,26 @@ const Profile = ({
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
 
+  const mode = getMode();
+  const view = getView();
+  if (view === "request") {
+    if (mode === "A") {
+      filteredPost = posts.profilePosts[userId]?.requests?.active ?? [];
+    } else if (mode === "IA") {
+      filteredPost = posts.profilePosts[userId]?.requests?.inactive ?? [];
+    } else {
+      filteredPost = posts.profilePosts[userId]?.requests?.all ?? [];
+    }
+  } else if (view === "offer") {
+    if (mode === "A") {
+      filteredPost = posts.profilePosts[userId]?.offers?.active ?? [];
+    } else if (mode === "IA") {
+      filteredPost = posts.profilePosts[userId]?.offers?.inactive ?? [];
+    } else {
+      filteredPost = posts.profilePosts[userId]?.offers?.all ?? [];
+    }
+  }
+
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -566,51 +590,8 @@ const Profile = ({
     setInternalTab(childTab);
   };
 
-  const convertToObjectPost = (postArray) => {
-    return postArray.reduce((map, obj) => {
-      map[obj._id] = obj;
-      return map;
-    }, {});
-  };
-
-  const getPostBasedOnModeAndView = () => {
-    const mode = getMode();
-    const view = getView();
-    if (view === "request") {
-      if (mode === "A") {
-        return convertToObjectPost(
-          posts.profilePosts[userId]?.requests?.active ?? []
-        );
-      } else if (mode === "IA") {
-        return convertToObjectPost(
-          posts.profilePosts[userId]?.requests?.inactive ?? []
-        );
-      } else {
-        return convertToObjectPost(
-          posts.profilePosts[userId]?.requests?.all ?? []
-        );
-      }
-    } else if (view === "offer") {
-      if (mode === "A") {
-        return convertToObjectPost(
-          posts.profilePosts[userId]?.offers?.active ?? []
-        );
-      } else if (mode === "IA") {
-        return convertToObjectPost(
-          posts.profilePosts[userId]?.offers?.inactive ?? []
-        );
-      } else {
-        return convertToObjectPost(
-          posts.profilePosts[userId]?.offers?.all ?? []
-        );
-      }
-    }
-
-    return {};
-  };
-
   const emptyFeed = () =>
-    Object.keys(getPostBasedOnModeAndView()).length < 1 && !isLoading;
+    filteredPost.length < 1 && !isLoading;
 
   return (
     <>
@@ -758,6 +739,7 @@ const Profile = ({
                     user={user}
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
+                    handlePostDelete={handlePostDelete}
                   />
                 )}
                 {sectionView === "Offers" && (
@@ -776,6 +758,7 @@ const Profile = ({
                     user={user}
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
+                    handlePostDelete={handlePostDelete}
                   />
                 )}
                 {sectionView === "Posts" && (
@@ -793,6 +776,7 @@ const Profile = ({
                     user={user}
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
+                    handlePostDelete={handlePostDelete}
                   />
                 )}
               </div>
@@ -831,7 +815,7 @@ const Profile = ({
                           menuView={sectionView.toUpperCase()}
                           isMobile={false}
                           postDispatch={dispatch}
-                          profilePost={getPostBasedOnModeAndView()}
+                          profilePost={convertToObjectPost(filteredPost)}
                           user={user}
                           postDelete={postDelete}
                           handlePostDelete={handlePostDelete}
@@ -839,7 +823,7 @@ const Profile = ({
                           handleCancelPostDelete={handleCancelPostDelete}
                           loadNextPage={loadNextPage}
                           isNextPageLoading={isLoading}
-                          itemCount={itemCount}
+                          itemCount={filteredPost.length}
                           isItemLoaded={isItemLoaded}
                           hasNextPage={loadMore}
                           totalPostCount={totalPostCount}

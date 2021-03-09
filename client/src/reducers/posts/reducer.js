@@ -6,6 +6,7 @@ const innitialState = {
   error: null,
   isLoading: false,
   loadMore: true,
+  isCachedStale: false,
   profilePosts: {},
 };
 
