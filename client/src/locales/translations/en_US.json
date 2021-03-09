@@ -70,12 +70,12 @@
         "shareLocation": "Share My Location"
       },
       "sortBy": "Sort by",
-      "trending": "Trending",
-      "mostViewed": "Most Viewed",
-      "latest": "Latest",
-      "mostLiked": "Most Liked",
-      "proximity": "Proximity",
-      "relevance": "Relevance",
+      "trending": "Sort by Trending",
+      "mostViewed": "Sort by Views",
+      "latest": "Sort by Latest",
+      "mostLiked": "Sort by Likes",
+      "proximity": "Sort by Distance",
+      "relevance": "Sort by Relevance",
       "providers": "Providers",
       "providersList": [
         "Individual",

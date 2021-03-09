@@ -62,7 +62,7 @@ export default function SortSelector({
         value={sortValue}
         options={options}
         onChange={handleSortDropdown}
-        minWidth="13rem"
+        minWidth="14.8rem"
         minHeight="5rem"
       />
     </div>
