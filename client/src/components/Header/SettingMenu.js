@@ -15,7 +15,6 @@ import PeopleIcon from "assets/icons/people-gray.svg";
 import { ReactComponent as ModeratorIcon } from "assets/icons/moderator-badge.svg";
 import { SCOPES } from "constants/permissions";
 
-
 const profileItemStyle = { margin: "8px 0", height: "auto" };
 const StyledModeratorIcon = styled(ModeratorIcon)`
   margin-right: 10px;

@@ -1,4 +1,5 @@
-import { Drawer } from "antd";
+import { Drawer, Menu } from "antd";
+
 import styled from "styled-components";
 
 import Heading from "../Typography/Heading";
@@ -211,7 +212,6 @@ export const IconsContainer = styled.div`
     a:last-child img {
       margin-right: 0;
     }
-    
   }
 `;
 export const HelpContainer = styled.div`
@@ -239,7 +239,7 @@ export const UserInfoContainer = styled.div`
   align-items: center;
   position: relative;
   border-radius: 8px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
 `;
 
@@ -286,7 +286,7 @@ export const DescriptionDesktop = styled.div`
   font-size: 1.2rem;
   line-height: 140%;
   color: #939393;
-  
+
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     margin-top: 2rem;
     font-family: Work Sans;
@@ -315,7 +315,7 @@ export const MobileLocation = styled.div`
     display: none;
   }
 `;
-export const  DesktopLocation = styled.div`
+export const DesktopLocation = styled.div`
   display: none;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: initial;
@@ -328,5 +328,113 @@ export const  DesktopLocation = styled.div`
     font-weight: normal;
     font-size: 1.1rem;
     line-height: 1rem;
+  }
+`;
+
+export const MobileMenuWrapper = styled(Menu)`
+  &.ant-menu-vertical {
+    border-right: none;
+  }
+  &.ant-menu {
+    width: 100%;
+    background-color: transparent;
+    border-bottom: 0.063rem solid #e0e0e0;
+    height: 4.5rem;
+    display: flex;
+    justify-content: space-between;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  li.ant-menu-item {
+    margin: 0.8rem 0;
+    height: 3rem;
+    padding-bottom: 0rem;
+    overflow: visible;
+
+    color: ${theme.colors.darkerGray};
+    font-size: ${theme.typography.size.large};
+    line-height: 1.313rem;
+    &:hover {
+      color: ${theme.colors.darkerGray};
+    }
+    text-align: center;
+  }
+
+  &.ant-menu .ant-menu-item-selected {
+    background-color: transparent;
+    border-bottom: 0.2rem solid ${theme.colors.black};
+    font-weight: bold;
+    overflow: visible;
+  }
+`;
+export const DesktopMenuWrapper = styled(Menu)`
+  &.ant-menu-vertical {
+    border-right: none;
+  }
+  &.ant-menu {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0rem;
+  }
+  li.ant-menu-item {
+    margin: 0.8rem 0;
+    height: 3rem;
+    padding-bottom: 0rem;
+    text-align: left;
+    color: ${theme.colors.darkerGray};
+    font-size: ${theme.typography.size.large};
+    line-height: 1.313rem;
+    &:hover {
+      color: ${theme.colors.darkerGray};
+    }
+  }
+
+  &.ant-menu .ant-menu-item-selected {
+    background-color: transparent;
+    font-weight: bold;
+  }
+`;
+
+export const ChildMenuWrapper = styled(Menu)`
+  height: 4rem;
+  margin: 0rem 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  &.ant-menu {
+    ${({ isMobile }) =>
+      isMobile
+        ? `
+      border-top: 0.2rem solid ${theme.colors.lightGray};
+      width: 100%;
+      border-bottom: 0.2rem solid ${theme.colors.lightGray};
+  `
+        : `border-bottom: 0.2rem solid ${theme.colors.darkGray};`}
+
+    li.ant-menu-item {
+      margin: 0.8rem 0;
+      height: 3rem;
+      padding-bottom: 0rem;
+
+      color: ${theme.colors.darkerGray};
+      font-size: ${theme.typography.size.large};
+      line-height: 21px;
+      width: 50%;
+      &:hover {
+        color: ${theme.colors.darkerGray};
+      }
+      text-align: center;
+    }
+
+    &.ant-menu .ant-menu-item-selected {
+      background-color: transparent;
+      border-bottom: 0.2rem solid ${theme.colors.black};
+      font-weight: bold;
+    }
   }
 `;

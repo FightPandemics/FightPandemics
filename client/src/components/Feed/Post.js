@@ -41,8 +41,11 @@ import {
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
 import { authorProfileLink, buildLocationString } from "./utils";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
-import { getInitialsFromFullName } from "utils/userInfo";
+import {
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser,
+} from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
@@ -62,7 +65,7 @@ import {
   DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
 import { postsActions } from "reducers/posts";
-import { theme } from "constants/theme";
+import { mq, theme } from "constants/theme";
 
 const URLS = {
   // playStore: [""], // TODO: add once design is done
@@ -148,8 +151,8 @@ const Post = ({
     reportsCount,
     status,
     objective,
+    workMode,
   } = post || {};
-
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + _id;
   const [showShareModal, setShowShareModal] = useState(false);
   const [toDelete, setToDelete] = useState("");
@@ -482,6 +485,8 @@ const Post = ({
     />
   );
 
+  const isMobile = window.screen.width <= parseInt(mq.phone.wide.maxWidth);
+
   const renderHeaderWithLink = (
     <Link to={authorProfileLink(post)}>{renderHeader}</Link>
   );
@@ -489,11 +494,15 @@ const Post = ({
   const renderTags = (
     <Card.Body>
       {post?.types &&
-        post?.types.map((tag, idx) => (
-          <PostTag key={idx} disabled={true} selected={false}>
-            {t(getOptionText(filters, "type", typeToTag(tag)))}
-          </PostTag>
-        ))}
+        post?.types.map((tag, idx) =>
+          tag !== "Remote Work" ? (
+            <PostTag key={idx} disabled={true} selected={false}>
+              {t(getOptionText(filters, "type", typeToTag(tag)))}
+            </PostTag>
+          ) : (
+            ""
+          ),
+        )}
     </Card.Body>
   );
 
@@ -584,6 +593,13 @@ const Post = ({
   const isOwner =
     isAuthenticated &&
     (isAuthorUser(user, post) || isAuthorOrg(user?.organisations, post.author));
+  const getWkMode = (workMode) => {
+    return workMode && workMode !== "both"
+      ? `post.${workMode}`
+      : !workMode && post.types.includes("Remote Work")
+      ? "post.remote"
+      : "post.both";
+  };
 
   return (
     <>
@@ -604,6 +620,12 @@ const Post = ({
             )}
             <div className="pre-header post-page">
               <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+              <span>
+                &nbsp;&nbsp;
+                {t(getWkMode(workMode))}
+                &nbsp;&nbsp;•
+              </span>
+
               <Tooltip
                 color={theme.colors.darkGray}
                 title={translateISOTimeTitle(post.createdAt)}

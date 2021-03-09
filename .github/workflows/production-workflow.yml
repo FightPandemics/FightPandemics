@@ -25,8 +25,10 @@ jobs:
       - if: matrix.app == 'client'
         env:
           GTM_ID: ${{ secrets.PRODUCTION_GTM_ID }}
+          FE_GOOGLE_MAPS_API_KEY: ${{ secrets.PRODUCTION_FE_GOOGLE_MAPS_API_KEY }}
         run: >
           echo "REACT_APP_GTM_ID=${GTM_ID}" > ./client/.env
+          echo "REACT_APP_GOOGLE_MAPS_API_KEY=${FE_GOOGLE_MAPS_API_KEY}" >> ./client/.env
       - name: docker
         uses: docker/build-push-action@v1.0.1
         with:

@@ -56,3 +56,25 @@ export const setQueryKeysValue = (history, newQuery) => {
     search: stringifiedQuery,
   });
 };
+
+export const formatDate = function (dateString) {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const date = new Date(dateString);
+  const dateStr = date.getDate();
+  const monthStr = monthNames[date.getMonth()];
+  const yearStr = date.getFullYear();
+  return `${monthStr} ${dateStr}, ${yearStr}`;
+};
