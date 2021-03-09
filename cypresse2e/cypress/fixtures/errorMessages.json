@@ -9,5 +9,6 @@
   "loginFailWrongEmail": "Login failed, reason: No account has been found with this email address, please click 'Join Now' to create an account.",
   "loginFailMaximumAttempts": "Login failed, reason: Maximum number of sign in attempts exceeded.",
   "noPostsAvailableText": "Sorry, there are currently no relevant posts available. Please try using a different filter search or",
-  "errorMessageTextInSearch": "Min. 2 characters"
+  "errorMessageTextInSearch": "Min. 2 characters",
+  "failedPredictionsTextMessage": "Failed getting predictions. Please retry"
 }

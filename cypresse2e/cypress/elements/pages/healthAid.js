@@ -1,13 +1,19 @@
 class HealthAid {
   shareLocationTextElement = " div.sc-gySEy.kVuBbU > h1";
-  enterAdressSpace = "#NH_LS_EAZ";
-  nearestHospitalsFacility = "#NH_FT0";
-  nearestDoctorsFacility = "#NH_FT1";
-  nearestPharmacies = "#NH_FT2";
-  moreResultsLink = ".sc-hiNaWY.jVmBxt >div >div >a";
-  showGoogleMap =
-    ".sc-jldpZZ.gjOvfh > div > div > div > div > div:nth-child(1)";
-  locationTextbox = "#NH_LC_EAZ";
+  // adressSearchContainer = "span.ant-select-selection-search";
+  adressSearchInput = "#NH_LS_EAZ";
+  //adressSearchInput = "#rc_select_3";
+  listOfNearestLocations = ".rc-virtual-list";
+  nearestLocationsTagName = "div";
+  failedPredictionsMessage = "small[class='sc-ksluoS doFBMb']";
+  //facilityAndLocationDiv = "div[class='sc-eYZppc eHSsiz']";
+  // facilityDiv = ".sc-chKoCp.byftgK";
+  // nearestHospitalsFacility = "#NH_FT0";
+  //nearestDoctorsFacility = "#NH_FT1";
+  // nearestPharmacies = "#NH_FT2";
+  // moreSearchResultsLink = ".sc-hiNaWY.jVmBxt >div >div >a";
+  // googleMap = ".sc-jldpZZ.gjOvfh > div > div > div > div > div:nth-child(1)";
+  //locationDiv = "sc-kwxPTd eMNdDs";
 
   constructor() {}
 
@@ -19,24 +25,20 @@ class HealthAid {
     return cy.get(this.shareLocationTextElement);
   }
 
-  getEnterAdressSpace() {
-    return cy.get(this.enterAdressSpace);
+  getAdressSearchContainer() {
+    return cy.get(this.adressSearchContainer);
   }
 
-  getNearestHospitalsFacility() {
-    return cy.get(this.nearestHospitalsFacility);
+  getAdressSearchInput() {
+    return cy.get(this.adressSearchInput);
   }
 
-  getNearestDoctorssFacility() {
-    return cy.get(this.nearestDoctorsFacility);
+  getListOfNearestLocations() {
+    return cy.get(this.listOfNearestLocations);
   }
 
-  getNearestPharmaciesFacility() {
-    return cy.get(this.nearestPharmaciesFacility);
-  }
-
-  getMoreResultsLink() {
-    return cy.get(this.moreResultsLink);
+  getFailedPredictionsMessage() {
+    return cy.get(this.failedPredictionsMessage);
   }
 }
 export default HealthAid;

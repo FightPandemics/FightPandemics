@@ -3,5 +3,7 @@
   "searchByRandomText": "rrr",
   "searchByName": "source",
   "searchByMisspelledText": "Mariana",
-  "searchBySingleCharacter": "w"
+  "searchBySingleCharacter": "w",
+  "searchHealthFacilityByAdress": "Los Angeles",
+  "searchHealthFacilityByAdressDoesnotExist": "&&&&"
 }
