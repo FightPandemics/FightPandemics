@@ -203,6 +203,9 @@ const Profile = ({
   const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
 
   const buildNavMenu = () => {
+    if (typeof isSelf === "undefined") {
+      return;
+    }
     const baseMenu = [
       {
         name: t("profile.views.activity"),

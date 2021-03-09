@@ -25,12 +25,12 @@ const TAB_TYPE = {
   REQUESTS: {
     ACTIVE_REQS: "Active",
     ARCHIVED_REQS: "Archived",
-    DRAFTS_REQS: "Drafts",
+    // DRAFTS_REQS: "Drafts",
   },
   OFFERS: {
     ACTIVE_OFRS: "Active",
     ARCHIVED_OFRS: "Archived",
-    DRAFTS_OFRS: "Drafts",
+    // DRAFTS_OFRS: "Drafts",
   },
 };
 const gtmTagsMap = {
@@ -39,7 +39,7 @@ const gtmTagsMap = {
   ACTIVE_OFRS: `${GTM.profile.offers + GTM.profile.active}`,
   ACTIVE_REQS: `${GTM.profile.requests + GTM.profile.active}`,
   ARCHIVED_OFRS: `${GTM.profile.offers + GTM.profile.archived}`,
-  ARCHIVED_REQS: `${GTM.profile.offers + GTM.profile.archived}`,
+  ARCHIVED_REQS: `${GTM.profile.requests + GTM.profile.archived}`,
   DRAFTS_REQS: `${GTM.profile.requests + GTM.profile.draft}`,
   DRAFTS_OFRS: `${GTM.profile.offers + GTM.profile.draft}`,
 };

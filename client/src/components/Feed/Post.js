@@ -763,6 +763,12 @@ const Post = ({
               )}
               <div className="pre-header">
                 <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+                <span>
+                  &nbsp;
+                  {t(getWkMode(workMode))}
+                  &nbsp;•
+                </span>
+
                 <Tooltip
                   color={theme.colors.darkGray}
                   title={translateISOTimeTitle(post.createdAt)}
@@ -781,6 +787,7 @@ const Post = ({
               </div>
               <WhiteSpace size={"xl"} />
               <WhiteSpace size={"md"} />
+              {isMobile && <br />}
               <div className="card-header">
                 {includeProfileLink ? renderHeaderWithLink : renderHeader}
                 {isAuthenticated && (
