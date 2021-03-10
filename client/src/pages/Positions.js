@@ -68,7 +68,8 @@ import {
     CategoryBackgroup,
     BackgroupContainer,
     PositionTitle,
-    OrgCategory
+    OrgCategory,
+    PositionDescription
 } from "../components/Profile/PositionsComponents";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -113,6 +114,7 @@ import { selectOrganisationId } from "reducers/session";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import JoinOrgButton from "components/OrganisationProfile/JoinOrgButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
+import ApplyButton from "components/Positions/ApplyButton";
 
 
 // const URLS = {
@@ -135,10 +137,10 @@ import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 // const Positions = ({ isAuthenticated }) => {
 //     let url = window.location.pathname.split("/");
 //     const organisationId = url[url.length - 1];
-//     const { orgProfileState, orgProfileDispatch } = useContext(
-//         OrganisationContext,
-//     );
-//     const { error, loading, organisation } = orgProfileState;
+// const { orgProfileState, orgProfileDispatch } = useContext(
+//     OrganisationContext,
+// );
+// const { error, loading, organisation } = orgProfileState;
 //     const [deleteModal, deleteModalDispatch] = useReducer(
 //         deletePostModalreducer,
 //         deletePostState,
@@ -789,6 +791,20 @@ import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 
 // NEW DESIGN POSITIONS
 const Positions = () => {
+    // const { orgProfileState, orgProfileDispatch } = useContext(
+    //     OrganisationContext,
+    // );
+    // const { error, loading, organisation } = orgProfileState;
+    // const {
+    //     email = "email",
+    //     name = "email",
+    //     location = "location",
+    //     about = "location",
+    //     isOwner = "location",
+    //     urls = "location",
+    //     verified = "location",
+    // } = organisation || {};
+
     const address = "yooo"
     const about = "about"
     const verified = "verified"
@@ -800,7 +816,13 @@ const Positions = () => {
         <PositionsContainer>
 
             <TitleContainer>
-                <SvgIcon src={BackIcon} /> {<PageTitle>Positions</PageTitle>}
+                {
+                    // link depends on data is stored
+                }
+                <Link to={"organisation"}>
+                    <SvgIcon src={BackIcon} />
+                </Link>
+                {<PageTitle>Positions</PageTitle>}
             </TitleContainer>
             <BackgroupContainer>
                 <PositionsBackgroup>
@@ -814,11 +836,18 @@ const Positions = () => {
                     <NamePara>{name}</NamePara>
                 </PositionsBackgroup>
                 <CategoryBackgroup>
-                    <OrgCategory>{"Category goes here"}</OrgCategory>
+                    <OrgCategory>{// Type / Field
+                    }
+                        {"Emergency Relief / International Assistance"}
+                    </OrgCategory>
                 </CategoryBackgroup>
             </BackgroupContainer>
             <PositionTitle>Volunteer Position</PositionTitle>
-            {"Position Description Goes Here"}
+            <PositionDescription>
+                Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mauris lectus, posuere at nunc non, bibendum iaculis dolor. Vivamus faucibus lacus nec malesuada volutpat.
+            </PositionDescription>
+
+            <ApplyButton>Apply</ApplyButton>
 
 
         </PositionsContainer>

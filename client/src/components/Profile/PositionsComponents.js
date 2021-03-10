@@ -139,51 +139,32 @@ export const EditIcon = styled(SvgIcon)`
 
 export const PositionsBackgroup = styled.div`
   background-color: ${colors.royalBlue}; 
-  /* position: absolute; */
-  /* top: 12rem;
-  left: 0; */
   width: 100%;
   height: 5.2rem;
   z-index: 0;
   border-radius: 1rem 1rem 0px 0px;
   display: flex;
   align-items: center;
-  
-  
-  
 `;
 
 export const CategoryBackgroup = styled.div`
+  display: flex;
+  align-items: center;
   background-color: ${colors.ghostWhite};
-  /* position: absolute; */
-  /* top: 12rem;
-  left: 0; */
   width: 100%;
-  height: 4.5rem;
-  z-index: 0;
+  height: 5.2rem;  
+  padding: 1rem 0 1rem 3.3rem;
   border-radius: 0 0 1rem 1rem;
  `;
 
 export const BackgroupContainer = styled.div`
   filter: drop-shadow(0 1rem 0.75rem rgba(0, 0, 0, 0.07)) ;
-`;
+  `;
 
 export const ProfileLayout = styled.div`
   background-color: ${colors.offWhite};
-  /* max-height: 100%;
-  z-index: 1;
-  max-width: 80rem;
-  padding: 0;
-  margin-top: 12.1rem;
-  width: 100vw;
-  border-radius: 0.8rem;
-  margin-bottom: 4rem; */
-  /* position: relative; */
-
+  
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    /* width: 90vw;
-    margin-left: auto;
-    margin-right: auto; */
     background-color: #f6f7fb;
   }
 `;
@@ -240,7 +221,6 @@ export const UserInfoContainer = styled.div`
   flex-direction: column;
   display: flex;
   align-items: center;
-  /* position: relative; */
   border-radius: 0.8rem;
 `;
 
@@ -286,21 +266,26 @@ export const DescriptionDesktop = styled.div`
 `;
 
 export const PositionTitle = styled.div`
-margin-top: 3rem;
-font-size: 1.7rem;
-line-height: 2rem;
-letter-spacing: .2rem;
-font-weight: 500;
-color: ${colors.darkerGray};
-align-self: flex-start;
+  margin: 1.6rem auto 3rem auto;
+  font-size: 1.7rem;
+  line-height: 2rem;
+  letter-spacing: .2rem;
+  font-weight: 500;
+  color: ${colors.darkerGray};
+  align-self: flex-start;
+`;
+
+export const PositionDescription = styled.div`
+  font-family: 'Work Sans''Courier New', Courier, monospace;
+  font-weight: 400;
+  color: ${colors.darkishGray}
 `;
 
 export const TitleContainer = styled.div`
-/* position: absolute; */
 display: flex;
 align-items: center;
 left: 0;
-margin-bottom: 3rem;
+margin-bottom: 1.4rem;
 `;
 export const PageTitle = styled(TextLabel)`
   display: flex;
@@ -308,10 +293,10 @@ export const PageTitle = styled(TextLabel)`
   align-self: flex-start;
   overflow-wrap: break-word;
   padding-left: 1rem;
-  /* justify-content: space-between; */
+     
 
   &.ant-typography {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 600;
   }
 
@@ -344,15 +329,14 @@ export const PageTitle = styled(TextLabel)`
 `;
 
 export const PositionsContainer = styled.div`
-  
   width: 90%;
-  
-  
-  
 `;
 
-export const OrgCategory = styled.fieldset`
-  padding-left: 2rem;
-`;
+export const OrgCategory = styled.div`
+  font-family: 'Work Sans';
+  font-size: 1.2rem;
+  color: ${colors.darkishGray};
+  
+  `;
 
 

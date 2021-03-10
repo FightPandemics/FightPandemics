@@ -91,6 +91,7 @@ const routes = [
     component: OfferHelp,
   },
   {
+    // exact: true,
     path: "/about-us",
     component: AboutUs,
   },
@@ -107,6 +108,7 @@ const routes = [
     component: ProfileCompleted,
   },
   {
+    exact: true,
     path: "/organisation/:id",
     component: OrganisationProfile,
     props: {
@@ -175,7 +177,7 @@ const routes = [
     },
   },
   {
-    path: "/feed/:id",
+    path: "/feed",
     component: Feed,
     props: {
       mobiletabs: true,
@@ -226,7 +228,7 @@ const routes = [
     },
   },
   {
-    path: "/post/:postId/",
+    path: "/post/:postId",
     component: PostPage,
     props: {
       loggedInOnly: false,
@@ -273,9 +275,10 @@ const routes = [
     layout: "logo",
   },
   {
-    path: "/positions",
+    path: "/:id/positions",
     component: Positions,
     props: {
+      isProfile: true,
       // loggedInOnly: true,
     }
   },
