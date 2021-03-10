@@ -4,6 +4,5 @@
   "searchByName": "source",
   "searchByMisspelledText": "Mariana",
   "searchBySingleCharacter": "w",
-  "searchHealthFacilityByAdress": "Los Angeles",
-  "searchHealthFacilityByAdressDoesnotExist": "&&&&"
+  "searchHealthFacilityByAdress": "Los Angeles"
 }
