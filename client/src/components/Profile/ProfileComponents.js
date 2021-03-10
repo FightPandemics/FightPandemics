@@ -112,6 +112,7 @@ export const NameDiv = styled(TextLabel)`
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100% - 1.6rem);
+    backgroun-color: red;
 
     img {
       margin-right: 0.8rem;
@@ -155,6 +156,7 @@ export const EditIcon = styled(SvgIcon)`
   right: 2.8rem;
   top: 2.4rem;
 `;
+
 
 export const ProfileBackgroup = styled.div`
   background-color: ${colors.royalBlue};
@@ -293,24 +295,26 @@ export const DescriptionDesktop = styled.div`
     font-style: normal;
     font-weight: normal;
     font-size: 1.5rem;
-    line-height: 2rem;
+    // line-height: 2rem;
+    line-height: 140%;
     color: #282828;
   }
 `;
 export const MobileLocation = styled.div`
-  color: #939393;
-  width: 70rem;
-  margin-top: 0.5rem;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1rem;
-  line-height: 140%;
-  display: flex;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: calc(100% - 1.6rem);
+color: #939393;
+font-weight: normal;
+font-family: Poppins;
+margin-top: 0.5rem;
+font-size: 1.1rem;
+line-height: 140%;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: calc(100% - 1.6rem);
+
+img {
+  margin-right: 0.5rem;
+}
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
