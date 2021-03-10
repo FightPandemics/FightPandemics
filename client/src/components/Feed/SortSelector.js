@@ -3,6 +3,7 @@ import BaseSelector from "../Selector/Selector";
 import SvgIcon from "../Icon/SvgIcon";
 import downArrowSlim from "../../assets/icons/down-arrow-slim.svg";
 import { useTranslation } from "react-i18next";
+import GTM from "constants/gtm-tags";
 
 export default function SortSelector({
   handleSortDropdown,
@@ -30,6 +31,7 @@ export default function SortSelector({
       value: "likes",
     },
   ]);
+  const gtmTag = (tag) => GTM.feed.prefix + GTM.feed.sort + GTM.feed[tag];
 
   useEffect(() => {
     const stagedOptions = options.filter(
@@ -51,7 +53,7 @@ export default function SortSelector({
   }, [ignoreUserLocation, keywordUsed, filterLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="visibility-post--selector">
+    <div className="visibility-post--selector" id={gtmTag(sortValue)}>
       <BaseSelector
         suffixIcon={
           <SvgIcon

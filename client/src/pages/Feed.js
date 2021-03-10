@@ -148,6 +148,7 @@ const Feed = (props) => {
   const organisationId = useSelector(selectOrganisationId);
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const posts = useSelector(selectPosts);
+  console.log(posts);
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
