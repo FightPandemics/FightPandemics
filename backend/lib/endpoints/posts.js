@@ -192,7 +192,26 @@ async function routes(app) {
           ] : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
       if (sort) {
-        sortAndFilterSteps.push({ $sort: { [sort === "likes" ? "likesCount": sort] : order === "asc" ? 1 : -1 } })
+        if (sort === "likes") {
+          sortAndFilterSteps.push(
+            {
+              $addFields: {
+                likesLength: {
+                  $size: "$likes",
+                },
+              },
+            },
+            {
+              $sort: {
+                likesLength: -1,
+              },
+            },
+          );
+        } else {
+          sortAndFilterSteps.push({
+            $sort: { [sort]: order === "asc" ? 1 : -1 },
+          });
+        }
       }
 
       /* eslint-disable sort-keys */
@@ -276,10 +295,10 @@ async function routes(app) {
       /* eslint-enable sort-keys */
 
       const aggregationPipelineResults = [
-        ...projectionSteps,
         ...sortAndFilterSteps,
         ...paginationSteps,
         ...lookupSteps,
+        ...projectionSteps,
       ];
 
       // Get the total results without pagination steps but with filtering aplyed - totalResults
