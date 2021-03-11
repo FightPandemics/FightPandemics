@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Modal, Form, Row, Col, Input } from "antd";
 import { useTranslation } from "react-i18next";
 
@@ -10,11 +10,32 @@ const OrgBookModal = ({
   visible,
   onCreate,
   onCancel,
+  currentOrgBookPages,
 }) => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
   const maxPageNameMessage = t("orgBook.maxPageName");
-  const prevRef = useRef();
+  const [canSubmit, setCanSubmit] = useState(true);
+
+  const validateForDupName = (rule, value, callback) => {
+    if (value) {
+      let uniquePageName = true;
+      if (currentOrgBookPages) {
+        if (currentOrgBookPages.some((item) => item.name === value)) {
+          uniquePageName = false;
+        }
+      }
+      if (!uniquePageName) {
+        setCanSubmit(false);
+        callback(t("orgBook.pageNameAlreadyExists"));
+      } else {
+        setCanSubmit(true);
+        callback();
+      }
+    } else {
+      callback();
+    }
+  };
 
   return (
     defaultPageName && (
@@ -26,18 +47,12 @@ const OrgBookModal = ({
         okText={okText}
         cancelText={t("orgBook.cancel")}
         onCancel={onCancel}
-        okButtonProps={{ disabled: false }}
+        okButtonProps={{ disabled: !canSubmit }}
         cancelButtonProps={{ disabled: false }}
         onOk={() => {
-          form
-            .validateFields()
-            .then((values) => {
-              //console.log("firing onCreate in modal with values: " + JSON.stringify(values));
-              onCreate(values);
-            })
-            .catch((info) => {
-              console.log("Validate Failed:", info);
-            });
+          form.validateFields().then((values) => {
+            onCreate(values);
+          });
         }}
       >
         <Form
@@ -61,6 +76,9 @@ const OrgBookModal = ({
                   {
                     max: 25,
                     message: maxPageNameMessage,
+                  },
+                  {
+                    validator: validateForDupName,
                   },
                 ]}
               >

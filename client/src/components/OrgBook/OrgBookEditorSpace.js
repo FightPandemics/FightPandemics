@@ -8,6 +8,7 @@ import { WhiteSpace } from "antd-mobile";
 import SvgIcon from "../Icon/SvgIcon";
 import eyeClosedIcon from "../../assets/icons/orgbook-eye-closed.svg";
 import eyeOpenIcon from "../../assets/icons/orgbook-eye-open.svg";
+import { set } from "lodash";
 
 const { colors, typography } = theme;
 const { white, royalBlue, black, red } = colors;
@@ -93,15 +94,23 @@ const PublishButtonLabel = styled.div`
 `;
 
 const OrgBookEditorSpace = (props) => {
-  const { organisation, selectedPage, PAGE_CATEGORIES } = props;
+  const {
+    organisation,
+    selectedPage,
+    PAGE_CATEGORIES,
+    UPDATE_ACTION_TYPES,
+    onUpdateAction,
+  } = props;
   const { t } = useTranslation();
   const tinyMce = useRef();
+  const [numberOfCharacters, setNumberOfCharacters] = useState(0);
 
   const onInit = useCallback(
     (editor) => {
       tinyMce.current = editor;
+      setNumberOfCharacters(selectedPage.content.length);
     },
-    [selectedPage?.content],
+    [selectedPage.content.length],
   );
 
   useEffect(() => {
@@ -122,10 +131,14 @@ const OrgBookEditorSpace = (props) => {
   };
 
   const handleEditorChange = (content, editor) => {
-    console.log("Content was updated:", content);
+    const wordcount = editor.plugins.wordcount;
+    setNumberOfCharacters(wordcount.body.getCharacterCountWithoutSpaces());
   };
 
-  const renderEditor = () => {
+  const renderDistractionFreeEditor = () => {
+    //quickbars_insert_toolbar appears on clicking on a new line (empty line following previously set/entered content)
+    //quickbars_selection_toolbar appears after double-clicking (selecting) existing content or empty space
+    //contextmenu appears after right-clicking on editable content
     return (
       <Editor
         apiKey="6wsqfx2q8gaxfha3k31vw5hivcu9rp3su7q4o2kuy8p9qavt"
@@ -135,39 +148,27 @@ const OrgBookEditorSpace = (props) => {
           oninit: onInit,
           setup: onInit,
           height: 700,
+          max_height: 700,
           menubar: false,
+          inline: true,
+          contextmenu: false,
+          resize: false,
           plugins: [
-            "advlist autolink lists link image charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table paste code help wordcount",
+            "quickbars advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen table spellchecker",
+            "insertdatetime media table paste code help wordcount autoresize imagetools",
           ],
+          quickbars_insert_toolbar: "undo redo | link image | help",
+          quickbars_selection_toolbar:
+            "undo redo | styleselect | fontselect | formatselect | \
+            alignleft aligncenter alignright alignjustify | bold italic underline backcolor | \
+            fontsizeselect | bullist numlist outdent indent | link image | removeformat | help",
+          contextmenu:
+            "undo redo | link | inserttable | cell row column deletetable | help",
+          powerpaste_word_import: "clean",
+          powerpaste_html_import: "clean",
           fontsize_formats: "14px 16px 18px 20px 24px 36px",
-          toolbar:
-            "undo redo | formatselect | bold italic backcolor | fontsizeselect \
-            alignleft aligncenter alignright alignjustify | \
-            bullist numlist outdent indent | removeformat | help",
-          formats: {
-            alignleft: {
-              selector: "span,em,i,b,strong",
-              block: "span",
-              styles: { display: "block", "text-align": "left" },
-            },
-            aligncenter: {
-              selector: "span,em,i,b,strong",
-              block: "span",
-              styles: { display: "block", "text-align": "center" },
-            },
-            alignright: {
-              selector: "span,em,i,b,strong",
-              block: "span",
-              styles: { display: "block", "text-align": "right" },
-            },
-            alignjustify: {
-              selector: "span,em,i,b,strong",
-              block: "span",
-              styles: { display: "block", "text-align": "full" },
-            },
-          },
+          toolbar: false,
         }}
         onEditorChange={handleEditorChange}
       />
@@ -190,6 +191,7 @@ const OrgBookEditorSpace = (props) => {
               onClick={() => {
                 console.log("clicked see preview");
               }}
+              to="#"
             >
               <span>{t("orgBook.seePreview")}</span>
             </Link>
@@ -203,6 +205,7 @@ const OrgBookEditorSpace = (props) => {
               onClick={() => {
                 console.log("clicked rename page");
               }}
+              to="#"
             >
               <span>{t("orgBook.renamePage")}</span>
             </Link>
@@ -212,7 +215,7 @@ const OrgBookEditorSpace = (props) => {
         </HeaderRenamePageContainer>
       </OrgBookEditorSpaceHeader>
       <MainEditorContainer>
-        {selectedPage ? renderEditor() : <WhiteSpace />}
+        {selectedPage ? renderDistractionFreeEditor() : <WhiteSpace />}
       </MainEditorContainer>
       <OrgBookEditorSpaceFooter>
         <FooterDeleteDraftContainer>
@@ -222,6 +225,7 @@ const OrgBookEditorSpace = (props) => {
               onClick={() => {
                 console.log("clicked delete draft");
               }}
+              to="#"
             >
               <span>{t("orgBook.deleteDraft")}</span>
             </Link>
@@ -238,8 +242,17 @@ const OrgBookEditorSpace = (props) => {
           {selectedPage ? (
             <Link
               onClick={() => {
-                console.log("clicked save progress");
+                //console.log("clicked save progress");
+                onUpdateAction(
+                  selectedPage.status === PAGE_CATEGORIES.draftCategory
+                    ? UPDATE_ACTION_TYPES.saveProgressType
+                    : UPDATE_ACTION_TYPES.republishType,
+                  selectedPage.pageId,
+                  tinyMce.current.getContent(),
+                  numberOfCharacters,
+                );
               }}
+              to="#"
             >
               <span>
                 {selectedPage.status === PAGE_CATEGORIES.draftCategory

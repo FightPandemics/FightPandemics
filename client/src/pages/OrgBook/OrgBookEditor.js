@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router-dom";
 import { refetchUser } from "actions/authActions";
 import {
@@ -23,6 +24,7 @@ import SuccessAlert from "../../components/Alert/SuccessAlert";
 import OrgBookTableOfContents from "../../components/OrgBook/OrgBookTableOfContents";
 import OrgBookEditorSpace from "../../components/OrgBook/OrgBookEditorSpace";
 import OrgBookModal from "../../components/OrgBook/OrgBookModal";
+import OrgBookInfoModal from "../../components/OrgBook/OrgBookInfoModal";
 import { ORANGE_RED, WHITE } from "../../constants/colors";
 
 const { colors, typography } = theme;
@@ -41,7 +43,14 @@ const PAGE_CATEGORIES = {
   liveCategory: "live",
   draftCategory: "draft",
 };
+const UPDATE_ACTION_TYPES = {
+  saveProgressType: "saveProgress",
+  republishType: "republish",
+};
+
 const MAX_PAGEGROUP_NUMBER = 5;
+const MAX_CHARACTERS_OF_CONTENT = 200;
+const MIN_CHARACTERS_OF_CONTENT = 10;
 
 const OrgBookEditorContainer = styled.div`
   width: 100%;
@@ -105,6 +114,13 @@ const OrgBookEditor = () => {
 
   const [createFormVisible, setCreateFormVisible] = useState(false);
   const [newPageFormVisible, setNewPageFormVisible] = useState(false);
+  const [infoModalVisible, setInfoModalVisible] = useState(false);
+
+  const [maxContentExceeded, setMaxContentExceeded] = useState(false);
+  const [minContentNotMet, setMinContentNotMet] = useState(false);
+  const [noOfContentChars, setNoOfContentChars] = useState(0);
+  const [pageId, setPageId] = useState("");
+
   const [currentEditOrgBookMode, setCurrentEditOrgBookMode] = useState(
     editOrgBookMode,
   );
@@ -184,17 +200,7 @@ const OrgBookEditor = () => {
 
   const addFirstOrgBookDraftPage = (formData) => {
     let newPages = [];
-    const newOrgBookPage = {
-      name: formData.pagename,
-      pageGroupNumber: 1,
-      status: PAGE_CATEGORIES.draftCategory,
-      locked: false,
-      content: getContentForNewPage(formData.pagename),
-      updated_by: "",
-      updated_at: "",
-      created_by: organisation.ownerId, //this will have to be filled in by be when editors exist
-      created_at: new Date().toLocaleString().replace(",", ""),
-    };
+    const newOrgBookPage = getNewOrgBookPage(formData, 1);
     newPages.push(newOrgBookPage);
     setSelectedPage(newOrgBookPage);
     let orgBookPages = {
@@ -212,13 +218,11 @@ const OrgBookEditor = () => {
     );
   };
 
-  const addNewOrgBookDraftPage = (formData) => {
-    const highestPageIndex = getHighestPageGroupNumber();
-    const newPageGroupNumber = highestPageIndex + 1;
-
-    const newOrgBookPage = {
+  const getNewOrgBookPage = (formData, pageGroupNumber) => {
+    return {
+      pageId: uuidv4(),
       name: formData.pagename,
-      pageGroupNumber: newPageGroupNumber,
+      pageGroupNumber: pageGroupNumber,
       status: PAGE_CATEGORIES.draftCategory,
       locked: false,
       content: getContentForNewPage(formData.pagename),
@@ -227,6 +231,12 @@ const OrgBookEditor = () => {
       created_by: organisation.ownerId, //this will have to be filled in by be when editors exist
       created_at: new Date().toLocaleString().replace(",", ""),
     };
+  };
+
+  const addNewOrgBookDraftPage = (formData) => {
+    const highestPageIndex = getHighestPageGroupNumber();
+    const newPageGroupNumber = highestPageIndex + 1;
+    const newOrgBookPage = getNewOrgBookPage(formData, newPageGroupNumber);
     currentOrgBookPages.push(newOrgBookPage);
     setSelectedPage(newOrgBookPage);
     let orgBookPages = {
@@ -273,10 +283,8 @@ const OrgBookEditor = () => {
   const handleOnCancel = () => {
     if (currentEditOrgBookMode === ORGBOOK_CREATE_MODE) {
       setCreateFormVisible(false);
-      //setNewPageFormVisible(false);
       history.push(`/organisation/${organisation._id}`);
     } else {
-      //setCreateFormVisible(false);
       setNewPageFormVisible(false);
     }
   };
@@ -290,8 +298,44 @@ const OrgBookEditor = () => {
   };
 
   const handleSelectPage = (page) => {
-    //console.log('in orgbookeditor, got page: ' + JSON.stringify(page));
     setSelectedPage(page);
+  };
+
+  const handleOnClose = () => {
+    setInfoModalVisible(false);
+  };
+
+  const handleUpdateAction = (
+    action,
+    editedPageId,
+    editedpageContent,
+    numberOfCharacters,
+  ) => {
+    //console.log('action: ' + action + ", editedPageId: " + editedPageId + ", editedpageContent: " + editedpageContent + ", no of chars: " + numberOfCharacters);
+    setPageId(editedPageId);
+    setMaxContentExceeded(false);
+    setMinContentNotMet(false);
+    selectedPage.content = editedpageContent;
+    setNoOfContentChars(numberOfCharacters);
+    switch (action) {
+      case UPDATE_ACTION_TYPES.saveProgressType:
+        if (numberOfCharacters >= MAX_CHARACTERS_OF_CONTENT) {
+          setMaxContentExceeded(true);
+          setInfoModalVisible(true);
+        } else {
+          if (numberOfCharacters < MIN_CHARACTERS_OF_CONTENT) {
+            setMinContentNotMet(true);
+            setInfoModalVisible(true);
+          } else {
+            //go ahead with update
+            console.log("go ahead with save prog");
+          }
+        }
+        break;
+
+      default:
+        break;
+    }
   };
 
   const renderTableOfContents = () => {
@@ -324,9 +368,55 @@ const OrgBookEditor = () => {
           organisation={organisation}
           selectedPage={selectedPage || null}
           PAGE_CATEGORIES={PAGE_CATEGORIES}
+          UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
+          onUpdateAction={handleUpdateAction}
         ></OrgBookEditorSpace>
       );
     }
+  };
+
+  const renderInfoModal = () => {
+    let title = "";
+    let infoMsg1 = "";
+    let infoMsg2 = "";
+    let infoMsg3 = "";
+    let infoMsg4 = "";
+    if (maxContentExceeded) {
+      title = t("orgBook.maxContentExceededTitle");
+      const pageName = selectedPage.name;
+      infoMsg1 = t("orgBook.maxContentsExceededFirstLine", { pageName });
+      const maxChars = MAX_CHARACTERS_OF_CONTENT;
+      infoMsg2 = t("orgBook.maxContentsExceededSecondLine", { maxChars });
+      infoMsg3 = t("orgBook.maxContentsExceededThirdLine", {
+        noOfContentChars,
+      });
+      infoMsg4 = t("orgBook.maxContentsExceededFourthLine");
+    }
+
+    if (minContentNotMet) {
+      title = t("orgBook.minContentNotMetTitle");
+      const pageName = selectedPage.name;
+      infoMsg1 = t("orgBook.minContentNotMetFirstLine", { pageName });
+      const minChars = MIN_CHARACTERS_OF_CONTENT;
+      infoMsg2 = t("orgBook.minContentNotMetSecondLine", { minChars });
+      infoMsg3 = t("orgBook.minContentNotMetThirdLine", { noOfContentChars });
+      infoMsg4 = t("orgBook.minContentNotMetFourthLine");
+    }
+
+    return (
+      <Background>
+        <OrgBookInfoModal
+          title={title}
+          okText={t("orgBook.ok")}
+          visible={infoModalVisible}
+          infoMsg1={infoMsg1}
+          infoMsg2={infoMsg2}
+          infoMsg3={infoMsg3}
+          infoMsg4={infoMsg4}
+          onClose={handleOnClose}
+        />
+      </Background>
+    );
   };
 
   const renderNewPageModal = () => {
@@ -344,10 +434,15 @@ const OrgBookEditor = () => {
           visible={newPageFormVisible}
           onCancel={handleOnCancel}
           onCreate={handleOnAdd}
+          currentOrgBookPages={currentOrgBookPages}
         />
       </Background>
     );
   };
+
+  if (infoModalVisible) {
+    return renderInfoModal();
+  }
 
   if (newPageFormVisible) {
     return renderNewPageModal();
@@ -381,6 +476,7 @@ const OrgBookEditor = () => {
           visible={createFormVisible}
           onCancel={handleOnCancel}
           onCreate={handleOnCreate}
+          currentOrgBookPages={null}
         />
       ) : (
         <OrgBookEditorContainer>

@@ -422,7 +422,19 @@
     "publish": "Publish",
     "unpublish": "Unpublish",
     "deleteDraft": "Delete Draft",
-    "republish": "Republish"
+    "republish": "Republish",
+    "pageNameAlreadyExists": "Page name already exists.  Please try again.",
+    "ok": "Ok",
+    "maxContentExceededTitle": "Max Allowed Content Exceeded",
+    "maxContentsExceededFirstLine": "{{pageName}} has exceeded the maximum number of characters allowed for content.",
+    "maxContentsExceededSecondLine": "Maximum characters allowed: {{maxChars}}.",
+    "maxContentsExceededThirdLine": "Current number of content characters: {{noOfContentChars}}.",
+    "maxContentsExceededFourthLine": "Please remove excess content and try again.",
+    "minContentNotMetTitle": "Minimum Content Not Met",
+    "minContentNotMetFirstLine": "{{pageName}} does not have the minimum number of characters required for content.",
+    "minContentNotMetSecondLine": "Minimum characters required: {{minChars}}.",
+    "minContentNotMetThirdLine": "Current number of content characters: {{noOfContentChars}}.",
+    "minContentNotMetFourthLine": "Please increase content and try again."
   },
   "auth": {
     "signIn": "Sign In",
