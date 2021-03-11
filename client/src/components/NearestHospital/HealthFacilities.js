@@ -264,24 +264,28 @@ const NearestHealthFacilities = () => {
     }
   };
 
+  const triggerGTMEvent = (location, type) => {
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "NH_LOCATION",
+        type: type,
+        infor: location,
+      },
+    });
+    // clear the DataLayer
+    TagManager.dataLayer({
+      dataLayer: {
+        event: -1,
+        type: -1,
+        infor: -1,
+      },
+    });
+  };
+
   const handleLocationChange = async (location) => {
     sourceLocation.current = location;
     if (sourceLocation.current) {
-      TagManager.dataLayer({
-        dataLayer: {
-          event: "NH_LOCATION",
-          type: selectedType,
-          infor: sourceLocation.current,
-        },
-      });
-      // clear the DataLayer
-      TagManager.dataLayer({
-        dataLayer: {
-          event: -1,
-          type: -1,
-          infor: -1,
-        },
-      });
+      triggerGTMEvent(location, selectedType);
       await loadData(sourceLocation.current, selectedType);
     }
   };
@@ -292,6 +296,7 @@ const NearestHealthFacilities = () => {
       e.stopPropagation();
       setSelectedType(type);
       if (sourceLocation.current) {
+        triggerGTMEvent(sourceLocation.current, type);
         loadData(sourceLocation.current, type);
       }
     },
