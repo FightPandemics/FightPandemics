@@ -30,8 +30,6 @@ import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
 import ProfileDesktop from "components/Profile/ProfileDesktop";
-import { isExpired } from "components/Feed/utils";
-import { Tabs } from "antd";
 
 import {
   ProfileLayout,
@@ -198,9 +196,11 @@ const Profile = ({
   const prevTotalPostCount = usePrevious(totalPostCount);
   const prevUserId = usePrevious(userId);
   const organisationId = useSelector(selectOrganisationId);
+  const [isInit, setIsInit] = useState(false);
 
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
+
   let filteredPost = [];
 
   const convertToObjectPost = useCallback((postArray) => {
@@ -215,7 +215,7 @@ const Profile = ({
     return sectionView.toUpperCase() !== "POSTS"
       ? lowerCase(sectionView).slice(0, -1)
       : lowerCase(internalTab).slice(0, -1);
-  }, [sectionView, internalTab]);
+  }, [sectionView, internalTab, actorId, userId, isInit]);
 
   const getMode = useCallback(() => {
     if (sectionView.toUpperCase() !== "POSTS") {
@@ -226,14 +226,15 @@ const Profile = ({
           : "D";
     }
     return undefined;
-  }, [sectionView, internalTab]);
+  }, [sectionView, internalTab, actorId, userId, isInit]);
 
   const isItemLoaded = useCallback((index) => !!filteredPost[index], [posts]);
 
   const buildNavMenu = () => {
-    if (typeof isSelf === "undefined") {
+    if (actorId == null || userId == null) {
       return;
     }
+
     const baseMenu = [
       {
         name: t("profile.views.activity"),
@@ -275,13 +276,15 @@ const Profile = ({
         gtm: "posts",
       });
       setSectionView(t("profile.views.posts"));
+      setInternalTab('Requests');
     }
     setNavMenu(baseMenu);
+    setIsInit(true);
   };
 
   useEffect(() => {
     buildNavMenu();
-  }, [isSelf]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isSelf, actorId, userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function usePrevious(value) {
     const ref = useRef();
@@ -301,6 +304,10 @@ const Profile = ({
     const source = CancelToken.source();
 
     const fetchPosts = async () => {
+      if (!isInit) {
+        return;
+      }
+
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
       dispatch(postsActions.fetchPostsBegin());
@@ -316,7 +323,6 @@ const Profile = ({
 
           const modeURL = `&postMode=${mode}`;
           const endpoint = `${baseURL}${objURL}${modeURL}`;
-
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
@@ -434,7 +440,7 @@ const Profile = ({
       _isMounted = true;
       source.cancel("Cancelling is cleanup");
     };
-  }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, page, toggleRefetch, isInit]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
@@ -571,6 +577,64 @@ const Profile = ({
     }
   }
 
+  const isPostExpired = (post) => {
+    if (!post.expiredAt) {
+      return false;
+    }
+    return new Date(post.expiredAt).getTime() < new Date().getTime();
+  }
+  
+  const handleDeletePostSuccess = (post) => {
+    if (post.objective === 'request') {
+      if (isPostExpired(post)) {
+        dispatch(
+          postsActions.fetchRequestsInactiveSuccess({
+            posts: posts.profilePosts[userId].requests.inactive.filter((curr) => curr._id != post._id),
+            userId,
+          })
+        );
+      }
+      else {
+        dispatch(
+          postsActions.fetchRequestsActiveSuccess({
+            posts: posts.profilePosts[userId].requests.active.filter((curr) => curr._id != post._id),
+            userId,
+          })
+        );
+      }
+      dispatch(
+        postsActions.fetchPostsRequestsSuccess({
+          posts: (posts.profilePosts[userId]?.requests?.all ?? []).filter((curr) => curr._id != post._id),
+          userId,
+        })
+      );
+    }
+    else {
+      if (isPostExpired(post)) {
+        dispatch(
+          postsActions.fetchOffersInactiveSuccess({
+            posts: posts.profilePosts[userId].offers.inactive.filter((curr) => curr._id != post._id),
+            userId,
+          })
+        );
+      }
+      else {
+        dispatch(
+          postsActions.fetchOffersActiveSuccess({
+            posts: posts.profilePosts[userId].offers.active.filter((curr) => curr._id != post._id),
+            userId,
+          })
+        );
+      }
+      dispatch(
+        postsActions.fetchPostsOffersSuccess({
+          posts: (posts.profilePosts[userId]?.offers?.all ?? []).filter((curr) => curr._id != post._id),
+          userId,
+        })
+      );
+    }
+  }
+
   const handlePostDelete = () => {
     deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
@@ -623,6 +687,10 @@ const Profile = ({
 
   const emptyFeed = () =>
     filteredPost.length < 1 && !isLoading;
+
+  if (!actorId || !userId) {
+    return <></>;
+  }
 
   return (
     <>
@@ -772,7 +840,8 @@ const Profile = ({
                     user={user}
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
-                    handlePostDelete={handlePostDelete}
+                    handlePostDelete={postDelete}
+                    onDeleteSuccess={handleDeletePostSuccess}
                   />
                 )}
                 {sectionView === "Offers" && (
@@ -792,7 +861,8 @@ const Profile = ({
                     user={user}
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
-                    handlePostDelete={handlePostDelete}
+                    handlePostDelete={postDelete}
+                    onDeleteSuccess={handleDeletePostSuccess}
                   />
                 )}
                 {sectionView === "Posts" && (
@@ -811,7 +881,9 @@ const Profile = ({
                     user={user}
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
-                    handlePostDelete={handlePostDelete}
+                    fromPage={false}
+                    handlePostDelete={postDelete}
+                    onDeleteSuccess={handleDeletePostSuccess}
                   />
                 )}
               </div>
