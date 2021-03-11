@@ -28,7 +28,7 @@ export default function SortSelector({
     },
     {
       text: t("feed.filters.mostLiked"),
-      value: "likes",
+      value: "likesCount",
     },
   ]);
   const gtmTag = (tag) => GTM.feed.prefix + GTM.feed.sort + GTM.feed[tag];

@@ -15,7 +15,7 @@ const getPostsSchema = {
     .prop("actorId", S.string())
     .prop("authorId", S.string())
     .prop("filter", S.string()) // URI encoded JSON; TODO: figure out way to custom validation
-    .prop("sort", S.string().enum(["likes", "updatedAt", "views", "shares"])) // Sorting posts by likes, updatedAt, views and shares
+    .prop("sort", S.string().enum(["likesCount", "updatedAt", "views", "shares"])) // Sorting posts by likes, updatedAt, views and shares
     .prop("order", S.string().enum(["asc", "desc"])) // descending or ascending
     .prop("keywords", S.string())
     .prop("ignoreUserLocation", S.boolean().default(false))
