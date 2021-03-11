@@ -275,11 +275,12 @@ const routes = [
     layout: "logo",
   },
   {
-    path: "/:id/positions",
+    path: "/organisation/:id/positions",
     component: Positions,
     props: {
       isProfile: true,
-      // loggedInOnly: true,
+      hideFooter: true,
+      hideHeader: true
     }
   },
   {

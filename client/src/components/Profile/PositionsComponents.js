@@ -158,7 +158,7 @@ export const CategoryBackgroup = styled.div`
  `;
 
 export const BackgroupContainer = styled.div`
-  filter: drop-shadow(0 1rem 0.75rem rgba(0, 0, 0, 0.07)) ;
+  filter: drop-shadow(0 .5rem 2rem rgba(0, 0, 0, .1)) ;
   `;
 
 export const ProfileLayout = styled.div`
@@ -266,26 +266,24 @@ export const DescriptionDesktop = styled.div`
 `;
 
 export const PositionTitle = styled.div`
-  margin: 1.6rem auto 3rem auto;
-  font-size: 1.7rem;
-  line-height: 2rem;
-  letter-spacing: .2rem;
+  margin: 3rem auto 1.6rem auto;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  letter-spacing: .04rem;
   font-weight: 500;
   color: ${colors.darkerGray};
   align-self: flex-start;
 `;
 
 export const PositionDescription = styled.div`
-  font-family: 'Work Sans''Courier New', Courier, monospace;
-  font-weight: 400;
-  color: ${colors.darkishGray}
+  
 `;
 
 export const TitleContainer = styled.div`
 display: flex;
 align-items: center;
 left: 0;
-margin-bottom: 1.4rem;
+margin-bottom: 2.2rem;
 `;
 export const PageTitle = styled(TextLabel)`
   display: flex;
@@ -330,6 +328,15 @@ export const PageTitle = styled(TextLabel)`
 
 export const PositionsContainer = styled.div`
   width: 90%;
+  
+  .positions-light-text {
+    font-family: 'Work Sans','Courier New', Courier, monospace;
+    font-weight: 400;
+    font-size: 1.2rem;
+    letter-spacing: .04;
+    color: ${colors.darkishGray};
+    opacity: 70%;
+  }
 `;
 
 export const OrgCategory = styled.div`
@@ -338,5 +345,8 @@ export const OrgCategory = styled.div`
   color: ${colors.darkishGray};
   
   `;
+
+
+
 
 

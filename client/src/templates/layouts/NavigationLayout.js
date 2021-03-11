@@ -64,6 +64,7 @@ const NavigationLayout = (props) => {
   const {
     authLoading,
     hideFooter,
+    hideHeader,
     mobiletabs,
     navSearch,
     tabIndex,
@@ -412,7 +413,7 @@ const NavigationLayout = (props) => {
           sidebarStyle={sidebarStyle}
           className="app-drawer"
         >
-          <Header
+          {!hideHeader && <Header
             authLoading={authLoading}
             onMenuClick={toggleDrawer}
             isAuthenticated={isAuthenticated}
@@ -424,7 +425,7 @@ const NavigationLayout = (props) => {
             }
             onOrganisationChange={onOrganisationChange}
             navSearch={navSearch}
-          />
+          />}
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}

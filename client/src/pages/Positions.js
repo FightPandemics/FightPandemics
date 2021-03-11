@@ -135,8 +135,8 @@ import ApplyButton from "components/Positions/ApplyButton";
 // const PAGINATION_LIMIT = 10;
 // const ARBITRARY_LARGE_NUM = 10000;
 // const Positions = ({ isAuthenticated }) => {
-//     let url = window.location.pathname.split("/");
-//     const organisationId = url[url.length - 1];
+let url = window.location.pathname.split("/");
+const organisationId = url[url.length - 2];
 // const { orgProfileState, orgProfileDispatch } = useContext(
 //     OrganisationContext,
 // );
@@ -812,6 +812,7 @@ const Positions = () => {
     const isSelf = "isSELF"
     const name = "name"
 
+
     return (
         <PositionsContainer>
 
@@ -819,7 +820,7 @@ const Positions = () => {
                 {
                     // link depends on data is stored
                 }
-                <Link to={"organisation"}>
+                <Link to={`/organisation/${organisationId}`}>
                     <SvgIcon src={BackIcon} />
                 </Link>
                 {<PageTitle>Positions</PageTitle>}
@@ -836,21 +837,29 @@ const Positions = () => {
                     <NamePara>{name}</NamePara>
                 </PositionsBackgroup>
                 <CategoryBackgroup>
-                    <OrgCategory>{// Type / Field
-                    }
+                    <OrgCategory
+                        className="positions-light-text"
+                    >{// Type / Field from backend
+                        }
                         {"Emergency Relief / International Assistance"}
                     </OrgCategory>
                 </CategoryBackgroup>
             </BackgroupContainer>
             <PositionTitle>Volunteer Position</PositionTitle>
-            <PositionDescription>
-                Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mauris lectus, posuere at nunc non, bibendum iaculis dolor. Vivamus faucibus lacus nec malesuada volutpat.
-            </PositionDescription>
+            <PositionDescription
+                className="positions-light-text"
+            >
+                Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.
+                <br /><br />
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mauris lectus, posuere at nunc non, bibendum iaculis dolor. Vivamus faucibus lacus nec malesuada volutpat.
+                <br /><br />
+                Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.~
+            </PositionDescription >
 
             <ApplyButton>Apply</ApplyButton>
 
 
-        </PositionsContainer>
+        </PositionsContainer >
     );
 }
 

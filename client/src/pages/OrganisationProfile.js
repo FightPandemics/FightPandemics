@@ -496,7 +496,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             onClick={
               () => sessionStorage.setItem("postredirect", window.location.pathname)
             }
-            to={isAuthenticated ? "/positions" :
+            to={isAuthenticated ? `/organisation/${organisationId}/positions` :
               {
                 pathname: LOGIN,
                 state: { from: window.location.pathname },

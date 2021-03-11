@@ -7,6 +7,8 @@ const JoinOrgBtn = styled(BaseButton)`
   border-radius: 4.6rem;
   background-color: ${theme.colors.royalBlue};
   color: #ffffff !important;
+  font-weight: 400;
+  font-size: 1.4rem;
   display: block;
   width: fit-content;
   margin: auto;
@@ -14,9 +16,10 @@ const JoinOrgBtn = styled(BaseButton)`
 
 const GtmContainer = styled.span`
   * {
+    font-family: 'Poppins', 'sans-serif';
     pointer-events: none;
     padding: 0 1rem;
-  }
+    }
   cursor: pointer;
 `;
 
