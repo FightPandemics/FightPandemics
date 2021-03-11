@@ -118,17 +118,20 @@ const PostTabCard = ({
   fromPage = true,
   handlePostDelete,
   isAuthenticated,
+  initialPage,
   onTabClick,
 }) => {
-  const tabs = cardContents.map((item) => ({ title: item.title }));
+  const tabs = cardContents.map((item) => ({ title: item.title, key: item.title }));
   return (
     <Container>
       <Tabs
+        initialPage={initialPage || 0}
         tabs={tabs}
         onTabClick={(tab) => onTabClick(tab.title)}
       >
         {cardContents.map((tab) => (
           <PostContent
+            key={tab.title}
             posts={tab.posts}
             maxPosts={maxPosts}
             user={user}

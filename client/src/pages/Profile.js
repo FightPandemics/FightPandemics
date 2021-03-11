@@ -540,6 +540,37 @@ const Profile = ({
     }
   };
 
+  const handleCreatePostSuccess = (post) => {
+    if (post.objective === 'request') {
+      dispatch(
+        postsActions.fetchRequestsActiveSuccess({
+          posts: [post, ...posts.profilePosts[userId]?.requests?.active],
+          userId,
+        })
+      );
+      dispatch(
+        postsActions.fetchPostsRequestsSuccess({
+          posts: [post, ...posts.profilePosts[userId]?.requests?.all],
+          userId,
+        })
+      );
+    }
+    else {
+      dispatch(
+        postsActions.fetchOfferActiveSuccess({
+          posts: [post, ...posts.profilePosts[userId]?.offers?.active],
+          userId,
+        })
+      );
+      dispatch(
+        postsActions.fetchOfferRequestsSuccess({
+          posts: [post, ...posts.profilePosts[userId]?.offers?.all],
+          userId,
+        })
+      );
+    }
+  }
+
   const handlePostDelete = () => {
     deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
@@ -700,6 +731,7 @@ const Profile = ({
             loadPosts={refetchPosts}
             visible={modal}
             user={user}
+            onSuccess={handleCreatePostSuccess}
             gtmPrefix={GTM.user.profilePrefix}
           />
         )}
@@ -724,6 +756,7 @@ const Profile = ({
               <div style={{ width: "100%" }}>
                 {sectionView === "Requests" && (
                   <PostTabCard
+                    initialPage={internalTab}
                     cardContents={[
                       {
                         title: "Active",
@@ -744,6 +777,7 @@ const Profile = ({
                 )}
                 {sectionView === "Offers" && (
                   <PostTabCard
+                    initialPage={internalTab}
                     cardContents={[
                       {
                         title: "Active",
@@ -763,6 +797,7 @@ const Profile = ({
                 )}
                 {sectionView === "Posts" && (
                   <PostTabCard
+                    initialPage={internalTab}
                     cardContents={[
                       {
                         title: "Requests",

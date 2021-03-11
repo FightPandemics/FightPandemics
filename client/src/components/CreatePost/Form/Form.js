@@ -27,7 +27,7 @@ const initialState = {
   errors: [],
 };
 
-const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
+const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix, onSuccess }) => {
   const { t } = useTranslation();
   const { form } = useContext(CreatePostContext);
   const [formData, setFormData] = useState(initialState.formData);
@@ -87,14 +87,13 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
     populateErrors();
 
     const payload = formDataToPost(formData);
-    console.log('OMG ***** OMG')
-    console.log({payload})
     if (form.organisationId) payload.actorId = form.organisationId;
 
     if (!errors.length) {
       try {
         const res = await axios.post("/api/posts", payload);
         setPostId(res.data._id);
+        onSuccess(res.data);
         cleanForm();
       } catch (error) {
         console.log(error);
