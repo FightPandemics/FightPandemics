@@ -16,7 +16,7 @@ export default function SortSelector({
   const [options, setOptions] = useState([
     {
       text: t("feed.filters.latest"),
-      value: "updatedAt",
+      value: "createdAt",
     },
     {
       text: t("feed.filters.trending"),
