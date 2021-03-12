@@ -25,6 +25,7 @@ import OrgBookTableOfContents from "../../components/OrgBook/OrgBookTableOfConte
 import OrgBookEditorSpace from "../../components/OrgBook/OrgBookEditorSpace";
 import OrgBookModal from "../../components/OrgBook/OrgBookModal";
 import OrgBookInfoModal from "../../components/OrgBook/OrgBookInfoModal";
+import OrgBookConfirmModal from "../../components/OrgBook/OrgBookConfirmModal";
 import { ORANGE_RED, WHITE } from "../../constants/colors";
 
 const { colors, typography } = theme;
@@ -44,8 +45,10 @@ const PAGE_CATEGORIES = {
   draftCategory: "draft",
 };
 const UPDATE_ACTION_TYPES = {
+  noAction: "none",
   saveProgressType: "saveProgress",
   republishType: "republish",
+  renamePageType: "renamePage",
 };
 
 const MAX_PAGEGROUP_NUMBER = 5;
@@ -115,11 +118,16 @@ const OrgBookEditor = () => {
   const [createFormVisible, setCreateFormVisible] = useState(false);
   const [newPageFormVisible, setNewPageFormVisible] = useState(false);
   const [infoModalVisible, setInfoModalVisible] = useState(false);
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [renamePageFormVisible, setRenamePageFormVisible] = useState(false);
 
   const [maxContentExceeded, setMaxContentExceeded] = useState(false);
   const [minContentNotMet, setMinContentNotMet] = useState(false);
   const [noOfContentChars, setNoOfContentChars] = useState(0);
   const [pageId, setPageId] = useState("");
+  const [currentUpdateAction, setCurrentUpdateAction] = useState(
+    UPDATE_ACTION_TYPES.noAction,
+  );
 
   const [currentEditOrgBookMode, setCurrentEditOrgBookMode] = useState(
     editOrgBookMode,
@@ -180,8 +188,6 @@ const OrgBookEditor = () => {
   }, [orgProfileDispatch, organisationId, t]);
 
   const handleOnCreate = (formData) => {
-    //console.log("in orgbook editorReceived values of form: ", values);
-    //console.log("in handleOnCreate, pagename received is: " + formData.pagename);
     if (currentEditOrgBookMode === ORGBOOK_CREATE_MODE) {
       addFirstOrgBookDraftPage(formData);
     }
@@ -189,7 +195,6 @@ const OrgBookEditor = () => {
   };
 
   const handleOnAdd = (formData) => {
-    //console.log("in handleOnAdd, pagename received is: " + formData.pagename);
     addNewOrgBookDraftPage(formData);
     setNewPageFormVisible(false);
   };
@@ -245,6 +250,15 @@ const OrgBookEditor = () => {
     updateOrgBookPages(orgBookPages);
   };
 
+  const handleOnRename = (formData) => {
+    renameOrgBookPage(formData);
+    setRenamePageFormVisible(false);
+  };
+
+  const renameOrgBookPage = (formData) => {
+    console.log("fired renameOrgBookPage");
+  };
+
   const updateOrgBookPages = async (orgBookPages) => {
     orgProfileDispatch(updateOrganisation());
     try {
@@ -286,6 +300,7 @@ const OrgBookEditor = () => {
       history.push(`/organisation/${organisation._id}`);
     } else {
       setNewPageFormVisible(false);
+      setRenamePageFormVisible(false);
     }
   };
 
@@ -311,12 +326,22 @@ const OrgBookEditor = () => {
     editedpageContent,
     numberOfCharacters,
   ) => {
-    //console.log('action: ' + action + ", editedPageId: " + editedPageId + ", editedpageContent: " + editedpageContent + ", no of chars: " + numberOfCharacters);
-    setPageId(editedPageId);
+    console.log(
+      "action: " +
+        action +
+        ", editedPageId: " +
+        editedPageId +
+        ", editedpageContent: " +
+        editedpageContent +
+        ", no of chars: " +
+        numberOfCharacters,
+    );
+    //setPageId(editedPageId);
     setMaxContentExceeded(false);
     setMinContentNotMet(false);
     selectedPage.content = editedpageContent;
     setNoOfContentChars(numberOfCharacters);
+
     switch (action) {
       case UPDATE_ACTION_TYPES.saveProgressType:
         if (numberOfCharacters >= MAX_CHARACTERS_OF_CONTENT) {
@@ -327,15 +352,56 @@ const OrgBookEditor = () => {
             setMinContentNotMet(true);
             setInfoModalVisible(true);
           } else {
-            //go ahead with update
-            console.log("go ahead with save prog");
+            setCurrentUpdateAction(action);
+            setConfirmModalVisible(true);
           }
         }
+        break;
+
+      case UPDATE_ACTION_TYPES.renamePageType:
+        setRenamePageFormVisible(true);
         break;
 
       default:
         break;
     }
+  };
+
+  const handleOnConfirm = (action) => {
+    switch (action) {
+      case UPDATE_ACTION_TYPES.saveProgressType:
+        const oldOrgBookPages = [...currentOrgBookPages];
+        const newOrgBookPages = oldOrgBookPages.map((page) =>
+          page.pageId === selectedPage.pageId
+            ? {
+                ...page,
+                content: selectedPage.content,
+                updated_by: organisation.ownerId,
+                updated_at: new Date().toLocaleString().replace(",", ""),
+              }
+            : page,
+        );
+        const orgBookPages = {
+          orgBookPages: newOrgBookPages,
+        };
+        setCurrentOrgBookPages(newOrgBookPages);
+        setSelectedPage(
+          newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
+        );
+        updateOrgBookPages(orgBookPages);
+
+        break;
+
+      default:
+        break;
+    }
+    setConfirmModalVisible(false);
+    setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
+  };
+
+  const handleOnCancelConfirm = () => {
+    setConfirmModalVisible(false);
+    setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
   };
 
   const renderTableOfContents = () => {
@@ -373,6 +439,21 @@ const OrgBookEditor = () => {
         ></OrgBookEditorSpace>
       );
     }
+  };
+
+  const renderConfirmModal = () => {
+    return (
+      <Background>
+        <OrgBookConfirmModal
+          action={currentUpdateAction}
+          selectedPage={selectedPage}
+          visible={confirmModalVisible}
+          onCancelConfirm={handleOnCancelConfirm}
+          onConfirm={handleOnConfirm}
+          UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
+        />
+      </Background>
+    );
   };
 
   const renderInfoModal = () => {
@@ -440,12 +521,40 @@ const OrgBookEditor = () => {
     );
   };
 
+  const renderRenamePageModal = () => {
+    const pageName = selectedPage.name;
+    const renameOrgBookPage = t("orgBook.renameOrgBookPage", { pageName });
+
+    return (
+      <Background>
+        <OrgBookModal
+          title={renameOrgBookPage}
+          okText={t("orgBook.rename")}
+          requiredPageNameMessage={t("orgBook.pleaseEnterPageNameRename")}
+          defaultPageName={t("orgBook.newPageName")}
+          visible={renamePageFormVisible}
+          onCancel={handleOnCancel}
+          onCreate={handleOnRename}
+          currentOrgBookPages={currentOrgBookPages}
+        />
+      </Background>
+    );
+  };
+
   if (infoModalVisible) {
     return renderInfoModal();
   }
 
   if (newPageFormVisible) {
     return renderNewPageModal();
+  }
+
+  if (renamePageFormVisible) {
+    return renderRenamePageModal();
+  }
+
+  if (confirmModalVisible) {
+    return renderConfirmModal();
   }
 
   if (loading) return <div>"{t("profile.common.loading")}"</div>;

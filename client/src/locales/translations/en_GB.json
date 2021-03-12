@@ -402,13 +402,16 @@
     "editorSpaceTOCHeader": "Org Editor Space",
     "newOrgBook": "New OrgBook",
     "newOrgBookPage": "New OrgBook Page",
+    "renameOrgBookPage": "Rename {{pageName}}",
     "page": "Page ",
     "pageName": "Page Name",
+    "newPageName": "New page name",
     "pleaseEnterPageNameCreate": "Please enter the page name for the first page in your OrgBook.",
     "pleaseEnterPageNameAdd": "Please enter the page name for the new page in your OrgBook.",
     "page1": "Page 1",
     "add": "Add",
     "create": "Create",
+    "rename": "Rename",
     "cancel": "Cancel",
     "maxPageName": "Page name must be maximum 25 characters.",
     "updateSuccess": "OrgBook successfully updated",
@@ -434,7 +437,10 @@
     "minContentNotMetFirstLine": "{{pageName}} does not have the minimum number of characters required for content.",
     "minContentNotMetSecondLine": "Minimum characters required: {{minChars}}.",
     "minContentNotMetThirdLine": "Current number of content characters: {{noOfContentChars}}.",
-    "minContentNotMetFourthLine": "Please increase content and try again."
+    "minContentNotMetFourthLine": "Please increase content and try again.",
+    "confirmSaveProgressTitle": "Save Progress",
+    "confirmSaveProgressOkText": "Save",
+    "confirmSaveProgressPrompt": "Save Progress on {{pageName}}?"
   },
   "auth": {
     "signIn": "Sign In",

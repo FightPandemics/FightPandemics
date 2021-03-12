@@ -108,9 +108,11 @@ const OrgBookEditorSpace = (props) => {
   const onInit = useCallback(
     (editor) => {
       tinyMce.current = editor;
-      setNumberOfCharacters(selectedPage.content.length);
+      if (!(selectedPage === null)) {
+        setNumberOfCharacters(selectedPage.content.length);
+      }
     },
-    [selectedPage.content.length],
+    [selectedPage],
   );
 
   useEffect(() => {
@@ -203,7 +205,13 @@ const OrgBookEditorSpace = (props) => {
           {selectedPage ? (
             <Link
               onClick={() => {
-                console.log("clicked rename page");
+                //console.log("clicked rename page");
+                onUpdateAction(
+                  UPDATE_ACTION_TYPES.renamePageType,
+                  selectedPage.pageId,
+                  tinyMce.current.getContent(),
+                  numberOfCharacters,
+                );
               }}
               to="#"
             >
