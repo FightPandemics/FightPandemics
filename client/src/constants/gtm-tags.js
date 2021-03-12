@@ -112,7 +112,7 @@ module.exports = {
     relevance: "_RE",
     likes: "_LI",
     shares: "_SH",
-    updatedAt: "_TI",
+    createdAt: "_TI",
     views: "_VI",
   },
   nearestHospital: {

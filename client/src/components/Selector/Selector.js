@@ -31,7 +31,12 @@ const BaseSelector = ({
       minHeight={minHeight}
     >
       {options.map((item) => (
-        <Option {...optionProps} key={item.value} value={item.value}>
+        <Option
+          {...optionProps}
+          key={item.key}
+          value={item.value}
+          id={item.gtm}
+        >
           {item[key]}
         </Option>
       ))}

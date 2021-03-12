@@ -49,11 +49,15 @@ export default function SortSelector({
         value: "relevance",
       });
     }
-    setOptions(stagedOptions);
+    const finalOptions = stagedOptions.map((e) => {
+      e.gtm = gtmTag(e.value);
+      return e;
+    });
+    setOptions(finalOptions);
   }, [ignoreUserLocation, keywordUsed, filterLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="visibility-post--selector" id={gtmTag(sortValue)}>
+    <div className="visibility-post--selector">
       <BaseSelector
         suffixIcon={
           <SvgIcon
