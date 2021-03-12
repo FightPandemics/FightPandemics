@@ -655,6 +655,7 @@ const Profile = ({
                           isItemLoaded={isItemLoaded}
                           hasNextPage={loadMore}
                           totalPostCount={totalPostCount}
+                          isProfile={true}
                         ></ProfileDesktop>
                       </FeedWrapper>
                     </SeeAllContentWrapper>

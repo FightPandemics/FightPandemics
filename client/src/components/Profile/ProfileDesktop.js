@@ -66,6 +66,7 @@ const ProfileDesktop = ({
   loadMore,
   totalPostCount,
   isMobile,
+  isProfile,
 }) => {
   const { t } = useTranslation();
 
@@ -77,7 +78,6 @@ const ProfileDesktop = ({
   const [childTab, setChildTab] = useState(defaultState);
 
   const handleTabChange = (e) => {
-    // console.log("tab Change", e.key);
     setChildTab(e.key);
     setInternalTab(e.key);
   };
@@ -86,6 +86,11 @@ const ProfileDesktop = ({
     setChildTab(defaultState);
     setInternalTab(defaultState);
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const gtmIdPost = () => {
+    const suffix = gtmTag(gtmTagsMap[childTab]) + GTM.profile.desktop;
+    return suffix;
+  };
 
   return (
     <SeeAllWrapper isMobile={false}>
@@ -122,16 +127,9 @@ const ProfileDesktop = ({
         isItemLoaded={isItemLoaded}
         hasNextPage={loadMore}
         totalPostCount={totalPostCount}
+        isProfile={isProfile}
+        gtmIdPost={gtmIdPost}
       />
-      {/* {postsError && (
-        <ErrorAlert
-          message={t([
-            `error.${postsError.message}`,
-            `error.http.${postsError.message}`,
-          ])}
-        />
-      )} */}
-      {/* {emptyFeed() && <>"No Posts matching your crieteria."</>} */}
     </SeeAllWrapper>
   );
 };

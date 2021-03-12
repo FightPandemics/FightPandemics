@@ -128,6 +128,8 @@ const Post = ({
   onPostHide,
   onPostUnhide,
   convertTextToURL,
+  isProfile,
+  gtmIdPost,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
@@ -601,6 +603,10 @@ const Post = ({
       : "post.both";
   };
 
+  const gtmId = () => {
+    return isProfile ? gtmIdPost() : GTM.feed.prefix + GTM.profile.posts;
+  };
+
   return (
     <>
       {postId && dispatchPostAction ? (
@@ -811,6 +817,7 @@ const Post = ({
               <WhiteSpace />
               {post && isAuthenticated ? (
                 <Link
+                  id={gtmId()}
                   to={{
                     pathname: `/post/${_id}`,
                     state: {
