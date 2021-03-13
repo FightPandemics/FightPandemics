@@ -41,7 +41,7 @@ const StyledContainer = styled.section`
   }
 `;
 
-const StyledCancelButton = styled.button `
+const StyledCancelButton = styled.button`
   font-size: 1.6rem;
   padding: 0;
   position:absolute;
@@ -55,7 +55,7 @@ const StyledCancelButton = styled.button `
 `;
 
 
-const StyledSubmitButton = styled.button `
+const StyledSubmitButton = styled.button`
   font-size: 1.6rem;
   padding: 0;
   position:absolute;
@@ -67,9 +67,9 @@ const StyledSubmitButton = styled.button `
   right: 5rem;
   color: Blue;
 `;
- 
 
-  
+
+
 
 
 
@@ -99,7 +99,7 @@ const SubmitExample = ({ getGTM, t, props }) => {
     setVisibleTwo(true);
   };
 
- 
+
 
 
 
@@ -117,7 +117,7 @@ const SubmitExample = ({ getGTM, t, props }) => {
         {t("getInvolved")}
       </LinkButton>
       <Modal
-      style={{border:"3rem"}}
+        style={{ border: "3rem" }}
         visible={visible}
         width={564}
         footer={null}
@@ -141,7 +141,7 @@ const SubmitExample = ({ getGTM, t, props }) => {
         {t("getInvolved")}
       </LinkButton>
       <Modal
-      style={{border:"3rem"}}
+        style={{ border: "3rem" }}
         visible={visibletwo}
         width={564}
         footer={null}
