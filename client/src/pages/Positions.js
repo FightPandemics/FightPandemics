@@ -24,6 +24,7 @@ import appStoreIcon from "assets/icons/app-store-icon.svg";
 import BackIcon from "assets/icons/back.svg";
 
 
+
 import instagramIcon from "assets/icons/social-instagram.svg";
 import linkedinBlue from "assets/icons/social-linkedin.svg";
 import facebookIcon from "assets/icons/social-fb.svg";

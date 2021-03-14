@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
-import LinkButton from "components/Button/LinkButton";
+import LinkButtonNarrow from "components/Button/LinkButtonNarrow";
 import styled from "styled-components";
 import { mq, theme } from "constants/theme";
 import { Column } from "react-virtualized";
 import PositionSubmitModal from "components/Positions/PositionSubmitModal";
+import applicationConfirmation from "assets/icons/application-received.svg";
 const { lighterBlack } = theme.colors;
 const { lightGrey } = theme.colors;
 const { display, body } = theme.typography.font.family;
@@ -23,6 +24,7 @@ const StyledContainer = styled.section`
     line-height: 1.17;
     text-align: center;
     margin-top: -3.2rem;
+    margin-bottom: 40rem;
     color: ${lighterBlack};
   }
   p {
@@ -53,10 +55,24 @@ const StyledCancelButton = styled.button`
   bottom: 1rem;
   right: 12.6rem;
   color: Blue;
+  display: none;
 `;
 
 
 const StyledSubmitButton = styled.button`
+  font-size: 1.6rem;
+  padding: 0;
+  position:absolute;
+  border: none;
+  background: none;
+  button:focus { outline: none; };
+  cursor: pointer;
+  bottom: 1rem;
+  right: 5rem;
+  color: Blue;
+`;
+
+const ConfirmationButton = styled.button`
   font-size: 1.6rem;
   padding: 0;
   position:absolute;
@@ -94,12 +110,12 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
     console.log("submit")
   };
   const handleCancelTwo = async (e) => {
-    
+
     setVisibleTwo(false);
   };
 
   const showPopUpTwo = async (e) => {
-    handleCancel()
+    // handleCancel()
     setVisibleTwo(true);
   };
 
@@ -110,16 +126,20 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
 
 
 
+
+
+
+
   return (
     <>
-      <LinkButton
+      <LinkButtonNarrow
         id={getGTM("Submit1")}
         type="primary"
         shape="round"
         onClick={showPopUp}
       >
         {"Submit - Confirm"}
-      </LinkButton>
+      </LinkButtonNarrow>
       <Modal
         style={{ border: "3rem" }}
         visible={visible}
@@ -144,7 +164,7 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
       >
         {"Application Submitted"}
       </LinkButton> */}
-      <Modal
+      {/* <Modal
         style={{ border: "3rem" }}
         visible={visibletwo}
         width={564}
@@ -153,14 +173,35 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
         onCancel={handleCancelTwo}
       >
         <StyledContainer>
-          <h2>Submit Application</h2>
+          <h2>Application Submitted</h2>
           <br></br>
-          <p>Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.</p>
-          <StyledCancelButton onClick={handleCancel} > Cancel </StyledCancelButton>
-          <StyledSubmitButton onClick={showPopUpTwo} > Submit  </StyledSubmitButton>
+          <p>Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.</p>
+          <LinkButton>Okay</LinkButton>
         </StyledContainer>
+      </Modal> */}
+
+      {/* Seperate Modal Component */}
+
+      <Modal
+        style={{ border: "3rem" }}
+        visible={true}
+        width={564}
+        footer={null}
+        centered={true}
+        onCancel={handleCancelTwo}
+      >
+        <PositionSubmitModal>
+          <img src={applicationConfirmation} alt="" />
+          <h2>Application Submitted</h2>
+          <p>Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.</p>
+          <LinkButtonNarrow>Okay!</LinkButtonNarrow>
+
+        </PositionSubmitModal>
       </Modal>
-      
+
+
+
+
 
     </>
   );

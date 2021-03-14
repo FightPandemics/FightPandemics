@@ -9,8 +9,8 @@ const { lightGrey } = theme.colors;
 const { display, body } = theme.typography.font.family;
 
 
-const StyledContainer = styled.section`
-  padding: 2.5rem 0;
+const PositionSubmitModal = styled.section`
+  /* padding: 2.5rem 0; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +21,7 @@ const StyledContainer = styled.section`
     font-weight: 600;
     line-height: 1.17;
     text-align: center;
-    margin-top: -3.2rem;
+    /* margin-bottom: 10rem !important; */
     color: ${lighterBlack};
   }
   p {
@@ -34,12 +34,20 @@ const StyledContainer = styled.section`
     line-height: 1;
     letter-spacing: normal;
     margin: 0 auto;
-    margin-top: -1.4rem;
+    /* margin-top: -1.4rem; */
     display: flex;
     justify-content: center;
     color: ${lightGrey};
   }
+  img {
+    padding-bottom: 2rem;
+}
+button {
+    padding: 60rem;
+}
 `;
+
+
 
 const StyledCancelButton = styled.button`
   font-size: 1.6rem;
@@ -52,12 +60,13 @@ const StyledCancelButton = styled.button`
   bottom: 1rem;
   right: 12.6rem;
   color: Blue;
+  
 `;
 
 
 const StyledSubmitButton = styled.button`
   font-size: 1.6rem;
-  padding: 0;
+  padding: 50rem;
   position:absolute;
   border: none;
   background: none;
@@ -74,67 +83,67 @@ const StyledSubmitButton = styled.button`
 
 
 
-const PositionSubmitModal = ({ getGTM, t, props }) => {
+// const PositionSubmitModal = ({ getGTM, t, props }) => {
 
-    // 't' comes from 'AboutUs' scope for translation
-    const [visible, setVisible] = useState(false);
-    const [visibletwo, setVisibleTwo] = useState(false);
+//     // 't' comes from 'AboutUs' scope for translation
+//     const [visible, setVisible] = useState(false);
+//     const [visibletwo, setVisibleTwo] = useState(false);
 
-    const handleCancel = async (e) => {
-        setVisible(false);
-    };
+//     const handleCancel = async (e) => {
+//         setVisible(false);
+//     };
 
-    const showPopUp = async (e) => {
+//     const showPopUp = async (e) => {
 
-        setVisible(true);
-    };
+//         setVisible(true);
+//     };
 
-    const handleClick = (e) => {
-        console.log("submit")
-    };
-    const handleCancelTwo = async (e) => {
-        setVisibleTwo(false);
-    };
+//     const handleClick = (e) => {
+//         console.log("submit")
+//     };
+//     const handleCancelTwo = async (e) => {
+//         setVisibleTwo(false);
+//     };
 
-    const showPopUpTwo = async (e) => {
-        setVisibleTwo(true);
-    };
-
-
+//     const showPopUpTwo = async (e) => {
+//         setVisibleTwo(true);
+//     };
 
 
 
 
 
 
-    return (
-        <>
-            <Modal
-                style={{ border: "3rem" }}
-                visible={visibletwo}
-                width={564}
-                footer={null}
-                centered={true}
-                onCancel={handleCancelTwo}
-            >
-                <StyledContainer>
-                    <h2>Application Submitted</h2>
-                    <br></br>
-                    <p>Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.</p>
-                    <LinkButton
-                        // id={getGTM("getInvolved")}
-                        // type="primary"
-                        // shape="round"
-                        // onClick={this.close}
-                    >
-                        {"Okay"}
-                    </LinkButton>
 
-                </StyledContainer>
-            </Modal>
 
-        </>
-    );
-};
+//     return (
+//         <>
+//             <Modal
+//                 style={{ border: "3rem" }}
+//                 // visible={visibletwo}
+//                 // width={564}
+//                 // footer={null}
+//                 // centered={true}
+//                 onCancel={handleCancelTwo}
+//             >
+//                 <StyledContainer>
+//                     <h2>Application Submitted</h2>
+//                     <br></br>
+//                     <p>Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.</p>
+//                     <LinkButton
+
+//                         type="primary"
+//                         shape="round"
+//                         // onClick={this.close}
+//                     >
+//                         {"Okay"}
+//                     </LinkButton>
+
+//                 </StyledContainer>
+//             </Modal>
+
+//         </>
+//     );
+// };
 
 export default PositionSubmitModal;
