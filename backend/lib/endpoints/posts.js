@@ -68,20 +68,13 @@ async function routes(app) {
       ];
       // "IA" stands for InActive or Archived
       //In future we will also have "D" for Drafts
-      if (postMode === 'IA') {
+      if (postMode === "IA") {
         filters = [
           {
-            $and: [{ expireAt: { $ne: null } }, { expireAt: { $lt: new Date() } }],
-            status: { $ne: "removed" },
-          },
-        ];
-      }
-
-      // "A" stands for Active or Active
-      if (postMode === 'A') {
-        filters = [
-          {
-            $or: [{ expireAt: { $eq: null } }, { expireAt: { $gt: new Date() } }],
+            $and: [
+              { expireAt: { $ne: null } },
+              { expireAt: { $lt: new Date() } },
+            ],
             status: { $ne: "removed" },
           },
         ];
@@ -136,14 +129,29 @@ async function routes(app) {
 
       //workMode filter
       if (workMode) {
-        const workModes = workMode.map(mode => mode.toLowerCase())
-        if (workModes.includes('both')) {
-          filters.push({ $or: [{ $and: [{ workMode: null }, { types: { $nin: ['Remote Work'] } }] }, { workMode: { $in: workModes } }] });
-        }
-        else if (workModes.includes('remote')) {
-          filters.push({ $or: [{ $and: [{ workMode: null }, { types: { $in: ['Remote Work'] } }] }, { workMode: { $in: workModes } }] });
-        }
-        else {
+        const workModes = workMode.map((mode) => mode.toLowerCase());
+        if (workModes.includes("both")) {
+          filters.push({
+            $or: [
+              {
+                $and: [
+                  { workMode: null },
+                  { types: { $nin: ["Remote Work"] } },
+                ],
+              },
+              { workMode: { $in: workModes } },
+            ],
+          });
+        } else if (workModes.includes("remote")) {
+          filters.push({
+            $or: [
+              {
+                $and: [{ workMode: null }, { types: { $in: ["Remote Work"] } }],
+              },
+              { workMode: { $in: workModes } },
+            ],
+          });
+        } else {
           filters.push({ workMode: { $in: workModes } });
         }
       }
@@ -190,45 +198,45 @@ async function routes(app) {
       /* eslint-disable sort-keys */
       const sortAndFilterSteps = location
         ? [
-          {
-            $geoNear: {
-              distanceField: "distance",
-              key: "author.location.coordinates",
-              near: {
-                $geometry: {
-                  coordinates: location.coordinates,
-                  type: "Point",
+            {
+              $geoNear: {
+                distanceField: "distance",
+                key: "author.location.coordinates",
+                near: {
+                  $geometry: {
+                    coordinates: location.coordinates,
+                    type: "Point",
+                  },
                 },
+                query: { $and: filters },
               },
-              query: { $and: filters },
             },
-          },
-          { $sort: { distance: 1, _id: -1 } },
-        ]
+            { $sort: { distance: 1, _id: -1 } },
+          ]
         : keywords
-          ? [
+        ? [
             { $match: { $and: filters, $text: { $search: keywords } } },
             { $sort: { score: { $meta: "textScore" } } },
           ]
-          : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+        : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
 
       /* eslint-disable sort-keys */
       const paginationSteps =
         limit === -1
           ? [
-            {
-              $skip: skip || 0,
-            },
-          ]
+              {
+                $skip: skip || 0,
+              },
+            ]
           : [
-            {
-              $skip: skip || 0,
-            },
-            {
-              $limit: limit || POST_PAGE_SIZE,
-            },
-          ];
+              {
+                $skip: skip || 0,
+              },
+              {
+                $limit: limit || POST_PAGE_SIZE,
+              },
+            ];
       /* eslint-enable sort-keys */
 
       /* eslint-disable sort-keys */
@@ -303,13 +311,13 @@ async function routes(app) {
       const totalResultsAggregationPipeline = await Post.aggregate(
         keywords && !location
           ? [
-            { $match: { $and: filters, $text: { $search: keywords } } },
-            { $group: { _id: null, count: { $sum: 1 } } },
-          ]
+              { $match: { $and: filters, $text: { $search: keywords } } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ]
           : [
-            { $match: { $and: filters } },
-            { $group: { _id: null, count: { $sum: 1 } } },
-          ],
+              { $match: { $and: filters } },
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ]
       );
       /* eslint-enable sort-keys */
 
@@ -322,7 +330,7 @@ async function routes(app) {
             };
           });
           return posts;
-        }),
+        })
       );
 
       const responseHandler = (response) => {
@@ -347,7 +355,7 @@ async function routes(app) {
       } else {
         return responseHandler(posts);
       }
-    },
+    }
   );
 
   app.post(
@@ -366,7 +374,8 @@ async function routes(app) {
         name: actor.name,
         photo: actor.photo,
         type: actor.type,
-        verified: actor.verification && actor.verification.status === "approved"
+        verified:
+          actor.verification && actor.verification.status === "approved",
       };
 
       // ExpireAt needs to calculate the date
@@ -388,7 +397,7 @@ async function routes(app) {
 
       reply.code(201);
       return post;
-    },
+    }
   );
 
   // /posts/postId
@@ -410,7 +419,7 @@ async function routes(app) {
           "author.location.coordinates": false,
           "author.location.neighborhood": false,
           "author.location.zip": false,
-        }),
+        })
       );
 
       if (postErr) {
@@ -432,15 +441,14 @@ async function routes(app) {
         // user shouldn't see posts reported by them, even if public.
         const didReport = post.reportedBy
           ? post.reportedBy.find(
-            (r) => r.id.toString() === actor._id.toString(),
-          )
+              (r) => r.id.toString() === actor._id.toString()
+            )
           : false;
         if (didReport) throw app.httpErrors.notFound();
       } else if (!actor) {
         // none logged in user shouldn't see removed posts on post page
         if (post.status === "removed") throw app.httpErrors.notFound();
       }
-
 
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
@@ -449,7 +457,7 @@ async function routes(app) {
         Comment.find({
           postId: mongoose.Types.ObjectId(postId),
           parentId: null,
-        }).count(),
+        }).count()
       );
       /* eslint-enable sort-keys */
 
@@ -461,7 +469,7 @@ async function routes(app) {
       const projectedPost = {
         ...post.toObject(),
         liked: post.likes.includes(
-          mongoose.Types.ObjectId(actor ? actor._id : null),
+          mongoose.Types.ObjectId(actor ? actor._id : null)
         ),
         likesCount: post.likes.length,
         elapsedTimeText: {
@@ -476,7 +484,7 @@ async function routes(app) {
       return {
         post: projectedPost,
       };
-    },
+    }
   );
 
   app.delete(
@@ -516,7 +524,7 @@ async function routes(app) {
       }
 
       return { deletedCommentsCount, deletedCount, success: true };
-    },
+    }
   );
 
   app.patch(
@@ -550,7 +558,7 @@ async function routes(app) {
       body.isEdited = true; // set edited true when update
 
       const [updateErr, updatedPost] = await app.to(
-        Object.assign(post, body).save(),
+        Object.assign(post, body).save()
       );
 
       if (updateErr) {
@@ -559,7 +567,7 @@ async function routes(app) {
       }
 
       return updatedPost;
-    },
+    }
   );
 
   app.put(
@@ -579,8 +587,8 @@ async function routes(app) {
         Post.findOneAndUpdate(
           { _id: postId },
           { $addToSet: { likes: actor._id } },
-          { new: true },
-        ),
+          { new: true }
+        )
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed liking post");
@@ -596,7 +604,7 @@ async function routes(app) {
         likes: updatedPost.likes,
         likesCount: updatedPost.likes.length,
       };
-    },
+    }
   );
 
   app.delete(
@@ -615,8 +623,8 @@ async function routes(app) {
         Post.findOneAndUpdate(
           { _id: postId },
           { $pull: { likes: actor._id } },
-          { new: true },
-        ),
+          { new: true }
+        )
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed unliking post");
@@ -629,7 +637,7 @@ async function routes(app) {
         likes: updatedPost.likes,
         likesCount: updatedPost.likes.length,
       };
-    },
+    }
   );
 
   // -- Comments
@@ -674,11 +682,11 @@ async function routes(app) {
           comments.forEach((comment) => {
             comment.elapsedTimeText = setElapsedTimeText(
               comment.createdAt,
-              comment.updatedAt,
+              comment.updatedAt
             );
           });
           return comments;
-        }),
+        })
       );
       if (commentErr) {
         req.log.error(commentErr, "Failed retrieving comments");
@@ -686,7 +694,7 @@ async function routes(app) {
       }
 
       return comments;
-    },
+    }
   );
 
   app.post(
@@ -715,7 +723,8 @@ async function routes(app) {
         name: actor.name,
         photo: actor.photo,
         type: actor.type,
-        verified: actor.verification && actor.verification.status === "approved"
+        verified:
+          actor.verification && actor.verification.status === "approved",
       };
 
       // Initial empty likes array
@@ -743,7 +752,7 @@ async function routes(app) {
 
       reply.code(201);
       return comment;
-    },
+    }
   );
 
   app.patch(
@@ -775,7 +784,7 @@ async function routes(app) {
       }
 
       return updatedComment;
-    },
+    }
   );
 
   app.delete(
@@ -810,7 +819,7 @@ async function routes(app) {
       } = await Comment.deleteMany({ parentId: commentId });
       if (deleteNestedOk !== 1) {
         app.log.error(
-          `Failed removing nested comments for deleted comment=${commentId}`,
+          `Failed removing nested comments for deleted comment=${commentId}`
         );
       }
 
@@ -819,7 +828,7 @@ async function routes(app) {
         deletedCount: deletedNestedCount + 1,
         success: true,
       };
-    },
+    }
   );
 
   app.put(
@@ -838,8 +847,8 @@ async function routes(app) {
         Comment.findOneAndUpdate(
           { _id: commentId },
           { $addToSet: { likes: actor._id } },
-          { new: true },
-        ),
+          { new: true }
+        )
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed liking comment");
@@ -850,7 +859,7 @@ async function routes(app) {
         likes: updatedComment.likes,
         likesCount: updatedComment.likes.length,
       };
-    },
+    }
   );
 
   app.delete(
@@ -869,8 +878,8 @@ async function routes(app) {
         Comment.findOneAndUpdate(
           { _id: commentId },
           { $pull: { likes: actor._id } },
-          { new: true },
-        ),
+          { new: true }
+        )
       );
       if (updateErr) {
         req.log.error(updateErr, "Failed unliking comment");
@@ -881,7 +890,7 @@ async function routes(app) {
         likes: updatedComment.likes,
         likesCount: updatedComment.likes.length,
       };
-    },
+    }
   );
 }
 

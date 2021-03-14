@@ -48,11 +48,8 @@ const postsReducer = (state = innitialState, action) => {
 
     case POSTS_ACTIONS.FETCH_PROFILE_POSTS_SUCCESS: {
       let { posts, userId, objective, mode } = action.payload;
-      console.log("&&&&&&&&&&&&&&&&&&&&&&&&&");
       objective = getProfileObjectiveProp(objective);
       mode = getProfileModeProp(mode);
-      console.log("************************");
-      console.log(objective, mode);
       return {
         ...state,
         error: null,
