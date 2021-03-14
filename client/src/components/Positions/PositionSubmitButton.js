@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
-import LinkButton from "./LinkButton";
+import LinkButton from "components/Button/LinkButton";
 import styled from "styled-components";
 import { mq, theme } from "constants/theme";
 import { Column } from "react-virtualized";
+import PositionSubmitModal from "components/Positions/PositionSubmitModal";
 const { lighterBlack } = theme.colors;
 const { lightGrey } = theme.colors;
 const { display, body } = theme.typography.font.family;
@@ -74,7 +75,7 @@ const StyledSubmitButton = styled.button`
 
 
 
-const SubmitExample = ({ getGTM, t, props }) => {
+const PositionSubmitButton = ({ getGTM, t, props }) => {
 
   // 't' comes from 'AboutUs' scope for translation
   const [visible, setVisible] = useState(false);
@@ -85,6 +86,7 @@ const SubmitExample = ({ getGTM, t, props }) => {
   };
 
   const showPopUp = async (e) => {
+
     setVisible(true);
   };
 
@@ -92,10 +94,12 @@ const SubmitExample = ({ getGTM, t, props }) => {
     console.log("submit")
   };
   const handleCancelTwo = async (e) => {
+    
     setVisibleTwo(false);
   };
 
   const showPopUpTwo = async (e) => {
+    handleCancel()
     setVisibleTwo(true);
   };
 
@@ -109,12 +113,12 @@ const SubmitExample = ({ getGTM, t, props }) => {
   return (
     <>
       <LinkButton
-        id={getGTM("getInvolved")}
+        id={getGTM("Submit1")}
         type="primary"
         shape="round"
         onClick={showPopUp}
       >
-        {t("getInvolved")}
+        {"Submit - Confirm"}
       </LinkButton>
       <Modal
         style={{ border: "3rem" }}
@@ -129,17 +133,17 @@ const SubmitExample = ({ getGTM, t, props }) => {
           <br></br>
           <p>Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.</p>
           <StyledCancelButton onClick={handleCancel} > Exit </StyledCancelButton>
-          <StyledSubmitButton onClick={handleClick} > Cancel  </StyledSubmitButton>
+          <StyledSubmitButton onClick={showPopUpTwo} > Submit  </StyledSubmitButton>
         </StyledContainer>
       </Modal>
-      <LinkButton
+      {/* <LinkButton
         id={getGTM("getInvolved")}
         type="primary"
         shape="round"
         onClick={showPopUpTwo}
       >
-        {t("getInvolved")}
-      </LinkButton>
+        {"Application Submitted"}
+      </LinkButton> */}
       <Modal
         style={{ border: "3rem" }}
         visible={visibletwo}
@@ -153,12 +157,13 @@ const SubmitExample = ({ getGTM, t, props }) => {
           <br></br>
           <p>Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.</p>
           <StyledCancelButton onClick={handleCancel} > Cancel </StyledCancelButton>
-          <StyledSubmitButton onClick={handleClick} > Submit  </StyledSubmitButton>
+          <StyledSubmitButton onClick={showPopUpTwo} > Submit  </StyledSubmitButton>
         </StyledContainer>
       </Modal>
+      
 
     </>
   );
 };
 
-export default SubmitExample;
+export default PositionSubmitButton;
