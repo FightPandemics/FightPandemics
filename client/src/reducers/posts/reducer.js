@@ -10,6 +10,25 @@ const innitialState = {
   profilePosts: {},
 };
 
+export const getProfileObjectiveProp = (view) => {
+  // convert 'request' or 'offer' tab to requests or offers prop name
+  const viewMap = {
+    request: "requests",
+    offer: "offers",
+  };
+  return viewMap[view];
+};
+
+export const getProfileModeProp = (mode) => {
+  // convert I, A, undefined to active, inactive, all
+  const modeMap = {
+    A: "active",
+    IA: "inactive",
+    undefined: "all",
+  };
+  return modeMap[mode];
+};
+
 const postsReducer = (state = innitialState, action) => {
   switch (action.type) {
     case POSTS_ACTIONS.FETCH_POSTS_BEGIN:
@@ -26,114 +45,31 @@ const postsReducer = (state = innitialState, action) => {
         isLoading: false,
       };
     }
-    case POSTS_ACTIONS.FETCH_REQUESTS_ACTIVE_SUCCESS: {
-      const { payload } = action;
+
+    case POSTS_ACTIONS.FETCH_PROFILE_POSTS_SUCCESS: {
+      let { posts, userId, objective, mode } = action.payload;
+      console.log("&&&&&&&&&&&&&&&&&&&&&&&&&");
+      objective = getProfileObjectiveProp(objective);
+      mode = getProfileModeProp(mode);
+      console.log("************************");
+      console.log(objective, mode);
       return {
         ...state,
         error: null,
         profilePosts: {
           ...state.profilePosts,
-          [payload.userId]: {
-            ...state.profilePosts[payload.userId],
-            requests: {
-              ...state.profilePosts[payload.userId]?.requests,
-              active: payload.posts,
-            }
-          }
+          [userId]: {
+            ...state.profilePosts[userId],
+            [objective]: {
+              ...state.profilePosts[userId]?.[objective],
+              [mode]: posts,
+            },
+          },
         },
         isLoading: false,
       };
     }
-    case POSTS_ACTIONS.FETCH_REQUESTS_INACTIVE_SUCCESS: {
-      const { payload } = action;
-      return {
-        ...state,
-        error: null,
-        profilePosts: {
-          ...state.profilePosts,
-          [payload.userId]: {
-            ...state.profilePosts[payload.userId],
-            requests: {
-              ...state.profilePosts[payload.userId]?.requests,
-              inactive: payload.posts,
-            }
-          }
-        },
-        isLoading: false,
-      };
-    }
-    case POSTS_ACTIONS.FETCH_OFFERS_ACTIVE_SUCCESS: {
-      const { payload } = action;
-      return {
-        ...state,
-        error: null,
-        profilePosts: {
-          ...state.profilePosts,
-          [payload.userId]: {
-            ...state.profilePosts[payload.userId],
-            offers: {
-              ...state.profilePosts[payload.userId]?.offers,
-              active: payload.posts,
-            }
-          }
-        },
-        isLoading: false,
-      };
-    }
-    case POSTS_ACTIONS.FETCH_OFFERS_INACTIVE_SUCCESS: {
-      const { payload } = action;
-      return {
-        ...state,
-        error: null,
-        profilePosts: {
-          ...state.profilePosts,
-          [payload.userId]: {
-            ...state.profilePosts[payload.userId],
-            offers: {
-              ...state.profilePosts[payload.userId]?.offers,
-              inactive: payload.posts,
-            }
-          }
-        },
-        isLoading: false,
-      };
-    }
-    case POSTS_ACTIONS.FETCH_POSTS_REQUESTS_SUCCESS: {
-      const { payload } = action;
-      return {
-        ...state,
-        error: null,
-        profilePosts: {
-          ...state.profilePosts,
-          [payload.userId]: {
-            ...state.profilePosts[payload.userId],
-            requests: {
-              ...state.profilePosts[payload.userId]?.requests,
-              all: payload.posts,
-            }
-          }
-        },
-        isLoading: false,
-      };
-    }
-    case POSTS_ACTIONS.FETCH_POSTS_OFFERS_SUCCESS: {
-      const { payload } = action;
-      return {
-        ...state,
-        error: null,
-        profilePosts: {
-          ...state.profilePosts,
-          [payload.userId]: {
-            ...state.profilePosts[payload.userId],
-            offers: {
-              ...state.profilePosts[payload.userId]?.offers,
-              all: payload.posts,
-            }
-          }
-        },
-        isLoading: false,
-      };
-    }
+
     case POSTS_ACTIONS.FETCH_POSTS_ERROR: {
       const { payload } = action;
       return {

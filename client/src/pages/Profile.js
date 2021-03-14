@@ -55,6 +55,7 @@ import {
   DesktopMenuWrapper,
   StyledMobileMenuContainer,
 } from "../components/Profile/ProfileComponents";
+
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -63,7 +64,12 @@ import {
   GITHUB_URL,
 } from "constants/urls";
 
-import { selectPosts, postsActions } from "reducers/posts";
+import {
+  selectPosts,
+  postsActions,
+  getProfileObjectiveProp,
+  getProfileModeProp,
+} from "reducers/posts";
 
 import {
   fetchUser,
@@ -154,7 +160,6 @@ const Profile = ({
   const { t } = useTranslation();
 
   //react-virtualized loaded rows and row count.
-  const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
 
@@ -203,13 +208,16 @@ const Profile = ({
 
   let filteredPost = [];
 
-  const convertToObjectPost = useCallback((postArray) => {
-    let temp = postArray.reduce((map, obj) => {
-      map[obj._id] = obj;
-      return map;
-    }, {});
-    return temp;
-  }, [posts.profilePosts, sectionView, internalTab, user]);
+  const convertToObjectPost = useCallback(
+    (postArray) => {
+      let temp = postArray.reduce((map, obj) => {
+        map[obj._id] = obj;
+        return map;
+      }, {});
+      return temp;
+    },
+    [posts.profilePosts, sectionView, internalTab, user]
+  );
 
   const getView = useCallback(() => {
     return sectionView.toUpperCase() !== "POSTS"
@@ -222,8 +230,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-          ? "A"
-          : "D";
+        ? "A"
+        : "D";
     }
     return undefined;
   }, [sectionView, internalTab, actorId, userId, isInit]);
@@ -276,7 +284,7 @@ const Profile = ({
         gtm: "posts",
       });
       setSectionView(t("profile.views.posts"));
-      setInternalTab('Requests');
+      setInternalTab("Requests");
     }
     setNavMenu(baseMenu);
     setIsInit(true);
@@ -314,7 +322,6 @@ const Profile = ({
       try {
         if (userId) {
           let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
-          // const childTab = "Requests";
           const view = getView();
 
           const objURL = `&objective=${view}`;
@@ -329,54 +336,14 @@ const Profile = ({
 
           if (!_isMounted) {
             //mobile fetch
-            if (view === "request") {
-              if (mode === "A") {
-                dispatch(
-                  postsActions.fetchRequestsActiveSuccess({
-                    posts: [...filteredPost, ...posts],
-                    userId,
-                  })
-                );
-              } else if (mode === "IA") {
-                dispatch(
-                  postsActions.fetchRequestsInactiveSuccess({
-                    posts: [...filteredPost, ...posts],
-                    userId,
-                  })
-                );
-              } else {
-                dispatch(
-                  postsActions.fetchPostsRequestsSuccess({
-                    posts: [...filteredPost, ...posts],
-                    userId,
-                  })
-                );
-              }
-            }
-            if (view === "offer") {
-              if (mode === "A") {
-                dispatch(
-                  postsActions.fetchOffersActiveSuccess({
-                    posts: [...filteredPost, ...posts],
-                    userId,
-                  })
-                );
-              } else if (mode === "IA") {
-                dispatch(
-                  postsActions.fetchOffersInactiveSuccess({
-                    posts: [...filteredPost, ...posts],
-                    userId,
-                  })
-                );
-              } else {
-                dispatch(
-                  postsActions.fetchPostsOffersSuccess({
-                    posts: [...filteredPost, ...posts],
-                    userId,
-                  })
-                );
-              }
-            }
+            dispatch(
+              postsActions.fetchProfilePostSuccess({
+                posts: [...filteredPost, ...posts],
+                userId,
+                objective: view,
+                mode: mode,
+              })
+            );
 
             //desktop fetch
             if (prevUserId !== userId) {
@@ -472,29 +439,11 @@ const Profile = ({
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
       const view = getView();
+      const filterView = getProfileObjectiveProp(view);
       const mode = getMode();
-      if (view === "request") {
-        if (mode === "A" && !posts.profilePosts[userId]?.requests?.active) {
-          setToggleRefetch(!toggleRefetch);
-        } else if (
-          mode === "IA" &&
-          !posts.profilePosts[userId]?.requests?.inactive
-        ) {
-          setToggleRefetch(!toggleRefetch);
-        } else if (!mode && !posts.profilePosts[userId]?.requests?.all) {
-          setToggleRefetch(!toggleRefetch);
-        }
-      } else if (view === "offer") {
-        if (mode === "A" && !posts.profilePosts[userId]?.offers?.active) {
-          setToggleRefetch(!toggleRefetch);
-        } else if (
-          mode === "IA" &&
-          !posts.profilePosts[userId]?.offers?.inactive
-        ) {
-          setToggleRefetch(!toggleRefetch);
-        } else if (!mode && !posts.profilePosts[userId]?.offers?.all) {
-          setToggleRefetch(!toggleRefetch);
-        }
+      const filterMode = getProfileModeProp(mode);
+      if (!posts.profilePosts?.[userId]?.[filterView]?.[filterMode]) {
+        setToggleRefetch(!toggleRefetch);
       }
     }
   };
@@ -517,7 +466,7 @@ const Profile = ({
     },
     [dispatch, isLoading, loadMore, filteredPost.length]
   );
-  
+
   const postDelete = async (post) => {
     let deleteResponse;
     const endPoint = `/api/posts/${post._id}`;
@@ -547,93 +496,59 @@ const Profile = ({
   };
 
   const handleCreatePostSuccess = (post) => {
-    if (post.objective === 'request') {
-      dispatch(
-        postsActions.fetchRequestsActiveSuccess({
-          posts: [post, ...posts.profilePosts[userId]?.requests?.active],
-          userId,
-        })
-      );
-      dispatch(
-        postsActions.fetchPostsRequestsSuccess({
-          posts: [post, ...posts.profilePosts[userId]?.requests?.all],
-          userId,
-        })
-      );
-    }
-    else {
-      dispatch(
-        postsActions.fetchOfferActiveSuccess({
-          posts: [post, ...posts.profilePosts[userId]?.offers?.active],
-          userId,
-        })
-      );
-      dispatch(
-        postsActions.fetchOfferRequestsSuccess({
-          posts: [post, ...posts.profilePosts[userId]?.offers?.all],
-          userId,
-        })
-      );
-    }
-  }
+    const objective = getProfileObjectiveProp(post.objective);
+    dispatch(
+      postsActions.fetchProfilePostSuccess({
+        posts: [post, ...posts.profilePosts?.[userId]?.[objective]?.active],
+        userId,
+        objective: post.objective,
+        mode: "A",
+      })
+    );
+    dispatch(
+      postsActions.fetchProfilePostSuccess({
+        posts: [post, ...posts.profilePosts?.[userId]?.[objective]?.all],
+        userId,
+        objective: post.objective,
+      })
+    );
+  };
 
   const isPostExpired = (post) => {
     if (!post.expiredAt) {
       return false;
     }
     return new Date(post.expiredAt).getTime() < new Date().getTime();
-  }
-  
+  };
+
   const handleDeletePostSuccess = (post) => {
-    if (post.objective === 'request') {
-      if (isPostExpired(post)) {
-        dispatch(
-          postsActions.fetchRequestsInactiveSuccess({
-            posts: posts.profilePosts[userId].requests.inactive.filter((curr) => curr._id != post._id),
-            userId,
-          })
-        );
-      }
-      else {
-        dispatch(
-          postsActions.fetchRequestsActiveSuccess({
-            posts: posts.profilePosts[userId].requests.active.filter((curr) => curr._id != post._id),
-            userId,
-          })
-        );
-      }
+    if (isPostExpired(post)) {
       dispatch(
-        postsActions.fetchPostsRequestsSuccess({
-          posts: (posts.profilePosts[userId]?.requests?.all ?? []).filter((curr) => curr._id != post._id),
+        postsActions.fetchProfilePostSuccess({
+          posts: filteredPost.filter((curr) => curr._id != post._id),
           userId,
+          objective: post.objective,
+          mode: "IA",
+        })
+      );
+    } else {
+      dispatch(
+        postsActions.fetchProfilePostSuccess({
+          posts: filteredPost.filter((curr) => curr._id != post._id),
+          userId,
+          objective: post.objective,
+          mode: "A",
         })
       );
     }
-    else {
-      if (isPostExpired(post)) {
-        dispatch(
-          postsActions.fetchOffersInactiveSuccess({
-            posts: posts.profilePosts[userId].offers.inactive.filter((curr) => curr._id != post._id),
-            userId,
-          })
-        );
-      }
-      else {
-        dispatch(
-          postsActions.fetchOffersActiveSuccess({
-            posts: posts.profilePosts[userId].offers.active.filter((curr) => curr._id != post._id),
-            userId,
-          })
-        );
-      }
-      dispatch(
-        postsActions.fetchPostsOffersSuccess({
-          posts: (posts.profilePosts[userId]?.offers?.all ?? []).filter((curr) => curr._id != post._id),
-          userId,
-        })
-      );
-    }
-  }
+    dispatch(
+      postsActions.fetchProfilePostSuccess({
+        posts: filteredPost.filter((curr) => curr._id != post._id),
+        userId,
+        objective: post.objective,
+      })
+    );
+  };
 
   const handlePostDelete = () => {
     deleteModalDispatch({
@@ -652,25 +567,11 @@ const Profile = ({
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
 
-  const mode = getMode();
   const view = getView();
-  if (view === "request") {
-    if (mode === "A") {
-      filteredPost = posts.profilePosts[userId]?.requests?.active ?? [];
-    } else if (mode === "IA") {
-      filteredPost = posts.profilePosts[userId]?.requests?.inactive ?? [];
-    } else {
-      filteredPost = posts.profilePosts[userId]?.requests?.all ?? [];
-    }
-  } else if (view === "offer") {
-    if (mode === "A") {
-      filteredPost = posts.profilePosts[userId]?.offers?.active ?? [];
-    } else if (mode === "IA") {
-      filteredPost = posts.profilePosts[userId]?.offers?.inactive ?? [];
-    } else {
-      filteredPost = posts.profilePosts[userId]?.offers?.all ?? [];
-    }
-  }
+  const filterView = getProfileObjectiveProp(view);
+  const mode = getMode();
+  const filterMode = getProfileModeProp(mode);
+  filteredPost = posts.profilePosts[userId]?.[filterView]?.[filterMode] ?? [];
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -685,8 +586,7 @@ const Profile = ({
     setInternalTab(childTab);
   };
 
-  const emptyFeed = () =>
-    filteredPost.length < 1 && !isLoading;
+  const emptyFeed = () => filteredPost.length < 1 && !isLoading;
 
   if (!actorId || !userId) {
     return <></>;
