@@ -31,7 +31,6 @@ const PostContent = ({
   maxPosts,
   handlePostDelete,
   isAuthenticated,
-  onDeleteSuccess,
   fromPage,
 }) => {
   const [hiddenPosts, setHiddenPosts] = useState(
@@ -121,7 +120,6 @@ const PostContent = ({
         visible={deleteModalVisibility}
         onOk={() => {
           handlePostDelete(toBeDeletedPost);
-          onDeleteSuccess(toBeDeletedPost);
           setToBeDeletedPost(null);
           setDeleteModalVisibility(false);
         }}
@@ -148,7 +146,6 @@ const PostTabCard = ({
   user,
   fromPage = true,
   handlePostDelete,
-  onDeleteSuccess,
   isAuthenticated,
   initialPage,
   onTabClick,
@@ -171,7 +168,6 @@ const PostTabCard = ({
             maxPosts={maxPosts}
             user={user}
             handlePostDelete={handlePostDelete}
-            onDeleteSuccess={onDeleteSuccess}
             isAuthenticated={isAuthenticated}
             fromPage={fromPage}
           />

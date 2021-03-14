@@ -239,7 +239,7 @@ const Profile = ({
   const isItemLoaded = useCallback((index) => !!filteredPost[index], [posts]);
 
   const buildNavMenu = () => {
-    if (actorId == null || userId == null) {
+    if (userId == null) {
       return;
     }
 
@@ -474,10 +474,7 @@ const Profile = ({
       try {
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
-          const allPosts = {
-            ...postsList,
-          };
-          delete allPosts[post._id];
+          handleDeletePostSuccess(post);
           setTotalPostCount(totalPostCount - 1);
           if (totalPostCount <= PAGINATION_LIMIT) {
             const isLoading = true;
@@ -588,7 +585,7 @@ const Profile = ({
 
   const emptyFeed = () => filteredPost.length < 1 && !isLoading;
 
-  if (!actorId || !userId) {
+  if (!userId) {
     return <></>;
   }
 
@@ -741,7 +738,6 @@ const Profile = ({
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
                     handlePostDelete={postDelete}
-                    onDeleteSuccess={handleDeletePostSuccess}
                   />
                 )}
                 {sectionView === "Offers" && (
@@ -762,7 +758,6 @@ const Profile = ({
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
                     handlePostDelete={postDelete}
-                    onDeleteSuccess={handleDeletePostSuccess}
                   />
                 )}
                 {sectionView === "Posts" && (
@@ -783,7 +778,6 @@ const Profile = ({
                     onTabClick={setTab}
                     fromPage={false}
                     handlePostDelete={postDelete}
-                    onDeleteSuccess={handleDeletePostSuccess}
                   />
                 )}
               </div>
