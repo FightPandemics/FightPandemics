@@ -126,14 +126,18 @@ const getGTM = (id) => {
 };
 
 const Positions = () => {
-    const address = "yooo"
+    const { orgProfileState, orgProfileDispatch } = useContext(
+        OrganisationContext,
+    );
+    const { error, loading, organisation } = orgProfileState;
+    const address = "adress"
     const about = "about"
     const verified = "verified"
     const renderURL = "renderURL"
     const isSelf = "isSELF"
     const name = "name"
     const { t: i18n } = useTranslation();
-    const i18nSCOPE = "Positions";
+    const i18nSCOPE = "positions";
     const t = React.useCallback((id, absolute = false) =>
         i18n(absolute ? id : `${i18nSCOPE}.${id}`),
     );
@@ -169,6 +173,7 @@ const Positions = () => {
                     </OrgCategory>
                 </CategoryBackgroup>
             </BackgroupContainer>
+            // Position title and description to be pulled from backend / api
             <PositionTitle>Volunteer Position</PositionTitle>
             <PositionDescription
                 className="positions-light-text"
@@ -187,4 +192,5 @@ const Positions = () => {
     );
 }
 
-export default Positions;
+//TODO - add user context
+export default withUserContext(withOrganisationContext(Positions));
