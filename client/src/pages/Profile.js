@@ -601,10 +601,8 @@ const Profile = ({
   const emptyFeed = () => filteredPost.length < 1 && !isLoading;
 
   if (authLoading == null || authLoading === true) {
-    console.log("NOT LOADING");
     return <></>;
   }
-  console.log("LOADED");
 
   return (
     <>
