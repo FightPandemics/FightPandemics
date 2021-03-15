@@ -122,7 +122,7 @@ const OrgBookEditorSpace = (props) => {
     ) {
       tinyMce.current.setContent(selectedPage?.content, { no_events: true });
     }
-  }, [selectedPage.content]);
+  }, [selectedPage?.content]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getHeaderPageName = () => {
     const status =
