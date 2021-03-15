@@ -205,7 +205,6 @@ const OrgBookEditorSpace = (props) => {
           {selectedPage ? (
             <Link
               onClick={() => {
-                //console.log("clicked rename page");
                 onUpdateAction(
                   UPDATE_ACTION_TYPES.renamePageType,
                   selectedPage.pageId,
@@ -250,7 +249,6 @@ const OrgBookEditorSpace = (props) => {
           {selectedPage ? (
             <Link
               onClick={() => {
-                //console.log("clicked save progress");
                 onUpdateAction(
                   selectedPage.status === PAGE_CATEGORIES.draftCategory
                     ? UPDATE_ACTION_TYPES.saveProgressType
@@ -276,6 +274,14 @@ const OrgBookEditorSpace = (props) => {
           <PublishButtonContainer
             onClick={(e) => {
               console.log("clicked publish");
+              onUpdateAction(
+                selectedPage.status === PAGE_CATEGORIES.draftCategory
+                  ? UPDATE_ACTION_TYPES.publishType
+                  : UPDATE_ACTION_TYPES.unpublishType,
+                selectedPage.pageId,
+                tinyMce.current.getContent(),
+                numberOfCharacters,
+              );
             }}
           >
             <PublishButtonLabel>

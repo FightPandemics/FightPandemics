@@ -9,6 +9,7 @@ const OrgBookConfirmModal = ({
   onConfirm,
   onCancelConfirm,
   UPDATE_ACTION_TYPES,
+  livePageExists,
 }) => {
   const { t } = useTranslation();
   let title = "";
@@ -23,6 +24,21 @@ const OrgBookConfirmModal = ({
       confirmPrompt = t("orgBook.confirmSaveProgressPrompt", { pageName });
       break;
 
+    case UPDATE_ACTION_TYPES.republishType:
+      title = t("orgBook.confirmRepublishTitle");
+      okText = t("orgBook.confirmRepublishOkText");
+      confirmPrompt = t("orgBook.confirmRepublishPrompt", { pageName });
+      break;
+
+    case UPDATE_ACTION_TYPES.publishType:
+      title = t("orgBook.confirmPublishTitle");
+      okText = t("orgBook.confirmPublishOkText");
+      confirmPrompt = livePageExists
+        ? t("orgBook.confirmPublishPromptLivePageExists", { pageName })
+        : t("orgBook.confirmPublishPromptNoLivePageYet", { pageName });
+
+      break;
+
     default:
       break;
   }
@@ -30,7 +46,7 @@ const OrgBookConfirmModal = ({
   return (
     selectedPage && (
       <Modal
-        width={300}
+        width={400}
         visible={visible}
         title={title}
         centered

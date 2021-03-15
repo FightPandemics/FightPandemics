@@ -49,6 +49,8 @@ const UPDATE_ACTION_TYPES = {
   saveProgressType: "saveProgress",
   republishType: "republish",
   renamePageType: "renamePage",
+  publishType: "publish",
+  unpublishType: "unpublish",
 };
 
 const MAX_PAGEGROUP_NUMBER = 5;
@@ -205,7 +207,14 @@ const OrgBookEditor = () => {
 
   const addFirstOrgBookDraftPage = (formData) => {
     let newPages = [];
-    const newOrgBookPage = getNewOrgBookPage(formData, 1);
+
+    const newOrgBookPage = getNewOrgBookPage(
+      formData.pagename,
+      1,
+      PAGE_CATEGORIES.draftCategory,
+      getContentForNewPage(formData.pagename),
+    );
+
     newPages.push(newOrgBookPage);
     setSelectedPage(newOrgBookPage);
     let orgBookPages = {
@@ -223,14 +232,14 @@ const OrgBookEditor = () => {
     );
   };
 
-  const getNewOrgBookPage = (formData, pageGroupNumber) => {
+  const getNewOrgBookPage = (pageName, pageGroupNumber, category, content) => {
     return {
       pageId: uuidv4(),
-      name: formData.pagename,
+      name: pageName,
       pageGroupNumber: pageGroupNumber,
-      status: PAGE_CATEGORIES.draftCategory,
+      status: category,
       locked: false,
-      content: getContentForNewPage(formData.pagename),
+      content: content,
       updated_by: "",
       updated_at: "",
       created_by: organisation.ownerId, //this will have to be filled in by be when editors exist
@@ -241,7 +250,14 @@ const OrgBookEditor = () => {
   const addNewOrgBookDraftPage = (formData) => {
     const highestPageIndex = getHighestPageGroupNumber();
     const newPageGroupNumber = highestPageIndex + 1;
-    const newOrgBookPage = getNewOrgBookPage(formData, newPageGroupNumber);
+
+    const newOrgBookPage = getNewOrgBookPage(
+      formData.pagename,
+      newPageGroupNumber,
+      PAGE_CATEGORIES.draftCategory,
+      getContentForNewPage(formData.pagename),
+    );
+
     currentOrgBookPages.push(newOrgBookPage);
     setSelectedPage(newOrgBookPage);
     let orgBookPages = {
@@ -256,7 +272,25 @@ const OrgBookEditor = () => {
   };
 
   const renameOrgBookPage = (formData) => {
-    console.log("fired renameOrgBookPage");
+    const oldOrgBookPages = [...currentOrgBookPages];
+    const newOrgBookPages = oldOrgBookPages.map((page) =>
+      page.pageGroupNumber === selectedPage.pageGroupNumber
+        ? {
+            ...page,
+            name: formData.pagename,
+            updated_by: organisation.ownerId,
+            updated_at: new Date().toLocaleString().replace(",", ""),
+          }
+        : page,
+    );
+    const orgBookPages = {
+      orgBookPages: newOrgBookPages,
+    };
+    setCurrentOrgBookPages(newOrgBookPages);
+    setSelectedPage(
+      newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
+    );
+    updateOrgBookPages(orgBookPages);
   };
 
   const updateOrgBookPages = async (orgBookPages) => {
@@ -326,16 +360,16 @@ const OrgBookEditor = () => {
     editedpageContent,
     numberOfCharacters,
   ) => {
-    console.log(
-      "action: " +
-        action +
-        ", editedPageId: " +
-        editedPageId +
-        ", editedpageContent: " +
-        editedpageContent +
-        ", no of chars: " +
-        numberOfCharacters,
-    );
+    // console.log(
+    //   "action: " +
+    //     action +
+    //     ", editedPageId: " +
+    //     editedPageId +
+    //     ", editedpageContent: " +
+    //     editedpageContent +
+    //     ", no of chars: " +
+    //     numberOfCharacters,
+    // );
     //setPageId(editedPageId);
     setMaxContentExceeded(false);
     setMinContentNotMet(false);
@@ -344,6 +378,8 @@ const OrgBookEditor = () => {
 
     switch (action) {
       case UPDATE_ACTION_TYPES.saveProgressType:
+      case UPDATE_ACTION_TYPES.republishType:
+      case UPDATE_ACTION_TYPES.publishType:
         if (numberOfCharacters >= MAX_CHARACTERS_OF_CONTENT) {
           setMaxContentExceeded(true);
           setInfoModalVisible(true);
@@ -368,8 +404,11 @@ const OrgBookEditor = () => {
   };
 
   const handleOnConfirm = (action) => {
+    let orgBookPages = {};
+
     switch (action) {
       case UPDATE_ACTION_TYPES.saveProgressType:
+      case UPDATE_ACTION_TYPES.republishType:
         const oldOrgBookPages = [...currentOrgBookPages];
         const newOrgBookPages = oldOrgBookPages.map((page) =>
           page.pageId === selectedPage.pageId
@@ -381,7 +420,7 @@ const OrgBookEditor = () => {
               }
             : page,
         );
-        const orgBookPages = {
+        orgBookPages = {
           orgBookPages: newOrgBookPages,
         };
         setCurrentOrgBookPages(newOrgBookPages);
@@ -389,6 +428,59 @@ const OrgBookEditor = () => {
           newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
         );
         updateOrgBookPages(orgBookPages);
+
+        break;
+
+      case UPDATE_ACTION_TYPES.publishType:
+        const livePageExists = currentOrgBookPages.some(
+          (page) =>
+            page.pageGroupNumber == selectedPage.pageGroupNumber &&
+            page.status === PAGE_CATEGORIES.liveCategory,
+        )
+          ? true
+          : false;
+
+        if (!livePageExists) {
+          //just create live page
+          const newOrgBookPage = getNewOrgBookPage(
+            selectedPage.name,
+            selectedPage.pageGroupNumber,
+            PAGE_CATEGORIES.liveCategory,
+            selectedPage.content,
+          );
+          currentOrgBookPages.push(newOrgBookPage);
+          setSelectedPage(newOrgBookPage);
+          orgBookPages = {
+            orgBookPages: currentOrgBookPages,
+          };
+          updateOrgBookPages(orgBookPages);
+        } else {
+          //overwrite existing live page
+          const oldOrgBookPages = [...currentOrgBookPages];
+          const newOrgBookPages = oldOrgBookPages.map((page) =>
+            page.pageGroupNumber === selectedPage.pageGroupNumber &&
+            page.status === PAGE_CATEGORIES.liveCategory
+              ? {
+                  ...page,
+                  content: selectedPage.content,
+                  updated_by: organisation.ownerId,
+                  updated_at: new Date().toLocaleString().replace(",", ""),
+                }
+              : page,
+          );
+          orgBookPages = {
+            orgBookPages: newOrgBookPages,
+          };
+          setCurrentOrgBookPages(newOrgBookPages);
+          setSelectedPage(
+            newOrgBookPages.find(
+              (page) =>
+                page.pageGroupNumber === selectedPage.pageGroupNumber &&
+                page.status === PAGE_CATEGORIES.liveCategory,
+            ),
+          );
+          updateOrgBookPages(orgBookPages);
+        }
 
         break;
 
@@ -442,6 +534,14 @@ const OrgBookEditor = () => {
   };
 
   const renderConfirmModal = () => {
+    const livePageExists = currentOrgBookPages.some(
+      (page) =>
+        page.pageGroupNumber == selectedPage.pageGroupNumber &&
+        page.status === PAGE_CATEGORIES.liveCategory,
+    )
+      ? true
+      : false;
+
     return (
       <Background>
         <OrgBookConfirmModal
@@ -451,6 +551,7 @@ const OrgBookEditor = () => {
           onCancelConfirm={handleOnCancelConfirm}
           onConfirm={handleOnConfirm}
           UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
+          livePageExists={livePageExists}
         />
       </Background>
     );

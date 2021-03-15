@@ -450,9 +450,16 @@
     "minContentNotMetSecondLine": "Minimum characters required: {{minChars}}.",
     "minContentNotMetThirdLine": "Current number of content characters: {{noOfContentChars}}.",
     "minContentNotMetFourthLine": "Please increase content and try again.",
-    "confirmSaveProgressTitle": "Save Progress",
+    "confirmSaveProgressTitle": "Save Progress of Draft",
     "confirmSaveProgressOkText": "Save",
-    "confirmSaveProgressPrompt": "Save Progress on {{pageName}}?"
+    "confirmSaveProgressPrompt": "Save Progress on {{pageName}}?",
+    "confirmRepublishTitle": "Republish Live Page",
+    "confirmRepublishOkText": "Republish",
+    "confirmRepublishPrompt": "Republish for new content on live page: {{pageName}}?  This will not affect any existing draft for this page.",
+    "confirmPublishTitle": "Publish Draft Page As Live",
+    "confirmPublishOkText": "Publish",
+    "confirmPublishPromptNoLivePageYet": "Publish content for: {{pageName}}?  This will create a live page for this draft.",
+    "confirmPublishPromptLivePageExists": "Publish content for: {{pageName}}?  Warning - This will overwrite the live page for this draft."
   },
   "auth": {
     "signIn": "Sign In",
