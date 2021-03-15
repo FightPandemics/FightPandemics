@@ -44,32 +44,12 @@ import VerificationTick from "components/Verification/Tick";
 import SvgIcon from "components/Icon/SvgIcon";
 
 import Loader from "components/Feed/StyledLoader";
+
+//addded z to in order import constants with sanme name for banner styles from Org profile
+
 import {
-    ProfileLayout,
-    UserInfoContainer,
-    EditIcon,
-    UserInfoDesktop,
-    NameDiv,
-    PlaceholderIcon,
-    DescriptionDesktop,
-    IconsContainer,
-    SocialIcon,
-    SectionHeader,
-    CreatePostDiv,
-    CreatePostIcon,
-    DrawerHeader,
-    CustomDrawer,
-    PhotoUploadButton,
-    AvatarPhotoContainer,
-    NamePara,
-    PositionsBackgroup,
-    PageTitle,
-    TitleContainer,
     PositionsContainer,
-    CategoryBackgroup,
-    BackgroupContainer,
     PositionTitle,
-    OrgCategory,
     PositionDescription
 } from "../components/Profile/PositionsComponents";
 import { isAuthorOrg, isAuthorUser } from "pages/Feed";
@@ -118,6 +98,29 @@ import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import ApplyButton from "components/Positions/PositionsButton";
 import PositionSubmitButton from "components/Positions/PositionSubmitButton"
 
+//Snippet from Organisation Profile to bring in banner design
+
+import {
+    ProfileLayout,
+    UserInfoContainer,
+    EditIcon,
+    UserInfoDesktop,
+    NameDiv,
+    PlaceholderIcon,
+    DescriptionDesktop,
+    IconsContainer,
+    SocialIcon,
+    SectionHeader,
+    CreatePostDiv,
+    CreatePostIcon,
+    DrawerHeader,
+    CustomDrawer,
+    PhotoUploadButton,
+    AvatarPhotoContainer,
+    NamePara,
+    ProfileBackgroup,
+} from "../components/Profile/ProfileComponents";
+
 
 let url = window.location.pathname.split("/");
 const organisationId = url[url.length - 2];
@@ -131,65 +134,129 @@ const Positions = () => {
     );
     const { error, loading, organisation } = orgProfileState;
     const address = "adress"
-    const about = "about"
-    const verified = "verified"
-    const renderURL = "renderURL"
-    const isSelf = "isSELF"
-    const name = "name"
+    // const about = "about"
+    // const verified = "verified"
+    // const renderURL = "renderURL"
+    // const isSelf = "isSELF"
+    // const name = "name"
 
+    const {
+        userProfileState: { user },
+        userProfileDispatch,
+    } = useContext(UserContext);
     const { t } = useTranslation();
+    const dispatch = useDispatch();
 
+    const {
+        email,
+        name,
+        location = {},
+        about = "",
+        isOwner,
+        urls = {},
+        verified,
+    } = organisation || {};
+
+    useEffect(() => {
+        dispatch(postsActions.resetPageAction({}));
+        (async function fetchOrgProfile() {
+            orgProfileDispatch(fetchOrganisation());
+            userProfileDispatch(fetchUser());
+            try {
+                const res = await axios.get(`/api/organisations/${organisationId}`);
+                orgProfileDispatch(fetchOrganisationSuccess(res.data));
+            } catch (err) {
+                const message = err.response?.data?.message || err.message;
+                const translatedErrorMessage = t([
+                    `error.${message}`,
+                    `error.http.${message}`,
+                ]);
+                orgProfileDispatch(
+                    fetchOrganisationError(
+                        `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+                    ),
+                );
+            }
+        })();
+        (async function fetchUserProfile() {
+            userProfileDispatch(fetchUser());
+            try {
+                const res = await axios.get("/api/users/current");
+                userProfileDispatch(fetchUserSuccess(res.data));
+            } catch (err) {
+                const message = err.response?.data?.message || err.message;
+                const translatedErrorMessage = t([
+                    `error.${message}`,
+                    `error.http.${message}`,
+                ]);
+                userProfileDispatch(
+                    fetchUserError(
+                        `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+                    ),
+                );
+            }
+        })();
+    }, [orgProfileDispatch, organisationId, userProfileDispatch]);
 
     return (
-        <PositionsContainer>
-            <TitleContainer>
-                {
-                    // link depends on data is stored
-                }
-                <Link to={`/organisation/${organisationId}`}>
-                    <SvgIcon src={BackIcon} />
-                </Link>
-                {<PageTitle>{t("positions.positions")}</PageTitle>}
-            </TitleContainer>
-            <BackgroupContainer>
-                <PositionsBackgroup>
-                    <AvatarPhotoContainer>
-                        <ProfilePic
-                            user="TES"
-                            initials={getInitialsFromFullName(name)}
-                        />
-                    </AvatarPhotoContainer>
-                    <NamePara>{name}</NamePara>
-                </PositionsBackgroup>
-                <CategoryBackgroup>
-                    <OrgCategory
-                        className="positions-light-text"
-                    >{// Type / Field from backend
-                        }
-                        {"Emergency Relief / International Assistance"}
-                    </OrgCategory>
-                </CategoryBackgroup>
-            </BackgroupContainer>
-            {// Position title and description to be pulled from backend / API
-            }
-            <PositionTitle>Volunteer Position</PositionTitle>
-            <PositionDescription
-                className="positions-light-text"
-            >
-                Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.
+        <>
+            <ProfileBackgroup />
+            <ProfileLayout>
+
+
+
+
+                <PositionsContainer>
+                    {//Old Desgin
+                    }
+                    <UserInfoContainer>
+                        <AvatarPhotoContainer>
+                            <ProfilePic
+                                user={organisation}
+                                initials={getInitialsFromFullName(name)}
+                            />
+
+                        </AvatarPhotoContainer>
+                        <UserInfoDesktop>
+                            <NameDiv>
+                                <div className="name-container">
+                                    <NamePara>
+                                        {name}
+                                    </NamePara>
+                                    {address && (
+                                        <div title={address} className="address-container">
+                                            <img src={locationIcon} alt={address} />
+                                            {address}
+                                        </div>
+                                    )}
+                                </div>
+                            </NameDiv>
+                            {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+                            <IconsContainer>
+                                <div className="social-icons">{"renderURL()"}</div>
+                            </IconsContainer>
+                        </UserInfoDesktop>
+                    </UserInfoContainer>
+                    {// Position title and description to be pulled from backend / API
+                    }
+                    <PositionTitle>Volunteer Position</PositionTitle>
+                    <PositionDescription>
+                        <p>Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.
                 <br /><br />
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mauris lectus, posuere at nunc non, bibendum iaculis dolor. Vivamus faucibus lacus nec malesuada volutpat.
                 <br /><br />
-                Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.~
-            </PositionDescription >
-            <ApplyButton>Apply</ApplyButton>
-            {
-                //Testing Position Submit
-            }
-            <PositionSubmitButton
-                getGTM={getGTM} t={t}>
-            </PositionSubmitButton>
-        </PositionsContainer >
+                Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.</p>
+                    </PositionDescription >
+                    <ApplyButton>Apply</ApplyButton>
+                    {
+                        //Testing Position Submit
+                    }
+                    <PositionSubmitButton
+                        getGTM={getGTM} t={t}>
+                    </PositionSubmitButton>
+                </PositionsContainer >
+            </ProfileLayout>
+        </>
     );
 }
 

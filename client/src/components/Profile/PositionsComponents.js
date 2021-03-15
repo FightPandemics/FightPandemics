@@ -329,13 +329,14 @@ export const PageTitle = styled(TextLabel)`
 export const PositionsContainer = styled.div`
   width: 90%;
   
-  .positions-light-text {
-    font-family: 'Work Sans','Courier New', Courier, monospace;
+  p {
+    color: ${colors.black};
+    font-size: 1.6rem;
     font-weight: 400;
-    font-size: 1.2rem;
-    letter-spacing: .04;
-    color: ${colors.darkishGray};
-    opacity: 70%;
+    color: ${colors.black};
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      font-size: 1.2rem;
+  }
   }
 `;
 
