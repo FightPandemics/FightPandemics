@@ -67,9 +67,14 @@ export const CreatePostDiv = styled.div`
 
 export const SocialIcon = styled(SvgIcon)`
   align-self: flex-end;
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   margin-right: 1.6rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    margin-top: 1rem;
+    width: 3rem;
+    height: 3rem;
+  }
 `;
 
 export const NameDiv = styled(TextLabel)`
@@ -87,7 +92,7 @@ export const NameDiv = styled(TextLabel)`
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     padding: 0;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     flex-direction: column;
   }
 
@@ -100,12 +105,14 @@ export const NameDiv = styled(TextLabel)`
   .address-container {
     color: #939393;
     font-weight: 400;
+    margin-top: auto;
     font-size: 1.4rem;
     line-height: 1.8rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100% - 1.6rem);
+    backgroun-color: red;
 
     img {
       margin-right: 0.8rem;
@@ -117,13 +124,28 @@ export const NamePara = styled.p`
   overflow-wrap: break-word;
   margin: 0 !important;
   text-align: left;
-  max-width: 90%;
+  max-width: 70%;
   margin-top: 1rem;
+  font-family: Poppins;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 2.7rem;
+  line-height: 3rem;
+  color: #282828;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     padding: 0;
-    font-size: 2.2rem;
-    line-height: 2.8rem;
+    overflow-wrap: break-word;
+    margin: 0 !important;
+    text-align: left;
+    max-width: 90%;
+    margin-top: 1rem;
+    font-family: Poppins;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.9rem;
+    line-height: 1.9rem;
+    letter-spacing: 0.05rem;
   }
 `;
 
@@ -134,6 +156,7 @@ export const EditIcon = styled(SvgIcon)`
   right: 2.8rem;
   top: 2.4rem;
 `;
+
 
 export const ProfileBackgroup = styled.div`
   background-color: ${colors.royalBlue};
@@ -170,7 +193,7 @@ export const IconsContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2.4rem;
+  margin-top: 1rem;
   ${(props) => (props.inCard ? `padding-bottom: 2rem;` : "")}
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     flex-direction: ${(props) => (props.inCard ? "row" : "column")};
@@ -198,7 +221,6 @@ export const HelpContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin-bottom: 1.6rem;
   }
-
   & > div {
     background: #f3f4fe;
     border-radius: 4px;
@@ -218,7 +240,9 @@ export const UserInfoContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  border-radius: 0.8rem;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
 `;
 
 export const AvatarPhotoContainer = styled.fieldset`
@@ -257,10 +281,58 @@ export const UserInfoDesktop = styled.div`
 `;
 
 export const DescriptionDesktop = styled.div`
-  margin-top: 2.4rem;
-  font-size: 1.4rem;
-  line-height: 2rem;
-  color: ${colors.darkerGray};
+  margin-top: 1rem;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.2rem;
+  line-height: 140%;
+  color: #939393;
+
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    margin-top: 2rem;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.5rem;
+    // line-height: 2rem;
+    line-height: 140%;
+    color: #282828;
+  }
+`;
+export const MobileLocation = styled.div`
+color: #939393;
+font-weight: normal;
+font-family: Poppins;
+margin-top: 0.5rem;
+font-size: 1.1rem;
+line-height: 140%;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: calc(100% - 1.6rem);
+
+img {
+  margin-right: 0.5rem;
+}
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
+`;
+export const DesktopLocation = styled.div`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    width: auto;
+    height: 1.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.1rem;
+    line-height: 1rem;
+  }
 `;
 
 export const MobileMenuWrapper = styled(Menu)`

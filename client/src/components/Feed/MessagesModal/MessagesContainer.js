@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { mq, theme } from "constants/theme";
 
 const primaryColor = theme?.colors?.royalBlue;
+const whiteColor = theme?.colors?.offWhite;
 
 export const MsgModal = styled(Modal)`
   min-width: 580px;
@@ -221,7 +222,22 @@ export const FailedModal = styled(SuccessModal)`
 `;
 
 export const PrivateMessageContainer = styled.div`
+  position: relative;
   cursor: pointer;
+  font-family: "Poppins",sans-serif;
+     
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        justify-content: center;
+        width: 3.1rem;
+        height: 5.4rem;
+        position: absolute;
+        top: -2.5rem;
+        right: 5rem;
+        background: ${whiteColor};
+        border: none;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+      }
+
   :hover {
     color: #939393;
   }
@@ -230,51 +246,72 @@ export const PrivateMessageContainer = styled.div`
     position: relative;
     top: 0.28rem;
   }
-  span {
+  span.message {
+    font-family: Poppins;
     position: relative;
-    left: 0.7rem;
-    color: #939393;
+    left: 3rem;
+    bottom: 0.7rem;
+    font-size: 1.6rem;
+    color: white;
+    font-weight: 500;
+    line-height: 1.25rem;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       display: none;
     }
   }
+  img.blueenvelope {
+    position: absolute;
+    top: 26%;
+    right: 70%;
+    width: 2.1rem;
+    display: block;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: none;
+    }
+  }
+  img.whiteenvelope {
+    display: none;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      position: absolute;
+      display:inline-block;
+      top: 22%;
+      right: 22%;
+      width: 3rem;
+      display: block;
+    }
+  }
+  
 
   img,
   span {
     pointer-events: none;
   }
-
-  ${(props) =>
-    props.isFromUserCard
-      ? `
-    margin-left: 7.4rem;
-  `
-      : ""}
-
   ${(props) =>
     props.isFromProfile
       ? `
-      display: flex;
-      align-items: center;
-      border: 0.1rem solid ${theme.colors.royalBlue};
+      position: absolute;
+      top: -3rem;
+      height: 6rem;
+      width: 16rem;
+      right: 5rem;
+      background: #425AF2;
+      border: 4px solid #FFFFFF;
       box-sizing: border-box;
       border-radius: 4.6rem;
       padding: 0.8rem 2.8rem;
-      margin-left: 0;
-
+     
       @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        margin-top: 1rem;
         justify-content: center;
+        width: 3.1rem;
+        height: 5.4rem;
+        position: absolute;
+        top: -2.5rem;
+        right: 5rem;
+        background: ${whiteColor};
+        border: none;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
       }
-
-        span {
-          font-size: 1.4rem;
-          color: ${theme.colors.royalBlue};
-          font-weight: 500;
-          @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-            display: block;
-          }
-        }
+    }
       `
       : ""}
 `;

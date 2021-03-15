@@ -11,6 +11,7 @@ import {
 } from "./MessagesContainer";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import activeemail from "assets/icons/mail.svg";
+import whiteemail from "assets/icons/white_mail.svg"
 import { WebSocketContext } from "context/WebsocketContext";
 import { useTranslation } from "react-i18next";
 import TagManager from "react-gtm-module";
@@ -70,7 +71,6 @@ const MessageModal = ({
     sessionStorage.removeItem("msgModal");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const showModal = async () => {
     await setVisible(true);
     document.querySelector(".ant-modal-root").style.opacity = 0;
@@ -161,8 +161,9 @@ const MessageModal = ({
             isFromUserCard={isFromUserCard}
             id={gtmId}
           >
-            <img src={activeemail} alt={"message-icon"} />
-            <span>{t("messaging.message")}</span>
+            <img src={activeemail} className='whiteenvelope' alt={"message-icon"} />
+            <img src={whiteemail} className='blueenvelope' alt={"message-icon"} />
+            <span className='message'>{t("messaging.message")}</span>
           </PrivateMessageContainer>
           <MsgModal
             title={t("messaging.sendMessage")}
@@ -256,8 +257,9 @@ const MessageModal = ({
             isFromUserCard={isFromUserCard}
             id={gtmId}
           >
-            <img src={activeemail} alt={"message-icon"} />
-            <span>{t("messaging.message")}</span>
+            <img src={activeemail} className='whiteenvelope' alt={"message-icon"} />
+            <img src={whiteemail} className='blueenvelope' alt={"message-icon"} />
+            <span className='message'>{t("messaging.message")}</span>
           </PrivateMessageContainer>
         </Link>
       )}

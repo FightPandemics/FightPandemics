@@ -4,7 +4,7 @@ import { CameraOutlined } from "@ant-design/icons";
 import BaseButton from "../Button/BaseButton";
 import ReactCrop from "react-image-crop";
 import styled from "styled-components";
-import { theme } from "../../constants/theme";
+import { mq, theme } from "../../constants/theme";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import GTM from "constants/gtm-tags";
@@ -44,8 +44,14 @@ const CameraButtonUpload = styled.button`
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   border-radius: 50%;
+  border: 4px solid;
+  border-color: white;
+  box-shadow: 2px 2px whitesmoke;
   background-color: ${colors.royalBlue};
   cursor: pointer;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    border: none;
+  }
 `;
 
 function isImageFile(file) {

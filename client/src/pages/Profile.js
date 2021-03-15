@@ -51,6 +51,8 @@ import {
   PhotoUploadButton,
   AvatarPhotoContainer,
   NamePara,
+  DesktopLocation,
+  MobileLocation,
   MobileMenuWrapper,
   DesktopMenuWrapper,
   StyledMobileMenuContainer,
@@ -626,12 +628,14 @@ const Profile = ({
                   {firstName} {lastName}
                   {verified && <VerificationTick />}
                 </NamePara>
-                {address && (
-                  <div title={address} className="address-container">
-                    <img src={locationIcon} alt={address} />
-                    {address}
-                  </div>
-                )}
+                <DesktopLocation>
+                  {address && (
+                    <div title={address} className="address-container">
+                      <img src={locationIcon} alt={address} />
+                      {address}
+                    </div>
+                  )}
+                </DesktopLocation>
               </div>
               {isSelf && (
                 <EditIcon
@@ -641,21 +645,27 @@ const Profile = ({
                 />
               )}
               {!ownUser && (
-                <MessageModal
-                  isAuthenticated={isAuthenticated}
-                  isFromUserCard={"USER"}
-                  isFromProfile={true}
-                  postAuthorName={`${firstName} ${lastName}`}
-                  authorId={userId}
-                />
+                <>
+                  <MessageModal
+                    isAuthenticated={isAuthenticated}
+                    isFromUserCard={"USER"}
+                    isFromProfile={true}
+                    postAuthorName={`${firstName} ${lastName}`}
+                    authorId={userId}
+                  />
+                </>
               )}
             </NameDiv>
             {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+            <MobileLocation>
+              {address && (
+                <div title={address} className="address-container">
+                  <img src={locationIcon} alt={address} />
+                  {address}
+                </div>
+              )}
+            </MobileLocation>
             <IconsContainer>
-              <HelpContainer>
-                {needHelp && <div>{t("profile.individual.needHelp")}</div>}
-                {offerHelp && <div> {t("profile.individual.wantHelp")}</div>}
-              </HelpContainer>
               <div className="social-icons">
                 {Object.entries(urls).map(([name, url]) => {
                   return (
