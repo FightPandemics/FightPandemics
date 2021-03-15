@@ -115,7 +115,7 @@ import { selectOrganisationId } from "reducers/session";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import JoinOrgButton from "components/OrganisationProfile/JoinOrgButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
-import ApplyButton from "components/Positions/ApplyButton";
+import ApplyButton from "components/Positions/PositionsButton";
 import PositionSubmitButton from "components/Positions/PositionSubmitButton"
 
 
@@ -136,11 +136,8 @@ const Positions = () => {
     const renderURL = "renderURL"
     const isSelf = "isSELF"
     const name = "name"
-    const { t: i18n } = useTranslation();
-    const i18nSCOPE = "positions";
-    const t = React.useCallback((id, absolute = false) =>
-        i18n(absolute ? id : `${i18nSCOPE}.${id}`),
-    );
+
+    const { t } = useTranslation();
 
 
     return (
@@ -152,7 +149,7 @@ const Positions = () => {
                 <Link to={`/organisation/${organisationId}`}>
                     <SvgIcon src={BackIcon} />
                 </Link>
-                {<PageTitle>Positions</PageTitle>}
+                {<PageTitle>{t("positions.positions")}</PageTitle>}
             </TitleContainer>
             <BackgroupContainer>
                 <PositionsBackgroup>
@@ -173,7 +170,8 @@ const Positions = () => {
                     </OrgCategory>
                 </CategoryBackgroup>
             </BackgroupContainer>
-            // Position title and description to be pulled from backend / api
+            {// Position title and description to be pulled from backend / API
+            }
             <PositionTitle>Volunteer Position</PositionTitle>
             <PositionDescription
                 className="positions-light-text"
@@ -185,6 +183,9 @@ const Positions = () => {
                 Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.~
             </PositionDescription >
             <ApplyButton>Apply</ApplyButton>
+            {
+                //Testing Position Submit
+            }
             <PositionSubmitButton
                 getGTM={getGTM} t={t}>
             </PositionSubmitButton>

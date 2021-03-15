@@ -14,37 +14,50 @@ const PositionSubmitModal = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 
   h2 {
     font-family: ${display};
-    font-size: 2.3rem;
-    font-weight: 600;
+    font-size: 1.6rem;
+    font-weight: 500;
     line-height: 1.17;
     text-align: center;
-    /* margin-bottom: 10rem !important; */
+    margin-bottom: 1.4rem;
     color: ${lighterBlack};
   }
+
   p {
     width: 100%;
+    text-align: center;
     font-family: ${body};
     font-size: 1.3rem;
-    font-weight: light;
+    font-weight: 400;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1;
+    line-height: 1.8rem;
     letter-spacing: normal;
     margin: 0 auto;
+    margin-bottom: 3.5rem;
     /* margin-top: -1.4rem; */
     display: flex;
     justify-content: center;
     color: ${lightGrey};
   }
+
   img {
     padding-bottom: 2rem;
 }
+
 button {
-    padding: 60rem;
+    
 }
+
+.am-button {
+    width: 15.7rem;
+    margin: auto;
+    margin-bottom: 1rem !important;
+    
+
 `;
 
 
@@ -76,12 +89,6 @@ const StyledSubmitButton = styled.button`
   right: 5rem;
   color: Blue;
 `;
-
-
-
-
-
-
 
 // const PositionSubmitModal = ({ getGTM, t, props }) => {
 
