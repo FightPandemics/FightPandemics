@@ -81,6 +81,7 @@ import {
 import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM, { post } from "constants/gtm-tags";
+import TagManager from "react-gtm-module";
 import Loader from "components/Feed/StyledLoader";
 import {
   selectOrganisationId,
@@ -142,13 +143,6 @@ const TAB_TYPE = {
 };
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-
-const gtmTagsMap = {
-  REQUESTS: `${GTM.profile.requests}`,
-  OFFERS: `${GTM.profile.offers}`,
-};
-
-const gtmTag = (tag) => GTM.profile.viewProfilePrefix + tag;
 
 const Profile = ({
   isAuthenticated,
@@ -244,6 +238,24 @@ const Profile = ({
     filteredPost,
   ]);
 
+  const pushTag = (tag) => {
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "ENV_PR_NAV_CLICK",
+        clickId:
+          GTM.user.profilePrefix +
+          GTM.profile[sectionView.toLowerCase()] +
+          GTM.profile[tag.toLowerCase()],
+      },
+    });
+    // clear dataLayer
+    TagManager.dataLayer({
+      dataLayer: {
+        event: null,
+        clickId: null,
+      },
+    });
+  };
   const buildNavMenu = () => {
     if (
       authLoading == null ||
@@ -596,6 +608,14 @@ const Profile = ({
   };
 
   const setTab = (childTab) => {
+    if (
+      childTab === "Offers" ||
+      childTab === "Requests" ||
+      childTab === "Active" ||
+      childTab === "Archived"
+    ) {
+      pushTag(childTab);
+    }
     setInternalTab(childTab);
   };
 

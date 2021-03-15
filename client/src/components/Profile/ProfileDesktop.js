@@ -44,7 +44,7 @@ const gtmTagsMap = {
   DRAFTS_OFRS: `${GTM.profile.offers + GTM.profile.draft}`,
 };
 
-const gtmTag = (tag) => GTM.user.profilePrefix + tag;
+const gtmTag = (tag) => GTM.user.profilePrefix + tag + GTM.profile.desktop;
 
 const ProfileDesktop = ({
   isAuthenticated,
