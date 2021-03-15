@@ -199,7 +199,7 @@ const Profile = ({
   if (ownUser) sessionStorage.removeItem("msgModal");
   const [deleteModal, deleteModalDispatch] = useReducer(
     deletePostModalreducer,
-    deletePostState
+    deletePostState,
   );
   const { deleteModalVisibility } = deleteModal;
 
@@ -213,22 +213,19 @@ const Profile = ({
 
   let filteredPost = [];
 
-  const convertToObjectPost = useCallback(
-    (postArray) => {
-      let temp = postArray.reduce((map, obj) => {
-        map[obj._id] = obj;
-        return map;
-      }, {});
-      return temp;
-    },
-    [posts.profilePosts, sectionView, internalTab, user]
-  );
+  const convertToObjectPost = useCallback((postArray) => {
+    let temp = postArray.reduce((map, obj) => {
+      map[obj._id] = obj;
+      return map;
+    }, {});
+    return temp;
+  }, []);
 
   const getView = useCallback(() => {
     return sectionView.toUpperCase() !== "POSTS"
       ? lowerCase(sectionView).slice(0, -1)
       : lowerCase(internalTab).slice(0, -1);
-  }, [sectionView, internalTab, actorId, userId, isInit]);
+  }, [sectionView, internalTab]);
 
   const getMode = useCallback(() => {
     if (sectionView.toUpperCase() !== "POSTS") {
@@ -239,9 +236,11 @@ const Profile = ({
         : "D";
     }
     return undefined;
-  }, [sectionView, internalTab, actorId, userId, isInit]);
+  }, [sectionView, internalTab]);
 
-  const isItemLoaded = useCallback((index) => !!filteredPost[index], [posts]);
+  const isItemLoaded = useCallback((index) => !!filteredPost[index], [
+    filteredPost,
+  ]);
 
   const buildNavMenu = () => {
     if (
@@ -352,7 +351,7 @@ const Profile = ({
                 userId,
                 objective: view,
                 mode: mode,
-              })
+              }),
             );
 
             //desktop fetch
@@ -360,7 +359,7 @@ const Profile = ({
               dispatch(
                 postsActions.fetchPostsSuccess({
                   posts: [],
-                })
+                }),
               );
             }
             if (posts.length && meta.total) {
@@ -381,20 +380,20 @@ const Profile = ({
                 dispatch(
                   postsActions.fetchPostsSuccess({
                     posts: { ...postsList, ...loadedPosts },
-                  })
+                  }),
                 );
               } else {
                 dispatch(
                   postsActions.fetchPostsSuccess({
                     posts: { ...loadedPosts },
-                  })
+                  }),
                 );
               }
             } else if (prevUserId === userId && posts) {
               dispatch(
                 postsActions.fetchPostsSuccess({
                   posts: { ...postsList },
-                })
+                }),
               );
               dispatch(postsActions.finishLoadingAction());
             } else {
@@ -434,8 +433,8 @@ const Profile = ({
         ]);
         userProfileDispatch(
           fetchUserError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
-          )
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
@@ -474,7 +473,7 @@ const Profile = ({
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, filteredPost.length]
+    [dispatch, isLoading, loadMore, filteredPost.length],
   );
 
   const postDelete = async (post) => {
@@ -510,14 +509,14 @@ const Profile = ({
         userId,
         objective: post.objective,
         mode: "A",
-      })
+      }),
     );
     dispatch(
       postsActions.fetchProfilePostSuccess({
         posts: [post, ...posts.profilePosts?.[userId]?.[objective]?.all],
         userId,
         objective: post.objective,
-      })
+      }),
     );
   };
 
@@ -536,7 +535,7 @@ const Profile = ({
           userId,
           objective: post.objective,
           mode: "IA",
-        })
+        }),
       );
     } else {
       dispatch(
@@ -545,7 +544,7 @@ const Profile = ({
           userId,
           objective: post.objective,
           mode: "A",
-        })
+        }),
       );
     }
     dispatch(
@@ -553,7 +552,7 @@ const Profile = ({
         posts: filteredPost.filter((curr) => curr._id != post._id),
         userId,
         objective: post.objective,
-      })
+      }),
     );
   };
 
@@ -739,12 +738,12 @@ const Profile = ({
                     initialPage={internalTab}
                     cardContents={[
                       {
-                        title: "Active",
+                        title: t("profile.views.active"),
                         posts:
                           posts.profilePosts[userId]?.requests?.active ?? [],
                       },
                       {
-                        title: "Archived",
+                        title: t("profile.views.archived"),
                         posts:
                           posts.profilePosts[userId]?.requests?.inactive ?? [],
                       },
@@ -760,11 +759,11 @@ const Profile = ({
                     initialPage={internalTab}
                     cardContents={[
                       {
-                        title: "Active",
+                        title: t("profile.views.active"),
                         posts: posts.profilePosts[userId]?.offers?.active ?? [],
                       },
                       {
-                        title: "Archived",
+                        title: t("profile.views.archived"),
                         posts:
                           posts.profilePosts[userId]?.offers?.inactive ?? [],
                       },
@@ -780,11 +779,11 @@ const Profile = ({
                     initialPage={internalTab}
                     cardContents={[
                       {
-                        title: "Requests",
+                        title: t("profile.views.requests"),
                         posts: posts.profilePosts[userId]?.requests?.all ?? [],
                       },
                       {
-                        title: "Offers",
+                        title: t("profile.views.offers"),
                         posts: posts.profilePosts[userId]?.offers?.all ?? [],
                       },
                     ]}
