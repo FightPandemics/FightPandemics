@@ -3,10 +3,13 @@ import { useSelector } from "react-redux";
 import { Tabs } from "antd-mobile";
 import { Button } from "antd";
 import PostDropdownButton from "components/Feed/PostDropdownButton";
+import DeleteModal from "components/Feed/PostDeleteModal";
 import CreateReport from "components/CreateReport/CreateReport";
 import { formatDate } from "./utils";
 import { isAuthorOrg, isAuthorUser } from "utils/userInfo";
 import { selectActorId } from "reducers/session/selectors";
+import GTM from "constants/gtm-tags";
+import { useTranslation } from "react-i18next";
 import {
   StyledPostTabCard,
   StyledCardHeader,
@@ -31,15 +34,18 @@ const PostContent = ({
   fromPage,
 }) => {
   const [hiddenPosts, setHiddenPosts] = useState(
-    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {}
   );
   const [callReport, setCallReport] = useState(false);
+  const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
+  const [toBeDeletedPost, setToBeDeletedPost] = useState(null);
+  const { t } = useTranslation();
   const actorId = useSelector(selectActorId);
 
   const hidePost = (postId) => {
     localStorage.setItem(
       "hiddenPosts",
-      JSON.stringify({ ...hiddenPosts, [postId]: true }),
+      JSON.stringify({ ...hiddenPosts, [postId]: true })
     ); // objects are fast, better than looking for postId in an Array
     setHiddenPosts({ ...hiddenPosts, [postId]: true });
   };
@@ -63,7 +69,10 @@ const PostContent = ({
                   <PostDropdownButton
                     onHide={() => hidePost(post._id)}
                     onReport={() => setCallReport(true)}
-                    onDelete={handlePostDelete}
+                    onDelete={() => {
+                      setToBeDeletedPost(post);
+                      setDeleteModalVisibility(true);
+                    }}
                     fromPage={fromPage}
                     post={post}
                     user={user}
@@ -100,12 +109,32 @@ const PostContent = ({
       actorId,
       callReport,
       hidePost,
-    ],
+    ]
   );
 
   return (
     <StyledPostTabCard>
       <StyledCardBody>{content}</StyledCardBody>
+      <DeleteModal
+        title={t("post.deletePostConfirmationTitle")}
+        visible={deleteModalVisibility}
+        onOk={() => {
+          handlePostDelete(toBeDeletedPost);
+          setToBeDeletedPost(null);
+          setDeleteModalVisibility(false);
+        }}
+        onCancel={() => {
+          setToBeDeletedPost(null);
+          setDeleteModalVisibility(false);
+        }}
+        okText={t("post.deleteConfirmation")}
+        cancelText={t("post.cancel")}
+        okButtonProps={{
+          id: GTM.post.prefix + GTM.post.delete,
+        }}
+      >
+        <p>{t("post.deletePostConfirmation")}</p>
+      </DeleteModal>
     </StyledPostTabCard>
   );
 };
@@ -118,13 +147,23 @@ const PostTabCard = ({
   fromPage = true,
   handlePostDelete,
   isAuthenticated,
+  initialPage,
+  onTabClick,
 }) => {
-  const tabs = cardContents.map((item) => ({ title: item.title }));
+  const tabs = cardContents.map((item) => ({
+    title: item.title,
+    key: item.title,
+  }));
   return (
     <Container>
-      <Tabs tabs={tabs} initialPage={1}>
+      <Tabs
+        initialPage={initialPage || 0}
+        tabs={tabs}
+        onTabClick={(tab) => onTabClick(tab.title)}
+      >
         {cardContents.map((tab) => (
           <PostContent
+            key={tab.title}
             posts={tab.posts}
             maxPosts={maxPosts}
             user={user}

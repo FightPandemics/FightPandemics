@@ -177,14 +177,14 @@ export const IconsContainer = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     ${(props) =>
-      props.inCard
-        ? `
+    props.inCard
+      ? `
     img {
       width: 2rem;
       height: 2rem;
     }
     `
-        : ""};
+      : ""};
   }
 
   .social-icons {
@@ -340,13 +340,13 @@ export const ChildMenuWrapper = styled(Menu)`
 
   &.ant-menu {
     ${({ isMobile }) =>
-      isMobile
-        ? `
+    isMobile
+      ? `
       border-top: 0.2rem solid ${theme.colors.lightGray};
       width: 100%;
       border-bottom: 0.2rem solid ${theme.colors.lightGray};
   `
-        : `border-bottom: 0.2rem solid ${theme.colors.darkGray};`}
+      : `border-bottom: 0.2rem solid ${theme.colors.darkGray};`}
 
     li.ant-menu-item {
       margin: 0.8rem 0;
@@ -370,3 +370,9 @@ export const ChildMenuWrapper = styled(Menu)`
     }
   }
 `;
+
+//Mobile
+export const StyledMobileMenuContainer = styled.div`
+  display: "flex";
+  flex-direction: "column"
+`

@@ -118,7 +118,6 @@ const ProfileDesktop = ({
         user={user}
         postDelete={postDelete}
         handlePostDelete={handlePostDelete}
-        // // handleEditPost={handleEditPost}
         deleteModalVisibility={deleteModalVisibility}
         handleCancelPostDelete={handleCancelPostDelete}
         loadNextPage={loadNextPage}
