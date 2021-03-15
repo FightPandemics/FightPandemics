@@ -80,7 +80,11 @@ import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM, { post } from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
-import { selectOrganisationId, selectActorId } from "reducers/session";
+import {
+  selectOrganisationId,
+  selectActorId,
+  selectAuthStatus,
+} from "reducers/session";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -153,6 +157,7 @@ const Profile = ({
   const window = useWindowDimensions();
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
+  const authLoading = useSelector(selectAuthStatus);
 
   const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
@@ -239,7 +244,12 @@ const Profile = ({
   const isItemLoaded = useCallback((index) => !!filteredPost[index], [posts]);
 
   const buildNavMenu = () => {
-    if (userId == null) {
+    if (
+      authLoading == null ||
+      authLoading === true ||
+      (!isAuthenticated && userId == null) ||
+      (isAuthenticated && (userId == null || actorId == null))
+    ) {
       return;
     }
 
@@ -292,7 +302,7 @@ const Profile = ({
 
   useEffect(() => {
     buildNavMenu();
-  }, [isSelf, actorId, userId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isSelf, actorId, userId, authLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function usePrevious(value) {
     const ref = useRef();
@@ -512,10 +522,10 @@ const Profile = ({
   };
 
   const isPostExpired = (post) => {
-    if (!post.expiredAt) {
+    if (!post.expireAt) {
       return false;
     }
-    return new Date(post.expiredAt).getTime() < new Date().getTime();
+    return new Date(post.expireAt).getTime() < new Date().getTime();
   };
 
   const handleDeletePostSuccess = (post) => {
@@ -577,6 +587,11 @@ const Profile = ({
 
   const handleMenuToggle = (e) => {
     setSectionView(e.key);
+    if (sectionView.toUpperCase() == "POSTS") {
+      setInternalTab("Requests");
+    } else {
+      setInternalTab("Active");
+    }
   };
 
   const setTab = (childTab) => {
@@ -585,9 +600,11 @@ const Profile = ({
 
   const emptyFeed = () => filteredPost.length < 1 && !isLoading;
 
-  if (!userId) {
+  if (authLoading == null || authLoading === true) {
+    console.log("NOT LOADING");
     return <></>;
   }
+  console.log("LOADED");
 
   return (
     <>
