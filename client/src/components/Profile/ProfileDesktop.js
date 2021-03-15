@@ -25,12 +25,12 @@ const TAB_TYPE = {
   REQUESTS: {
     ACTIVE_REQS: "Active",
     ARCHIVED_REQS: "Archived",
-    DRAFTS_REQS: "Drafts",
+    // DRAFTS_REQS: "Drafts",
   },
   OFFERS: {
     ACTIVE_OFRS: "Active",
     ARCHIVED_OFRS: "Archived",
-    DRAFTS_OFRS: "Drafts",
+    // DRAFTS_OFRS: "Drafts",
   },
 };
 const gtmTagsMap = {
@@ -39,7 +39,7 @@ const gtmTagsMap = {
   ACTIVE_OFRS: `${GTM.profile.offers + GTM.profile.active}`,
   ACTIVE_REQS: `${GTM.profile.requests + GTM.profile.active}`,
   ARCHIVED_OFRS: `${GTM.profile.offers + GTM.profile.archived}`,
-  ARCHIVED_REQS: `${GTM.profile.offers + GTM.profile.archived}`,
+  ARCHIVED_REQS: `${GTM.profile.requests + GTM.profile.archived}`,
   DRAFTS_REQS: `${GTM.profile.requests + GTM.profile.draft}`,
   DRAFTS_OFRS: `${GTM.profile.offers + GTM.profile.draft}`,
 };
@@ -66,6 +66,7 @@ const ProfileDesktop = ({
   loadMore,
   totalPostCount,
   isMobile,
+  isProfile,
 }) => {
   const { t } = useTranslation();
 
@@ -77,7 +78,6 @@ const ProfileDesktop = ({
   const [childTab, setChildTab] = useState(defaultState);
 
   const handleTabChange = (e) => {
-    // console.log("tab Change", e.key);
     setChildTab(e.key);
     setInternalTab(e.key);
   };
@@ -86,6 +86,11 @@ const ProfileDesktop = ({
     setChildTab(defaultState);
     setInternalTab(defaultState);
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const gtmIdPost = () => {
+    const suffix = gtmTag(gtmTagsMap[childTab]) + GTM.profile.desktop;
+    return suffix;
+  };
 
   return (
     <SeeAllWrapper isMobile={false}>
@@ -113,7 +118,6 @@ const ProfileDesktop = ({
         user={user}
         postDelete={postDelete}
         handlePostDelete={handlePostDelete}
-        // // handleEditPost={handleEditPost}
         deleteModalVisibility={deleteModalVisibility}
         handleCancelPostDelete={handleCancelPostDelete}
         loadNextPage={loadNextPage}
@@ -122,16 +126,9 @@ const ProfileDesktop = ({
         isItemLoaded={isItemLoaded}
         hasNextPage={loadMore}
         totalPostCount={totalPostCount}
+        isProfile={isProfile}
+        gtmIdPost={gtmIdPost}
       />
-      {/* {postsError && (
-        <ErrorAlert
-          message={t([
-            `error.${postsError.message}`,
-            `error.http.${postsError.message}`,
-          ])}
-        />
-      )} */}
-      {/* {emptyFeed() && <>"No Posts matching your crieteria."</>} */}
     </SeeAllWrapper>
   );
 };

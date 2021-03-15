@@ -31,6 +31,8 @@ const Activity = ({
   isItemLoaded,
   hasNextPage,
   totalPostCount,
+  isProfile,
+  gtmIdPost,
 }) => {
   const posts = Object.entries(filteredPosts);
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
@@ -82,6 +84,8 @@ const Activity = ({
             onPostHide={hidePost}
             onPostUnhide={unhidePost}
             convertTextToURL={false}
+            isProfile={isProfile}
+            gtmIdPost={gtmIdPost}
           />
         );
       }
@@ -103,6 +107,7 @@ const Activity = ({
     },
     [
       deleteModalVisibility,
+      gtmIdPost,
       handleCancelPostDelete,
       handleEditPost,
       handlePostDelete,
@@ -110,6 +115,7 @@ const Activity = ({
       hiddenPosts,
       hidePost,
       isItemLoaded,
+      isProfile,
       postDelete,
       postDispatch,
       posts,

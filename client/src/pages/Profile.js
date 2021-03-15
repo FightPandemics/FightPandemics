@@ -23,13 +23,13 @@ import {
 } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
+import PostTabCard from "components/Feed/PostTabCard";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
 import ProfileDesktop from "components/Profile/ProfileDesktop";
-import { Tabs } from "antd";
 
 import {
   ProfileLayout,
@@ -55,7 +55,9 @@ import {
   MobileLocation,
   MobileMenuWrapper,
   DesktopMenuWrapper,
+  StyledMobileMenuContainer,
 } from "../components/Profile/ProfileComponents";
+
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -64,7 +66,12 @@ import {
   GITHUB_URL,
 } from "constants/urls";
 
-import { selectPosts, postsActions } from "reducers/posts";
+import {
+  selectPosts,
+  postsActions,
+  getProfileObjectiveProp,
+  getProfileModeProp,
+} from "reducers/posts";
 
 import {
   fetchUser,
@@ -73,9 +80,13 @@ import {
 } from "hooks/actions/userActions";
 import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
-import GTM from "constants/gtm-tags";
+import GTM, { post } from "constants/gtm-tags";
 import Loader from "components/Feed/StyledLoader";
-import { selectOrganisationId, selectActorId } from "reducers/session";
+import {
+  selectOrganisationId,
+  selectActorId,
+  selectAuthStatus,
+} from "reducers/session";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -148,6 +159,7 @@ const Profile = ({
   const window = useWindowDimensions();
   const dispatch = useDispatch();
   const { userProfileState, userProfileDispatch } = useContext(UserContext);
+  const authLoading = useSelector(selectAuthStatus);
 
   const posts = useSelector(selectPosts);
   const [modal, setModal] = useState(false);
@@ -155,14 +167,13 @@ const Profile = ({
   const { t } = useTranslation();
 
   //react-virtualized loaded rows and row count.
-  const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
 
   const { error, loading, user } = userProfileState;
   const [sectionView, setSectionView] = useState(t("requests"));
   const [navMenu, setNavMenu] = useState([]);
-  const [internalTab, setInternalTab] = useState("Requests");
+  const [internalTab, setInternalTab] = useState("Active");
   const {
     id: userId,
     about,
@@ -195,16 +206,54 @@ const Profile = ({
   const { deleteModalVisibility } = deleteModal;
 
   const prevTotalPostCount = usePrevious(totalPostCount);
-  const userPosts = Object.entries(postsList);
   const prevUserId = usePrevious(userId);
   const organisationId = useSelector(selectOrganisationId);
+  const [isInit, setIsInit] = useState(false);
 
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
 
-  const isItemLoaded = useCallback((index) => !!userPosts[index], [userPosts]);
+  let filteredPost = [];
+
+  const convertToObjectPost = useCallback((postArray) => {
+    let temp = postArray.reduce((map, obj) => {
+      map[obj._id] = obj;
+      return map;
+    }, {});
+    return temp;
+  }, []);
+
+  const getView = useCallback(() => {
+    return sectionView.toUpperCase() !== "POSTS"
+      ? lowerCase(sectionView).slice(0, -1)
+      : lowerCase(internalTab).slice(0, -1);
+  }, [sectionView, internalTab]);
+
+  const getMode = useCallback(() => {
+    if (sectionView.toUpperCase() !== "POSTS") {
+      return lowerCase(internalTab).includes("archived")
+        ? "IA"
+        : lowerCase(internalTab).includes("active")
+        ? "A"
+        : "D";
+    }
+    return undefined;
+  }, [sectionView, internalTab]);
+
+  const isItemLoaded = useCallback((index) => !!filteredPost[index], [
+    filteredPost,
+  ]);
 
   const buildNavMenu = () => {
+    if (
+      authLoading == null ||
+      authLoading === true ||
+      (!isAuthenticated && userId == null) ||
+      (isAuthenticated && (userId == null || actorId == null))
+    ) {
+      return;
+    }
+
     const baseMenu = [
       {
         name: t("profile.views.activity"),
@@ -246,13 +295,15 @@ const Profile = ({
         gtm: "posts",
       });
       setSectionView(t("profile.views.posts"));
+      setInternalTab("Requests");
     }
     setNavMenu(baseMenu);
+    setIsInit(true);
   };
 
   useEffect(() => {
     buildNavMenu();
-  }, [isSelf]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isSelf, actorId, userId, authLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function usePrevious(value) {
     const ref = useRef();
@@ -272,34 +323,40 @@ const Profile = ({
     const source = CancelToken.source();
 
     const fetchPosts = async () => {
+      if (!isInit) {
+        return;
+      }
+
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
       dispatch(postsActions.fetchPostsBegin());
       try {
         if (userId) {
           let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
-          // const childTab = "Requests";
-          const view =
-            sectionView.toUpperCase() !== "POSTS"
-              ? lowerCase(sectionView).slice(0, -1)
-              : lowerCase(internalTab).slice(0, -1);
+          const view = getView();
 
           const objURL = `&objective=${view}`;
 
-          const mode =
-            sectionView.toUpperCase() !== "POSTS" &&
-            lowerCase(internalTab).includes("archive")
-              ? "IA"
-              : "D";
+          const mode = getMode();
 
           const modeURL = `&postMode=${mode}`;
           const endpoint = `${baseURL}${objURL}${modeURL}`;
-
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
 
           if (!_isMounted) {
+            //mobile fetch
+            dispatch(
+              postsActions.fetchProfilePostSuccess({
+                posts: [...filteredPost, ...posts],
+                userId,
+                objective: view,
+                mode: mode,
+              }),
+            );
+
+            //desktop fetch
             if (prevUserId !== userId) {
               dispatch(
                 postsActions.fetchPostsSuccess({
@@ -361,7 +418,7 @@ const Profile = ({
       _isMounted = true;
       source.cancel("Cancelling is cleanup");
     };
-  }, [userId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, page, toggleRefetch, isInit]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
@@ -387,12 +444,18 @@ const Profile = ({
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
-  }, [internalTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
-      setToggleRefetch(!toggleRefetch);
+      const view = getView();
+      const filterView = getProfileObjectiveProp(view);
+      const mode = getMode();
+      const filterMode = getProfileModeProp(mode);
+      if (!posts.profilePosts?.[userId]?.[filterView]?.[filterMode]) {
+        setToggleRefetch(!toggleRefetch);
+      }
     }
   };
 
@@ -401,8 +464,8 @@ const Profile = ({
       if (
         !isLoading &&
         loadMore &&
-        stopIndex >= userPosts.length &&
-        userPosts.length
+        stopIndex >= filteredPost.length &&
+        filteredPost.length
       ) {
         return new Promise((resolve) => {
           dispatch(postsActions.setNextPageAction());
@@ -412,12 +475,8 @@ const Profile = ({
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, userPosts.length],
+    [dispatch, isLoading, loadMore, filteredPost.length],
   );
-
-  useEffect(() => {
-    setItemCount(loadMore ? userPosts.length + 1 : userPosts.length);
-  }, [loadMore, userPosts.length]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -426,10 +485,7 @@ const Profile = ({
       try {
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
-          const allPosts = {
-            ...postsList,
-          };
-          delete allPosts[post._id];
+          handleDeletePostSuccess(post);
           setTotalPostCount(totalPostCount - 1);
           if (totalPostCount <= PAGINATION_LIMIT) {
             const isLoading = true;
@@ -445,6 +501,61 @@ const Profile = ({
         });
       }
     }
+  };
+
+  const handleCreatePostSuccess = (post) => {
+    const objective = getProfileObjectiveProp(post.objective);
+    dispatch(
+      postsActions.fetchProfilePostSuccess({
+        posts: [post, ...posts.profilePosts?.[userId]?.[objective]?.active],
+        userId,
+        objective: post.objective,
+        mode: "A",
+      }),
+    );
+    dispatch(
+      postsActions.fetchProfilePostSuccess({
+        posts: [post, ...posts.profilePosts?.[userId]?.[objective]?.all],
+        userId,
+        objective: post.objective,
+      }),
+    );
+  };
+
+  const isPostExpired = (post) => {
+    if (!post.expireAt) {
+      return false;
+    }
+    return new Date(post.expireAt).getTime() < new Date().getTime();
+  };
+
+  const handleDeletePostSuccess = (post) => {
+    if (isPostExpired(post)) {
+      dispatch(
+        postsActions.fetchProfilePostSuccess({
+          posts: filteredPost.filter((curr) => curr._id != post._id),
+          userId,
+          objective: post.objective,
+          mode: "IA",
+        }),
+      );
+    } else {
+      dispatch(
+        postsActions.fetchProfilePostSuccess({
+          posts: filteredPost.filter((curr) => curr._id != post._id),
+          userId,
+          objective: post.objective,
+          mode: "A",
+        }),
+      );
+    }
+    dispatch(
+      postsActions.fetchProfilePostSuccess({
+        posts: filteredPost.filter((curr) => curr._id != post._id),
+        userId,
+        objective: post.objective,
+      }),
+    );
   };
 
   const handlePostDelete = () => {
@@ -464,6 +575,12 @@ const Profile = ({
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
 
+  const view = getView();
+  const filterView = getProfileObjectiveProp(view);
+  const mode = getMode();
+  const filterMode = getProfileModeProp(mode);
+  filteredPost = posts.profilePosts[userId]?.[filterView]?.[filterMode] ?? [];
+
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -471,13 +588,22 @@ const Profile = ({
 
   const handleMenuToggle = (e) => {
     setSectionView(e.key);
+    if (sectionView.toUpperCase() == "POSTS") {
+      setInternalTab("Requests");
+    } else {
+      setInternalTab("Active");
+    }
   };
 
   const setTab = (childTab) => {
     setInternalTab(childTab);
   };
 
-  const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
+  const emptyFeed = () => filteredPost.length < 1 && !isLoading;
+
+  if (authLoading == null || authLoading === true) {
+    return <></>;
+  }
 
   return (
     <>
@@ -594,26 +720,92 @@ const Profile = ({
             loadPosts={refetchPosts}
             visible={modal}
             user={user}
+            onSuccess={handleCreatePostSuccess}
             gtmPrefix={GTM.user.profilePrefix}
           />
         )}
         <div>
           {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
-            <MobileMenuWrapper
-              defaultSelectedKeys={[sectionView]}
-              selectedKeys={sectionView}
-              onClick={handleMenuToggle}
-            >
-              {navMenu.map((item, index) => (
-                <Menu.Item
-                  key={item.name}
-                  disabled={item.disabled}
-                  id={GTM.user.profilePrefix + GTM.profile[item.gtm]}
-                >
-                  {item.name}
-                </Menu.Item>
-              ))}
-            </MobileMenuWrapper>
+            <StyledMobileMenuContainer>
+              <MobileMenuWrapper
+                defaultSelectedKeys={[sectionView]}
+                selectedKeys={sectionView}
+                onClick={handleMenuToggle}
+              >
+                {navMenu.map((item, index) => (
+                  <Menu.Item
+                    key={item.name}
+                    disabled={item.disabled}
+                    id={GTM.user.profilePrefix + GTM.profile[item.gtm]}
+                  >
+                    {item.name}
+                  </Menu.Item>
+                ))}
+              </MobileMenuWrapper>
+              <div style={{ width: "100%" }}>
+                {sectionView === "Requests" && (
+                  <PostTabCard
+                    initialPage={internalTab}
+                    cardContents={[
+                      {
+                        title: t("profile.views.active"),
+                        posts:
+                          posts.profilePosts[userId]?.requests?.active ?? [],
+                      },
+                      {
+                        title: t("profile.views.archived"),
+                        posts:
+                          posts.profilePosts[userId]?.requests?.inactive ?? [],
+                      },
+                    ]}
+                    user={user}
+                    isAuthenticated={isAuthenticated}
+                    onTabClick={setTab}
+                    handlePostDelete={postDelete}
+                  />
+                )}
+                {sectionView === "Offers" && (
+                  <PostTabCard
+                    initialPage={internalTab}
+                    cardContents={[
+                      {
+                        title: t("profile.views.active"),
+                        posts: posts.profilePosts[userId]?.offers?.active ?? [],
+                      },
+                      {
+                        title: t("profile.views.archived"),
+                        posts:
+                          posts.profilePosts[userId]?.offers?.inactive ?? [],
+                      },
+                    ]}
+                    user={user}
+                    isAuthenticated={isAuthenticated}
+                    onTabClick={setTab}
+                    handlePostDelete={postDelete}
+                  />
+                )}
+                {sectionView === "Posts" && (
+                  <PostTabCard
+                    initialPage={internalTab}
+                    cardContents={[
+                      {
+                        title: t("profile.views.requests"),
+                        posts: posts.profilePosts[userId]?.requests?.all ?? [],
+                      },
+                      {
+                        title: t("profile.views.offers"),
+                        posts: posts.profilePosts[userId]?.offers?.all ?? [],
+                      },
+                    ]}
+                    user={user}
+                    isAuthenticated={isAuthenticated}
+                    onTabClick={setTab}
+                    fromPage={false}
+                    handlePostDelete={postDelete}
+                  />
+                )}
+              </div>
+            </StyledMobileMenuContainer>
           ) : null}
           {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
             <div style={{ display: "flex" }}>
@@ -643,25 +835,24 @@ const Profile = ({
                         <WhiteSpace size={"xl"}></WhiteSpace>
                         <ProfileDesktop
                           setInternalTab={setTab}
-                          // profileId={pathUserId}
                           isOrg={false}
                           isAuthenticated={isAuthenticated}
                           menuView={sectionView.toUpperCase()}
                           isMobile={false}
                           postDispatch={dispatch}
-                          profilePost={postsList}
+                          profilePost={convertToObjectPost(filteredPost)}
                           user={user}
                           postDelete={postDelete}
                           handlePostDelete={handlePostDelete}
-                          // // handleEditPost={handleEditPost}
                           deleteModalVisibility={deleteModalVisibility}
                           handleCancelPostDelete={handleCancelPostDelete}
                           loadNextPage={loadNextPage}
                           isNextPageLoading={isLoading}
-                          itemCount={itemCount}
+                          itemCount={filteredPost.length}
                           isItemLoaded={isItemLoaded}
                           hasNextPage={loadMore}
                           totalPostCount={totalPostCount}
+                          isProfile={true}
                         ></ProfileDesktop>
                       </FeedWrapper>
                     </SeeAllContentWrapper>

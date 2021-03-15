@@ -128,6 +128,8 @@ const Post = ({
   onPostHide,
   onPostUnhide,
   convertTextToURL,
+  isProfile,
+  gtmIdPost,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
@@ -601,6 +603,10 @@ const Post = ({
       : "post.both";
   };
 
+  const gtmId = () => {
+    return isProfile ? gtmIdPost() : GTM.feed.prefix + GTM.profile.posts;
+  };
+
   return (
     <>
       {postId && dispatchPostAction ? (
@@ -763,6 +769,12 @@ const Post = ({
               )}
               <div className="pre-header">
                 <span>{t(`feed.${objective}`)}&nbsp;&nbsp;•</span>
+                <span>
+                  &nbsp;
+                  {t(getWkMode(workMode))}
+                  &nbsp;•
+                </span>
+
                 <Tooltip
                   color={theme.colors.darkGray}
                   title={translateISOTimeTitle(post.createdAt)}
@@ -781,6 +793,7 @@ const Post = ({
               </div>
               <WhiteSpace size={"xl"} />
               <WhiteSpace size={"md"} />
+              {isMobile && <br />}
               <div className="card-header">
                 {includeProfileLink ? renderHeaderWithLink : renderHeader}
                 {isAuthenticated && (
@@ -804,6 +817,7 @@ const Post = ({
               <WhiteSpace />
               {post && isAuthenticated ? (
                 <Link
+                  id={gtmId()}
                   to={{
                     pathname: `/post/${_id}`,
                     state: {
