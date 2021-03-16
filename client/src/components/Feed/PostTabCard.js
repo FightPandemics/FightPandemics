@@ -154,13 +154,13 @@ const PostTabCard = ({
   const tabs = cardContents.map((item) => ({
     title: item.title,
     key: item.title,
-    postCount: item.posts.length,
+    // postCount: item.posts.length,
   }));
-  const [currentTab, setCurrentTab] = useState({});
+  // const [currentTab, setCurrentTab] = useState({});
 
   useEffect(() => {
     const initialTab = tabs.find((tab) => tab.title === initialPage);
-    setCurrentTab(initialTab);
+    // setCurrentTab(initialTab);
   }, [cardContents, initialPage, tabs]);
 
   return (
@@ -169,7 +169,7 @@ const PostTabCard = ({
         initialPage={initialPage || 0}
         tabs={tabs}
         onTabClick={(tab) => {
-          setCurrentTab(tab);
+          // setCurrentTab(tab);
           onTabClick(tab.title);
         }}
       >

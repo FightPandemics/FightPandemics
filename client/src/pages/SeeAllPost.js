@@ -215,7 +215,7 @@ const SeeAll = (props) => {
       <LayoutWrapper>
         <WhiteSpace size={"lg"} />
 
-        <Link to={`/profile/${pathUserId}`} style={{ "margin-left": "29px" }}>
+        <Link to={`/profile/${pathUserId}`} style={{ marginLeft: "29px" }}>
           <SvgIcon src={backIcon} title="Navigate to the profile page" />
           <BackText>{t(VIEW_TYPE[viewType])}</BackText>
         </Link>
