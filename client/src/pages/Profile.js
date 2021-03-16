@@ -782,6 +782,7 @@ const Profile = ({
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
                     handlePostDelete={postDelete}
+                    viewType={sectionView.toUpperCase()}
                   />
                 )}
                 {sectionView === "Offers" && (
@@ -802,6 +803,7 @@ const Profile = ({
                     isAuthenticated={isAuthenticated}
                     onTabClick={setTab}
                     handlePostDelete={postDelete}
+                    viewType={sectionView.toUpperCase()}
                   />
                 )}
                 {sectionView === "Posts" && (
@@ -822,6 +824,7 @@ const Profile = ({
                     onTabClick={setTab}
                     fromPage={false}
                     handlePostDelete={postDelete}
+                    viewType={sectionView.toUpperCase()}
                   />
                 )}
               </div>

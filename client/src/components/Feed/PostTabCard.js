@@ -35,7 +35,7 @@ const PostContent = ({
   fromPage,
 }) => {
   const [hiddenPosts, setHiddenPosts] = useState(
-    JSON.parse(localStorage.getItem("hiddenPosts")) || {}
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
   );
   const [callReport, setCallReport] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
@@ -46,7 +46,7 @@ const PostContent = ({
   const hidePost = (postId) => {
     localStorage.setItem(
       "hiddenPosts",
-      JSON.stringify({ ...hiddenPosts, [postId]: true })
+      JSON.stringify({ ...hiddenPosts, [postId]: true }),
     ); // objects are fast, better than looking for postId in an Array
     setHiddenPosts({ ...hiddenPosts, [postId]: true });
   };
@@ -109,7 +109,7 @@ const PostContent = ({
       actorId,
       callReport,
       hidePost,
-    ]
+    ],
   );
 
   return (
@@ -149,6 +149,7 @@ const PostTabCard = ({
   isAuthenticated,
   initialPage,
   onTabClick,
+  viewType,
 }) => {
   const tabs = cardContents.map((item) => ({
     title: item.title,
@@ -160,7 +161,7 @@ const PostTabCard = ({
   useEffect(() => {
     const initialTab = tabs.find((tab) => tab.title === initialPage);
     setCurrentTab(initialTab);
-  }, [cardContents]);
+  }, [cardContents, initialPage, tabs]);
 
   return (
     <Container>
@@ -184,21 +185,21 @@ const PostTabCard = ({
           />
         ))}
       </Tabs>
-      {currentTab.postCount > 0 && (
-        <StyledCardFooter>
-          <Link
-            to={{
-              pathname: `/see-all/${user.id}`,
-              state: {
-                viewType: currentTab.title.toUpperCase(),
-                isAuthenticated: isAuthenticated,
-              },
-            }}
-          >
-            See All
-          </Link>
-        </StyledCardFooter>
-      )}
+      {/* {currentTab && currentTab.postCount > 0 && ( */}
+      <StyledCardFooter>
+        <Link
+          to={{
+            pathname: `/see-all/${user.id}`,
+            state: {
+              viewType: viewType?.toUpperCase(),
+              isAuthenticated: isAuthenticated,
+            },
+          }}
+        >
+          See All
+        </Link>
+      </StyledCardFooter>
+      {/* )}  */}
     </Container>
   );
 };
