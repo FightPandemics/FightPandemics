@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Tabs } from "antd-mobile";
 import { Button } from "antd";
@@ -35,7 +35,7 @@ const PostContent = ({
   fromPage,
 }) => {
   const [hiddenPosts, setHiddenPosts] = useState(
-    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {}
   );
   const [callReport, setCallReport] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
@@ -46,7 +46,7 @@ const PostContent = ({
   const hidePost = (postId) => {
     localStorage.setItem(
       "hiddenPosts",
-      JSON.stringify({ ...hiddenPosts, [postId]: true }),
+      JSON.stringify({ ...hiddenPosts, [postId]: true })
     ); // objects are fast, better than looking for postId in an Array
     setHiddenPosts({ ...hiddenPosts, [postId]: true });
   };
@@ -109,7 +109,7 @@ const PostContent = ({
       actorId,
       callReport,
       hidePost,
-    ],
+    ]
   );
 
   return (
@@ -153,13 +153,24 @@ const PostTabCard = ({
   const tabs = cardContents.map((item) => ({
     title: item.title,
     key: item.title,
+    postCount: item.posts.length,
   }));
+  const [currentTab, setCurrentTab] = useState({});
+
+  useEffect(() => {
+    const initialTab = tabs.find((tab) => tab.title === initialPage);
+    setCurrentTab(initialTab);
+  }, [cardContents]);
+
   return (
     <Container>
       <Tabs
         initialPage={initialPage || 0}
         tabs={tabs}
-        onTabClick={(tab) => onTabClick(tab.title)}
+        onTabClick={(tab) => {
+          setCurrentTab(tab);
+          onTabClick(tab.title);
+        }}
       >
         {cardContents.map((tab) => (
           <PostContent
@@ -173,19 +184,21 @@ const PostTabCard = ({
           />
         ))}
       </Tabs>
-      <StyledCardFooter>
-        <Link
-          to={{
-            pathname: `/see-all/${user.id}`,
-            state: {
-              viewType: "OFFERS",
-              isAuthenticated: isAuthenticated,
-            },
-          }}
-        >
-          See All
-        </Link>
-      </StyledCardFooter>
+      {currentTab.postCount > 0 && (
+        <StyledCardFooter>
+          <Link
+            to={{
+              pathname: `/see-all/${user.id}`,
+              state: {
+                viewType: currentTab.title.toUpperCase(),
+                isAuthenticated: isAuthenticated,
+              },
+            }}
+          >
+            See All
+          </Link>
+        </StyledCardFooter>
+      )}
     </Container>
   );
 };
