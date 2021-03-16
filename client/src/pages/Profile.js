@@ -195,7 +195,7 @@ const Profile = ({
   if (ownUser) sessionStorage.removeItem("msgModal");
   const [deleteModal, deleteModalDispatch] = useReducer(
     deletePostModalreducer,
-    deletePostState,
+    deletePostState
   );
   const { deleteModalVisibility } = deleteModal;
 
@@ -300,6 +300,7 @@ const Profile = ({
         gtm: "offers",
       });
       setSectionView(t("profile.views.requests"));
+      setInternalTab(t("profile.views.active"));
     } else {
       baseMenu.splice(1, 0, {
         name: t("profile.views.posts"),
@@ -307,7 +308,7 @@ const Profile = ({
         gtm: "posts",
       });
       setSectionView(t("profile.views.posts"));
-      setInternalTab("Requests");
+      setInternalTab(t("profile.views.requests"));
     }
     setNavMenu(baseMenu);
     setIsInit(true);
@@ -341,6 +342,10 @@ const Profile = ({
 
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
+      if (!shouldRefetchPost()) {
+        return;
+      }
+
       dispatch(postsActions.fetchPostsBegin());
       try {
         if (userId) {
@@ -365,7 +370,7 @@ const Profile = ({
                 userId,
                 objective: view,
                 mode: mode,
-              }),
+              })
             );
 
             //desktop fetch
@@ -373,7 +378,7 @@ const Profile = ({
               dispatch(
                 postsActions.fetchPostsSuccess({
                   posts: [],
-                }),
+                })
               );
             }
             if (posts.length && meta.total) {
@@ -394,20 +399,20 @@ const Profile = ({
                 dispatch(
                   postsActions.fetchPostsSuccess({
                     posts: { ...postsList, ...loadedPosts },
-                  }),
+                  })
                 );
               } else {
                 dispatch(
                   postsActions.fetchPostsSuccess({
                     posts: { ...loadedPosts },
-                  }),
+                  })
                 );
               }
             } else if (prevUserId === userId && posts) {
               dispatch(
                 postsActions.fetchPostsSuccess({
                   posts: { ...postsList },
-                }),
+                })
               );
               dispatch(postsActions.finishLoadingAction());
             } else {
@@ -447,12 +452,20 @@ const Profile = ({
         ]);
         userProfileDispatch(
           fetchUserError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
-          ),
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
+          )
         );
       }
     })();
   }, [pathUserId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const shouldRefetchPost = () => {
+    const view = getView();
+    const filterView = getProfileObjectiveProp(view);
+    const mode = getMode();
+    const filterMode = getProfileModeProp(mode);
+    return posts.profilePosts?.[userId]?.[filterView]?.[filterMode] == null;
+  };
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
@@ -461,11 +474,7 @@ const Profile = ({
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
     if (page === 0) {
-      const view = getView();
-      const filterView = getProfileObjectiveProp(view);
-      const mode = getMode();
-      const filterMode = getProfileModeProp(mode);
-      if (!posts.profilePosts?.[userId]?.[filterView]?.[filterMode]) {
+      if (shouldRefetchPost()) {
         setToggleRefetch(!toggleRefetch);
       }
     }
@@ -487,7 +496,7 @@ const Profile = ({
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, filteredPost.length],
+    [dispatch, isLoading, loadMore, filteredPost.length]
   );
 
   const postDelete = async (post) => {
@@ -523,14 +532,14 @@ const Profile = ({
         userId,
         objective: post.objective,
         mode: "A",
-      }),
+      })
     );
     dispatch(
       postsActions.fetchProfilePostSuccess({
         posts: [post, ...posts.profilePosts?.[userId]?.[objective]?.all],
         userId,
         objective: post.objective,
-      }),
+      })
     );
   };
 
@@ -549,7 +558,7 @@ const Profile = ({
           userId,
           objective: post.objective,
           mode: "IA",
-        }),
+        })
       );
     } else {
       dispatch(
@@ -558,7 +567,7 @@ const Profile = ({
           userId,
           objective: post.objective,
           mode: "A",
-        }),
+        })
       );
     }
     dispatch(
@@ -566,7 +575,7 @@ const Profile = ({
         posts: filteredPost.filter((curr) => curr._id != post._id),
         userId,
         objective: post.objective,
-      }),
+      })
     );
   };
 
