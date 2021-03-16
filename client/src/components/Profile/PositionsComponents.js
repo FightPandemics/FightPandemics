@@ -227,7 +227,6 @@ export const UserInfoContainer = styled.div`
 export const AvatarPhotoContainer = styled.fieldset`
   padding: 0;
   padding-left: 2rem;
-  
 `;
 
 export const PhotoUploadButton = styled.legend`
@@ -275,8 +274,11 @@ export const PositionTitle = styled.div`
   align-self: flex-start;
 `;
 
-export const PositionDescription = styled.div`
-  
+export const PositionDescription = styled.p`
+`;
+
+export const PositionLisitingContainer = styled.div`
+
 `;
 
 export const TitleContainer = styled.div`

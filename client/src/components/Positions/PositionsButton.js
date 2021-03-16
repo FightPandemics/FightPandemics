@@ -10,9 +10,9 @@ const ApplyBtn = styled(BaseButton)`
   font-weight: 500;
   color: #ffffff !important;
   display: block;
-  width: fit-content;
-  min-width: 33.4rem;
-  margin: 4rem auto;
+  max-width: 33.4rem;
+  margin: auto;
+  padding: 1rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
     width: fit-content;

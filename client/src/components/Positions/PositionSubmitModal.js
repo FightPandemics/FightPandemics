@@ -56,8 +56,6 @@ button {
     width: 15.7rem;
     margin: auto;
     margin-bottom: 1rem !important;
-    
-
 `;
 
 
