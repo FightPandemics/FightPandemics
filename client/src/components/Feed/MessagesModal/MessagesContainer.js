@@ -220,23 +220,80 @@ export const FailedModal = styled(SuccessModal)`
     display: none;
   }
 `;
+export const PrivateMessageContainerFeed = styled.div`
+  cursor: pointer;
+  :hover {
+    color: #939393;
+  }
 
+  svg {
+    position: relative;
+    top: 0.28rem;
+  }
+  span {
+    position: relative;
+    left: 0.7rem;
+    color: #939393;
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      display: none;
+    }
+  }
+
+  img,
+  span {
+    pointer-events: none;
+  }
+
+  ${(props) =>
+    props.isFromUserCard
+      ? `
+    margin-left: 7.4rem;
+  `
+      : ""}
+
+  ${(props) =>
+    props.isFromProfile
+      ? `
+      display: flex;
+      align-items: center;
+      border: 0.1rem solid ${theme.colors.royalBlue};
+      box-sizing: border-box;
+      border-radius: 4.6rem;
+      padding: 0.8rem 2.8rem;
+      margin-left: 0;
+
+      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        margin-top: 1rem;
+        justify-content: center;
+      }
+
+        span {
+          font-size: 1.4rem;
+          color: ${theme.colors.royalBlue};
+          font-weight: 500;
+          @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+            display: block;
+          }
+        }
+      `
+      : ""}
+`;
 export const PrivateMessageContainer = styled.div`
   position: relative;
   cursor: pointer;
-  font-family: "Poppins",sans-serif;
-     
-      @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        justify-content: center;
-        width: 3.1rem;
-        height: 5.4rem;
-        position: absolute;
-        top: -2.5rem;
-        right: 5rem;
-        background: ${whiteColor};
-        border: none;
-        box-shadow: 0.2rem 0.2rem 0.2rem lightgrey;
-      }
+  font-family: "Poppins", sans-serif;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    justify-content: center;
+    width: 3.1rem;
+    height: 5.4rem;
+    position: absolute;
+    top: -2.5rem;
+    right: 5rem;
+    background: ${whiteColor};
+    border: none;
+    box-shadow: 0.2rem 0.2rem 0.2rem lightgrey;
+  }
 
   :hover {
     color: #939393;
@@ -273,14 +330,13 @@ export const PrivateMessageContainer = styled.div`
     display: none;
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       position: absolute;
-      display:inline-block;
+      display: inline-block;
       top: 22%;
       right: 22%;
       width: 3rem;
       display: block;
     }
   }
-  
 
   img,
   span {

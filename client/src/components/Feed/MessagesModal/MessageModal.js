@@ -7,11 +7,12 @@ import {
   MsgModal,
   SuccessModal,
   FailedModal,
+  PrivateMessageContainerFeed,
   PrivateMessageContainer,
-} from "./MessagesContainer";
+} from "./MessagesContainer.js";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import activeemail from "assets/icons/mail.svg";
-import whiteemail from "assets/icons/white_mail.svg"
+import whiteemail from "assets/icons/white_mail.svg";
 import { WebSocketContext } from "context/WebsocketContext";
 import { useTranslation } from "react-i18next";
 import TagManager from "react-gtm-module";
@@ -151,20 +152,44 @@ const MessageModal = ({
         : GTM.inbox.org
       : GTM.inbox.post);
 
+  const checkProfile = () => {
+    if (isFromProfile) {
+      return (
+        <PrivateMessageContainer
+          onClick={showModal}
+          isFromProfile={isFromProfile}
+          isFromUserCard={isFromUserCard}
+          id={gtmId}
+        >
+          <img
+            src={activeemail}
+            className="whiteenvelope"
+            alt={"message-icon"}
+          />
+          <img src={whiteemail} className="blueenvelope" alt={"message-icon"} />
+          <span className="message">{t("messaging.message")}</span>
+        </PrivateMessageContainer>
+      );
+    } else {
+      return (
+        <PrivateMessageContainerFeed
+          onClick={showModal}
+          isFromProfile={isFromProfile}
+          isFromUserCard={isFromUserCard}
+          id={gtmId}
+        >
+          <img src={activeemail} alt={"message-icon"} />
+          <span> {t("messaging.message")}</span>
+        </PrivateMessageContainerFeed>
+      );
+    }
+  };
   return (
     <>
       {isAuthenticated ? (
         <div>
-          <PrivateMessageContainer
-            onClick={showModal}
-            isFromProfile={isFromProfile}
-            isFromUserCard={isFromUserCard}
-            id={gtmId}
-          >
-            <img src={activeemail} className='whiteenvelope' alt={"message-icon"} />
-            <img src={whiteemail} className='blueenvelope' alt={"message-icon"} />
-            <span className='message'>{t("messaging.message")}</span>
-          </PrivateMessageContainer>
+          {checkProfile()}
+
           <MsgModal
             title={t("messaging.sendMessage")}
             visible={visible}
@@ -252,15 +277,7 @@ const MessageModal = ({
             state: { from: window.location.href },
           }}
         >
-          <PrivateMessageContainer
-            isFromProfile={isFromProfile}
-            isFromUserCard={isFromUserCard}
-            id={gtmId}
-          >
-            <img src={activeemail} className='whiteenvelope' alt={"message-icon"} />
-            <img src={whiteemail} className='blueenvelope' alt={"message-icon"} />
-            <span className='message'>{t("messaging.message")}</span>
-          </PrivateMessageContainer>
+          {checkProfile()}
         </Link>
       )}
     </>
