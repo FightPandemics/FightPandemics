@@ -61,25 +61,20 @@ async function routes(app) {
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       let filters = [
+        postMode === "IA" ?
+        {
+          $and: [
+            { expireAt: { $ne: null } },
+            { expireAt: { $lt: new Date() } },
+          ],
+          status: { $ne: "removed" },
+        }
+        :
         {
           $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }],
           status: { $ne: "removed" },
-        },
+        }
       ];
-      // "IA" stands for InActive or Archived
-      //In future we will also have "D" for Drafts
-      if (postMode === "IA") {
-        filters = [
-          {
-            $and: [
-              { expireAt: { $ne: null } },
-              { expireAt: { $lt: new Date() } },
-            ],
-            status: { $ne: "removed" },
-          },
-        ];
-      }
-
       // prefer location from query filters, then user if authenticated
       let location;
       if (queryFilters.location) {
@@ -130,28 +125,21 @@ async function routes(app) {
       //workMode filter
       if (workMode) {
         const workModes = workMode.map((mode) => mode.toLowerCase());
-        if (workModes.includes("both")) {
+        if (workModes.includes("both") || workModes.includes("remote")) {
           filters.push({
             $or: [
               {
                 $and: [
                   { workMode: null },
-                  { types: { $nin: ["Remote Work"] } },
+                  workModes.includes("both")?
+                  { types: { $nin: ["Remote Work"] } }:
+                  { types: { $in: ["Remote Work"] } }
                 ],
               },
               { workMode: { $in: workModes } },
             ],
           });
-        } else if (workModes.includes("remote")) {
-          filters.push({
-            $or: [
-              {
-                $and: [{ workMode: null }, { types: { $in: ["Remote Work"] } }],
-              },
-              { workMode: { $in: workModes } },
-            ],
-          });
-        } else {
+        }else {
           filters.push({ workMode: { $in: workModes } });
         }
       }
