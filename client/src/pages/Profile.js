@@ -357,7 +357,6 @@ const Profile = ({
 
           const modeURL = `&postMode=${mode}`;
           const endpoint = `${baseURL}${objURL}${modeURL}`;
-          console.log("Calling fetch with endpoint ", endpoint);
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
