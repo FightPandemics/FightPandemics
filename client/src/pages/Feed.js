@@ -19,6 +19,7 @@ import { WhiteSpace } from "antd-mobile";
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import filterOptions from "assets/data/filterOptions";
+import createPostSettings from "assets/data/createPostSettings";
 import {
   FeedWrapper,
   SiderWrapper,
@@ -49,6 +50,7 @@ import {
   deletePostModalreducer,
   deletePostState,
 } from "hooks/reducers/feedReducers";
+import { isAuthorUser, isAuthorOrg } from "utils/userInfo";
 
 // ICONS
 import { CreatePostIcon } from "../components/Profile/ProfileComponents";
@@ -72,21 +74,6 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import WithSummitBanner from "components/WithSummitBanner";
-
-export const isAuthorOrg = (organisations, author) => {
-  const isValid = organisations?.some(
-    (organisation) => organisation.name === author.name,
-  );
-  return isValid;
-};
-
-export const isAuthorUser = (user, post) => {
-  return (
-    user?._id === post?.author?.id ||
-    (user?.id === post?.author?.id &&
-      (user.ownUser === undefined || user.ownUser))
-  );
-};
 
 const gtmTagsMap = {
   ALL: GTM.post.allPost,
@@ -157,6 +144,7 @@ const Feed = (props) => {
     ignoreUserLocation,
   } = feedState;
   const filters = Object.values(filterOptions);
+  const workMode = Object.values(createPostSettings.workMode);
   const {
     error: postsError,
     isLoading,
@@ -193,7 +181,6 @@ const Feed = (props) => {
 
   const getStateFromQuery = () => {
     const query = qs.parse(history.location.search);
-
     // search category (Tab)
     query.s_category = SEARCH_OPTIONS[query.s_category]?.id || null;
     changeHelpType(query.s_category);
@@ -209,7 +196,11 @@ const Feed = (props) => {
     if (query.location) {
       query.location = JSON.parse(atob(query.location));
       dispatchAction(SET_VALUE, "location", query.location);
-    } else dispatchAction(SET_VALUE, "location", "");
+      sessionStorage.setItem("feedLocation", JSON.stringify(query.location));
+    } else {
+      dispatchAction(SET_VALUE, "location", "");
+      sessionStorage.removeItem("feedLocation");
+    }
 
     // filters / help type (objective)
     if (query.filters || query.objective) {
@@ -243,14 +234,17 @@ const Feed = (props) => {
     setQueryParams(query);
   };
 
+  //Sets query state for filters
   const setQueryFromState = () => {
     const newQuery = {};
     const oldFiltersLength =
       (queryParams.filters?.type || []).length +
-      (queryParams.filters?.providers || []).length;
+      (queryParams.filters?.providers || []).length +
+      (queryParams.filters?.workMode || []).length;
     const newFiltersLength =
       (selectedOptions?.type || []).length +
-      (selectedOptions?.providers || []).length;
+      (selectedOptions?.providers || []).length +
+      (selectedOptions?.workMode || []).length;
     if (applyFilters && location) {
       newQuery.location = btoa(JSON.stringify(location));
     }
@@ -272,12 +266,14 @@ const Feed = (props) => {
         return;
       }
     }
+
     if (newFiltersLength) {
       if (applyFilters || oldFiltersLength > newFiltersLength) {
         newQuery.filters = btoa(JSON.stringify(selectedOptions));
       }
     } else if (queryParams.filters && !newFiltersLength)
       newQuery.filters = null;
+
     setQueryKeysValue(history, newQuery);
   };
 
@@ -309,7 +305,9 @@ const Feed = (props) => {
     e.preventDefault();
     optionsDispatch({ type: REMOVE_ALL_OPTIONS, payload: {} });
     dispatchAction(SET_VALUE, "location", null);
+    sessionStorage.removeItem("feedLocation");
     setQueryKeysValue(history, { location: null });
+
     setTimeout(() => {
       dispatchAction(SET_VALUE, "activePanel", null);
     }, 500);
@@ -350,8 +348,9 @@ const Feed = (props) => {
       dispatch(postsActions.resetPageAction({}));
     }
     dispatchAction(SET_VALUE, "location", value);
-    if (!value && queryParams.location)
+    if (!value && queryParams.location) {
       setQueryKeysValue(history, { location: null });
+    }
   };
 
   const handleOption = (label, option) => (e) => {
@@ -456,7 +455,6 @@ const Feed = (props) => {
         return `&keywords=${encodeURIComponent(searchKeyword)}`;
       else return "";
     };
-
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
@@ -467,12 +465,13 @@ const Feed = (props) => {
         baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}`;
         break;
       case "ORGANISATIONS":
-        baseURL = `/api/organisations/search?includeMeta=true&limit=${limit}&skip=${skip}`;
+        baseURL = `/api/organisations/?includeMeta=true&limit=${limit}&skip=${skip}`;
         break;
       default:
         break;
     }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
+
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -671,6 +670,7 @@ const Feed = (props) => {
           toggleShowNearMe,
           showFilters,
           totalPostCount,
+          workMode,
         }}
       >
         <FeedWrapper>

@@ -6,6 +6,7 @@ const {
   POST_OBJECTIVES,
   POST_TYPES,
   VISIBILITY_OPTIONS,
+  REMOTE_OPTIONS,
 } = require("../../models/Post");
 
 const getPostsSchema = {
@@ -17,6 +18,7 @@ const getPostsSchema = {
     .prop("ignoreUserLocation", S.boolean().default(false))
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("skip", S.integer())
+    .prop("postMode", S.string())
     .prop("includeMeta", S.boolean().default(false)),
 };
 
@@ -40,7 +42,8 @@ const createPostSchema = {
       "types",
       S.array().minItems(1).items(S.string().enum(POST_TYPES)).required(),
     )
-    .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required()),
+    .prop("visibility", S.string().enum(VISIBILITY_OPTIONS).required())
+    .prop("workMode", S.string().enum(REMOTE_OPTIONS).required()),
 };
 
 const getPostByIdSchema = {
@@ -63,7 +66,8 @@ const updatePostSchema = {
     .prop("objective", S.string().enum(POST_OBJECTIVES))
     .prop("title", S.string())
     .prop("types", S.array().minItems(1).items(S.string().enum(POST_TYPES)))
-    .prop("visibility", S.string().enum(VISIBILITY_OPTIONS)),
+    .prop("visibility", S.string().enum(VISIBILITY_OPTIONS))
+    .prop("workMode", S.string().enum(REMOTE_OPTIONS)),
   params: S.object().prop("postId", S.string()),
 };
 

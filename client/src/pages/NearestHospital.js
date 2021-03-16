@@ -4,9 +4,10 @@ import { NavLink } from "react-router-dom";
 import ConfirmedCases from "../components/NearestHospital/ConfirmedCases";
 import Sidebar from "../components/NearestHospital/HospitalSidebar";
 import HealthFacilities from "../components/NearestHospital/HealthFacilities";
-import CheckSymptomsBox from "../components/NearestHospital/CheckSymptomsBox";
 import { withRouter } from "react-router-dom";
 import { theme, mq } from "../constants/theme";
+import { useTranslation } from "react-i18next";
+import { WhiteSpace } from "antd-mobile";
 
 const { white, offWhite, royalBlue } = theme.colors;
 
@@ -49,8 +50,9 @@ const ActiveLinkStyles = {
   padding: ".4rem 2rem",
 };
 
-const NearestHospitalLayout = (props) => {
+const NearestHospitalLayout = () => {
   const [isMobile, setMediaQuery] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -66,6 +68,8 @@ const NearestHospitalLayout = (props) => {
     setPage(pageName);
   };
 
+  const hidingSideBar = true;
+
   const renderChildComponents = () => {
     if (isMobile) {
       return (
@@ -76,7 +80,6 @@ const NearestHospitalLayout = (props) => {
     } else {
       return (
         <div>
-          <CheckSymptomsBox />
           {page === "nearest-hospital" ? (
             <HealthFacilities />
           ) : (
@@ -89,35 +92,38 @@ const NearestHospitalLayout = (props) => {
 
   return (
     <NearestHospitalContainer>
-      <NearestHospitalSideBar>
-        <Sidebar>
-          <ul>
-            <li>
-              <NavLink
-                onClick={(pageName) => setCurrentPage("nearest-hospital")}
-                activeStyle={
-                  page === "nearest-hospital" ? ActiveLinkStyles : null
-                }
-                to="#"
-              >
-                Health Facilities
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                onClick={(pageName) => setCurrentPage("confirmed-cases")}
-                activeStyle={
-                  page === "confirmed-cases" ? ActiveLinkStyles : null
-                }
-                to="#"
-              >
-                Confirmed Cases
-              </NavLink>
-            </li>
-          </ul>
-        </Sidebar>
-      </NearestHospitalSideBar>
-
+      {!hidingSideBar ? (
+        <NearestHospitalSideBar>
+          <Sidebar>
+            <ul>
+              <li>
+                <NavLink
+                  onClick={(pageName) => setCurrentPage("nearest-hospital")}
+                  activeStyle={
+                    page === "nearest-hospital" ? ActiveLinkStyles : null
+                  }
+                  to="#"
+                >
+                  {t("nearestHsp.healthFacilities")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  onClick={(pageName) => setCurrentPage("confirmed-cases")}
+                  activeStyle={
+                    page === "confirmed-cases" ? ActiveLinkStyles : null
+                  }
+                  to="#"
+                >
+                  {t("nearestHsp.confirmedCases")}
+                </NavLink>
+              </li>
+            </ul>
+          </Sidebar>
+        </NearestHospitalSideBar>
+      ) : (
+        <WhiteSpace />
+      )}
       <NearestHospitalContentBox>
         {renderChildComponents()}
       </NearestHospitalContentBox>

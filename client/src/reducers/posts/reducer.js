@@ -6,6 +6,27 @@ const innitialState = {
   error: null,
   isLoading: false,
   loadMore: true,
+  isCachedStale: false,
+  profilePosts: {},
+};
+
+export const getProfileObjectiveProp = (view) => {
+  // convert 'request' or 'offer' tab to requests or offers prop name
+  const viewMap = {
+    request: "requests",
+    offer: "offers",
+  };
+  return viewMap[view];
+};
+
+export const getProfileModeProp = (mode) => {
+  // convert I, A, undefined to active, inactive, all
+  const modeMap = {
+    A: "active",
+    IA: "inactive",
+    undefined: "all",
+  };
+  return modeMap[mode];
 };
 
 const postsReducer = (state = innitialState, action) => {
@@ -24,6 +45,28 @@ const postsReducer = (state = innitialState, action) => {
         isLoading: false,
       };
     }
+
+    case POSTS_ACTIONS.FETCH_PROFILE_POSTS_SUCCESS: {
+      let { posts, userId, objective, mode } = action.payload;
+      objective = getProfileObjectiveProp(objective);
+      mode = getProfileModeProp(mode);
+      return {
+        ...state,
+        error: null,
+        profilePosts: {
+          ...state.profilePosts,
+          [userId]: {
+            ...state.profilePosts[userId],
+            [objective]: {
+              ...state.profilePosts[userId]?.[objective],
+              [mode]: posts,
+            },
+          },
+        },
+        isLoading: false,
+      };
+    }
+
     case POSTS_ACTIONS.FETCH_POSTS_ERROR: {
       const { payload } = action;
       return {

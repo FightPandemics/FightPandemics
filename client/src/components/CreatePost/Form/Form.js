@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import First from "./FirstSection";
 import Second from "./SecondSection";
 import Third from "./ThirdSection";
+import Fourth from "./FourthSection";
 import { CreatePostContext } from "components/CreatePost/CreatePost";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 import createPostSettings from "assets/data/createPostSettings";
@@ -11,7 +12,7 @@ import axios from "axios";
 import { formDataToPost } from "assets/data/formToPostMappings";
 import GTM from "constants/gtm-tags";
 
-const { shareWith, expires, helpTypes } = createPostSettings;
+const { shareWith, expires, helpTypes, workMode } = createPostSettings;
 
 const initialState = {
   formData: {
@@ -21,11 +22,19 @@ const initialState = {
     shareWith: shareWith.default.value,
     expires: expires.default.value,
     help: helpTypes.default.value,
+    workMode: workMode.default.value,
   },
   errors: [],
 };
 
-const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
+const Form = ({
+  setCurrentStep,
+  textData,
+  type,
+  setPostId,
+  gtmPrefix,
+  onSuccess,
+}) => {
   const { t } = useTranslation();
   const { form } = useContext(CreatePostContext);
   const [formData, setFormData] = useState(initialState.formData);
@@ -91,6 +100,7 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
       try {
         const res = await axios.post("/api/posts", payload);
         setPostId(res.data._id);
+        onSuccess(res.data);
         cleanForm();
       } catch (error) {
         console.log(error);
@@ -117,6 +127,10 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
         onShareWithChange={(val) => handleSelectorChange("shareWith", val)}
         onExpirationChange={(val) => handleSelectorChange("expires", val)}
       />
+      <Fourth
+        formData={formData}
+        onWorkModeChange={(val) => handleSelectorChange("workMode", val)}
+      />
       <Footer>
         <Submit
           primary="true"
@@ -124,7 +138,8 @@ const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
           disabled={
             !formData.title ||
             !formData.description ||
-            formData.tags.length === 0
+            formData.tags.length === 0 ||
+            formData.workMode === workMode.default.value
           }
           id={gtmPrefix + GTM.post.button}
         >

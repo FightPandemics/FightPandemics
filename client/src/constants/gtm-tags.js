@@ -11,6 +11,8 @@ module.exports = {
     language: "_LS",
     switch: "_SWC",
     notifications: "_NOT",
+    nearestHsp: "_NH",
+    checkSymp: "_CS",
   },
   homePage: {
     prefix: "HP",
@@ -57,6 +59,7 @@ module.exports = {
     button: "_PO",
     delete: "_DEL",
     edit: "_EDT",
+    workMode: "_WM",
   },
   user: {
     completedPrefix: "PC",
@@ -83,6 +86,18 @@ module.exports = {
     cancelVerify: "_CV",
     accountVerified: "_AV",
     checkBadge: "_AV_CB",
+    requests: "_RE",
+    offers: "_OF",
+    posts: "_PO",
+    card: "_CRD",
+    desktop: "_DET",
+    active: "_AC",
+    archived: "_AR",
+    draft: "_DFT",
+    activity: "_ACT",
+    organizations: "_ORG",
+    badges: "_BD",
+    thanks: "_TH",
   },
   sign: {
     inPrefix: "SI",
@@ -104,6 +119,12 @@ module.exports = {
   },
   feed: {
     prefix: "HB",
+  },
+  nearestHospital: {
+    prefix: "NH",
+    facilityType: "_FT",
+    locationChange: "_LC",
+    locationShare: "_LS",
   },
   providersFilters: {
     individual: "_IN",
@@ -129,6 +150,11 @@ module.exports = {
     researchAndDevelopment: "_RD",
     tech: "_TC",
     other: "_OT",
+  },
+  workModeFilter: {
+    inPerson: "_IP",
+    remote: "_RM",
+    both: "_IPR",
   },
   language: {
     "en-US": "_EN_US",

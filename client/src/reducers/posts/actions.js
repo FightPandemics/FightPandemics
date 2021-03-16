@@ -3,6 +3,7 @@ export const POSTS_ACTIONS = {
   FETCH_POSTS_SUCCESS: "FETCH_POSTS_SUCCESS",
   FETCH_POSTS_BEGIN: "FETCH_POSTS_BEGIN",
   FETCH_POSTS_ERROR: "FETCH_POSTS_ERROR",
+  FETCH_PROFILE_POSTS_SUCCESS: "FETCH_PROFILE_POSTS_SUCCESS",
   NEXT_PAGE: "NEXT_PAGE",
   SET_PAGE: "SET_PAGE",
   RESET_PAGE: "RESET_PAGE",
@@ -35,6 +36,16 @@ export const fetchPostsBegin = () => ({
 export const fetchPostsSuccess = ({ posts }) => ({
   type: POSTS_ACTIONS.FETCH_POSTS_SUCCESS,
   payload: posts,
+});
+
+export const fetchProfilePostSuccess = ({
+  posts,
+  userId,
+  objective,
+  mode,
+}) => ({
+  type: POSTS_ACTIONS.FETCH_PROFILE_POSTS_SUCCESS,
+  payload: { posts, userId, objective, mode },
 });
 
 export const fetchPostsError = (error) => ({
@@ -75,6 +86,7 @@ export const postsActions = {
   setLikeAction,
   fetchPostsBegin,
   fetchPostsSuccess,
+  fetchProfilePostSuccess,
   fetchPostsError,
   finishLoadingAction,
   setLoadingAction,

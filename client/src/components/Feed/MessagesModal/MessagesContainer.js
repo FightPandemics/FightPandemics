@@ -365,7 +365,7 @@ export const PrivateMessageContainer = styled.div`
         right: 5rem;
         background: ${whiteColor};
         border: none;
-        box-shadow: 0.2rem 0.2rem 0.2rem lightgrey;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
       }
     }
       `
