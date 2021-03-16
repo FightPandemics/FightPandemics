@@ -35,7 +35,7 @@ const PostContent = ({
   fromPage,
 }) => {
   const [hiddenPosts, setHiddenPosts] = useState(
-    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {}
   );
   const [callReport, setCallReport] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
@@ -46,7 +46,7 @@ const PostContent = ({
   const hidePost = (postId) => {
     localStorage.setItem(
       "hiddenPosts",
-      JSON.stringify({ ...hiddenPosts, [postId]: true }),
+      JSON.stringify({ ...hiddenPosts, [postId]: true })
     ); // objects are fast, better than looking for postId in an Array
     setHiddenPosts({ ...hiddenPosts, [postId]: true });
   };
@@ -109,7 +109,7 @@ const PostContent = ({
       actorId,
       callReport,
       hidePost,
-    ],
+    ]
   );
 
   return (
@@ -154,14 +154,15 @@ const PostTabCard = ({
   const tabs = cardContents.map((item) => ({
     title: item.title,
     key: item.title,
-    // postCount: item.posts.length,
+    postCount: item.posts.length,
   }));
-  // const [currentTab, setCurrentTab] = useState({});
+  const initialTab = tabs.find((tab) => tab.title === initialPage);
+  const [currentTab, setCurrentTab] = useState(initialTab);
 
   useEffect(() => {
     const initialTab = tabs.find((tab) => tab.title === initialPage);
-    // setCurrentTab(initialTab);
-  }, [cardContents, initialPage, tabs]);
+    setCurrentTab(initialTab);
+  }, [cardContents, initialPage]);
 
   return (
     <Container>
@@ -169,7 +170,7 @@ const PostTabCard = ({
         initialPage={initialPage || 0}
         tabs={tabs}
         onTabClick={(tab) => {
-          // setCurrentTab(tab);
+          setCurrentTab(tab);
           onTabClick(tab.title);
         }}
       >
@@ -186,19 +187,21 @@ const PostTabCard = ({
         ))}
       </Tabs>
       {/* {currentTab && currentTab.postCount > 0 && ( */}
-      <StyledCardFooter>
-        <Link
-          to={{
-            pathname: `/see-all/${user.id}`,
-            state: {
-              viewType: viewType?.toUpperCase(),
-              isAuthenticated: isAuthenticated,
-            },
-          }}
-        >
-          See All
-        </Link>
-      </StyledCardFooter>
+      {currentTab && currentTab.postCount > 0 && (
+        <StyledCardFooter>
+          <Link
+            to={{
+              pathname: `/see-all/${user.id}`,
+              state: {
+                viewType: viewType?.toUpperCase(),
+                isAuthenticated: isAuthenticated,
+              },
+            }}
+          >
+            See All
+          </Link>
+        </StyledCardFooter>
+      )}
       {/* )}  */}
     </Container>
   );
