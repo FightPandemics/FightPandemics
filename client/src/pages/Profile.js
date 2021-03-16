@@ -300,6 +300,7 @@ const Profile = ({
         gtm: "offers",
       });
       setSectionView(t("profile.views.requests"));
+      setInternalTab(t("profile.views.active"));
     } else {
       baseMenu.splice(1, 0, {
         name: t("profile.views.posts"),
@@ -307,7 +308,7 @@ const Profile = ({
         gtm: "posts",
       });
       setSectionView(t("profile.views.posts"));
-      setInternalTab("Requests");
+      setInternalTab(t("profile.views.requests"));
     }
     setNavMenu(baseMenu);
     setIsInit(true);
