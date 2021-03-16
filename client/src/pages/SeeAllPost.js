@@ -7,7 +7,7 @@ import React, {
   useRef,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -154,15 +154,16 @@ export const BackText = styled.span`
   font-weight: bold;
 `;
 
-const SeeAll = ({
-  isAuthenticated,
-  isOrg = true,
-  isProfile = false,
-  match: {
-    params: { id: pathUserId },
-  },
-  viewType = "OFFERS",
-}) => {
+const SeeAll = (props) => {
+  const loc = useLocation();
+  const viewType = loc.state.viewType;
+  const isAuthenticated = loc.state.isAuthenticated;
+  const isOrg = true;
+
+  const { id: pathUserId } = useParams();
+  // const { history, view } = props;
+
+  console.log(loc.state.viewType, viewType);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   let orgId = "";

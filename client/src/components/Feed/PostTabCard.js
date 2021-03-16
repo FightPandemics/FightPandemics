@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Tabs } from "antd-mobile";
 import { Button } from "antd";
+import { Link } from "react-router-dom";
 import PostDropdownButton from "components/Feed/PostDropdownButton";
 import DeleteModal from "components/Feed/PostDeleteModal";
 import CreateReport from "components/CreateReport/CreateReport";
@@ -34,7 +35,7 @@ const PostContent = ({
   fromPage,
 }) => {
   const [hiddenPosts, setHiddenPosts] = useState(
-    JSON.parse(localStorage.getItem("hiddenPosts")) || {}
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
   );
   const [callReport, setCallReport] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
@@ -45,7 +46,7 @@ const PostContent = ({
   const hidePost = (postId) => {
     localStorage.setItem(
       "hiddenPosts",
-      JSON.stringify({ ...hiddenPosts, [postId]: true })
+      JSON.stringify({ ...hiddenPosts, [postId]: true }),
     ); // objects are fast, better than looking for postId in an Array
     setHiddenPosts({ ...hiddenPosts, [postId]: true });
   };
@@ -102,14 +103,13 @@ const PostContent = ({
       posts,
       maxPosts,
       hiddenPosts,
-      handlePostDelete,
       fromPage,
       user,
       isAuthenticated,
       actorId,
       callReport,
       hidePost,
-    ]
+    ],
   );
 
   return (
@@ -174,7 +174,17 @@ const PostTabCard = ({
         ))}
       </Tabs>
       <StyledCardFooter>
-        <Button type="link">See All</Button>
+        <Link
+          to={{
+            pathname: `/see-all/${user.id}`,
+            state: {
+              viewType: "OFFERS",
+              isAuthenticated: isAuthenticated,
+            },
+          }}
+        >
+          See All
+        </Link>
       </StyledCardFooter>
     </Container>
   );
