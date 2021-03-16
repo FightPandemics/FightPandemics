@@ -186,7 +186,6 @@ const PostTabCard = ({
           />
         ))}
       </Tabs>
-      {/* {currentTab && currentTab.postCount > 0 && ( */}
       {currentTab && currentTab.postCount > 0 && (
         <StyledCardFooter>
           <Link
@@ -202,7 +201,6 @@ const PostTabCard = ({
           </Link>
         </StyledCardFooter>
       )}
-      {/* )}  */}
     </Container>
   );
 };
