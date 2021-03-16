@@ -41,8 +41,8 @@ const gtmTagsMap = {
   ACTIVE_REQS: `${GTM.profile.requests + GTM.profile.active}`,
   ARCHIVED_OFRS: `${GTM.profile.offers + GTM.profile.archived}`,
   ARCHIVED_REQS: `${GTM.profile.offers + GTM.profile.archived}`,
-  DRAFTS_REQS: `${GTM.profile.requests + GTM.profile.draft}`,
-  DRAFTS_OFRS: `${GTM.profile.offers + GTM.profile.draft}`,
+  //DRAFTS_REQS: `${GTM.profile.requests + GTM.profile.draft}`,
+  //DRAFTS_OFRS: `${GTM.profile.offers + GTM.profile.draft}`,
 };
 // run this for the tags
 const gtmTag = (tag) => GTM.user.profilePrefix + tag;
@@ -55,12 +55,12 @@ const TAB_TYPE = {
   REQUESTS: {
     ACTIVE_REQS: "active",
     ARCHIVED_REQS: "archived",
-    DRAFTS_REQS: "drafts",
+    //DRAFTS_REQS: "drafts",
   },
   OFFERS: {
     ACTIVE_OFRS: "active",
     ARCHIVED_OFRS: "archived",
-    DRAFTS_OFRS: "drafts",
+    //DRAFTS_OFRS: "drafts",
   },
 };
 
@@ -409,7 +409,9 @@ const SeeAll = ({
           ])}
         />
       )}
-      {emptyFeed() && <>"No Posts matching your crieteria."</>}
+      <div style={{ textAlign: "center" }}>
+        {emptyFeed() && <>"No Posts to display."</>}
+      </div>
     </SeeAllWrapper>
   );
 };

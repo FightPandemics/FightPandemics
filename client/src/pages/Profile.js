@@ -889,7 +889,9 @@ const Profile = ({
                       ])}
                     />
                   )}
-                  {emptyFeed() && <>"No Posts to display."</>}
+                  <div style={{ textAlign: "center" }}>
+                    {emptyFeed() && <>"No Posts to display."</>}
+                  </div>
                 </div>
               ) : null}
             </div>
