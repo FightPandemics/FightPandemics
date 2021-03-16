@@ -115,7 +115,12 @@ const CreatePost = ({ onCancel, onSuccess, loadPosts, ...props }) => {
       <Wrapper onCancel={clearState} {...props}>
         <Step2 gtmPrefix={props.gtmPrefix} />
       </Wrapper>
-      <Step1 onSuccess={onSuccess} onCancel={clearState} {...props} gtmPrefix={props.gtmPrefix} />
+      <Step1
+        onSuccess={onSuccess}
+        onCancel={clearState}
+        {...props}
+        gtmPrefix={props.gtmPrefix}
+      />
     </CreatePostContext.Provider>
   );
 };

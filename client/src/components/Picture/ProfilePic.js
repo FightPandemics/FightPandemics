@@ -23,7 +23,7 @@ const InitialDiv = styled.div`
   align-items: center;
   justify-content: center;
   @media screen and (min-width: ${(props) =>
-    props.resolution ? props.resolution : mq.tablet.narrow.minWidth}) {
+      props.resolution ? props.resolution : mq.tablet.narrow.minWidth}) {
     margin: 0;
     height: ${(props) => (props.hasPhoto ? `11rem` : `12rem`)};
     line-height: ${(props) => (props.hasPhoto ? `10rem` : `11rem`)};

@@ -157,7 +157,6 @@ export const EditIcon = styled(SvgIcon)`
   top: 2.4rem;
 `;
 
-
 export const ProfileBackgroup = styled.div`
   background-color: ${colors.royalBlue};
   position: absolute;
@@ -200,14 +199,14 @@ export const IconsContainer = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     ${(props) =>
-    props.inCard
-      ? `
+      props.inCard
+        ? `
     img {
       width: 2rem;
       height: 2rem;
     }
     `
-      : ""};
+        : ""};
   }
 
   .social-icons {
@@ -301,20 +300,20 @@ export const DescriptionDesktop = styled.div`
   }
 `;
 export const MobileLocation = styled.div`
-color: #939393;
-font-weight: normal;
-font-family: Poppins;
-margin-top: 0.5rem;
-font-size: 1.1rem;
-line-height: 140%;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-max-width: calc(100% - 1.6rem);
+  color: #939393;
+  font-weight: normal;
+  font-family: Poppins;
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  line-height: 140%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 1.6rem);
 
-img {
-  margin-right: 0.5rem;
-}
+  img {
+    margin-right: 0.5rem;
+  }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
@@ -412,13 +411,13 @@ export const ChildMenuWrapper = styled(Menu)`
 
   &.ant-menu {
     ${({ isMobile }) =>
-    isMobile
-      ? `
+      isMobile
+        ? `
       border-top: 0.2rem solid ${theme.colors.lightGray};
       width: 100%;
       border-bottom: 0.2rem solid ${theme.colors.lightGray};
   `
-      : `border-bottom: 0.2rem solid ${theme.colors.darkGray};`}
+        : `border-bottom: 0.2rem solid ${theme.colors.darkGray};`}
 
     li.ant-menu-item {
       margin: 0.8rem 0;
@@ -446,5 +445,5 @@ export const ChildMenuWrapper = styled(Menu)`
 //Mobile
 export const StyledMobileMenuContainer = styled.div`
   display: "flex";
-  flex-direction: "column"
-`
+  flex-direction: "column";
+`;

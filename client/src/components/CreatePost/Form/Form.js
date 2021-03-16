@@ -27,7 +27,14 @@ const initialState = {
   errors: [],
 };
 
-const Form = ({ setCurrentStep, textData, type, setPostId, gtmPrefix, onSuccess }) => {
+const Form = ({
+  setCurrentStep,
+  textData,
+  type,
+  setPostId,
+  gtmPrefix,
+  onSuccess,
+}) => {
   const { t } = useTranslation();
   const { form } = useContext(CreatePostContext);
   const [formData, setFormData] = useState(initialState.formData);

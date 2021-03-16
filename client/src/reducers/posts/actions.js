@@ -38,10 +38,15 @@ export const fetchPostsSuccess = ({ posts }) => ({
   payload: posts,
 });
 
-export const fetchProfilePostSuccess = ({ posts, userId, objective, mode }) => ({
+export const fetchProfilePostSuccess = ({
+  posts,
+  userId,
+  objective,
+  mode,
+}) => ({
   type: POSTS_ACTIONS.FETCH_PROFILE_POSTS_SUCCESS,
-  payload: { posts, userId, objective, mode }
-})
+  payload: { posts, userId, objective, mode },
+});
 
 export const fetchPostsError = (error) => ({
   type: POSTS_ACTIONS.FETCH_POSTS_ERROR,
