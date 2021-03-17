@@ -39,6 +39,8 @@ import {
 } from "../components/Profile/ProfileComponents";
 import PositionSubmitButton from "components/Positions/PositionSubmitButton";
 
+
+
 const Apply = () => {
 
     let url = window.location.pathname.split("/");
