@@ -32,6 +32,7 @@ import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
 import Positions from "./pages/Positions";
+import Apply from "./pages/Apply";
 
 import { SCOPES } from "constants/permissions";
 
@@ -278,20 +279,18 @@ const routes = [
     path: "/organisation/:id/positions",
     component: Positions,
     props: {
-      isProfile: true,
+      // TODO hide footer mobile
+    }
+  },
+  {
+    //TODO update path to be structure convention
+    path: "/organisation/:id/apply",
+    component: Apply,
+    props: {
       hideFooter: true,
       hideHeader: true
     }
   },
-  {
-    path: "/organisation/:id/position/:id",
-    component: Positions,
-    props: {
-      isProfile: true,
-      hideFooter: true,
-      hideHeader: true
-    }
-  }
   {
     path: "*",
     component: NotFoundPage,

@@ -37,8 +37,7 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
-
-import PositionSubmitButton from "/components/Positions";
+import PositionSubmitButton from "components/Positions/PositionSubmitButton";
 
 const Apply = () => {
 

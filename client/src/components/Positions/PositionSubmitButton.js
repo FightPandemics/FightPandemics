@@ -131,15 +131,15 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
   };
   return (
     <>
-      <LinkButtonNarrow
+      {/* <LinkButtonNarrow
       // needs proper GTM tag
-        id={getGTM("Submit1")}
+        // id={getGTM("Submit1")}
         type="primary"
         shape="round"
         onClick={showPopUp}
       >
         {t("positions.submitButton")}
-      </LinkButtonNarrow>
+      </LinkButtonNarrow> */}
       <ApplyModal
         style={{ border: "3rem" }}
         //set to true for testing, normally handled by {visible}
