@@ -145,8 +145,8 @@ const Positions = () => {
                             </UserInfoDesktop>
                         </UserInfoContainer>
                         {// Position title and description to be pulled from backend / API
-                        // Placeholder text for ONE position is being used below
-                        // Component will be needed for multiple positions (based on backend schema / structure) Placeholder text is being used below
+                            // Placeholder text for ONE position is being used below
+                            // Component will be needed for multiple positions (based on backend schema / structure)
                         }
                         <PositionTitle>Volunteer Position</PositionTitle>
                         <PositionDescription>
