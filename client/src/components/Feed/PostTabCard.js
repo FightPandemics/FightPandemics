@@ -169,7 +169,7 @@ const PostTabCard = ({
       <Tabs
         initialPage={initialPage || 0}
         tabs={tabs}
-        onTabClick={(tab) => {
+        onChange={(tab) => {
           setCurrentTab(tab);
           onTabClick(tab.title);
         }}
