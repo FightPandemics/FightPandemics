@@ -335,45 +335,76 @@ export const DesktopLocation = styled.div`
 `;
 
 export const MobileMenuWrapper = styled(Menu)`
-  &.ant-menu-vertical {
-    border-right: none;
-  }
+  height: 4rem;
+  margin: 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+
   &.ant-menu {
-    width: 100%;
-    background-color: transparent;
-    border-bottom: 0.063rem solid #e0e0e0;
-    height: 4.5rem;
-    display: flex;
-    justify-content: space-between;
-    overflow: auto;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  li.ant-menu-item {
-    margin: 0.8rem 0;
-    height: 3rem;
-    padding-bottom: 0rem;
-    overflow: visible;
+    li.ant-menu-item {
+      margin: 0.8rem 0;
+      height: 3rem;
+      padding-bottom: 0rem;
 
-    color: ${theme.colors.darkerGray};
-    font-size: ${theme.typography.size.large};
-    line-height: 1.313rem;
-    &:hover {
       color: ${theme.colors.darkerGray};
+      font-size: ${theme.typography.size.large};
+      line-height: 2.1rem;
+      width: 50%;
+      &:hover {
+        color: ${theme.colors.darkerGray};
+      }
+      text-align: center;
     }
-    text-align: center;
-  }
 
-  &.ant-menu .ant-menu-item-selected {
-    background-color: transparent;
-    border-bottom: 0.2rem solid ${theme.colors.black};
-    font-weight: bold;
-    overflow: visible;
+    &.ant-menu .ant-menu-item-selected {
+      background-color: transparent;
+      border-bottom: 0.2rem solid ${theme.colors.black};
+      font-weight: bold;
+    }
   }
 `;
+// TODO: Below is the wrapper for when future features get added
+// export const MobileMenuWrapper = styled(Menu)`
+//   &.ant-menu-vertical {
+//     border-right: none;
+//   }
+//   &.ant-menu {
+//     width: 100%;
+//     background-color: transparent;
+//     border-bottom: 0.063rem solid #e0e0e0;
+//     height: 4.5rem;
+//     display: flex;
+//     justify-content: space-between;
+//     overflow: auto;
+//     &::-webkit-scrollbar {
+//       display: none;
+//     }
+//     -ms-overflow-style: none;
+//     scrollbar-width: none;
+//   }
+//   li.ant-menu-item {
+//     margin: 0.8rem 0;
+//     height: 3rem;
+//     padding-bottom: 0rem;
+//     overflow: visible;
+
+//     color: ${theme.colors.darkerGray};
+//     font-size: ${theme.typography.size.large};
+//     line-height: 1.313rem;
+//     &:hover {
+//       color: ${theme.colors.darkerGray};
+//     }
+//     text-align: center;
+//   }
+
+//   &.ant-menu .ant-menu-item-selected {
+//     background-color: transparent;
+//     border-bottom: 0.2rem solid ${theme.colors.black};
+//     font-weight: bold;
+//     overflow: visible;
+//   }
+// `;
 export const DesktopMenuWrapper = styled(Menu)`
   &.ant-menu-vertical {
     border-right: none;

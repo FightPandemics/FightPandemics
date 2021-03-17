@@ -195,7 +195,7 @@ const Profile = ({
   if (ownUser) sessionStorage.removeItem("msgModal");
   const [deleteModal, deleteModalDispatch] = useReducer(
     deletePostModalreducer,
-    deletePostState
+    deletePostState,
   );
   const { deleteModalVisibility } = deleteModal;
 
@@ -267,26 +267,27 @@ const Profile = ({
     }
 
     const baseMenu = [
-      {
-        name: t("profile.views.activity"),
-        disabled: true,
-        gtm: "activity",
-      },
-      {
-        name: t("profile.views.organizations"),
-        disabled: true,
-        gtm: "organizations",
-      },
-      {
-        name: t("profile.views.badges"),
-        disabled: true,
-        gtm: "badges",
-      },
-      {
-        name: t("profile.views.thanks"),
-        disabled: true,
-        gtm: "thanks",
-      },
+      // TODO:Future feature tabs when ready
+      // {
+      //   name: t("profile.views.activity"),
+      //   disabled: true,
+      //   gtm: "activity",
+      // },
+      // {
+      //   name: t("profile.views.organizations"),
+      //   disabled: true,
+      //   gtm: "organizations",
+      // },
+      // {
+      //   name: t("profile.views.badges"),
+      //   disabled: true,
+      //   gtm: "badges",
+      // },
+      // {
+      //   name: t("profile.views.thanks"),
+      //   disabled: true,
+      //   gtm: "thanks",
+      // },
     ];
     if (isSelf) {
       baseMenu.splice(1, 0, {
@@ -370,7 +371,7 @@ const Profile = ({
                 userId,
                 objective: view,
                 mode: mode,
-              })
+              }),
             );
 
             //desktop fetch
@@ -378,7 +379,7 @@ const Profile = ({
               dispatch(
                 postsActions.fetchPostsSuccess({
                   posts: [],
-                })
+                }),
               );
             }
             if (posts.length && meta.total) {
@@ -399,20 +400,20 @@ const Profile = ({
                 dispatch(
                   postsActions.fetchPostsSuccess({
                     posts: { ...postsList, ...loadedPosts },
-                  })
+                  }),
                 );
               } else {
                 dispatch(
                   postsActions.fetchPostsSuccess({
                     posts: { ...loadedPosts },
-                  })
+                  }),
                 );
               }
             } else if (prevUserId === userId && posts) {
               dispatch(
                 postsActions.fetchPostsSuccess({
                   posts: { ...postsList },
-                })
+                }),
               );
               dispatch(postsActions.finishLoadingAction());
             } else {
@@ -452,8 +453,8 @@ const Profile = ({
         ]);
         userProfileDispatch(
           fetchUserError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
-          )
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
@@ -496,7 +497,7 @@ const Profile = ({
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, filteredPost.length]
+    [dispatch, isLoading, loadMore, filteredPost.length],
   );
 
   const postDelete = async (post) => {
@@ -532,14 +533,14 @@ const Profile = ({
         userId,
         objective: post.objective,
         mode: "A",
-      })
+      }),
     );
     dispatch(
       postsActions.fetchProfilePostSuccess({
         posts: [post, ...posts.profilePosts?.[userId]?.[objective]?.all],
         userId,
         objective: post.objective,
-      })
+      }),
     );
   };
 
@@ -558,7 +559,7 @@ const Profile = ({
           userId,
           objective: post.objective,
           mode: "IA",
-        })
+        }),
       );
     } else {
       dispatch(
@@ -567,7 +568,7 @@ const Profile = ({
           userId,
           objective: post.objective,
           mode: "A",
-        })
+        }),
       );
     }
     dispatch(
@@ -575,7 +576,7 @@ const Profile = ({
         posts: filteredPost.filter((curr) => curr._id != post._id),
         userId,
         objective: post.objective,
-      })
+      }),
     );
   };
 
