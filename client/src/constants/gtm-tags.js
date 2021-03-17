@@ -71,6 +71,7 @@ module.exports = {
     createOrgProfPrefix: "COP",
     createNew: "_CN",
     email: "_EM",
+    joinOrg: "JOR"
   },
   profile: {
     createProfile: "_CPR",

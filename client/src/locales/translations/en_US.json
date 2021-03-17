@@ -339,7 +339,8 @@
       "updatingPassword": "Updating Password",
       "editSecurity": "Edit Security",
       "editNotification": "Edit Notification",
-      "editAccount": "Edit Account"
+      "editAccount": "Edit Account",
+      "joinOrg": "Join"
     },
     "org": {
       "title": "Create Organization Profile",
@@ -1106,5 +1107,16 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Close"
+  },
+  "positions": {
+    "applicationSubmitted": "Application Submitted!",
+    "applicationReceived": "Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.",
+    "apply": "Apply",
+    "positions": "Positions",
+    "okay": "Okay!",
+    "submitApplication": "Submit Application",
+    "submitButton": "Submit",
+    "submitModal": "SUBMIT",
+    "cancelModal": "CANCEL"
   }
 }

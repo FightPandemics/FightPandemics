@@ -31,6 +31,7 @@ import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
+import Positions from "./pages/Positions";
 
 import { SCOPES } from "constants/permissions";
 
@@ -90,6 +91,7 @@ const routes = [
     component: OfferHelp,
   },
   {
+    // exact: true,
     path: "/about-us",
     component: AboutUs,
   },
@@ -106,6 +108,7 @@ const routes = [
     component: ProfileCompleted,
   },
   {
+    exact: true,
     path: "/organisation/:id",
     component: OrganisationProfile,
     props: {
@@ -174,7 +177,7 @@ const routes = [
     },
   },
   {
-    path: "/feed/:id",
+    path: "/feed",
     component: Feed,
     props: {
       mobiletabs: true,
@@ -225,7 +228,7 @@ const routes = [
     },
   },
   {
-    path: "/post/:postId/",
+    path: "/post/:postId",
     component: PostPage,
     props: {
       loggedInOnly: false,
@@ -271,7 +274,15 @@ const routes = [
     component: Unsubscribe,
     layout: "logo",
   },
-
+  {
+    path: "/organisation/:id/positions",
+    component: Positions,
+    props: {
+      isProfile: true,
+      hideFooter: true,
+      hideHeader: true
+    }
+  },
   {
     path: "*",
     component: NotFoundPage,
