@@ -284,6 +284,15 @@ const routes = [
     }
   },
   {
+    path: "/organisation/:id/position/:id",
+    component: Positions,
+    props: {
+      isProfile: true,
+      hideFooter: true,
+      hideHeader: true
+    }
+  }
+  {
     path: "*",
     component: NotFoundPage,
     exact: true,
