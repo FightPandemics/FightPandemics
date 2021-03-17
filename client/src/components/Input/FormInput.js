@@ -81,7 +81,10 @@ export default forwardRef(
             ref={ref}
             placeholder={placeholder}
             {...props}
+            
+            
           />
+         
         </InputWrapper>
         {typeof charsLeft === "number" && charsLeft !== props.maxLength && (
           <InputInfo

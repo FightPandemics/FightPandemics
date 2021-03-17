@@ -38,6 +38,7 @@ import {
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 import PositionSubmitButton from "components/Positions/PositionSubmitButton";
+import PositionApplicationForm from "components/Positions/PositionApplicationForm";
 
 
 
@@ -149,20 +150,8 @@ const Apply = () => {
                                 {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
                             </UserInfoDesktop>
                         </UserInfoContainer>
-                        {// Position title and description to be pulled from backend / API. Placeholder text is being used below
-                        }
-                        <PositionTitle>Volunteer Position</PositionTitle>
-                        <PositionDescription>
-                            <p>Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.
-                            <br /><br />
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mauris lectus, posuere at nunc non, bibendum iaculis dolor. Vivamus faucibus lacus nec malesuada volutpat.
-                            <br /><br />
-                            Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.</p>
-                        </PositionDescription >
-                        {//Button will connect applications page
-                        }
-                        <ApplyButton>{t("positions.apply")}</ApplyButton>
-                        <PositionSubmitButton></PositionSubmitButton>
+                                            <PositionApplicationForm></PositionApplicationForm>
+                        {/* <PositionSubmitButton></PositionSubmitButton> */}
                     </PositionsContainer >
                 </ProfileLayout>
             </>

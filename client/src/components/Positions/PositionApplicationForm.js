@@ -158,11 +158,12 @@ const PositionApplicationForm = () => {
           // error={errors.firstQ}
           style={inputStyles}
           placeholder={t("orgJoinQ.maxnum")}
+          
           ref={register({
             required: t("orgJoinQ.required"),
             maxLength: {
-              value: 30,
-              message: t("profile.common.maxCharacters", { maxNum: 30 }),
+              value: 250,
+              message: t("profile.common.maxCharacters", { maxNum: 250 },),
             },
           })}
           onChange={(event) => event.target.value}
