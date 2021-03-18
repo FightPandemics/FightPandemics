@@ -1100,6 +1100,7 @@
     "application": "Applicaton",
     "submit": "Submit",
     "maxnum": "/250"
+  },
   "nearestHsp": {
     "noResults": "No Results",
     "tryAdjusting": "Try adjusting your type of health facilities or location.",
