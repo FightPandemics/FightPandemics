@@ -273,7 +273,6 @@ const OrgBookEditorSpace = (props) => {
         {selectedPage ? (
           <PublishButtonContainer
             onClick={(e) => {
-              console.log("clicked publish");
               onUpdateAction(
                 selectedPage.status === PAGE_CATEGORIES.draftCategory
                   ? UPDATE_ACTION_TYPES.publishType

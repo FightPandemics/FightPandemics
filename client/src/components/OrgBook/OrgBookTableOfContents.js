@@ -100,6 +100,9 @@ const OrgBookTableOfContents = (props) => {
   } = props;
   const { t } = useTranslation();
   const [selectedPage, setSelectedPage] = useState(preSelectedPage || null);
+  const [sortedCurrentOrgBookPages, setSortedCurrentOrgBookPages] = useState(
+    null,
+  );
 
   const LIVE_PAGE_VIEW_TYPES = {
     //correspond to private, public for live pages only
@@ -112,6 +115,15 @@ const OrgBookTableOfContents = (props) => {
   };
 
   const initialize = () => {
+    //sort ascending pageGroupNumber, then descending by create_at date
+    const sortedPages = currentOrgBookPages.sort(
+      (a, b) =>
+        a.pageGroupNumber - b.pageGroupNumber ||
+        Date.parse(b.created_at) - Date.parse(a.created_at),
+    );
+
+    setSortedCurrentOrgBookPages(sortedPages);
+
     if (preSelectedPage) {
       setSelectedPage(preSelectedPage);
       selectPage(preSelectedPage);
@@ -145,44 +157,46 @@ const OrgBookTableOfContents = (props) => {
   };
 
   return (
-    <>
-      <OrgBookTOCHeader>{t("orgBook.editorSpaceTOCHeader")}</OrgBookTOCHeader>
-      <MainNavigationContainer>
-        <WhiteSpace />
-        <OrgAvatarAndNameContainer>
-          <Avatar>{getInitialsFromFullName(`${organisation.name}`)}</Avatar>
-          {organisation.name}
-        </OrgAvatarAndNameContainer>
-        {currentOrgBookPages.map((page, idx) => (
-          <PageListContainer
-            key={idx}
-            selected={isSelectedPage(page)}
-            onClick={handlePageClick(page)}
-          >
-            <PageIconAndNameContainer>
-              <PageSvgIcon src={pageIcon} />
-              {page.name}
-            </PageIconAndNameContainer>
-            <WhiteSpace visibility="hidden" />
-            <WhiteSpace visibility="hidden" />
-            {renderEyeIcon(page)}
-          </PageListContainer>
-        ))}
-        {showAddNewPage ? (
-          <AddNewPageContainer
-            key={"add-new-page"}
-            onClick={handleNewPageClick}
-          >
-            <NewPageIconContainer>
-              <PageSvgIcon src={plusIcon} />
-            </NewPageIconContainer>
-            {t("orgBook.addNewPage")}
-          </AddNewPageContainer>
-        ) : (
-          ""
-        )}
-      </MainNavigationContainer>
-    </>
+    sortedCurrentOrgBookPages && (
+      <>
+        <OrgBookTOCHeader>{t("orgBook.editorSpaceTOCHeader")}</OrgBookTOCHeader>
+        <MainNavigationContainer>
+          <WhiteSpace />
+          <OrgAvatarAndNameContainer>
+            <Avatar>{getInitialsFromFullName(`${organisation.name}`)}</Avatar>
+            {organisation.name}
+          </OrgAvatarAndNameContainer>
+          {sortedCurrentOrgBookPages.map((page, idx) => (
+            <PageListContainer
+              key={idx}
+              selected={isSelectedPage(page)}
+              onClick={handlePageClick(page)}
+            >
+              <PageIconAndNameContainer>
+                <PageSvgIcon src={pageIcon} />
+                {page.name}
+              </PageIconAndNameContainer>
+              <WhiteSpace visibility="hidden" />
+              <WhiteSpace visibility="hidden" />
+              {renderEyeIcon(page)}
+            </PageListContainer>
+          ))}
+          {showAddNewPage ? (
+            <AddNewPageContainer
+              key={"add-new-page"}
+              onClick={handleNewPageClick}
+            >
+              <NewPageIconContainer>
+                <PageSvgIcon src={plusIcon} />
+              </NewPageIconContainer>
+              {t("orgBook.addNewPage")}
+            </AddNewPageContainer>
+          ) : (
+            ""
+          )}
+        </MainNavigationContainer>
+      </>
+    )
   );
 };
 
