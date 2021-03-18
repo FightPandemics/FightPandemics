@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -18,6 +18,11 @@ import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg, isAuthorUser } from "utils/userInfo";
 import { postReducer, postState } from "hooks/reducers/postReducers";
 import { selectOrganisationId, selectActorId } from "reducers/session";
+import {
+  selectPosts,
+  postsActions,
+  getProfileObjectiveProp,
+} from "reducers/posts";
 import GTM from "constants/gtm-tags";
 
 // Constants
@@ -35,6 +40,7 @@ import {
   DELETE_MODAL_HIDE,
   DELETE_MODAL_COMMENT,
 } from "hooks/actions/feedActions";
+import { isPostExpired } from "components/Feed/utils";
 import { theme, mq } from "constants/theme";
 
 const { typography } = theme;
@@ -88,7 +94,9 @@ export const PostContext = React.createContext();
 const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const history = useHistory();
   const { postId } = useParams();
+  const posts = useSelector(selectPosts);
   const [post, postDispatch] = useReducer(postReducer, postState);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const organisationId = useSelector(selectOrganisationId);
   const actorId = useSelector(selectActorId);
@@ -147,6 +155,64 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
     }
   };
 
+  const handleEditPostSuccess = (post) => {
+    const objective = getProfileObjectiveProp(post.objective);
+    const isExpired = isPostExpired(post);
+    if (posts.profilePosts?.[post.author.id]?.[objective]?.all !== undefined) {
+      const newUpdatedPost = posts.profilePosts?.[post.author.id]?.[
+        objective
+      ]?.all.map((curr) => {
+        if (curr._id !== post._id) {
+          return curr;
+        }
+        return post;
+      });
+      dispatch(
+        postsActions.fetchProfilePostSuccess({
+          posts: newUpdatedPost,
+          userId: post.author.id,
+          objective: post.objective,
+        })
+      );
+    }
+
+    if (!isExpired) {
+      const newActivePost = (
+        posts.profilePosts?.[post.author.id]?.[objective]?.active ?? []
+      ).map((curr) => {
+        if (curr._id !== post._id) {
+          return curr;
+        }
+        return post;
+      });
+      dispatch(
+        postsActions.fetchProfilePostSuccess({
+          posts: newActivePost,
+          userId: post.author.id,
+          objective: post.objective,
+          mode: "A",
+        })
+      );
+    } else {
+      const newExpiredPosts = (
+        posts.profilePosts?.[post.author.id]?.[objective]?.inactive ?? []
+      ).map((curr) => {
+        if (curr._id !== post._id) {
+          return curr;
+        }
+        return post;
+      });
+      dispatch(
+        postsActions.fetchProfilePostSuccess({
+          posts: newExpiredPosts,
+          userId: post.author.id,
+          objective: post.objective,
+          mode: "A",
+        })
+      );
+    }
+  };
+
   const handleCloseEditPost = () => {
     postDispatch({
       type: SET_EDIT_POST_MODAL_VISIBILITY,
@@ -185,7 +251,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,
         "deleteModalVisibility",
-        DELETE_MODAL_HIDE,
+        DELETE_MODAL_HIDE
       );
       history.push(FEED);
       let endPoint = `/api/posts/${postId}${getActorQuery()}`;
@@ -197,7 +263,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
             "post",
             initialState,
             "content",
-            initialState.content,
+            initialState.content
           );
         }
       } catch (error) {
@@ -222,7 +288,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
         "post",
         initialState,
         "content",
-        initialState.content,
+        initialState.content
       );
     }
     if (response && response.data) {
@@ -325,8 +391,8 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
                 user={user}
                 dispatchAction={dispatchPostAction}
                 loadPost={loadPost}
-                // onSelect={handleEditPost}
                 isAuthenticated={isAuthenticated}
+                onSuccess={handleEditPostSuccess}
                 onCancel={handleCloseEditPost}
                 fullContent={fullContent}
                 currentPost={post}

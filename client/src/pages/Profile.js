@@ -80,6 +80,7 @@ import {
 } from "hooks/actions/userActions";
 import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
+import { isPostExpired } from "components/Feed/utils";
 import GTM, { post } from "constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import Loader from "components/Feed/StyledLoader";
@@ -542,13 +543,6 @@ const Profile = ({
         objective: post.objective,
       }),
     );
-  };
-
-  const isPostExpired = (post) => {
-    if (!post.expireAt) {
-      return false;
-    }
-    return new Date(post.expireAt).getTime() < new Date().getTime();
   };
 
   const handleDeletePostSuccess = (post) => {

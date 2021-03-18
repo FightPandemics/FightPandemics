@@ -84,6 +84,7 @@ const ModalComponent = ({
                   fullContent={fullContent}
                   dispatchAction={dispatchAction}
                   currentPost={currentPost}
+                  onSuccess={onSuccess}
                   user={user}
                   onSelect={handleEditPost}
                   isAuthenticated={isAuthenticated}
