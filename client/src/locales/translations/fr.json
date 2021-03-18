@@ -21,7 +21,8 @@
     "stayOnPageContent": "Si vous sélectionnez \"Non\", vous serez redirigé vers le Tableau d'aide.",
     "yes": "Oui",
     "no": "Non",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Lieu",
         "providers": "Fournisseurs",
         "type": "Types",
-        "lookingFor": "Offrez ou demandez de l’aide"
+        "lookingFor": "Offrez ou demandez de l’aide",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Individu",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Cherchant de l'aide",
         "offer": "Offrant de l'aide"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Afficher",
@@ -233,7 +240,12 @@
     "hideCaption": "non intéressé",
     "reportAction": "Signaler le poste",
     "reportCaption": "Pour l'examen",
-    "copyUrl": "Copy URL"
+    "copyUrl": "Copy URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Mot de passe actuel incorrect",
     "noEmailAccount": "Aucun compte n'a été trouvé avec cette adresse e-mail, veuillez cliquer sur «S'inscrire» pour créer un compte.",
     "registeredAccount": "Un compte social a été enregistré avec cette adresse électronique. Veuillez cliquer sur \"S'inscrire\" pour créer un compte de courrier électronique direct avec un mot de passe.",
-    "failedLinkAccounts": "Échec de la liaison des comptes, raison:"
+    "failedLinkAccounts": "Échec de la liaison des comptes, raison:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "Nous ne sommes pas fournisseur de services de santé",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Nous offrons ce service en tout bonne foi pour ceux qui ne parviennent pas à trouver l'aide et les ressources nécessaires pendant cette crise sanitaire sans précédent.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Fermer"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Partager votre position afin de voir votre hôpital le plus proche",
+    "changeLoc": "Lieu",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Etablissements de soins ",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

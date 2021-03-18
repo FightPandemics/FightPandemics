@@ -21,7 +21,8 @@
     "stayOnPageContent": "Ako odaberete \"Ne\", bit ćete preusmjereni na Ploču za pomoć.",
     "yes": "Da",
     "no": "Ne",
-    "ok": "u redu"
+    "ok": "u redu",
+    "nearestHsp": "Zdravstvena pomoć"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Lokacija",
         "providers": "Pružatelji usluga",
         "type": "Vrste",
-        "lookingFor": "Ponudite ili zatražite pomoć"
+        "lookingFor": "Ponudite ili zatražite pomoć",
+        "workMode": "Ispunjenje objave"
       },
       "providersOptions": {
         "Individual": "Pojedinac",
@@ -139,8 +141,8 @@
         "Remote Work": "Rad na daljinu"
       },
       "lookingForOptions": {
-        "Request Help": "Traženje pomoći",
-        "Offer Help": "Nuditi pomoć"
+        "Request Help": "Zatražite pomoć",
+        "Offer Help": "Ponudite pomoć"
       },
       "postsNearMe": "Prikaži rezultate u mojoj blizini"
     },
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Traženje pomoći",
         "offer": "Nuditi pomoć"
+      },
+      "workMode": {
+        "inPerson": "Osobno",
+        "remote": "Na daljinu",
+        "both": "Oba"
       }
     },
     "post": "Objavi",
@@ -233,7 +240,12 @@
     "hideCaption": "Nije mi relevantno",
     "reportAction": "Prijavi post",
     "reportCaption": "Pregled za moderatore",
-    "copyUrl": "Kopiraj URL"
+    "copyUrl": "Kopiraj URL",
+    "workMode": "Kako se ova objava može ispuniti?",
+    "workFullfillment": "Ova objava se može ispuniti",
+    "remote": "Na daljinu",
+    "in-person": "Osobno",
+    "both": "Na daljinu i i osobno"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Pogrešna trenutna lozinka",
     "noEmailAccount": "Nije pronađen nijedan račun s ovom adresom e-pošte, kliknite \"Pridružite se sada\" da biste stvorili račun.",
     "registeredAccount": "Društveni račun je registriran s ovom adresom e-pošte. Kliknite \"Pridružite se sada\" da biste stvorili izravan račun e-pošte i lozinke.",
-    "failedLinkAccounts": "Neuspjelo povezivanje računa, razlog:"
+    "failedLinkAccounts": "Neuspjelo povezivanje računa, razlog:",
+    "failedHealthFacPlaces": "Dobivanje zdravstvenih ustanova nije uspjelo."
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",
@@ -945,8 +958,8 @@
     "emptyInbox": {
       "header": "Nemate nijednu poruku",
       "p1": "Još niste primili nijednu poruku.",
-      "p2": "Vratite se u Odbor za pomoć kako biste pronašli ponude ili zahtjeve za odgovor.",
-      "goToHB": "Idite na odbor za pomoć"
+      "p2": "Vratite se u Ploču za pomoć kako biste pronašli ponude ili zahtjeve za odgovor.",
+      "goToHB": "Idite na ploču za pomoć"
     },
     "selectRoom": {
       "header": "Odaberite bilo koju poruku za čitanje",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "Otkazali ste postupak provjere",
     "stepCancelBody": "Uvijek se možete vratiti i potvrditi svoj račun u bilo kojem trenutku!",
     "stepCancelAction": "Zatvoriti"
+  },
+  "nearestHsp": {
+    "noResults": "Nema rezultata",
+    "tryAdjusting": "Pokušajte prilagoditi vrstu zdravstvenih ustanova ili lokaciju.",
+    "shareLoc": "Podijelite svoju lokaciju ako želite vidjeti najbliže zdravstvene ustanove",
+    "changeLoc": "Lokacija",
+    "facility": "Objekt",
+    "hospitals": "Bolnice",
+    "doctors": "Liječnici",
+    "pharmacies": "Ljekarne",
+    "healthFacilities": "Zdravstvene ustanove",
+    "confirmedCases": "Potvrđeni slučajevi",
+    "viewList": "Prikaz popisa",
+    "viewMap": "Prikaz karte",
+    "you": "Vas",
+    "yourLocation": "Vaša lokacija",
+    "open24Hours": "Otvoreno 24 sata",
+    "open": "Otvoreno",
+    "closed": "Zatvoreno",
+    "and": "i",
+    "evalYourHealth": "Procijenite svoje zdravlje i primite upute i preporuke o",
+    "covid19": "COVID-19",
+    "healthEval": "Procjena zdravlja",
+    "chkSymptoms": "Provjera simptoma",
+    "forDirAndMore": "Za upute i više informacija",
+    "localEmergencyNumber": "Lokalni broj za hitne slučajeve",
+    "forMoreResults": "Prikaži više rezultata pretraživanja ..."
   }
 }

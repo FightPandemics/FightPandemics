@@ -21,7 +21,8 @@
     "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
     "yes": "Yes",
     "no": "No",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Localização",
         "providers": "Fornecedores",
         "type": "Tipos",
-        "lookingFor": "Oferecer ou Pedir Ajuda"
+        "lookingFor": "Oferecer ou Pedir Ajuda",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Individual",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Pedir ajuda",
         "offer": "Oferecer ajuda"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Publicação",
@@ -233,7 +240,12 @@
     "hideCaption": "It is not relevant to me",
     "reportAction": "Report Post",
     "reportCaption": "For moderators review",
-    "copyUrl": "Copy URL"
+    "copyUrl": "Copy URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Wrong current password",
     "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
     "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "failedLinkAccounts": "Failed linking accounts, reason:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "Não fornecemos serviços de saúde",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Este serviço é fornecido de boa fé como último recurso para aqueles que  não conseguem obter ajuda ou recursos de outra forma, durante esta emergência de saúde pública sem precedentes.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Close"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Localização",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Hospital mais próximo",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }
