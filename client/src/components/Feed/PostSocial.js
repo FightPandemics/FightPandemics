@@ -58,6 +58,7 @@ const PostSocial = ({
   keepPageState,
   keepPostsState,
   gtmPrefix,
+  post,
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -66,7 +67,8 @@ const PostSocial = ({
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
-  if (isOwnPost && sessionStorage.getItem("msgModal") === authorId) sessionStorage.removeItem("msgModal");
+  if (isOwnPost && sessionStorage.getItem("msgModal") === authorId)
+    sessionStorage.removeItem("msgModal");
 
   const showNativeShareOrModal = () => {
     if (navigator.share) {
@@ -84,7 +86,7 @@ const PostSocial = ({
     }
   };
 
-  const handlePostLike = useCallback(async (postId, liked, create) => {
+  const handlePostLike = useCallback(async (post, postId, liked, create) => {
     sessionStorage.removeItem("likePost");
 
     if (isAuthenticated) {
@@ -97,7 +99,15 @@ const PostSocial = ({
       const request = liked ? axios.delete : axios.put;
       try {
         const { data } = await request(endPoint);
+        post.liked = !post.liked;
+        post.likesCount = data.likesCount;
         postDispatch(postsActions.setLikeAction(postId, data.likesCount));
+        postDispatch(
+          postsActions.updateProfilePostSucess({
+            post,
+            userId: post.author.id,
+          })
+        );
       } catch (error) {
         console.log({ error });
       }
@@ -112,7 +122,7 @@ const PostSocial = ({
 
     if (id === likePost) {
       if (likePost) {
-        handlePostLike(likePost, liked, false);
+        handlePostLike(post, likePost, liked, false);
       }
     }
   }, [handlePostLike, id, liked]);
@@ -123,7 +133,7 @@ const PostSocial = ({
         <div
           id={gtmTag("like", GTM.post.prefix)}
           className="social-icon"
-          onClick={() => handlePostLike(id, liked, true)}
+          onClick={() => handlePostLike(post, id, liked, true)}
         >
           {renderLikeIcon(liked)}
           {renderLabels("Like", numLikes, t)}
@@ -134,7 +144,7 @@ const PostSocial = ({
             <div
               id={gtmTag("like", GTM.feed.prefix)}
               className="social-icon"
-              onClick={() => handlePostLike(id, liked, true)}
+              onClick={() => handlePostLike(post, id, liked, true)}
             >
               {renderLikeIcon(liked)}
               {renderLabels("Like", numLikes, t)}

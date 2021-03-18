@@ -9,7 +9,6 @@ import isEmpty from "lodash/isEmpty";
 
 // Local
 import EditPost from "components/CreatePost/EditPost";
-import { ProfileCompletedButtonsWrapper } from "components/CompletedProfile/CompletedProfile";
 import Loader from "components/Feed/StyledLoader";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
@@ -18,11 +17,7 @@ import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg, isAuthorUser } from "utils/userInfo";
 import { postReducer, postState } from "hooks/reducers/postReducers";
 import { selectOrganisationId, selectActorId } from "reducers/session";
-import {
-  selectPosts,
-  postsActions,
-  getProfileObjectiveProp,
-} from "reducers/posts";
+import { selectPosts, postsActions } from "reducers/posts";
 import GTM from "constants/gtm-tags";
 
 // Constants
@@ -40,7 +35,6 @@ import {
   DELETE_MODAL_HIDE,
   DELETE_MODAL_COMMENT,
 } from "hooks/actions/feedActions";
-import { isPostExpired } from "components/Feed/utils";
 import { theme, mq } from "constants/theme";
 
 const { typography } = theme;
@@ -94,7 +88,6 @@ export const PostContext = React.createContext();
 const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const history = useHistory();
   const { postId } = useParams();
-  const posts = useSelector(selectPosts);
   const [post, postDispatch] = useReducer(postReducer, postState);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -118,7 +111,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const {
     postLength,
     fullContent,
-    //editPostModalVisibility,
     deleteModalVisibility,
     commentsCount,
     showComments,
@@ -156,61 +148,12 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   };
 
   const handleEditPostSuccess = (post) => {
-    const objective = getProfileObjectiveProp(post.objective);
-    const isExpired = isPostExpired(post);
-    if (posts.profilePosts?.[post.author.id]?.[objective]?.all !== undefined) {
-      const newUpdatedPost = posts.profilePosts?.[post.author.id]?.[
-        objective
-      ]?.all.map((curr) => {
-        if (curr._id !== post._id) {
-          return curr;
-        }
-        return post;
-      });
-      dispatch(
-        postsActions.fetchProfilePostSuccess({
-          posts: newUpdatedPost,
-          userId: post.author.id,
-          objective: post.objective,
-        })
-      );
-    }
-
-    if (!isExpired) {
-      const newActivePost = (
-        posts.profilePosts?.[post.author.id]?.[objective]?.active ?? []
-      ).map((curr) => {
-        if (curr._id !== post._id) {
-          return curr;
-        }
-        return post;
-      });
-      dispatch(
-        postsActions.fetchProfilePostSuccess({
-          posts: newActivePost,
-          userId: post.author.id,
-          objective: post.objective,
-          mode: "A",
-        })
-      );
-    } else {
-      const newExpiredPosts = (
-        posts.profilePosts?.[post.author.id]?.[objective]?.inactive ?? []
-      ).map((curr) => {
-        if (curr._id !== post._id) {
-          return curr;
-        }
-        return post;
-      });
-      dispatch(
-        postsActions.fetchProfilePostSuccess({
-          posts: newExpiredPosts,
-          userId: post.author.id,
-          objective: post.objective,
-          mode: "A",
-        })
-      );
-    }
+    dispatch(
+      postsActions.updateProfilePostSucess({
+        post,
+        userId: post.author.id,
+      })
+    );
   };
 
   const handleCloseEditPost = () => {

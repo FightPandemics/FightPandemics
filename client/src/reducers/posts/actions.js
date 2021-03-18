@@ -4,6 +4,7 @@ export const POSTS_ACTIONS = {
   FETCH_POSTS_BEGIN: "FETCH_POSTS_BEGIN",
   FETCH_POSTS_ERROR: "FETCH_POSTS_ERROR",
   FETCH_PROFILE_POSTS_SUCCESS: "FETCH_PROFILE_POSTS_SUCCESS",
+  UPDATE_PROFILE_POST_SUCCESS: "UPDATE_PROFILE_POST_SUCCESS",
   NEXT_PAGE: "NEXT_PAGE",
   SET_PAGE: "SET_PAGE",
   RESET_PAGE: "RESET_PAGE",
@@ -46,6 +47,11 @@ export const fetchProfilePostSuccess = ({
 }) => ({
   type: POSTS_ACTIONS.FETCH_PROFILE_POSTS_SUCCESS,
   payload: { posts, userId, objective, mode },
+});
+
+export const updateProfilePostSucess = ({ post, userId }) => ({
+  type: POSTS_ACTIONS.UPDATE_PROFILE_POST_SUCCESS,
+  payload: { post, userId },
 });
 
 export const fetchPostsError = (error) => ({
@@ -94,4 +100,5 @@ export const postsActions = {
   setPageAction,
   setReported,
   showAnyway,
+  updateProfilePostSucess,
 };
