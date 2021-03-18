@@ -140,15 +140,17 @@ const PositionApplicationForm = () => {
     }
   };
 
+  const [count, setCount] = useState(0);
+
   return (
     <Wrapper>
-      <Heading level={3} style={{ marginBottom:"5rem" }}>
-            {t("orgJoinQ.application")}
+      <Heading level={3} style={{ marginBottom: "5rem" }}>
+        {t("orgJoinQ.application")}
       </Heading>
       <StyledForm>
         <Label
-          style={{ ...blockLabelStyles, color: theme.colors.black, marginTop:"2rem"}}
-          label={ t("orgJoinQ.question1") + " * " }
+          style={{ ...blockLabelStyles, color: theme.colors.black, marginTop: "2rem" }}
+          label={t("orgJoinQ.question1") + " * "}
         />
         <FormInput
           name="firstQ"
@@ -157,8 +159,7 @@ const PositionApplicationForm = () => {
           defaultValue={firstQ}
           // error={errors.firstQ}
           style={inputStyles}
-          placeholder={t("orgJoinQ.maxnum")}
-          
+          // placeholder={t("orgJoinQ.maxnum")}
           ref={register({
             required: t("orgJoinQ.required"),
             maxLength: {
@@ -166,15 +167,15 @@ const PositionApplicationForm = () => {
               message: t("profile.common.maxCharacters", { maxNum: 250 },),
             },
           })}
-          onChange={(event) => event.target.value}
+          onChange={(event) => setCount(event.target.value.length)}
         />
         {errors.firstQ && (
           <InputError style={errorStyles}>{errors.firstQ.message}</InputError>
         )}
-       <WhiteSpace/>
+        <WhiteSpace />
         <Label
-          style={{ ...blockLabelStyles, color: theme.colors.black, marginTop:"2rem" }}
-          label={ t("orgJoinQ.question2") + "* "}
+          style={{ ...blockLabelStyles, color: theme.colors.black, marginTop: "2rem" }}
+          label={t("orgJoinQ.question2") + "* "}
         />
         <FormInput
           name="secondQ"
@@ -196,10 +197,10 @@ const PositionApplicationForm = () => {
         {errors.secondQ && (
           <InputError style={errorStyles}>{errors.secondQ.message}</InputError>
         )}
-       <WhiteSpace/>
-       <Label
-          style={{ ...blockLabelStyles, color: theme.colors.black, marginTop:"2rem"}}
-          label={ t("orgJoinQ.question3") + "* "}
+        <WhiteSpace />
+        <Label
+          style={{ ...blockLabelStyles, color: theme.colors.black, marginTop: "2rem" }}
+          label={t("orgJoinQ.question3") + "* "}
         />
         <FormInput
           name="thirdQ"
@@ -218,10 +219,10 @@ const PositionApplicationForm = () => {
           })}
           onChange={(event) => event.target.value}
         />
-        {errors.thirdQ&& (
+        {errors.thirdQ && (
           <InputError style={errorStyles}>{errors.thirdQ.message}</InputError>
         )}
-        <WhiteSpace/>
+        <WhiteSpace />
         <Footer>
           <Link
             to={{
