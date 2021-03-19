@@ -432,8 +432,33 @@ const OrgBookEditor = () => {
         break;
 
       case UPDATE_ACTION_TYPES.unpublishType:
-        console.log("confirm action handler for unpublish: " + action);
-        console.log("confirm option handler for unpublish: " + unpublishOption);
+        const draftPageExists = currentOrgBookPages.some(
+          (page) =>
+            page.pageGroupNumber == selectedPage.pageGroupNumber &&
+            page.status === PAGE_CATEGORIES.draftCategory,
+        )
+          ? true
+          : false;
+
+        if (!draftPageExists) {
+          //if no draft exists, change status of live page to draft and keep content as is
+          unPublishLiveToDraft();
+        } else {
+          const draftContent = currentOrgBookPages.find(
+            (page) =>
+              page.pageGroupNumber === selectedPage.pageGroupNumber &&
+              page.status === PAGE_CATEGORIES.draftCategory,
+          ).content;
+
+          if (draftContent === selectedPage.content) {
+            //If the content is the same on live and draft, just remove live page and keep draft content as is
+            unpublishRemoveLive();
+          } else {
+            //If the content is different on live and draft, leave or replace draft content as user choose
+            unpublishHandleOption(unpublishOption);
+          }
+        }
+
         break;
 
       default:
@@ -516,6 +541,89 @@ const OrgBookEditor = () => {
     return orgBookPages;
   };
 
+  const unPublishLiveToDraft = () => {
+    const oldOrgBookPages = [...currentOrgBookPages];
+    const newOrgBookPages = oldOrgBookPages.map((page) =>
+      page.pageGroupNumber === selectedPage.pageGroupNumber
+        ? {
+            ...page,
+            status: PAGE_CATEGORIES.draftCategory,
+            updated_by: organisation.ownerId,
+            updated_at: new Date().toLocaleString().replace(",", ""),
+          }
+        : page,
+    );
+    const orgBookPages = {
+      orgBookPages: newOrgBookPages,
+    };
+    setCurrentOrgBookPages(newOrgBookPages);
+    setSelectedPage(
+      newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
+    );
+    updateOrgBookPages(orgBookPages);
+  };
+
+  const unpublishRemoveLive = () => {
+    const oldOrgBookPages = [...currentOrgBookPages];
+    const newOrgBookPages = oldOrgBookPages.filter(
+      (page) => page.pageId !== selectedPage.pageId,
+    );
+    const orgBookPages = {
+      orgBookPages: newOrgBookPages,
+    };
+    setCurrentOrgBookPages(newOrgBookPages);
+    setSelectedPage(
+      newOrgBookPages.find(
+        (page) =>
+          page.pageGroupNumber === selectedPage.pageGroupNumber &&
+          page.status === PAGE_CATEGORIES.draftCategory,
+      ),
+    );
+    updateOrgBookPages(orgBookPages);
+  };
+
+  const unpublishHandleOption = (unpublishOption) => {
+    switch (unpublishOption) {
+      case UNPUBLISH_OPTIONS.leaveDraftContent:
+        unpublishRemoveLive();
+        break;
+
+      case UNPUBLISH_OPTIONS.replaceDraftContent:
+        const oldOrgBookPages = [...currentOrgBookPages];
+        const updtOrgBookPages = oldOrgBookPages.map((page) =>
+          page.pageGroupNumber == selectedPage.pageGroupNumber &&
+          page.status === PAGE_CATEGORIES.draftCategory
+            ? {
+                ...page,
+                content: selectedPage.content,
+                updated_by: organisation.ownerId,
+                updated_at: new Date().toLocaleString().replace(",", ""),
+              }
+            : page,
+        );
+        const newOrgBookPages = updtOrgBookPages.filter(
+          (page) => page.pageId !== selectedPage.pageId,
+        );
+        const orgBookPages = {
+          orgBookPages: newOrgBookPages,
+        };
+        setCurrentOrgBookPages(newOrgBookPages);
+        setSelectedPage(
+          newOrgBookPages.find(
+            (page) =>
+              page.pageGroupNumber === selectedPage.pageGroupNumber &&
+              page.status === PAGE_CATEGORIES.draftCategory,
+          ),
+        );
+        updateOrgBookPages(orgBookPages);
+
+        break;
+
+      default:
+        break;
+    }
+  };
+
   const handleOnCancelConfirm = () => {
     setConfirmModalVisible(false);
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
@@ -585,13 +693,6 @@ const OrgBookEditor = () => {
             page.pageGroupNumber === selectedPage.pageGroupNumber &&
             page.status === PAGE_CATEGORIES.draftCategory,
         ).content;
-
-        //test only
-        if (draftContent !== selectedPage.content) {
-          console.log("content is different");
-        } else {
-          console.log("content is the same");
-        }
         return draftContent !== selectedPage.content;
       }
     };
