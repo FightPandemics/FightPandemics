@@ -21,7 +21,7 @@ import {
     fetchUserSuccess
 } from "hooks/actions/userActions";
 import React, {
-    useContext, useEffect, useRef
+    useContext, useEffect, useRef, useHistory
 } from "react";
 import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -43,6 +43,36 @@ import PositionApplicationForm from "components/Positions/PositionApplicationFor
 
 
 const Apply = () => {
+
+
+    // useEffect(() => {
+    //     // const { state, pathname } = history.location;
+    //     // history.push(pathname, {
+    //     //   ...state,
+    //     //   keepScroll: true,
+    //     // });
+
+
+    //     window.addEventListener("popstate", onBrowserBack);
+    //     // return () => {
+    //     //   window.removeEventListener("popstate", setVisible(false));
+    //     // };
+    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // const onBrowserBack = (e) => {
+    //     e.preventDefault();
+
+    //     // if (!visible) {
+    //     //   setVisible(true);
+    //     // }
+    //     // else {
+    //     //   setVisible(false);
+    //     // };
+    // }
+
+
+
+
 
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 2];
@@ -150,7 +180,9 @@ const Apply = () => {
                                 {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
                             </UserInfoDesktop>
                         </UserInfoContainer>
-                                            <PositionApplicationForm></PositionApplicationForm>
+                        <PositionApplicationForm
+                            orgnName={name}
+                        ></PositionApplicationForm>
                         {/* <PositionSubmitButton></PositionSubmitButton> */}
                     </PositionsContainer >
                 </ProfileLayout>

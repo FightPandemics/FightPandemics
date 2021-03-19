@@ -1,4 +1,4 @@
-import React, { useReducer, useState, createContext, useContext } from "react";
+import React, { useReducer, useState, createContext, useContext, useEffect, useHistory } from "react";
 import { Link } from "react-router-dom";
 import { WhiteSpace } from "antd-mobile";
 import { Select } from "antd";
@@ -14,6 +14,10 @@ import { useTranslation } from "react-i18next";
 import Heading from "components/Typography/Heading";
 import SubmitButton from "components/Button/SubmitButton";
 import { Footer } from "components/CreatePost/StyledModal";
+// Policy Modal present for testing
+import PolicyModal from "components/PolicyPages/PolicyModal"
+import AutoSize from "components/Input/AutoSize";
+import { Button } from "antd";
 
 // Icons
 import { ReactComponent as BackIcon } from "assets/icons/back-black.svg";
@@ -73,8 +77,9 @@ export const StyledForm = styled.form`
   width: 100%;
 `;
 
-export const Submit = styled(SubmitButton)`
-  width: 15rem;
+// styled(Button) was originall styled(SubmitButton)
+export const Submit = styled(Button)`
+  max-width: 25rem;
   height: 4rem;
   align-self: center;
   text-align: center;
@@ -94,7 +99,7 @@ export const Submit = styled(SubmitButton)`
   }
 `;
 const buttonStyles = {
-  backgroundColor: "blue",
+  backgroundColor: "red",
   fontWeight: "500",
   cursor: "pointer",
 };
@@ -106,7 +111,7 @@ const inputStyles = {
   margin: 0,
   paddingBottom: "0.8rem",
   // marginBottom: "1.2rem",
-  width: "100%",
+  width: "40rem",
   textOverflow: 'ellipsis',
 };
 
@@ -117,10 +122,10 @@ const errorStyles = {
   alignSelf: "",
 };
 
-//const Form = ({ onChangeDescription }) => {
+// const Form = ({ onChangeDescription }) => {
 const PositionApplicationForm = () => {
-  const { errors, register, handleSubmit } = useForm({
-    mode: "change",
+  const { errors, register, handleSubmit, orgName } = useForm({
+    mode: "onSubmit",
   });
   const [
     createOrganisationFormState,
@@ -129,60 +134,66 @@ const PositionApplicationForm = () => {
   const { t } = useTranslation();
   const { firstQ, secondQ, thirdQ } = {};
 
+  // onSubmit doesn't appear to be adding functionality
   const onSubmit = async (formData) => {
     if (!firstQ) {
-      // return createOrganisationFormDispatch({
-      //   type: "Simple error",
-      //   error: t("error.privacyPolicyRequired"),
-      // });
     } else if (!secondQ) {
     } else if (!thirdQ) {
     }
   };
 
-  const [count, setCount] = useState(0);
+  const [visible, setVisible] = useState(false);
 
   return (
     <Wrapper>
+      {/* <AutoSize
+        placeholder={t("comment.writeAComment")}
+      /> */}
+
+      <PolicyModal
+        visible={visible}
+      // onCancel={handleHide}
+      // onClick={handleHide}
+      />
       <Heading level={3} style={{ marginBottom: "5rem" }}>
         {t("orgJoinQ.application")}
       </Heading>
       <StyledForm>
         <Label
           style={{ ...blockLabelStyles, color: theme.colors.black, marginTop: "2rem" }}
-          label={t("orgJoinQ.question1") + " * "}
+          label={t("orgJoinQ.question1") + ` ${orgName}` + "?" + " *"}
         />
         <FormInput
           name="firstQ"
           type="text"
           rules={[{ required: true }]}
           defaultValue={firstQ}
-          // error={errors.firstQ}
+          error={errors.firstQ}
           style={inputStyles}
           // placeholder={t("orgJoinQ.maxnum")}
           ref={register({
             required: t("orgJoinQ.required"),
             maxLength: {
               value: 250,
-              message: t("profile.common.maxCharacters", { maxNum: 250 },),
+              // message: t("profile.common.maxCharacters", { maxNum: 250 },),
             },
           })}
-          onChange={(event) => setCount(event.target.value.length)}
         />
         {errors.firstQ && (
           <InputError style={errorStyles}>{errors.firstQ.message}</InputError>
+
         )}
         <WhiteSpace />
         <Label
           style={{ ...blockLabelStyles, color: theme.colors.black, marginTop: "2rem" }}
-          label={t("orgJoinQ.question2") + "* "}
+          label={t("orgJoinQ.question2") + " org" + "?" + " *"}
         />
         <FormInput
           name="secondQ"
           type="text"
           rules={[{ required: true }]}
           defaultValue={firstQ}
-          // error={errors.firstQ}
+          error={errors.firstQ}
           style={inputStyles}
           placeholder={t("orgJoinQ.maxnum")}
           ref={register({
@@ -202,12 +213,13 @@ const PositionApplicationForm = () => {
           style={{ ...blockLabelStyles, color: theme.colors.black, marginTop: "2rem" }}
           label={t("orgJoinQ.question3") + "* "}
         />
+
         <FormInput
           name="thirdQ"
           type="text"
           rules={[{ required: true }]}
           defaultValue={firstQ}
-          // error={errors.firstQ}
+          error={errors.firstQ}
           style={inputStyles}
           placeholder={t("orgJoinQ.maxnum")}
           ref={register({
@@ -226,12 +238,15 @@ const PositionApplicationForm = () => {
         <Footer>
           <Link
             to={{
-              pathname: `/nearest-hospital`,
+              // pathname: `/nearest-hospital`,
               state: { from: window.location.href },
             }}
           >
-            <Submit style={buttonStyles} onClick={handleSubmit(onSubmit)}>
-              {t("orgJoinQ.submit")}
+            <Submit style={buttonStyles}
+              onClick={handleSubmit(onSubmit)}
+            // onClick={alert("Button clicked")}
+            >
+              TEST SUBMIT BUTTON
             </Submit>
           </Link>
         </Footer>

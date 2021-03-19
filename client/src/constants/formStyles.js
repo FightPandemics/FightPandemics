@@ -26,3 +26,8 @@ export const inlineLabelStyles = {
   color: theme.colors.darkerGray,
   lineHeight: "2rem",
 };
+
+export const PositionApplyLabelStyles = {
+  ...labelStyles,
+  
+}
