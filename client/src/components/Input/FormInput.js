@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 
 import { blockLabelStyles } from "constants/formStyles";
@@ -6,7 +6,6 @@ import { mq, theme } from "constants/theme";
 import InputError from "./InputError";
 import InputInfo from "./InputInfo";
 import Label from "./Label";
-import TextArea from "./TextArea"
 
 const { colors } = theme;
 
@@ -18,8 +17,8 @@ const FormInput = styled.input.attrs(({ maxLength, min, max }) => ({
   border: none;
   box-shadow: none;
   color: ${colors.black};
-  flex-grow: 3;
-  /* overflow: auto; */
+  flex-grow: 1;
+  overflow: auto;
   padding-bottom: 0.5rem;
 `;
 
@@ -49,87 +48,48 @@ const Prefix = styled.span`
   padding-bottom: 0.5rem;
 `;
 
-const CharCounter = styled.p`
-  color: ${colors.darkishGray} !important;
-  padding-left: 2rem;
-  font-size: 1.2rem !important;
-  font-weight: 500 !important;
-  text-align: right;
-
-  &.has-error {
-  color: ${colors.red} !important;
-}
-`;
-
 export default forwardRef(
   (
     {
-      onChange,
-      onSubmit,
-      onPressEnter,
-      maxLength, inputTitle,
+      inputTitle,
       name,
       defaultValue,
       error,
       icon,
       prefix,
       placeholder,
-      counter,
       ...props
     },
     ref,
   ) => {
     const charsLeft =
       props.maxLength && props.value && props.maxLength - props.value.length;
-    const [count, setCount] = useState(0);
-
     return (
-
       <OuterWrapper>
-
         <Label
           icon={icon}
           htmlFor={name}
           style={blockLabelStyles}
           label={inputTitle}
-          className="asterisk"
         />
-        <InputWrapper className={count > 250 ? "has-error" : "" || error && "has-error"}>
+        <InputWrapper className={error && "has-error"}>
           {prefix && <Prefix>{prefix}</Prefix>}
           <FormInput
             name={name}
             id={name}
             defaultValue={defaultValue}
             ref={ref}
-            // placeholder={placeholder}
+            placeholder={placeholder}
             {...props}
-            onChange={(event) => setCount(event.target.value.length)}
           />
-          {// TextArea is for Autosize test
-          }
-          {/* <TextArea
-            autoSize
-            name={name}
-            id={name}
-            defaultValue={defaultValue}
-            ref={ref}
-            error={error}
-            // placeholder={placeholder}
-            {...props}
-            onChange={(event) => setCount(event.target.value.length)}
-          /> */}
-          <CharCounter className={count > 250 ? "has-error" : ""}> {count} / {250} </CharCounter>
         </InputWrapper>
-
-        {
-          typeof charsLeft === "number" && charsLeft !== props.maxLength && (
-            <InputInfo
-              error={charsLeft === 0}
-            >{`${charsLeft} characters left`}</InputInfo>
-          )
-        }
-        {/* {error && <InputError>{error.message}</InputError>} */}
-      </OuterWrapper >
+        {typeof charsLeft === "number" && charsLeft !== props.maxLength && (
+          <InputInfo
+            error={charsLeft === 0}
+          >{`${charsLeft} characters left`}</InputInfo>
+        )}
+        {error && <InputError>{error.message}</InputError>}
+      </OuterWrapper>
     );
   },
 );

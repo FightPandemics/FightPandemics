@@ -3,14 +3,14 @@ import styled from "styled-components";
 
 import { blockLabelStyles } from "constants/formStyles";
 import { mq, theme } from "constants/theme";
-import InputError from "./InputError";
-import InputInfo from "./InputInfo";
-import Label from "./Label";
-import TextArea from "./TextArea"
+import InputError from "components/Input/InputError";
+import InputInfo from "components/Input/InputInfo";
+import Label from "components/Input/Label";
+import TextArea from "components/Input/TextArea";
 
 const { colors } = theme;
 
-const FormInput = styled.input.attrs(({ maxLength, min, max }) => ({
+const ApplyFormInput = styled.input.attrs(({ maxLength, min, max }) => ({
   maxLength: maxLength || Number.MAX_SAFE_INTEGER,
   min: min || Number.MIN_SAFE_INTEGER,
   max: max || Number.MAX_SAFE_INTEGER,
@@ -64,6 +64,7 @@ const CharCounter = styled.p`
 export default forwardRef(
   (
     {
+      orgName,
       onChange,
       onSubmit,
       onPressEnter,
@@ -96,12 +97,13 @@ export default forwardRef(
         />
         <InputWrapper className={count > 250 ? "has-error" : "" || error && "has-error"}>
           {prefix && <Prefix>{prefix}</Prefix>}
-          <FormInput
+          <ApplyFormInput
             name={name}
             id={name}
             defaultValue={defaultValue}
             ref={ref}
             // placeholder={placeholder}
+            orgName={orgName}
             {...props}
             onChange={(event) => setCount(event.target.value.length)}
           />

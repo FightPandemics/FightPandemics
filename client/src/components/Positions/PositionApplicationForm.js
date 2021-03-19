@@ -2,7 +2,7 @@ import React, { useReducer, useState, createContext, useContext, useEffect, useH
 import { Link } from "react-router-dom";
 import { WhiteSpace } from "antd-mobile";
 import { Select } from "antd";
-import FormInput from "components/Input/FormInput";
+import ApplyFormInput from "components/Positions/ApplyFormInput";
 import Label from "components/Input/Label";
 import InputError from "components/Input/InputError";
 import { useForm, Controller } from "react-hook-form";
@@ -123,10 +123,12 @@ const errorStyles = {
 };
 
 // const Form = ({ onChangeDescription }) => {
-const PositionApplicationForm = () => {
-  const { errors, register, handleSubmit, orgName } = useForm({
+const PositionApplicationForm = ({ orgName }) => {
+  const { errors, register, handleSubmit } = useForm({
     mode: "onSubmit",
   });
+
+
   const [
     createOrganisationFormState,
     createOrganisationFormDispatch,
@@ -162,8 +164,9 @@ const PositionApplicationForm = () => {
         <Label
           style={{ ...blockLabelStyles, color: theme.colors.black, marginTop: "2rem" }}
           label={t("orgJoinQ.question1") + ` ${orgName}` + "?" + " *"}
+
         />
-        <FormInput
+        <ApplyFormInput
           name="firstQ"
           type="text"
           rules={[{ required: true }]}
@@ -186,9 +189,9 @@ const PositionApplicationForm = () => {
         <WhiteSpace />
         <Label
           style={{ ...blockLabelStyles, color: theme.colors.black, marginTop: "2rem" }}
-          label={t("orgJoinQ.question2") + " org" + "?" + " *"}
+          label={t("orgJoinQ.question2") + ` ${orgName}` + "?" + " *"}
         />
-        <FormInput
+        <ApplyFormInput
           name="secondQ"
           type="text"
           rules={[{ required: true }]}
@@ -214,7 +217,7 @@ const PositionApplicationForm = () => {
           label={t("orgJoinQ.question3") + "* "}
         />
 
-        <FormInput
+        <ApplyFormInput
           name="thirdQ"
           type="text"
           rules={[{ required: true }]}

@@ -181,7 +181,7 @@ const Apply = () => {
                             </UserInfoDesktop>
                         </UserInfoContainer>
                         <PositionApplicationForm
-                            orgnName={name}
+                            orgName={name}
                         ></PositionApplicationForm>
                         {/* <PositionSubmitButton></PositionSubmitButton> */}
                     </PositionsContainer >
