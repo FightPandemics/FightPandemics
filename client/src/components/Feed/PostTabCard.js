@@ -162,7 +162,7 @@ const PostTabCard = ({
   useEffect(() => {
     const initialTab = tabs.find((tab) => tab.title === initialPage);
     setCurrentTab(initialTab);
-  }, [cardContents, initialPage, tabs]);
+  }, [cardContents, initialPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container>
