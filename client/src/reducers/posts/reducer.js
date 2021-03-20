@@ -80,7 +80,10 @@ const postsReducer = (state = innitialState, action) => {
               if (currentPost._id !== post._id) {
                 return currentPost;
               }
-              return post;
+              return {
+                ...currentPost,
+                ...post,
+              };
             })
           : undefined;
 
@@ -96,7 +99,10 @@ const postsReducer = (state = innitialState, action) => {
                 if (currentActivePost._id !== post._id) {
                   return currentActivePost;
                 }
-                return post;
+                return {
+                  ...currentActivePost,
+                  ...post,
+                };
               })
             : undefined;
       } else {
@@ -107,7 +113,10 @@ const postsReducer = (state = innitialState, action) => {
                 if (currentInActivePost._id !== post._id) {
                   return currentInActivePost;
                 }
-                return post;
+                return {
+                  ...currentInActivePost,
+                  ...post,
+                };
               })
             : undefined;
       }
@@ -163,9 +172,9 @@ const postsReducer = (state = innitialState, action) => {
         ...state,
         posts: {
           ...state.posts,
-          [payload.postId]: {
-            ...state.posts[payload.postId],
-            liked: !!!state.posts[payload.postId].liked,
+          [payload.post._id]: {
+            ...state.posts[payload.post._id],
+            liked: payload.post.liked,
             likesCount: payload.count,
           },
         },

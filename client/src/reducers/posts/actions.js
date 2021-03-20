@@ -5,6 +5,7 @@ export const POSTS_ACTIONS = {
   FETCH_POSTS_ERROR: "FETCH_POSTS_ERROR",
   FETCH_PROFILE_POSTS_SUCCESS: "FETCH_PROFILE_POSTS_SUCCESS",
   UPDATE_PROFILE_POST_SUCCESS: "UPDATE_PROFILE_POST_SUCCESS",
+  UPDATE_PROFILE_POST_COMMENTS: "UPDATE_PROFILE_POST_COMMENTS",
   NEXT_PAGE: "NEXT_PAGE",
   SET_PAGE: "SET_PAGE",
   RESET_PAGE: "RESET_PAGE",
@@ -22,10 +23,10 @@ export const resetPageAction = ({ isLoading = false, loadMore = true }) => ({
   },
 });
 
-export const setLikeAction = (postId, count) => ({
+export const setLikeAction = (post, count) => ({
   type: POSTS_ACTIONS.SET_LIKE,
   payload: {
-    postId,
+    post,
     count,
   },
 });
@@ -52,6 +53,11 @@ export const fetchProfilePostSuccess = ({
 export const updateProfilePostSucess = ({ post, userId }) => ({
   type: POSTS_ACTIONS.UPDATE_PROFILE_POST_SUCCESS,
   payload: { post, userId },
+});
+
+export const updateProfilePostComment = ({ post, commentsCount }) => ({
+  type: POSTS_ACTIONS.UPDATE_PROFILE_POST_COMMENTS,
+  payload: { post, commentsCount },
 });
 
 export const fetchPostsError = (error) => ({
@@ -101,4 +107,5 @@ export const postsActions = {
   setReported,
   showAnyway,
   updateProfilePostSucess,
+  updateProfilePostComment,
 };
