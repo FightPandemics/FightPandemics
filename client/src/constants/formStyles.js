@@ -1,4 +1,4 @@
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 
 export const inputStyles = {
   backgroundColor: "transparent",
@@ -27,7 +27,8 @@ export const inlineLabelStyles = {
   lineHeight: "2rem",
 };
 
-export const PositionApplyLabelStyles = {
+export const positionApplyLabelStyles = {
   ...labelStyles,
-  
+  fontWeight: 400,
+  color: theme.colors.black
 }

@@ -1,11 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 
 const { royalBlue } = theme.colors;
 
 const StyledLabel = styled.label`
-  color: ${(props) => props.color || royalBlue};
+  font-size: 2.2rem;
+  font-weight: 400;
+  line-height: 3.3rem;
+  /* letter-spacing: .04rem; */
+  color: theme.colors.black;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+  }
 `;
 
 const LabelIcon = styled.img`

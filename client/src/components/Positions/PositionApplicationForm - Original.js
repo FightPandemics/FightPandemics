@@ -137,21 +137,18 @@ const PositionApplicationForm = ({ orgName }) => {
   const { t } = useTranslation();
   const { firstQ, secondQ, thirdQ } = {};
 
-
-
   // onSubmit doesn't appear to be adding functionality
   const onSubmit = async (formData) => {
-    // if (!firstQ.value.length) {
+    // if (!firstQ) {
     //   //should probably use setError / useState to set class
-    //   alert("firstQ blank!")
     // } else if (!secondQ) {
 
     // } else if (!thirdQ) {
     // }
 
-    alert(formData.length)
+    console.log(formData)
   };
-  const [textPresent, setTextPresent] = useState(false);
+
   const [visible, setVisible] = useState(false);
 
   return (
@@ -166,6 +163,10 @@ const PositionApplicationForm = ({ orgName }) => {
       // onClick={handleHide}
       /> */}
 
+      <form action="">
+        <ApplyFormInput />
+        <input type="submit" />
+      </form>
       <Heading level={3} style={{ marginBottom: "5rem" }}>
         {t("orgJoinQ.application")}
       </Heading>
@@ -180,24 +181,22 @@ const PositionApplicationForm = ({ orgName }) => {
           name="firstQ"
           // type="text"
           rules={[{ required: true }]}
-          value={firstQ}
           defaultValue={firstQ}
           error={errors.firstQ}
           style={inputStyles}
-        // placeholder={t("orgJoinQ.maxnum")}
-        // ref={register({
-        //   required: t("orgJoinQ.required"),
-        //   minLength: 1,
-        //   maxLength: {
-        //     value: 1,
-        //     message: t("profile.common.maxCharacters", { maxNum: 1 },),
-        //   },
-        // })}
+          // placeholder={t("orgJoinQ.maxnum")}
+          ref={register({
+            required: t("orgJoinQ.required"),
+            minLength: 1,
+            maxLength: {
+              value: 1,
+              message: t("profile.common.maxCharacters", { maxNum: 1 },),
+            },
+          })}
         />
-        <input></input>
         {errors.firstQ && (
           <InputError style={errorStyles}>{errors.firstQ.message}</InputError>
-          
+
         )}
         <WhiteSpace />
         <ApplyFormLabel
@@ -212,13 +211,13 @@ const PositionApplicationForm = ({ orgName }) => {
           error={errors.firstQ}
           style={inputStyles}
           placeholder={t("orgJoinQ.maxnum")}
-          // ref={register({
-          //   required: t("orgJoinQ.required"),
-          //   maxLength: {
-          //     value: 250,
-          //     message: t("profile.common.maxCharacters", { maxNum: 250 }),
-          //   },
-          // })}
+          ref={register({
+            required: t("orgJoinQ.required"),
+            maxLength: {
+              value: 250,
+              message: t("profile.common.maxCharacters", { maxNum: 250 }),
+            },
+          })}
           onChange={(event) => event.target.value}
         />
         {errors.secondQ && (
@@ -238,16 +237,15 @@ const PositionApplicationForm = ({ orgName }) => {
           error={errors.firstQ}
           style={inputStyles}
           placeholder={t("orgJoinQ.maxnum")}
-          // ref={register({
-          //   required: t("orgJoinQ.required"),
-          //   maxLength: {
-          //     value: 250,
-          //     message: t("profile.common.maxCharacters", { maxNum: 250 }),
-          //   },
-          // })}
+          ref={register({
+            required: t("orgJoinQ.required"),
+            maxLength: {
+              value: 250,
+              message: t("profile.common.maxCharacters", { maxNum: 250 }),
+            },
+          })}
           onChange={(event) => event.target.value}
         />
-        <textarea>something</textarea>
         {errors.thirdQ && (
           <InputError style={errorStyles}>{errors.thirdQ.message}</InputError>
         )}
@@ -260,8 +258,7 @@ const PositionApplicationForm = ({ orgName }) => {
             }}
           >
             <input type="submit" />
-            <Submit
-              style={buttonStyles}
+            <Submit style={buttonStyles}
               onClick={handleSubmit(onSubmit)}
             // onClick={alert("Button clicked")}
             >
