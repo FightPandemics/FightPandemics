@@ -87,7 +87,9 @@ const PostContent = ({
                 </StyledDropDown>
               </StyledCardHeader>
               <StyledTitlePostCard>{post.title}</StyledTitlePostCard>
-              <StyledDescription>{finalContent}</StyledDescription>
+              <Link to={`/post/${post._id}`}>
+                <StyledDescription>{finalContent}</StyledDescription>
+              </Link>
               <LineBreak />
               {callReport ? (
                 <CreateReport

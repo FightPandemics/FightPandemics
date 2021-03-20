@@ -1,6 +1,6 @@
 // Core
 import React, { useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -64,6 +64,7 @@ const PostSocial = ({
   const history = useHistory();
   const organisationId = useSelector(selectOrganisationId);
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
@@ -99,13 +100,13 @@ const PostSocial = ({
       const request = liked ? axios.delete : axios.put;
       try {
         const { data } = await request(endPoint);
-        post.liked = !post.liked;
-        post.likesCount = data.likesCount;
-        postDispatch(postsActions.setLikeAction(postId, data.likesCount));
         postDispatch(
+          postsActions.setLikeAction(data.post, data.post.likesCount)
+        );
+        dispatch(
           postsActions.updateProfilePostSucess({
-            post,
-            userId: post.author.id,
+            post: data.post,
+            userId: authorId,
           })
         );
       } catch (error) {

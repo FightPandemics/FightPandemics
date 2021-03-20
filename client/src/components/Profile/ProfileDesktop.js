@@ -75,7 +75,7 @@ const ProfileDesktop = ({
     else if (viewType === "REQUESTS") return "ACTIVE_REQS";
     else return "ACTIVE_OFRS";
   });
-  const [childTab, setChildTab] = useState(defaultState);
+  const [childTab, setChildTab] = useState(defaultState());
 
   const handleTabChange = (e) => {
     setChildTab(e.key);
@@ -83,8 +83,8 @@ const ProfileDesktop = ({
   };
 
   useEffect(() => {
-    setChildTab(defaultState);
-    setInternalTab(defaultState);
+    setChildTab(defaultState());
+    setInternalTab(defaultState());
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const gtmIdPost = () => {

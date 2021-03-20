@@ -613,14 +613,14 @@ const Profile = ({
 
   const setTab = (childTab) => {
     if (
-      childTab === "Offers" ||
-      childTab === "Requests" ||
-      childTab === "Active" ||
-      childTab === "Archived"
+      childTab.toUpperCase() === t("profile.views.requests").toUpperCase() ||
+      childTab.toUpperCase() === t("profile.views.offers").toUpperCase() ||
+      childTab.toUpperCase() === t("profile.views.active").toUpperCase() ||
+      childTab.toUpperCase() === t("profile.views.archived").toUpperCase()
     ) {
       pushTag(childTab);
+      setInternalTab(childTab);
     }
-    setInternalTab(childTab);
   };
 
   const emptyFeed = () => filteredPost.length < 1 && !isLoading;

@@ -17,7 +17,7 @@ import { typeToTag } from "assets/data/formToPostMappings";
 import { isAuthorOrg, isAuthorUser } from "utils/userInfo";
 import { postReducer, postState } from "hooks/reducers/postReducers";
 import { selectOrganisationId, selectActorId } from "reducers/session";
-import { selectPosts, postsActions } from "reducers/posts";
+import { postsActions } from "reducers/posts";
 import GTM from "constants/gtm-tags";
 
 // Constants

@@ -1,6 +1,6 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import { Tooltip } from "antd";
@@ -134,6 +134,7 @@ const Post = ({
   const { t } = useTranslation();
   const { postId } = useParams();
   const limit = useRef(5);
+  const dispatch = useDispatch();
   let post;
   if (currentPost) {
     post = currentPost;
@@ -300,6 +301,12 @@ const Post = ({
         "commentsCount",
         commentCountRes.data.post.commentsCount
       );
+      dispatch(
+        postsActions.updateProfilePostSucess({
+          post: commentCountRes.data.post,
+          userId: commentCountRes.data.post.author.id,
+        })
+      );
       setComment([]);
     }
   };
@@ -353,6 +360,12 @@ const Post = ({
           filterComments,
           "commentsCount",
           commentCountRes.data.post.commentsCount
+        );
+        dispatch(
+          postsActions.updateProfilePostSucess({
+            post: commentCountRes.data.post,
+            userId: commentCountRes.data.post.author.id,
+          })
         );
       }
     }

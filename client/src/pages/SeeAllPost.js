@@ -161,9 +161,6 @@ const SeeAll = (props) => {
   const isOrg = true;
 
   const { id: pathUserId } = useParams();
-  // const { history, view } = props;
-
-  console.log(loc.state.viewType, viewType);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   let orgId = "";
@@ -203,8 +200,8 @@ const SeeAll = (props) => {
         ]);
         userProfileDispatch(
           fetchUserError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
-          ),
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
+          )
         );
       }
     })();
