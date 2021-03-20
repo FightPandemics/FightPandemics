@@ -4,6 +4,7 @@ const { SCOPES } = require("../constants");
 const {
   setElapsedTimeText,
   createSearchRegex,
+  transformPost,
   translateISOtoRelativeTime,
 } = require("../utils");
 
@@ -61,19 +62,18 @@ async function routes(app) {
       // Base filters - expiration and visibility
       /* eslint-disable sort-keys */
       let filters = [
-        postMode === "IA" ?
-        {
-          $and: [
-            { expireAt: { $ne: null } },
-            { expireAt: { $lt: new Date() } },
-          ],
-          status: { $ne: "removed" },
-        }
-        :
-        {
-          $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }],
-          status: { $ne: "removed" },
-        }
+        postMode === "IA"
+          ? {
+              $and: [
+                { expireAt: { $ne: null } },
+                { expireAt: { $lt: new Date() } },
+              ],
+              status: { $ne: "removed" },
+            }
+          : {
+              $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }],
+              status: { $ne: "removed" },
+            },
       ];
       // prefer location from query filters, then user if authenticated
       let location;
@@ -131,15 +131,15 @@ async function routes(app) {
               {
                 $and: [
                   { workMode: null },
-                  workModes.includes("both")?
-                  { types: { $nin: ["Remote Work"] } }:
-                  { types: { $in: ["Remote Work"] } }
+                  workModes.includes("both")
+                    ? { types: { $nin: ["Remote Work"] } }
+                    : { types: { $in: ["Remote Work"] } },
                 ],
               },
               { workMode: { $in: workModes } },
             ],
           });
-        }else {
+        } else {
           filters.push({ workMode: { $in: workModes } });
         }
       }
@@ -323,7 +323,7 @@ async function routes(app) {
 
       const responseHandler = (response) => {
         if (!includeMeta) {
-          return posts;
+          return response;
         }
         return {
           meta: {
@@ -384,12 +384,15 @@ async function routes(app) {
       }
 
       reply.code(201);
-      return post;
+      return {
+        ...transformPost(post.toObject()),
+        liked: false,
+        likesCount: 0,
+      };
     }
   );
 
   // /posts/postId
-
   app.get(
     "/:postId",
     {
@@ -455,19 +458,15 @@ async function routes(app) {
       }
 
       const projectedPost = {
-        ...post.toObject(),
-        liked: post.likes.includes(
-          mongoose.Types.ObjectId(actor ? actor._id : null)
-        ),
-        likesCount: post.likes.length,
-        elapsedTimeText: {
-          created: translateISOtoRelativeTime(post.createdAt),
-          isEdited: post.isEdited, // keep frontend format
-        },
-        reportsCount: (post.reportedBy || []).length,
+        ...transformPost(post.toObject()),
         commentsCount: commentQuery || 0,
+        likesCount: post.likes.length || 0,
+        liked: post.likes
+          ? post.likes.includes(
+              mongoose.Types.ObjectId(actor ? actor._id : null)
+            )
+          : post.likes,
       };
-      delete projectedPost.reportedBy;
 
       return {
         post: projectedPost,
@@ -518,11 +517,11 @@ async function routes(app) {
   app.patch(
     "/:postId",
     {
-      preValidation: [app.authenticate],
+      preValidation: [app.authenticate, app.setActor],
       schema: updatePostSchema,
     },
     async (req) => {
-      const { userId, body } = req;
+      const { actor, userId, body } = req;
       const [err, post] = await app.to(Post.findById(req.params.postId));
 
       if (err) {
@@ -554,7 +553,29 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
 
-      return updatedPost;
+      const [commentQueryErr, commentQuery] = await app.to(
+        Comment.find({
+          postId: mongoose.Types.ObjectId(post._id),
+          parentId: null,
+        }).count()
+      );
+      /* eslint-enable sort-keys */
+
+      if (commentQueryErr) {
+        req.log.error(commentQueryErr, "Failed retrieving comments");
+        throw app.httpErrors.internalServerError();
+      }
+
+      return {
+        ...transformPost(updatedPost.toObject()),
+        likesCount: updatedPost.likes.length,
+        commentsCount: commentQuery || 0,
+        liked: updatedPost.likes
+          ? updatedPost.likes.includes(
+              mongoose.Types.ObjectId(actor ? actor._id : null)
+            )
+          : updatedPost.likes,
+      };
     }
   );
 
@@ -589,8 +610,15 @@ async function routes(app) {
       app.notifier.notify("like", updatedPost, actor._id, userId);
 
       return {
-        likes: updatedPost.likes,
-        likesCount: updatedPost.likes.length,
+        post: {
+          ...transformPost(updatedPost.toObject()),
+          likesCount: updatedPost.likes.length,
+          liked: updatedPost.likes
+            ? updatedPost.likes.includes(
+                mongoose.Types.ObjectId(actor ? actor._id : null)
+              )
+            : updatedPost.likes,
+        },
       };
     }
   );
@@ -622,8 +650,15 @@ async function routes(app) {
       }
 
       return {
-        likes: updatedPost.likes,
-        likesCount: updatedPost.likes.length,
+        post: {
+          ...transformPost(updatedPost.toObject()),
+          likesCount: updatedPost.likes.length,
+          liked: updatedPost.likes
+            ? updatedPost.likes.includes(
+                mongoose.Types.ObjectId(actor ? actor._id : null)
+              )
+            : updatedPost.likes,
+        },
       };
     }
   );
