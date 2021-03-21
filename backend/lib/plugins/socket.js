@@ -464,7 +464,7 @@ function onSocketConnect(socket) {
 
     //updating shares each time an user click to share a post
     const [updateErr, updatedPost] = await this.to(
-      post.update({
+      post.updateOne({
         $inc: {
           shares: 1
         }
@@ -472,7 +472,7 @@ function onSocketConnect(socket) {
     );
 
     if (updateErr) {
-      req.log.error(updateErr, "Failed updating post share count");
+      this.log.error(updateErr, "Failed updating post share count");
       throw app.httpErrors.internalServerError();
     } else if (updatedPost === null) {
       throw app.httpErrors.notFound();
