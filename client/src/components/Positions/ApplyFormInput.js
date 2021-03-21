@@ -128,10 +128,108 @@ const ErrorMsg = styled.p`
   }
 `;
 
+// export default forwardRef(
+//   (
+//     {
+//       formData,
+//       textPresent,
+//       register,
+//       onChange,
+//       onSubmit,
+//       onPressEnter,
+//       maxLength, inputTitle,
+//       name,
+//       defaultValue,
+//       error,
+//       icon,
+//       prefix,
+//       placeholder,
+//       counter,
+//       ...props
+//     },
+//     ref,
+//   ) => {
+//     const charsLeft =
+//       props.maxLength && props.value && props.maxLength - props.value.length;
+//     const [count, setCount] = useState(0);
+
+//     // const [textPresent, setTextPresent] = useState(true);
+
+//     return (
+
+//       <OuterWrapper>
+
+//         {/* <Label
+//           icon={icon}
+//           htmlFor={name}
+//           // style={blockLabelStyles}
+//           label={inputTitle}
+//         /> */}
+//         <InputWrapper className={count > 250 ? "has-error" : "" || error && "has-error"}>
+//           {prefix && <Prefix>{prefix}</Prefix>}
+//           <ApplyFormInput
+//             value={count}
+//             required
+//             className={count > 0 ? "text-present" : ""}
+//             // row={rows}
+//             name={name}
+//             id={name}
+//             defaultValue={defaultValue}
+//             ref={ref}
+//             // placeholder={placeholder}
+//             // orgName={orgName}
+//             {...props}
+//             // maxLength="1"
+//             error={error}
+//             // onChange={(event) => setCount(event.target.value.length)}
+//             // onChange={(e) => alert(e.target.value)}
+
+
+//           // onChange={setTextPresent(false)}
+//           />
+
+//           {// TextArea is for Autosize test
+//           }
+//           {/* <TextArea
+//             autoSize
+//             name={name}
+//             id={name}
+//             defaultValue={defaultValue}
+//             ref={ref}
+//             error={error}
+//             // placeholder={placeholder}
+//             {...props}
+//             onChange={(event) => setCount(event.target.value.length)}
+//           /> */}
+//           <CharCounter className={count > 250 ? "has-error" : ""}> {count} / {250} </CharCounter>
+//         </InputWrapper>
+
+//         {!props.textPresent && <ErrorMsg className="has-error">Required Field</ErrorMsg>}
+
+//         {
+//           typeof charsLeft === "number" && charsLeft !== props.maxLength && (
+//             <InputInfo
+//               error={charsLeft === 0}
+//             >{`${charsLeft} characters left`}
+
+
+//             </InputInfo>
+//           )
+//         }
+//         {/* {error && <InputError>{error.message}</InputError>} */}
+//       </OuterWrapper >
+//     );
+//   },
+// );
+
+
+
 export default forwardRef(
   (
     {
-      textPresentregister,
+      formData,
+      textPresent,
+      register,
       onChange,
       onSubmit,
       onPressEnter,
@@ -151,7 +249,7 @@ export default forwardRef(
       props.maxLength && props.value && props.maxLength - props.value.length;
     const [count, setCount] = useState(0);
 
-    const [textPresent, setTextPresent] = useState(true);
+    // const [textPresent, setTextPresent] = useState(true);
 
     return (
 
@@ -166,6 +264,7 @@ export default forwardRef(
         <InputWrapper className={count > 250 ? "has-error" : "" || error && "has-error"}>
           {prefix && <Prefix>{prefix}</Prefix>}
           <ApplyFormInput
+            value={count}
             required
             className={count > 0 ? "text-present" : ""}
             // row={rows}
@@ -178,8 +277,11 @@ export default forwardRef(
             {...props}
             // maxLength="1"
             error={error}
-            // onChange={(event) => setCount(event.target.value.length), setTextPresent(false)}
-            // onChange={setTextPresent(false)}
+            // onChange={(event) => setCount(event.target.value.length)}
+            // onChange={(e) => alert(e.target.value)}
+
+
+          // onChange={setTextPresent(false)}
           />
 
           {// TextArea is for Autosize test
@@ -198,7 +300,7 @@ export default forwardRef(
           <CharCounter className={count > 250 ? "has-error" : ""}> {count} / {250} </CharCounter>
         </InputWrapper>
 
-        {!textPresent && <ErrorMsg className="has-error">Required Field</ErrorMsg>}
+        {!props.textPresent && <ErrorMsg className="has-error">Required Field</ErrorMsg>}
 
         {
           typeof charsLeft === "number" && charsLeft !== props.maxLength && (

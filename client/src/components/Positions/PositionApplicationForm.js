@@ -32,6 +32,7 @@ const { Option } = Select;
 export const initialState = {
   error: null,
   loading: false,
+  formData: null
 };
 
 export const joinOrgFormReducer = (state, action) => {
@@ -123,12 +124,14 @@ const errorStyles = {
   alignSelf: "",
 };
 
+
 // const Form = ({ onChangeDescription }) => {
 const PositionApplicationForm = ({ orgName }) => {
   const { errors, register, handleSubmit } = useForm({
     mode: "change",
   });
 
+  const [formData, setFormData] = useState(initialState.formData);
 
   const [
     createOrganisationFormState,
@@ -148,9 +151,11 @@ const PositionApplicationForm = ({ orgName }) => {
 
     // } else if (!thirdQ) {
     // }
-
-    alert(formData.length)
+    // console.log(formData);
+    alert(formData);
   };
+
+  const handleChange = (e) => alert(this)
   const [textPresent, setTextPresent] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -169,12 +174,29 @@ const PositionApplicationForm = ({ orgName }) => {
       <Heading level={3} style={{ marginBottom: "5rem" }}>
         {t("orgJoinQ.application")}
       </Heading>
-      <StyledForm>
+      <StyledForm
+      // onSubmit={alert(firstQ)}
+
+      >
         <ApplyFormLabel
           // style={positionApplyLabelStyles}
           label={t("orgJoinQ.question1") + ` ${orgName}` + "?" + " *"}
 
         />
+        <input
+          name="testinput"
+          id="yo"
+          required={true}
+          name="firstQ"
+          // type="text"
+          rules={[{ required: true }]}
+          value={firstQ}
+          defaultValue={firstQ}
+          error={errors.firstQ}
+          style={inputStyles}
+        >
+
+        </input>
         <ApplyFormInput
           required={true}
           name="firstQ"
@@ -184,20 +206,24 @@ const PositionApplicationForm = ({ orgName }) => {
           defaultValue={firstQ}
           error={errors.firstQ}
           style={inputStyles}
-        // placeholder={t("orgJoinQ.maxnum")}
-        // ref={register({
-        //   required: t("orgJoinQ.required"),
-        //   minLength: 1,
-        //   maxLength: {
-        //     value: 1,
-        //     message: t("profile.common.maxCharacters", { maxNum: 1 },),
-        //   },
-        // })}
+          // placeholder={t("orgJoinQ.maxnum")}
+          ref={register({
+            required: t("orgJoinQ.required"),
+            minLength: 1,
+            maxLength: {
+              value: 1,
+              message: t("profile.common.maxCharacters", { maxNum: 1 },),
+            },
+          })}
+          textPresent={textPresent}
+          formData={formData}
+
+
         />
-        <input></input>
+        <input type="submit" />
         {errors.firstQ && (
           <InputError style={errorStyles}>{errors.firstQ.message}</InputError>
-          
+
         )}
         <WhiteSpace />
         <ApplyFormLabel
@@ -212,13 +238,13 @@ const PositionApplicationForm = ({ orgName }) => {
           error={errors.firstQ}
           style={inputStyles}
           placeholder={t("orgJoinQ.maxnum")}
-          // ref={register({
-          //   required: t("orgJoinQ.required"),
-          //   maxLength: {
-          //     value: 250,
-          //     message: t("profile.common.maxCharacters", { maxNum: 250 }),
-          //   },
-          // })}
+          ref={register({
+            required: t("orgJoinQ.required"),
+            maxLength: {
+              value: 250,
+              message: t("profile.common.maxCharacters", { maxNum: 250 }),
+            },
+          })}
           onChange={(event) => event.target.value}
         />
         {errors.secondQ && (
@@ -238,13 +264,13 @@ const PositionApplicationForm = ({ orgName }) => {
           error={errors.firstQ}
           style={inputStyles}
           placeholder={t("orgJoinQ.maxnum")}
-          // ref={register({
-          //   required: t("orgJoinQ.required"),
-          //   maxLength: {
-          //     value: 250,
-          //     message: t("profile.common.maxCharacters", { maxNum: 250 }),
-          //   },
-          // })}
+          ref={register({
+            required: t("orgJoinQ.required"),
+            maxLength: {
+              value: 250,
+              message: t("profile.common.maxCharacters", { maxNum: 250 }),
+            },
+          })}
           onChange={(event) => event.target.value}
         />
         <textarea>something</textarea>
@@ -256,10 +282,10 @@ const PositionApplicationForm = ({ orgName }) => {
           <Link
             to={{
               // pathname: `/nearest-hospital`,
-              // state: { from: window.location.href },
+              state: { from: window.location.href },
             }}
           >
-            <input type="submit" />
+
             <Submit
               style={buttonStyles}
               onClick={handleSubmit(onSubmit)}
