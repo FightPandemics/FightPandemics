@@ -6,12 +6,13 @@ const notifyPreferenceSchema = new Schema({
     comment: { default: true, type: Boolean },
     share: { default: true, type: Boolean },
     message: { default: true, type: Boolean },
+    orgPosts: { default: false, type: Boolean },
   },
   digest: {
     daily: { default: true, type: Boolean },
     weekly: { default: true, type: Boolean },
     biweekly: { default: true, type: Boolean },
-  }
+  },
 });
 
 const NotifyPrefs = model("NotifyPrefs", notifyPreferenceSchema);
