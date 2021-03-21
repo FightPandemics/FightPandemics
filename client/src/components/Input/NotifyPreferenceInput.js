@@ -34,6 +34,7 @@ const NotifyType = {
   share: "post.share_plural",
   comment: "comment.comment_plural",
   message: "message.message_plural",
+  orgPosts: "common.orgPosts",
 };
 
 const NotifyFreq = {
