@@ -4,6 +4,14 @@ import SvgIcon from "../Icon/SvgIcon";
 import downArrowSlim from "../../assets/icons/down-arrow-slim.svg";
 import { useTranslation } from "react-i18next";
 import GTM from "constants/gtm-tags";
+import styled from "styled-components";
+
+const SelectorWrapper = styled.div`
+  span.ant-select-selection-item {
+    font-weight: 600;
+    font-size: 1.4rem !important;
+  }
+`;
 
 export default function SortSelector({
   handleSortDropdown,
@@ -57,7 +65,7 @@ export default function SortSelector({
   }, [ignoreUserLocation, keywordUsed, filterLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="visibility-post--selector">
+    <SelectorWrapper>
       <BaseSelector
         suffixIcon={
           <SvgIcon
@@ -71,6 +79,6 @@ export default function SortSelector({
         minWidth="14.8rem"
         minHeight="5rem"
       />
-    </div>
+    </SelectorWrapper>
   );
 }
