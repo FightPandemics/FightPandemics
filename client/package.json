@@ -9,8 +9,8 @@
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "classnames": "^2.2.6",
-    "google-map-react": "^2.1.9",
     "disposable-email-domains": "^1.0.57",
+    "google-map-react": "^2.1.9",
     "i18next": "^19.6.3",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
@@ -74,11 +74,11 @@
     "@testing-library/react": "^10.0.3",
     "@testing-library/user-event": "^10.1.0",
     "dotenv": "^8.2.0",
-    "redux-devtools-extension": "^2.13.8",
     "http-proxy-middleware": "^1.0.3",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.0",
     "prettier": "^2.0.5",
+    "redux-devtools-extension": "^2.13.8",
     "remote-redux-devtools": "^0.5.16"
   },
   "husky": {
