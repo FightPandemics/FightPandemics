@@ -1,9 +1,9 @@
 import applicationConfirmation from "assets/icons/application-received.svg";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
+import { ApplyModal, ButtonsContainer, StyledCancelButton, StyledContainer, StyledSubmitButton } from "components/Positions/ApplicationModalStyles";
 import { CharCounter, ErrorMsg, InputField, InputWrapper, OuterWrapper } from "components/Positions/ApplyFormInputStyles";
 import PositionsButton from "components/Positions/PositionsButton";
-import PositionSubmitButton, { ApplyModal, ButtonsContainer, StyledCancelButton, StyledContainer, StyledSubmitButton } from "components/Positions/ApplicationModalStyles";
-import PositionSubmitModal from "components/Positions/PositionSubmitModal";
+import { PositionSubmitModal } from "components/Positions/PositionSubmitModal";
 import { mq } from "constants/theme";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -124,7 +124,6 @@ const PositionApplicationForm = ({ orgName }) => {
             id="question1"
             name="question1"
             onChange={handleFormData("question1")}
-            // value={formData.question1}
             renderError={renderError}
             formData={formData}
           />
@@ -212,7 +211,6 @@ const PositionApplicationForm = ({ orgName }) => {
             </StyledCancelButton>
             <StyledSubmitButton
               onClick={showPopUpTwo}
-            // onClick={onClick}
             >
               {t("positions.submitModal")}
             </StyledSubmitButton>
