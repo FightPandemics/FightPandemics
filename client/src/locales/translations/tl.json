@@ -21,7 +21,8 @@
     "stayOnPageContent": "Kung pipiliin mo ang \"Hindi\" ibabalik ka sa Help Board.",
     "yes": "Oo",
     "no": "Hindi",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Lokasyon",
         "providers": "Mga tagabigay",
         "type": "Mga uri",
-        "lookingFor": "Mag-alok o Humiling ng Tulong"
+        "lookingFor": "Mag-alok o Humiling ng Tulong",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Indibidwal",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Naghahanap ng tulong",
         "offer": "Nag-aalok ng tulong"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Mag-post",
@@ -233,7 +240,12 @@
     "hideCaption": "Hindi ito nauugnay sa akin",
     "reportAction": "I-report ang post",
     "reportCaption": "Para sa mas masusing pagsusuri ng mga moderator",
-    "copyUrl": "Kopyahin ang URL"
+    "copyUrl": "Kopyahin ang URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Kasalukuyang maling password",
     "noEmailAccount": "Walang natagpuang account sa email address na ito, mangyaring i-click ang 'Sumali Ngayon' upang lumikha ng isang account.",
     "registeredAccount": "Ang isang social account ay nakarehistro sa email address na ito. Mangyaring i-click ang 'Sumali Ngayon' upang lumikha ng isang direktang email at password account.",
-    "failedLinkAccounts": "Nabigo ang pag-link ng mga account, dahilan:"
+    "failedLinkAccounts": "Nabigo ang pag-link ng mga account, dahilan:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "Hindi kami tagapagbigay ng mga serbisyong pangkalusugan",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Ang serbisyong ito ay ibinibigay na may mabuting pananampalataya para sa mga taong hindi makakakuha o walang mapagkukunan ng tulong sa panahon ng hindi pa nasasaksihang krisis sa larangan ng kalusugang pampubliko.",
@@ -943,15 +956,15 @@
       "blockedEmpty": "You haven't blocked any accounts."
     },
     "emptyInbox": {
-      "header": "You don't have any messages",
-      "p1": "You haven't received any messages yet.",
-      "p2": "Head back to Help Board to find offers or requests to respond to.",
+      "header": "Wala kang mga mensahe",
+      "p1": "Wala ka pang natatanggap na mga mensahe.",
+      "p2": "Bumalik sa Help Board upang makahanap ng mga alok o mga kahilingan upang tumugon.",
       "goToHB": "Pumunta sa Help Board"
     },
     "selectRoom": {
-      "header": "Select any message to read",
-      "p1": "The message content would appear here once you select",
-      "p2": "a conversation from the inbox."
+      "header": "Pumili ng anumang mensahe na babasahin",
+      "p1": "Ang nilalaman ng mensahe ay lilitaw dito kapag pinili mo",
+      "p2": "isang pag-uusap mula sa inbox."
     },
     "selectRequest": {
       "header": "Select any message request to read",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "Kinansela mo ang proseso ng pag-verify",
     "stepCancelBody": "Maari mong balikan at i-verify ang iyong account anuman oras!",
     "stepCancelAction": "Isara"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Lokasyon",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

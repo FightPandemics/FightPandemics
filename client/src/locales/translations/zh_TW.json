@@ -21,7 +21,8 @@
     "stayOnPageContent": "如果選擇“不是”，您將被重新導向至幫助版面。",
     "yes": "是",
     "no": "不是",
-    "ok": "好"
+    "ok": "好",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "位置",
         "providers": "供應商",
         "type": "種類",
-        "lookingFor": "提供或請求幫助"
+        "lookingFor": "提供或請求幫助",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "個人",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "請求幫助",
         "offer": "提供幫助"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "發布",
@@ -233,7 +240,12 @@
     "hideCaption": "這與我無關",
     "reportAction": "舉報貼文",
     "reportCaption": "供版主審查",
-    "copyUrl": "複製網址"
+    "copyUrl": "複製網址",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "目前的密碼有誤",
     "noEmailAccount": "未找到該與電子郵件地址相關聯的帳戶，請點擊“立即加入”以創建一個帳戶。",
     "registeredAccount": "該電子郵件地址已被注冊社交賬戶。請單擊“立即加入”以創建直接電子郵件和密碼的賬戶。",
-    "failedLinkAccounts": "鏈接賬戶失敗，原因："
+    "failedLinkAccounts": "鏈接賬戶失敗，原因：",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "我們不是醫療保健服務提供商",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "這項服務本著善意，為那些在這次公共衛生緊急情況下完全無法獲得幫助和資源的眾人提供的。",
@@ -1017,7 +1030,7 @@
     "commented": "<0>{{username}}</0> 在您的貼文 <1>{{postTitle}}</1> 留言",
     "shared": "<0>{{username}}</0>在 <1>{{shareMedium}}</1> 共享您的貼文 <1>{{postTitle}}</1>",
     "empty": "沒有更多通知",
-    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
+    "reported": "您的貼文<1>{{postTitle}}</1>違反了我們的內容政策，因此已被刪除"
   },
   "moderation": {
     "report": "舉報",
@@ -1054,17 +1067,44 @@
     "reportRejectedBody": "This post was not removed!"
   },
   "verification": {
-    "verifyTitle": "Verify your account!",
-    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
-    "verified": "Verified by Veriff",
-    "stepStartTitle": "Verify your account with Veriff",
+    "verifyTitle": "驗證您的帳戶！",
+    "verifyBody": "我們注意到您尚未驗證您的帳戶。點擊這裡開始。",
+    "verified": "由Veriff驗證",
+    "stepStartTitle": "使用Veriff驗證您的帳戶",
     "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
-    "stepStartAction": "Get Verified",
-    "stepSuccessTitle": "Thanks for verifying your account!",
+    "stepStartAction": "獲得驗證",
+    "stepSuccessTitle": "感謝您驗證您的帳戶！",
     "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
-    "stepSuccessAction": "Awesome!",
-    "stepCancelTitle": "You canceled the verification process",
-    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "stepSuccessAction": "太棒了！",
+    "stepCancelTitle": "您取消了驗證過程",
+    "stepCancelBody": "您可隨時返回並驗證您的帳戶！",
     "stepCancelAction": "關閉"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "位置",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "卫生设施",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }
