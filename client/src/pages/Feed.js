@@ -152,7 +152,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-  const [sortValue, setSortValue] = useState();
+  const [sortValue, setSortValue] = useState("createdAt");
   const {
     filterModal,
     showCreatePostModal,
@@ -334,9 +334,20 @@ const Feed = (props) => {
   };
 
   const toggleShowNearMe = (e) => {
-    setQueryKeysValue(history, {
-      near_me: e.target.checked,
-    });
+    if (e.target.checked) {
+      setSortValue("proximity");
+      setQueryKeysValue(history, {
+        s_keyword: null,
+        s_category: null,
+        location: null,
+        near_me: e.target.checked,
+      });
+    } else {
+      setSortValue("createdAt");
+      setQueryKeysValue(history, {
+        near_me: e.target.checked,
+      });
+    }
   };
 
   const changeHelpType = (selectedValue) => {
@@ -362,6 +373,17 @@ const Feed = (props) => {
   };
 
   const handleLocation = (value) => {
+    if (value) {
+      setSortValue("proximity");
+      setQueryKeysValue(history, {
+        s_keyword: null,
+        s_category: null,
+        near_me: false,
+      });
+    } else {
+      setSortValue("createdAt");
+    }
+
     if (applyFilters) {
       dispatch(postsActions.resetPageAction({}));
     }
@@ -598,11 +620,23 @@ const Feed = (props) => {
 
   useEffect(() => {
     if (typeof queryParams.s_keyword !== "undefined") {
+      setQueryKeysValue(history, {
+        location: null,
+        near_me: false,
+      });
       setSortValue("relevance");
-    } else if (!ignoreUserLocation || queryParams.location) {
-      setSortValue("proximity");
-    } else {
-      setSortValue("createdAt");
+    } else if (sortValue !== "proximity") {
+      setQueryKeysValue(history, {
+        location: null,
+        near_me: false,
+      });
+      if (
+        sortValue !== "views" &&
+        sortValue !== "shares" &&
+        sortValue !== "likes"
+      ) {
+        setSortValue("createdAt");
+      }
     }
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
   }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -689,6 +723,12 @@ const Feed = (props) => {
 
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const handleSortDropdown = (value) => {
+    setQueryKeysValue(history, {
+      s_keyword: null,
+      s_category: null,
+      location: null,
+      near_me: false,
+    });
     setSortValue(value);
   };
   return (

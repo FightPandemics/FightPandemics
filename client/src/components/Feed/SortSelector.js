@@ -39,30 +39,18 @@ export default function SortSelector({
       value: "likes",
     },
   ]);
+  const [value, setValue] = useState();
   const gtmTag = (tag) => GTM.feed.prefix + GTM.feed.sort + GTM.feed[tag];
 
   useEffect(() => {
-    const stagedOptions = options.filter(
-      (e) => e.value !== "proximity" && e.value !== "relevance",
-    );
-    if (!ignoreUserLocation || filterLocation) {
-      stagedOptions.push({
-        text: t("feed.filters.proximity"),
-        value: "proximity",
-      });
+    if (sortValue === "proximity") {
+      setValue(t("feed.filters.proximity"));
+    } else if (sortValue === "relevance") {
+      setValue(t("feed.filters.relevance"));
+    } else {
+      setValue(sortValue);
     }
-    if (keywordUsed) {
-      stagedOptions.push({
-        text: t("feed.filters.relevance"),
-        value: "relevance",
-      });
-    }
-    const finalOptions = stagedOptions.map((e) => {
-      e.gtm = gtmTag(e.value);
-      return e;
-    });
-    setOptions(finalOptions);
-  }, [ignoreUserLocation, keywordUsed, filterLocation]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ignoreUserLocation, keywordUsed, filterLocation, sortValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <SelectorWrapper>
@@ -73,7 +61,7 @@ export default function SortSelector({
             style={{ width: "1.5rem", height: "auto" }}
           />
         }
-        value={sortValue}
+        value={value}
         options={options}
         onChange={handleSortDropdown}
         minWidth="14.8rem"
