@@ -373,6 +373,13 @@ const Feed = (props) => {
   };
 
   const handleLocation = (value) => {
+    if (applyFilters) {
+      dispatch(postsActions.resetPageAction({}));
+    }
+    dispatchAction(SET_VALUE, "location", value);
+    if (!value && queryParams.location) {
+      setQueryKeysValue(history, { location: null });
+    }
     if (value) {
       setSortValue("proximity");
       setQueryKeysValue(history, {
@@ -382,14 +389,6 @@ const Feed = (props) => {
       });
     } else {
       setSortValue("createdAt");
-    }
-
-    if (applyFilters) {
-      dispatch(postsActions.resetPageAction({}));
-    }
-    dispatchAction(SET_VALUE, "location", value);
-    if (!value && queryParams.location) {
-      setQueryKeysValue(history, { location: null });
     }
   };
 
