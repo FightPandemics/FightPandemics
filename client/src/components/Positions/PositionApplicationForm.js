@@ -458,7 +458,7 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
 
     // field.preventDefault();
     if (!formData.props) { populateErrors(); }
-    if (formData.question1 && formData.question2) { showPopUp(); }
+    if (formData.question1 && formData.question2 && formData.question3) { showPopUp(); }
 
 
 
