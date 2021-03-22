@@ -1095,7 +1095,7 @@
   "orgJoinQ": {
     "question1": " Tell us, why do you want to join",
     "question2": " What skills would you bring to",
-    "question3": " What type of Volunteering work have you done in the past?",
+    "question3": " What type of Volunteering work have you done in the past",
     "required": "Required Field",
     "application": "Applicaton",
     "submit": "Submit",

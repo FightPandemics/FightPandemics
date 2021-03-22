@@ -585,7 +585,7 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
             id="question3"
             name="question3"
             onChange={handleFormData("question3")}
-            value={formData.question2}
+            value={formData.question3}
             renderError={renderError}
             formData={formData}
 
@@ -614,7 +614,7 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
         onWorkModeChange={(val) => handleSelectorChange("workMode", val)}
       /> */}
       <ApplyModal
-        style={{ border: "3rem" }}
+        // style={{ border: "3rem" }}
         //set to true for testing, normally handled by {visible}
         visible={visible}
         width={564}
@@ -668,15 +668,16 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
 
 
       <ApplyModal
-        style={{ border: "3rem" }}
         // visibility set to true for testing, logic to be based on previous submit button on modal
         visible={visibleTwo}
+        // visible={true}
         // width={"3rem"}
         footer={null}
         centered={true}
         onCancel={handleCancelTwo}
         cancelButtonProps={{ style: { display: 'none' } }}
         closable={false}
+        className="submitted"
       >
         <PositionSubmitModal>
           <img src={applicationConfirmation} alt="" />

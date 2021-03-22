@@ -13,11 +13,10 @@ const { colors, typography } = theme;
 const { display, body } = theme.typography.font.family;
 
 export const StyledContainer = styled.section`
-  padding: 0;
+  padding: 0 !important;
   display: flex;
   flex-direction: column;
   text-align: left;
-  
 
   h2 {
     font-family: ${display};
@@ -37,7 +36,6 @@ export const StyledContainer = styled.section`
     font-stretch: normal;
     font-style: normal;
     line-height: 1.8rem;
-    letter-spacing: normal;
     margin: 0 auto;
     margin-top: -1.4rem;
     margin-bottom: 2rem;
@@ -95,7 +93,25 @@ export const ConfirmationButton = styled.button`
 
 export const ApplyModal = styled(Modal)`
   margin-bottom: 20rem;
-  border-radius: 10rem !important;
+  margin: 0 !important;
+  height: fit-content;
+  
+  .ant-modal-content {
+    display: flex;
+    align-items: center;
+    border-radius: 1rem;
+    max-height: 30.5rem;
+  
+   
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
+      max-height: 30.6rem;
+      margin: 0 4rem;
+   
+
+    }
+  }
+  
+  
 `;
 
 export const ButtonsContainer = styled.div`
@@ -164,8 +180,8 @@ const PositionSubmitButton = ({ showPopUpTwo, onClick, getGTM, props }) => {
             <StyledCancelButton onClick={handleCancel}>
               {t("positions.cancelModal")}
             </StyledCancelButton>
-            <StyledSubmitButton 
-            onClick={showPopUpTwo}
+            <StyledSubmitButton
+              onClick={showPopUpTwo}
             // onClick={onClick}
             >
               {t("positions.submitModal")}
