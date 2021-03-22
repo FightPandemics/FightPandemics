@@ -3,7 +3,7 @@
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
-import ApplyButton from "components/Positions/PositionsButton";
+import PositionApplicationForm from "components/Positions/PositionApplicationForm";
 import ProfilePic from "components/Positions/ProfilePic";
 import {
     OrganisationContext,
@@ -21,15 +21,12 @@ import {
     fetchUserSuccess
 } from "hooks/actions/userActions";
 import React, {
-    useContext, useEffect, useRef, useHistory
+    useContext, useEffect, useRef
 } from "react";
 import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import {
-    PositionDescription, PositionsContainer,
-    PositionTitle
-} from "../components/Profile/PositionsComponents";
+import { PositionsContainer } from "../components/Profile/PositionsComponents";
 import {
     AvatarPhotoContainer, DescriptionDesktop, NameDiv,
     NamePara,
@@ -37,55 +34,8 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
-import PositionSubmitButton from "components/Positions/ApplicationModalStyles";
-import PositionApplicationForm from "components/Positions/PositionApplicationForm";
-// import History from "client/src/utils/history";
-
-
 
 const Apply = () => {
-
-
-
-
-
-    // useEffect(() => {
-    //     // const { state, pathname } = history.location;
-    //     // history.push(pathname, {
-    //     //   ...state,
-    //     //   keepScroll: true,
-    //     // });
-
-
-    //     window.addEventListener("popstate", onBrowserBack);
-    //     // return () => {
-    //     //   window.removeEventListener("popstate", setVisible(false));
-    //     // };
-    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    // const onBrowserBack = (e) => {
-    //     e.preventDefault();
-    //     alert("No backsies!")
-    //     // if (!visible) {
-    //     //   setVisible(true);
-    //     // }
-    //     // else {
-    //     //   setVisible(false);
-    //     // };
-    // }
-
-    // useEffect(() => {
-    //     // code here would fire when the page loads, equivalent to `componentDidMount`.
-    //     return () => {
-    //         // code after the return is equivalent to `componentWillUnmount`
-    //         if (History.action === "POP") {
-    //             // handle any state changes necessary to set the screen display back one page.
-    //         }
-    //     }
-    // })
-
-
-
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 2];
     const { orgProfileState, orgProfileDispatch } = useContext(
@@ -195,7 +145,6 @@ const Apply = () => {
                         <PositionApplicationForm
                             orgName={name}
                         ></PositionApplicationForm>
-                        {/* <PositionSubmitButton></PositionSubmitButton> */}
                     </PositionsContainer >
                 </ProfileLayout>
             </>

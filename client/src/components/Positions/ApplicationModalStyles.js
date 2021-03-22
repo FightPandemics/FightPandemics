@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import { mq, theme } from "constants/theme";
 import styled from "styled-components";
 
-const { colors, typography } = theme;
+const { colors } = theme;
 const { display, body } = theme.typography.font.family;
 
 export const StyledContainer = styled.section`
