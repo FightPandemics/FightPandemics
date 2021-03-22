@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 
 import { blockLabelStyles } from "constants/formStyles";
@@ -48,18 +48,6 @@ const Prefix = styled.span`
   padding-bottom: 0.5rem;
 `;
 
-const CharCounter = styled.p`
-  color: ${colors.darkGray};
-  /* position: relative; */
-  /* right: 0; */
-  width: 100%;
-  text-align: right;
-
-  &.has-error {
-  color: ${colors.red};
-}
-`;
-
 export default forwardRef(
   (
     {
@@ -70,16 +58,13 @@ export default forwardRef(
       icon,
       prefix,
       placeholder,
-      counter,
       ...props
     },
     ref,
   ) => {
     const charsLeft =
       props.maxLength && props.value && props.maxLength - props.value.length;
-    const [count, setCount] = useState(0);
     return (
-
       <OuterWrapper>
         <Label
           icon={icon}
@@ -94,13 +79,10 @@ export default forwardRef(
             id={name}
             defaultValue={defaultValue}
             ref={ref}
-            // placeholder={placeholder}
+            placeholder={placeholder}
             {...props}
-            onChange={(event) => setCount(event.target.value.length)}
           />
-          <CharCounter className={count > 250 && "has-error"}> {count} / {250} </CharCounter>
         </InputWrapper>
-
         {typeof charsLeft === "number" && charsLeft !== props.maxLength && (
           <InputInfo
             error={charsLeft === 0}

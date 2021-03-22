@@ -21,7 +21,7 @@ import {
     fetchUserSuccess
 } from "hooks/actions/userActions";
 import React, {
-    useContext, useEffect, useRef
+    useContext, useEffect, useRef, useHistory
 } from "react";
 import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -39,10 +39,52 @@ import {
 } from "../components/Profile/ProfileComponents";
 import PositionSubmitButton from "components/Positions/PositionSubmitButton";
 import PositionApplicationForm from "components/Positions/PositionApplicationForm";
+// import History from "client/src/utils/history";
 
 
 
 const Apply = () => {
+
+
+
+
+
+    // useEffect(() => {
+    //     // const { state, pathname } = history.location;
+    //     // history.push(pathname, {
+    //     //   ...state,
+    //     //   keepScroll: true,
+    //     // });
+
+
+    //     window.addEventListener("popstate", onBrowserBack);
+    //     // return () => {
+    //     //   window.removeEventListener("popstate", setVisible(false));
+    //     // };
+    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // const onBrowserBack = (e) => {
+    //     e.preventDefault();
+    //     alert("No backsies!")
+    //     // if (!visible) {
+    //     //   setVisible(true);
+    //     // }
+    //     // else {
+    //     //   setVisible(false);
+    //     // };
+    // }
+
+    // useEffect(() => {
+    //     // code here would fire when the page loads, equivalent to `componentDidMount`.
+    //     return () => {
+    //         // code after the return is equivalent to `componentWillUnmount`
+    //         if (History.action === "POP") {
+    //             // handle any state changes necessary to set the screen display back one page.
+    //         }
+    //     }
+    // })
+
+
 
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 2];
@@ -150,7 +192,9 @@ const Apply = () => {
                                 {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
                             </UserInfoDesktop>
                         </UserInfoContainer>
-                                            <PositionApplicationForm></PositionApplicationForm>
+                        <PositionApplicationForm
+                            orgName={name}
+                        ></PositionApplicationForm>
                         {/* <PositionSubmitButton></PositionSubmitButton> */}
                     </PositionsContainer >
                 </ProfileLayout>
