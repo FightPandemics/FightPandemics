@@ -1081,7 +1081,6 @@
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Close"
   },
-<<<<<<< HEAD
   "positions": {
     "applicationSubmitted": "Application Submitted!",
     "applicationReceived": "Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.",
@@ -1092,7 +1091,7 @@
     "submitButton": "Submit",
     "submitModal": "SUBMIT",
     "cancelModal": "CANCEL"
-=======
+  },
   "nearestHsp": {
     "noResults": "No Results",
     "tryAdjusting": "Try adjusting your type of health facilities or location.",
@@ -1119,6 +1118,5 @@
     "forDirAndMore": "For directions and more info",
     "localEmergencyNumber": "Local emergency number",
     "forMoreResults": "Show more search results..."
->>>>>>> origin/staging
   }
 }
