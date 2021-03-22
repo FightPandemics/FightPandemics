@@ -87,7 +87,17 @@ const PostContent = ({
                 </StyledDropDown>
               </StyledCardHeader>
               <StyledTitlePostCard>{post.title}</StyledTitlePostCard>
-              <Link to={`/post/${post._id}`}>
+              <Link
+                to={{
+                  pathname: `/post/${post._id}`,
+                  state: {
+                    post: post,
+                    postId: post._id,
+                    from: window.location.href,
+                    user,
+                  },
+                }}
+              >
                 <StyledDescription>{finalContent}</StyledDescription>
               </Link>
               <LineBreak />
