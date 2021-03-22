@@ -2,7 +2,7 @@ import applicationConfirmation from "assets/icons/application-received.svg";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 import { CharCounter, ErrorMsg, InputField, InputWrapper, OuterWrapper } from "components/Positions/ApplyFormInput";
 import PositionsButton from "components/Positions/PositionsButton";
-import PositionSubmitButton, { ApplyModal, ButtonsContainer, StyledCancelButton, StyledContainer, StyledSubmitButton } from "components/Positions/PositionSubmitButton";
+import PositionSubmitButton, { ApplyModal, ButtonsContainer, StyledCancelButton, StyledContainer, StyledSubmitButton } from "components/Positions/ApplicationModalStyles";
 import PositionSubmitModal from "components/Positions/PositionSubmitModal";
 import { mq } from "constants/theme";
 import React, { useState } from "react";
@@ -242,7 +242,6 @@ const PositionApplicationForm = ({ orgName }) => {
       </ApplyModal>
 
       <Footer>
-        <PositionSubmitButton></PositionSubmitButton>
         <Submit
           primary="true"
           onClick={handleSubmit}

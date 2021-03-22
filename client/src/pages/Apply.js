@@ -37,7 +37,7 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
-import PositionSubmitButton from "components/Positions/PositionSubmitButton";
+import PositionSubmitButton from "components/Positions/ApplicationModalStyles";
 import PositionApplicationForm from "components/Positions/PositionApplicationForm";
 // import History from "client/src/utils/history";
 
