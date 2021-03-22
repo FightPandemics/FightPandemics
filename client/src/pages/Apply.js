@@ -39,10 +39,14 @@ import {
 } from "../components/Profile/ProfileComponents";
 import PositionSubmitButton from "components/Positions/PositionSubmitButton";
 import PositionApplicationForm from "components/Positions/PositionApplicationForm";
+// import History from "client/src/utils/history";
 
 
 
 const Apply = () => {
+
+
+
 
 
     // useEffect(() => {
@@ -61,7 +65,7 @@ const Apply = () => {
 
     // const onBrowserBack = (e) => {
     //     e.preventDefault();
-
+    //     alert("No backsies!")
     //     // if (!visible) {
     //     //   setVisible(true);
     //     // }
@@ -70,7 +74,15 @@ const Apply = () => {
     //     // };
     // }
 
-
+    // useEffect(() => {
+    //     // code here would fire when the page loads, equivalent to `componentDidMount`.
+    //     return () => {
+    //         // code after the return is equivalent to `componentWillUnmount`
+    //         if (History.action === "POP") {
+    //             // handle any state changes necessary to set the screen display back one page.
+    //         }
+    //     }
+    // })
 
 
 
