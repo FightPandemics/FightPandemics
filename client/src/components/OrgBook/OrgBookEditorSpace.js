@@ -100,6 +100,7 @@ const OrgBookEditorSpace = (props) => {
     PAGE_CATEGORIES,
     UPDATE_ACTION_TYPES,
     onUpdateAction,
+    livePageExists,
   } = props;
   const { t } = useTranslation();
   const tinyMce = useRef();
@@ -227,10 +228,16 @@ const OrgBookEditorSpace = (props) => {
       <OrgBookEditorSpaceFooter>
         <FooterDeleteDraftContainer>
           {selectedPage &&
+          livePageExists === false &&
           selectedPage.status === PAGE_CATEGORIES.draftCategory ? (
             <Link
               onClick={() => {
-                console.log("clicked delete draft");
+                onUpdateAction(
+                  UPDATE_ACTION_TYPES.deleteDraftType,
+                  selectedPage.pageId,
+                  tinyMce.current.getContent(),
+                  numberOfCharacters,
+                );
               }}
               to="#"
             >

@@ -465,7 +465,10 @@
     "confirmUnpublishPrompt": "Unpublish live page: {{pageName}}? Unpublishing will remove this live page.",
     "confirmUnpublishOptionText": "Would you like to:",
     "confirmUnpublishOption1": "Leave the current content of draft page as is.",
-    "confirmUnpublishOption2": "Replace the current content of draft page with this live page content."
+    "confirmUnpublishOption2": "Replace the current content of draft page with this live page content.",
+    "confirmDeleteTitle": "Delete Draft Page",
+    "confirmDeleteOkText": "Delete",
+    "confirmDeletePrompt": "Delete draft page: {{pageName}}?"
   },
   "auth": {
     "signIn": "Sign In",

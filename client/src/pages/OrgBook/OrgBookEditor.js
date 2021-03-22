@@ -51,6 +51,7 @@ const UPDATE_ACTION_TYPES = {
   renamePageType: "renamePage",
   publishType: "publish",
   unpublishType: "unpublish",
+  deleteDraftType: "deleteDraft",
 };
 
 const UNPUBLISH_OPTIONS = {
@@ -365,17 +366,6 @@ const OrgBookEditor = () => {
     editedpageContent,
     numberOfCharacters,
   ) => {
-    // console.log(
-    //   "action: " +
-    //     action +
-    //     ", editedPageId: " +
-    //     editedPageId +
-    //     ", editedpageContent: " +
-    //     editedpageContent +
-    //     ", no of chars: " +
-    //     numberOfCharacters,
-    // );
-    //setPageId(editedPageId);
     setMaxContentExceeded(false);
     setMinContentNotMet(false);
     selectedPage.content = editedpageContent;
@@ -408,12 +398,17 @@ const OrgBookEditor = () => {
         setRenamePageFormVisible(true);
         break;
 
+      case UPDATE_ACTION_TYPES.deleteDraftType:
+        setCurrentUpdateAction(action);
+        setConfirmModalVisible(true);
+        break;
+
       default:
         break;
     }
   };
 
-  const handleOnConfirm = (action, unpublishOption = null) => {
+  const handleOnConfirm = async (action, unpublishOption = null) => {
     let orgBookPages = {};
 
     switch (action) {
@@ -432,13 +427,7 @@ const OrgBookEditor = () => {
         break;
 
       case UPDATE_ACTION_TYPES.unpublishType:
-        const draftPageExists = currentOrgBookPages.some(
-          (page) =>
-            page.pageGroupNumber == selectedPage.pageGroupNumber &&
-            page.status === PAGE_CATEGORIES.draftCategory,
-        )
-          ? true
-          : false;
+        const draftPageExists = draftPageExistsForSelectedPage();
 
         if (!draftPageExists) {
           //if no draft exists, change status of live page to draft and keep content as is
@@ -454,10 +443,16 @@ const OrgBookEditor = () => {
             //If the content is the same on live and draft, just remove live page and keep draft content as is
             unpublishRemoveLive();
           } else {
-            //If the content is different on live and draft, leave or replace draft content as user choose
+            //If the content is different on live and draft, leave or replace draft content for option user chose
             unpublishHandleOption(unpublishOption);
           }
         }
+
+        break;
+
+      case UPDATE_ACTION_TYPES.deleteDraftType:
+        orgBookPages = deleteSelectedPage(orgBookPages);
+        await updateOrgBookAndCheckForReturn(orgBookPages);
 
         break;
 
@@ -466,6 +461,20 @@ const OrgBookEditor = () => {
     }
     setConfirmModalVisible(false);
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
+  };
+
+  const updateOrgBookAndCheckForReturn = async (orgBookPages) => {
+    await updateOrgBookPages(orgBookPages);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        setConfirmModalVisible(false);
+        setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
+        if (orgBookPages.orgBookPages.length == 0) {
+          history.push(`/organisation/${organisation._id}`);
+        }
+        resolve(null);
+      }, 200);
+    });
   };
 
   const replaceContentForSelectedPage = (orgBookPages) => {
@@ -490,15 +499,43 @@ const OrgBookEditor = () => {
     return orgBookPages;
   };
 
-  const saveLivePageForPublish = (updatedOrgBookPages) => {
-    let orgBookPages = {};
-    const livePageExists = currentOrgBookPages.some(
+  const livePageExistsForSelectedPage = () => {
+    if (
+      !currentOrgBookPages ||
+      currentOrgBookPages.length === 0 ||
+      !selectedPage
+    ) {
+      return false;
+    }
+    return currentOrgBookPages.some(
       (page) =>
         page.pageGroupNumber == selectedPage.pageGroupNumber &&
         page.status === PAGE_CATEGORIES.liveCategory,
     )
       ? true
       : false;
+  };
+
+  const draftPageExistsForSelectedPage = () => {
+    if (
+      !currentOrgBookPages ||
+      currentOrgBookPages.length === 0 ||
+      !selectedPage
+    ) {
+      return false;
+    }
+    return currentOrgBookPages.some(
+      (page) =>
+        page.pageGroupNumber == selectedPage.pageGroupNumber &&
+        page.status === PAGE_CATEGORIES.draftCategory,
+    )
+      ? true
+      : false;
+  };
+
+  const saveLivePageForPublish = (updatedOrgBookPages) => {
+    let orgBookPages = {};
+    const livePageExists = livePageExistsForSelectedPage();
 
     if (!livePageExists) {
       const newOrgBookPage = getNewOrgBookPage(
@@ -624,6 +661,19 @@ const OrgBookEditor = () => {
     }
   };
 
+  const deleteSelectedPage = (orgBookPages) => {
+    const oldOrgBookPages = [...currentOrgBookPages];
+    const newOrgBookPages = oldOrgBookPages.filter(
+      (page) => page.pageId !== selectedPage.pageId,
+    );
+    orgBookPages = {
+      orgBookPages: newOrgBookPages,
+    };
+    setCurrentOrgBookPages(newOrgBookPages);
+    setSelectedPage(null);
+    return orgBookPages;
+  };
+
   const handleOnCancelConfirm = () => {
     setConfirmModalVisible(false);
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
@@ -653,6 +703,9 @@ const OrgBookEditor = () => {
   };
 
   const renderEditorSpace = () => {
+    const livePageExists = selectedPage
+      ? livePageExistsForSelectedPage()
+      : false;
     if (organisation) {
       return (
         <OrgBookEditorSpace
@@ -661,30 +714,20 @@ const OrgBookEditor = () => {
           PAGE_CATEGORIES={PAGE_CATEGORIES}
           UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
           onUpdateAction={handleUpdateAction}
+          livePageExists={livePageExists}
         ></OrgBookEditorSpace>
       );
     }
   };
 
   const renderConfirmModal = () => {
-    const livePageExists = currentOrgBookPages.some(
-      (page) =>
-        page.pageGroupNumber == selectedPage.pageGroupNumber &&
-        page.status === PAGE_CATEGORIES.liveCategory,
-    )
-      ? true
-      : false;
+    const livePageExists = livePageExistsForSelectedPage();
 
     const showUnpublishOptions = () => {
       if (currentUpdateAction !== UPDATE_ACTION_TYPES.unpublishType)
         return false;
-      const draftPageExists = currentOrgBookPages.some(
-        (page) =>
-          page.pageGroupNumber == selectedPage.pageGroupNumber &&
-          page.status === PAGE_CATEGORIES.draftCategory,
-      )
-        ? true
-        : false;
+
+      const draftPageExists = draftPageExistsForSelectedPage();
 
       if (!draftPageExists) return false;
       if (draftPageExists) {

@@ -21,7 +21,7 @@ const OrgBookConfirmModal = ({
   let title = "";
   let okText = "";
   let confirmPrompt = "";
-  let pageName = selectedPage.name;
+  let pageName = selectedPage?.name;
   let unpublishOption1 = "";
   let unpublishOption2 = "";
   let unpublishOptionText = "";
@@ -56,6 +56,12 @@ const OrgBookConfirmModal = ({
         unpublishOption2 = t("orgBook.confirmUnpublishOption2");
         unpublishOptionText = t("orgBook.confirmUnpublishOptionText");
       }
+      break;
+
+    case UPDATE_ACTION_TYPES.deleteDraftType:
+      title = t("orgBook.confirmDeleteTitle");
+      okText = t("orgBook.confirmDeleteOkText");
+      confirmPrompt = t("orgBook.confirmDeletePrompt", { pageName });
       break;
 
     default:
