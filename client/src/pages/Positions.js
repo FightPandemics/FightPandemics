@@ -19,7 +19,7 @@ import {
     fetchUserSuccess
 } from "hooks/actions/userActions";
 import React, {
-    useContext, useEffect, useRef
+    useContext, useEffect
 } from "react";
 import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -35,6 +35,7 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
+import { Link } from "react-router-dom";
 
 const Positions = () => {
 
@@ -45,7 +46,6 @@ const Positions = () => {
     );
     const { error, loading, organisation } = orgProfileState;
     const {
-        userProfileState: { user },
         userProfileDispatch,
     } = useContext(UserContext);
     const { t } = useTranslation();
@@ -54,14 +54,6 @@ const Positions = () => {
         location = {},
         about = "",
     } = organisation || {};
-
-    function usePrevious(value) {
-        const ref = useRef();
-        useEffect(() => {
-            ref.current = value;
-        });
-        return ref.current;
-    }
 
     useEffect(() => {
         (async function fetchOrgProfile() {
@@ -158,7 +150,11 @@ const Positions = () => {
                         </PositionDescription >
                         {//Button will connect applications page
                         }
-                        <ApplyButton>{t("positions.apply")}</ApplyButton>
+                        <Link
+                            to={`/organisation/${organisationId}/apply`}
+                        >
+                            <ApplyButton>{t("positions.apply")}</ApplyButton>
+                        </Link>
                     </PositionsContainer >
                 </ProfileLayout>
             </>
