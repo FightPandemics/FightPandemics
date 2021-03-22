@@ -22,6 +22,12 @@ import SubmitButton from "components/Button/SubmitButton";
 import PolicyModal from "components/PolicyPages/PolicyModal"
 import AutoSize from "components/Input/AutoSize";
 import { Button } from "antd";
+import PositionSubmitButton from "components/Positions/PositionSubmitButton";
+
+import { ApplyModal, StyledContainer, ButtonsContainer, StyledCancelButton, StyledSubmitButton } from "components/Positions/PositionSubmitButton";
+import PositionSubmitModal from "components/Positions/PositionSubmitModal";
+import applicationConfirmation from "assets/icons/application-received.svg";
+import PositionsButton from "components/Positions/PositionsButton"
 
 // // Icons
 // import { ReactComponent as BackIcon } from "assets/icons/back-black.svg";
@@ -363,7 +369,7 @@ const initialState = {
 const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   const { t } = useTranslation();
   // const { form } = useContext(CreatePostContext);
-
+  // const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState(initialState.formData);
 
   const [errors, setErrors] = useState(initialState.errors);
@@ -383,6 +389,11 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
   // const [count, setCount] = useState(initialState.formData);
   const handleFormData = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
+
+    if (errors.includes(field) && formData[field]) {
+      const newErrors = errors.filter((error) => error !== field);
+      setErrors(newErrors);
+    }
     // setFormData({ ...formData, count: { [field]: 0 + e.target.value } });
 
     // if (!errors) {
@@ -432,17 +443,32 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
       }
     }
     setErrors([...errors, ...newErrors]);
+
   };
 
-  const handleSubmit = async (field) => {
-    // setCurrentStep(2);
+  //handleSubmit was an ASYNC functin
 
-    if (errors.includes(field) && formData[field]) {
-      const newErrors = errors.filter((error) => error !== field);
-      setErrors(newErrors);
-    }
-    field.preventDefault();
-    populateErrors();
+  const handleSubmit = (field) => {
+    // setCurrentStep(2);
+    const formErrors = errors
+    // if (errors.includes(field) && formData[field]) {
+    //   const newErrors = errors.filter((error) => error !== field);
+    //   setErrors(newErrors);
+    // }
+
+    // field.preventDefault();
+    if (!formData.props) { populateErrors(); }
+    if (formData.question1 && formData.question2) { showPopUp(); }
+
+
+
+
+
+    // { setErrors(initialState.errors); showPopUp() }
+
+
+    // else {showPopUp()}
+    // return
 
     // const payload = formDataToPost(formData);
     // if (form.organisationId) payload.actorId = form.organisationId;
@@ -456,6 +482,32 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
     //     console.log(error);
     //   }
     // }
+  };
+
+  // const { t } = useTranslation();
+  const [visible, setVisible] = useState(false);
+  const [visibleTwo, setVisibleTwo] = useState(false);
+
+  const handleCancel = async (e) => {
+    setVisible(false);
+  };
+
+  const showPopUp = async (e) => {
+
+    setVisible(true);
+  };
+
+  const handleClick = (e) => {
+    console.log("submit")
+  };
+  const handleCancelTwo = async (e) => {
+
+    setVisibleTwo(false);
+  };
+
+  const showPopUpTwo = async (e) => {
+    handleCancel()
+    setVisibleTwo(true);
   };
   return (
     <>
@@ -489,6 +541,7 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
         <ErrorMsg
           className="has-error"
         >{renderError("question1")}</ErrorMsg>
+
         <LabelContainer
           className={renderError("question2") ? "asterisk" : ""}
         >
@@ -516,6 +569,34 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
           </CharCounter>
         </InputWrapper>
         <ErrorMsg className="has-error">{renderError("question2")}</ErrorMsg>
+
+        <LabelContainer
+          className={renderError("question3") ? "asterisk" : ""}
+        >
+          <ApplyFormLabel
+            label={t("orgJoinQ.question3") + "?"}
+          />
+        </LabelContainer>
+        <InputWrapper
+          className={
+            formData.question3.length > 250 ? "has-error" : ""}
+        >
+          <InputField
+            id="question3"
+            name="question3"
+            onChange={handleFormData("question3")}
+            value={formData.question2}
+            renderError={renderError}
+            formData={formData}
+
+          />
+          <CharCounter
+            className={formData.question3.length > 250 ? "has-error" : ""}
+          >
+            {formData.question3.length} / {250}
+          </CharCounter>
+        </InputWrapper>
+        <ErrorMsg className="has-error">{renderError("question3")}</ErrorMsg>
       </OuterWrapper>
       {/* <Second
         addTag={addTag}
@@ -532,7 +613,87 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
         formData={formData}
         onWorkModeChange={(val) => handleSelectorChange("workMode", val)}
       /> */}
+      <ApplyModal
+        style={{ border: "3rem" }}
+        //set to true for testing, normally handled by {visible}
+        visible={visible}
+        width={564}
+        footer={null}
+        centered={true}
+        onCancel={handleCancel}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        closable={false}
+      >
+        <StyledContainer>
+          <h2>{t("positions.submitApplication")}</h2>
+          <p>Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.</p>
+          <ButtonsContainer>
+            <StyledCancelButton onClick={handleCancel}>
+              {t("positions.cancelModal")}
+            </StyledCancelButton>
+            <StyledSubmitButton
+              onClick={showPopUpTwo}
+            // onClick={onClick}
+            >
+              {t("positions.submitModal")}
+            </StyledSubmitButton>
+          </ButtonsContainer>
+        </StyledContainer>
+      </ApplyModal>
+      {/* <LinkButton
+        id={getGTM("getInvolved")}
+        type="primary"
+        shape="round"
+        onClick={showPopUpTwo}
+      >
+        {"Application Submitted"}
+      </LinkButton> */}
+      {/* <Modal
+        style={{ border: "3rem" }}
+        visible={visibletwo}
+        width={564}
+        footer={null}
+        centered={true}
+        onCancel={handleCancelTwo}
+      >
+        <StyledContainer>
+          <h2>Application Submitted</h2>
+          <br></br>
+          <p>Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.</p>
+          <LinkButton>Okay</LinkButton>
+        </StyledContainer>
+      </Modal> */}
+
+      {/* Seperate Modal Component */}
+
+
+      <ApplyModal
+        style={{ border: "3rem" }}
+        // visibility set to true for testing, logic to be based on previous submit button on modal
+        visible={visibleTwo}
+        // width={"3rem"}
+        footer={null}
+        centered={true}
+        onCancel={handleCancelTwo}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        closable={false}
+      >
+        <PositionSubmitModal>
+          <img src={applicationConfirmation} alt="" />
+          <h2>{t("positions.applicationSubmitted")}</h2>
+          <p>{t("positions.applicationReceived")}</p>
+          <PositionsButton
+            onClick={handleCancelTwo}
+          >
+            {t("positions.okay")}
+          </PositionsButton>
+        </PositionSubmitModal>
+      </ApplyModal>
+
+
+
       <Footer>
+        <PositionSubmitButton></PositionSubmitButton>
         <Submit
           primary="true"
           onClick={handleSubmit}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Modal } from "antd";
 import LinkButtonNarrow from "components/Button/LinkButtonNarrow";
 import styled from "styled-components";
@@ -7,10 +8,11 @@ import { Column } from "react-virtualized";
 import PositionSubmitModal from "components/Positions/PositionSubmitModal";
 import PositionsButton from "components/Positions/PositionsButton"
 import applicationConfirmation from "assets/icons/application-received.svg";
+
 const { colors, typography } = theme;
 const { display, body } = theme.typography.font.family;
 
-const StyledContainer = styled.section`
+export const StyledContainer = styled.section`
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -46,7 +48,7 @@ const StyledContainer = styled.section`
   
 `;
 
-const StyledCancelButton = styled.button`
+export const StyledCancelButton = styled.button`
   font-family: 'Poppins';
   font-size: 1.6rem;
   padding: 0;
@@ -61,7 +63,7 @@ const StyledCancelButton = styled.button`
   color: Blue;
 `;
 
-const StyledSubmitButton = styled.button`
+export const StyledSubmitButton = styled.button`
   font-family: 'Poppins';
   font-size: 1.6rem;
   font-weight: 600;
@@ -78,7 +80,7 @@ const StyledSubmitButton = styled.button`
   justify-self: flex-start;
 `;
 
-const ConfirmationButton = styled.button`
+export const ConfirmationButton = styled.button`
   font-size: 1.6rem;
   padding: 0;
   position:absolute;
@@ -91,20 +93,22 @@ const ConfirmationButton = styled.button`
   color: Blue;
 `;
 
-const ApplyModal = styled(Modal)`
+export const ApplyModal = styled(Modal)`
   margin-bottom: 20rem;
   border-radius: 10rem !important;
 `;
 
-const ButtonsContainer = styled.div`
+export const ButtonsContainer = styled.div`
 display: flex;
 justify-content: flex-end;
 gap: 1.8rem;
 `;
 
-const PositionSubmitButton = ({ getGTM, t, props }) => {
+const PositionSubmitButton = ({ showPopUpTwo, onClick, getGTM, props }) => {
 
-  // 't' comes from 'AboutUs' scope for translation
+  // 't' from above comes from 'AboutUs' scope for translation
+
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [visibleTwo, setVisibleTwo] = useState(false);
 
@@ -125,10 +129,12 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
     setVisibleTwo(false);
   };
 
-  const showPopUpTwo = async (e) => {
-    handleCancel()
-    setVisibleTwo(true);
-  };
+  // const showPopUpTwo = async (e) => {
+  //   handleCancel()
+  //   setVisibleTwo(true);
+  // };
+
+
   return (
     <>
       {/* <LinkButtonNarrow
@@ -158,7 +164,10 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
             <StyledCancelButton onClick={handleCancel}>
               {t("positions.cancelModal")}
             </StyledCancelButton>
-            <StyledSubmitButton onClick={showPopUpTwo}>
+            <StyledSubmitButton 
+            onClick={showPopUpTwo}
+            // onClick={onClick}
+            >
               {t("positions.submitModal")}
             </StyledSubmitButton>
           </ButtonsContainer>

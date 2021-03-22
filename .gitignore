@@ -12,3 +12,4 @@ cypresse2e/cypress/videos
 docker-compose.override.yml
 **/yarn.lock
 client/src/components/Input/FormInput ORIGINAL.js
+client/src/components/Positions/PositionApplicationForm - Original.js

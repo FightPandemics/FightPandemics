@@ -280,9 +280,6 @@ const AboutUs = () => {
         <p>{t("community")}</p>
         <GetInvButton getGTM={getGTM} t={t} />
       </ImageContainer>
-      {/* <PositionSubmitButton
-        getGTM={getGTM} t={t}
-      ></PositionSubmitButton> */}
 
       <ConnectContainer>
         <FlexBox justify="center">
