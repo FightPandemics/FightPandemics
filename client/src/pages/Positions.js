@@ -1,7 +1,7 @@
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
-import ApplyButton from "components/Positions/PositionsButton";
+import ApplyButton, { ApplyContainer } from "components/Positions/PositionsButton";
 import ProfilePic from "components/Positions/ProfilePic";
 import {
     OrganisationContext,
@@ -157,7 +157,7 @@ const Positions = () => {
                         </PositionDescription >
                         {//Button will connect applications page
                         }
-                        <ApplyButton>{t("positions.apply")}</ApplyButton>
+                        <ApplyContainer><ApplyButton>{t("positions.apply")}</ApplyButton></ApplyContainer>
                     </PositionsContainer >
                 </ProfileLayout>
             </>

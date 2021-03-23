@@ -3,6 +3,10 @@ import BaseButton from "components/Button/BaseButton";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
+export const JoinOrgContainer = styled.div`
+  max-width: 33.4rem;
+  margin: auto;
+`;
 const JoinOrgBtn = styled(BaseButton)`
   border-radius: 4.6rem;
   background-color: ${theme.colors.royalBlue};
@@ -14,8 +18,9 @@ const JoinOrgBtn = styled(BaseButton)`
   margin: auto;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-  width: fit-content;
-  margin: auto;
+    width:fit-content;
+    
+  }
  `;
 
 const GtmContainer = styled.span`
