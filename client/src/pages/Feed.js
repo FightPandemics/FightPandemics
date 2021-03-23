@@ -620,38 +620,38 @@ const Feed = (props) => {
     setQueryFromState();
   }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // useEffect(() => {
-  //   if (typeof queryParams.s_keyword !== "undefined") {
-  //     setQueryKeysValue(history, {
-  //       location: null,
-  //       near_me: false,
-  //     });
-  //     dispatchAction(SET_VALUE, "location", null);
-  //     setSortValue("relevance");
-  //   } else if (location) {
-  //     if (ignoreUserLocation) {
-  //       setQueryKeysValue(history, {
-  //         near_me: false,
-  //       });
-  //     }
-  //     setSortValue("proximity-location");
-  //   } else if (!ignoreUserLocation) {
-  //     if (location) {
-  //       setQueryKeysValue(history, {
-  //         location: null,
-  //       });
-  //     }
-  //     dispatchAction(SET_VALUE, "location", null);
-  //     setSortValue("proximity-near");
-  //   } else if (
-  //     sortValue !== "views" &&
-  //     sortValue !== "shares" &&
-  //     sortValue !== "likes"
-  //   ) {
-  //     setSortValue("createdAt");
-  //   }
-  //   console.log(history.location);
-  // }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (typeof queryParams.s_keyword !== "undefined") {
+      setQueryKeysValue(history, {
+        location: null,
+        near_me: false,
+      });
+      dispatchAction(SET_VALUE, "location", null);
+      setSortValue("relevance");
+    } else if (location) {
+      if (ignoreUserLocation) {
+        setQueryKeysValue(history, {
+          near_me: false,
+        });
+      }
+      setSortValue("proximity-location");
+    } else if (!ignoreUserLocation) {
+      if (location) {
+        setQueryKeysValue(history, {
+          location: null,
+        });
+      }
+      dispatchAction(SET_VALUE, "location", null);
+      setSortValue("proximity-near");
+    } else if (
+      sortValue !== "views" &&
+      sortValue !== "shares" &&
+      sortValue !== "likes"
+    ) {
+      setSortValue("createdAt");
+    }
+    console.log(history.location);
+  }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
