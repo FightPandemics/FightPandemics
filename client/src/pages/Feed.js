@@ -623,7 +623,6 @@ const Feed = (props) => {
         location: null,
         near_me: false,
       });
-      dispatchAction(SET_VALUE, "location", null);
       setSortValue("relevance");
     } else if (location) {
       if (ignoreUserLocation) {
@@ -637,7 +636,6 @@ const Feed = (props) => {
         setQueryKeysValue(history, {
           location: null,
         });
-        dispatchAction(SET_VALUE, "location", null);
       }
       setSortValue("proximity-near");
     } else if (
