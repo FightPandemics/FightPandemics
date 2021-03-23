@@ -49,6 +49,13 @@ const individualUserSchema = new Schema(
       type: Number,
       required: true,
       default: ROLES.user,
+    },
+    //populate with organisation ID when a 
+    //user becomes member on acceptance from org owner or admin
+    memberOf: {
+      required: false,
+      type: [String],
+      default: [],
     }
   },
   { collection: "users" },

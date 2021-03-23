@@ -24,6 +24,11 @@ const organisation = {
     .prop("playStore", S.string())
     .prop("twitter", S.string())
     .prop("website", S.string()),
+  isJoinOrg: S.boolean(),
+  orgBookLink: S.string(),
+  positions: S.object()
+    .prop("name", S.string())
+    .prop("description", S.string()),
 };
 
 const createOrganisationSchema = {
@@ -39,6 +44,9 @@ const createOrganisationSchema = {
     .prop("type", organisation.type.required())
     .prop("urls", organisation.urls)
     .prop("notifyPrefs", notifyPreferenceSchema)
+    .prop("isJoinOrg", organisation.isJoinOrg)
+    .prop("orgBookLink", organisation.orgBookLink)
+    .prop("positions", organisation.positions)
     .required(["location"]),
 };
 
@@ -80,7 +88,10 @@ const updateOrganisationSchema = {
     .prop("needs", organisation.needs)
     .prop("type", organisation.type)
     .prop("urls", organisation.urls)
-    .prop("notifyPrefs", notifyPreferenceSchema),
+    .prop("notifyPrefs", notifyPreferenceSchema)
+    .prop("isJoinOrg", organisation.isJoinOrg)
+    .prop("orgBookLink", organisation.orgBookLink)
+    .prop("positions", organisation.positions),
   params: strictSchema().prop("organisationId", S.string().required()),
 };
 

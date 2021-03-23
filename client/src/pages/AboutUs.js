@@ -95,6 +95,7 @@ import facebookLogo from "assets/icons/social-fb.svg";
 import twitterLogo from "assets/icons/social-tw.svg";
 
 import GTM from "constants/gtm-tags";
+import PositionSubmitButton from "components/Positions/PositionSubmitButton"
 
 const getGTM = (id) => {
   return `${GTM?.aboutUs?.prefix}${GTM?.aboutUs?.[id]}`;
@@ -280,6 +281,9 @@ const AboutUs = () => {
         <p>{t("community")}</p>
         <GetInvButton getGTM={getGTM} t={t} />
       </ImageContainer>
+      {/* <PositionSubmitButton
+        getGTM={getGTM} t={t}
+      ></PositionSubmitButton> */}
 
       <ConnectContainer>
         <FlexBox justify="center">
