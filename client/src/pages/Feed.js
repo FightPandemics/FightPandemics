@@ -337,7 +337,6 @@ const Feed = (props) => {
     if (e.target.checked) {
       setQueryKeysValue(history, {
         s_keyword: null,
-        s_category: null,
         location: null,
         near_me: e.target.checked,
       });
@@ -382,7 +381,6 @@ const Feed = (props) => {
     if (value) {
       setQueryKeysValue(history, {
         s_keyword: null,
-        s_category: null,
         near_me: false,
       });
       dispatchAction(SET_VALUE, "location", value);
@@ -735,7 +733,6 @@ const Feed = (props) => {
   const handleSortDropdown = (value) => {
     setQueryKeysValue(history, {
       s_keyword: null,
-      s_category: null,
       location: null,
       near_me: false,
     });
