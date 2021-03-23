@@ -99,7 +99,7 @@ import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
-import JoinOrgButton from "components/OrganisationProfile/JoinOrgButton";
+import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
 const URLS = {
@@ -492,20 +492,22 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           <WhiteSpace />
           {// Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }
-          <Link
-            onClick={
-              () => sessionStorage.setItem("postredirect", window.location.pathname)
-            }
-            to={isAuthenticated ? `/organisation/${organisationId}/positions` :
-              {
-                pathname: LOGIN,
-                state: { from: window.location.pathname },
-              }}>
-            <JoinOrgButton
-              id={GTM.organisation.joinOrg}>
-              {t("profile.individual.joinOrg") + ` ${name}`}
-            </JoinOrgButton>
-          </Link>
+          <JoinOrgContainer>
+            <Link
+              onClick={
+                () => sessionStorage.setItem("postredirect", window.location.pathname)
+              }
+              to={isAuthenticated ? `/organisation/${organisationId}/positions` :
+                {
+                  pathname: LOGIN,
+                  state: { from: window.location.pathname },
+                }}>
+              <JoinOrgButton
+                id={GTM.organisation.joinOrg}>
+                {t("profile.individual.joinOrg") + ` ${name}`}
+              </JoinOrgButton>
+            </Link>
+          </JoinOrgContainer>
           <div>
             <SectionHeader>
               {t("profile.org.activity")}
