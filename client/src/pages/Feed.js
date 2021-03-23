@@ -380,7 +380,6 @@ const Feed = (props) => {
       setQueryKeysValue(history, { location: null });
     }
     if (value) {
-      console.log("in location value");
       setQueryKeysValue(history, {
         s_keyword: null,
         s_category: null,
