@@ -1,11 +1,10 @@
-import React, { useState } from "react";
 import { Modal } from "antd";
-import LinkButtonNarrow from "components/Button/LinkButtonNarrow";
-import styled from "styled-components";
-import { mq, theme } from "constants/theme";
-import { Column } from "react-virtualized";
-import PositionSubmitModal from "components/Positions/PositionSubmitModal";
 import applicationConfirmation from "assets/icons/application-received.svg";
+import LinkButtonNarrow from "components/Button/LinkButtonNarrow";
+import { PositionSubmitModal } from "components/Positions/PositionSubmitModal";
+import { theme } from "constants/theme";
+import React, { useState } from "react";
+import styled from "styled-components";
 const { lighterBlack } = theme.colors;
 const { lightGrey } = theme.colors;
 const { display, body } = theme.typography.font.family;
