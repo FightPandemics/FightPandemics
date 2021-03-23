@@ -360,6 +360,7 @@ const Profile = ({
 
           const modeURL = `&postMode=${mode}`;
           const endpoint = `${baseURL}${objURL}${modeURL}`;
+
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
