@@ -337,7 +337,6 @@ const Feed = (props) => {
     if (e.target.checked) {
       setQueryKeysValue(history, {
         s_keyword: null,
-        s_category: null,
         location: null,
         near_me: e.target.checked,
       });
@@ -382,7 +381,6 @@ const Feed = (props) => {
     if (value) {
       setQueryKeysValue(history, {
         s_keyword: null,
-        s_category: null,
         near_me: false,
       });
       dispatchAction(SET_VALUE, "location", value);
@@ -489,10 +487,6 @@ const Feed = (props) => {
       }
     };
     const searchKeyword = queryParams.s_keyword;
-    const limit = PAGINATION_LIMIT;
-    const skip = page * limit;
-    let baseURL = gePostsBasetUrl(organisationId, limit, skip);
-
     const sortQuery = () => {
       if (
         sortValue === "proximity-location" ||
@@ -509,6 +503,9 @@ const Feed = (props) => {
         return `&sort=${sortValue}`;
       }
     };
+    const limit = PAGINATION_LIMIT;
+    const skip = page * limit;
+    let baseURL = gePostsBasetUrl(organisationId, limit, skip);
     // ${searchURL()}&ignoreUserLocation=${ignoreUserLocation}
     switch (queryParams.s_category) {
       case "POSTS":
@@ -736,7 +733,6 @@ const Feed = (props) => {
   const handleSortDropdown = (value) => {
     setQueryKeysValue(history, {
       s_keyword: null,
-      s_category: null,
       location: null,
       near_me: false,
     });

@@ -10,12 +10,12 @@
     "question": "Question",
     "aboutUs": "About Us",
     "profile": "Profile",
-    "addOrg": "Add Organisation",
+    "addOrg": "Add Organization",
     "logout": "Sign Out",
-    "organisations": "Organisations",
+    "organisations": "Organizations",
     "language": "Language",
     "switchAccount": "Switch Account",
-    "myOrganisation": "My Organisations",
+    "myOrganisation": "My Organizations",
     "willRefresh": "The current page will refresh.",
     "stayOnPageHeader": "Stay on the current page?",
     "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
@@ -51,7 +51,7 @@
       "howContribute": "How do you want to contribute?",
       "volunteer": "As a Volunteer",
       "donorInvestor": "As a Donor/Investor",
-      "organisation": "As an Organisation"
+      "organisation": "As an Organization"
     }
   },
   "feed": {
@@ -95,11 +95,11 @@
         "Funding",
         "R&D",
         "Tech",
-        "Other",
-        "Childcare",
-        "Translations",
-        "Volunteer",
-        "Staff (paid)",
+        "Övrigt",
+        "Barnomsorg",
+        "Översättningar",
+        "Volontär",
+        "Personal (betald)",
         "Remote Work"
       ],
       "labels": {
@@ -133,27 +133,27 @@
         "R&D": "R&D",
         "Tech": "Tech",
         "Other": "Others",
-        "Housing": "Housing",
-        "Childcare": "Childcare",
-        "Translations": "Translations",
-        "Volunteer": "Volunteer",
-        "Staff (paid)": "Staff (paid)",
+        "Housing": "Bostäder",
+        "Childcare": "Barnomsorg",
+        "Translations": "Översättningar",
+        "Volunteer": "Volontär",
+        "Staff (paid)": "Personal (betald)",
         "Remote Work": "Remote Work"
       },
       "lookingForOptions": {
         "Request Help": "Requesting Help",
         "Offer Help": "Offering Help"
       },
-      "postsNearMe": "Show results near me"
+      "postsNearMe": "Visa resultat nära mig"
     },
     "filterBy": "Filter by",
     "noResults": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
     "allPosts": "All posts",
     "allPeople": "All people",
-    "allOrgs": "All organisations",
+    "allOrgs": "All organizations",
     "noResultsPosts": "Sorry, there are currently no relevant posts available. Please try using a different filter search or <0>create a post</0>.",
     "noResultsPeople": "Sorry, there are currently no relevant Individuals available. Please try using a different filter search.",
-    "noResultsOrgs": "Sorry, there are currently no relevant organisations available. Please try using a different filter search.",
+    "noResultsOrgs": "Sorry, there are currently no relevant organizations available. Please try using a different filter search.",
     "search": {
       "placeholder": "Search Posts, People & Orgs",
       "keywords": "keywords",
@@ -161,7 +161,7 @@
       "options": {
         "posts": "Posts",
         "people": "People",
-        "orgs": "Organisations",
+        "orgs": "Organizations",
         "orgsShort": "Orgs"
       }
     }
@@ -170,7 +170,7 @@
     "create": "Create a post",
     "continueAs": "Continue Posting As",
     "individual": "Individual",
-    "organisation": "Organisation",
+    "organisation": "Organization",
     "givingHelp": "Offering Help",
     "gettingHelp": "Requesting Help",
     "writePostHere": "Write your post here",
@@ -204,8 +204,8 @@
         "day": "For a day"
       },
       "helpTypes": {
-        "request": "Looking for help",
-        "offer": "Offering to help"
+        "request": "Requesting help",
+        "offer": "Offering help"
       },
       "workMode": {
         "inPerson": "In-person",
@@ -214,14 +214,14 @@
       }
     },
     "post": "Post",
-    "postAsOrg": "Posting as an Organisation",
+    "postAsOrg": "Posting as an Organization",
     "createNew": "Create a new one",
     "whatNeed": "What do you need?",
     "viewLess": "View Less",
     "viewMore": "View More",
-    "deletePostConfirmation": "Are you sure you want to delete the post?",
-    "deleteCommentConfirmation": "Are you sure you want to delete the comment?",
-    "shareVia": "Share via...",
+    "deletePostConfirmation": "Are you sure you want to delete this post?",
+    "deleteCommentConfirmation": "Are you sure you want to delete this comment?",
+    "shareVia": "Share Post",
     "others": "Others",
     "expireTitle": "Ahh... snap!",
     "expire": "The post you have been looking for has expired. Please check our Help Board for more such posts.",
@@ -232,15 +232,15 @@
     "confirm": "Confirm",
     "edited": "edited",
     "share_plural": "Shares",
-    "deletePostConfirmationTitle": "Delete post confirmation",
-    "deleteCommentConfirmationTitle": "Delete comment confirmation",
-    "deleteConfirmation": "Delete",
-    "edit": "Edit post",
-    "hideAction": "Hide post",
-    "hideCaption": "It is not relevant to me",
-    "reportAction": "Report Post",
-    "reportCaption": "For moderators review",
-    "copyUrl": "Copy URL",
+    "deletePostConfirmationTitle": "Ta bort bekräftelse av inlägg",
+    "deleteCommentConfirmationTitle": "Ta bort kommentarsbekräftelse",
+    "deleteConfirmation": "Ta bort",
+    "edit": "Redigera inlägg",
+    "hideAction": "Dölj inlägg",
+    "hideCaption": "Det är inte relevant för mig",
+    "reportAction": "Rapportera inlägg",
+    "reportCaption": "För granskning av moderatorer",
+    "copyUrl": "Kopiera URL",
     "workMode": "How can this post be fulfilled?",
     "workFullfillment": "This post can be fulfilled",
     "remote": "Remote",
@@ -298,7 +298,7 @@
       "daily": "Daily",
       "weekly": "Weekly",
       "biweekly": "Biweekly",
-      "digest": "Digest",
+      "digest": "Flöde",
       "on": "On",
       "off": "Off"
     },
@@ -321,7 +321,7 @@
       "website": "Personal Website",
       "myActivity": "My Activity",
       "userActivity": "User Activity",
-      "wantHelp": "I want to help",
+      "wantHelp": "I want to help ",
       "needHelp": "I need help ",
       "firstNameRequired": "First name is required.",
       "lastNameRequired": "Last name is required.",
@@ -339,15 +339,15 @@
       "updatingPassword": "Updating Password",
       "editSecurity": "Edit Security",
       "editNotification": "Edit Notification",
-      "editAccount": "Edit Account"
+      "editAccount": "Redigera konto"
     },
     "org": {
-      "title": "Create Organisation Profile",
-      "editOrgProfile": "Edit Organisation Profile",
-      "name": "Organisation Name",
-      "email": "Organisation Contact Email",
+      "title": "Create Organization Profile",
+      "editOrgProfile": "Edit Organization Profile",
+      "name": "Organization Name",
+      "email": "Organization Contact Email",
       "invalidEmail": "Email is invalid",
-      "globalOrg": "We are a global organisation",
+      "globalOrg": "We are a global organization",
       "seeking": "What are you looking for",
       "volunteers": "Volunteers",
       "donations": "Donations",
@@ -373,7 +373,7 @@
         "Banking",
         "Biotechnology",
         "Business Supplies and Equipment",
-        "Civic & Social Organisation",
+        "Civic & Social Organization",
         "Events Services",
         "Fund-raising",
         "Government Relations",
@@ -384,27 +384,27 @@
         "Legal Services",
         "Marketing and Advertising",
         "Medical Devices",
-        "Non-Profit Organisation Management",
+        "Non-Profit Organization Management",
         "Other",
         "Philanthropy",
         "Primary/Secondary Education",
         "Professional Training & Coaching",
         "Research",
         "Think Tanks",
-        "Translation and Localisation"
+        "Translation and Localization"
       ],
-      "typeIndustryError": "Please select organisation type and industry from dropdown",
-      "desc": "Organisation Description",
-      "lang": "Organisation Language",
-      "completeOrgProfile": "Complete Organisation Profile",
+      "typeIndustryError": "Please select organization type and industry from dropdown",
+      "desc": "Organization Description",
+      "lang": "Organization Language",
+      "completeOrgProfile": "Complete Organization Profile",
       "about": "About",
       "activity": "Activity",
       "editAccount": "Edit Account Information",
-      "updateSuccess": "Organisation successfully updated",
-      "orgNameRequired": "Organisation name is required",
+      "updateSuccess": "Organization successfully updated",
+      "orgNameRequired": "Organization name is required",
       "global": "Global",
-      "editOrgAccount": "Edit Organisation Account",
-      "editOrgNotification": "Edit Organisation Notification"
+      "editOrgAccount": "Redigera organisationskonto",
+      "editOrgNotification": "Redigera organisationsnotifikationer"
     }
   },
   "auth": {
@@ -427,19 +427,19 @@
     "passwordConfirmationRequired": "Password confirmation is required.",
     "passwordNotMatch": "Passwords don't match",
     "backHome": "Back to Home Screen",
-    "linkAccountsSuccess": "Your account has been linked with your existing email account. Please login again with any of them."
+    "linkAccountsSuccess": "Ditt konto har kopplats med ditt befintliga e-postkonto. Vänligen logga in igen med någon av dem."
   },
   "verifyEmail": {
     "checkInbox": "Check your inbox",
-    "forgotPass": "An email has been sent to {{email}} with further instructions on how to reset your password.",
-    "confirm": "We just emailed a link to {email}. Click the link to confirm your account and complete your profile.",
+    "forgotPass": "If an account is associated with {{email}}, you will receive an email with further instructions on how to reset the password.",
+    "confirm": "We just emailed a link to {{email}}. Click the link to confirm your account and complete your profile.",
     "checkSpam": "If you don't see a message within a few minutes please check spam, promotions or other incoming mail folders."
   },
   "aboutUs": {
     "ourStory": "Our Story",
-    "story": "FightPandemics is the brainchild of Manuel Gonzalez Alzuru, who was infected with COVID-19 in France. Upon returning home to Barcelona, he found he was unable to get help even though there were people who wanted to provide it.",
+    "story": "is the brainchild of Manuel Gonzalez Alzuru, who was infected with COVID-19 in France. Upon returning home to Barcelona, he found that he was unable to get help even though there were people who wanted to help.",
     "ourCommunity": "Our Community",
-    "community": "We are built by a team of 1100+ volunteer developers, designers, scientists, health experts, and product managers from around the world",
+    "community": "We are built by a team of 1100+ volunteer developers, designers, scientists, health experts, and product managers from around the world.",
     "ourIdea": "Our Idea",
     "ourSupporters": "Our Supporters",
     "followUs": "Follow us on social media",
@@ -477,15 +477,15 @@
     "studentSummerProgram": "Student Summer Program",
     "forStudentInAge": "For Students ages 14-18.",
     "press": "Press",
-    "pressInfo": "If you're a member of the press, contact us at",
-    "pressKitLink": "Go to Press Kit",
-    "communityPartners": "Community Partners",
-    "communityCollaboration": "We want to empower communities and organisations across the world through our platform, and in order to do that, we need to work together! Ongoing collaboration with our community partners allows us to build a better platform for them, and for others.",
-    "becomeCommunityPartner": "Would you like your community to be our partner as well? We'd love to hear from you and start collaborating! Reach out at ",
-    "currentPartners": "Current Community Partners",
-    "bookCall": "Book Call",
-    "bookCallInfo": "Looking to have a personal experience with our product? Schedule a call with us!",
-    "bookCallLink": "Book a Call"
+    "pressInfo": "Om du är en pressmedlem, kontakta oss på",
+    "pressKitLink": "Gå till pressmaterial",
+    "communityPartners": "Communitypartners",
+    "communityCollaboration": "Vi vill stärka communities och organisationer över hela världen via vår plattform, och för att göra det måste vi arbeta tillsammans! Pågående samarbete med våra communitypartners gör att vi kan bygga en bättre plattform för dem och för andra.",
+    "becomeCommunityPartner": "Vill du att ditt community också ska vara vår partner? Vi vill gärna höra från dig och börja samarbeta! Hör av dig vid",
+    "currentPartners": "Nuvarande communitypartners",
+    "bookCall": "Boka samtal",
+    "bookCallInfo": "Vill du ha en personlig upplevelse med vår produkt? Boka ett samtal med oss!",
+    "bookCallLink": "Boka ett samtal"
   },
   "footer": {
     "faq": "FAQ",
@@ -504,8 +504,8 @@
       [
         "What is FightPandemics?",
         "FightPandemics is a platform created amid the COVID-19 outbreak with the aim to be a go-to place for people affected in many ways by the pandemic.",
-        "Our main mission is to connect individuals and organisations offering and requesting help amid pandemic crisis, in a local and global level. No matter if you seek medical help, facial masks, legal help, groceries, someone to walk your dog or support with any other day-to-day activities, you can look for it here:",
-        "We strive to gather essential information that is highly fragmented, connecting in one network individuals, communities and organisations working on pandemic-related issues or projects. Our vision is to create a world where everyone is more resilient to emergencies, by helping communities respond more quickly and effectively to health emergencies and humanitarian crises."
+        "Our main mission is to connect individuals and organizations offering and requesting help amid pandemic crisis, in a local and global level. No matter if you seek medical help, facial masks, legal help, groceries, someone to walk your dog or support with any other day-to-day activities, you can look for it here:",
+        "We strive to gather essential information that is highly fragmented, connecting in one network individuals, communities and organizations working on pandemic-related issues or projects. Our vision is to create a world where everyone is more resilient to emergencies, by helping communities respond more quickly and effectively to health emergencies and humanitarian crises."
       ],
       [
         "Who is FightPandemics?",
@@ -518,7 +518,7 @@
       ],
       [
         "Who is FightPandemics for?",
-        "Anyone needing or offering help is welcome to join our platform and connect with other individuals and organisations."
+        "Anyone needing or offering help is welcome to join our platform and connect with other individuals and organizations."
       ],
       [
         "How can I post an offer or request for help on FightPandemics?",
@@ -534,7 +534,7 @@
       ],
       [
         "What kind of help can I offer/ request on FightPandemics?",
-        "You're welcome to ask for and offer any type of help to support individuals and organisations cope during the COVID-19 pandemic. Here is a list with some examples of the type of help you can offer or request:",
+        "You're welcome to ask for and offer any type of help to support individuals and organizations cope during the COVID-19 pandemic. Here is a list with some examples of the type of help you can offer or request:",
         "<0>Groceries</0><1>Medical supplies </1><2>Legal assistance</2><3>Tech support </3><4>Information</4><5>Funding</5><6>Events and activities</6><7>Education</7><8>Wellness</8><9>Research and development</9>"
       ],
       [
@@ -543,7 +543,7 @@
       ],
       [
         "How can I offer help?",
-        "<0>You can offer help as an individual or as an organisation.</0><1>From the homepage, select \"Give help\" to see all the posts created by users asking for help and filter the results by location and type. You need to be signed in to reach out to them. You can also create your own postings describing the help you're able to offer.</1>"
+        "<0>You can offer help as an individual or as an organization.</0><1>From the homepage, select \"Give help\" to see all the posts created by users asking for help and filter the results by location and type. You need to be signed in to reach out to them. You can also create your own postings describing the help you're able to offer.</1>"
       ],
       [
         "Do I need to be signed in to view help requests and offers?",
@@ -554,12 +554,12 @@
         "Yes, you need to create an account and sign in if you want to create or edit posts."
       ],
       [
-        "Do I need to be signed up as an individual to create organisation profiles?",
-        "Yes, once you are signed up as an individual, you can create one or multiple organisational profile(s) linked to your account."
+        "Do I need to be signed up as an individual to create organization profiles?",
+        "Yes, once you are signed up as an individual, you can create one or multiple organizational profile linked to your account."
       ],
       [
-        "Will my name/ organisation's name be displayed to other users?",
-        "When you create posts either offering or seeking help, your name/ your organisation's name is displayed to anyone viewing the help board."
+        "Will my name/organization's name be displayed to other users?",
+        "When you create posts either offering or seeking help, your name/ your organization's name is displayed to anyone viewing the help board."
       ],
       [
         "How can I trust that the posts are reliable?",
@@ -604,12 +604,12 @@
         "<0>To join the community as a user, click the \"Menu\" button and select the \"Join Now/Sign In\" option. There you will be able to join with your choice of email or social media credentials.</0><1>When you join the community, you will have unlimited access to view and create posts and comments on FightPandemics platform.</1>"
       ],
       [
-        "How can I change my individual profile to an organisation profile?",
-        "An organisational profile is tied to your individual profile. Once you create your individual profile, you can add as many organisational profiles as you'd like tied to that individual profile. Your sign in credentials will continue to be the email and password you used to join for the individual profile."
+        "How can I change my individual profile to an organization profile?",
+        "An organizational profile is tied to your individual profile. Once you create your individual profile, you can add as many organizational profiles as you'd like tied to that individual profile. Your sign in credentials will continue to be the email and password you used to join for the individual profile."
       ],
       [
-        "How can I change my organisation profile to an individual profile?",
-        "You cannot change your organisation profile to an individual profile. In order to create an organisational profile, you are required to have an individual profile. Once you create your individual profile, you can add as many organisation profiles as you'd like, tied to that individual profile. Your sign in credentials will continue to be the email and password you used to join for the individual profile."
+        "How can I change my organization profile to an individual profile?",
+        "You cannot change your organization profile to an individual profile. In order to create an organizational profile, you are required to have an individual profile. Once you create your individual profile, you can add as many organization profiles as you'd like, tied to that individual profile. Your sign in credentials will continue to be the email and password you used to join for the individual profile."
       ],
       [
         "How can I reset my password?",
@@ -669,7 +669,7 @@
       ],
       [
         "I need technical support.",
-        "We are sorry for that. Send us an email at <0>support@fightpandemics.com</0>. Since we are an all volunteer team, please expect at least 48 hours for a response."
+        "We are sorry for that. Send us an email at <0>support@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
       ],
       [
         "I want to reach out to FightPandemics for other reasons.",
@@ -773,7 +773,7 @@
     "facebookIcon": "FightPandemics Facebook Icon",
     "instagramIcon": "FightPandemics Instagram Icon",
     "twitterIcon": "FightPandemics Twitter Icon",
-    "createOrg": "create organisation",
+    "createOrg": "create organization",
     "personalDataImage": "two people standing next to a list of personal items",
     "envelope": "envelope",
     "avatar": "avatar"
@@ -791,7 +791,7 @@
     "User denied Geolocation": "User denied Geolocation.",
     "resetBrowserLocationPermission": "Please reset your browser's location permissions or enter the address.",
     "enterAddressAgain": "Please enter the address or try again.",
-    "loggedInToCreateOrgProfile": "You must be logged in to create an organisation profile",
+    "loggedInToCreateOrgProfile": "You must be logged in to create an organization profile",
     "selectOneOption": "Please select at least one option",
     "userExists": "User already exists",
     "invalidState": "Invalid state",
@@ -807,8 +807,8 @@
     "failedCreatingUser": "Failed creating user, reason:",
     "failedLoadingProfile": "Failed loading profile, reason:",
     "failedLoadingActivity": "Failed loading activity, reason:",
-    "failedCreatingOrgProfile": "Failed creating organisation profile, reason:",
-    "failedUpdatingOrgProfile": "Failed updating organisation profile, reason:",
+    "failedCreatingOrgProfile": "Failed creating organization profile, reason:",
+    "failedUpdatingOrgProfile": "Failed updating organization profile, reason:",
     "failedUpdatingProfile": "Failed updating profile, reason:",
     "failedAuthentication": "Authentication failed, reason:",
     "failedLogin": "Login failed, reason:",
@@ -816,7 +816,7 @@
     "failedPasswordRecovery": "Password recovery failed, reason:",
     "http": {
       "Bad Request": "Bad Request",
-      "Unauthorized": "Unauthorised",
+      "Unauthorized": "Unauthorized",
       "Payment Required": "Payment Required",
       "Forbidden": "Forbidden",
       "Not Found": "Not Found",
@@ -864,9 +864,9 @@
       "networkError": "Sorry, some network error occurred."
     },
     "wrongOldPassword": "Wrong current password",
-    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
-    "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:",
+    "noEmailAccount": "Inget konto har hittats med den här e-postadressen. Klicka på \"Gå med nu\" för att skapa ett konto.",
+    "registeredAccount": "Ett socialt konto har registrerats med den här e-postadressen. Klicka på \"Gå med nu\" för att skapa ett direkt e-post- och lösenordskonto.",
+    "failedLinkAccounts": "Det gick inte att länka konton, orsak:",
     "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
@@ -886,7 +886,7 @@
   "TEMP: Under 18": "Under 18",
   "TEMP: Between 18 and 64": "Between 18 and 64",
   "TEMP: 65 or older": "65 or older",
-  "TEMP: Multiple options can be selected": "Multiple options can be selected",
+  "TEMP: Multiple options can be selected": "Multiple options can be selected ",
   "TEMP: Fever, chills, or sweating": "Fever, chills, or sweating",
   "TEMP: New or worsening cough": "New or worsening cough",
   "TEMP: Sore throat": "Sore throat",
@@ -908,15 +908,15 @@
   "TEMP: Please consult a medical professional for advice": "Please consult a medical professional for advice",
   "TEMP: Done": "Done",
   "TEMP: Retake the Test": "Retake the Test",
-  "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Based on your reported symptoms, you should seek care immediately. \nCall the emergency number!",
+  "TEMP: Based on your reported symptoms, you should seek care immediately. Call the emergency number!": "Based on your reported symptoms, you should seek care immediately.\nCall the emergency number!",
   "TEMP: Your Responses": "Your Responses",
   "avatar": {
     "submitBtn": "Submit",
     "cancelBtn": "Cancel",
     "tryAgainBtn": "Try Again",
-    "remove": "Remove Avatar",
-    "uploadNew": "Upload New",
-    "edit": "Edit Avatar"
+    "remove": "Ta bort Avatar",
+    "uploadNew": "Ladda upp ny",
+    "edit": "Redigera Avatar"
   },
   "dates": {
     "monthsShort": {
@@ -1029,30 +1029,30 @@
     "liked": "<0>{{username}}</0> liked your post <1>{{postTitle}}</1>",
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
-    "empty": "No more notifications",
-    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
+    "empty": "Inga fler notifikationer",
+    "reported": "Ditt inlägg <1>{{postTitle}}</1> bryter mot vår innehållspolicy och därför togs det bort"
   },
   "moderation": {
     "report": "Report",
-    "cancel": "Cancel",
-    "finish": "Finish",
-    "reason": "Reason for reporting:",
-    "additionalDetails": "Additional details (optional)",
-    "enterDetails": "Please enter more details here...",
-    "reportPost": "Report Post",
-    "reportPostSuccess": "Thank you for your report! This post will be submitted for review.",
-    "reportPostError": "Oops! something went wrong...",
-    "reportPostSuccessTitle": "Report Received",
-    "reportPostErrorTitle": "Oops!",
+    "cancel": "Avbryt",
+    "finish": "Avsluta",
+    "reason": "Anledning till rapportering:",
+    "additionalDetails": "Ytterligare detaljer (valfritt)",
+    "enterDetails": "Vänligen ange mer information här ...",
+    "reportPost": "Rapportera inlägg",
+    "reportPostSuccess": "Tack för din rapport! Detta inlägg kommer att skickas för granskning.",
+    "reportPostError": "Hoppsan! något gick fel...",
+    "reportPostSuccessTitle": "Rapport mottagen",
+    "reportPostErrorTitle": "Hoppsan!",
     "spam": "Spam",
-    "inappropriateContent": "Inappropriate Content",
-    "violatesTerms": "Violates Terms",
-    "other": "Other",
-    "postSuspected": "This post received multiple reports and was held for review",
-    "showAnyway": "Show anyway",
-    "postHidden": "You have chosen to hide this post",
-    "unhide": "Unhide",
-    "youReported": "You have reported this post. It will no longer be visible on your feed",
+    "inappropriateContent": "Olämpligt innehåll",
+    "violatesTerms": "Bryter mot villkoren",
+    "other": "Övrigt",
+    "postSuspected": "Detta inlägg fick flera rapporter och hölls för granskning",
+    "showAnyway": "Visa ändå",
+    "postHidden": "Du har valt att dölja det här inlägget",
+    "unhide": "Ta fram",
+    "youReported": "Du har rapporterat det här inlägget. Det kommer inte längre att synas i ditt flöde",
     "buttonRemove": "Remove",
     "buttonKeep": "Keep",
     "removePostTitle": "Remove Post Confirmation",
@@ -1067,18 +1067,18 @@
     "reportRejectedBody": "This post was not removed!"
   },
   "verification": {
-    "verifyTitle": "Verify your account!",
-    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
-    "verified": "Verified by Veriff",
-    "stepStartTitle": "Verify your account with Veriff",
-    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
-    "stepStartAction": "Get Verified",
-    "stepSuccessTitle": "Thanks for verifying your account!",
-    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
-    "stepSuccessAction": "Awesome!",
-    "stepCancelTitle": "You cancelled the verification process",
-    "stepCancelBody": "You can always go back and verify you account at anytime!",
-    "stepCancelAction": "Close"
+    "verifyTitle": "Verifiera ditt konto!",
+    "verifyBody": "Vi har märkt att du inte har verifierat ditt konto. Klicka här för att komma igång.",
+    "verified": "Verifierad av Veriff",
+    "stepStartTitle": "Verifiera ditt konto med Veriff",
+    "stepStartBody": "FightPandemics vill hålla vårt community öppet, ärligt och säkert. Det blåa verifierade märket bredvid användarens namn låter folk veta att ett konto är autentiskt.",
+    "stepStartAction": "Bli verifierad",
+    "stepSuccessTitle": "Tack för att du verifierade ditt konto!",
+    "stepSuccessBody": "Ditt verifieringsmärke kommer visas i din profil om några ögonblick",
+    "stepSuccessAction": "Toppen!",
+    "stepCancelTitle": "Du avbröt verifieringsprocessen",
+    "stepCancelBody": "Du kan alltid gå tillbaka och verifiera ditt konto när som helst!",
+    "stepCancelAction": "Stäng"
   },
   "nearestHsp": {
     "noResults": "No Results",

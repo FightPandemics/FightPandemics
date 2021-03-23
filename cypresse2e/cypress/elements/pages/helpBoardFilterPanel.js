@@ -13,6 +13,8 @@ class HelpBoardFilter {
   hbProvidersTags = ".filter-2 a";
   hbTypeHeading = ".filter-3 .am-accordion-header";
   hbTypeTags = ".filter-3 a";
+  hbPostFulfillmentHeading = ".filter-5 .am-accordion-header";
+  hbPostFulfillmentTags = ".filter-5 a";
   quitFiltersButton = "#HB_FI_QF";
   applyFiltersButton = "#HB_FI_VR";
   closeSelectedTags = "div a.am-button.tag-closable";
@@ -77,6 +79,14 @@ class HelpBoardFilter {
 
   getHbTypeTags() {
     return cy.get(this.hbTypeTags);
+  }
+
+  getHbPostFulfillmentHeading() {
+    return cy.get(this.hbPostFulfillmentHeading);
+  }
+
+  getHbPostFulfillmentTags() {
+    return cy.get(this.hbPostFulfillmentTags);
   }
 
   getQuitFiltersButton() {
