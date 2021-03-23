@@ -612,11 +612,11 @@ const Feed = (props) => {
   useEffect(() => {
     console.log(history);
     getStateFromQuery();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setQueryFromState();
-  }, [applyFilters, selectedOptions, location, history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (typeof queryParams.s_keyword !== "undefined") {
