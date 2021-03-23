@@ -50,6 +50,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
   const fromPath = ["dashboard", "feed"];
   const fullPath = (from, pathname) => from.slice(from.indexOf(pathname) - 1);
   const [isBrowserBackClicked, setBrowserBackClicked] = useState(false);
+  const [historyState, setHistoryState] = useState(history);
 
   useEffect(() => {
     console.log(history);
