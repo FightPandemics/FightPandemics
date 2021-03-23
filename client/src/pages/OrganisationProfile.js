@@ -487,16 +487,19 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   )}
               </NameDiv>
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-              <IconsContainer>
+
+              {/* <IconsContainer>
                 <div className="social-icons">{renderURL()}</div>
-              </IconsContainer>
+              </IconsContainer> */}
+
             </UserInfoDesktop>
           </UserInfoContainer>
           {isSelf && !verified && <Verification />}
           <WhiteSpace />
           {// Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }
-          <JoinOrgContainer>
+
+          {!isOwner ? <JoinOrgContainer>
             <Link
               onClick={
                 () => sessionStorage.setItem("postredirect", window.location.pathname)
@@ -511,11 +514,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 {t("profile.individual.joinOrg") + ` ${name}`}
               </JoinOrgButton>
             </Link>
-          </JoinOrgContainer>
-
+          </JoinOrgContainer> : null}
           {// TABS
           }
-
           <ProfileTabs defaultActiveKey="2">
             <ProfileTabPane tab="Activity" key="1"><div>
               <SectionHeader>
