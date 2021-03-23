@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Form, Row, Col, Input } from "antd";
 import { useTranslation } from "react-i18next";
+import { OrgBookStyledModalContainer } from "./OrgBookStyledModal";
 
 const OrgBookModal = ({
   title,
@@ -39,7 +40,7 @@ const OrgBookModal = ({
 
   return (
     defaultPageName && (
-      <Modal
+      <OrgBookStyledModalContainer
         width={300}
         visible={visible}
         title={title}
@@ -87,7 +88,7 @@ const OrgBookModal = ({
             </Col>
           </Row>
         </Form>
-      </Modal>
+      </OrgBookStyledModalContainer>
     )
   );
 };

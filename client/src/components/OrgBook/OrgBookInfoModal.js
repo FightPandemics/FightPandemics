@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from "antd";
+import { OrgBookStyledModalContainer } from "./OrgBookStyledModal";
 
 const OrgBookInfoModal = ({
   title,
@@ -12,7 +12,7 @@ const OrgBookInfoModal = ({
   onClose,
 }) => {
   return (
-    <Modal
+    <OrgBookStyledModalContainer
       width={400}
       visible={visible}
       title={title}
@@ -30,7 +30,7 @@ const OrgBookInfoModal = ({
       <p>{infoMsg2}</p>
       <p>{infoMsg3}</p>
       <p>{infoMsg4}</p>
-    </Modal>
+    </OrgBookStyledModalContainer>
   );
 };
 

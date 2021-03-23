@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import { useTranslation } from "react-i18next";
 import OrgBookRadioGroup from "./OrgBookRadioGroup";
+import { OrgBookStyledModalContainer } from "./OrgBookStyledModal";
 
 const OrgBookConfirmModal = ({
   action,
@@ -108,7 +109,7 @@ const OrgBookConfirmModal = ({
 
   return (
     selectedPage && (
-      <Modal
+      <OrgBookStyledModalContainer
         width={450}
         visible={visible}
         title={title}
@@ -141,7 +142,7 @@ const OrgBookConfirmModal = ({
               </>
             )
           : ""}
-      </Modal>
+      </OrgBookStyledModalContainer>
     )
   );
 };
