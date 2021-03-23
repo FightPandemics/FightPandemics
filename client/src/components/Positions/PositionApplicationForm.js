@@ -109,6 +109,7 @@ const PositionApplicationForm = ({ orgName }) => {
   };
   return (
     <>
+      <h2 style={{ "color": "red", }}>TEST FORM & BUTTON</h2>
       <OuterWrapper>
         <LabelContainer
           className={renderError("question1") ? "asterisk" : ""}
@@ -241,10 +242,11 @@ const PositionApplicationForm = ({ orgName }) => {
 
       <Footer>
         <Submit
+          style={{ "background-color": "red" }}
           primary="true"
           onClick={handleSubmit}
         >
-          {t("positions.submitButton")}
+          TEST SUBMIT
         </Submit>
       </Footer>
     </>
