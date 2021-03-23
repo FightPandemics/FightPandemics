@@ -45,6 +45,19 @@ const organisationSchema = new Schema(
       twitter: String,
       website: String,
     },
+    isJoinOrg: {
+        required: true,
+        type: Boolean,
+        default: false,
+    },
+    orgBookLink: {
+        required: false,
+        type: String,
+    },
+    positions: {
+      name: { default: "Volunteer", required: true, type: String, },
+      description: { default: "Position Description", required: true, type: String, },
+    }
   },
   { collection: "users" },
 );
