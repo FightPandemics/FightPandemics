@@ -3,6 +3,11 @@ import BaseButton from "components/Button/BaseButton";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
+export const ApplyButtonContainer = styled.div`
+  max-width: 33.4rem;
+  margin: auto;
+`;
+
 const ApplyBtn = styled(BaseButton)`
   border-radius: 4.6rem;
   background-color: ${theme.colors.royalBlue};
