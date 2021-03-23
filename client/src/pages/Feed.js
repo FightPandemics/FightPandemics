@@ -520,6 +520,7 @@ const Feed = (props) => {
         break;
     }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${sortQuery()}`;
+    console.log(endpoint);
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -610,7 +611,6 @@ const Feed = (props) => {
   // useEffect(() => {}, [ignoreUserLocation]);
 
   useEffect(() => {
-    console.log(history);
     getStateFromQuery();
   }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 

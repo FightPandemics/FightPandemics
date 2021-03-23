@@ -279,7 +279,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
         <Body>{t("post.expire")}</Body>
         <StyledLink
           id={GTM.organisation.completedPrefix + GTM.profile.continueToFeed}
-          to="/feed"
+          to={"/feed"}
         >
           {t("feed.title")}
         </StyledLink>
