@@ -43,7 +43,7 @@ export default function SortSelector({
   const gtmTag = (tag) => GTM.feed.prefix + GTM.feed.sort + GTM.feed[tag];
 
   useEffect(() => {
-    if (sortValue === "proximity") {
+    if (sortValue === "proximity-near" || sortValue === "proximity-location") {
       setValue(t("feed.filters.proximity"));
     } else if (sortValue === "relevance") {
       setValue(t("feed.filters.relevance"));

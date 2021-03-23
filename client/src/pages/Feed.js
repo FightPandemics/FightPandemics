@@ -335,18 +335,18 @@ const Feed = (props) => {
 
   const toggleShowNearMe = (e) => {
     if (e.target.checked) {
-      setSortValue("proximity");
       setQueryKeysValue(history, {
         s_keyword: null,
         s_category: null,
         location: null,
         near_me: e.target.checked,
       });
+      setSortValue("proximity");
     } else {
-      setSortValue("createdAt");
       setQueryKeysValue(history, {
         near_me: e.target.checked,
       });
+      setSortValue("createdAt");
     }
   };
 
@@ -376,17 +376,18 @@ const Feed = (props) => {
     if (applyFilters) {
       dispatch(postsActions.resetPageAction({}));
     }
-    dispatchAction(SET_VALUE, "location", value);
     if (!value && queryParams.location) {
       setQueryKeysValue(history, { location: null });
     }
     if (value) {
-      setSortValue("proximity");
+      console.log("in location value");
       setQueryKeysValue(history, {
         s_keyword: null,
         s_category: null,
         near_me: false,
       });
+      dispatchAction(SET_VALUE, "location", value);
+      setSortValue("proximity");
     } else {
       setSortValue("createdAt");
     }
@@ -494,7 +495,10 @@ const Feed = (props) => {
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
 
     const sortQuery = () => {
-      if (sortValue === "proximity") {
+      if (
+        sortValue === "proximity-location" ||
+        sortValue === "proximity-near"
+      ) {
         return `&ignoreUserLocation=${ignoreUserLocation}`;
       } else if (sortValue === t("feed.filters.sortBy")) {
         return "";
@@ -623,21 +627,30 @@ const Feed = (props) => {
         location: null,
         near_me: false,
       });
+      dispatchAction(SET_VALUE, "location", null);
       setSortValue("relevance");
-    } else if (sortValue !== "proximity") {
-      setQueryKeysValue(history, {
-        location: null,
-        near_me: false,
-      });
-      if (
-        sortValue !== "views" &&
-        sortValue !== "shares" &&
-        sortValue !== "likes"
-      ) {
-        setSortValue("createdAt");
+    } else if (location) {
+      if (ignoreUserLocation) {
+        setQueryKeysValue(history, {
+          near_me: false,
+        });
       }
+      setSortValue("proximity-location");
+    } else if (!ignoreUserLocation) {
+      if (location) {
+        setQueryKeysValue(history, {
+          location: null,
+        });
+        dispatchAction(SET_VALUE, "location", null);
+      }
+      setSortValue("proximity-near");
+    } else if (
+      sortValue !== "views" &&
+      sortValue !== "shares" &&
+      sortValue !== "likes"
+    ) {
+      setSortValue("createdAt");
     }
-    refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
   }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
