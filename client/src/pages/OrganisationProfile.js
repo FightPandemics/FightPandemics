@@ -517,7 +517,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           </JoinOrgContainer> : null}
           {// TABS
           }
-          <ProfileTabs defaultActiveKey="2">
+          <ProfileTabs defaultActiveKey="activity">
             <ProfileTabPane tab={t("profile.org.activity")} key="activity"><div>
               <SectionHeader>
                 {/* {t("profile.org.activity")} */}
