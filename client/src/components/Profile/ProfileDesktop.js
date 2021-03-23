@@ -77,12 +77,17 @@ const ProfileDesktop = ({
   const [childTab, setChildTab] = useState(defaultState());
 
   const getTabName = (key) => {
-    return key ? key.substr(0, key.indexOf("_")) : "";
+    // console.log(key.indexOf('_') );
+    return key && key.indexOf("_") !== -1
+      ? key.substr(0, key.indexOf("_"))
+      : key;
   };
 
   const handleTabChange = (e) => {
     const keyVal = e.key;
+    // console.log(keyVal);
     setChildTab(keyVal);
+    // console.log(getTabName(keyVal));
     setInternalTab(getTabName(keyVal));
   };
 
