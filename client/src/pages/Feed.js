@@ -650,6 +650,7 @@ const Feed = (props) => {
     ) {
       setSortValue("createdAt");
     }
+    console.log(history.location);
   }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {

@@ -60,7 +60,10 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
       ...state,
       keepScroll: true,
     });
-    console.log("history after push", history);
+    setTimeout(() => {
+      console.log("history after push useEffect", history);
+    }, 10000);
+
     window.addEventListener("popstate", onBrowserBack);
     return () => {
       window.removeEventListener("popstate", onBrowserBack);
@@ -109,7 +112,9 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
             ...state,
             keepScroll: true,
           });
-          console.log("history after push", history);
+          setTimeout(() => {
+            console.log("history after push, handleclick", history);
+          }, 10000);
         } else {
           console.log("in go back else", history.location);
           history.goBack();
