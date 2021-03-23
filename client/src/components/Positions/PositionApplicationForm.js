@@ -107,6 +107,9 @@ const PositionApplicationForm = ({ orgName }) => {
     handleCancel()
     setVisibleTwo(true);
   };
+
+  const applicationReceived = t("positions.applicationReceived").replace("{orgName}", orgName);
+
   return (
     <>
       <h2 style={{ "color": "red", }}>TEST FORM & BUTTON</h2>
@@ -221,6 +224,7 @@ const PositionApplicationForm = ({ orgName }) => {
 
       <ApplyModal
         visible={visibleTwo}
+        visible={true}
         footer={null}
         centered={true}
         onCancel={handleCancelTwo}
@@ -231,7 +235,7 @@ const PositionApplicationForm = ({ orgName }) => {
         <PositionSubmitModal>
           <img src={applicationConfirmation} alt="" />
           <h2>{t("positions.applicationSubmitted")}</h2>
-          <p>{t("positions.applicationReceived")}</p>
+          <p>{applicationReceived}</p>
           <PositionsButton
             onClick={handleCancelTwo}
           >

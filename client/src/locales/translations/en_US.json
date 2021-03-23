@@ -1083,7 +1083,7 @@
   },
   "positions": {
     "applicationSubmitted": "Application Submitted!",
-    "applicationReceived": "Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.",
+    "applicationReceived": "Thank you for your interest in {orgName} . We have received your application and we’ll be in touch with you as soon as possible.",
     "apply": "Apply",
     "positions": "Positions",
     "okay": "Okay!",
