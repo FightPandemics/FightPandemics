@@ -55,6 +55,7 @@ export const TestMembers = () => {
     const names = ["Amy Smith", "Juan Matias", "Richard James", "Emily Johnson"]
     return (
         <AllMembers>
+
             {names.map((names) => {
 
                 return (
@@ -70,6 +71,7 @@ export const TestMembers = () => {
                     </>
                 )
             })}
+            <center style={{ "color": "red" }}>TEST MEMBERS</center>
         </AllMembers>
     )
 }

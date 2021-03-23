@@ -518,7 +518,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           {// TABS
           }
           <ProfileTabs defaultActiveKey="2">
-            <ProfileTabPane tab="Activity" key="1"><div>
+            <ProfileTabPane tab={t("profile.org.activity")} key="activity"><div>
               <SectionHeader>
                 {/* {t("profile.org.activity")} */}
                 <PlaceholderIcon />
@@ -578,7 +578,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 )}
               </FeedWrapper>
             </div></ProfileTabPane>
-            <ProfileTabPane tab="Members" key="2"><TestMembers /></ProfileTabPane>
+            <ProfileTabPane tab={t("profile.org.members")} key="members"><TestMembers /></ProfileTabPane>
           </ProfileTabs>
 
           {isSelf && (
