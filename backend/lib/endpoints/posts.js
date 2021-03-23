@@ -48,7 +48,7 @@ async function routes(app) {
           authorId,
           ignoreUserLocation,
           filter,
-          sort,
+          sortValue,
           order,
           keywords,
           limit,
@@ -191,8 +191,8 @@ async function routes(app) {
             { $sort: { score: { $meta: "textScore" } } },
           ] : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
-      if (sort) {
-        if (sort === "likes") {
+      if (sortValue) {
+        if (sortValue === "likes") {
           sortAndFilterSteps.push(
             {
               $addFields: {
@@ -209,7 +209,7 @@ async function routes(app) {
           );
         } else {
           sortAndFilterSteps.push({
-            $sort: { [sort]: order === "asc" ? 1 : -1 },
+            $sort: { [sortValue]: order === "asc" ? 1 : -1 },
           });
         }
       }

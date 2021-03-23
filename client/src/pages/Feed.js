@@ -500,7 +500,7 @@ const Feed = (props) => {
           return `&keywords=${encodeURIComponent(searchKeyword)}`;
         else return "";
       } else {
-        return `&sort=${sortValue}`;
+        return `&sortValue=${sortValue}`;
       }
     };
     const limit = PAGINATION_LIMIT;
