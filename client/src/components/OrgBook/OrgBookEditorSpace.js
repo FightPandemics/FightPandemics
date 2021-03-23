@@ -172,6 +172,9 @@ const OrgBookEditorSpace = (props) => {
           powerpaste_html_import: "clean",
           fontsize_formats: "14px 16px 18px 20px 24px 36px",
           toolbar: false,
+          content_style: `.tox .tox-button { border-radius: 3.8rem; background-color: ${royalBlue} !important; } 
+          .tox .tox-button--icon, .tox .tox-button.tox-button--icon, .tox .tox-button.tox-button--secondary.tox-button--icon { 
+            background-color: ${white} !important; }`,
         }}
         onEditorChange={handleEditorChange}
       />
@@ -192,7 +195,7 @@ const OrgBookEditorSpace = (props) => {
           {selectedPage ? (
             <Link
               onClick={() => {
-                console.log("clicked see preview");
+                tinyMce.current.execCommand("mcePreview");
               }}
               to="#"
             >

@@ -70,7 +70,7 @@ const OrgBookStyledModalContainer = styled(Modal)`
     min-width: 15rem;
     max-width: 15rem;
     height: 4.5rem;
-    border: 0.1rem solid ${colors.royalBlue};
+    border: 0.1rem solid ${colors.black};
     border-radius: 3.8rem;
     margin-bottom: 1.5rem;
     text-align: center;
