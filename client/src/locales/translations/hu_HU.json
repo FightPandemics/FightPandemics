@@ -1,6 +1,6 @@
 {
   "headline": "Egy hely, ahol segítséget nyújthat és segítséget kérhet",
-  "tagline": "<0>A járványok továbbra is elő fognak fordulni.</0> <1>Segítjük a közösségeket a felkészülésben és a válaszlépések megtételeben.</1>",
+  "tagline": "<0>Járványok továbbra is elő fognak fordulni.</0> <1>Segítjük a közösségeket a felkészülésben és a válaszlépések megtételeben.</1>",
   "common": {
     "getHelp": "Segítség kérése",
     "giveHelp": "Segítség felajánlása",
@@ -21,7 +21,8 @@
     "stayOnPageContent": "Ha a \"Nem\" lehetőséget választja, akkor átirányítjuk a Segítségfolyamra.",
     "yes": "Igen",
     "no": "Nem",
-    "ok": "Ok"
+    "ok": "Ok",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Elhelyezkedés",
         "providers": "Szolgáltatók",
         "type": "Típusok",
-        "lookingFor": "Segítség felkínálása vagy kérése"
+        "lookingFor": "Segítség felkínálása vagy kérése",
+        "workMode": "Munkakör betöltése"
       },
       "providersOptions": {
         "Individual": "Magánszemély",
@@ -142,7 +144,7 @@
         "Request Help": "Segítség kérése",
         "Offer Help": "Segítség felajánlása"
       },
-      "postsNearMe": "Eredmények megjelenítése a közelemben"
+      "postsNearMe": "Mutasd a közelemben"
     },
     "filterBy": "Szűrés",
     "noResults": "Sajnos jelenleg nincs releváns elérhető bejegyzés. Próbálkozzon másik szűrőkereséssel, vagy <0> hozzon létre egy bejegyzést </0> .",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Segítség kérése",
         "offer": "Segítség felajánlása"
+      },
+      "workMode": {
+        "inPerson": "Helyszíni munkavégzés",
+        "remote": "Távmunka",
+        "both": "Mindkettő"
       }
     },
     "post": "Poszt",
@@ -233,7 +240,12 @@
     "hideCaption": "Számomra nem fontos",
     "reportAction": "Bejegyzés jelentése",
     "reportCaption": "A moderátorok felülvizsgálatának kérése",
-    "copyUrl": "URL másolása"
+    "copyUrl": "URL másolása",
+    "workMode": "Hogyan tölthető be ez a munkakör?",
+    "workFullfillment": "Ez a munkakör betölthető",
+    "remote": "Távmunka",
+    "in-person": "Helyszíni munkavégzés",
+    "both": "Távmunka & Helyszíni munkavégzés"
   },
   "profile": {
     "common": {
@@ -401,7 +413,7 @@
     "email": "E-mail",
     "enterEmail": "Adja meg az e-mail címét",
     "password": "Jelszó",
-    "enterPassword": "Írd be a jelszavát",
+    "enterPassword": "Írja be a jelszavát",
     "confirmPassword": "Jelszó megerősítése",
     "forgotPassword": "Elfelejtette a jelszavát?",
     "noAccount": "Még nincs fiókja?",
@@ -492,12 +504,12 @@
       [
         "Mi az a FightPandemics?",
         "A FightPandemics egy olyan platform, amelyet a COVID-19 járvány közepette hoztak létre azzal a céllal, hogy a pandémia által sokféleképpen érintett emberek találkozóhelye legyen.",
-        "Fő küldetésünk, hogy összekapcsoljuk azokat az egyéneket és szervezeteket, akik helyi és globális szinten kínálnak és kérnek segítséget a világjárvány válságában. Nem számít, hogy orvosi segítséget, arcmaszkot, jogi segítséget keres, élelmiszer házhozszállítást keres, vagy csak valakit aki megsétáltatná a kutyáját, vagy bármely más napi tevékenységhez szükséges segítséget kér, itt megteheti:",
+        "Fő küldetésünk, hogy összekapcsoljuk azokat az egyéneket és szervezeteket, akik helyi és globális szinten kínálnak és kérnek segítséget a világjárvány válságában. Nem számít, hogy orvosi segítséget, arcmaszkot, jogi segítséget vagy élelmiszer házhozszállítást keres, vagy csak valakit aki megsétáltatná a kutyáját, vagy bármely más napi tevékenységhez szükséges segítséget kér, itt megteheti:",
         "Arra törekszünk, hogy alapvető információkat gyűjtsünk, amelyek nagyon széttagoltak, és egyetlen hálózatba kapcsolják az egyéneket, közösségeket és szervezeteket, akik a pandémiával kapcsolatos kérdéseken vagy projekteken dolgoznak. Az a jövőképünk, hogy olyan világot hozzunk létre, ahol mindenki jobban ellenáll a vészhelyzeteknek, azáltal, hogy segítjük a közösségeket gyorsabban és hatékonyabban reagálni az egészségügyi vészhelyzetekre és a humanitárius válságokra."
       ],
       [
         "Ki az a FightPandemics?",
-        "A FightPandemics egy önkéntes, globális csapat, amelynek küldetése, hogy felületet adjon azoknak akik segítséget tudnak nyújtani azokkal akik segítséget keresnek. Csapatunk 150+ elkötelezett önkéntesből áll 70+ országból, akik arra törekszenek, hogy változást érjenek el. A platform egy innovatív együttműködési erőfeszítéssel jött létre, amely a problémamegoldók sokszínű csoportját hozta össze, széles körű készségekkel, amelyek készek egymással alkotni és tanulni.",
+        "A FightPandemics egy önkéntes, globális csapat, amelynek küldetése, hogy felületet adjon azoknak akik segítséget tudnak nyújtani azokkal akik segítséget keresnek. Csapatunk 150+ elkötelezett önkéntesből áll 70+ országból, akik arra törekszenek, hogy változást érjenek el. A platform egy innovatív együttműködési erőfeszítéssel jött létre, amely a problémamegoldók sokszínű csoportját hozta össze, széles körű készségekkel, akik készek egymással alkotni és tanulni.",
         "Csatlakozni kíván kezdeményezésünkhöz? Keresse fel a <0> hr@fightpandemics.com </0> címet"
       ],
       [
@@ -506,11 +518,11 @@
       ],
       [
         "Kinek szól a FightPandemics?",
-        "Bárki, aki segítségre szorul vagy felajánlja segítségét csatlakozhat platformunkhoz, és kapcsolatba léphet más személyekkel és szervezetekkel."
+        "Bárki, aki segítségre szorul vagy felajánlja segítségét, csatlakozhat platformunkhoz, és kapcsolatba léphet más személyekkel és szervezetekkel."
       ],
       [
         "Hogyan ajánlhatok fel vagy kérhetek segítséget  a FightPandemics-en?",
-        "<0>Amikor csatlakozik a közösséghez, korlátlan hozzáférése lesz a FightPandemics platformon található bejegyzések és megjegyzések megtekintéséhez és létrehozásához.</0> <1>Ha felhasználóként szeretne csatlakozni a közösséghez, kattintson a \"Menü\" gombra, és válassza a \"Csatlakozzon most/Bejelentkezés\" lehetőséget. Ott csatlakozhat az Ön által választott e-mail címmel vagy valamely közösségi média fiókjának hitelesítő adataival</1> <2>Miután létrehozta a profilját, válassza a menügombot, majd a profilom megtekintése lehetőséget, és kattintson a plusz gombra az első bejegyzés létrehozásához.</2>"
+        "<0>Amikor csatlakozik a közösséghez, korlátlan hozzáférése lesz a FightPandemics platformon található bejegyzések és megjegyzések megtekintéséhez és létrehozásához.</0> <1>Ha felhasználóként szeretne csatlakozni a közösséghez, kattintson a \"Menü\" gombra, és válassza a \"Csatlakozzon most/Bejelentkezés\" lehetőséget. Ott csatlakozhat az Ön által választott e-mail címmel vagy valamely közösségi média fiókjának hitelesítő adataival.</1> <2>Miután létrehozta a profilját, válassza a menügombot, majd a profilom megtekintése lehetőséget, és kattintson a plusz gombra az első bejegyzés létrehozásához.</2>"
       ],
       [
         "Hogyan tudok naprakész lenni a FightPandemics híreivel kapcsolatban?",
@@ -550,7 +562,7 @@
         "Ha segítséget kínáló vagy segítséget kérő bejegyzéseket hoz létre, a neve / szervezete neve megjelenik a Segítségfolyamot megtekintők számára."
       ],
       [
-        "Hogyan bízhatok abban, hogy a bejegyzések megbízhatóak?",
+        "Hogyan lehetek biztos abban, hogy a bejegyzések megbízhatóak?",
         "Sajnos, nem tudjuk biztosítani, hogy minden hozzászólás megbízható legyen, mivel azokat a  felhasználók hozzák létre. Azonban mindent megteszünk, hogy a tartalom releváns maradjon, rendszeres adattisztítással és a bejegyzések lejárat utáni inaktiválásával. Ha aggályai vannak a tartalommal kapcsolatban kérjük írjon nekünk a :<0>support@fightpandemics.com</0> címen."
       ],
       [
@@ -670,7 +682,7 @@
     "whatCookies": "MIK AZOK A COOKIE-K?",
     "whatCookiesContent": "<0> Ez a weboldal Cookiekat és más hasonló mechanizmusokat használ. A cookie-k olyan fájlok, amelyeket egy webszerveren keresztül a böngészőbe küldenek, hogy rögzítsék a Felhasználó tevékenységét egy adott webhelyen vagy a webhelyen található összes webhelyen, alkalmazásban és/vagy szolgáltatásban. A cookiek első célja, hogy gyorsabb és személyre szabottabb hozzáférést biztosítson a Felhasználó számára a kínált szolgáltatásokhoz. A cookiek csak egy névtelen Felhasználóhoz és annak számítógépéhez vannak társítva, és nem tartalmaznak olyan hivatkozásokat, amelyek lehetővé teszik a Felhasználó személyes adatainak kivonását, megszerzését. </0> <1> A Felhasználó konfigurálhatja úgy a  böngészőjét, hogy értesítést kapjon és elutasíthassa a webhely által küldött Cookie-k telepítését, a Felhasználónak a Tartalomhoz való hozzáférés lehetőségének sérelme nélkül. Megjegyezzük azonban, hogy mindenesetre a weboldal teljesítménye csökkenhet. Ez a weboldal Web Bug-okat használ amelyek apró és átlátszó képek, amelyeket az e-mailekbe illesztenek be. Amikor a Felhasználó megnyitja a Weboldal hírlevelét, ez a kép letöltésre kerül az e-mail többi tartalmával együtt, és lehetővé teszi annak felismerését, hogy egy adott e-mailt megnyitottak-e vagy sem, valamint azt az IP-címet, amelyről letöltötték. A FightPandemics ezeket az információkat felhasználja statisztikák megszerzéséhez és elemző tanulmányok készítéséhez az e-mailek Felhasználók általi fogadásáról. </1>",
     "typeCookies": "A COOKIE-K TÍPUSA, CÉLJA ÉS MŰKÖDÉSE",
-    "typeCookiesBegin": "A cookiek, tartósságuktól függően, munkamenetre vagy állandó cookiekra oszthatók. Az elsők akkor járnak le, amikor a Felhasználó bezárja a böngészőt. A másodikak attól függően járnak le, hogy mikor teljesül az a cél, amelyre szolgálnak, vagy amikor manuálisan törlik őket. Ezenkívül, a céljától függően, az ezen a weboldalon használt sütik az alábbiak szerint osztályozhatók:",
+    "typeCookiesBegin": "A cookiek, tartósságuktól függően, munkamenetre vagy állandó cookiekra oszthatók. Az elsők akkor járnak le, amikor a Felhasználó bezárja a böngészőt. A másodikak attól függően járnak le, hogy mikor teljesül az a cél, amelyre szolgálnak, vagy amikor manuálisan törlik őket. Ezenkívül, a céljától függően, az ezen a weboldalon használt cookie-k az alábbiak szerint osztályozhatók:",
     "typeCookiesContent": "<0>Technikai cookie-k: Ezek lehetővé teszik a felhasználó számára, hogy navigáljon egy weboldalon, platformon vagy alkalmazásban, és használja az ott létező különböző lehetőségeket vagy szolgáltatásokat, például a forgalom és az adatok kommunikációjának szabályozását, a munkamenet azonosítását, a korlátozott hozzáférésű részek elérését, a megrendelést kitevő elemek megjegyzését, a megrendelés vásárlási folyamatát, a regisztrációra vagy az eseményben való részvételre vonatkozó kérést, a navigáció során  használt biztonsági elemeket, videók vagy hang terjesztésére szolgáló tartalmak tárolását vagy a közösségi hálózatokon keresztül történő tartalom megosztását. </0> <1> Elemzési cookie-k: Azok a cookiek amelyeket mi, vagy harmadik felek dolgoznak fel, lehetővé teszik a felhasználók számának számszerűsítésére, és így elvégzik a kínált szolgáltatások felhasználók általi használatának mérését és statisztikai elemzését. Ehhez a weboldalunkon történő böngészést elemezzük annak érdekében, hogy javítsuk az általunk kínált termékek vagy szolgáltatások kínálatát.</1> <2>Hirdetési cookie-k: Azok a cookiek amelyeket mi, vagy harmadik felek dolgoznak fel, lehetővé téve számunkra, hogy a lehető leghatékonyabban kezeljük a weboldalon található hirdetési terek kínálatát, a hirdetés tartalmát a kért szolgáltatás tartalmához vagy a weboldalunkon végzett felhasználáshoz igazítva. Ehhez elemezzük a böngészési szokásait az interneten, és meg tudjuk mutatni, a böngészési profiljához kapcsolódó hirdetések.</2> <3>Viselkedési hirdetési cookie-k: Ezek lehetővé teszik a lehető leghatékonyabb módon azoknak a hirdetési területeknek a kezelését, amelyeket a szerkesztő adott esetben beépített egy weboldalba, alkalmazásba vagy platformba, ahonnan a kért szolgáltatást nyújtja. Ezek a cookie-k információkat tárolnak a felhasználók viselkedéséről, amelyet a böngészési szokásaik megfigyelése révén szereztek, lehetővé teszi egy adott profil kialakítását és annak  alapján való megjelenítését a hirdetéseknek.</3>",
     "typeCookiesEnd": "A Weboldal olyan harmadik fél által nyújtott szolgáltatásokat is igénybe vehet, amelyek cookie-k telepítését tehetik szükségessé a FightPandemics nevében, és statisztikai célból információkat gyűjt az oldal használatáról a felhasználó áltaá, valamint a Weboldal tevékenységével és egyéb internetes szolgáltatásokkal kapcsolatos egyéb szolgáltatások nyújtásáról.",
     "disableCookies": "HOGYAN LEHET LETILTANI A COOKIE-KAT ÉS WEBES HIBÁKAT A FŐ BÖNGÉSZŐKBEN?",
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Helytelen jelszó",
     "noEmailAccount": "Ezzel az e-mail címmel nem található fiók, a fiók létrehozásához kattintson a \"Csatlakozzon most\" gombra.",
     "registeredAccount": "Ezzel az e-mail címmel regisztráltak egy közösségi fiókot. Kérjük, kattintson a \"Csatlakozzon most\" gombra a közvetlen e-mail- és jelszófiók létrehozásához.",
-    "failedLinkAccounts": "Nem sikerült összekapcsolni a fiókokat, ok:"
+    "failedLinkAccounts": "Nem sikerült összekapcsolni a fiókokat, ok:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "Megszakította az ellenőrzési folyamatot",
     "stepCancelBody": "Bármikor visszaléphet, és bármikor igazolhatja fiókját!",
     "stepCancelAction": "Bezárás"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Elhelyezkedés",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }
