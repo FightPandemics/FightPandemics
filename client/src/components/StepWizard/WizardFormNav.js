@@ -52,11 +52,15 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
   const [isBrowserBackClicked, setBrowserBackClicked] = useState(false);
 
   useEffect(() => {
+    console.log("in use effect");
     const { state, pathname } = history.location;
+    console.log(state, pathname);
+    console.log("history before push", history);
     history.push(pathname, {
       ...state,
       keepScroll: true,
     });
+    console.log("history after push", history);
     window.addEventListener("popstate", onBrowserBack);
     return () => {
       window.removeEventListener("popstate", onBrowserBack);
@@ -99,11 +103,12 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
           .toString();
         console.log(toPath, history.location);
         if (toPath) {
-          console.log("inside toPath", history.location);
+          console.log("inside toPath", history);
           history.push(fullPath(state.from, toPath), {
             ...state,
             keepScroll: true,
           });
+          console.log("history after push", history);
         } else {
           console.log("in go back else", history.location);
           history.goBack();
