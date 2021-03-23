@@ -224,7 +224,6 @@ const PositionApplicationForm = ({ orgName }) => {
 
       <ApplyModal
         visible={visibleTwo}
-        visible={true}
         footer={null}
         centered={true}
         onCancel={handleCancelTwo}
