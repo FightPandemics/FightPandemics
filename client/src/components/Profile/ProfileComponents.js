@@ -36,8 +36,9 @@ export const SectionHeader = styled(Heading)`
     color: ${colors.darkGray};
     font-size: 1.5rem;
     font-weight: 500;
-    margin-bottom: 2rem;
+    // margin-bottom: 2rem;
     background: transparent;
+    padding: 0rem;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       background: ${colors.ghostWhite};
