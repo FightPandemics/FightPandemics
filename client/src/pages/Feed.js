@@ -522,7 +522,6 @@ const Feed = (props) => {
         break;
     }
     let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${sortQuery()}`;
-    console.log(endpoint);
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -650,7 +649,6 @@ const Feed = (props) => {
     ) {
       setSortValue("createdAt");
     }
-    console.log(history.location);
   }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {

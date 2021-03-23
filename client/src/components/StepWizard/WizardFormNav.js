@@ -44,27 +44,18 @@ export const StyledButtonWizard = styled(StepWizard)`
 
 const WizardFormNav = ({ gtmPrefix = "" }) => {
   const history = useHistory();
-  console.log(history);
   const { t } = useTranslation();
   // expandable with paginated paths to keep scroll level
   const fromPath = ["dashboard", "feed"];
   const fullPath = (from, pathname) => from.slice(from.indexOf(pathname) - 1);
   const [isBrowserBackClicked, setBrowserBackClicked] = useState(false);
-  const [historyState, setHistoryState] = useState(history);
 
   useEffect(() => {
-    console.log(history);
     const { state, pathname } = history.location;
-    console.log(state, pathname);
-    console.log("history before push", history);
     history.push(pathname, {
       ...state,
       keepScroll: true,
     });
-    setTimeout(() => {
-      console.log("history after push useEffect", history);
-    }, 10000);
-
     window.addEventListener("popstate", onBrowserBack);
     return () => {
       window.removeEventListener("popstate", onBrowserBack);
@@ -72,7 +63,6 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onBrowserBack = (e) => {
-    console.log("in browserBack", history);
     e.preventDefault();
     const { state } = history.location;
     if (!isBrowserBackClicked && state) {
@@ -98,34 +88,24 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
   };
 
   const handleClick = () => {
-    console.log(history);
     if (history?.location?.state?.from) {
       const { state } = history.location;
       if (typeof state.from !== "object") {
-        console.log("frompath", fromPath, history);
         const toPath = fromPath
           .filter((path) => state.from.indexOf(path) > -1)
           .toString();
-        console.log("topath", toPath, history);
         if (toPath) {
-          console.log("inside toPath", history);
           history.push(fullPath(state.from, toPath), {
             ...state,
             keepScroll: true,
           });
-          setTimeout(() => {
-            console.log("history after push, handleclick", history);
-          }, 10000);
         } else {
-          console.log("in go back else", history.location);
           history.goBack();
         }
       } else {
-        console.log("in first history push else", history.location);
         history.push(FEED);
       }
     } else {
-      console.log("in last history push else", history.location);
       history.push(FEED);
     }
   };
