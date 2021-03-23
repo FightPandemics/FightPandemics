@@ -340,7 +340,8 @@
       "updatingPassword": "Updating Password",
       "editSecurity": "Edit Security",
       "editNotification": "Edit Notification",
-      "editAccount": "Edit Account"
+      "editAccount": "Edit Account",
+      "joinOrg": "Join"
     },
     "org": {
       "title": "Create Organization Profile",
