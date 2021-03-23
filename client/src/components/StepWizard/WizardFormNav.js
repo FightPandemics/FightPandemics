@@ -52,7 +52,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
   const [isBrowserBackClicked, setBrowserBackClicked] = useState(false);
 
   useEffect(() => {
-    console.log("in use effect");
+    console.log(history);
     const { state, pathname } = history.location;
     console.log(state, pathname);
     console.log("history before push", history);
@@ -68,6 +68,7 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onBrowserBack = (e) => {
+    console.log("in browserBack", history);
     e.preventDefault();
     const { state } = history.location;
     if (!isBrowserBackClicked && state) {
