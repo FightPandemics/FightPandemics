@@ -1,5 +1,6 @@
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Loader from "components/Feed/StyledLoader";
 import ApplyButton, { ApplyContainer } from "components/Positions/PositionsButton";
 import ProfilePic from "components/Positions/ProfilePic";
@@ -157,7 +158,11 @@ const Positions = () => {
                         </PositionDescription >
                         {//Button will connect applications page
                         }
-                        <ApplyContainer><ApplyButton>{t("positions.apply")}</ApplyButton></ApplyContainer>
+                        <ApplyContainer>
+                            <Link to={`/organisation/${organisationId}/apply`}>
+                                <ApplyButton>{t("positions.apply")}</ApplyButton>
+                            </Link>
+                        </ApplyContainer>
                     </PositionsContainer >
                 </ProfileLayout>
             </>
