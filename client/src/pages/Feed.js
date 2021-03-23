@@ -654,7 +654,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
-  }, [sortValue]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [sortValue, queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
