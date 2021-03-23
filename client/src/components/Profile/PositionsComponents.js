@@ -287,7 +287,6 @@ export const PositionDescription = styled.p`
   font-size: 1.6rem;
   line-height: 1.9rem;
   letter-spacing: .07rem;
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
     font-size: 1.2rem;
     line-height: 1.4rem;
