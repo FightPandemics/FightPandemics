@@ -21,7 +21,8 @@
     "stayOnPageContent": "Если вы выберете «Нет», вы будете перенаправлены на Доску Объявлений.",
     "yes": "Да",
     "no": "Нет",
-    "ok": "ОК"
+    "ok": "ОК",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Местоположение",
         "providers": "Провайдеры",
         "type": "Виды",
-        "lookingFor": "Предложение или просьба о помощи"
+        "lookingFor": "Предложение или просьба о помощи",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Частное лицо",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Попросить о помощи",
         "offer": "Предложить помощь"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Сообщение",
@@ -233,7 +240,12 @@
     "hideCaption": "Это не имеет ко мне отношения",
     "reportAction": "Пожаловаться на объявление",
     "reportCaption": "Для рассмотрения модераторам",
-    "copyUrl": "Копировать URL"
+    "copyUrl": "Копировать URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Неверный текущий пароль",
     "noEmailAccount": "Нет аккаунта, привязанного к этому адресу электронной почты. Пожалуйста, нажмите \"Присоединиться\", чтобы создать новый аккаунт.",
     "registeredAccount": "С этим адресом электронной почты уже был зарегистрирован социальный аккаунт. Пожалуйста, нажмите «Присоединиться», чтобы создать учетную запись непосредственно с помощью адреса электронной почты и пароля.",
-    "failedLinkAccounts": "Не удалось связать аккаунты, причина:"
+    "failedLinkAccounts": "Не удалось связать аккаунты, причина:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "Верификация отменена",
     "stepCancelBody": "Вы всегда можете вернуться и верифицировать свою учётную запись!",
     "stepCancelAction": "Закрыть"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "[!!! §λářè ¥ôúř ℓôçáƭïôñ ïƒ ¥ôú ωáñƭ ƭô ƨèè ¥ôúř ñèářèƨƭ λèáℓƭλ ƒáçïℓïƭïèƨ £ôřè₥ ïƥƨú₥ δôℓôř ƨï !!!]",
+    "changeLoc": "Местоположение",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "[!!! Hèáℓƭλ Fáçïℓïƭïèƨ £ôřè₥ !!!]",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }
