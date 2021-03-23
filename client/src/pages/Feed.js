@@ -340,7 +340,7 @@ const Feed = (props) => {
         location: null,
         near_me: e.target.checked,
       });
-      setSortValue("proximity");
+      setSortValue("proximity-near");
     } else {
       setQueryKeysValue(history, {
         near_me: e.target.checked,
@@ -384,7 +384,7 @@ const Feed = (props) => {
         near_me: false,
       });
       dispatchAction(SET_VALUE, "location", value);
-      setSortValue("proximity");
+      setSortValue("proximity-location");
     } else {
       setSortValue("createdAt");
     }
