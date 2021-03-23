@@ -287,8 +287,8 @@ const routes = [
     path: "/organisation/:id/apply",
     component: Apply,
     props: {
-      hideFooter: true,
-      hideHeader: true
+      hideFooter: false,
+      hideHeader: false
     }
   },
   {
