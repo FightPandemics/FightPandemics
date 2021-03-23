@@ -97,11 +97,11 @@ const WizardFormNav = ({ gtmPrefix = "" }) => {
     if (history?.location?.state?.from) {
       const { state } = history.location;
       if (typeof state.from !== "object") {
-        console.log(fromPath, history.location);
+        console.log("frompath", fromPath, history);
         const toPath = fromPath
           .filter((path) => state.from.indexOf(path) > -1)
           .toString();
-        console.log(toPath, history.location);
+        console.log("topath", toPath, history);
         if (toPath) {
           console.log("inside toPath", history);
           history.push(fullPath(state.from, toPath), {
