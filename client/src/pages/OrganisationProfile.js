@@ -1,4 +1,6 @@
 import { WhiteSpace } from "antd-mobile";
+import { Tabs } from "antd";
+import { ProfileTabs, ProfileTabPane } from "components/OrganisationProfile/ProfileTabs"
 import axios from "axios";
 import React, {
   useState,
@@ -101,6 +103,7 @@ import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
+import { TestMembers } from "components/OrganisationProfile/OrgMembers"
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -422,6 +425,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
+  const { TabPane } = Tabs
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -508,65 +512,74 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </JoinOrgButton>
             </Link>
           </JoinOrgContainer>
-          <div>
-            <SectionHeader>
-              {t("profile.org.activity")}
-              <PlaceholderIcon />
-              {isSelf && (
-                <>
-                  <CreatePostIcon
-                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    src={createPost}
-                    onClick={onToggleCreatePostDrawer}
-                  />
-                  <CreatePostButton
-                    onClick={onToggleCreatePostDrawer}
-                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    inline={true}
-                    icon={<PlusIcon />}
-                  >
-                    {t("post.create")}
-                  </CreatePostButton>
-                </>
-              )}
-            </SectionHeader>
-            <FeedWrapper isProfile>
-              <Activity
-                postDispatch={dispatch}
-                filteredPosts={postsList}
-                user={user}
-                postDelete={postDelete}
-                handlePostDelete={handlePostDelete}
-                handleEditPost={handleEditPost}
-                deleteModalVisibility={deleteModalVisibility}
-                handleCancelPostDelete={handleCancelPostDelete}
-                loadNextPage={loadNextPage}
-                isNextPageLoading={isLoading}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalPostCount={totalPostCount}
-              />
-              {postsError && (
-                <ErrorAlert
-                  message={t([
-                    `error.${postsError.message}`,
-                    `error.http.${postsError.message}`,
-                  ])}
-                />
-              )}
-              {emptyFeed() && <></>}
-              {isSelf && (
-                <CreatePost
-                  gtmPrefix={GTM.organisation.orgPrefix}
-                  onCancel={onToggleCreatePostDrawer}
-                  loadPosts={refetchPosts}
-                  visible={modal}
+
+          {// TABS
+          }
+
+          <ProfileTabs defaultActiveKey="2">
+            <ProfileTabPane tab="Activity" key="1"><div>
+              <SectionHeader>
+                {/* {t("profile.org.activity")} */}
+                <PlaceholderIcon />
+                {isSelf && (
+                  <>
+                    <CreatePostIcon
+                      id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                      src={createPost}
+                      onClick={onToggleCreatePostDrawer}
+                    />
+                    <CreatePostButton
+                      onClick={onToggleCreatePostDrawer}
+                      id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                      inline={true}
+                      icon={<PlusIcon />}
+                    >
+                      {t("post.create")}
+                    </CreatePostButton>
+                  </>
+                )}
+              </SectionHeader>
+
+              <FeedWrapper isProfile>
+                <Activity
+                  postDispatch={dispatch}
+                  filteredPosts={postsList}
                   user={user}
+                  postDelete={postDelete}
+                  handlePostDelete={handlePostDelete}
+                  handleEditPost={handleEditPost}
+                  deleteModalVisibility={deleteModalVisibility}
+                  handleCancelPostDelete={handleCancelPostDelete}
+                  loadNextPage={loadNextPage}
+                  isNextPageLoading={isLoading}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoaded}
+                  hasNextPage={loadMore}
+                  totalPostCount={totalPostCount}
                 />
-              )}
-            </FeedWrapper>
-          </div>
+                {postsError && (
+                  <ErrorAlert
+                    message={t([
+                      `error.${postsError.message}`,
+                      `error.http.${postsError.message}`,
+                    ])}
+                  />
+                )}
+                {emptyFeed() && <></>}
+                {isSelf && (
+                  <CreatePost
+                    gtmPrefix={GTM.organisation.orgPrefix}
+                    onCancel={onToggleCreatePostDrawer}
+                    loadPosts={refetchPosts}
+                    visible={modal}
+                    user={user}
+                  />
+                )}
+              </FeedWrapper>
+            </div></ProfileTabPane>
+            <ProfileTabPane tab="Members" key="2"><TestMembers /></ProfileTabPane>
+          </ProfileTabs>
+
           {isSelf && (
             <CustomDrawer
               placement="bottom"
