@@ -340,6 +340,7 @@ const Feed = (props) => {
         location: null,
         near_me: e.target.checked,
       });
+      dispatchAction(SET_VALUE, "location", null);
       setSortValue("proximity-near");
     } else {
       setQueryKeysValue(history, {
@@ -375,9 +376,6 @@ const Feed = (props) => {
     if (applyFilters) {
       dispatch(postsActions.resetPageAction({}));
     }
-    if (!value && queryParams.location) {
-      setQueryKeysValue(history, { location: null });
-    }
     if (value) {
       setQueryKeysValue(history, {
         s_keyword: null,
@@ -387,6 +385,9 @@ const Feed = (props) => {
       setSortValue("proximity-location");
     } else {
       setSortValue("createdAt");
+    }
+    if (!value && queryParams.location) {
+      setQueryKeysValue(history, { location: null });
     }
   };
 
@@ -438,6 +439,7 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
     dispatchAction(SET_VALUE, "applyFilters", true);
+    dispatchAction(SET_VALUE, "location", null);
   };
 
   const handlePostDelete = () => {
