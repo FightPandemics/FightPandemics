@@ -489,10 +489,6 @@ const Feed = (props) => {
       }
     };
     const searchKeyword = queryParams.s_keyword;
-    const limit = PAGINATION_LIMIT;
-    const skip = page * limit;
-    let baseURL = gePostsBasetUrl(organisationId, limit, skip);
-
     const sortQuery = () => {
       if (
         sortValue === "proximity-location" ||
@@ -509,6 +505,9 @@ const Feed = (props) => {
         return `&sort=${sortValue}`;
       }
     };
+    const limit = PAGINATION_LIMIT;
+    const skip = page * limit;
+    let baseURL = gePostsBasetUrl(organisationId, limit, skip);
     // ${searchURL()}&ignoreUserLocation=${ignoreUserLocation}
     switch (queryParams.s_category) {
       case "POSTS":
