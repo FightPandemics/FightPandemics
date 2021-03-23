@@ -1,4 +1,5 @@
 import { POSTS_ACTIONS } from "./actions";
+import { isPostExpired } from "components/Feed/utils";
 
 const innitialState = {
   posts: [],
@@ -66,7 +67,75 @@ const postsReducer = (state = innitialState, action) => {
         isLoading: false,
       };
     }
+    case POSTS_ACTIONS.UPDATE_PROFILE_POST_SUCCESS: {
+      let { post, userId } = action.payload;
+      const isExpired = isPostExpired(post);
+      const objective = getProfileObjectiveProp(post.objective);
 
+      // map though all Profile Posts to update (likes, edits, etc.)
+      let currentPosts = state.profilePosts[userId]?.[objective]?.all;
+      currentPosts =
+        currentPosts !== undefined
+          ? currentPosts.map((currentPost) => {
+              if (currentPost._id !== post._id) {
+                return currentPost;
+              }
+              return {
+                ...currentPost,
+                ...post,
+              };
+            })
+          : undefined;
+
+      let currentActivePosts = state.profilePosts[userId]?.[objective]?.active;
+      let currentInActivePosts =
+        state.profilePosts[userId]?.[objective]?.inactive;
+
+      if (!isExpired) {
+        // map through active Profile posts to update
+        currentActivePosts =
+          currentActivePosts !== undefined
+            ? currentActivePosts.map((currentActivePost) => {
+                if (currentActivePost._id !== post._id) {
+                  return currentActivePost;
+                }
+                return {
+                  ...currentActivePost,
+                  ...post,
+                };
+              })
+            : undefined;
+      } else {
+        // map though achived Profile posts to update
+        currentInActivePosts =
+          currentInActivePosts !== undefined
+            ? currentInActivePosts.map((currentInActivePost) => {
+                if (currentInActivePost._id !== post._id) {
+                  return currentInActivePost;
+                }
+                return {
+                  ...currentInActivePost,
+                  ...post,
+                };
+              })
+            : undefined;
+      }
+      return {
+        ...state,
+        error: null,
+        profilePosts: {
+          ...state.profilePosts,
+          [userId]: {
+            ...state.profilePosts[userId],
+            [objective]: {
+              active: currentActivePosts,
+              inactive: currentInActivePosts,
+              all: currentPosts,
+            },
+          },
+        },
+      };
+    }
     case POSTS_ACTIONS.FETCH_POSTS_ERROR: {
       const { payload } = action;
       return {
@@ -103,9 +172,9 @@ const postsReducer = (state = innitialState, action) => {
         ...state,
         posts: {
           ...state.posts,
-          [payload.postId]: {
-            ...state.posts[payload.postId],
-            liked: !!!state.posts[payload.postId].liked,
+          [payload.post._id]: {
+            ...state.posts[payload.post._id],
+            liked: payload.post.liked,
             likesCount: payload.count,
           },
         },

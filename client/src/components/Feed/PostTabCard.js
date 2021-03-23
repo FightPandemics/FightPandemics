@@ -35,7 +35,7 @@ const PostContent = ({
   fromPage,
 }) => {
   const [hiddenPosts, setHiddenPosts] = useState(
-    JSON.parse(localStorage.getItem("hiddenPosts")) || {},
+    JSON.parse(localStorage.getItem("hiddenPosts")) || {}
   );
   const [callReport, setCallReport] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
@@ -46,7 +46,7 @@ const PostContent = ({
   const hidePost = (postId) => {
     localStorage.setItem(
       "hiddenPosts",
-      JSON.stringify({ ...hiddenPosts, [postId]: true }),
+      JSON.stringify({ ...hiddenPosts, [postId]: true })
     ); // objects are fast, better than looking for postId in an Array
     setHiddenPosts({ ...hiddenPosts, [postId]: true });
   };
@@ -87,7 +87,19 @@ const PostContent = ({
                 </StyledDropDown>
               </StyledCardHeader>
               <StyledTitlePostCard>{post.title}</StyledTitlePostCard>
-              <StyledDescription>{finalContent}</StyledDescription>
+              <Link
+                to={{
+                  pathname: `/post/${post._id}`,
+                  state: {
+                    post: post,
+                    postId: post._id,
+                    from: window.location.href,
+                    user,
+                  },
+                }}
+              >
+                <StyledDescription>{finalContent}</StyledDescription>
+              </Link>
               <LineBreak />
               {callReport ? (
                 <CreateReport
@@ -109,7 +121,7 @@ const PostContent = ({
       actorId,
       callReport,
       hidePost,
-    ],
+    ]
   );
 
   return (

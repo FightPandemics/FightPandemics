@@ -69,22 +69,31 @@ const ProfileDesktop = ({
   isProfile,
 }) => {
   const { t } = useTranslation();
-
   const defaultState = useCallback(() => {
     if (viewType === "POSTS") return "REQUESTS";
     else if (viewType === "REQUESTS") return "ACTIVE_REQS";
     else return "ACTIVE_OFRS";
   });
-  const [childTab, setChildTab] = useState(defaultState);
+  const [childTab, setChildTab] = useState(defaultState());
+
+  const getTabName = (key) => {
+    // console.log(key.indexOf('_') );
+    return key && key.indexOf("_") !== -1
+      ? key.substr(0, key.indexOf("_"))
+      : key;
+  };
 
   const handleTabChange = (e) => {
-    setChildTab(e.key);
-    setInternalTab(e.key);
+    const keyVal = e.key;
+    // console.log(keyVal);
+    setChildTab(keyVal);
+    // console.log(getTabName(keyVal));
+    setInternalTab(getTabName(keyVal));
   };
 
   useEffect(() => {
-    setChildTab(defaultState);
-    setInternalTab(defaultState);
+    setChildTab(defaultState());
+    setInternalTab(getTabName(defaultState()));
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const gtmIdPost = () => {

@@ -80,6 +80,7 @@ import {
 } from "hooks/actions/userActions";
 import { UserContext, withUserContext } from "context/UserContext";
 import { getInitialsFromFullName } from "utils/userInfo";
+import { isPostExpired } from "components/Feed/utils";
 import GTM, { post } from "constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import Loader from "components/Feed/StyledLoader";
@@ -359,6 +360,7 @@ const Profile = ({
 
           const modeURL = `&postMode=${mode}`;
           const endpoint = `${baseURL}${objURL}${modeURL}`;
+
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
@@ -544,13 +546,6 @@ const Profile = ({
     );
   };
 
-  const isPostExpired = (post) => {
-    if (!post.expireAt) {
-      return false;
-    }
-    return new Date(post.expireAt).getTime() < new Date().getTime();
-  };
-
   const handleDeletePostSuccess = (post) => {
     if (isPostExpired(post)) {
       dispatch(
@@ -619,14 +614,14 @@ const Profile = ({
 
   const setTab = (childTab) => {
     if (
-      childTab === "Offers" ||
-      childTab === "Requests" ||
-      childTab === "Active" ||
-      childTab === "Archived"
+      childTab.toUpperCase() === t("profile.views.requests").toUpperCase() ||
+      childTab.toUpperCase() === t("profile.views.offers").toUpperCase() ||
+      childTab.toUpperCase() === t("profile.views.active").toUpperCase() ||
+      childTab.toUpperCase() === t("profile.views.archived").toUpperCase()
     ) {
       pushTag(childTab);
+      setInternalTab(childTab);
     }
-    setInternalTab(childTab);
   };
 
   const emptyFeed = () => filteredPost.length < 1 && !isLoading;
