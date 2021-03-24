@@ -32,6 +32,7 @@ import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
+import SeeAll from "./pages/SeeAllPost";
 
 import { SCOPES } from "constants/permissions";
 
@@ -245,6 +246,14 @@ const routes = [
     layout: "navless",
     props: {
       loggedInOnly: true,
+    },
+  },
+  {
+    path: "/see-all/:id",
+    component: SeeAll,
+    props: {
+      loggedInOnly: false,
+      isProfile: false,
     },
   },
   {

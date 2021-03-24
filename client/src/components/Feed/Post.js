@@ -1,6 +1,6 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import { Tooltip } from "antd";
@@ -41,8 +41,11 @@ import {
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
 import { authorProfileLink, buildLocationString } from "./utils";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
-import { getInitialsFromFullName } from "utils/userInfo";
+import {
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser,
+} from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
@@ -125,10 +128,13 @@ const Post = ({
   onPostHide,
   onPostUnhide,
   convertTextToURL,
+  isProfile,
+  gtmIdPost,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
   const limit = useRef(5);
+  const dispatch = useDispatch();
   let post;
   if (currentPost) {
     post = currentPost;
@@ -295,6 +301,12 @@ const Post = ({
         "commentsCount",
         commentCountRes.data.post.commentsCount,
       );
+      dispatch(
+        postsActions.updateProfilePostSucess({
+          post: commentCountRes.data.post,
+          userId: commentCountRes.data.post.author.id,
+        }),
+      );
       setComment([]);
     }
   };
@@ -348,6 +360,12 @@ const Post = ({
           filterComments,
           "commentsCount",
           commentCountRes.data.post.commentsCount,
+        );
+        dispatch(
+          postsActions.updateProfilePostSucess({
+            post: commentCountRes.data.post,
+            userId: commentCountRes.data.post.author.id,
+          }),
         );
       }
     }
@@ -581,6 +599,7 @@ const Post = ({
           location: post.author.location,
           age: Object.values(post?.elapsedTimeText?.created || {}).join(" "),
         }}
+        post={post}
       />
     </Card.Body>
   );
@@ -598,6 +617,10 @@ const Post = ({
       : "post.both";
   };
 
+  const gtmId = () => {
+    return isProfile ? gtmIdPost() : GTM.feed.prefix + GTM.profile.posts;
+  };
+
   return (
     <>
       {postId && dispatchPostAction ? (
@@ -608,11 +631,6 @@ const Post = ({
               <div className="blur-overlay">
                 <SvgIcon src={eyeHide} />
                 {t("moderation.postSuspected")}
-                {/* removed for now
-                <span onClick={() => onPostPageShowAnyway(postId)}>
-                  {t("moderation.showAnyway")}
-                </span>
-                */}
               </div>
             )}
             <div className="pre-header post-page">
@@ -747,14 +765,7 @@ const Post = ({
                     </>
                   )}
                   {isSuspected && !isOwner && (
-                    <>
-                      {t("moderation.postSuspected")}
-                      {/* removed for now
-                      <span onClick={() => onPostShowAnyway(_id)}>
-                        {t("moderation.showAnyway")}
-                      </span>
-                      */}
-                    </>
+                    <>{t("moderation.postSuspected")}</>
                   )}
                 </div>
               )}
@@ -777,7 +788,6 @@ const Post = ({
                         count: post?.elapsedTimeText?.created?.count,
                       },
                     )}
-
                     {post?.elapsedTimeText?.isEdited &&
                       ` · ${t("post.edited")}`}
                   </span>
@@ -809,6 +819,7 @@ const Post = ({
               <WhiteSpace />
               {post && isAuthenticated ? (
                 <Link
+                  id={gtmId()}
                   to={{
                     pathname: `/post/${_id}`,
                     state: {

@@ -407,6 +407,18 @@
       "editOrgNotification": "Edit Organisation Notification",
       "editOrgBook": "Edit OrgBook",
       "createOrgBook": "Create OrgBook"
+    },
+    "views": {
+      "activity": "Activity",
+      "posts": "Posts",
+      "requests": "Requests",
+      "offers": "Offers",
+      "organizations": "Organizations",
+      "badges": "Badges",
+      "thanks": "Thanks",
+      "active": "Active",
+      "archived": "Archived",
+      "drafts": "drafts"
     }
   },
   "orgBook": {
