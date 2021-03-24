@@ -1,6 +1,6 @@
 // Core
 import React, { useEffect, useState, useRef } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Card, WhiteSpace } from "antd-mobile";
 import { Tooltip } from "antd";
@@ -41,8 +41,11 @@ import {
   TOGGLE_COMMENTS,
 } from "hooks/actions/postActions";
 import { authorProfileLink, buildLocationString } from "./utils";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
-import { getInitialsFromFullName } from "utils/userInfo";
+import {
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser,
+} from "utils/userInfo";
 import { ExternalLinkIcon, IconsContainer } from "./ExternalLinks";
 import GTM from "constants/gtm-tags";
 import { selectActorId } from "reducers/session";
@@ -82,7 +85,7 @@ const highlightString = (text, highlight) => {
   return parts
     .filter((part) => part)
     .map((part) =>
-      regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
+      regex.test(part) ? <span className={"highlighted"}>{part}</span> : part
     );
 };
 
@@ -93,7 +96,7 @@ const Highlight = ({ textObj = "", highlight = "" }) => {
   // linkify result could be Array
   if (Array.isArray(textObj)) {
     return textObj.map((part) =>
-      typeof part === "string" ? highlightString(part, highlight) : part,
+      typeof part === "string" ? highlightString(part, highlight) : part
     );
   }
   return textObj;
@@ -125,10 +128,13 @@ const Post = ({
   onPostHide,
   onPostUnhide,
   convertTextToURL,
+  isProfile,
+  gtmIdPost,
 }) => {
   const { t } = useTranslation();
   const { postId } = useParams();
   const limit = useRef(5);
+  const dispatch = useDispatch();
   let post;
   if (currentPost) {
     post = currentPost;
@@ -214,7 +220,7 @@ const Post = ({
 
       allComments = allComments.filter(
         (comment1, index, self) =>
-          index === self.findIndex((comment2) => comment2._id === comment1._id),
+          index === self.findIndex((comment2) => comment2._id === comment1._id)
       );
       if (
         previousComments.length === allComments.length ||
@@ -228,7 +234,7 @@ const Post = ({
           "comments",
           allComments,
           "commentsCount",
-          commentCountRes.data.post.commentsCount,
+          commentCountRes.data.post.commentsCount
         );
       }
 
@@ -293,7 +299,13 @@ const Post = ({
         "comments",
         allComments,
         "commentsCount",
-        commentCountRes.data.post.commentsCount,
+        commentCountRes.data.post.commentsCount
+      );
+      dispatch(
+        postsActions.updateProfilePostSucess({
+          post: commentCountRes.data.post,
+          userId: commentCountRes.data.post.author.id,
+        })
       );
       setComment([]);
     }
@@ -339,7 +351,7 @@ const Post = ({
       }
       if (response && response.data) {
         let filterComments = comments.filter(
-          (comment) => comment._id !== commentId,
+          (comment) => comment._id !== commentId
         );
 
         await dispatchPostAction(
@@ -347,7 +359,13 @@ const Post = ({
           "comments",
           filterComments,
           "commentsCount",
-          commentCountRes.data.post.commentsCount,
+          commentCountRes.data.post.commentsCount
+        );
+        dispatch(
+          postsActions.updateProfilePostSucess({
+            post: commentCountRes.data.post,
+            userId: commentCountRes.data.post.author.id,
+          })
         );
       }
     }
@@ -498,7 +516,7 @@ const Post = ({
             </PostTag>
           ) : (
             ""
-          ),
+          )
         )}
     </Card.Body>
   );
@@ -581,6 +599,7 @@ const Post = ({
           location: post.author.location,
           age: Object.values(post?.elapsedTimeText?.created || {}).join(" "),
         }}
+        post={post}
       />
     </Card.Body>
   );
@@ -598,6 +617,10 @@ const Post = ({
       : "post.both";
   };
 
+  const gtmId = () => {
+    return isProfile ? gtmIdPost() : GTM.feed.prefix + GTM.profile.posts;
+  };
+
   return (
     <>
       {postId && dispatchPostAction ? (
@@ -608,11 +631,6 @@ const Post = ({
               <div className="blur-overlay">
                 <SvgIcon src={eyeHide} />
                 {t("moderation.postSuspected")}
-                {/* removed for now
-                <span onClick={() => onPostPageShowAnyway(postId)}>
-                  {t("moderation.showAnyway")}
-                </span>
-                */}
               </div>
             )}
             <div className="pre-header post-page">
@@ -632,7 +650,7 @@ const Post = ({
                     `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
                     {
                       count: post?.elapsedTimeText?.created?.count,
-                    },
+                    }
                   )}
                   {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
                 </span>
@@ -669,7 +687,7 @@ const Post = ({
               content,
               highlightWords,
               showComplete,
-              convertTextToURL,
+              convertTextToURL
             )}
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
@@ -747,14 +765,7 @@ const Post = ({
                     </>
                   )}
                   {isSuspected && !isOwner && (
-                    <>
-                      {t("moderation.postSuspected")}
-                      {/* removed for now
-                      <span onClick={() => onPostShowAnyway(_id)}>
-                        {t("moderation.showAnyway")}
-                      </span>
-                      */}
-                    </>
+                    <>{t("moderation.postSuspected")}</>
                   )}
                 </div>
               )}
@@ -775,9 +786,8 @@ const Post = ({
                       `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
                       {
                         count: post?.elapsedTimeText?.created?.count,
-                      },
+                      }
                     )}
-
                     {post?.elapsedTimeText?.isEdited &&
                       ` · ${t("post.edited")}`}
                   </span>
@@ -809,6 +819,7 @@ const Post = ({
               <WhiteSpace />
               {post && isAuthenticated ? (
                 <Link
+                  id={gtmId()}
                   to={{
                     pathname: `/post/${_id}`,
                     state: {
@@ -827,7 +838,7 @@ const Post = ({
                     content,
                     highlightWords,
                     showComplete,
-                    convertTextToURL,
+                    convertTextToURL
                   )}
                 </Link>
               ) : (
@@ -847,7 +858,7 @@ const Post = ({
                     content,
                     highlightWords,
                     showComplete,
-                    convertTextToURL,
+                    convertTextToURL
                   )}
                 </>
               )}
@@ -903,7 +914,7 @@ const renderContent = (
   content,
   highlightWords,
   showComplete,
-  convertTextToURL,
+  convertTextToURL
 ) => {
   let finalContent = content;
   if (finalContent.length > CONTENT_LENGTH && !showComplete) {

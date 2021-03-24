@@ -19,7 +19,7 @@ const { typography } = theme;
 
 export const CreatePostContext = createContext();
 
-const Step1 = ({ onCancel, visible, gtmPrefix }) => {
+const Step1 = ({ onCancel, visible, gtmPrefix, onSuccess }) => {
   const { currentStep, setCurrentStep, setPostId } = useContext(
     CreatePostContext,
   );
@@ -27,6 +27,7 @@ const Step1 = ({ onCancel, visible, gtmPrefix }) => {
   return (
     <TabForms
       setCurrentStep={setCurrentStep}
+      onSuccess={onSuccess}
       onClose={() => {
         setCurrentStep(1);
         onCancel();
@@ -89,7 +90,7 @@ const Step2 = () => {
   );
 };
 
-const CreatePost = ({ onCancel, loadPosts, ...props }) => {
+const CreatePost = ({ onCancel, onSuccess, loadPosts, ...props }) => {
   const organisationId = useSelector(selectOrganisationId);
   const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState({ organisationId: organisationId });
@@ -114,7 +115,12 @@ const CreatePost = ({ onCancel, loadPosts, ...props }) => {
       <Wrapper onCancel={clearState} {...props}>
         <Step2 gtmPrefix={props.gtmPrefix} />
       </Wrapper>
-      <Step1 onCancel={clearState} {...props} gtmPrefix={props.gtmPrefix} />
+      <Step1
+        onSuccess={onSuccess}
+        onCancel={clearState}
+        {...props}
+        gtmPrefix={props.gtmPrefix}
+      />
     </CreatePostContext.Provider>
   );
 };

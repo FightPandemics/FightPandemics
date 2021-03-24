@@ -51,6 +51,7 @@ import {
   deletePostModalreducer,
   deletePostState,
 } from "hooks/reducers/feedReducers";
+import { isAuthorUser, isAuthorOrg } from "utils/userInfo";
 
 // ICONS
 import { CreatePostIcon } from "../components/Profile/ProfileComponents";
@@ -76,21 +77,6 @@ import TagManager from "react-gtm-module";
 import WithSummitBanner from "components/WithSummitBanner";
 import SortSelector from "../components/Feed/SortSelector";
 import useWindowDimensions from "../utils/windowSize";
-
-export const isAuthorOrg = (organisations, author) => {
-  const isValid = organisations?.some(
-    (organisation) => organisation.name === author.name,
-  );
-  return isValid;
-};
-
-export const isAuthorUser = (user, post) => {
-  return (
-    user?._id === post?.author?.id ||
-    (user?.id === post?.author?.id &&
-      (user.ownUser === undefined || user.ownUser))
-  );
-};
 
 const gtmTagsMap = {
   ALL: GTM.post.allPost,

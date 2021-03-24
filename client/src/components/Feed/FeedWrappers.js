@@ -156,3 +156,26 @@ export const MobileSearchWrapper = styled.div`
     display: none !important;
   }
 `;
+
+export const SeeAllWrapper = styled(Content)`
+  overflow-x: visible !important;
+  background: ${white};
+  ${({ isMobile }) =>
+    isMobile
+      ? `
+      ""
+  `
+      : `width: 100%`}
+`;
+
+export const SeeAllTabsWrapper = styled(Content)`
+  background: ${white};
+  border-radius: 1rem;
+`;
+
+export const SeeAllContentWrapper = styled(Content)`
+  overflow-x: visible !important;
+  width: 95%;
+  margin: auto;
+  background: ${white};
+`;
