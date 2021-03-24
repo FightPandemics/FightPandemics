@@ -109,8 +109,9 @@ const OrgBookEditorSpace = (props) => {
   const onInit = useCallback(
     (editor) => {
       tinyMce.current = editor;
-      if (!(selectedPage === null)) {
-        setNumberOfCharacters(selectedPage.content.length);
+      if (selectedPage) {
+        const withoutSpace = selectedPage.content.replace(/ /g, "");
+        setNumberOfCharacters(withoutSpace.length);
       }
     },
     [selectedPage],

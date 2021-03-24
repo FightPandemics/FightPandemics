@@ -110,6 +110,8 @@ const OrgBookConfirmModal = ({
   return (
     selectedPage && (
       <OrgBookStyledModalContainer
+        MaxModalBodyHeight={showUnpublishOptions ? "49.6rem" : "10rem"}
+        MinModalBodyHeight={showUnpublishOptions ? "25.7rem" : "10rem"}
         width={450}
         visible={visible}
         title={title}

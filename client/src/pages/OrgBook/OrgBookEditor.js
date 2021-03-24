@@ -60,7 +60,7 @@ const UNPUBLISH_OPTIONS = {
 };
 
 const MAX_PAGEGROUP_NUMBER = 5;
-const MAX_CHARACTERS_OF_CONTENT = 200;
+const MAX_CHARACTERS_OF_CONTENT = 500000;
 const MIN_CHARACTERS_OF_CONTENT = 5;
 
 const OrgBookEditorContainer = styled.div`
@@ -114,6 +114,17 @@ const ErrorAlert = styled(Alert)`
 export const Background = styled.div`
   width: 95%;
   background-color: ${mediumGray};
+`;
+
+export const ModalMount = styled.div`
+  id: modalMount;
+  display: inline-block;
+  width: 95%;
+  position: fixed;
+  top: 6rem;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `;
 
 const OrgBookEditor = () => {
@@ -741,8 +752,10 @@ const OrgBookEditor = () => {
     };
 
     return (
-      <Background>
+      <div>
         <OrgBookConfirmModal
+          mask={false}
+          getContainer="#modalMount"
           action={currentUpdateAction}
           selectedPage={selectedPage}
           visible={confirmModalVisible}
@@ -753,7 +766,15 @@ const OrgBookEditor = () => {
           UNPUBLISH_OPTIONS={UNPUBLISH_OPTIONS}
           showUnpublishOptions={showUnpublishOptions()}
         />
-      </Background>
+        <ModalMount>
+          <OrgBookEditorContainer>
+            {renderTableOfContents()}
+            <OrgBookEditorContentBox>
+              {renderEditorSpace()}
+            </OrgBookEditorContentBox>
+          </OrgBookEditorContainer>
+        </ModalMount>
+      </div>
     );
   };
 
@@ -786,8 +807,10 @@ const OrgBookEditor = () => {
     }
 
     return (
-      <Background>
+      <div>
         <OrgBookInfoModal
+          mask={false}
+          getContainer="#modalMount"
           title={title}
           okText={t("orgBook.ok")}
           visible={infoModalVisible}
@@ -797,7 +820,15 @@ const OrgBookEditor = () => {
           infoMsg4={infoMsg4}
           onClose={handleOnClose}
         />
-      </Background>
+        <ModalMount>
+          <OrgBookEditorContainer>
+            {renderTableOfContents()}
+            <OrgBookEditorContentBox>
+              {renderEditorSpace()}
+            </OrgBookEditorContentBox>
+          </OrgBookEditorContainer>
+        </ModalMount>
+      </div>
     );
   };
 
@@ -807,8 +838,10 @@ const OrgBookEditor = () => {
       t("orgBook.page") + (highestPageIndex + 1).toString();
 
     return (
-      <Background>
+      <div>
         <OrgBookModal
+          mask={false}
+          getContainer="#modalMount"
           title={t("orgBook.newOrgBookPage")}
           okText={t("orgBook.add")}
           requiredPageNameMessage={t("orgBook.pleaseEnterPageNameAdd")}
@@ -818,7 +851,15 @@ const OrgBookEditor = () => {
           onCreate={handleOnAdd}
           currentOrgBookPages={currentOrgBookPages}
         />
-      </Background>
+        <ModalMount>
+          <OrgBookEditorContainer>
+            {renderTableOfContents()}
+            <OrgBookEditorContentBox>
+              {renderEditorSpace()}
+            </OrgBookEditorContentBox>
+          </OrgBookEditorContainer>
+        </ModalMount>
+      </div>
     );
   };
 
@@ -827,8 +868,10 @@ const OrgBookEditor = () => {
     const renameOrgBookPage = t("orgBook.renameOrgBookPage", { pageName });
 
     return (
-      <Background>
+      <div>
         <OrgBookModal
+          mask={false}
+          getContainer="#modalMount"
           title={renameOrgBookPage}
           okText={t("orgBook.rename")}
           requiredPageNameMessage={t("orgBook.pleaseEnterPageNameRename")}
@@ -838,7 +881,15 @@ const OrgBookEditor = () => {
           onCreate={handleOnRename}
           currentOrgBookPages={currentOrgBookPages}
         />
-      </Background>
+        <ModalMount>
+          <OrgBookEditorContainer>
+            {renderTableOfContents()}
+            <OrgBookEditorContentBox>
+              {renderEditorSpace()}
+            </OrgBookEditorContentBox>
+          </OrgBookEditorContainer>
+        </ModalMount>
+      </div>
     );
   };
 
@@ -879,6 +930,7 @@ const OrgBookEditor = () => {
       )}
       {currentEditOrgBookMode === ORGBOOK_CREATE_MODE ? (
         <OrgBookModal
+          mask={false}
           title={t("orgBook.newOrgBook")}
           okText={t("orgBook.create")}
           requiredPageNameMessage={t("orgBook.pleaseEnterPageNameCreate")}

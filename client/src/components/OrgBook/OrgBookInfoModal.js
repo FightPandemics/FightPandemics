@@ -13,6 +13,8 @@ const OrgBookInfoModal = ({
 }) => {
   return (
     <OrgBookStyledModalContainer
+      MaxModalBodyHeight={"49.6rem"}
+      MinModalBodyHeight={"25.7rem"}
       width={400}
       visible={visible}
       title={title}

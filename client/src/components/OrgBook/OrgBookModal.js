@@ -41,6 +41,8 @@ const OrgBookModal = ({
   return (
     defaultPageName && (
       <OrgBookStyledModalContainer
+        MaxModalBodyHeight={"10rem"}
+        MinModalBodyHeight={"10rem"}
         width={300}
         visible={visible}
         title={title}

@@ -32,10 +32,11 @@ const OrgBookStyledModalContainer = styled(Modal)`
 
   .ant-modal-body {
     display: flex;
-    max-height: 49.6rem;
-    overflow-y: auto;
+    max-height: ${(props) => props.MaxModalBodyHeight};
+    overflow-y: hidden;
     padding: 3.8rem 4rem 4.7rem 4rem;
-    min-height: 25.7rem;
+    min-height: ${(props) => props.MinModalBodyHeight};
+
     flex-direction: column;
     justify-content: center;
   }
@@ -70,7 +71,6 @@ const OrgBookStyledModalContainer = styled(Modal)`
     min-width: 15rem;
     max-width: 15rem;
     height: 4.5rem;
-    border: 0.1rem solid ${colors.black};
     border-radius: 3.8rem;
     margin-bottom: 1.5rem;
     text-align: center;
