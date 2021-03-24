@@ -157,7 +157,9 @@ const Positions = () => {
                         </PositionDescription >
                         {//Button will connect applications page
                         }
-                        <ApplyButton>{t("positions.apply")}</ApplyButton>
+                        <Link to={`/organisation/${organisationId}/apply`}>
+                            <ApplyButton>{t("positions.apply")}</ApplyButton>
+                        </Link>
                     </PositionsContainer >
                 </ProfileLayout>
             </>
