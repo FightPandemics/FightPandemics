@@ -34,8 +34,39 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
+import { useHistory } from "react-router-dom";
 
 const Apply = () => {
+
+
+    // window.addEventListener('popstate', (e) => {
+    //     e.preventDefault();
+    //     alert("TEST2!")
+
+    // }
+    // )
+
+
+    // const history = useHistory();
+
+    // useEffect(() => {
+    //     const { state, pathname } = history.location;
+    //     history.push(pathname, {
+    //         ...state,
+    //         keepScroll: true,
+    //     });
+    //     window.addEventListener("popstate", onBrowserBack);
+    //     return () => {
+    //         window.removeEventListener("popstate", onBrowserBack);
+    //     };
+    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // const onBrowserBack = (e) => {
+    //     alert("TEST!")
+    //     e.preventDefault();
+    // };
+
+
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 2];
     const { orgProfileState, orgProfileDispatch } = useContext(
@@ -115,6 +146,7 @@ const Apply = () => {
         return (
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
+                
                 <ProfileBackgroup />
                 <ProfileLayout>
                     <PositionsContainer>

@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import ApplyFormLabel from "./ApplyFormLabel";
+import { useHistory } from "react-router-dom";
 
 const LabelContainer = styled.label`
 font-size: 2.2rem;
@@ -109,7 +110,7 @@ const PositionApplicationForm = ({ orgName }) => {
   };
 
   const applicationReceived = t("positions.applicationReceived").replace("{orgName}", orgName);
-
+  const history = useHistory();
   return (
     <>
       <h2 style={{ "color": "red", }}>TEST FORM & BUTTON</h2>
@@ -247,7 +248,8 @@ const PositionApplicationForm = ({ orgName }) => {
         <Submit
           style={{ "background-color": "red" }}
           primary="true"
-          onClick={handleSubmit}
+          // onClick={handleSubmit}
+          onClick={history.goBack()}
         >
           TEST SUBMIT
         </Submit>
