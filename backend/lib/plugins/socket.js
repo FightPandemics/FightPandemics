@@ -461,6 +461,23 @@ function onSocketConnect(socket) {
     const { userId } = socket;
     const [errPost, post] = await this.to(Post.findById(data.postId));
     if (errPost || !post) return;
+
+    //updating shares each time an user click to share a post
+    const [updateErr, updatedPost] = await this.to(
+      post.updateOne({
+        $inc: {
+          shares: 1
+        }
+      })
+    );
+
+    if (updateErr) {
+      this.log.error(updateErr, "Failed updating post share count");
+      throw app.httpErrors.internalServerError();
+    } else if (updatedPost === null) {
+      throw app.httpErrors.notFound();
+    }
+
     const decodedToken = this.jwt.decode(socket.request.cookies.token);
     const authUserId = decodedToken.payload[auth.jwtMongoIdKey];
     // action, post, actorId, authUserId, {sharedVia}

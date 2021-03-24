@@ -70,6 +70,14 @@ const postSchema = new Schema(
       ref: "User",
       type: [ObjectId],
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
+    shares: {
+      type: Number,
+      default: 0,
+    },
     objective: {
       enum: POST_OBJECTIVES,
       lowercase: true,

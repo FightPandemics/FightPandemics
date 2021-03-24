@@ -36,6 +36,9 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
             }
             filterOption={false}
             options={translateOptions(shareWith.options)}
+            popUpContainer={
+              document.getElementsByClassName("ant-tabs-content-holder")[0]
+            }
             minWidth="13rem"
           />
           <Selector
@@ -49,6 +52,9 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
             defaultValue={formData ? formData.expires : expires.default.value}
             filterOption={false}
             options={translateOptions(expires.options)}
+            popUpContainer={
+              document.getElementsByClassName("ant-tabs-content-holder")[0]
+            }
           />
         </div>
       </div>

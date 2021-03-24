@@ -21,7 +21,8 @@
     "stayOnPageContent": "إذا قمت بتحديد \"لا\" سيتم توجيهك إلى لوحة المساعدة",
     "yes": "نعم",
     "no": "لا",
-    "ok": "موافق"
+    "ok": "موافق",
+    "nearestHsp": "المعونة الصحية"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "موقع",
         "providers": "الموفرون",
         "type": "أنواع",
-        "lookingFor": "تقديم المساعدة أو طلبها"
+        "lookingFor": "تقديم المساعدة أو طلبها",
+        "workMode": "تسليم الطلب"
       },
       "providersOptions": {
         "Individual": "فرد",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "طلب المساعدة",
         "offer": "تقديم المساعدة"
+      },
+      "workMode": {
+        "inPerson": "شخصيا",
+        "remote": "عبر الانترنت",
+        "both": "كلاهما"
       }
     },
     "post": "نشر",
@@ -233,7 +240,12 @@
     "hideCaption": "لا يهمني",
     "reportAction": "الإبلاغ عن المنشور",
     "reportCaption": "لمراجعة المشرفين",
-    "copyUrl": "نسخ الرابط"
+    "copyUrl": "نسخ الرابط",
+    "workMode": "كيف يمكن تسليم هذا الطلب",
+    "workFullfillment": "يمكن تسليم هذا الطلب",
+    "remote": "عبر الانترنت",
+    "in-person": "شخصيا",
+    "both": "عبر الانترنت وشخصيا"
   },
   "profile": {
     "common": {
@@ -425,7 +437,7 @@
   },
   "aboutUs": {
     "ourStory": "قصتنا",
-    "story": "FightPandemics هي منصة من بنات أفكار مانويل غونزاليس الزورو ، الذي أصيب بـ COVID-19 في فرنسا. عند عودته إلى منزله في برشلونة ، وجد أنه غير قادر على الحصول على المساعدة على الرغم من وجود أشخاص يريدون توفيرها",
+    "story": "هي منصة من بنات أفكار مانويل غونزاليس الزورو ، الذي أصيب بـ COVID-19 في فرنسا. عند عودته إلى منزله في برشلونة ، وجد أنه غير قادر على الحصول على المساعدة على الرغم من وجود أشخاص يريدون توفيرها",
     "ourCommunity": "مجتمعنا",
     "community": "لقد أنشأنا فريق من أكثر من 1100 مطورًا و متطوعا ومصممًا وعلماء وخبراء صحة ومديري منتجات من جميع أنحاء العالم",
     "ourIdea": "فكرتنا",
@@ -854,7 +866,8 @@
     "wrongOldPassword": "كلمة المرور الحالية خاطئة",
     "noEmailAccount": "لم يتم العثور على حساب بعنوان البريد الإلكتروني هذا، الرجاء النقر فوق \"الانضمام الآن\" لإنشاء حساب.",
     "registeredAccount": "تم تسجيل حساب اجتماعي مع عنوان البريد الإلكتروني هذا. الرجاء النقر فوق \"الانضمام الآن\" لإنشاء حساب مباشر ببريد إلكتروني وكلمة مرور.",
-    "failedLinkAccounts": "فشل ربط الحسابات ، السبب:"
+    "failedLinkAccounts": "فشل ربط الحسابات ، السبب:",
+    "failedHealthFacPlaces": "فشل الحصول على المرافق الصحية"
   },
   "TEMP: We are not a provider of healthcare services": "نحن لا نقدم خدمات طبية",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "يتم توفير هذه الخدمة بحسن النية لأولئك الذين لا يستطيعون الحصول على التعليمات والموارد خلال هذا الطارئة الصحية الغير مسبوقة",
@@ -1054,17 +1067,44 @@
     "reportRejectedBody": "لم يتم حذف هذا المنشور"
   },
   "verification": {
-    "verifyTitle": "Verify your account!",
-    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
-    "verified": "Verified by Veriff",
-    "stepStartTitle": "Verify your account with Veriff",
-    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
-    "stepStartAction": "Get Verified",
-    "stepSuccessTitle": "Thanks for verifying your account!",
-    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
-    "stepSuccessAction": "Awesome!",
-    "stepCancelTitle": "You canceled the verification process",
-    "stepCancelBody": "You can always go back and verify you account at anytime!",
+    "verifyTitle": "ثبت حسابك",
+    "verifyBody": "لاحظنا أنك لم تثبت حسابك. انقر هنا لتبدأ",
+    "verified": "تم التثبيت عن طريق Veriff",
+    "stepStartTitle": "ثبت حسابك عن طريق Veriff",
+    "stepStartBody": "تريد FightPandemics إبقاء مجتمعنا مفتوحًا وصادقًا وآمنًا. تشير شارة التحقق الزرقاء بجوار اسم المستخدم أن الحساب أصلي",
+    "stepStartAction": "ثبت حسابك",
+    "stepSuccessTitle": "شكرا لتثبيت حسابك!",
+    "stepSuccessBody": "ستظهر شارة التثبيت على ملفك الشخصي في لحظات قليلة",
+    "stepSuccessAction": "تمام",
+    "stepCancelTitle": "لقد ألغيت عملية التثبيت",
+    "stepCancelBody": "يمكنك دائمًا الرجوع وتثبيت حسابك في أي وقت",
     "stepCancelAction": "إغلاق"
+  },
+  "nearestHsp": {
+    "noResults": "لا توجد نتائج",
+    "tryAdjusting": "حاول تعديل نوع المرافق الصحية أو الموقع",
+    "shareLoc": "شارك موقعك اذا كنت تريد إظهار اقرب مرفق صحي لك",
+    "changeLoc": "موقع",
+    "facility": "المرفق",
+    "hospitals": "المستشفيات",
+    "doctors": "الأطباء",
+    "pharmacies": "الصيدليات",
+    "healthFacilities": "المرافق الصحية",
+    "confirmedCases": "الحالات المؤكدة",
+    "viewList": "عرض القائمة",
+    "viewMap": "عرض الخريطة",
+    "you": "أنت",
+    "yourLocation": "موقعك",
+    "open24Hours": "مفتوح 24 ساعة",
+    "open": "مفتوح",
+    "closed": "مغلق",
+    "and": "و",
+    "evalYourHealth": "قم بتقييم صحتك وتلقي التعليمات والتوصيات حول",
+    "covid19": "كوفيد -19",
+    "healthEval": "التقييم الصحي",
+    "chkSymptoms": "فحص الأعراض",
+    "forDirAndMore": "للحصول على الاتجاهات والمزيد من المعلومات",
+    "localEmergencyNumber": "رقم الطوارئ المحلي",
+    "forMoreResults": "إظهار المزيد من نتائج البحث"
   }
 }

@@ -21,7 +21,8 @@
     "stayOnPageContent": "Nếu bạn chọn \"Không\", bạn sẽ được chuyển hướng đến Bảng trợ giúp.",
     "yes": "Có",
     "no": "Không",
-    "ok": "Đồng ý"
+    "ok": "Đồng ý",
+    "nearestHsp": "Hỗ trợ sức khỏe"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Vị trí",
         "providers": "Nhà cung cấp",
         "type": "Các loại",
-        "lookingFor": "Đề nghị hoặc yêu cầu trợ giúp"
+        "lookingFor": "Đề nghị hoặc yêu cầu trợ giúp",
+        "workMode": "Đăng hoàn thành"
       },
       "providersOptions": {
         "Individual": "Cá nhân",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Yêu cầu trợ giúp",
         "offer": "Cung cấp trợ giúp"
+      },
+      "workMode": {
+        "inPerson": "Trực tiếp",
+        "remote": "Làm việc từ xa",
+        "both": "Cả hai"
       }
     },
     "post": "Bài đăng",
@@ -233,7 +240,12 @@
     "hideCaption": "Nó không liên quan đến tôi",
     "reportAction": "Báo cáo về bài đăng",
     "reportCaption": "Để người kiểm duyệt xem xét",
-    "copyUrl": "Sao CHÉP URL"
+    "copyUrl": "Sao CHÉP URL",
+    "workMode": "Làm thế nào bài đăng này có thể được thực hiện?",
+    "workFullfillment": "Bài đăng này có thể được hoàn thành",
+    "remote": "Đăng từ xa",
+    "in-person": "Trực tiếp",
+    "both": "Từ xa & Trực tiếp"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Mật khẩu hiện tại sai",
     "noEmailAccount": "Không có tài khoản nào được tìm thấy với địa chỉ email này, vui lòng nhấp vào 'Tham gia ngay' để tạo tài khoản.",
     "registeredAccount": "Một tài khoản xã hội đã được đăng ký với địa chỉ email này. Vui lòng nhấp vào 'Tham gia ngay' để tạo tài khoản email và mật khẩu trực tiếp.",
-    "failedLinkAccounts": "Liên kết tài khoản không thành công, lý do:"
+    "failedLinkAccounts": "Liên kết tài khoản không thành công, lý do:",
+    "failedHealthFacPlaces": "Không nhận được các cơ sở y tế."
   },
   "TEMP: We are not a provider of healthcare services": "Chúng tôi không phải là nhà cung cấp các dịch vụ chăm sóc sức khỏe",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Dịch vụ này được cung cấp một cách thiện chí cho những người nói cách khác không thể có được sự trợ giúp và các nguồn lực trong trường hợp khẩn cấp về sức khỏe cộng đồng chưa từng có này.",
@@ -1017,7 +1030,7 @@
     "commented": "<0> {{username}} </0> đã nhận xét về bài đăng của bạn <1> {{postTitle}} </1>",
     "shared": "<0> {{username}} </0> đã chia sẻ bài đăng của bạn <1> {{postTitle}} </1> trên <1> {{shareMedium}} </1>",
     "empty": "Không có thêm thông báo",
-    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
+    "reported": "Bài viết của bạn <1>{{postTitle}}</1> vi phạm chính sách nội dung của chúng tôi và do đó bài viết đó đã bị xóa"
   },
   "moderation": {
     "report": "Báo cáo",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "Bạn đã hủy quy trình xác minh",
     "stepCancelBody": "Bạn luôn có thể quay lại và xác minh tài khoản của mình bất cứ lúc nào!",
     "stepCancelAction": "Đóng"
+  },
+  "nearestHsp": {
+    "noResults": "Không có kết quả",
+    "tryAdjusting": "Thử điều chỉnh loại cơ sở y tế hoặc vị trí của bạn.",
+    "shareLoc": "Chia sẻ vị trí của bạn nếu bạn muốn khám tại các cơ sở y tế gần nhất",
+    "changeLoc": "Vị trí",
+    "facility": "Cơ sở",
+    "hospitals": "Bệnh viện",
+    "doctors": "Các bác sĩ",
+    "pharmacies": "Hiệu thuốc",
+    "healthFacilities": "Cơ sở y tế",
+    "confirmedCases": "Các trường hợp đã xác nhận",
+    "viewList": "Chế độ xem Danh sách",
+    "viewMap": "Chế độ xem bản đồ",
+    "you": "Bạn",
+    "yourLocation": "Vị trí của bạn",
+    "open24Hours": "Mở cửa 24 giờ",
+    "open": "Mở",
+    "closed": "Đóng cửa",
+    "and": "và",
+    "evalYourHealth": "Đánh giá sức khỏe của bạn và nhận hướng dẫn và khuyến nghị về ",
+    "covid19": "COVID-19",
+    "healthEval": "Đánh giá sức khỏe",
+    "chkSymptoms": "Kiểm tra các triệu chứng",
+    "forDirAndMore": "Để biết chỉ đường và biết thêm thông tin",
+    "localEmergencyNumber": "Số điện thoại khẩn cấp tại địa phương",
+    "forMoreResults": "Hiện thêm kết quả tìm kiếm..."
   }
 }

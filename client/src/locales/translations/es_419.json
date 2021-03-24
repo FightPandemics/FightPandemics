@@ -21,7 +21,8 @@
     "stayOnPageContent": "Si selecciona \"No\", será redirigido al tablero de ayuda.",
     "yes": "Sí",
     "no": "No",
-    "ok": "Okay"
+    "ok": "Okay",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Ubicación",
         "providers": "Proveedores",
         "type": "Tipos",
-        "lookingFor": "Oferta o Solicitud de ayuda"
+        "lookingFor": "Oferta o Solicitud de ayuda",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Individuo",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Solicitar ayuda",
         "offer": "Ofrecer ayuda"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Enviar",
@@ -233,7 +240,12 @@
     "hideCaption": "No es relevante para mí",
     "reportAction": "Reportar un Post",
     "reportCaption": "Para la revisión de los moderadores",
-    "copyUrl": "Copiar URL"
+    "copyUrl": "Copiar URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Contraseña actual incorrecta",
     "noEmailAccount": "No se ha encontrado ninguna cuenta con esta dirección de correo electrónico, haga clic en \"Unirse ahora\" para crear una cuenta.",
     "registeredAccount": "Se ha registrado una cuenta social con esta dirección de correo electrónico. Haga clic en \"Unirse ahora\" para crear una cuenta de correo electrónico y contraseña directa.",
-    "failedLinkAccounts": "Error en la vinculación de cuentas, motivo:"
+    "failedLinkAccounts": "Error en la vinculación de cuentas, motivo:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "No somos proveedores de servicios de salud.",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Este servicio es brindado de buena fe a quienes de otra manera no podrían obtener ayuda y recursos durante esta emergencia de salud pública sin precedentes.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "Canceló el proceso de verificación",
     "stepCancelBody": "Puedes verificar tu cuenta en cualquier momento",
     "stepCancelAction": "Cerrar"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Ubicación",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

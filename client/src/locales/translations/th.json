@@ -21,7 +21,8 @@
     "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
     "yes": "Yes",
     "no": "No",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "สถานที่",
         "providers": "ผู้ให้บริการ",
         "type": "ประเภท",
-        "lookingFor": "ให้หรือขอความช่วยเหลือ"
+        "lookingFor": "ให้หรือขอความช่วยเหลือ",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "บุคคล",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "มองหาความช่วยเหลือ",
         "offer": "เสนอความช่วยเหลือ"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "โพสต์",
@@ -233,7 +240,12 @@
     "hideCaption": "It is not relevant to me",
     "reportAction": "Report Post",
     "reportCaption": "For moderators review",
-    "copyUrl": "Copy URL"
+    "copyUrl": "Copy URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -632,10 +644,7 @@
         "ฉันต้องการเป็นหุ้นส่วนหรือผู้สนับสนุน",
         "ติดต่อทีมพันธมิตรของเราที่ <0>partnerships@fightpandemics.com</0>"
       ],
-      [
-        "ฉันมาจากสื่อมวลชน",
-        "ติดต่อเราที่ <0>pr@fightpandemics.com.</0>"
-      ],
+      ["ฉันมาจากสื่อมวลชน", "ติดต่อเราที่ <0>pr@fightpandemics.com.</0>"],
       [
         "ฉันต้องการการสนับสนุนทางเทคนิค",
         "ขออภัยในความไม่สะดวก ส่งอีเมลถึงเราที่ <0> support@fightpandemics.com </0> เนื่องจากเราเป็นทีมอาสาสมัครทั้งหมด โปรดรอการตอบกลับอย่างน้อย 48 ชั่วโมง"
@@ -651,10 +660,7 @@
         "ฉันต้องการเป็นหุ้นส่วนหรือผู้สนับสนุน",
         "ติดต่อทีมพันธมิตรของเราที่ <0>partnerships@fightpandemics.com</0>"
       ],
-      [
-        "ฉันมาจากสื่อมวลชน",
-        "ติดต่อเราที่ <0>pr@fightpandemics.com.</0>"
-      ],
+      ["ฉันมาจากสื่อมวลชน", "ติดต่อเราที่ <0>pr@fightpandemics.com.</0>"],
       [
         "ฉันต้องการการสนับสนุนทางเทคนิค",
         "ขออภัยในความไม่สะดวก ส่งอีเมลถึงเราที่ <0> support@fightpandemics.com </0> เนื่องจากเราเป็นทีมอาสาสมัครทั้งหมด โปรดรอการตอบกลับอย่างน้อย 48 ชั่วโมง"
@@ -854,7 +860,8 @@
     "wrongOldPassword": "Wrong current password",
     "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
     "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "failedLinkAccounts": "Failed linking accounts, reason:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "เราไม่ใช่ผู้ให้บริการด้านการดูแลสุขภาพ",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "บริการนี้ถูกจัดขึ้นด้วยความมุ่งหมายที่ดีเพื่อผู้ที่ไม่สามารถขอรับความช่วยเหลือและสิ่งจุนเจือต่างๆ ในสภาวะฉุกเฉินทางด้านสาธารณะสุขที่ไม่เคยเกิดขึ้นมาก่อน",
@@ -1066,5 +1073,32 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Close"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "สถานที่",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

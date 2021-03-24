@@ -21,7 +21,8 @@
     "stayOnPageContent": "Se selezioni \"No\" verrai reindirizzato alla Bacheca di aiuto.",
     "yes": "Sì",
     "no": "No",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Assistenza sanitaria"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Posizione",
         "providers": "Fornitori",
         "type": "Tipi",
-        "lookingFor": "Offri o richiedi aiuto"
+        "lookingFor": "Offri o richiedi aiuto",
+        "workMode": "Realizzazione post"
       },
       "providersOptions": {
         "Individual": "Individuo",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Richiedere aiuto",
         "offer": "Offerte di aiuto"
+      },
+      "workMode": {
+        "inPerson": "Di persona",
+        "remote": "Da remoto",
+        "both": "Entrambi"
       }
     },
     "post": "Pubblicare",
@@ -233,7 +240,12 @@
     "hideCaption": "Non è rilevante per me",
     "reportAction": "Segnala post",
     "reportCaption": "Per la recensione dei moderatori",
-    "copyUrl": "Copia URL"
+    "copyUrl": "Copia URL",
+    "workMode": "Come può essere realizzato questo post?",
+    "workFullfillment": "Questo post può essere realizzato",
+    "remote": "Da remoto",
+    "in-person": "Di persona",
+    "both": "Da remoto e di persona"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Password attuale errata",
     "noEmailAccount": "Non è stato trovato nessun account con questo indirizzo email, clicca su 'Iscriviti ora' per creare un account.",
     "registeredAccount": "Un account social è stato registrato con questo indirizzo email. Clicca su \"Iscriviti ora\" per creare un account di posta elettronica e una password diretti.",
-    "failedLinkAccounts": "Collegamento degli account non riuscito, motivo:"
+    "failedLinkAccounts": "Collegamento degli account non riuscito, motivo:",
+    "failedHealthFacPlaces": "Tentativo fallito di trovare strutture sanitarie."
   },
   "TEMP: We are not a provider of healthcare services": "Non forniamo servizi sanitari",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Questo servizio è fornito in buona fede per coloro che non riuscirebbero a ottenere aiuto e risorse in altro modo durante questa emergenza di sanità pubblica senza precedenti.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "Hai annullato il processo di autenticazione",
     "stepCancelBody": "Puoi tornare indietro e verificare il tuo account in qualsiasi momento!",
     "stepCancelAction": "Chiudi"
+  },
+  "nearestHsp": {
+    "noResults": "Nessun risultato",
+    "tryAdjusting": "Prova a modificare il tuo tipo di struttura sanitaria o la tua posizione.",
+    "shareLoc": "Condividi la tua posizione se vuoi vedere la struttura sanitaria più vicina a te",
+    "changeLoc": "Posizione",
+    "facility": "Struttura",
+    "hospitals": "Ospedali",
+    "doctors": "Medici",
+    "pharmacies": "Farmacie",
+    "healthFacilities": "Strutture Sanitarie",
+    "confirmedCases": "Casi confermati",
+    "viewList": "Visualizzazione elenco",
+    "viewMap": "Visualizzazione mappa",
+    "you": "Tu",
+    "yourLocation": "La tua posizione",
+    "open24Hours": "Aperto 24 ore su 24",
+    "open": "Aperto",
+    "closed": "Chiuso",
+    "and": "e",
+    "evalYourHealth": "Valuta il tuo stato di salute e ricevi istruzioni e consigli in merito",
+    "covid19": "COVID-19",
+    "healthEval": "Valutazione dello stato di salute",
+    "chkSymptoms": "Controlla i sintomi",
+    "forDirAndMore": "Per indicazioni e maggiori informazioni",
+    "localEmergencyNumber": "Numero di emergenza locale",
+    "forMoreResults": "Mostra più risultati..."
   }
 }

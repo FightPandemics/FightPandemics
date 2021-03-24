@@ -21,7 +21,8 @@
     "stayOnPageContent": "Wenn du \"Nein\" auswählst, wirst du zum Hilfebrett weitergeleitet.",
     "yes": "Ja",
     "no": "Nein",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Standort",
         "providers": "Anbieter",
         "type": "Arten",
-        "lookingFor": "Hilfe bieten oder anfordern"
+        "lookingFor": "Hilfe bieten oder anfordern",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Einzelperson",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Suche Hilfe",
         "offer": "Biete Hilfe"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Post",
@@ -233,7 +240,12 @@
     "hideCaption": "Es ist für mich nicht relevant.",
     "reportAction": "Beitrag melden",
     "reportCaption": "Für die Überprüfung von Moderatoren",
-    "copyUrl": "URL kopieren"
+    "copyUrl": "URL kopieren",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Falsches aktuelles Passwort",
     "noEmailAccount": "Es wurde kein Konto mit dieser E-Mail-Adresse gefunden. Bitte klicke auf 'Jetzt anmelden', um ein Konto zu erstellen.",
     "registeredAccount": "Ein soziales Konto wurde mit dieser E-Mail-Adresse registriert. Bitte klicke auf 'Jetzt anmelden', um ein direktes E-Mail- und Passwort-Konto zu erstellen.",
-    "failedLinkAccounts": "Fehler beim Verknüpfen von Konten, Grund:"
+    "failedLinkAccounts": "Fehler beim Verknüpfen von Konten, Grund:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "Wir sind kein Gesundheitsdienstleister",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Dieser Service wird als hilfreiche Option für jene angeboten,\ndie zur Zeit nicht in der Lage sind anderweitig Resourcen \noder Hilfe zu erlangen.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Schließen"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Teile deinen Standort, um Krankenhäuser in deiner Nähe zu finden",
+    "changeLoc": "Standort",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Krankenhäuser",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": "und",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

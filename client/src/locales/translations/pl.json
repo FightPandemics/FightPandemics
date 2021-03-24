@@ -21,7 +21,8 @@
     "stayOnPageContent": "Jeśli wybierzesz „Nie”, zostaniesz przekierowany do Forum pomocy.",
     "yes": "Tak",
     "no": "Nie",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Lokalizacja",
         "providers": "Dostawcy",
         "type": "Rodzaje",
-        "lookingFor": "Zaoferuj lub poproś o pomoc"
+        "lookingFor": "Zaoferuj lub poproś o pomoc",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Indywidualny",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Szukam pomocy",
         "offer": "Oferuję pomoc"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Utwórz wpis",
@@ -233,7 +240,12 @@
     "hideCaption": "To mnie nie dotyczy",
     "reportAction": "Zgłoś wpis",
     "reportCaption": "Do recenzji moderatorów",
-    "copyUrl": "Kopiuj adres URL"
+    "copyUrl": "Kopiuj adres URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Nieprawidłowe aktualne hasło",
     "noEmailAccount": "Nie znaleziono konta z tym adresem e-mail. Kliknij „Dołącz teraz”, aby utworzyć konto.",
     "registeredAccount": "Na ten adres e-mail zostało zarejestrowane konto społecznościowe. Proszę kliknąć \"Dołącz teraz\", aby utworzyć bezpośrednie konto e-mail i hasło.",
-    "failedLinkAccounts": "Nieudane łączenie kont, przyczyna:"
+    "failedLinkAccounts": "Nieudane łączenie kont, przyczyna:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "Nie jesteśmy dostawcą usług opieki zdrowotnej",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Usługa ta jest świadczona w dobrej wierze dla tych, którzy w przeciwnym razie nie byliby w stanie uzyskać pomocy i środków w tej bezprecedensowej sytuacji zagrożenia zdrowia publicznego.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Zamknij"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Lokalizacja",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

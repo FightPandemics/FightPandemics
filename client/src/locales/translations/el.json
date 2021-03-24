@@ -21,7 +21,8 @@
     "stayOnPageContent": "Εάν επιλέξετε \"Όχι\" θα μεταφερθείτε στον πίνακα βοήθειας.",
     "yes": "Ναι",
     "no": "Όχι",
-    "ok": "Εντάξει"
+    "ok": "Εντάξει",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Τοποθεσία",
         "providers": "Πάροχοι",
         "type": "Είδη",
-        "lookingFor": "Προσφορά ή Αναζήτηση Βοήθειας"
+        "lookingFor": "Προσφορά ή Αναζήτηση Βοήθειας",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Μεμονωμένα",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Επιζητώντας βοήθεια",
         "offer": "Προσφέροντας βοήθεια"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Δημοσίευση",
@@ -233,7 +240,12 @@
     "hideCaption": "Δεν είναι σχετικό με εμένα",
     "reportAction": "Αναφορά δημοσίευσης",
     "reportCaption": "Για έλεγχο συντονιστών",
-    "copyUrl": "Αντιγραφή διεύθυνσης URL"
+    "copyUrl": "Αντιγραφή διεύθυνσης URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Λανθασμένος τρέχων κωδικός πρόσβασης",
     "noEmailAccount": "Δε βρέθηκε λογαριασμός με αυτήν τη διεύθυνση ηλεκτρονικού ταχυδρομείου, κάντε κλικ στην επιλογή \"Εγγραφή τώρα\" για να δημιουργήσετε έναν λογαριασμό.",
     "registeredAccount": "Ένας κοινωνικός λογαριασμός έχει καταχωρηθεί με αυτήν τη διεύθυνση ηλεκτρονικού ταχυδρομείου. Κάντε κλικ στο \"Εγγραφή τώρα\" για να δημιουργήσετε έναν άμεσο λογαριασμό email και κωδικού πρόσβασης.",
-    "failedLinkAccounts": "Απέτυχε η φόρτωση λογαριασμών, αιτία:"
+    "failedLinkAccounts": "Απέτυχε η φόρτωση λογαριασμών, αιτία:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "Δεν είμαστε πάροχοι υπηρεσιών υγείας",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Η υπηρεσία αυτή παρέχεται καλή τη πίστει σε όσους δεν είναι σε θέση να λάβουν βοήθεια και πόρους κατά τη διάρκεια αυτής της άνευ προηγουμένου έκτακτης ανάγκης για τη δημόσια υγεία.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "Ακυρώσατε τη διαδικασία επαλήθευσης",
     "stepCancelBody": "Μπορείτε πάντα να επιστρέψετε και να επαληθεύσετε το λογαριασμό σας ανά πάσα στιγμή!",
     "stepCancelAction": "Κλείσιμο"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Τοποθεσία",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }
