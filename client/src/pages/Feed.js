@@ -11,6 +11,7 @@ import { useTranslation, Trans } from "react-i18next";
 import styled from "styled-components";
 import axios from "axios";
 import qs from "query-string";
+import { mq } from "constants/theme";
 
 // Antd
 import { Menu } from "antd";
@@ -73,6 +74,8 @@ import { LOGIN } from "templates/RouteWithSubRoutes";
 import GTM from "../constants/gtm-tags";
 import TagManager from "react-gtm-module";
 import WithSummitBanner from "components/WithSummitBanner";
+import SortSelector from "../components/Feed/SortSelector";
+import useWindowDimensions from "../utils/windowSize";
 
 export const isAuthorOrg = (organisations, author) => {
   const isValid = organisations?.some(
@@ -130,6 +133,7 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const Feed = (props) => {
+  const window = useWindowDimensions();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -148,6 +152,7 @@ const Feed = (props) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+  const [sortValue, setSortValue] = useState("createdAt");
   const {
     filterModal,
     showCreatePostModal,
@@ -287,7 +292,6 @@ const Feed = (props) => {
       }
     } else if (queryParams.filters && !newFiltersLength)
       newQuery.filters = null;
-
     setQueryKeysValue(history, newQuery);
   };
 
@@ -330,9 +334,20 @@ const Feed = (props) => {
   };
 
   const toggleShowNearMe = (e) => {
-    setQueryKeysValue(history, {
-      near_me: e.target.checked,
-    });
+    if (e.target.checked) {
+      setQueryKeysValue(history, {
+        s_keyword: null,
+        location: null,
+        near_me: e.target.checked,
+      });
+      dispatchAction(SET_VALUE, "location", null);
+      setSortValue("proximity-near");
+    } else {
+      setQueryKeysValue(history, {
+        near_me: e.target.checked,
+      });
+      setSortValue("createdAt");
+    }
   };
 
   const changeHelpType = (selectedValue) => {
@@ -361,7 +376,16 @@ const Feed = (props) => {
     if (applyFilters) {
       dispatch(postsActions.resetPageAction({}));
     }
-    dispatchAction(SET_VALUE, "location", value);
+    if (value) {
+      setQueryKeysValue(history, {
+        s_keyword: null,
+        near_me: false,
+      });
+      dispatchAction(SET_VALUE, "location", value);
+      setSortValue("proximity-location");
+    } else {
+      setSortValue("createdAt");
+    }
     if (!value && queryParams.location) {
       setQueryKeysValue(history, { location: null });
     }
@@ -415,6 +439,7 @@ const Feed = (props) => {
     dispatchAction(SET_VALUE, "filterModal", false);
     dispatchAction(TOGGLE_STATE, "showFilters");
     dispatchAction(SET_VALUE, "applyFilters", true);
+    dispatchAction(SET_VALUE, "location", null);
   };
 
   const handlePostDelete = () => {
@@ -464,14 +489,26 @@ const Feed = (props) => {
       }
     };
     const searchKeyword = queryParams.s_keyword;
-    const searchURL = () => {
-      if (searchKeyword)
-        return `&keywords=${encodeURIComponent(searchKeyword)}`;
-      else return "";
+    const sortQuery = () => {
+      if (
+        sortValue === "proximity-location" ||
+        sortValue === "proximity-near"
+      ) {
+        return `&ignoreUserLocation=${ignoreUserLocation}`;
+      } else if (sortValue === t("feed.filters.sortBy")) {
+        return "";
+      } else if (sortValue === "relevance") {
+        if (searchKeyword)
+          return `&keywords=${encodeURIComponent(searchKeyword)}`;
+        else return "";
+      } else {
+        return `&sortValue=${sortValue}`;
+      }
     };
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
     let baseURL = gePostsBasetUrl(organisationId, limit, skip);
+    // ${searchURL()}&ignoreUserLocation=${ignoreUserLocation}
     switch (queryParams.s_category) {
       case "POSTS":
         break;
@@ -484,8 +521,7 @@ const Feed = (props) => {
       default:
         break;
     }
-    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${searchURL()}&ignoreUserLocation=${ignoreUserLocation}`;
-
+    let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${sortQuery()}`;
     dispatch(postsActions.fetchPostsBegin());
 
     try {
@@ -573,6 +609,8 @@ const Feed = (props) => {
     }
   };
 
+  // useEffect(() => {}, [ignoreUserLocation]);
+
   useEffect(() => {
     getStateFromQuery();
   }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -582,8 +620,40 @@ const Feed = (props) => {
   }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    if (typeof queryParams.s_keyword !== "undefined") {
+      setQueryKeysValue(history, {
+        location: null,
+        near_me: false,
+      });
+      dispatchAction(SET_VALUE, "location", null);
+      setSortValue("relevance");
+    } else if (location) {
+      if (ignoreUserLocation) {
+        setQueryKeysValue(history, {
+          near_me: false,
+        });
+      }
+      setSortValue("proximity-location");
+    } else if (!ignoreUserLocation) {
+      if (location) {
+        setQueryKeysValue(history, {
+          location: null,
+        });
+      }
+      dispatchAction(SET_VALUE, "location", null);
+      setSortValue("proximity-near");
+    } else if (
+      sortValue !== "views" &&
+      sortValue !== "shares" &&
+      sortValue !== "likes"
+    ) {
+      setSortValue("createdAt");
+    }
+  }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
-  }, [queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [sortValue, queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (applyFilters) {
@@ -662,7 +732,14 @@ const Feed = (props) => {
   };
 
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
-
+  const handleSortDropdown = (value) => {
+    setQueryKeysValue(history, {
+      s_keyword: null,
+      location: null,
+      near_me: false,
+    });
+    setSortValue(value);
+  };
   return (
     <WithSummitBanner>
       <FeedContext.Provider
@@ -738,13 +815,25 @@ const Feed = (props) => {
               />
             </SiderWrapper>
             <ContentWrapper>
-              <HeaderWrapper empty={emptyFeed()}>
+              <HeaderWrapper
+                empty={emptyFeed()}
+                style={{ justifyContent: "flex-end" }}
+              >
                 <TabsWrapper
                   options={SEARCH_OPTIONS}
                   showOptions={!!queryParams.s_keyword}
                   displayValue={"name"}
                   t={t}
                 />
+                {window.width <= parseInt(mq.phone.wide.maxWidth) ? null : (
+                  <SortSelector
+                    handleSortDropdown={handleSortDropdown}
+                    ignoreUserLocation={ignoreUserLocation}
+                    filterLocation={typeof queryParams.location !== "undefined"}
+                    keywordUsed={typeof queryParams.s_keyword !== "undefined"}
+                    sortValue={sortValue}
+                  />
+                )}
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
                   <CreatePostButton
@@ -768,7 +857,7 @@ const Feed = (props) => {
                 />
               </MobileSearchWrapper>
               {
-                <div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   <FilterBox
                     locationOnly={
                       !(
@@ -778,6 +867,17 @@ const Feed = (props) => {
                     }
                     gtmPrefix={GTM.feed.prefix}
                   />
+                  {window.width <= parseInt(mq.phone.wide.maxWidth) ? (
+                    <SortSelector
+                      handleSortDropdown={handleSortDropdown}
+                      ignoreUserLocation={ignoreUserLocation}
+                      filterLocation={
+                        typeof queryParams.location !== "undefined"
+                      }
+                      keywordUsed={typeof queryParams.s_keyword !== "undefined"}
+                      sortValue={sortValue}
+                    />
+                  ) : null}
                 </div>
               }
               <WhiteSpace size={"lg"} />

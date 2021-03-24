@@ -107,6 +107,13 @@ module.exports = {
   },
   feed: {
     prefix: "HB",
+    sort: "_SR",
+    proximity: "_DI",
+    relevance: "_RL",
+    likes: "_LK",
+    shares: "_SH",
+    createdAt: "_TI",
+    views: "_VI",
   },
   nearestHospital: {
     prefix: "NH",

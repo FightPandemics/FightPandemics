@@ -9,11 +9,14 @@ const {
   REMOTE_OPTIONS,
 } = require("../../models/Post");
 
+
 const getPostsSchema = {
   querystring: strictQueryStringSchema()
     .prop("actorId", S.string())
     .prop("authorId", S.string())
     .prop("filter", S.string()) // URI encoded JSON; TODO: figure out way to custom validation
+    .prop("sortValue", S.string().enum(["likes", "createdAt", "views", "shares"])) // Sorting posts by likes, updatedAt, views and shares
+    .prop("order", S.string().enum(["asc", "desc"])) // descending or ascending
     .prop("keywords", S.string())
     .prop("ignoreUserLocation", S.boolean().default(false))
     .prop("objective", S.string().enum(POST_OBJECTIVES))

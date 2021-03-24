@@ -48,6 +48,8 @@ async function routes(app) {
           authorId,
           ignoreUserLocation,
           filter,
+          sortValue,
+          order,
           keywords,
           limit,
           objective,
@@ -168,45 +170,66 @@ async function routes(app) {
       /* eslint-disable sort-keys */
       const sortAndFilterSteps = location
         ? [
-            {
-              $geoNear: {
-                distanceField: "distance",
-                key: "author.location.coordinates",
-                near: {
-                  $geometry: {
-                    coordinates: location.coordinates,
-                    type: "Point",
-                  },
+          {
+            $geoNear: {
+              distanceField: "distance",
+              key: "author.location.coordinates",
+              near: {
+                $geometry: {
+                  coordinates: location.coordinates,
+                  type: "Point",
                 },
-                query: { $and: filters },
               },
+              query: { $and: filters },
             },
-            { $sort: { distance: 1, _id: -1 } },
-          ]
+          },
+          { $sort: { distance: 1, _id: -1 } },
+        ]
         : keywords
-        ? [
+          ? [
             { $match: { $and: filters, $text: { $search: keywords } } },
             { $sort: { score: { $meta: "textScore" } } },
-          ]
-        : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+          ] : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
       /* eslint-enable sort-keys */
+      if (sortValue) {
+        if (sortValue === "likes") {
+          sortAndFilterSteps.push(
+            {
+              $addFields: {
+                likesLength: {
+                  $size: "$likes",
+                },
+              },
+            },
+            {
+              $sort: {
+                likesLength: -1,
+              },
+            },
+          );
+        } else {
+          sortAndFilterSteps.push({
+            $sort: { [sortValue]: order === "asc" ? 1 : -1 },
+          });
+        }
+      }
 
       /* eslint-disable sort-keys */
       const paginationSteps =
         limit === -1
           ? [
-              {
-                $skip: skip || 0,
-              },
-            ]
+            {
+              $skip: skip || 0,
+            },
+          ]
           : [
-              {
-                $skip: skip || 0,
-              },
-              {
-                $limit: limit || POST_PAGE_SIZE,
-              },
-            ];
+            {
+              $skip: skip || 0,
+            },
+            {
+              $limit: limit || POST_PAGE_SIZE,
+            },
+          ];
       /* eslint-enable sort-keys */
 
       /* eslint-disable sort-keys */
@@ -264,6 +287,8 @@ async function routes(app) {
             workMode: true,
             createdAt: true,
             updatedAt: true,
+            views: true,
+            shares: true,
           },
         },
       ];
@@ -281,13 +306,13 @@ async function routes(app) {
       const totalResultsAggregationPipeline = await Post.aggregate(
         keywords && !location
           ? [
-              { $match: { $and: filters, $text: { $search: keywords } } },
-              { $group: { _id: null, count: { $sum: 1 } } },
-            ]
+            { $match: { $and: filters, $text: { $search: keywords } } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ]
           : [
-              { $match: { $and: filters } },
-              { $group: { _id: null, count: { $sum: 1 } } },
-            ],
+            { $match: { $and: filters } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ],
       );
       /* eslint-enable sort-keys */
 
@@ -391,10 +416,10 @@ async function routes(app) {
         }),
       );
 
-      if (postErr){
-        if (postErr instanceof mongoose.Error.CastError){
-            req.log.error(postErr, "Can't find a post with given id");
-            throw app.httpErrors.badRequest();
+      if (postErr) {
+        if (postErr instanceof mongoose.Error.CastError) {
+          req.log.error(postErr, "Can't find a post with given id");
+          throw app.httpErrors.badRequest();
         }
         throw app.httpErrors.internalServerError();
       } else if (post === null) {
@@ -410,15 +435,30 @@ async function routes(app) {
         // user shouldn't see posts reported by them, even if public.
         const didReport = post.reportedBy
           ? post.reportedBy.find(
-              (r) => r.id.toString() === actor._id.toString(),
-            )
+            (r) => r.id.toString() === actor._id.toString(),
+          )
           : false;
         if (didReport) throw app.httpErrors.notFound();
       } else if (!actor) {
         // none logged in user shouldn't see removed posts on post page
         if (post.status === "removed") throw app.httpErrors.notFound();
       }
-      
+
+      //updating views each time an user click on a post to see detail
+      const [updateErr, updatedPost] = await app.to(
+        post.update({
+          $inc: {
+            views: 1
+          }
+        })
+      );
+
+      if (updateErr) {
+        req.log.error(updateErr, "Failed updating post view");
+        throw app.httpErrors.internalServerError();
+      } else if (updatedPost === null) {
+        throw app.httpErrors.notFound();
+      }
 
       /* eslint-disable sort-keys */
       // Keys shouldn't be sorted here since this is a query, so order of the
@@ -540,6 +580,7 @@ async function routes(app) {
     },
   );
 
+  //Update "Likes"
   app.put(
     "/:postId/likes/:actorId",
     {
