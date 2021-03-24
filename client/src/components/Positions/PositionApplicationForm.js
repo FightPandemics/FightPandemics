@@ -248,8 +248,7 @@ const PositionApplicationForm = ({ orgName }) => {
         <Submit
           style={{ "background-color": "red" }}
           primary="true"
-          // onClick={handleSubmit}
-          onClick={history.goBack()}
+          onClick={handleSubmit}
         >
           TEST SUBMIT
         </Submit>
