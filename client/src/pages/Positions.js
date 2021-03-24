@@ -1,5 +1,6 @@
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Loader from "components/Feed/StyledLoader";
 import ApplyButton from "components/Positions/PositionsButton";
 import ProfilePic from "components/Positions/ProfilePic";
