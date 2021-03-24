@@ -3,7 +3,7 @@
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
-import ApplyButton from "components/Positions/PositionsButton";
+import PositionApplicationForm from "components/Positions/PositionApplicationForm";
 import ProfilePic from "components/Positions/ProfilePic";
 import {
     OrganisationContext,
@@ -21,15 +21,12 @@ import {
     fetchUserSuccess
 } from "hooks/actions/userActions";
 import React, {
-    useContext, useEffect, useRef, useHistory
+    useContext, useEffect, useRef
 } from "react";
 import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import {
-    PositionDescription, PositionsContainer,
-    PositionTitle
-} from "../components/Profile/PositionsComponents";
+import { PositionsContainer } from "../components/Profile/PositionsComponents";
 import {
     AvatarPhotoContainer, DescriptionDesktop, NameDiv,
     NamePara,
@@ -37,53 +34,37 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
-import PositionSubmitButton from "components/Positions/PositionSubmitButton";
-import PositionApplicationForm from "components/Positions/PositionApplicationForm";
-// import History from "client/src/utils/history";
-
-
+import { useHistory } from "react-router-dom";
 
 const Apply = () => {
 
 
+    // window.addEventListener('popstate', (e) => {
+    //     e.preventDefault();
+    //     alert("TEST2!")
+
+    // }
+    // )
 
 
+    // const history = useHistory();
 
     // useEffect(() => {
-    //     // const { state, pathname } = history.location;
-    //     // history.push(pathname, {
-    //     //   ...state,
-    //     //   keepScroll: true,
-    //     // });
-
-
+    //     const { state, pathname } = history.location;
+    //     history.push(pathname, {
+    //         ...state,
+    //         keepScroll: true,
+    //     });
     //     window.addEventListener("popstate", onBrowserBack);
-    //     // return () => {
-    //     //   window.removeEventListener("popstate", setVisible(false));
-    //     // };
+    //     return () => {
+    //         window.removeEventListener("popstate", onBrowserBack);
+    //     };
     // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     // const onBrowserBack = (e) => {
+    //     alert("TEST!")
     //     e.preventDefault();
-    //     alert("No backsies!")
-    //     // if (!visible) {
-    //     //   setVisible(true);
-    //     // }
-    //     // else {
-    //     //   setVisible(false);
-    //     // };
-    // }
-
-    // useEffect(() => {
-    //     // code here would fire when the page loads, equivalent to `componentDidMount`.
-    //     return () => {
-    //         // code after the return is equivalent to `componentWillUnmount`
-    //         if (History.action === "POP") {
-    //             // handle any state changes necessary to set the screen display back one page.
-    //         }
-    //     }
-    // })
-
+    // };
 
 
     let url = window.location.pathname.split("/");
@@ -165,6 +146,7 @@ const Apply = () => {
         return (
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
+                
                 <ProfileBackgroup />
                 <ProfileLayout>
                     <PositionsContainer>
@@ -195,7 +177,6 @@ const Apply = () => {
                         <PositionApplicationForm
                             orgName={name}
                         ></PositionApplicationForm>
-                        {/* <PositionSubmitButton></PositionSubmitButton> */}
                     </PositionsContainer >
                 </ProfileLayout>
             </>
