@@ -21,7 +21,8 @@
     "stayOnPageContent": "If you select \"No\" you will be redirected to the Help Board.",
     "yes": "Yes",
     "no": "No",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -68,6 +69,13 @@
         "enterAddress": "Enter address, zip code, or city",
         "shareLocation": "Share My Location"
       },
+      "sortBy": "Sort by",
+      "trending": "Sort by Trending",
+      "mostViewed": "Sort by Views",
+      "latest": "Sort by Latest",
+      "mostLiked": "Sort by Likes",
+      "proximity": "Sort by Distance",
+      "relevance": "Sort by Relevance",
       "providers": "Providers",
       "providersList": [
         "Individual",
@@ -179,8 +187,6 @@
     "addTags": "Add tags to make your post more visible",
     "whatVisibility": "What is the visibility of your post?",
     "postVisible": "The post will be visible to",
-    "workMode": "How can this post be fulfilled?",
-    "workFullfillment": "This post can be fulfilled",
     "success": "Success",
     "viewPost": "View Your Post",
     "like": "Like",
@@ -232,9 +238,6 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "edited": "edited",
-    "remote": "Remote",
-    "in-person": "In-person",
-    "both": "Remote & In-person",
     "share_plural": "Shares",
     "deletePostConfirmationTitle": "Delete post confirmation",
     "deleteCommentConfirmationTitle": "Delete comment confirmation",
@@ -244,7 +247,12 @@
     "hideCaption": "It is not relevant to me",
     "reportAction": "Report Post",
     "reportCaption": "For moderators review",
-    "copyUrl": "Copy URL"
+    "copyUrl": "Copy URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -404,6 +412,18 @@
       "global": "Global",
       "editOrgAccount": "Edit Organization Account",
       "editOrgNotification": "Edit Organization Notification"
+    },
+    "views": {
+      "activity": "Activity",
+      "posts": "Posts",
+      "requests": "Requests",
+      "offers": "Offers",
+      "organizations": "Organizations",
+      "badges": "Badges",
+      "thanks": "Thanks",
+      "active": "Active",
+      "archived": "Archived",
+      "drafts": "drafts"
     }
   },
   "auth": {
@@ -865,7 +885,8 @@
     "wrongOldPassword": "Wrong current password",
     "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
     "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "failedLinkAccounts": "Failed linking accounts, reason:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "We are not a provider of healthcare services",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.",
@@ -1077,5 +1098,32 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Close"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Location",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

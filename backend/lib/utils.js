@@ -83,6 +83,19 @@ const setElapsedTimeText = (createdAt, updatedAt) => {
   };
 };
 
+const transformPost = (post) => {
+  let projectedPost = {
+    ...post,
+    elapsedTimeText: {
+      created: translateISOtoRelativeTime(post.createdAt),
+      isEdited: post.isEdited, // keep frontend format
+    },
+    reportsCount: (post.reportedBy || []).length,
+  };
+  delete projectedPost.reportedBy;
+  return projectedPost;
+};
+
 const getReqParam = (req, paramName) => {
   // check in body props OR path params OR query params (might be null)
   const body = req.body || {}; // might be null
@@ -104,10 +117,10 @@ const createSearchRegex = (keywords) => {
           ? "\\b" + key + "\\b"
           : isLatin
           ? "\\b" + key
-          : key,
+          : key
       )
       .join("|") || "\\b\\B",
-    "ig",
+    "ig"
   );
   return keywordsRegex;
 };
@@ -143,5 +156,6 @@ module.exports = {
   isValidPassword,
   createSearchRegex,
   setElapsedTimeText,
+  transformPost,
   translateISOtoRelativeTime,
 };

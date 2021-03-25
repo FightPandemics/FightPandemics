@@ -21,7 +21,8 @@
     "stayOnPageContent": "\"Hayır\" ı seçerseniz, Yardım Panosuna yönlendirileceksiniz.",
     "yes": "Evet",
     "no": "Hayır",
-    "ok": "Tamam"
+    "ok": "Tamam",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Konum",
         "providers": "Destekçiler",
         "type": "Türler",
-        "lookingFor": "Yardım et veya yardım iste"
+        "lookingFor": "Yardım et veya yardım iste",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Bireysel",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Yardıma ihtiyacım var",
         "offer": "Yardım et"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Paylaş",
@@ -233,7 +240,12 @@
     "hideCaption": "Benim için uygun değil.",
     "reportAction": "Şikayet et",
     "reportCaption": "Moderatörler için",
-    "copyUrl": "URL'yi kopyala"
+    "copyUrl": "URL'yi kopyala",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Yanlış şifre",
     "noEmailAccount": "Bu e-posta adresine kayıtlı bir hesap bulunamadı, lütfen bir hesap oluşturmak için 'Şimdi Katıl'ı tıklayın.",
     "registeredAccount": "Bu e-posta adresiyle bir sosyal hesap oluşturuldu. Doğrudan bir e-posta ve şifre şle hesap oluşturmak için lütfen 'Şimdi Katıl'ı tıklayın.",
-    "failedLinkAccounts": "Hesaplar arasında bağlantı kurulamadı, nedeni:"
+    "failedLinkAccounts": "Hesaplar arasında bağlantı kurulamadı, nedeni:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "Biz sağlık hizmetleri sunan bir organizasyon değiliz",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Bu hizmet, şuan yaşamakta olduğumuz halk sağlığını tehdit eden bu olagan üstü durum sırasında, yardım alamayan ve temel kaynaklarından yoksun kalan insanlara yardım etmek amacıyla verilmektedir.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Kapat"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "Konum",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

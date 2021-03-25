@@ -21,7 +21,8 @@
     "stayOnPageContent": "Si seleccionas \"No\", serás redirigido/a al Tablero de Ayuda.",
     "yes": "Sí",
     "no": "No",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Ubicación",
         "providers": "Proveedores",
         "type": "Tipos",
-        "lookingFor": "Ofrecer o Solicitar Ayuda"
+        "lookingFor": "Ofrecer o Solicitar Ayuda",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Individuo",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Solicitando ayuda",
         "offer": "Ofreciendo ayuda"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "Publicación",
@@ -233,7 +240,12 @@
     "hideCaption": "No me interesa",
     "reportAction": "Denunciar publicación",
     "reportCaption": "Para revisión por parte de los moderadores",
-    "copyUrl": "Copiar URL"
+    "copyUrl": "Copiar URL",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Contraseña actual incorrecta",
     "noEmailAccount": "No hay ninguna cuenta asociada a ese correo electrónico, haz clic en «unirse» para crear una cuenta.",
     "registeredAccount": "Se ha asociado una cuenta con este correo electrónico. Haz clic en «unirse» para crear un correo electrónico y contraseña.",
-    "failedLinkAccounts": "Error de vinculación, motivo:"
+    "failedLinkAccounts": "Error de vinculación, motivo:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "No somos proveedores de servicios de salud",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Este servicio se brinda de buena fe para aquellos que de otro modo no podrían obtener ayuda ni recursos durante esta emergencia de salud pública sin precedentes",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "Has cancelado el proceso de verificación",
     "stepCancelBody": "Puedes verificar tu cuenta en cualquier momento",
     "stepCancelAction": "Cerrar"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Comparte tu ubicación si deseas visualizar el hospital más cercano",
+    "changeLoc": "Ubicación",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Hospital Mas Cercano",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

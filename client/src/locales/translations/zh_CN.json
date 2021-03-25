@@ -21,7 +21,8 @@
     "stayOnPageContent": "如果选择“否”，您将被重定向到帮助面板。",
     "yes": "是",
     "no": "不好",
-    "ok": "好的"
+    "ok": "好的",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "位置",
         "providers": "提供者",
         "type": "类型",
-        "lookingFor": "提供或请求帮助"
+        "lookingFor": "提供或请求帮助",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "个人",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "寻求帮助",
         "offer": "提供帮助"
+      },
+      "workMode": {
+        "inPerson": "In-person",
+        "remote": "Remote",
+        "both": "Both"
       }
     },
     "post": "发布",
@@ -233,7 +240,12 @@
     "hideCaption": "与我无关",
     "reportAction": "举报帖子",
     "reportCaption": "供版主审核",
-    "copyUrl": "复制链接"
+    "copyUrl": "复制链接",
+    "workMode": "How can this post be fulfilled?",
+    "workFullfillment": "This post can be fulfilled",
+    "remote": "Remote",
+    "in-person": "In-person",
+    "both": "Remote & In-person"
   },
   "profile": {
     "common": {
@@ -553,10 +565,7 @@
         "我怎么能相信这些帖子是可靠的？",
         "不幸的是，由于这些帖子是由我们的用户创建的，因此我们无法确保所有帖子都是可靠的。但是，我们会通过定期清除数据并在帖子过期后将其停用来保持内容的相关性。如果您对帖子内容有疑问，请通过<0> support@fightpandemics.com </0>与我们联系。"
       ],
-      [
-        "你们能帮我解决医疗问题吗？",
-        "FightPandemics不是医疗服务提供商。"
-      ],
+      ["你们能帮我解决医疗问题吗？", "FightPandemics不是医疗服务提供商。"],
       [
         "我需要分享我的当前位置吗？如果我不想分享自己的位置怎么办？",
         "我们使用位置来显示最相关的结果，但是，您也可以查看所有帖子。由于FightPandemics各地都有成千上万的帖子，因此我们建议您输入附近的位置，以最佳地定制结果。"
@@ -632,10 +641,7 @@
         "我想成为合作伙伴或赞助商。",
         "请通过<0>partnerships@fightpandemics.com</0>与我们的合作伙伴团队联系。"
       ],
-      [
-        "我来自出版社/媒体。",
-        "请通过<0>pr@fightpandemics.com</0>与我们联系。"
-      ],
+      ["我来自出版社/媒体。", "请通过<0>pr@fightpandemics.com</0>与我们联系。"],
       [
         "我需要技术支持。",
         "对此我们感到抱歉。请发送电子邮件至<0>support@fightpandemics.com</0>由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
@@ -651,10 +657,7 @@
         "我想成为合作伙伴或赞助商。",
         "请通过<0>partnerships@fightpandemics.com</0>与我们的合作伙伴团队联系。"
       ],
-      [
-        "我来自出版社/媒体。",
-        "请通过<0>pr@fightpandemics.com</0>与我们联系。"
-      ],
+      ["我来自出版社/媒体。", "请通过<0>pr@fightpandemics.com</0>与我们联系。"],
       [
         "我需要技术支持。",
         "对此我们感到抱歉。请发送电子邮件至<0>support@fightpandemics.com</0>。由于我们是一个完全由自愿者组成的团队，因此请至少等待48小时才能得到答复。"
@@ -854,7 +857,8 @@
     "wrongOldPassword": "当前密码错误",
     "noEmailAccount": "找不到此电子邮件地址的帐户，请点击“立即加入”以创建帐户。",
     "registeredAccount": "已有社交帐户使用了此邮件。请点击“立即加入”注册一个使用邮箱密码登录的帐户。",
-    "failedLinkAccounts": "链接帐户失败，原因："
+    "failedLinkAccounts": "链接帐户失败，原因：",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "我们不是医疗服务提供商",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "这项服务是本着诚意为那些在此次空前的卫生危机下无法获得帮助和资源的人提供的。",
@@ -1066,5 +1070,32 @@
     "stepCancelTitle": "您取消了验证过程",
     "stepCancelBody": "您随时可以随时返回并验证您的帐户！",
     "stepCancelAction": "关闭"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "位置",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

@@ -21,7 +21,8 @@
     "stayOnPageContent": "Jika anda memilih \"Tidak\", anda akan dihalakan ke Papan Bantuan.",
     "yes": "Ya",
     "no": "Tidak",
-    "ok": "OK"
+    "ok": "OK",
+    "nearestHsp": "Bantuan Kesihatan"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "Lokasi",
         "providers": "Pembekal",
         "type": "Jenis",
-        "lookingFor": "Tawar atau Mohon Bantuan"
+        "lookingFor": "Tawar atau Mohon Bantuan",
+        "workMode": "Post fulfillment"
       },
       "providersOptions": {
         "Individual": "Individu",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "Memohon bantuan",
         "offer": "Menawarkan bantuan"
+      },
+      "workMode": {
+        "inPerson": "Secara peribadi",
+        "remote": "Secara Jarak Jauh",
+        "both": "Kedua-duanya"
       }
     },
     "post": "Siar",
@@ -233,7 +240,12 @@
     "hideCaption": "Ianya tidak berkaitan dengan saya",
     "reportAction": "Laporkan Siaran",
     "reportCaption": "Untuk semakan moderator",
-    "copyUrl": "Salin URL"
+    "copyUrl": "Salin URL",
+    "workMode": "Bagaimanakah siaran ini dapat dipenuhi?",
+    "workFullfillment": "Siaran ini dapat dipenuhi",
+    "remote": "Secara Jarak Jauh",
+    "in-person": "Secara Peribadi",
+    "both": "Secara Jarak Jauh & Peribadi"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "Kata laluan semasa yang salah",
     "noEmailAccount": "Tiada akaun telah dijumpai dengan alamat e-mel ini, sila klik \"Sertai Sekarang\" untuk mencipta akaun.",
     "registeredAccount": "Akaun sosial telah didaftarkan dengan alamat e-mel ini. Sila klik \"Sertai Sekarang\" untuk mencipta akaun e-mel dan kata laluan langsung.",
-    "failedLinkAccounts": "Gagal memautkan akaun, sebab:"
+    "failedLinkAccounts": "Gagal memautkan akaun, sebab:",
+    "failedHealthFacPlaces": "Gagal mendapatkan kemudahan kesihatan."
   },
   "TEMP: We are not a provider of healthcare services": "Kami bukan pembekal perkhidmatan penjagaan kesihatan",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "Perkhidmatan ini disediakan dengan niat ikhlas bagi sesiapa jua yang tidak mampu untuk mendapatkan bantuan dan sumber semasa kecemasan kesihatan awam yang belum pernah berlaku sebelum ini.",
@@ -1017,7 +1030,7 @@
     "commented": "<0>{{username}}</0> memberikan komen pada siaran anda <1>{postTitle}}</1>",
     "shared": "<0>{{username}}</0> berkongsi siaran anda <1>{{postTitle}}</1> pada <1>{{shareMedium}}</1>",
     "empty": "Tiada pemberitahuan lagi",
-    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
+    "reported": "Siaran anda <1>{{postTitle}}</1> melanggar dasar kandungan kami dan oleh itu ianya telah dialih keluar"
   },
   "moderation": {
     "report": "Laporan",
@@ -1055,16 +1068,43 @@
   },
   "verification": {
     "verifyTitle": "Sahkan akaun anda!",
-    "verifyBody": "We noticed that you haven’t verified your account. Click here to get started.",
+    "verifyBody": "Kami menyedari bahawa anda belum mengesahkan akaun anda. Klik di sini untuk bermula.",
     "verified": "Disahkan oleh Veriff",
     "stepStartTitle": "Sahkan akaun anda dengan Veriff",
-    "stepStartBody": "FightPandemics wants to keep our community open, honest, and safe. The blue verified badge next to user’s name lets people know that an account is authentic.",
-    "stepStartAction": "Get Verified",
+    "stepStartBody": "FightPandemics mahu memastikan komuniti kita terbuka, jujur dan selamat. Lencana pengesahan biru di sebelah nama pengguna memberitahu orang ramai bahawa akaun itu adalah sahih.",
+    "stepStartAction": "Dapatkan Pengesahan",
     "stepSuccessTitle": "Terima kasih kerana mengesahkan akaun anda!",
-    "stepSuccessBody": "Your verification badge should appear on your profile in few moments",
+    "stepSuccessBody": "Lencana pengesahan anda akan muncul di profil anda dalam beberapa ketika",
     "stepSuccessAction": "Hebat!",
     "stepCancelTitle": "Anda membatalkan proses pengesahan",
     "stepCancelBody": "Anda boleh sentiasa kembali dan mengesahkan akaun anda pada bila-bila masa!",
     "stepCancelAction": "Tutup"
+  },
+  "nearestHsp": {
+    "noResults": "Tiada Hasil",
+    "tryAdjusting": "Cuba laraskan jenis atau lokasi kemudahan kesihatan anda.",
+    "shareLoc": "Kongsikan lokasi anda jika ingin melihat kemudahan kesihatan terdekat anda",
+    "changeLoc": "Lokasi",
+    "facility": "Kemudahan",
+    "hospitals": "Hospital",
+    "doctors": "Doktor",
+    "pharmacies": "Farmasi",
+    "healthFacilities": "Kemudahan Kesihatan",
+    "confirmedCases": "Kes-kes Yang Disahkan",
+    "viewList": "Paparan Senarai",
+    "viewMap": "Paparan Peta",
+    "you": "Anda",
+    "yourLocation": "Lokasi Anda",
+    "open24Hours": "Buka 24 Jam",
+    "open": "Buka",
+    "closed": "Tutup",
+    "and": " dan ",
+    "evalYourHealth": "Menilai kesihatan anda serta menerima arahan dan cadangan tentang ",
+    "covid19": "COVID-19",
+    "healthEval": "Penilaian Kesihatan",
+    "chkSymptoms": "Periksa Gejala",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Nombor kecemasan tempatan",
+    "forMoreResults": "Tunjukkan Lebih Banyak Hasil Carian..."
   }
 }

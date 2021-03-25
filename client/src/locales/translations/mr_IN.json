@@ -21,7 +21,8 @@
     "stayOnPageContent": "जर तुम्ही \"नाही\" निवडले तर तुम्हाला हेल्प बोर्डकडे पुनर्निर्देशित केले जाईल.",
     "yes": "होय",
     "no": "नाही",
-    "ok": "ठीक आहे"
+    "ok": "ठीक आहे",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "स्थान",
         "providers": "प्रदाते",
         "type": "प्रकार",
-        "lookingFor": "मदत सादर करा किंवा विनंती करा"
+        "lookingFor": "मदत सादर करा किंवा विनंती करा",
+        "workMode": "पद पूर्णता"
       },
       "providersOptions": {
         "Individual": "वैयक्तिक",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "मदतीची विनंती करत आहे",
         "offer": "मदत देणे"
+      },
+      "workMode": {
+        "inPerson": "वैयतिक/प्रत्यक्ष",
+        "remote": "दूरस्थ",
+        "both": "दोघेही"
       }
     },
     "post": "पोस्ट",
@@ -233,7 +240,12 @@
     "hideCaption": "हे माझ्याशी संबंधित नाही",
     "reportAction": "रिपोर्ट पोस्ट",
     "reportCaption": "नियंत्रकांच्या पुनरावलोकनासाठी",
-    "copyUrl": "URL कॉपी करा"
+    "copyUrl": "URL कॉपी करा",
+    "workMode": "हे पद कसे पूर्ण करता येईल?",
+    "workFullfillment": "हे पोस्ट पूर्ण केले जाऊ शकते",
+    "remote": "दूरस्थ",
+    "in-person": "वैयतिक/प्रत्यक्ष",
+    "both": "दूरस्थ आणि व्यक्तीगत"
   },
   "profile": {
     "common": {
@@ -854,7 +866,8 @@
     "wrongOldPassword": "चुकीचा चालू संकेतशब्द",
     "noEmailAccount": "या ईमेल पत्त्यासह कोणतेही खाते आढळले नाही, कृपया खाते तयार करण्यासाठी 'जॉइन नाऊ'वर क्लिक करा.",
     "registeredAccount": "या ईमेल पत्त्यासह एका सामाजिक खात्याची नोंदणी करण्यात आली आहे. थेट ईमेल आणि पासवर्ड खाते तयार करण्यासाठी कृपया 'जॉइन नाऊ'वर क्लिक करा.",
-    "failedLinkAccounts": "खाते लिंक करण्यात अपयशी, कारण:"
+    "failedLinkAccounts": "खाते लिंक करण्यात अपयशी, कारण:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "आम्ही आरोग्य सेवा प्रदाता नाही",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "या अभूतपूर्व सार्वजनिक आरोग्य आणीबाणीच्या काळात ज्यांना मदत आणि संसाधने मिळू शकत नाहीत त्यांच्यासाठी ही सेवा चांगल्या विश्वासाने पुरवली जाते.",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "बंद करा"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "स्थान",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

@@ -5,7 +5,7 @@
     "getHelp": "सहायता के लिए अनुरोध करें",
     "giveHelp": "मदद का प्रस्ताव करें",
     "viewFeed": "सहायता(हेल्प) बोर्ड देखें",
-    "register": "अब सम्मिलित हों",
+    "register": "हमसे जुड़ें",
     "feedback": "प्रतिपुष्टि",
     "question": "प्रश्न(सवाल)",
     "aboutUs": "हमारे बारे में",
@@ -21,7 +21,8 @@
     "stayOnPageContent": "यदि आप \"नहीं\" चुनते हैं, तो आपको सहायता बोर्ड पर पुनर्निर्देशित किया जाएगा।",
     "yes": "हाँ",
     "no": "नहीं",
-    "ok": "ठीक है"
+    "ok": "ठीक है",
+    "nearestHsp": "Health Aid"
   },
   "onboarding": {
     "common": {
@@ -105,7 +106,8 @@
         "location": "स्थान",
         "providers": "प्रदाताओं",
         "type": "प्रकार",
-        "lookingFor": "मदद की पेशकश या सहायता का अनुरोध करें"
+        "lookingFor": "मदद की पेशकश या सहायता का अनुरोध करें",
+        "workMode": "पद पूर्ति"
       },
       "providersOptions": {
         "Individual": "व्यक्तिगत",
@@ -204,6 +206,11 @@
       "helpTypes": {
         "request": "मदद का अनुरोध",
         "offer": "मदद की पेशकश"
+      },
+      "workMode": {
+        "inPerson": "वैयक्तिक रूप से",
+        "remote": "दूरस्थ",
+        "both": "दोनों"
       }
     },
     "post": "पोस्ट",
@@ -233,7 +240,12 @@
     "hideCaption": "यह मेरे अनुरूप नहीं है",
     "reportAction": "रिपोर्ट पोस्ट",
     "reportCaption": "मध्यस्थों के पुनरावलोकन के लिए",
-    "copyUrl": "Copy URL"
+    "copyUrl": "Copy URL",
+    "workMode": "इस पद की पूर्ति कैसे की जा सकती है?",
+    "workFullfillment": "इस पद की पूर्ति की जा सकती है",
+    "remote": "दूरस्थ",
+    "in-person": "वैयक्तिक रूप से",
+    "both": "दूरस्थ और वैयक्तिक रूप से"
   },
   "profile": {
     "common": {
@@ -415,7 +427,7 @@
     "passwordConfirmationRequired": "पासवर्ड की पुष्टि आवश्यक है।",
     "passwordNotMatch": "पासवर्ड मेल नहीं खाते",
     "backHome": "होम स्क्रीन पर वापस",
-    "linkAccountsSuccess": "Your account has been linked with your existing same email account. Please login again with any of them."
+    "linkAccountsSuccess": "आपका खाता आपके मौजूदा ईमेल खाते से लिंक कर दिया गया है। कृपया उनमें से किसी के साथ दोबारा लॉगिन करें।"
   },
   "verifyEmail": {
     "checkInbox": "अपने इनबॉक्स की जांच करें",
@@ -852,9 +864,10 @@
       "networkError": "क्षमा करें, कुछ नेटवर्क त्रुटि हुई है।"
     },
     "wrongOldPassword": "वर्तमान पासवर्ड गलत है",
-    "noEmailAccount": "No account has been found with this email address, please click 'Join Now' to create an account.",
+    "noEmailAccount": "इस ईमेल पते के साथ कोई खाता नहीं पाया गया है, कृपया खाता बनाने के लिए 'Join Now' पर क्लिक करें।",
     "registeredAccount": "A social account has been registered with this email address. Please click 'Join Now' to create a direct email and password account.",
-    "failedLinkAccounts": "Failed linking accounts, reason:"
+    "failedLinkAccounts": "Failed linking accounts, reason:",
+    "failedHealthFacPlaces": "Failed getting health facilities."
   },
   "TEMP: We are not a provider of healthcare services": "हम स्वास्थ्य सेवाओं के प्रदाता नहीं हैं",
   "TEMP: This service is provided in good faith for those who are otherwise unable to obtain help and resources during this unprecedented public health emergency.": "जो इस अभूतपूर्व सार्वजनिक स्वास्थ्य आपातकाल के दौरान सहायता और संसाधन प्राप्त करने में असमर्थ हैं, यह सेवा उन लोगों को सद्भाव से प्रदान की जाती है।",
@@ -1066,5 +1079,32 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "बंद करे"
+  },
+  "nearestHsp": {
+    "noResults": "No Results",
+    "tryAdjusting": "Try adjusting your type of health facilities or location.",
+    "shareLoc": "Share your location if you want to see your nearest health facilities",
+    "changeLoc": "स्थान(लोकेशन)",
+    "facility": "Facility",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "pharmacies": "Pharmacies",
+    "healthFacilities": "Health Facilities",
+    "confirmedCases": "Confirmed Cases",
+    "viewList": "List View",
+    "viewMap": "Map View",
+    "you": "You",
+    "yourLocation": "Your Location",
+    "open24Hours": "Open 24 hours",
+    "open": "Open",
+    "closed": "Closed",
+    "and": " and ",
+    "evalYourHealth": "Evaluate your health and receive instructions and recommendations about ",
+    "covid19": "COVID-19",
+    "healthEval": "Health Evaluation",
+    "chkSymptoms": "Check Symptoms",
+    "forDirAndMore": "For directions and more info",
+    "localEmergencyNumber": "Local emergency number",
+    "forMoreResults": "Show more search results..."
   }
 }

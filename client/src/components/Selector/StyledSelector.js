@@ -9,7 +9,8 @@ const StyledSelector = styled(Select)`
   margin: 0.5rem;
 
   .ant-select-selector {
-    min-width: ${props => props.minWidth || "11rem"};
+    min-width: ${(props) => props.minWidth || "11rem"};
+    min-height: ${(props) => props.minHeight || null};
     height: 2.25rem !important;
     border: 0.1rem solid ${colors.royalBlue} !important;
     border-radius: 0.5rem !important;

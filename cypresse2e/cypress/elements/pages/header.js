@@ -1,5 +1,6 @@
 class Header {
   aboutUsLink = "li #NAV_AU";
+  nearestHspLink = "li #NAV_NH";
   helpBoardLink = "li #NAV_HB";
   signInLink = "li #NAV_SI";
   joinNowLink = "li #NAV_JN";
@@ -14,6 +15,10 @@ class Header {
 
   getAboutUsLink() {
     return cy.get(this.aboutUsLink);
+  }
+
+  getNearestHspLink() {
+    return cy.get(this.nearestHspLink);
   }
 
   getHelpBoardLink() {

@@ -33,11 +33,11 @@ export const highlightSearchRegex = (text) => {
             ? "\\b" + key + "\\b"
             : isLatin
             ? "\\b" + key
-            : key,
+            : key
         )
         .join("|") || "\\b\\B"
     })`,
-    "ig",
+    "ig"
   );
   return regex;
 };
@@ -55,4 +55,33 @@ export const setQueryKeysValue = (history, newQuery) => {
     pathname: history.location.pathname,
     search: stringifiedQuery,
   });
+};
+
+export const formatDate = function (dateString) {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const date = new Date(dateString);
+  const dateStr = date.getDate();
+  const monthStr = monthNames[date.getMonth()];
+  const yearStr = date.getFullYear();
+  return `${monthStr} ${dateStr}, ${yearStr}`;
+};
+
+export const isPostExpired = (post) => {
+  if (!post.expireAt) {
+    return false;
+  }
+  return new Date(post.expireAt).getTime() < new Date().getTime();
 };
