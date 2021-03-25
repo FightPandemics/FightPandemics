@@ -37,6 +37,40 @@ import {
 import { useHistory } from "react-router-dom";
 
 const Apply = () => {
+    const history = useHistory();
+    useEffect(() => {
+
+        // window.addEventListener("popstate", (e) => {
+        //     window.stop()
+        //     e.preventDefault();
+        //     alert(window.location);
+        //     // history.go(1);
+        // }, true);
+        const yo = false
+        window.history.pushState(null, null,);
+        window.onpopstate = function () {
+
+
+            if (!yo) { history.go(1); }
+
+        };
+
+
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+
+    // const history = useHistory();
+
+    // window.addEventListener('keydown', (e) => {
+    //     e.preventDefault();
+    //     alert("e")
+
+    // }
+    // )
+
+    // window.onpopstate = (e) => { e.preventDefault() }
+
+
 
 
     // window.addEventListener('popstate', (e) => {
@@ -146,7 +180,7 @@ const Apply = () => {
         return (
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
-                
+
                 <ProfileBackgroup />
                 <ProfileLayout>
                     <PositionsContainer>

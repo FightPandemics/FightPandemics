@@ -1,6 +1,6 @@
 // ORIGINAL VERISION
 // //
-import React, { useReducer, useState, usePrevious, createContext, useContext, useEffect, useHistory } from "react";
+import React, { useReducer, useState, usePrevious, createContext, useContext, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { WhiteSpace } from "antd-mobile";
 import { Select } from "antd";
@@ -22,6 +22,8 @@ import SubmitButton from "components/Button/SubmitButton";
 import PolicyModal from "components/PolicyPages/PolicyModal"
 import AutoSize from "components/Input/AutoSize";
 import { Button } from "antd";
+import { createBrowserHistory } from "utils/history";
+import { useHistory } from "react-router-dom";
 
 // // Icons
 // import { ReactComponent as BackIcon } from "assets/icons/back-black.svg";
@@ -320,6 +322,7 @@ import axios from "axios";
 import { formDataToPost } from "assets/data/formToPostMappings";
 import GTM from "constants/gtm-tags";
 
+
 const { colors } = theme
 const LabelContainer = styled.label`
 font-size: 2.2rem;
@@ -363,7 +366,7 @@ const initialState = {
 const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setPostId, gtmPrefix }) => {
   const { t } = useTranslation();
   // const { form } = useContext(CreatePostContext);
-
+  const history = useHistory();
   const [formData, setFormData] = useState(initialState.formData);
 
   const [errors, setErrors] = useState(initialState.errors);
@@ -457,6 +460,23 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
     //   }
     // }
   };
+
+  // useEffect(() => {
+
+  //   window.addEventListener("popstate", onBrowserBack);
+  //   return () => {
+  //     window.removeEventListener("popstate", onBrowserBack);
+  //   };
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+
+  // window.addEventListener("popstate", onBrowserBack);
+
+  const onBrowserBack = () => { alert("Yoooo!") };
+  
+
+
+
   return (
     <>
       <OuterWrapper>
@@ -536,6 +556,7 @@ const PositionApplicationForm = ({ orgName, setCurrentStep, textData, type, setP
         <Submit
           primary="true"
           onClick={handleSubmit}
+        // onClick={history.goBack()}
         // disabled={
         //   !formData.title ||
         //   !formData.description ||
