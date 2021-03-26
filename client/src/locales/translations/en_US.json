@@ -1107,5 +1107,8 @@
     "forDirAndMore": "For directions and more info",
     "localEmergencyNumber": "Local emergency number",
     "forMoreResults": "Show more search results..."
+  },
+  "newApplicant":{
+    "newApplicant":"New Applicant"
   }
 }

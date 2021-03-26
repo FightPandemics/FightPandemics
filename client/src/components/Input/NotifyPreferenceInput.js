@@ -34,6 +34,7 @@ const NotifyType = {
   share: "post.share_plural",
   comment: "comment.comment_plural",
   message: "message.message_plural",
+  newApplicant: "newApplicant.newApplicant"
 };
 
 const NotifyFreq = {
@@ -80,7 +81,7 @@ const NotifyPreferenceInput = ({
       <WhiteSpace />
       <HelpWrapper>
         {Object.entries(NotifyGroup).map(([key1, label1]) => (
-          <>
+          <div key={key1}>
             <Col md="auto" key={(key1, label1)}>
               <WhiteSpace />
               <Label key={(key1, label1)}>{t(label1)}</Label>
@@ -105,7 +106,7 @@ const NotifyPreferenceInput = ({
               <WhiteSpace />
             </Col>
             <Col span={2}></Col>
-          </>
+          </div>
         ))}
       </HelpWrapper>
     </div>
