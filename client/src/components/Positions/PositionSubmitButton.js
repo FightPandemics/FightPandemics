@@ -84,11 +84,8 @@ const ConfirmationButton = styled.button`
   color: Blue;
 `;
 
-
-
-
-
-
+const ButtonsContainer = styled.div`
+`;
 
 const PositionSubmitButton = ({ getGTM, t, props }) => {
 
@@ -157,8 +154,8 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
             <StyledCancelButton onClick={handleCancel}>
               {t("positions.cancelModal")}
             </StyledCancelButton>
-            <StyledSubmitButton 
-            onClick={showPopUpTwo}>
+            <StyledSubmitButton
+              onClick={showPopUpTwo}>
               {t("positions.submitModal")}
             </StyledSubmitButton>
           </ButtonsContainer>

@@ -53,34 +53,34 @@ const Apply = () => {
     const handleCancel = async (e) => {
         setVisible(false);
         window.history.pushState({}, '',);
-    // window.addEventListener('popstate', (e) => {
-    //     e.preventDefault();
-    //     alert("TEST2!")
+        // window.addEventListener('popstate', (e) => {
+        //     e.preventDefault();
+        //     alert("TEST2!")
 
-    // }
-    // )
-
-
-    // const history = useHistory();
-
-    // useEffect(() => {
-    //     const { state, pathname } = history.location;
-    //     history.push(pathname, {
-    //         ...state,
-    //         keepScroll: true,
-    //     });
-    //     window.addEventListener("popstate", onBrowserBack);
-    //     return () => {
-    //         window.removeEventListener("popstate", onBrowserBack);
-    //     };
-    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    // const onBrowserBack = (e) => {
-    //     alert("TEST!")
-    //     e.preventDefault();
-    // };
+        // }
+        // )
 
 
+        // const history = useHistory();
+
+        // useEffect(() => {
+        //     const { state, pathname } = history.location;
+        //     history.push(pathname, {
+        //         ...state,
+        //         keepScroll: true,
+        //     });
+        //     window.addEventListener("popstate", onBrowserBack);
+        //     return () => {
+        //         window.removeEventListener("popstate", onBrowserBack);
+        //     };
+        // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+        // const onBrowserBack = (e) => {
+        //     alert("TEST!")
+        //     e.preventDefault();
+        // };
+
+    }
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 2];
     const { orgProfileState, orgProfileDispatch } = useContext(
@@ -118,9 +118,7 @@ const Apply = () => {
     return (
         // Header and class/component container for position info will be needed from new profile design to be consistent
         <>
-
             <ProfileBackgroup />
-
             <ProfileLayout>
                 <PositionsContainer>
                     <UserInfoContainer>
@@ -151,24 +149,24 @@ const Apply = () => {
 
                     <PositionApplicationForm
                         orgName={name}
-                    ></PositionApplicationForm> */}
-            <ExitModal
-                        visible={visible}
-                        handleExit={handleExit}
-                        handleCancel={handleCancel}
-                    />
-                    <div>{window.history.state.idx}</div>
-                    <TestButton
-                        onClick={handleBackRequest}
-                    // handleBackRequest={handleBackRequest}
-
-                    >CLICK TEST</TestButton>
-                        ></PositionApplicationForm>
-                    </PositionsContainer >
-        </ProfileLayout>
+                    >
+                        <ExitModal
+                            visible={visible}
+                            handleExit={handleExit}
+                            handleCancel={handleCancel}
+                        />
+                        <div>{window.history.state.idx}</div>
+                        <TestButton
+                            onClick={handleBackRequest}
+                        >
+                            CLICK TEST
+                        </TestButton>
+                    </PositionApplicationForm>
+                </PositionsContainer >
+            </ProfileLayout>
         </>
     );
 }
-}
+
 
 export default withUserContext(withOrganisationContext(Apply));

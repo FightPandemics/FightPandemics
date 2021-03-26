@@ -11,8 +11,6 @@ import styled from "styled-components";
 import ApplyFormLabel from "./ApplyFormLabel";
 import { useHistory } from "react-router-dom";
 
-
-const { colors } = theme
 const LabelContainer = styled.label`
 font-size: 2.2rem;
   font-weight: 400;
@@ -41,8 +39,8 @@ const initialState = {
 
 const PositionApplicationForm = ({ orgName }) => {
   const { t } = useTranslation();
-  // const { form } = useContext(CreatePostContext);
-  const history = useHistory();
+
+  // const history = useHistory();
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
 
