@@ -4,29 +4,59 @@ import { ApplyModal, ButtonsContainer, StyledCancelButton, StyledContainer, Styl
 import { CharCounter, ErrorMsg, InputField, InputWrapper, OuterWrapper } from "components/Positions/ApplyFormInputStyles";
 import PositionsButton from "components/Positions/PositionsButton";
 import { PositionSubmitModal } from "components/Positions/PositionSubmitModal";
-import { mq } from "constants/theme";
+import { mq, theme } from "constants/theme";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import ApplyFormLabel from "./ApplyFormLabel";
 import { useHistory } from "react-router-dom";
 
+const { colors } = theme
+
 const LabelContainer = styled.label`
 font-size: 2.2rem;
   font-weight: 400;
   line-height: 3.3rem;
 
-&.asterisk {
 :after {
   content: " *";
-  color: red;
 }
+
+&.asterisk-error {
+  :after {
+    color: red;
+  }
+}
+
 }
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 1.4rem;
     line-height: 1.8rem;
   }
 `;
+
+const Title = styled.h2`
+  margin: 7rem auto;
+  font-weight: 600;
+  font-size: 3.2rem;
+
+`;
+
+const ApplyFormSubmit = styled(Submit)`
+text-align: center;
+margin-top: 10rem !important;
+margin: auto;
+width: 33.4rem;
+height: 5.4rem;
+font-weight: 500;
+font-size: 1.6rem;
+line-height: 2.02rem;
+@media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+  width: 15.5rem;
+  height: 4.8rem;
+}
+`;
+
 
 const initialState = {
   formData: {
@@ -61,9 +91,6 @@ const PositionApplicationForm = ({ orgName }) => {
       setErrors(newErrors);
     }
   };
-
-  // cleanform will be used
-  const cleanForm = () => setFormData(initialState.formData);
 
   const renderError = (field) => {
     if (errors.includes(field) && (!formData[field] || !formData[field].length))
@@ -115,17 +142,20 @@ const PositionApplicationForm = ({ orgName }) => {
   const history = useHistory();
   return (
     <>
-      <h2 style={{ "color": "red", }}>TEST FORM & BUTTON</h2>
       <OuterWrapper>
+        <Title
+          className="hide-mobile"
+        >Application</Title>
         <LabelContainer
-          className={renderError("question1") ? "asterisk" : ""}
+          className={renderError("question1") ? "asterisk-error" : ""}
         >
           <ApplyFormLabel
             label={t("orgJoinQ.question1") + ` ${orgName}` + "?"}
           />
         </LabelContainer>
         <InputWrapper className={
-          formData.question1.length > 250 ? "has-error" : ""}
+          formData.question1.length > 250 || renderError("question1") ? "has-error text-present" :
+            formData.question1.length > 0 ? "text-present" : ""}
         >
           <InputField
             id="question1"
@@ -133,12 +163,13 @@ const PositionApplicationForm = ({ orgName }) => {
             onChange={handleFormData("question1")}
             renderError={renderError}
             formData={formData}
+          // rows={formData.question1.length > 0 ? 3 : 1}
           />
           <CharCounter
             className={
               formData.question1.length > 250 ? "has-error" : ""}
           >
-            {formData.question1.length} / {250}
+            {formData.question1.length} / {t("orgJoinQ.maxnum")}
           </CharCounter>
         </InputWrapper>
         <ErrorMsg
@@ -146,7 +177,7 @@ const PositionApplicationForm = ({ orgName }) => {
         >{renderError("question1")}</ErrorMsg>
 
         <LabelContainer
-          className={renderError("question2") ? "asterisk" : ""}
+          className={renderError("question2") ? "asterisk-error" : ""}
         >
           <ApplyFormLabel
             label={t("orgJoinQ.question2") + ` ${orgName}` + "?"}
@@ -154,7 +185,8 @@ const PositionApplicationForm = ({ orgName }) => {
         </LabelContainer>
         <InputWrapper
           className={
-            formData.question2.length > 250 ? "has-error" : ""}
+            formData.question2.length > 250 || renderError("question2") ? "has-error text-present" :
+              formData.question1.length > 0 ? "text-present" : ""}
         >
           <InputField
             id="question2"
@@ -163,17 +195,18 @@ const PositionApplicationForm = ({ orgName }) => {
             value={formData.question2}
             renderError={renderError}
             formData={formData}
+            rows={formData.question2.length > 0 ? 3 : 1}
           />
           <CharCounter
             className={formData.question2.length > 250 ? "has-error" : ""}
           >
-            {formData.question2.length} / {250}
+            {formData.question2.length} / {t("orgJoinQ.maxnum")}
           </CharCounter>
         </InputWrapper>
         <ErrorMsg className="has-error">{renderError("question2")}</ErrorMsg>
 
         <LabelContainer
-          className={renderError("question3") ? "asterisk" : ""}
+          className={renderError("question3") ? "asterisk-error" : ""}
         >
           <ApplyFormLabel
             label={t("orgJoinQ.question3") + "?"}
@@ -181,7 +214,8 @@ const PositionApplicationForm = ({ orgName }) => {
         </LabelContainer>
         <InputWrapper
           className={
-            formData.question3.length > 250 ? "has-error" : ""}
+            formData.question3.length > 250 || renderError("question3") ? "has-error text-present" :
+              formData.question3.length > 0 ? "text-present" : ""}
         >
           <InputField
             id="question3"
@@ -190,11 +224,12 @@ const PositionApplicationForm = ({ orgName }) => {
             value={formData.question3}
             renderError={renderError}
             formData={formData}
+            rows={formData.question3.length > 0 ? 3 : 1}
           />
           <CharCounter
             className={formData.question3.length > 250 ? "has-error" : ""}
           >
-            {formData.question3.length} / {250}
+            {formData.question3.length} / {t("orgJoinQ.maxnum")}
           </CharCounter>
         </InputWrapper>
         <ErrorMsg className="has-error">{renderError("question3")}</ErrorMsg>
@@ -247,13 +282,12 @@ const PositionApplicationForm = ({ orgName }) => {
       </ApplyModal>
 
       <Footer>
-        <Submit
-          style={{ "background-color": "red" }}
+        <ApplyFormSubmit
           primary="true"
           onClick={handleSubmit}
         >
-          TEST SUBMIT
-        </Submit>
+          {t("orgJoinQ.submit")}
+        </ApplyFormSubmit>
       </Footer>
     </>
   );

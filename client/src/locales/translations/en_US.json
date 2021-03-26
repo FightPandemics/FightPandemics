@@ -1099,7 +1099,7 @@
     "required": "Required Field",
     "application": "Applicaton",
     "submit": "Submit",
-    "maxnum": "/250"
+    "maxnum": "250"
   },
   "nearestHsp": {
     "noResults": "No Results",

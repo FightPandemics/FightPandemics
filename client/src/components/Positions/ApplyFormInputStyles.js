@@ -29,15 +29,16 @@ export const InputField = styled(TextArea)`
   width: 100%;
   flex-basis: 40rem;
   overflow-wrap: break-word;
+  
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 1.2rem;
-    height: 5.6rem;
+    min-height: 1.2rem !important;  
+    padding-right: 3rem !important;
+    padding-bottom: .7rem;
   }
 
-  &.text-present {
-    height: 10rem !important;
-  }
+  
 
 `;
 
@@ -50,6 +51,14 @@ export const OuterWrapper = styled.div`
   .has-error {
     color: red;
   }
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}){ 
+    .hide-mobile{
+    display: none;
+  }
+  }
+
+  
 `;
 
 export const InputWrapper = styled.div`
@@ -62,6 +71,18 @@ export const InputWrapper = styled.div`
     border-bottom: 1px solid ${colors.red};
     color: ${colors.red};
   }
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}){ 
+    flex-direction: column;
+    max-height: 3.2rem;
+    
+    &.text-present {
+      transition: max-height 1s ease;
+      max-height: 5rem;
+
+  }
+  }
+  
 `;
 
 const Prefix = styled.span`
@@ -75,25 +96,39 @@ export const CharCounter = styled.p`
   text-align: right;
   max-width: 40%;
   min-width: 25%;
- 
+  margin: 0;
+  margin-right: 2rem;
+
   &.has-error {
   color: ${colors.red} !important;
-
-  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
-
   }
-}
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    
+  }
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      max-width: 100%;
+      width: 100%;
+  }
+
 `;
 
 export const ErrorMsg = styled.p`
   color: ${colors.red} !important;
   font-family: 'Poppins';
   font-size: 1.4rem;
-  /* display: none; */
   position: relative;
   top: 0;
+  margin-bottom: 9rem;
+
   .has-error {
     color: red;
     display: block;
   }
+  
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-bottom: 5rem;
+  }
+  
 `;
+

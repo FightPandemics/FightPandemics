@@ -14,6 +14,7 @@ const StyledLabel = styled.label`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 1.4rem;
     line-height: 1.8rem;
+    margin-bottom: .5rem;
   }
 `;
 
