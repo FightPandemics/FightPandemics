@@ -565,10 +565,7 @@
         "我如何相信呢啲帖文係可靠嘅？",
         "Unfortunately, we cannot ensure that all postings are reliable, since the posts are created by our users. However we make our best to keep the content relevant, by doing regular data cleansing and by deactivating posts after their expiration. If you have concerns about the content of a post please contact us at <0>support@fightpandemics.com</0>"
       ],
-      [
-        "你可唔可以帮我解决醫療问题啊？",
-        "FightPandemics唔係醫療服務供應商。"
-      ],
+      ["你可唔可以帮我解决醫療问题啊？", "FightPandemics唔係醫療服務供應商。"],
       [
         "Do I need to share my current location? What if I don't want to share my location?",
         "We use location to show you the most relevant results, however, you may also view all postings. Since FightPandemics has thousands of postings from all over, we suggest you enter a location near you to best tailor results."
@@ -644,10 +641,7 @@
         "我想成為合作夥伴或贊助商。",
         "請與<0>partnerships@fightpandemics.com.</0>聯繫我哋嘅合作夥伴團隊"
       ],
-      [
-        "我來自出版社/媒體。",
-        "請與<0>pr@fightpandemics.com.</0>聯繫我們"
-      ],
+      ["我來自出版社/媒體。", "請與<0>pr@fightpandemics.com.</0>聯繫我們"],
       [
         "我需要技術支持.",
         "We are sorry for that. Send us an email at <0>support@fightpandemics.com.</0> Since we are an all volunteer team, please expect at least 48 hours for a response."
@@ -663,10 +657,7 @@
         "我想成為合作夥伴或贊助商。",
         "請與<0>partnerships@fightpandemics.com.</0>聯繫我哋嘅合作夥伴團隊"
       ],
-      [
-        "我來自出版社/媒體。",
-        "請與<0>pr@fightpandemics.com.</0>聯繫我們"
-      ],
+      ["我來自出版社/媒體。", "請與<0>pr@fightpandemics.com.</0>聯繫我們"],
       [
         "我需要技術支持",
         "對此我哋感到抱歉。 發送電子郵件至0<0>support@fightpandemics.com.</0> 由於我哋係一個完全由志願者組成嘅團隊，請耐心等待至少48小时會有答覆。"

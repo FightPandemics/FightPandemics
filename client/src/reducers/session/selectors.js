@@ -1,6 +1,7 @@
 export const selectOrganisationId = (state) => state.session.organisationId;
 
 export const selectUser = (state) => state.session.user;
+export const selectAuthStatus = (state) => state.session.authLoading;
 
 export const selectActorId = (state) => {
   const organisationId = selectOrganisationId(state);

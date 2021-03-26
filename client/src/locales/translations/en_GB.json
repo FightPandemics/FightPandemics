@@ -405,6 +405,18 @@
       "global": "Global",
       "editOrgAccount": "Edit Organisation Account",
       "editOrgNotification": "Edit Organisation Notification"
+    },
+    "views": {
+      "activity": "Activity",
+      "posts": "Posts",
+      "requests": "Requests",
+      "offers": "Offers",
+      "organizations": "Organizations",
+      "badges": "Badges",
+      "thanks": "Thanks",
+      "active": "Active",
+      "archived": "Archived",
+      "drafts": "drafts"
     }
   },
   "auth": {
