@@ -21,7 +21,7 @@ import {
     fetchUserSuccess
 } from "hooks/actions/userActions";
 import React, {
-    useContext, useEffect, useRef
+    useContext, useEffect, useRef, useState
 } from "react";
 import { useTranslation } from "react-i18next";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -35,71 +35,46 @@ import {
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import { Modal, Button } from "antd";
+import PositionSubmitButton from "components/Positions/PositionSubmitButton";
+import ExitModal from "components/Positions/ExitModal";
+import googleMapReact from "google-map-react";
+
+
+export const TestModal = styled(Modal)`
+    height: 50rem;
+    width: 100rem;
+`;
+
+const TestButton = styled.button`
+`;
 
 const Apply = () => {
     const history = useHistory();
+    const [visible, setVisible] = useState(false);
+    const handleBackRequest = async (e) => {
+        history.goBack(-1);
+    }
+    const handleExit = (e) => {
+        history.goBack(-1);
+    }
+
+    const initialBackRequest = (e) => {
+        setVisible(true);
+    }
+
+    const handleCancel = async (e) => {
+        setVisible(false);
+        window.history.pushState({}, '',);
+    }
+
     useEffect(() => {
-
-        // window.addEventListener("popstate", (e) => {
-        //     window.stop()
-        //     e.preventDefault();
-        //     alert(window.location);
-        //     // history.go(1);
-        // }, true);
-        const yo = false
-        window.history.pushState(null, null,);
+        window.history.pushState({}, '',);
         window.onpopstate = function () {
-
-
-            if (!yo) { history.go(1); }
-
+            initialBackRequest();
         };
-
-
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-
-    // const history = useHistory();
-
-    // window.addEventListener('keydown', (e) => {
-    //     e.preventDefault();
-    //     alert("e")
-
-    // }
-    // )
-
-    // window.onpopstate = (e) => { e.preventDefault() }
-
-
-
-
-    // window.addEventListener('popstate', (e) => {
-    //     e.preventDefault();
-    //     alert("TEST2!")
-
-    // }
-    // )
-
-
-    // const history = useHistory();
-
-    // useEffect(() => {
-    //     const { state, pathname } = history.location;
-    //     history.push(pathname, {
-    //         ...state,
-    //         keepScroll: true,
-    //     });
-    //     window.addEventListener("popstate", onBrowserBack);
-    //     return () => {
-    //         window.removeEventListener("popstate", onBrowserBack);
-    //     };
-    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    // const onBrowserBack = (e) => {
-    //     alert("TEST!")
-    //     e.preventDefault();
-    // };
-
 
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 2];
@@ -182,6 +157,7 @@ const Apply = () => {
             <>
 
                 <ProfileBackgroup />
+
                 <ProfileLayout>
                     <PositionsContainer>
                         <UserInfoContainer>
@@ -208,9 +184,22 @@ const Apply = () => {
                                 {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
                             </UserInfoDesktop>
                         </UserInfoContainer>
+                        <div>test</div>
+
                         <PositionApplicationForm
                             orgName={name}
                         ></PositionApplicationForm>
+                        <ExitModal
+                            visible={visible}
+                            handleExit={handleExit}
+                            handleCancel={handleCancel}
+                        />
+                        <div>{window.history.state.idx}</div>
+                        <TestButton
+                            onClick={handleBackRequest}
+                        // handleBackRequest={handleBackRequest}
+
+                        >CLICK TEST</TestButton>
                     </PositionsContainer >
                 </ProfileLayout>
             </>

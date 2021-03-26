@@ -143,7 +143,7 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
       <ApplyModal
         style={{ border: "3rem" }}
         //set to true for testing, normally handled by {visible}
-        visible={visible}
+        visible={true}
         width={564}
         footer={null}
         centered={true}
@@ -158,7 +158,8 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
             <StyledCancelButton onClick={handleCancel}>
               {t("positions.cancelModal")}
             </StyledCancelButton>
-            <StyledSubmitButton onClick={showPopUpTwo}>
+            <StyledSubmitButton 
+            onClick={showPopUpTwo}>
               {t("positions.submitModal")}
             </StyledSubmitButton>
           </ButtonsContainer>
