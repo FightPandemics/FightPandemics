@@ -1,81 +1,74 @@
-import React, { useState } from "react";
 import { Modal } from "antd";
-import LinkButtonNarrow from "components/Button/LinkButtonNarrow";
-import styled from "styled-components";
-import { mq, theme } from "constants/theme";
-import { Column } from "react-virtualized";
-import PositionSubmitModal from "components/Positions/PositionSubmitModal";
-import PositionsButton from "components/Positions/PositionsButton"
 import applicationConfirmation from "assets/icons/application-received.svg";
-const { colors, typography } = theme;
+import LinkButtonNarrow from "components/Button/LinkButtonNarrow";
+import { PositionSubmitModal } from "components/Positions/PositionSubmitModal";
+import { theme } from "constants/theme";
+import React, { useState } from "react";
+import styled from "styled-components";
+const { lighterBlack } = theme.colors;
+const { lightGrey } = theme.colors;
 const { display, body } = theme.typography.font.family;
 
+
 const StyledContainer = styled.section`
-  padding: 0;
+  padding: 2.5rem 0;
   display: flex;
   flex-direction: column;
-  text-align: left;
-  
+  align-items: center;
 
   h2 {
     font-family: ${display};
-    font-size: 1.6rem;
-    font-weight: 500;
-    line-height: 2rem;
-    text-align: left !important;
-    margin-bottom: 2.7rem;
-    color: ${colors.black};
-    
+    font-size: 2.3rem;
+    font-weight: 600;
+    line-height: 1.17;
+    text-align: center;
+    margin-top: -3.2rem;
+    margin-bottom: 40rem;
+    color: ${lighterBlack};
   }
   p {
     width: 100%;
     font-family: ${body};
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: light;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.8rem;
+    line-height: 1;
     letter-spacing: normal;
     margin: 0 auto;
     margin-top: -1.4rem;
-    margin-bottom: 2rem;
     display: flex;
     justify-content: center;
-    color: ${colors.darkGray};
+    color: ${lightGrey};
   }
-  
 `;
 
 const StyledCancelButton = styled.button`
-  font-family: 'Poppins';
   font-size: 1.6rem;
   padding: 0;
-  letter-spacing: .035rem;
-  /* position:absolute; */
+  position:absolute;
   border: none;
   background: none;
   button:focus { outline: none; };
   cursor: pointer;
   bottom: 1rem;
-  right: 10rem;
+  right: 12.6rem;
   color: Blue;
+  display: none;
 `;
 
+
 const StyledSubmitButton = styled.button`
-  font-family: 'Poppins';
   font-size: 1.6rem;
-  font-weight: 600;
-  letter-spacing: .035rem;
   padding: 0;
-  /* position:absolute; */
+  position:absolute;
   border: none;
   background: none;
   button:focus { outline: none; };
   cursor: pointer;
   bottom: 1rem;
-  right: 2rem;
+  right: 5rem;
   color: Blue;
-  justify-self: flex-start;
 `;
 
 const ConfirmationButton = styled.button`
@@ -91,22 +84,17 @@ const ConfirmationButton = styled.button`
   color: Blue;
 `;
 
-const ApplyModal = styled(Modal)`
-  margin-bottom: 20rem;
-  border-radius: 10rem !important;
-`;
 
-const ButtonsContainer = styled.div`
-display: flex;
-justify-content: flex-end;
-gap: 1.8rem;
-`;
+
+
+
+
 
 const PositionSubmitButton = ({ getGTM, t, props }) => {
 
   // 't' comes from 'AboutUs' scope for translation
   const [visible, setVisible] = useState(false);
-  const [visibleTwo, setVisibleTwo] = useState(false);
+  const [visibletwo, setVisibleTwo] = useState(false);
 
   const handleCancel = async (e) => {
     setVisible(false);
@@ -126,33 +114,44 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
   };
 
   const showPopUpTwo = async (e) => {
-    handleCancel()
+    // handleCancel()
     setVisibleTwo(true);
   };
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <>
-      {/* <LinkButtonNarrow
-      // needs proper GTM tag
-        // id={getGTM("Submit1")}
+      <LinkButtonNarrow
+        id={getGTM("Submit1")}
         type="primary"
         shape="round"
         onClick={showPopUp}
       >
-        {t("positions.submitButton")}
-      </LinkButtonNarrow> */}
-      <ApplyModal
+        {"Submit - Confirm"}
+      </LinkButtonNarrow>
+      <Modal
         style={{ border: "3rem" }}
         //set to true for testing, normally handled by {visible}
-        visible={true}
+        // visible={true}
+        visible={visible}
         width={564}
         footer={null}
         centered={true}
         onCancel={handleCancel}
-        cancelButtonProps={{ style: { display: 'none' } }}
-        closable={false}
       >
         <StyledContainer>
-          <h2>{t("positions.submitApplication")}</h2>
+          <h2>Submit Application</h2>
+          <br></br>
           <p>Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.</p>
           <ButtonsContainer>
             <StyledCancelButton onClick={handleCancel}>
@@ -163,8 +162,10 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
               {t("positions.submitModal")}
             </StyledSubmitButton>
           </ButtonsContainer>
+          <StyledCancelButton onClick={handleCancel} > Exit </StyledCancelButton>
+          <StyledSubmitButton onClick={showPopUpTwo} > Submit  </StyledSubmitButton>
         </StyledContainer>
-      </ApplyModal>
+      </Modal>
       {/* <LinkButton
         id={getGTM("getInvolved")}
         type="primary"
@@ -191,25 +192,27 @@ const PositionSubmitButton = ({ getGTM, t, props }) => {
 
       {/* Seperate Modal Component */}
 
-
-      <ApplyModal
+      <Modal
         style={{ border: "3rem" }}
-        // visibility set to true for testing, logic to be based on previous submit button on modal
-        visible={visibleTwo}
-        // width={"3rem"}
+        visible={true}
+        width={564}
         footer={null}
         centered={true}
         onCancel={handleCancelTwo}
-        cancelButtonProps={{ style: { display: 'none' } }}
-        closable={false}
       >
         <PositionSubmitModal>
           <img src={applicationConfirmation} alt="" />
-          <h2>{t("positions.applicationSubmitted")}</h2>
-          <p>{t("positions.applicationReceived")}</p>
-          <PositionsButton>{t("positions.okay")}</PositionsButton>
+          <h2>Application Submitted</h2>
+          <p>Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.</p>
+          <LinkButtonNarrow>Okay!</LinkButtonNarrow>
+
         </PositionSubmitModal>
-      </ApplyModal>
+      </Modal>
+
+
+
+
+
     </>
   );
 };

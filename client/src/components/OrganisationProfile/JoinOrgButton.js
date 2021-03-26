@@ -3,6 +3,10 @@ import BaseButton from "components/Button/BaseButton";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
+export const JoinOrgContainer = styled.div`
+  max-width: 33.4rem;
+  margin: auto;
+`;
 const JoinOrgBtn = styled(BaseButton)`
   border-radius: 4.6rem;
   background-color: ${theme.colors.royalBlue};

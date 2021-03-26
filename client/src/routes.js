@@ -279,16 +279,15 @@ const routes = [
     path: "/organisation/:id/positions",
     component: Positions,
     props: {
-      // TODO hide footer mobile
+      // hide footer mobile
     }
   },
   {
-    //TODO update path to be structure convention
     path: "/organisation/:id/apply",
     component: Apply,
     props: {
-      hideFooter: true,
-      hideHeader: true
+      hideFooter: false,
+      hideHeader: false
     }
   },
   {

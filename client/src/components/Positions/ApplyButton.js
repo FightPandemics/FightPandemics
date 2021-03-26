@@ -3,26 +3,15 @@ import BaseButton from "components/Button/BaseButton";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
-export const ApplyContainer = styled.div`
-  max-width: 33.4rem;
-  margin: auto;
-`;
-
 const ApplyBtn = styled(BaseButton)`
   border-radius: 4.6rem;
   background-color: ${theme.colors.royalBlue};
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 500;
   color: #ffffff !important;
   display: block;
-  max-width: 33.4rem;
-  margin: auto;
-  padding: 1rem;
-
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
-    width: fit-content;
-    
-  }
+  width: fit-content;
+  margin: 4rem auto;
  `;
 
 const GtmContainer = styled.span`
