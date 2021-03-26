@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import { useTranslation } from "react-i18next";
 import { WhiteSpace } from "antd-mobile";
+import { getLang } from "i18n";
+import { LANG_MAP } from "./OrgBookData";
 import SvgIcon from "../Icon/SvgIcon";
 import eyeClosedIcon from "../../assets/icons/orgbook-eye-closed.svg";
 import eyeOpenIcon from "../../assets/icons/orgbook-eye-open.svg";
@@ -105,6 +107,8 @@ const OrgBookEditorSpace = (props) => {
   const { t } = useTranslation();
   const tinyMce = useRef();
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
+  const [currentLanguage, setCurrentLanguage] = useState("en");
+  const [currentLanguageUrl, setCurrentLanguageUrl] = useState("");
 
   const onInit = useCallback(
     (editor) => {
@@ -116,6 +120,18 @@ const OrgBookEditorSpace = (props) => {
     },
     [selectedPage],
   );
+
+  useEffect(() => {
+    const { language } = getLang();
+    let tinyMceLang = LANG_MAP.find((l) => l.localeLang === language)
+      ?.tinyMceLang;
+    if (tinyMceLang === undefined) {
+      tinyMceLang = LANG_MAP.find((l) => l.default === true).tinyMceLang;
+    }
+    setCurrentLanguage(tinyMceLang);
+    const langUrl = `https://maskowe.github.io/tinymce_translations/${tinyMceLang}.js`;
+    setCurrentLanguageUrl(langUrl);
+  }, []);
 
   useEffect(() => {
     if (
@@ -157,6 +173,8 @@ const OrgBookEditorSpace = (props) => {
           inline: true,
           contextmenu: false,
           resize: false,
+          language: currentLanguage,
+          language_url: currentLanguageUrl,
           plugins: [
             "quickbars advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen table spellchecker",
