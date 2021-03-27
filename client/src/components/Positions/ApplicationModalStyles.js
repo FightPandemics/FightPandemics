@@ -44,14 +44,13 @@ export const StyledCancelButton = styled.button`
   font-size: 1.6rem;
   padding: 0;
   letter-spacing: .035rem;
-  /* position:absolute; */
   border: none;
   background: none;
   button:focus { outline: none; };
   cursor: pointer;
   bottom: 1rem;
   right: 10rem;
-  color: Blue;
+  color: ${colors.royalBlue};
 `;
 
 export const StyledSubmitButton = styled.button`
@@ -60,14 +59,13 @@ export const StyledSubmitButton = styled.button`
   font-weight: 600;
   letter-spacing: .035rem;
   padding: 0;
-  /* position:absolute; */
   border: none;
   background: none;
   button:focus { outline: none; };
   cursor: pointer;
   bottom: 1rem;
   right: 2rem;
-  color: Blue;
+  color: ${colors.royalBlue};
   justify-self: flex-start;
 `;
 
@@ -81,7 +79,7 @@ export const ConfirmationButton = styled.button`
   cursor: pointer;
   bottom: 1rem;
   right: 5rem;
-  color: Blue;
+  color: ${colors.royalBlue};
 `;
 
 export const ApplyModal = styled(Modal)`

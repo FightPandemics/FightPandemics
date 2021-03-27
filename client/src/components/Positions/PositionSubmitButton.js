@@ -5,6 +5,8 @@ import { PositionSubmitModal } from "components/Positions/PositionSubmitModal";
 import { theme } from "constants/theme";
 import React, { useState } from "react";
 import styled from "styled-components";
+
+const { colors } = theme;
 const { lighterBlack } = theme.colors;
 const { lightGrey } = theme.colors;
 const { display, body } = theme.typography.font.family;
@@ -53,7 +55,7 @@ const StyledCancelButton = styled.button`
   cursor: pointer;
   bottom: 1rem;
   right: 12.6rem;
-  color: Blue;
+  color: ${colors.royalBlue};
   display: none;
 `;
 
@@ -68,7 +70,7 @@ const StyledSubmitButton = styled.button`
   cursor: pointer;
   bottom: 1rem;
   right: 5rem;
-  color: Blue;
+  color: ${colors.royalBlue};
 `;
 
 const ConfirmationButton = styled.button`
@@ -81,7 +83,7 @@ const ConfirmationButton = styled.button`
   cursor: pointer;
   bottom: 1rem;
   right: 5rem;
-  color: Blue;
+  color: ${colors.royalBlue};
 `;
 
 const ButtonsContainer = styled.div`

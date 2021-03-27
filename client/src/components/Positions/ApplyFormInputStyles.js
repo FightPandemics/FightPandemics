@@ -49,7 +49,7 @@ export const OuterWrapper = styled.div`
   width: 100%;
 
   .has-error {
-    color: red;
+    color: ${colors.red};
   }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}){ 
@@ -122,7 +122,7 @@ export const ErrorMsg = styled.p`
   margin-bottom: 9rem;
 
   .has-error {
-    color: red;
+    color: ${colors.red};
     display: block;
   }
   

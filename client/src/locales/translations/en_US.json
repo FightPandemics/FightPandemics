@@ -1087,10 +1087,15 @@
     "apply": "Apply",
     "positions": "Positions",
     "okay": "Okay!",
-    "submitApplication": "Submit Application",
+    "submitModalTitle": "Submit Application",
+    "submitModalDescription": "Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.",
     "submitButton": "Submit",
     "submitModal": "SUBMIT",
-    "cancelModal": "CANCEL"
+    "submitModalCancel": "CANCEL",
+    "cancelModal": "Cancel",
+    "cancelModalExit": "Exit",
+    "cancelModalTitle": "Exit Application",
+    "cancelModalDescription": "Once confirmed, this action cannot be undone and your progress will be lost."
   },
   "orgJoinQ": {
     "question1": " Tell us, why do you want to join",

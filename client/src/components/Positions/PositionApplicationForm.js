@@ -24,7 +24,7 @@ font-size: 2.2rem;
 
 &.asterisk-error {
   :after {
-    color: red;
+    color: ${colors.red};
   }
 }
 
@@ -44,7 +44,7 @@ const Title = styled.h2`
 
 const ApplyFormSubmit = styled(Submit)`
 text-align: center;
-margin-top: 10rem !important;
+margin-top: 3rem;
 margin: auto;
 width: 33.4rem;
 height: 5.4rem;
@@ -54,9 +54,9 @@ line-height: 2.02rem;
 @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
   width: 15.5rem;
   height: 4.8rem;
+  margin-top: 2rem;
 }
 `;
-
 
 const initialState = {
   formData: {
@@ -70,7 +70,6 @@ const initialState = {
 const PositionApplicationForm = ({ orgName }) => {
   const { t } = useTranslation();
 
-  // const history = useHistory();
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
 
@@ -186,7 +185,7 @@ const PositionApplicationForm = ({ orgName }) => {
         <InputWrapper
           className={
             formData.question2.length > 250 || renderError("question2") ? "has-error text-present" :
-              formData.question1.length > 0 ? "text-present" : ""}
+              formData.question2.length > 0 ? "text-present" : ""}
         >
           <InputField
             id="question2"
@@ -195,7 +194,6 @@ const PositionApplicationForm = ({ orgName }) => {
             value={formData.question2}
             renderError={renderError}
             formData={formData}
-            rows={formData.question2.length > 0 ? 3 : 1}
           />
           <CharCounter
             className={formData.question2.length > 250 ? "has-error" : ""}
@@ -224,7 +222,6 @@ const PositionApplicationForm = ({ orgName }) => {
             value={formData.question3}
             renderError={renderError}
             formData={formData}
-            rows={formData.question3.length > 0 ? 3 : 1}
           />
           <CharCounter
             className={formData.question3.length > 250 ? "has-error" : ""}
@@ -245,11 +242,12 @@ const PositionApplicationForm = ({ orgName }) => {
         closable={false}
       >
         <StyledContainer>
-          <h2>{t("positions.submitApplication")}</h2>
-          <p>Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.</p>
-          <ButtonsContainer>
+          <h2>{t("positions.submitModalTitle")}</h2>
+          <p>{t("positions.submitModalDescription")}</p>
+          <ButtonsContainer
+          >
             <StyledCancelButton onClick={handleCancel}>
-              {t("positions.cancelModal")}
+              {t("positions.submitModalCancel")}
             </StyledCancelButton>
             <StyledSubmitButton
               onClick={showPopUpTwo}
