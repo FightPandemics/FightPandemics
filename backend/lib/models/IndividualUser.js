@@ -1,6 +1,6 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
-const { ROLES } = require( "../constants");
+const { ROLES } = require("../constants");
 
 const INDIVIDUAL_USER_TYPES = ["Individual"];
 function fullName(firstName, lastName) {
@@ -50,13 +50,13 @@ const individualUserSchema = new Schema(
       required: true,
       default: ROLES.user,
     },
-    //populate with organisation ID when a 
+    //populate with organisation ID when a
     //user becomes member on acceptance from org owner or admin
     memberOf: {
       required: false,
       type: [String],
       default: [],
-    }
+    },
   },
   { collection: "users" },
 );

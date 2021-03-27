@@ -46,13 +46,12 @@ function EditNotifications(props) {
       like: false,
       comment: false,
       share: false,
-      orgPosts: true,
+      orgPosts: false,
     },
     digest: { daily: false, weekly: false, biweekly: false },
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
   const [switchOnOff, setSwitchOnOff] = useState(true);
-  const [isMember, setIsMember] = useState(false);
 
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
@@ -81,8 +80,8 @@ function EditNotifications(props) {
       try {
         const res = await axios.get("/api/users/current");
         let { _id, ...prefs } = res.data.notifyPrefs;
-        if (res.data.memberOf.length > 0) {
-          setIsMember(true);
+        if (res.data.memberOf && res.data.memberOf.length > 0) {
+          prefs.instant.orgPosts = true;
         }
         if (isEqual(prefs, disabledPrefs)) {
           setSwitchOnOff(false); // update switch button
