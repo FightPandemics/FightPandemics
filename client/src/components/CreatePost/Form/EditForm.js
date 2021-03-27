@@ -7,7 +7,7 @@ import Second from "./SecondSection";
 import Third from "./ThirdSection";
 import Fourth from "./FourthSection";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "utils/userInfo";
 
 import { SET_POST, RESET_POST } from "hooks/actions/postActions";
 
@@ -23,6 +23,7 @@ const EditModalComponent = ({
   textData,
   dispatchAction,
   type,
+  onSuccess,
   user,
 }) => {
   const { t } = useTranslation();
@@ -120,6 +121,7 @@ const EditModalComponent = ({
       try {
         response = await axios.patch(endPoint, payload);
         if (response && response.data) {
+          onSuccess(response.data);
           dispatchAction(SET_POST, "content", response.data.content, "post", {
             ...post,
             ...response.data,

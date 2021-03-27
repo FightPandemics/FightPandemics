@@ -1,4 +1,5 @@
-import { Drawer } from "antd";
+import { Drawer, Menu } from "antd";
+
 import styled from "styled-components";
 
 import Heading from "../Typography/Heading";
@@ -35,8 +36,9 @@ export const SectionHeader = styled(Heading)`
     color: ${colors.darkGray};
     font-size: 1.5rem;
     font-weight: 500;
-    margin-bottom: 2rem;
+    // margin-bottom: 2rem;
     background: transparent;
+    padding: 0rem;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       background: ${colors.ghostWhite};
@@ -50,7 +52,7 @@ export const CreatePostIcon = styled(SvgIcon)`
   right: 2rem;
   height: 5rem;
   width: 5rem;
-  z-index: 1;
+  z-index: 2;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
   }
@@ -66,9 +68,14 @@ export const CreatePostDiv = styled.div`
 
 export const SocialIcon = styled(SvgIcon)`
   align-self: flex-end;
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   margin-right: 1.6rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    margin-top: 1rem;
+    width: 3rem;
+    height: 3rem;
+  }
 `;
 
 export const NameDiv = styled(TextLabel)`
@@ -86,7 +93,7 @@ export const NameDiv = styled(TextLabel)`
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     padding: 0;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     flex-direction: column;
   }
 
@@ -99,12 +106,14 @@ export const NameDiv = styled(TextLabel)`
   .address-container {
     color: #939393;
     font-weight: 400;
+    margin-top: auto;
     font-size: 1.4rem;
     line-height: 1.8rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100% - 1.6rem);
+    backgroun-color: red;
 
     img {
       margin-right: 0.8rem;
@@ -116,13 +125,28 @@ export const NamePara = styled.p`
   overflow-wrap: break-word;
   margin: 0 !important;
   text-align: left;
-  max-width: 90%;
+  max-width: 70%;
   margin-top: 1rem;
+  font-family: Poppins;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 2.7rem;
+  line-height: 3rem;
+  color: #282828;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     padding: 0;
-    font-size: 2.2rem;
-    line-height: 2.8rem;
+    overflow-wrap: break-word;
+    margin: 0 !important;
+    text-align: left;
+    max-width: 90%;
+    margin-top: 1rem;
+    font-family: Poppins;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.9rem;
+    line-height: 1.9rem;
+    letter-spacing: 0.05rem;
   }
 `;
 
@@ -169,7 +193,7 @@ export const IconsContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2.4rem;
+  margin-top: 1rem;
   ${(props) => (props.inCard ? `padding-bottom: 2rem;` : "")}
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     flex-direction: ${(props) => (props.inCard ? "row" : "column")};
@@ -197,7 +221,6 @@ export const HelpContainer = styled.div`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     margin-bottom: 1.6rem;
   }
-
   & > div {
     background: #f3f4fe;
     border-radius: 4px;
@@ -217,7 +240,9 @@ export const UserInfoContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  border-radius: 0.8rem;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
 `;
 
 export const AvatarPhotoContainer = styled.fieldset`
@@ -256,8 +281,201 @@ export const UserInfoDesktop = styled.div`
 `;
 
 export const DescriptionDesktop = styled.div`
-  margin-top: 2.4rem;
-  font-size: 1.4rem;
-  line-height: 2rem;
-  color: ${colors.darkerGray};
+  margin-top: 1rem;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.2rem;
+  line-height: 140%;
+  color: #939393;
+
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    margin-top: 2rem;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.5rem;
+    // line-height: 2rem;
+    line-height: 140%;
+    color: #282828;
+  }
+`;
+export const MobileLocation = styled.div`
+  color: #939393;
+  font-weight: normal;
+  font-family: Poppins;
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  line-height: 140%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 1.6rem);
+
+  img {
+    margin-right: 0.5rem;
+  }
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: none;
+  }
+`;
+export const DesktopLocation = styled.div`
+  display: none;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    display: initial;
+    width: auto;
+    height: 1.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.1rem;
+    line-height: 1rem;
+  }
+`;
+
+export const MobileMenuWrapper = styled(Menu)`
+  height: 4rem;
+  margin: 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+
+  &.ant-menu {
+    li.ant-menu-item {
+      margin: 0.8rem 0;
+      height: 3rem;
+      padding-bottom: 0rem;
+
+      color: ${theme.colors.darkerGray};
+      font-size: ${theme.typography.size.large};
+      line-height: 2.1rem;
+      width: 50%;
+      &:hover {
+        color: ${theme.colors.darkerGray};
+      }
+      text-align: center;
+    }
+
+    &.ant-menu .ant-menu-item-selected {
+      background-color: transparent;
+      border-bottom: 0.2rem solid ${theme.colors.black};
+      font-weight: bold;
+    }
+  }
+`;
+// TODO: Below is the wrapper for when future features get added
+// export const MobileMenuWrapper = styled(Menu)`
+//   &.ant-menu-vertical {
+//     border-right: none;
+//   }
+//   &.ant-menu {
+//     width: 100%;
+//     background-color: transparent;
+//     border-bottom: 0.063rem solid #e0e0e0;
+//     height: 4.5rem;
+//     display: flex;
+//     justify-content: space-between;
+//     overflow: auto;
+//     &::-webkit-scrollbar {
+//       display: none;
+//     }
+//     -ms-overflow-style: none;
+//     scrollbar-width: none;
+//   }
+//   li.ant-menu-item {
+//     margin: 0.8rem 0;
+//     height: 3rem;
+//     padding-bottom: 0rem;
+//     overflow: visible;
+
+//     color: ${theme.colors.darkerGray};
+//     font-size: ${theme.typography.size.large};
+//     line-height: 1.313rem;
+//     &:hover {
+//       color: ${theme.colors.darkerGray};
+//     }
+//     text-align: center;
+//   }
+
+//   &.ant-menu .ant-menu-item-selected {
+//     background-color: transparent;
+//     border-bottom: 0.2rem solid ${theme.colors.black};
+//     font-weight: bold;
+//     overflow: visible;
+//   }
+// `;
+export const DesktopMenuWrapper = styled(Menu)`
+  &.ant-menu-vertical {
+    border-right: none;
+  }
+  &.ant-menu {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0rem;
+  }
+  li.ant-menu-item {
+    margin: 0.8rem 0;
+    height: 3rem;
+    padding-bottom: 0rem;
+    text-align: left;
+    color: ${theme.colors.darkerGray};
+    font-size: ${theme.typography.size.large};
+    line-height: 1.313rem;
+    &:hover {
+      color: ${theme.colors.darkerGray};
+    }
+  }
+
+  &.ant-menu .ant-menu-item-selected {
+    background-color: transparent;
+    font-weight: bold;
+  }
+`;
+
+export const ChildMenuWrapper = styled(Menu)`
+  height: 4rem;
+  margin: 0rem 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  &.ant-menu {
+    ${({ isMobile }) =>
+      isMobile
+        ? `
+      border-top: 0.2rem solid ${theme.colors.lightGray};
+      width: 100%;
+      border-bottom: 0.2rem solid ${theme.colors.lightGray};
+  `
+        : `border-bottom: 0.2rem solid ${theme.colors.darkGray};`}
+
+    li.ant-menu-item {
+      margin: 0.8rem 0;
+      height: 3rem;
+      padding-bottom: 0rem;
+
+      color: ${theme.colors.darkerGray};
+      font-size: ${theme.typography.size.large};
+      line-height: 21px;
+      width: 50%;
+      &:hover {
+        color: ${theme.colors.darkerGray};
+      }
+      text-align: center;
+    }
+
+    &.ant-menu .ant-menu-item-selected {
+      background-color: transparent;
+      border-bottom: 0.2rem solid ${theme.colors.black};
+      font-weight: bold;
+    }
+  }
+`;
+
+//Mobile
+export const StyledMobileMenuContainer = styled.div`
+  display: "flex";
+  flex-direction: "column";
 `;

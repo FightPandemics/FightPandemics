@@ -3,6 +3,7 @@ const { model: User } = require("./User");
 const { ROLES } = require( "../constants");
 
 const INDIVIDUAL_USER_TYPES = ["Individual"];
+const ORG_MEMBERS_TYPES = ["volunteer", "wikieditor", "admin"];
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`;
 }
@@ -56,6 +57,11 @@ const individualUserSchema = new Schema(
       required: false,
       type: [String],
       default: [],
+    },
+    memberType: {
+      lowercase: true,
+      enum: ORG_MEMBERS_TYPES,
+      type: String,
     }
   },
   { collection: "users" },
@@ -82,6 +88,7 @@ const IndividualUser = User.discriminator(
 
 module.exports = {
   INDIVIDUAL_USER_TYPES,
+  ORG_MEMBERS_TYPES,
   model: IndividualUser,
   schema: individualUserSchema,
 };

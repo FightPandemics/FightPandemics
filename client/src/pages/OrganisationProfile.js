@@ -58,8 +58,11 @@ import {
   NamePara,
   ProfileBackgroup,
 } from "../components/Profile/ProfileComponents";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
-import { getInitialsFromFullName } from "utils/userInfo";
+import {
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser,
+} from "utils/userInfo";
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -490,19 +493,23 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           </UserInfoContainer>
           {isSelf && !verified && <Verification />}
           <WhiteSpace />
-          {// Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
+          {
+            // Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }
           <Link
-            onClick={
-              () => sessionStorage.setItem("postredirect", window.location.pathname)
+            onClick={() =>
+              sessionStorage.setItem("postredirect", window.location.pathname)
             }
-            to={isAuthenticated ? `/organisation/${organisationId}/positions` :
-              {
-                pathname: LOGIN,
-                state: { from: window.location.pathname },
-              }}>
-            <JoinOrgButton
-              id={GTM.organisation.joinOrg}>
+            to={
+              isAuthenticated
+                ? `/organisation/${organisationId}/positions`
+                : {
+                    pathname: LOGIN,
+                    state: { from: window.location.pathname },
+                  }
+            }
+          >
+            <JoinOrgButton id={GTM.organisation.joinOrg}>
               {t("profile.individual.joinOrg") + ` ${name}`}
             </JoinOrgButton>
           </Link>
