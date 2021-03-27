@@ -34,7 +34,7 @@ const NotifyType = {
   share: "post.share_plural",
   comment: "comment.comment_plural",
   message: "message.message_plural",
-  newApplicant: "newApplicant.newApplicant"
+  newapplicant: "newapplicant.newapplicant_singular"
 };
 
 const NotifyFreq = {

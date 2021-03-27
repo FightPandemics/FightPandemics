@@ -41,7 +41,7 @@ function EditNotifications(props) {
   const { firstName, lastName, usesPassword = false } = user || {};
   const { t } = useTranslation();
   const disabledPrefs = {
-    instant: { message: false, like: false, comment: false, share: false, newApplicant: false},
+    instant: { message: false, like: false, comment: false, share: false, newapplicant: false},
     digest: { daily: false, weekly: false, biweekly: false },
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });

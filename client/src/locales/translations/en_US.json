@@ -1127,7 +1127,7 @@
     "localEmergencyNumber": "Local emergency number",
     "forMoreResults": "Show more search results..."
   },
-  "newApplicant":{
-    "newApplicant":"New Applicant"
+  "newapplicant":{
+    "newapplicant_singular": "New Applicant"
   }
 }
