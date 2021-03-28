@@ -34,7 +34,6 @@ const NotifyType = {
   share: "post.share_plural",
   comment: "comment.comment_plural",
   message: "message.message_plural",
-  orgPosts: "common.orgPosts",
 };
 
 const NotifyFreq = {
@@ -46,6 +45,7 @@ const NotifyFreq = {
 const NotifyPreferenceInput = ({
   control,
   currPrefs,
+  enableOrgPosts,
   switchOnOff,
   setSwitchOnOff,
 }) => {
@@ -53,8 +53,11 @@ const NotifyPreferenceInput = ({
   const { t } = useTranslation();
 
   useEffect(() => {
+    if (enableOrgPosts) {
+      Object.assign(NotifyType, { orgPosts: "common.orgPosts" });
+    }
     setChecksEnabled(switchOnOff);
-  }, [switchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [switchOnOff, enableOrgPosts]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
