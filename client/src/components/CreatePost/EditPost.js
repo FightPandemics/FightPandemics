@@ -3,20 +3,33 @@ import React from "react";
 import TabForms from "./Form/TabForms";
 
 const EditPost = (props) => {
+  const {
+    user,
+    isAuthenticated,
+    dispatchAction,
+    currentPost,
+    loadPost,
+    fullContent,
+    textData,
+    onSuccess,
+    onCancel,
+    visible,
+  } = props;
   return props.currentPost &&
-    props.currentPost.author &&
-    props.isAuthenticated &&
-    props.visible ? (
+    currentPost.author &&
+    isAuthenticated &&
+    visible ? (
     <TabForms
-      user={props.user}
-      isAuthenticated={props.isAuthenticated}
-      dispatchAction={props.dispatchAction}
-      currentPost={props.currentPost}
-      loadPost={props.loadPost}
-      fullContent={props.fullContent}
-      textData={props.textData}
+      user={user}
+      isAuthenticated={isAuthenticated}
+      dispatchAction={dispatchAction}
+      currentPost={currentPost}
+      loadPost={loadPost}
+      fullContent={fullContent}
+      textData={textData}
+      onSuccess={onSuccess}
       onClose={() => {
-        props.onCancel();
+        onCancel();
       }}
     />
   ) : (

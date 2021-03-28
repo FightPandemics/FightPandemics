@@ -1,6 +1,8 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
 
+const posDescription = "";
+
 const organisationSchema = new Schema(
   {
     global: Boolean,
@@ -49,6 +51,11 @@ const organisationSchema = new Schema(
         required: true,
         type: Boolean,
         default: false,
+    },
+    isNewApplicant : {
+      required: true,
+      type: Boolean,
+      default: false,
     },
     orgBookLink: {
         required: false,

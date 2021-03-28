@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -9,15 +9,15 @@ import isEmpty from "lodash/isEmpty";
 
 // Local
 import EditPost from "components/CreatePost/EditPost";
-import { ProfileCompletedButtonsWrapper } from "components/CompletedProfile/CompletedProfile";
 import Loader from "components/Feed/StyledLoader";
 import Post, { CONTENT_LENGTH } from "components/Feed/Post";
 import { StyledPostPage } from "components/Feed/StyledPostPage";
 import PostMetaContainer from "components/Meta/PostMetaContainer";
 import { typeToTag } from "assets/data/formToPostMappings";
-import { isAuthorOrg, isAuthorUser } from "pages/Feed";
+import { isAuthorOrg, isAuthorUser } from "utils/userInfo";
 import { postReducer, postState } from "hooks/reducers/postReducers";
 import { selectOrganisationId, selectActorId } from "reducers/session";
+import { postsActions } from "reducers/posts";
 import GTM from "constants/gtm-tags";
 
 // Constants
@@ -89,6 +89,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const history = useHistory();
   const { postId } = useParams();
   const [post, postDispatch] = useReducer(postReducer, postState);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const organisationId = useSelector(selectOrganisationId);
   const actorId = useSelector(selectActorId);
@@ -110,7 +111,6 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
   const {
     postLength,
     fullContent,
-    //editPostModalVisibility,
     deleteModalVisibility,
     commentsCount,
     showComments,
@@ -145,6 +145,15 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
         visibility: true,
       });
     }
+  };
+
+  const handleEditPostSuccess = (post) => {
+    dispatch(
+      postsActions.updateProfilePostSucess({
+        post,
+        userId: post.author.id,
+      }),
+    );
   };
 
   const handleCloseEditPost = () => {
@@ -325,8 +334,8 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
                 user={user}
                 dispatchAction={dispatchPostAction}
                 loadPost={loadPost}
-                // onSelect={handleEditPost}
                 isAuthenticated={isAuthenticated}
+                onSuccess={handleEditPostSuccess}
                 onCancel={handleCloseEditPost}
                 fullContent={fullContent}
                 currentPost={post}

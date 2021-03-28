@@ -71,7 +71,7 @@ module.exports = {
     createOrgProfPrefix: "COP",
     createNew: "_CN",
     email: "_EM",
-    joinOrg: "JOR"
+    joinOrg: "JOR",
   },
   profile: {
     createProfile: "_CPR",
@@ -87,6 +87,18 @@ module.exports = {
     cancelVerify: "_CV",
     accountVerified: "_AV",
     checkBadge: "_AV_CB",
+    requests: "_RE",
+    offers: "_OF",
+    posts: "_PO",
+    card: "_CRD",
+    desktop: "_DET",
+    active: "_AC",
+    archived: "_AR",
+    draft: "_DFT",
+    activity: "_ACT",
+    organizations: "_ORG",
+    badges: "_BD",
+    thanks: "_TH",
   },
   sign: {
     inPrefix: "SI",
@@ -108,6 +120,13 @@ module.exports = {
   },
   feed: {
     prefix: "HB",
+    sort: "_SR",
+    proximity: "_DI",
+    relevance: "_RL",
+    likes: "_LK",
+    shares: "_SH",
+    createdAt: "_TI",
+    views: "_VI",
   },
   nearestHospital: {
     prefix: "NH",

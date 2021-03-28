@@ -70,6 +70,13 @@
         "enterAddress": "Enter address, zip code, or city",
         "shareLocation": "Share My Location"
       },
+      "sortBy": "Sort by",
+      "trending": "Sort by Trending",
+      "mostViewed": "Sort by Views",
+      "latest": "Sort by Latest",
+      "mostLiked": "Sort by Likes",
+      "proximity": "Sort by Distance",
+      "relevance": "Sort by Relevance",
       "providers": "Providers",
       "providersList": [
         "Individual",
@@ -407,6 +414,18 @@
       "global": "Global",
       "editOrgAccount": "Edit Organization Account",
       "editOrgNotification": "Edit Organization Notification"
+    },
+    "views": {
+      "activity": "Activity",
+      "posts": "Posts",
+      "requests": "Requests",
+      "offers": "Offers",
+      "organizations": "Organizations",
+      "badges": "Badges",
+      "thanks": "Thanks",
+      "active": "Active",
+      "archived": "Archived",
+      "drafts": "drafts"
     }
   },
   "auth": {

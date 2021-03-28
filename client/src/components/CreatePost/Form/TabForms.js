@@ -23,6 +23,7 @@ const ModalComponent = ({
   setPostId,
   addTag,
   currentPost,
+  onSuccess,
   user,
   gtmTagPrefix,
 }) => {
@@ -83,6 +84,7 @@ const ModalComponent = ({
                   fullContent={fullContent}
                   dispatchAction={dispatchAction}
                   currentPost={currentPost}
+                  onSuccess={onSuccess}
                   user={user}
                   onSelect={handleEditPost}
                   isAuthenticated={isAuthenticated}
@@ -104,6 +106,7 @@ const ModalComponent = ({
                   handleFormData={handleFormData}
                   renderError={renderError}
                   addTag={addTag}
+                  onSuccess={onSuccess}
                   onClose={onClose}
                   setPostId={setPostId}
                   gtmPrefix={gtmTagPrefix + tagsMap[tab.key]}

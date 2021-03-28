@@ -4,7 +4,7 @@ import { CameraOutlined } from "@ant-design/icons";
 import BaseButton from "../Button/BaseButton";
 import ReactCrop from "react-image-crop";
 import styled from "styled-components";
-import { theme } from "../../constants/theme";
+import { mq, theme } from "../../constants/theme";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import GTM from "constants/gtm-tags";
@@ -44,8 +44,14 @@ const CameraButtonUpload = styled.button`
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   border-radius: 50%;
+  border: 4px solid;
+  border-color: white;
+  box-shadow: 2px 2px whitesmoke;
   background-color: ${colors.royalBlue};
   cursor: pointer;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    border: none;
+  }
 `;
 
 function isImageFile(file) {
@@ -232,10 +238,10 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
                   {t("avatar.submitBtn")}
                 </CustomSubmitButton>
               ) : (
-                  <CustomSubmitButton key="retry" onClick={retry}>
-                    {t("avatar.tryAgainBtn")}
-                  </CustomSubmitButton>
-                )
+                <CustomSubmitButton key="retry" onClick={retry}>
+                  {t("avatar.tryAgainBtn")}
+                </CustomSubmitButton>
+              )
             ) : null}
           </div>
         }
@@ -249,35 +255,35 @@ const UploadPic = ({ cameraIconSize, gtmPrefix, user }) => {
             {uploadError ? (
               <h3>{uploadError}</h3>
             ) : (
-                <ReactCrop
-                  src={photoURL}
-                  crop={crop}
-                  minHeight={250}
-                  minWidth={250}
-                  circularCrop={true}
-                  ruleOfThirds
-                  keepSelection={true}
-                  onImageLoaded={imageLoaded}
-                  onChange={(newCrop) => setCrop(newCrop)}
-                />
-              )}
+              <ReactCrop
+                src={photoURL}
+                crop={crop}
+                minHeight={250}
+                minWidth={250}
+                circularCrop={true}
+                ruleOfThirds
+                keepSelection={true}
+                onImageLoaded={imageLoaded}
+                onChange={(newCrop) => setCrop(newCrop)}
+              />
+            )}
           </div>
         ) : (
-            <div
-              style={{
-                textAlign: "center",
-              }}
-            >
-              {uploadError ? (
-                <h3>{uploadError}</h3>
-              ) : (
-                  <img
-                    style={{ borderRadius: "50%" }}
-                    src={user && user.photo ? user.photo : null}
-                  ></img>
-                )}
-            </div>
-          )}
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            {uploadError ? (
+              <h3>{uploadError}</h3>
+            ) : (
+              <img
+                style={{ borderRadius: "50%" }}
+                src={user && user.photo ? user.photo : null}
+              ></img>
+            )}
+          </div>
+        )}
       </AvatarModal>
     );
   };

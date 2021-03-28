@@ -1,6 +1,6 @@
 // Core
 import React, { useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -58,15 +58,18 @@ const PostSocial = ({
   keepPageState,
   keepPostsState,
   gtmPrefix,
+  post,
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const organisationId = useSelector(selectOrganisationId);
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const gtmTag = (element, prefix) => prefix + GTM.post[element] + "_" + id;
 
-  if (isOwnPost && sessionStorage.getItem("msgModal") === authorId) sessionStorage.removeItem("msgModal");
+  if (isOwnPost && sessionStorage.getItem("msgModal") === authorId)
+    sessionStorage.removeItem("msgModal");
 
   const showNativeShareOrModal = () => {
     if (navigator.share) {
@@ -84,7 +87,7 @@ const PostSocial = ({
     }
   };
 
-  const handlePostLike = useCallback(async (postId, liked, create) => {
+  const handlePostLike = useCallback(async (post, postId, liked, create) => {
     sessionStorage.removeItem("likePost");
 
     if (isAuthenticated) {
@@ -97,7 +100,15 @@ const PostSocial = ({
       const request = liked ? axios.delete : axios.put;
       try {
         const { data } = await request(endPoint);
-        postDispatch(postsActions.setLikeAction(postId, data.likesCount));
+        postDispatch(
+          postsActions.setLikeAction(data.post, data.post.likesCount),
+        );
+        dispatch(
+          postsActions.updateProfilePostSucess({
+            post: data.post,
+            userId: authorId,
+          }),
+        );
       } catch (error) {
         console.log({ error });
       }
@@ -112,10 +123,10 @@ const PostSocial = ({
 
     if (id === likePost) {
       if (likePost) {
-        handlePostLike(likePost, liked, false);
+        handlePostLike(post, likePost, liked, false);
       }
     }
-  }, [handlePostLike, id, liked]);
+  }, [handlePostLike, id, liked, post]);
 
   const renderPostSocialIcons = (
     <>
@@ -123,7 +134,7 @@ const PostSocial = ({
         <div
           id={gtmTag("like", GTM.post.prefix)}
           className="social-icon"
-          onClick={() => handlePostLike(id, liked, true)}
+          onClick={() => handlePostLike(post, id, liked, true)}
         >
           {renderLikeIcon(liked)}
           {renderLabels("Like", numLikes, t)}
@@ -134,7 +145,7 @@ const PostSocial = ({
             <div
               id={gtmTag("like", GTM.feed.prefix)}
               className="social-icon"
-              onClick={() => handlePostLike(id, liked, true)}
+              onClick={() => handlePostLike(post, id, liked, true)}
             >
               {renderLikeIcon(liked)}
               {renderLabels("Like", numLikes, t)}
