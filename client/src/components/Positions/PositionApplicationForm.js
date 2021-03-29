@@ -234,6 +234,53 @@ const PositionApplicationForm = ({ orgName }) => {
         <ErrorMsg className="has-error">{renderError("question3")}</ErrorMsg>
       </OuterWrapper>
 
+      
+      <ApplyModal
+        visible={visible}
+        width={564}
+        footer={null}
+        centered={true}
+        onCancel={handleCancel}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        closable={false}
+      >
+        <StyledContainer>
+          <h2>{t("positions.submitApplication")}</h2>
+          <p>Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.</p>
+          <ButtonsContainer>
+            <StyledCancelButton onClick={handleCancel}>
+              {t("positions.cancelModal")}
+            </StyledCancelButton>
+            <StyledSubmitButton
+              onClick={showPopUpTwo}
+            >
+              {t("positions.submitModal")}
+            </StyledSubmitButton>
+          </ButtonsContainer>
+        </StyledContainer>
+      </ApplyModal>
+
+      <ApplyModal
+        visible={visibleTwo}
+        footer={null}
+        centered={true}
+        onCancel={handleCancelTwo}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        closable={false}
+        className="submitted"
+      >
+        <PositionSubmitModal>
+          <img src={applicationConfirmation} alt="" />
+          <h2>{t("positions.applicationSubmitted")}</h2>
+          <p>{applicationReceived}</p>
+          <PositionsButton
+            onClick={handleCancelTwo}
+          >
+            {t("positions.okay")}
+          </PositionsButton>
+        </PositionSubmitModal>
+      </ApplyModal>
+
       <Footer>
         <ApplyFormSubmit
           primary="true"
