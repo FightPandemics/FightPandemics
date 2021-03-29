@@ -133,6 +133,10 @@ module.exports = {
     locationChange: "_LC",
     locationShare: "_LS",
   },
+  orgBook: {
+    prefix: "OB",
+    back: "_BA",
+  },
   providersFilters: {
     individual: "_IN",
     startUp: "_ST",

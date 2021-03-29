@@ -4,7 +4,9 @@ import { theme, mq } from "../../constants/theme";
 import { useTranslation } from "react-i18next";
 import { WhiteSpace } from "antd-mobile";
 import { Avatar } from "components/Avatar";
+import BackArrowButton from "./OrgBookBackButton";
 import { getInitialsFromFullName } from "utils/userInfo";
+import GTM from "../../constants/gtm-tags";
 import SvgIcon from "../Icon/SvgIcon";
 import eyeClosedIcon from "../../assets/icons/orgbook-eye-closed.svg";
 import eyeOpenIcon from "../../assets/icons/orgbook-eye-open.svg";
@@ -14,13 +16,22 @@ import pageIcon from "../../assets/icons/orgbook-page.svg";
 import plusIcon from "../../assets/icons/orgbook-plus.svg";
 
 const { colors, typography } = theme;
-const { white, black, lightGray } = colors;
+const { white, black, lightGray, royalBlue } = colors;
 
 const OrgBookTOCHeader = styled.div`
   background-color: rgb(120, 120, 120);
   color: ${white};
   height: 3vh;
   padding: 1.4rem 1.4rem 3.4rem 1.4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const OrgBookHeaderLabelContainer = styled.div``;
+
+const HeaderSpacerContainer = styled.div`
+  width: 50px;
 `;
 
 const MainNavigationContainer = styled.div`
@@ -97,6 +108,7 @@ const OrgBookTableOfContents = (props) => {
     showAddNewPage,
     selectPage,
     preSelectedPage,
+    handleBackBtnClick,
   } = props;
   const { t } = useTranslation();
   const [selectedPage, setSelectedPage] = useState(preSelectedPage || null);
@@ -159,7 +171,19 @@ const OrgBookTableOfContents = (props) => {
   return (
     sortedCurrentOrgBookPages && (
       <>
-        <OrgBookTOCHeader>{t("orgBook.editorSpaceTOCHeader")}</OrgBookTOCHeader>
+        <OrgBookTOCHeader>
+          <OrgBookHeaderLabelContainer>
+            {t("orgBook.editorSpaceTOCHeader")}
+          </OrgBookHeaderLabelContainer>
+          <HeaderSpacerContainer />
+          <BackArrowButton
+            handleClick={handleBackBtnClick}
+            id={GTM.orgBook.prefix + GTM.orgBook.back}
+            label={t("onboarding.common.previous")}
+            color={white}
+            bgcolor="transparent"
+          ></BackArrowButton>
+        </OrgBookTOCHeader>
         <MainNavigationContainer>
           <WhiteSpace />
           <OrgAvatarAndNameContainer>

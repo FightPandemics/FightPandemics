@@ -690,6 +690,10 @@ const OrgBookEditor = () => {
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
   };
 
+  const handleBackBtnClick = () => {
+    history.push(`/organisation/${organisation._id}`);
+  };
+
   const renderTableOfContents = () => {
     if (organisation && currentOrgBookPages && currentOrgBookPages.length > 0) {
       let showAddNewPage = true;
@@ -707,6 +711,7 @@ const OrgBookEditor = () => {
             showAddNewPage={showAddNewPage}
             selectPage={handleSelectPage}
             preSelectedPage={selectedPage}
+            handleBackBtnClick={handleBackBtnClick}
           ></OrgBookTableOfContents>
         </TableOfContentsSidebar>
       );
