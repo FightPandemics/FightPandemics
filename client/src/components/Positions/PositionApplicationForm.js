@@ -245,7 +245,7 @@ const PositionApplicationForm = ({ orgName }) => {
         closable={false}
       >
         <StyledContainer>
-          <h2>{t("positions.submitApplication")}</h2>
+          <h2>{t("positions.submitModalTitle")}</h2>
           <p>Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.</p>
           <ButtonsContainer>
             <StyledCancelButton onClick={handleCancel}>
