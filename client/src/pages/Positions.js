@@ -36,7 +36,6 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
-import { Link } from "react-router-dom";
 
 const Positions = () => {
 
