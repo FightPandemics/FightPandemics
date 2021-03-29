@@ -502,53 +502,77 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           {
             // Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }
-
-          {!isOwner ? <JoinOrgContainer>
-            <Link
-              onClick={
-                () => sessionStorage.setItem("postredirect", window.location.pathname)
-              }
-              to={isAuthenticated ? `/organisation/${organisationId}/positions` :
-                {
-                  pathname: LOGIN,
-                  state: { from: window.location.pathname },
-                }}>
-              <JoinOrgButton
-                id={GTM.organisation.joinOrg}>
-                {t("profile.individual.joinOrg") + ` ${name}`}
-              </JoinOrgButton>
-            </Link>
-          </JoinOrgContainer> : null}
-          {// TABS
-          }
-          <ProfileTabs defaultActiveKey="activity">
-            <ProfileTabPane tab={t("profile.org.activity")} key="activity"><div>
-              <SectionHeader>
-                {/* {t("profile.org.activity")} */}
-                <PlaceholderIcon />
-                {isSelf && (
-                  <>
-                    <CreatePostIcon
-                      id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                      src={createPost}
-                      onClick={onToggleCreatePostDrawer}
-                    />
-                    <CreatePostButton
-                      onClick={onToggleCreatePostDrawer}
-                      id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                      inline={true}
-                      icon={<PlusIcon />}
-                    >
-                      {t("post.create")}
-                    </CreatePostButton>
-                  </>
-                )}
-              </SectionHeader>
-
-              <FeedWrapper isProfile>
-                <Activity
-                  postDispatch={dispatch}
-                  filteredPosts={postsList}
+          <Link
+            onClick={() =>
+              sessionStorage.setItem("postredirect", window.location.pathname)
+            }
+            to={
+              isAuthenticated
+                ? `/organisation/${organisationId}/positions`
+                : {
+                    pathname: LOGIN,
+                    state: { from: window.location.pathname },
+                  }
+            }
+          >
+            <JoinOrgButton id={GTM.organisation.joinOrg}>
+              {t("profile.individual.joinOrg") + ` ${name}`}
+            </JoinOrgButton>
+          </Link>
+          <div>
+            <SectionHeader>
+              {t("profile.org.activity")}
+              <PlaceholderIcon />
+              {isSelf && (
+                <>
+                  <CreatePostIcon
+                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    src={createPost}
+                    onClick={onToggleCreatePostDrawer}
+                  />
+                  <CreatePostButton
+                    onClick={onToggleCreatePostDrawer}
+                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                    inline={true}
+                    icon={<PlusIcon />}
+                  >
+                    {t("post.create")}
+                  </CreatePostButton>
+                </>
+              )}
+            </SectionHeader>
+            <FeedWrapper isProfile>
+              <Activity
+                postDispatch={dispatch}
+                filteredPosts={postsList}
+                user={user}
+                postDelete={postDelete}
+                handlePostDelete={handlePostDelete}
+                handleEditPost={handleEditPost}
+                deleteModalVisibility={deleteModalVisibility}
+                handleCancelPostDelete={handleCancelPostDelete}
+                loadNextPage={loadNextPage}
+                isNextPageLoading={isLoading}
+                itemCount={itemCount}
+                isItemLoaded={isItemLoaded}
+                hasNextPage={loadMore}
+                totalPostCount={totalPostCount}
+              />
+              {postsError && (
+                <ErrorAlert
+                  message={t([
+                    `error.${postsError.message}`,
+                    `error.http.${postsError.message}`,
+                  ])}
+                />
+              )}
+              {emptyFeed() && <></>}
+              {isSelf && (
+                <CreatePost
+                  gtmPrefix={GTM.organisation.orgPrefix}
+                  onCancel={onToggleCreatePostDrawer}
+                  loadPosts={refetchPosts}
+                  visible={modal}
                   user={user}
                   postDelete={postDelete}
                   handlePostDelete={handlePostDelete}
@@ -585,32 +609,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             <ProfileTabPane tab={t("profile.org.members")} key="members"><TestMembers /></ProfileTabPane>
           </ProfileTabs>
 
-          {isSelf && (
-            <CustomDrawer
-              placement="bottom"
-              closable={false}
-              onClose={onToggleDrawer}
-              visible={drawer}
-              height="auto"
-              key="bottom"
-            >
-              <DrawerHeader>
-                <Link to={`/edit-organisation-account/${organisationId}`}>
-                  {t("profile.org.editOrgAccount")}
-                </Link>
-              </DrawerHeader>
-              <DrawerHeader>
-                <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  {t("profile.org.editOrgProfile") + " "}
-                </Link>
-              </DrawerHeader>
-              <DrawerHeader>
-                <Link to={`/edit-organisation-notifications/${organisationId}`}>
-                  {t("profile.org.editOrgNotification")}{" "}
-                </Link>
-              </DrawerHeader>
-            </CustomDrawer>
-          )}
+          {}
         </ProfileLayout>
       </>
     );

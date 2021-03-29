@@ -345,8 +345,7 @@ export const PageTitle = styled(TextLabel)`
 `;
 
 export const PositionsContainer = styled.div`
-  width: 90%;
-  
+    
   p {
     color: ${colors.black};
     font-size: 1.6rem;

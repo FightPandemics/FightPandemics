@@ -1104,14 +1104,28 @@
   },
   "positions": {
     "applicationSubmitted": "Application Submitted!",
-    "applicationReceived": "Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.",
+    "applicationReceived": "Thank you for your interest in {orgName}. We have received your application and we’ll be in touch with you as soon as possible.",
     "apply": "Apply",
     "positions": "Positions",
     "okay": "Okay!",
-    "submitApplication": "Submit Application",
+    "submitModalTitle": "Submit Application",
+    "submitModalDescription": "Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.",
     "submitButton": "Submit",
     "submitModal": "SUBMIT",
-    "cancelModal": "CANCEL"
+    "submitModalCancel": "CANCEL",
+    "cancelModal": "Cancel",
+    "cancelModalExit": "Exit",
+    "cancelModalTitle": "Exit Application",
+    "cancelModalDescription": "Once confirmed, this action cannot be undone and your progress will be lost."
+  },
+  "orgJoinQ": {
+    "question1": " Tell us, why do you want to join",
+    "question2": " What skills would you bring to",
+    "question3": " What type of Volunteering work have you done in the past",
+    "required": "Required Field",
+    "application": "Applicaton",
+    "submit": "Submit",
+    "maxnum": "250"
   },
   "nearestHsp": {
     "noResults": "No Results",
