@@ -11,3 +11,4 @@ cypresse2e/cypress/videos
 .DS_Store
 docker-compose.override.yml
 **/yarn.lock
+client/src/pages/Apply.js

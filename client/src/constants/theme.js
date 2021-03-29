@@ -18,6 +18,7 @@ import {
   GRAY,
   LIGHTER_BLACK,
   GHOST_WHITE,
+  SHADOW_BLACK
 } from "./colors";
 
 const theme = {
@@ -81,6 +82,7 @@ const theme = {
     gray: GRAY,
     lighterBlack: LIGHTER_BLACK,
     ghostWhite: GHOST_WHITE,
+    shadowBlack: SHADOW_BLACK,
   },
   button: {
     fontFamily: '"DM Sans", sans-serif',

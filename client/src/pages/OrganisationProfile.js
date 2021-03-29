@@ -1,4 +1,6 @@
 import { WhiteSpace } from "antd-mobile";
+import { Tabs } from "antd";
+import { ProfileTabs, ProfileTabPane } from "components/OrganisationProfile/ProfileTabs"
 import axios from "axios";
 import React, {
   useState,
@@ -102,8 +104,9 @@ import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
-import JoinOrgButton from "components/OrganisationProfile/JoinOrgButton";
+import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
+import { TestMembers } from "components/OrganisationProfile/OrgMembers"
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -425,6 +428,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
+  const { TabPane } = Tabs
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -486,9 +490,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   )}
               </NameDiv>
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-              <IconsContainer>
+
+              {/* <IconsContainer>
                 <div className="social-icons">{renderURL()}</div>
-              </IconsContainer>
+              </IconsContainer> */}
+
             </UserInfoDesktop>
           </UserInfoContainer>
           {isSelf && !verified && <Verification />}
@@ -496,82 +502,89 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           {
             // Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }
-          <Link
-            onClick={() =>
-              sessionStorage.setItem("postredirect", window.location.pathname)
-            }
-            to={
-              isAuthenticated
-                ? `/organisation/${organisationId}/positions`
-                : {
-                    pathname: LOGIN,
-                    state: { from: window.location.pathname },
-                  }
-            }
-          >
-            <JoinOrgButton id={GTM.organisation.joinOrg}>
-              {t("profile.individual.joinOrg") + ` ${name}`}
-            </JoinOrgButton>
-          </Link>
-          <div>
-            <SectionHeader>
-              {t("profile.org.activity")}
-              <PlaceholderIcon />
-              {isSelf && (
-                <>
-                  <CreatePostIcon
-                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    src={createPost}
-                    onClick={onToggleCreatePostDrawer}
-                  />
-                  <CreatePostButton
-                    onClick={onToggleCreatePostDrawer}
-                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    inline={true}
-                    icon={<PlusIcon />}
-                  >
-                    {t("post.create")}
-                  </CreatePostButton>
-                </>
-              )}
-            </SectionHeader>
-            <FeedWrapper isProfile>
-              <Activity
-                postDispatch={dispatch}
-                filteredPosts={postsList}
-                user={user}
-                postDelete={postDelete}
-                handlePostDelete={handlePostDelete}
-                handleEditPost={handleEditPost}
-                deleteModalVisibility={deleteModalVisibility}
-                handleCancelPostDelete={handleCancelPostDelete}
-                loadNextPage={loadNextPage}
-                isNextPageLoading={isLoading}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalPostCount={totalPostCount}
-              />
-              {postsError && (
-                <ErrorAlert
-                  message={t([
-                    `error.${postsError.message}`,
-                    `error.http.${postsError.message}`,
-                  ])}
-                />
-              )}
-              {emptyFeed() && <></>}
-              {isSelf && (
-                <CreatePost
-                  gtmPrefix={GTM.organisation.orgPrefix}
-                  onCancel={onToggleCreatePostDrawer}
-                  loadPosts={refetchPosts}
-                  visible={modal}
+
+          {!isOwner ? <JoinOrgContainer>
+            <Link
+              onClick={
+                () => sessionStorage.setItem("postredirect", window.location.pathname)
+              }
+              to={isAuthenticated ? `/organisation/${organisationId}/positions` :
+                {
+                  pathname: LOGIN,
+                  state: { from: window.location.pathname },
+                }}>
+              <JoinOrgButton
+                id={GTM.organisation.joinOrg}>
+                {t("profile.individual.joinOrg") + ` ${name}`}
+              </JoinOrgButton>
+            </Link>
+          </JoinOrgContainer> : null}
+          {// TABS
+          }
+          <ProfileTabs defaultActiveKey="activity">
+            <ProfileTabPane tab={t("profile.org.activity")} key="activity"><div>
+              <SectionHeader>
+                {/* {t("profile.org.activity")} */}
+                <PlaceholderIcon />
+                {isSelf && (
+                  <>
+                    <CreatePostIcon
+                      id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                      src={createPost}
+                      onClick={onToggleCreatePostDrawer}
+                    />
+                    <CreatePostButton
+                      onClick={onToggleCreatePostDrawer}
+                      id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                      inline={true}
+                      icon={<PlusIcon />}
+                    >
+                      {t("post.create")}
+                    </CreatePostButton>
+                  </>
+                )}
+              </SectionHeader>
+
+              <FeedWrapper isProfile>
+                <Activity
+                  postDispatch={dispatch}
+                  filteredPosts={postsList}
                   user={user}
+                  postDelete={postDelete}
+                  handlePostDelete={handlePostDelete}
+                  handleEditPost={handleEditPost}
+                  deleteModalVisibility={deleteModalVisibility}
+                  handleCancelPostDelete={handleCancelPostDelete}
+                  loadNextPage={loadNextPage}
+                  isNextPageLoading={isLoading}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoaded}
+                  hasNextPage={loadMore}
+                  totalPostCount={totalPostCount}
                 />
-              )}
-            </FeedWrapper>
-          </div>
+                {postsError && (
+                  <ErrorAlert
+                    message={t([
+                      `error.${postsError.message}`,
+                      `error.http.${postsError.message}`,
+                    ])}
+                  />
+                )}
+                {emptyFeed() && <></>}
+                {isSelf && (
+                  <CreatePost
+                    gtmPrefix={GTM.organisation.orgPrefix}
+                    onCancel={onToggleCreatePostDrawer}
+                    loadPosts={refetchPosts}
+                    visible={modal}
+                    user={user}
+                  />
+                )}
+              </FeedWrapper>
+            </div></ProfileTabPane>
+            <ProfileTabPane tab={t("profile.org.members")} key="members"><TestMembers /></ProfileTabPane>
+          </ProfileTabs>
+
           {isSelf && (
             <CustomDrawer
               placement="bottom"

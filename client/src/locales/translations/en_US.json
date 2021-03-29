@@ -424,7 +424,9 @@
       "thanks": "Thanks",
       "active": "Active",
       "archived": "Archived",
-      "drafts": "drafts"
+      "drafts": "drafts",
+      "editOrgNotification": "Edit Organization Notification",
+      "members": "Members"
     }
   },
   "auth": {
@@ -1099,6 +1101,17 @@
     "stepCancelTitle": "You canceled the verification process",
     "stepCancelBody": "You can always go back and verify you account at anytime!",
     "stepCancelAction": "Close"
+  },
+  "positions": {
+    "applicationSubmitted": "Application Submitted!",
+    "applicationReceived": "Thank you for your interest in orgName. We have received your application and we’ll be in touch with you as soon as possible.",
+    "apply": "Apply",
+    "positions": "Positions",
+    "okay": "Okay!",
+    "submitApplication": "Submit Application",
+    "submitButton": "Submit",
+    "submitModal": "SUBMIT",
+    "cancelModal": "CANCEL"
   },
   "nearestHsp": {
     "noResults": "No Results",
