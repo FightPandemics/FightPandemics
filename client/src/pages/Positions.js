@@ -1,6 +1,5 @@
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import Loader from "components/Feed/StyledLoader";
 import ApplyButton, { ApplyContainer } from "components/Positions/PositionsButton";
 import ProfilePic from "components/Positions/ProfilePic";
@@ -23,6 +22,7 @@ import React, {
     useContext, useEffect, useRef
 } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import {
@@ -36,7 +36,6 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
-import PositionSubmitButton from "components/Positions/ApplicationModalStyles";
 
 const Positions = () => {
 

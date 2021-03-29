@@ -11,12 +11,9 @@ export const InputField = styled(TextArea)`
   border: none;
   border-radius: none;
   padding: 0;
+  margin: 0;
+  margin-top: 2rem;
   overflow: hidden;
-  &.ant-input:focus,
-  &.ant-input-focused {
-    box-shadow: unset;
-  }
-  
   box-shadow: none;
   color: ${colors.darkishGray};
   flex-grow: 2;
@@ -25,20 +22,35 @@ export const InputField = styled(TextArea)`
   font-size: 1.4rem;
   line-height: 1.8rem;
   font-weight: 400;
-  margin: 0;
   width: 100%;
   flex-basis: 40rem;
   overflow-wrap: break-word;
   
+  &.ant-input {
+    min-height: 0 !important;
+    max-height: 1.8rem !important;
+  }
+
+  &.ant-input:focus,
+  &.ant-input-focused {
+    box-shadow: unset;
+  }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 1.2rem;
-    min-height: 1.2rem !important;  
-    padding-right: 3rem !important;
-    padding-bottom: .7rem;
-  }
+    margin: 0;
+    min-height: 1.2rem !important;
+      max-height: 10rem !important;
+    
+    /* padding-right: 3rem !important;
+    padding-bottom: .7rem; */
 
-  
+    &.ant-input { 
+      min-height: 1.2rem !important;
+      max-height: 10rem !important;
+    }
+
+  }
 
 `;
 
@@ -57,15 +69,15 @@ export const OuterWrapper = styled.div`
     display: none;
   }
   }
-
-  
 `;
 
 export const InputWrapper = styled.div`
   align-items: center;
   border-bottom: 1px solid ${colors.royalBlue};
   display: flex;
-  margin: 0.4rem 0;
+  flex-direction: column;
+  max-height: 7rem;
+  margin: 0;
 
   &.has-error {
     border-bottom: 1px solid ${colors.red};
@@ -73,16 +85,16 @@ export const InputWrapper = styled.div`
   }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}){ 
+    margin: 0.4rem 0;
     flex-direction: column;
     max-height: 3.2rem;
     
     &.text-present {
       transition: max-height 1s ease;
-      max-height: 5rem;
+      max-height: 6rem;
 
   }
   }
-  
 `;
 
 const Prefix = styled.span`
@@ -93,11 +105,12 @@ export const CharCounter = styled.p`
   color: ${colors.darkishGray} !important;
   font-size: 1.2rem !important;
   font-weight: 500 !important;
+  line-height: 1.8rem;
   text-align: right;
-  max-width: 40%;
-  min-width: 25%;
-  margin: 0;
+  margin: auto;
   margin-right: 2rem;
+  margin-bottom: 1rem;
+  justify-self: flex-end !important;
 
   &.has-error {
   color: ${colors.red} !important;
@@ -107,8 +120,10 @@ export const CharCounter = styled.p`
   }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      font-size: .8rem !important;
       max-width: 100%;
       width: 100%;
+      margin-bottom: 0 !important;
   }
 
 `;

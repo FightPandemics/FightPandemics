@@ -51,10 +51,12 @@ height: 5.4rem;
 font-weight: 500;
 font-size: 1.6rem;
 line-height: 2.02rem;
+margin-bottom: 40rem;
 @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
   width: 15.5rem;
   height: 4.8rem;
   margin-top: 2rem;
+  margin-bottom: 5rem;
 }
 `;
 
@@ -231,53 +233,6 @@ const PositionApplicationForm = ({ orgName }) => {
         </InputWrapper>
         <ErrorMsg className="has-error">{renderError("question3")}</ErrorMsg>
       </OuterWrapper>
-
-      <ApplyModal
-        visible={visible}
-        width={564}
-        footer={null}
-        centered={true}
-        onCancel={handleCancel}
-        cancelButtonProps={{ style: { display: 'none' } }}
-        closable={false}
-      >
-        <StyledContainer>
-          <h2>{t("positions.submitModalTitle")}</h2>
-          <p>{t("positions.submitModalDescription")}</p>
-          <ButtonsContainer
-          >
-            <StyledCancelButton onClick={handleCancel}>
-              {t("positions.submitModalCancel")}
-            </StyledCancelButton>
-            <StyledSubmitButton
-              onClick={showPopUpTwo}
-            >
-              {t("positions.submitModal")}
-            </StyledSubmitButton>
-          </ButtonsContainer>
-        </StyledContainer>
-      </ApplyModal>
-
-      <ApplyModal
-        visible={visibleTwo}
-        footer={null}
-        centered={true}
-        onCancel={handleCancelTwo}
-        cancelButtonProps={{ style: { display: 'none' } }}
-        closable={false}
-        className="submitted"
-      >
-        <PositionSubmitModal>
-          <img src={applicationConfirmation} alt="" />
-          <h2>{t("positions.applicationSubmitted")}</h2>
-          <p>{applicationReceived}</p>
-          <PositionsButton
-            onClick={handleCancelTwo}
-          >
-            {t("positions.okay")}
-          </PositionsButton>
-        </PositionSubmitModal>
-      </ApplyModal>
 
       <Footer>
         <ApplyFormSubmit

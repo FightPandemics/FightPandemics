@@ -1,4 +1,4 @@
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 import styled from "styled-components";
 const { lighterBlack } = theme.colors;
 const { lightGrey } = theme.colors;
@@ -31,10 +31,10 @@ export const PositionSubmitModal = styled.section`
     letter-spacing: normal;
     margin: 0 auto;
     margin-bottom: 3.5rem;
-    /* margin-top: -1.4rem; */
     display: flex;
     justify-content: center;
     color: ${lightGrey};
+    width: 49.1rem;
   }
 
   img {
@@ -46,7 +46,18 @@ button {
 }
 
 .am-button {
-    width: 15.7rem;
+    width: 19.5rem;
     margin: auto;
     margin-bottom: 1rem !important;
+}
+
+.ant-modal {
+
+}
+
+@media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
+  .am-button {
+   width: 15.6rem; 
+  } 
+}
 `;

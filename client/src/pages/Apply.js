@@ -1,5 +1,3 @@
-// This is a test page for Apply copied from Positions
-
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
@@ -41,9 +39,7 @@ const Apply = () => {
 
     const history = useHistory();
     const [visible, setVisible] = useState(false);
-    const handleBackRequest = async (e) => {
-        history.goBack(-1);
-    }
+
     const handleExit = (e) => {
         history.goBack(-1);
     }

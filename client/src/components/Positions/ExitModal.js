@@ -1,14 +1,9 @@
-import React, { useState } from "react";
 import { Modal } from "antd";
-import LinkButtonNarrow from "components/Button/LinkButtonNarrow";
-import styled from "styled-components";
 import { mq, theme } from "constants/theme";
-import { Column } from "react-virtualized";
-import PositionSubmitModal from "components/Positions/PositionSubmitModal";
-import PositionsButton from "components/Positions/PositionsButton"
-import applicationConfirmation from "assets/icons/application-received.svg";
+import React from "react";
 import { useTranslation } from "react-i18next";
-const { colors, typography } = theme;
+import styled from "styled-components";
+const { colors } = theme;
 const { display, body } = theme.typography.font.family;
 
 const StyledContainer = styled.section`
@@ -136,13 +131,12 @@ const CancelModal = styled(Modal)`
     .ant-modal-content {
       width: 28.2rem;
       height: 19.2rem;
-      
     }
+    
     .ant-modal-body {
     padding: 1.7rem;
   }
   }
-
 `;
 
 const ButtonsContainer = styled.div`

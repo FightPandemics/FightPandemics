@@ -86,7 +86,11 @@ export const ApplyModal = styled(Modal)`
   margin-bottom: 20rem;
   margin: 0 !important;
   height: fit-content;
+  width: 56.4rem !important;
   
+  .ant-modal-body {
+    margin: auto;
+  }
   .ant-modal-content {
     display: flex;
     align-items: center;
@@ -98,6 +102,11 @@ export const ApplyModal = styled(Modal)`
       margin: 0 4rem;
     }
   }
+`;
+
+export const ConfirmationModal = styled(ApplyModal)`
+  width: 69.5rem !important;
+
 `;
 
 export const ButtonsContainer = styled.div`
