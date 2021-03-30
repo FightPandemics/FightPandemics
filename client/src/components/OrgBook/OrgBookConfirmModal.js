@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Modal } from "antd";
 import { useTranslation } from "react-i18next";
 import OrgBookRadioGroup from "./OrgBookRadioGroup";
 import { OrgBookStyledModalContainer } from "./OrgBookStyledModal";
@@ -63,6 +62,14 @@ const OrgBookConfirmModal = ({
       title = t("orgBook.confirmDeleteTitle");
       okText = t("orgBook.confirmDeleteOkText");
       confirmPrompt = t("orgBook.confirmDeletePrompt", { pageName });
+      break;
+
+    case UPDATE_ACTION_TYPES.movingOffDirtyPageType:
+      title = t("orgBook.confirmMovingOffDirtyPageTitle");
+      okText = t("orgBook.confirmMovingOffDirtyPageOkText");
+      confirmPrompt = t("orgBook.confirmMovingOffDirtyPagePrompt", {
+        pageName,
+      });
       break;
 
     default:

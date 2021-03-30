@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import { useTranslation } from "react-i18next";
@@ -109,6 +109,9 @@ const OrgBookTableOfContents = (props) => {
     selectPage,
     preSelectedPage,
     handleBackBtnClick,
+    selectedPageDirty,
+    onUpdateAction,
+    UPDATE_ACTION_TYPES,
   } = props;
   const { t } = useTranslation();
   const [selectedPage, setSelectedPage] = useState(preSelectedPage || null);
@@ -133,9 +136,7 @@ const OrgBookTableOfContents = (props) => {
         a.pageGroupNumber - b.pageGroupNumber ||
         Date.parse(b.created_at) - Date.parse(a.created_at),
     );
-
     setSortedCurrentOrgBookPages(sortedPages);
-
     if (preSelectedPage) {
       setSelectedPage(preSelectedPage);
       selectPage(preSelectedPage);
@@ -144,9 +145,32 @@ const OrgBookTableOfContents = (props) => {
 
   useEffect(initialize, []);
 
-  const handlePageClick = (page) => (e) => {
-    setSelectedPage(page);
-    selectPage(page);
+  const handlePageClick = (e, page) => {
+    e.persist();
+    e.stopPropagation();
+    // if (selectedPageDirty) {
+    //   console.log('****in orgbook toc handlePageClick selectedPageDirty: ' + selectedPageDirty +
+    //     ' for selectedPage: ' + selectedPage.name);
+    // };
+    if (!selectedPageDirty) {
+      console.log(
+        "****in orgbook toc handlePageClick NOT dirty, so setSelectedPage to page named: " +
+          page.name,
+      );
+      setSelectedPage(page);
+      selectPage(page);
+    } else {
+      console.log(
+        "****in orgbook toc handlePageClick IS dirty for selectedPage: " +
+          selectedPage.name,
+      );
+      onUpdateAction(
+        UPDATE_ACTION_TYPES.movingOffDirtyPageType,
+        page.pageId,
+        page.content,
+        page.content.replace(/ /g, "").length,
+      );
+    }
   };
 
   const renderEyeIcon = (page) => {
@@ -194,7 +218,9 @@ const OrgBookTableOfContents = (props) => {
             <PageListContainer
               key={idx}
               selected={isSelectedPage(page)}
-              onClick={handlePageClick(page)}
+              onClick={(e) => {
+                handlePageClick(e, page);
+              }}
             >
               <PageIconAndNameContainer>
                 <PageSvgIcon src={pageIcon} />

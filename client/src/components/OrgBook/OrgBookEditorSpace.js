@@ -103,6 +103,8 @@ const OrgBookEditorSpace = (props) => {
     UPDATE_ACTION_TYPES,
     onUpdateAction,
     livePageExists,
+    selectedPageDirty,
+    onSelectedPageDirty,
   } = props;
   const { t } = useTranslation();
   const tinyMce = useRef();
@@ -116,6 +118,14 @@ const OrgBookEditorSpace = (props) => {
       if (selectedPage) {
         const withoutSpace = selectedPage.content.replace(/ /g, "");
         setNumberOfCharacters(withoutSpace.length);
+      }
+      if (selectedPage) {
+        console.log(
+          "in orgbook editor space, onInit with selected page: " +
+            selectedPage.name,
+        );
+      } else {
+        console.log("in orgbook editor space, onInit with no page selected");
       }
     },
     [selectedPage],
@@ -138,7 +148,10 @@ const OrgBookEditorSpace = (props) => {
       tinyMce.current &&
       tinyMce.current.getContent() !== selectedPage?.content
     ) {
+      console.log("setting to selectedPage?.content: " + selectedPage?.content);
       tinyMce.current.setContent(selectedPage?.content, { no_events: true });
+    } else {
+      console.log("in useEffect in orgbook ed sp, content is the same");
     }
   }, [selectedPage?.content]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -151,11 +164,25 @@ const OrgBookEditorSpace = (props) => {
   };
 
   const handleEditorChange = (content, editor) => {
+    console.log("selectedPageDirty in org ed space: " + selectedPageDirty);
     const wordcount = editor.plugins.wordcount;
     setNumberOfCharacters(wordcount.body.getCharacterCountWithoutSpaces());
+    if (content !== selectedPage.content) {
+      console.log("content changed in ed sp, so toggle to true");
+      onSelectedPageDirty(true);
+    } else {
+      console.log("content didnt change ");
+    }
   };
 
   const renderDistractionFreeEditor = () => {
+    if (selectedPage) {
+      console.log(
+        "renderDistractionFreeEditor with selected page: " + selectedPage.name,
+      );
+    } else {
+      console.log("renderDistractionFreeEditor with no page selected");
+    }
     //quickbars_insert_toolbar appears on clicking on a new line (empty line following previously set/entered content)
     //quickbars_selection_toolbar appears after double-clicking (selecting) existing content or empty space
     //contextmenu appears after right-clicking on editable content

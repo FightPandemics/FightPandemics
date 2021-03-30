@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "antd-mobile";
-import backArrow from "assets/icons/back-arrow.svg";
+import backArrow from "../../assets/icons/orgbook-backarrow.svg";
 import SvgIcon from "../Icon/SvgIcon";
 import { theme } from "../../constants/theme";
 const { colors, typography } = theme;

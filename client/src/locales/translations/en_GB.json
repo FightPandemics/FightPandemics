@@ -479,7 +479,10 @@
     "confirmUnpublishOption2": "Replace the current content of draft page with this live page content.",
     "confirmDeleteTitle": "Delete Draft Page",
     "confirmDeleteOkText": "Delete",
-    "confirmDeletePrompt": "Delete draft page: {{pageName}}?"
+    "confirmDeletePrompt": "Delete draft page: {{pageName}}?",
+    "confirmMovingOffDirtyPageTitle": "Leaving Modified Page",
+    "confirmMovingOffDirtyPageOkText": "Leave Page",
+    "confirmMovingOffDirtyPagePrompt": "You have made changes to page: {{pageName}}.  Sure you want to leave this page?   Clicking Cancel will stay on this page."
   },
   "auth": {
     "signIn": "Sign In",
