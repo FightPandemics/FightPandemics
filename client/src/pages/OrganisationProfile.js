@@ -49,6 +49,7 @@ import {
   PlaceholderIcon,
   DescriptionDesktop,
   IconsContainer,
+  SeeOrgBookLink,
   SocialIcon,
   SectionHeader,
   CreatePostDiv,
@@ -494,6 +495,13 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               {/* <IconsContainer>
                 <div className="social-icons">{renderURL()}</div>
               </IconsContainer> */}
+
+              {
+                isAuthenticated && !isOwner &&
+                (<SeeOrgBookLink>
+                  <a href="">See Org Book</a>
+                </SeeOrgBookLink>)
+              }
 
             </UserInfoDesktop>
           </UserInfoContainer>

@@ -300,6 +300,15 @@ export const DescriptionDesktop = styled.div`
     color: #282828;
   }
 `;
+
+export const SeeOrgBookLink = styled.a`
+  color: ${colors.royalBlue};
+  align-self: center;  
+  display: block;
+  width: fit-content;
+  margin: auto;
+`; 
+
 export const MobileLocation = styled.div`
   color: #939393;
   font-weight: normal;
