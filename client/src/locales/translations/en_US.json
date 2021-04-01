@@ -412,7 +412,8 @@
       "orgNameRequired": "Organization name is required",
       "global": "Global",
       "editOrgAccount": "Edit Organization Account",
-      "editOrgNotification": "Edit Organization Notification"
+      "editOrgNotification": "Edit Organization Notification",
+      "applicants": "Applicants"
     },
     "views": {
       "activity": "Activity",

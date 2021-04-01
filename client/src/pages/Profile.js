@@ -58,6 +58,8 @@ import {
   StyledMobileMenuContainer,
 } from "../components/Profile/ProfileComponents";
 
+import { ProfileTabs, ProfileTabPane } from "components/OrganisationProfile/ProfileTabs"
+
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
