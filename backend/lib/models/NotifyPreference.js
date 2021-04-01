@@ -7,7 +7,6 @@ const notifyPreferenceSchema = new Schema({
     share: { default: true, type: Boolean },
     message: { default: true, type: Boolean },
     orgposts: {default: false, type: Boolean},
-    newapplicant: {default: false, type: Boolean},
   },
   digest: {
     daily: { default: true, type: Boolean },

@@ -29,13 +29,6 @@ const NotifyGroup = {
   digest: "profile.common.digest",
 };
 
-const NotifyType = {
-  like: "post.like_plural",
-  share: "post.share_plural",
-  comment: "comment.comment_plural",
-  message: "message.message_plural",
-  newapplicant: "newapplicant.newapplicant_singular"
-};
 
 const NotifyFreq = {
   daily: "profile.common.daily",
@@ -52,9 +45,23 @@ const NotifyPreferenceInput = ({
   const [checksEnabled, setChecksEnabled] = useState(true);
   const { t } = useTranslation();
 
+  const [NotifyType,setNotifyType] = useState({
+    like: "post.like_plural",
+    share: "post.share_plural",
+    comment: "comment.comment_plural",
+    message: "message.message_plural",
+    newapplicant: "newapplicant.newapplicant_singular"
+  });
+
   useEffect(() => {
     setChecksEnabled(switchOnOff);
-  }, [switchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
+    
+    if(!('newapplicant' in currPrefs['instant'])){
+      const removeProp = 'newapplicant';
+      const { [removeProp]: remove, ...rest } = NotifyType;
+      setNotifyType(rest);
+    }
+  }, [switchOnOff,currPrefs]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
