@@ -227,7 +227,6 @@ export const UserInfoContainer = styled.div`
 export const AvatarPhotoContainer = styled.fieldset`
   padding: 0;
   padding-left: 2rem;
-  
 `;
 
 export const PhotoUploadButton = styled.legend`
@@ -265,18 +264,37 @@ export const DescriptionDesktop = styled.div`
   color: ${colors.darkerGray};
 `;
 
-export const PositionTitle = styled.div`
+export const PositionTitle = styled.h1`
+  font-size: 3.2rem;
+  line-height: 3.7rem;
+  letter-spacing: .04rem;
+  font-weight: 600;
+  color: ${colors.black};
+  align-self: flex-start;
+  
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
   margin: 3rem auto 1.6rem auto;
   font-size: 1.6rem;
   line-height: 2.4rem;
-  letter-spacing: .04rem;
   font-weight: 500;
-  color: ${colors.darkerGray};
-  align-self: flex-start;
+  }
+
 `;
 
-export const PositionDescription = styled.div`
-  
+export const PositionDescription = styled.p`
+  color: ${colors.mediumGray};
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.9rem;
+  letter-spacing: .07rem;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+  }
+`;
+
+export const PositionLisitingContainer = styled.div`
+
 `;
 
 export const TitleContainer = styled.div`
@@ -327,15 +345,15 @@ export const PageTitle = styled(TextLabel)`
 `;
 
 export const PositionsContainer = styled.div`
-  width: 90%;
-  
-  .positions-light-text {
-    font-family: 'Work Sans','Courier New', Courier, monospace;
+    
+  p {
+    color: ${colors.black};
+    font-size: 1.6rem;
     font-weight: 400;
-    font-size: 1.2rem;
-    letter-spacing: .04;
-    color: ${colors.darkishGray};
-    opacity: 70%;
+    color: ${colors.black};
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+      font-size: 1.2rem;
+  }
   }
 `;
 

@@ -3,41 +3,44 @@ import BaseButton from "components/Button/BaseButton";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 
-export const JoinOrgContainer = styled.div`
+export const ApplyButtonContainer = styled.div`
   max-width: 33.4rem;
   margin: auto;
 `;
-const JoinOrgBtn = styled(BaseButton)`
+
+const ApplyBtn = styled(BaseButton)`
   border-radius: 4.6rem;
   background-color: ${theme.colors.royalBlue};
+  font-size: 1.6rem;
+  font-weight: 500;
   color: #ffffff !important;
-  font-weight: 400;
-  font-size: 1.4rem;
   display: block;
   max-width: 33.4rem;
   margin: auto;
+  padding: 1rem;
 
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width:fit-content;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
+    width: fit-content;
     
   }
  `;
 
 const GtmContainer = styled.span`
   * {
-    font-family: 'Poppins', 'sans-serif';
     pointer-events: none;
-    padding: 0 1rem;
-    }
+    padding: 0 2.6rem;
+    margin-top: 6.8rem;
+    font-family: 'Poppins', 'sans-serif';
+  }
   cursor: pointer;
 `;
 
-function JoinOrgButton({ onClick, id, ...others }) {
+function ApplyButton({ onClick, id, ...others }) {
   return (
     <GtmContainer id={id} onClick={onClick}>
-      <JoinOrgBtn {...others} />
+      <ApplyBtn {...others} />
     </GtmContainer>
   );
 }
 
-export default JoinOrgButton;
+export default ApplyButton;

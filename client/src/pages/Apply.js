@@ -1,7 +1,7 @@
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
-import ApplyButton, { ApplyButtonContainer } from "components/Positions/PositionsButton";
+import PositionApplicationForm, { Title } from "components/Positions/PositionApplicationForm";
 import ProfilePic from "components/Positions/ProfilePic";
 import {
     OrganisationContext,
@@ -19,16 +19,12 @@ import {
     fetchUserSuccess
 } from "hooks/actions/userActions";
 import React, {
-    useContext, useEffect
+    useContext, useEffect, useRef, useState
 } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import {
-    PositionDescription, PositionsContainer,
-    PositionTitle
-} from "../components/Profile/PositionsComponents";
+import { PositionsContainer } from "../components/Profile/PositionsComponents";
 import {
     AvatarPhotoContainer, DescriptionDesktop, NameDiv,
     NamePara,
@@ -36,8 +32,34 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
+import { useHistory } from "react-router-dom";
+import ExitModal from "components/Positions/ExitModal";
 
-const Positions = () => {
+const Apply = () => {
+
+    const history = useHistory();
+    const [visible, setVisible] = useState(false);
+
+    const handleExit = (e) => {
+        history.goBack(-1);
+    }
+
+    const initialBackRequest = (e) => {
+        setVisible(true);
+    }
+
+    const handleCancel = async (e) => {
+        setVisible(false);
+        window.history.pushState({}, '',);
+    }
+
+    useEffect(() => {
+        window.history.pushState({}, '',);
+        window.onpopstate = function () {
+            initialBackRequest();
+        };
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 2];
@@ -46,6 +68,7 @@ const Positions = () => {
     );
     const { error, loading, organisation } = orgProfileState;
     const {
+        userProfileState: { user },
         userProfileDispatch,
     } = useContext(UserContext);
     const { t } = useTranslation();
@@ -54,6 +77,14 @@ const Positions = () => {
         location = {},
         about = "",
     } = organisation || {};
+
+    function usePrevious(value) {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = value;
+        });
+        return ref.current;
+    }
 
     useEffect(() => {
         (async function fetchOrgProfile() {
@@ -109,6 +140,7 @@ const Positions = () => {
         return (
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
+
                 <ProfileBackgroup />
                 <ProfileLayout>
                     <PositionsContainer>
@@ -136,32 +168,19 @@ const Positions = () => {
                                 {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
                             </UserInfoDesktop>
                         </UserInfoContainer>
-                        {   // Position title and description to be pulled from backend / API
-                            // Placeholder text for ONE position is being used below
-                            // Component will be needed for multiple positions (based on backend schema / structure)
-                        }
-                        <PositionTitle>Volunteer Position</PositionTitle>
-                        <PositionDescription>
-                            <p>Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.
-                            <br /><br />
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mauris lectus, posuere at nunc non, bibendum iaculis dolor. Vivamus faucibus lacus nec malesuada volutpat.
-                            <br /><br />
-                            Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.</p>
-                        </PositionDescription >
-                        {//Button will connect applications page
-                        }
-                        <ApplyButtonContainer>
-                            <Link
-                                to={`/organisation/${organisationId}/apply`}
-                            >
-                                <ApplyButton>{t("positions.apply")}</ApplyButton>
-                            </Link>
-                        </ApplyButtonContainer>
+                        <PositionApplicationForm
+                            orgName={name}
+                        ></PositionApplicationForm>
                     </PositionsContainer >
+                    <ExitModal
+                        visible={visible}
+                        handleExit={handleExit}
+                        handleCancel={handleCancel}
+                    />
                 </ProfileLayout>
             </>
         );
     }
 }
 
-export default withUserContext(withOrganisationContext(Positions));
+export default withUserContext(withOrganisationContext(Apply));
