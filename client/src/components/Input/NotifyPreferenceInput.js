@@ -34,6 +34,7 @@ const NotifyType = {
   share: "post.share_plural",
   comment: "comment.comment_plural",
   message: "message.message_plural",
+  orgposts: "OrgPosts",
 };
 
 const NotifyFreq = {
@@ -51,7 +52,7 @@ const NotifyPreferenceInput = ({
 }) => {
   const [checksEnabled, setChecksEnabled] = useState(true);
   const { t } = useTranslation();
-
+  console.log("currPrefs", currPrefs, enableOrgPosts);
   useEffect(() => {
     if (enableOrgPosts) {
       Object.assign(NotifyType, { orgPosts: "common.orgPosts" });
@@ -89,22 +90,26 @@ const NotifyPreferenceInput = ({
               <WhiteSpace />
               <Label key={(key1, label1)}>{t(label1)}</Label>
               {Object.entries(key1 !== "digest" ? NotifyType : NotifyFreq).map(
-                ([subkey, sublabel]) => (
-                  <CheckBoxWrapper key={(key1, subkey)}>
-                    <Controller
-                      key={(key1, subkey)}
-                      as={Checkbox}
-                      defaultValue={currPrefs[key1][subkey]}
-                      name={`notifyPrefs.${key1}.${subkey}`}
-                      control={control}
-                      onChange={([event]) => event.target.checked}
-                      checked={currPrefs[key1][subkey]}
-                      disabled={!checksEnabled}
-                    >
-                      {t(sublabel)}
-                    </Controller>
-                  </CheckBoxWrapper>
-                ),
+                ([subkey, sublabel]) =>
+                  (subkey.toLowerCase() === "orgposts" && enableOrgPosts) ||
+                  subkey.toLowerCase() !== "orgposts" ? (
+                    <CheckBoxWrapper key={(key1, subkey)}>
+                      <Controller
+                        key={(key1, subkey)}
+                        as={Checkbox}
+                        defaultValue={currPrefs[key1][subkey]}
+                        name={`notifyPrefs.${key1}.${subkey}`}
+                        control={control}
+                        onChange={([event]) => event.target.checked}
+                        checked={currPrefs[key1][subkey]}
+                        disabled={!checksEnabled}
+                      >
+                        {t(sublabel)}
+                      </Controller>
+                    </CheckBoxWrapper>
+                  ) : (
+                    ""
+                  ),
               )}
               <WhiteSpace />
             </Col>
