@@ -34,6 +34,7 @@ import EditSecurity from "./pages/EditSecurity";
 import Positions from "./pages/Positions";
 import SeeAll from "./pages/SeeAllPost";
 import Apply from "./pages/Apply";
+import AdminProfileTESTPAGE from "./pages/AdminProfileTESTPAGE";
 
 import { SCOPES } from "constants/permissions";
 
@@ -193,6 +194,14 @@ const routes = [
       isProfile: true,
     },
   },
+  {
+    path: "/adminprofiletestpage/:id",
+    component: AdminProfileTESTPAGE,
+    props: {
+      isProfile: true,
+    },
+  },
+
   // todo: maybe move this inside the create-user-profile since it doesn't really need a separate route for a "page"
   {
     path: "/profile-completed",

@@ -427,7 +427,8 @@
       "archived": "Archived",
       "drafts": "drafts",
       "editOrgNotification": "Edit Organization Notification",
-      "members": "Members"
+      "members": "Members",
+      "applicants": "Applicants"
     }
   },
   "auth": {

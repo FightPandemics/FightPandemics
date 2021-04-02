@@ -231,8 +231,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-        ? "A"
-        : "D";
+          ? "A"
+          : "D";
     }
     return undefined;
   }, [sectionView, internalTab]);
@@ -770,6 +770,7 @@ const Profile = ({
                 ))}
               </MobileMenuWrapper>
               <div style={{ width: "100%" }}>
+
                 {sectionView === "Requests" && (
                   <PostTabCard
                     initialPage={internalTab}
@@ -856,8 +857,8 @@ const Profile = ({
               </DesktopMenuWrapper>
 
               {sectionView === "Requests" ||
-              sectionView === "Offers" ||
-              sectionView === "Posts" ? (
+                sectionView === "Offers" ||
+                sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>
@@ -939,6 +940,7 @@ const Profile = ({
           </CustomDrawer>
         )}
       </ProfileLayout>
+
     </>
   );
 };
