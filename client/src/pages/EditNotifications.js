@@ -140,6 +140,7 @@ function EditNotifications(props) {
               currPrefs={currPrefs}
               switchOnOff={switchOnOff}
               setSwitchOnOff={setSwitchOnOff}
+              isOwner={false}
             />
             {/* Button that saves changes */}
             <CustomSubmitButton

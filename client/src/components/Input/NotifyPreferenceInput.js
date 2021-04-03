@@ -41,6 +41,7 @@ const NotifyPreferenceInput = ({
   currPrefs,
   switchOnOff,
   setSwitchOnOff,
+  isOwner
 }) => {
   const [checksEnabled, setChecksEnabled] = useState(true);
   const { t } = useTranslation();
@@ -55,13 +56,13 @@ const NotifyPreferenceInput = ({
 
   useEffect(() => {
     setChecksEnabled(switchOnOff);
-    
-    if(!('newapplicant' in currPrefs['instant'])){
+    console.log("owner",isOwner);
+    if(!isOwner){
       const removeProp = 'newapplicant';
       const { [removeProp]: remove, ...rest } = NotifyType;
       setNotifyType(rest);
     }
-  }, [switchOnOff,currPrefs]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [switchOnOff,isOwner]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>

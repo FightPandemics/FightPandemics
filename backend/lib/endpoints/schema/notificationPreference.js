@@ -8,8 +8,7 @@ const notifyPreferenceSchema = strictSchema()
       .prop("like", S.boolean().default(true))
       .prop("comment", S.boolean().default(true))
       .prop("share", S.boolean().default(true))
-      .prop("message", S.boolean().default(true))
-      .prop("newapplicant", S.boolean().default(false)),
+      .prop("message", S.boolean().default(true)),
   )
   .prop(
     "digest",

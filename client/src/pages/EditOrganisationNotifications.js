@@ -52,6 +52,7 @@ function EditOrganisationNotifications(props) {
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
   const [switchOnOff, setSwitchOnOff] = useState(true);
+  const [isCurrOwner, setCurrOwner] = useState(false);
 
   const onSubmit = async (formData) => {
     orgProfileDispatch(updateOrganisation());
@@ -89,6 +90,7 @@ function EditOrganisationNotifications(props) {
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         let { _id, ...prefs } = res.data.notifyPrefs;
+        let isOwner = res.data.isOwner;
         if (isEqual(prefs, disabledPrefs)) {
           setSwitchOnOff(false); // update switch button
           const preNotifyPrefsString = localStorage.getItem(
@@ -98,6 +100,7 @@ function EditOrganisationNotifications(props) {
             Object.assign(prefs, JSON.parse(preNotifyPrefsString));
           }
         }
+        setCurrOwner(isOwner);
         setCurrPrefs({ ...currPrefs, ...prefs });
         setValue("notifyPrefs", { ...prefs }); // update chexkboxes
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
@@ -166,6 +169,7 @@ function EditOrganisationNotifications(props) {
               currPrefs={currPrefs}
               switchOnOff={switchOnOff}
               setSwitchOnOff={setSwitchOnOff}
+              isOwner={isCurrOwner}
             />
             {/* Button that saves changes */}
             <CustomSubmitButton
