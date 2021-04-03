@@ -56,7 +56,6 @@ const NotifyPreferenceInput = ({
 
   useEffect(() => {
     setChecksEnabled(switchOnOff);
-    console.log("owner",isOwner);
     if(!isOwner){
       const removeProp = 'newapplicant';
       const { [removeProp]: remove, ...rest } = NotifyType;
