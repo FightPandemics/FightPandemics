@@ -7,12 +7,15 @@ const { display } = theme.typography.font.family;
 const LinkButtonNarrow = styled(BaseButton).attrs(({ size, inline }) => {
   return { size, inline };
 })`
+  font-family: 'Poppins';
+  feature/join-org
   max-width: 40rem;
   width: 100%;
   height: 5.4rem;
   border-radius: 4.6rem;
   border: solid 0 ${black};
   font-family: ${display};
+  font-size: 1.4rem;
   font-size: 1.8rem;
   font-weight: 500;
   font-stretch: normal;
