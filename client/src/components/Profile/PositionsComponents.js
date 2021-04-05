@@ -271,6 +271,8 @@ export const PositionTitle = styled.h1`
   font-weight: 600;
   color: ${colors.black};
   align-self: flex-start;
+  margin-top: 10rem;
+  margin-bottom: 0;
   
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
   margin: 3rem auto 1.6rem auto;
@@ -287,9 +289,11 @@ export const PositionDescription = styled.p`
   font-size: 1.6rem;
   line-height: 1.9rem;
   letter-spacing: .07rem;
+  margin-top: 5rem;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
     font-size: 1.2rem;
     line-height: 1.4rem;
+    margin-top: 2rem;
   }
 `;
 

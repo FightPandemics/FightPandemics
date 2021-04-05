@@ -170,6 +170,7 @@ const Apply = () => {
                         </UserInfoContainer>
                         <PositionApplicationForm
                             orgName={name}
+                            organisationId={organisationId}
                         ></PositionApplicationForm>
                     </PositionsContainer >
                     <ExitModal

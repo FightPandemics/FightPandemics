@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import ApplyFormLabel from "./ApplyFormLabel";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const { colors } = theme
 
@@ -49,14 +49,21 @@ margin: auto;
 width: 33.4rem;
 height: 5.4rem;
 font-weight: 500;
-font-size: 1.6rem;
 line-height: 2.02rem;
 margin-bottom: 40rem;
+
+span {
+  font-size: 1.6rem;
+}
 @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
   width: 15.5rem;
   height: 4.8rem;
   margin-top: 2rem;
   margin-bottom: 5rem;
+
+  span {
+  font-size: 1.4rem;
+}
 }
 `;
 
@@ -69,7 +76,7 @@ const initialState = {
   errors: [],
 };
 
-const PositionApplicationForm = ({ orgName }) => {
+const PositionApplicationForm = ({ orgName, organisationId, ...props }) => {
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState(initialState.formData);
@@ -134,8 +141,9 @@ const PositionApplicationForm = ({ orgName }) => {
     setVisibleTwo(false);
   };
 
-  const showPopUpTwo = async (e) => {
+  const showPopUpTwo = async (formData) => {
     handleCancel()
+    // submit form to backend
     setVisibleTwo(true);
   };
 
@@ -166,6 +174,7 @@ const PositionApplicationForm = ({ orgName }) => {
             formData={formData}
           // rows={formData.question1.length > 0 ? 3 : 1}
           />
+
           <CharCounter
             className={
               formData.question1.length > 250 ? "has-error" : ""}
@@ -234,7 +243,7 @@ const PositionApplicationForm = ({ orgName }) => {
         <ErrorMsg className="has-error">{renderError("question3")}</ErrorMsg>
       </OuterWrapper>
 
-      
+
       <ApplyModal
         visible={visible}
         width={564}
@@ -252,6 +261,7 @@ const PositionApplicationForm = ({ orgName }) => {
               {t("positions.cancelModal")}
             </StyledCancelButton>
             <StyledSubmitButton
+              // submit form to backend onClick
               onClick={showPopUpTwo}
             >
               {t("positions.submitModal")}
@@ -273,11 +283,16 @@ const PositionApplicationForm = ({ orgName }) => {
           <img src={applicationConfirmation} alt="" />
           <h2>{t("positions.applicationSubmitted")}</h2>
           <p>{applicationReceived}</p>
-          <PositionsButton
+          <Link
             onClick={handleCancelTwo}
+            to={`/organisation/${organisationId}`}
           >
-            {t("positions.okay")}
-          </PositionsButton>
+            <PositionsButton
+            // onClick={handleCancelTwo}
+            >
+              {t("positions.okay")}
+            </PositionsButton>
+          </Link>
         </PositionSubmitModal>
       </ApplyModal>
 
