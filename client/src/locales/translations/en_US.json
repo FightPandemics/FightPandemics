@@ -488,9 +488,13 @@
     "confirmDeleteTitle": "Delete Draft Page",
     "confirmDeleteOkText": "Delete",
     "confirmDeletePrompt": "Delete draft page: {{pageName}}?",
-    "confirmMovingOffDirtyPageTitle": "Leaving Modified Page",
-    "confirmMovingOffDirtyPageOkText": "Leave Page",
-    "confirmMovingOffDirtyPagePrompt": "You have made changes to page: {{pageName}}.  Sure you want to leave this page?   Clicking Cancel will stay on this page."
+    "confirmUndoAllChangesTitle": "Undo All My Changes",
+    "confirmUndoAllChangesOkText": "Undo All",
+    "confirmUndoAllChangesPrompt": "You have made changes to page: {{pageName}}.  Sure you want to undo all?  Clicking Cancel will leave all changes as is.",
+    "contentChanged": "Content changed in editor only.",
+    "click": "Click \"",
+    "belowOr": "\" below to save when ready or ",
+    "undoAllMyChanges": "Undo All My Changes"
   },
   "auth": {
     "signIn": "Sign In",

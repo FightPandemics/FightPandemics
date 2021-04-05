@@ -64,10 +64,10 @@ const OrgBookConfirmModal = ({
       confirmPrompt = t("orgBook.confirmDeletePrompt", { pageName });
       break;
 
-    case UPDATE_ACTION_TYPES.movingOffDirtyPageType:
-      title = t("orgBook.confirmMovingOffDirtyPageTitle");
-      okText = t("orgBook.confirmMovingOffDirtyPageOkText");
-      confirmPrompt = t("orgBook.confirmMovingOffDirtyPagePrompt", {
+    case UPDATE_ACTION_TYPES.undoAllChangesType:
+      title = t("orgBook.confirmUndoAllChangesTitle");
+      okText = t("orgBook.confirmUndoAllChangesOkText");
+      confirmPrompt = t("orgBook.confirmUndoAllChangesPrompt", {
         pageName,
       });
       break;
@@ -125,7 +125,13 @@ const OrgBookConfirmModal = ({
         centered
         okText={okText}
         cancelText={t("orgBook.cancel")}
-        onCancel={onCancelConfirm}
+        onCancel={() => {
+          if (action === UPDATE_ACTION_TYPES.movingOffDirtyPageType) {
+            onCancelConfirm(selectedPage);
+          } else {
+            onCancelConfirm();
+          }
+        }}
         cancelButtonProps={{ disabled: false }}
         onOk={() => {
           if (action === UPDATE_ACTION_TYPES.unpublishType) {

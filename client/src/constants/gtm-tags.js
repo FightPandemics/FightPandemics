@@ -136,6 +136,7 @@ module.exports = {
   orgBook: {
     prefix: "OB",
     back: "_BA",
+    undoAll: "_UA",
   },
   providersFilters: {
     individual: "_IN",

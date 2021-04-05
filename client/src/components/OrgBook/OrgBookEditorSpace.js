@@ -7,13 +7,15 @@ import { useTranslation } from "react-i18next";
 import { WhiteSpace } from "antd-mobile";
 import { getLang } from "i18n";
 import { LANG_MAP } from "./OrgBookData";
+import GTM from "../../constants/gtm-tags";
+import UndoAllChangesButton from "./OrgBookUndoAllButton";
+import OrgBookConfirmModal from "./OrgBookConfirmModal";
 import SvgIcon from "../Icon/SvgIcon";
 import eyeClosedIcon from "../../assets/icons/orgbook-eye-closed.svg";
 import eyeOpenIcon from "../../assets/icons/orgbook-eye-open.svg";
-import { set } from "lodash";
 
 const { colors, typography } = theme;
-const { white, royalBlue, black, red } = colors;
+const { white, royalBlue, black, red, mediumGray } = colors;
 
 const OrgBookEditorSpaceWrapper = styled.div`
   height: 100%;
@@ -42,6 +44,15 @@ const HeaderSeePreviewContainer = styled.div`
 const HeaderRenamePageContainer = styled.div`
   text-decoration: underline;
   padding: 0 0 0 1px;
+`;
+
+const OrgBookContentChangedContainer = styled.div`
+  background-color: #ffffcc;
+  color: ${black};
+  padding: 1.4rem 1.4rem 1.4rem 1.4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const MainEditorContainer = styled.div`
@@ -95,10 +106,17 @@ const PublishButtonLabel = styled.div`
   white-space: nowrap;
 `;
 
+export const Background = styled.div`
+  width: 95%;
+  background-color: ${mediumGray};
+`;
+
 const OrgBookEditorSpace = (props) => {
   const {
     organisation,
     selectedPage,
+    preSelectedPage,
+    onClearPreselectedPage,
     PAGE_CATEGORIES,
     UPDATE_ACTION_TYPES,
     onUpdateAction,
@@ -111,27 +129,29 @@ const OrgBookEditorSpace = (props) => {
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const [currentLanguage, setCurrentLanguage] = useState("en");
   const [currentLanguageUrl, setCurrentLanguageUrl] = useState("");
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+  // const UNPUBLISH_OPTIONS = {
+  //   leaveDraftContent: 1,
+  //   replaceDraftContent: 2,
+  // };
 
   const onInit = useCallback(
     (editor) => {
       tinyMce.current = editor;
+
       if (selectedPage) {
         const withoutSpace = selectedPage.content.replace(/ /g, "");
         setNumberOfCharacters(withoutSpace.length);
-      }
-      if (selectedPage) {
-        console.log(
-          "in orgbook editor space, onInit with selected page: " +
-            selectedPage.name,
-        );
-      } else {
-        console.log("in orgbook editor space, onInit with no page selected");
       }
     },
     [selectedPage],
   );
 
   useEffect(() => {
+    setTinyMceLanguage();
+  }, []);
+
+  const setTinyMceLanguage = () => {
     const { language } = getLang();
     let tinyMceLang = LANG_MAP.find((l) => l.localeLang === language)
       ?.tinyMceLang;
@@ -141,17 +161,14 @@ const OrgBookEditorSpace = (props) => {
     setCurrentLanguage(tinyMceLang);
     const langUrl = `https://maskowe.github.io/tinymce_translations/${tinyMceLang}.js`;
     setCurrentLanguageUrl(langUrl);
-  }, []);
+  };
 
   useEffect(() => {
     if (
       tinyMce.current &&
       tinyMce.current.getContent() !== selectedPage?.content
     ) {
-      console.log("setting to selectedPage?.content: " + selectedPage?.content);
       tinyMce.current.setContent(selectedPage?.content, { no_events: true });
-    } else {
-      console.log("in useEffect in orgbook ed sp, content is the same");
     }
   }, [selectedPage?.content]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -163,34 +180,41 @@ const OrgBookEditorSpace = (props) => {
     return `${organisation.name}\xa0\xa0\xa0/\xa0\xa0\xa0${selectedPage.name}\xa0\xa0\xa0-\xa0\xa0\xa0${status}`;
   };
 
+  const handleUndoAllBtnClick = () => {
+    setConfirmModalVisible(true);
+  };
+
+  const handleOnConfirm = async () => {
+    console.log("in ed sp, handleOnonfirm forundoAllChangesType");
+
+    setConfirmModalVisible(true);
+  };
+
+  const handleOnCancelConfirm = () => {
+    setConfirmModalVisible(false);
+  };
+
   const handleEditorChange = (content, editor) => {
-    console.log("selectedPageDirty in org ed space: " + selectedPageDirty);
     const wordcount = editor.plugins.wordcount;
     setNumberOfCharacters(wordcount.body.getCharacterCountWithoutSpaces());
-    if (content !== selectedPage.content) {
-      console.log("content changed in ed sp, so toggle to true");
-      onSelectedPageDirty(true);
+    if (preSelectedPage) {
+      onClearPreselectedPage();
     } else {
-      console.log("content didnt change ");
+      if (content !== selectedPage.content) {
+        onSelectedPageDirty(true);
+      }
     }
   };
 
   const renderDistractionFreeEditor = () => {
-    if (selectedPage) {
-      console.log(
-        "renderDistractionFreeEditor with selected page: " + selectedPage.name,
-      );
-    } else {
-      console.log("renderDistractionFreeEditor with no page selected");
-    }
     //quickbars_insert_toolbar appears on clicking on a new line (empty line following previously set/entered content)
     //quickbars_selection_toolbar appears after double-clicking (selecting) existing content or empty space
     //contextmenu appears after right-clicking on editable content
     return (
       <Editor
         apiKey="6wsqfx2q8gaxfha3k31vw5hivcu9rp3su7q4o2kuy8p9qavt"
-        initialValue={selectedPage.content}
-        value={selectedPage.content}
+        initialValue={selectedPage?.content}
+        value={selectedPage?.content}
         init={{
           oninit: onInit,
           setup: onInit,
@@ -226,6 +250,33 @@ const OrgBookEditorSpace = (props) => {
       />
     );
   };
+
+  const renderConfirmModal = () => {
+    //const livePageExists = livePageExistsForSelectedPage();
+
+    return (
+      <div>
+        <OrgBookConfirmModal
+          mask={false}
+          //getContainer="#modalMount"
+          action={UPDATE_ACTION_TYPES.undoAllChangesType}
+          selectedPage={selectedPage}
+          visible={confirmModalVisible}
+          onCancelConfirm={handleOnCancelConfirm}
+          onConfirm={handleOnConfirm}
+          UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
+          livePageExists={false}
+          UNPUBLISH_OPTIONS={{}}
+          showUnpublishOptions={false}
+        />
+        <Background />
+      </div>
+    );
+  };
+
+  if (confirmModalVisible) {
+    return renderConfirmModal();
+  }
 
   return (
     <OrgBookEditorSpaceWrapper>
@@ -271,6 +322,29 @@ const OrgBookEditorSpace = (props) => {
           )}
         </HeaderRenamePageContainer>
       </OrgBookEditorSpaceHeader>
+      {selectedPage && selectedPageDirty ? (
+        <OrgBookContentChangedContainer>
+          <div>{t("orgBook.contentChanged")}</div>
+          <div>
+            <span>{t("orgBook.click")}</span>
+            <span>
+              {selectedPage.status === PAGE_CATEGORIES.draftCategory
+                ? t("orgBook.saveProgress")
+                : t("orgBook.republish")}
+            </span>
+            <span>{t("orgBook.belowOr")}</span>
+            <UndoAllChangesButton
+              handleClick={handleUndoAllBtnClick}
+              id={GTM.orgBook.prefix + GTM.orgBook.undoAll}
+              label={t("orgBook.undoAllMyChanges")}
+              color={black}
+              bgcolor="transparent"
+            ></UndoAllChangesButton>
+          </div>
+        </OrgBookContentChangedContainer>
+      ) : (
+        <WhiteSpace />
+      )}
       <MainEditorContainer>
         {selectedPage ? renderDistractionFreeEditor() : <WhiteSpace />}
       </MainEditorContainer>

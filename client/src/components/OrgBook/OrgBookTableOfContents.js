@@ -16,7 +16,7 @@ import pageIcon from "../../assets/icons/orgbook-page.svg";
 import plusIcon from "../../assets/icons/orgbook-plus.svg";
 
 const { colors, typography } = theme;
-const { white, black, lightGray, royalBlue } = colors;
+const { white, black, lightGray, mediumGray } = colors;
 
 const OrgBookTOCHeader = styled.div`
   background-color: rgb(120, 120, 120);
@@ -26,6 +26,9 @@ const OrgBookTOCHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+const OrgBookTOCWrapper = styled.div`
+  opacity: ${(props) => (props.selectedDirty ? "0.5" : "1")};
 `;
 
 const OrgBookHeaderLabelContainer = styled.div``;
@@ -62,6 +65,7 @@ const PageListContainer = styled.div`
     color: ${black};
   }
   border: ${(props) => (props.selected ? "1px solid white" : "none")};
+  pointer-events: ${(props) => (props.selectedDirty ? "none" : "auto")};
 `;
 
 const AddNewPageContainer = styled.div`
@@ -76,6 +80,7 @@ const AddNewPageContainer = styled.div`
     background-color: ${lightGray};
     color: ${black};
   }
+  pointer-events: ${(props) => (props.selectedDirty ? "none" : "auto")};
 `;
 
 const NewPageIconContainer = styled.div`
@@ -100,6 +105,11 @@ const EyeSvgIcon = styled(SvgIcon)`
   margin-right: 2px;
 `;
 
+export const Background = styled.div`
+  width: 95%;
+  background-color: ${mediumGray};
+`;
+
 const OrgBookTableOfContents = (props) => {
   const {
     organisation,
@@ -112,6 +122,7 @@ const OrgBookTableOfContents = (props) => {
     selectedPageDirty,
     onUpdateAction,
     UPDATE_ACTION_TYPES,
+    onSelectedPageDirty,
   } = props;
   const { t } = useTranslation();
   const [selectedPage, setSelectedPage] = useState(preSelectedPage || null);
@@ -128,6 +139,10 @@ const OrgBookTableOfContents = (props) => {
     liveCategory: "live",
     draftCategory: "draft",
   };
+  const UNPUBLISH_OPTIONS = {
+    leaveDraftContent: 1,
+    replaceDraftContent: 2,
+  };
 
   const initialize = () => {
     //sort ascending pageGroupNumber, then descending by create_at date
@@ -137,7 +152,7 @@ const OrgBookTableOfContents = (props) => {
         Date.parse(b.created_at) - Date.parse(a.created_at),
     );
     setSortedCurrentOrgBookPages(sortedPages);
-    if (preSelectedPage) {
+    if (preSelectedPage && !selectedPageDirty) {
       setSelectedPage(preSelectedPage);
       selectPage(preSelectedPage);
     }
@@ -145,32 +160,13 @@ const OrgBookTableOfContents = (props) => {
 
   useEffect(initialize, []);
 
+  useEffect(() => {}, [selectedPageDirty]);
+
   const handlePageClick = (e, page) => {
     e.persist();
     e.stopPropagation();
-    // if (selectedPageDirty) {
-    //   console.log('****in orgbook toc handlePageClick selectedPageDirty: ' + selectedPageDirty +
-    //     ' for selectedPage: ' + selectedPage.name);
-    // };
-    if (!selectedPageDirty) {
-      console.log(
-        "****in orgbook toc handlePageClick NOT dirty, so setSelectedPage to page named: " +
-          page.name,
-      );
-      setSelectedPage(page);
-      selectPage(page);
-    } else {
-      console.log(
-        "****in orgbook toc handlePageClick IS dirty for selectedPage: " +
-          selectedPage.name,
-      );
-      onUpdateAction(
-        UPDATE_ACTION_TYPES.movingOffDirtyPageType,
-        page.pageId,
-        page.content,
-        page.content.replace(/ /g, "").length,
-      );
-    }
+    setSelectedPage(page);
+    selectPage(page);
   };
 
   const renderEyeIcon = (page) => {
@@ -192,9 +188,26 @@ const OrgBookTableOfContents = (props) => {
       : false;
   };
 
+  const livePageExistsForSelectedPage = () => {
+    if (
+      !currentOrgBookPages ||
+      currentOrgBookPages.length === 0 ||
+      !selectedPage
+    ) {
+      return false;
+    }
+    return currentOrgBookPages.some(
+      (page) =>
+        page.pageGroupNumber == selectedPage.pageGroupNumber &&
+        page.status === PAGE_CATEGORIES.liveCategory,
+    )
+      ? true
+      : false;
+  };
+
   return (
     sortedCurrentOrgBookPages && (
-      <>
+      <OrgBookTOCWrapper selectedDirty={selectedPageDirty}>
         <OrgBookTOCHeader>
           <OrgBookHeaderLabelContainer>
             {t("orgBook.editorSpaceTOCHeader")}
@@ -218,6 +231,7 @@ const OrgBookTableOfContents = (props) => {
             <PageListContainer
               key={idx}
               selected={isSelectedPage(page)}
+              selectedDirty={selectedPageDirty}
               onClick={(e) => {
                 handlePageClick(e, page);
               }}
@@ -233,6 +247,7 @@ const OrgBookTableOfContents = (props) => {
           ))}
           {showAddNewPage ? (
             <AddNewPageContainer
+              selectedDirty={selectedPageDirty}
               key={"add-new-page"}
               onClick={handleNewPageClick}
             >
@@ -245,7 +260,7 @@ const OrgBookTableOfContents = (props) => {
             ""
           )}
         </MainNavigationContainer>
-      </>
+      </OrgBookTOCWrapper>
     )
   );
 };

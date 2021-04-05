@@ -52,7 +52,7 @@ const UPDATE_ACTION_TYPES = {
   publishType: "publish",
   unpublishType: "unpublish",
   deleteDraftType: "deleteDraft",
-  movingOffDirtyPageType: "movingOffDirtyPage",
+  undoAllChangesType: "undoAllChanges",
 };
 
 const UNPUBLISH_OPTIONS = {
@@ -128,6 +128,11 @@ export const ModalMount = styled.div`
   left: 0;
 `;
 
+const useForceUpdate = () => {
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue((value) => value + 1); // update the state to force render
+};
+
 const OrgBookEditor = () => {
   const url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
@@ -144,7 +149,7 @@ const OrgBookEditor = () => {
   const [maxContentExceeded, setMaxContentExceeded] = useState(false);
   const [minContentNotMet, setMinContentNotMet] = useState(false);
   const [noOfContentChars, setNoOfContentChars] = useState(0);
-  const [targetPageId, setTargetPageId] = useState("");
+  //const [targetPageId, setTargetPageId] = useState("");
   const [currentUpdateAction, setCurrentUpdateAction] = useState(
     UPDATE_ACTION_TYPES.noAction,
   );
@@ -154,6 +159,7 @@ const OrgBookEditor = () => {
   );
   const [isUpdateSuccess, handleSuccess] = useState(false);
   const [selectedPage, setSelectedPage] = useState(null);
+  const [preSelectedPage, setPreselectedPage] = useState(null);
   const [selectedPageDirty, setSelectedPageDirty] = useState(false);
   const [isUpdateError, handleUpdateError] = useState(false);
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -161,6 +167,7 @@ const OrgBookEditor = () => {
   );
   const { loading, organisation } = orgProfileState;
   const [currentOrgBookPages, setCurrentOrgBookPages] = useState(null);
+  const forceUpdate = useForceUpdate();
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -236,6 +243,7 @@ const OrgBookEditor = () => {
 
     newPages.push(newOrgBookPage);
     setSelectedPage(newOrgBookPage);
+    setPreselectedPage(newOrgBookPage);
     let orgBookPages = {
       orgBookPages: newPages,
     };
@@ -279,6 +287,7 @@ const OrgBookEditor = () => {
 
     currentOrgBookPages.push(newOrgBookPage);
     setSelectedPage(newOrgBookPage);
+    setPreselectedPage(newOrgBookPage);
     let orgBookPages = {
       orgBookPages: currentOrgBookPages,
     };
@@ -366,7 +375,10 @@ const OrgBookEditor = () => {
   };
 
   const handleSelectPage = (page) => {
-    setSelectedPage(page);
+    console.log("setting to selectedPage: " + page.name);
+    //setSelectedPage(page);
+    setSelectedPage(currentOrgBookPages.find((p) => p.pageId === page.pageId));
+    forceUpdate();
   };
 
   const handleOnClose = () => {
@@ -383,7 +395,7 @@ const OrgBookEditor = () => {
     setMinContentNotMet(false);
     selectedPage.content = editedpageContent;
     setNoOfContentChars(numberOfCharacters);
-    setTargetPageId(targetPageId);
+    //setTargetPageId(targetPageId);
 
     switch (action) {
       case UPDATE_ACTION_TYPES.saveProgressType:
@@ -417,10 +429,10 @@ const OrgBookEditor = () => {
         setConfirmModalVisible(true);
         break;
 
-      case UPDATE_ACTION_TYPES.movingOffDirtyPageType:
-        setCurrentUpdateAction(action);
-        setConfirmModalVisible(true);
-        break;
+      // case UPDATE_ACTION_TYPES.movingOffDirtyPageType:
+      //   console.log('hit update action for moving off dirty page in editor');
+      //   setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
+      //  break;
 
       default:
         break;
@@ -475,22 +487,22 @@ const OrgBookEditor = () => {
 
         break;
 
-      case UPDATE_ACTION_TYPES.movingOffDirtyPageType:
-        const targetPage = currentOrgBookPages.find(
-          (page) => page.pageId === targetPageId,
-        );
-        console.log("going to targetPage: " + targetPage.name);
-        setSelectedPage(
-          currentOrgBookPages.find((page) => page.pageId === targetPageId),
-        );
+      // case UPDATE_ACTION_TYPES.movingOffDirtyPageType:
+      //   const targetPage = currentOrgBookPages.find(
+      //     (page) => page.pageId === targetPageId,
+      //   );
+      //   //console.log("going to targetPage: " + targetPage.name);
+      //   setSelectedPage(
+      //     currentOrgBookPages.find((page) => page.pageId === targetPageId),
+      //   );
 
-        break;
+      //   break;
 
       default:
         break;
     }
     setSelectedPageDirty(false);
-    setTargetPageId("");
+    //setTargetPageId("");
     setConfirmModalVisible(false);
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
   };
@@ -706,11 +718,16 @@ const OrgBookEditor = () => {
     return orgBookPages;
   };
 
-  const handleOnCancelConfirm = () => {
-    if (currentUpdateAction === UPDATE_ACTION_TYPES.movingOffDirtyPageType) {
-      setSelectedPageDirty(false);
-      setTargetPageId("");
-    }
+  const handleOnCancelConfirm = (backToPage = null) => {
+    // if (currentUpdateAction === UPDATE_ACTION_TYPES.movingOffDirtyPageType) {
+    //   alert('in editor, handleOnCancelConfirm for movingoffdirypage for selectedPage: ' + selectedPage.name);
+    //   //console.log('handleOnCancelConfirm for movingoffdirypage with selectPage: ' + backToPage.name);
+    //   setSelectedPage(
+    //     currentOrgBookPages.find((page) => page.pageId === backToPage.pageId),
+    //   );
+    // };
+    setSelectedPageDirty(false);
+    //setTargetPageId("");
     setConfirmModalVisible(false);
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
   };
@@ -742,11 +759,12 @@ const OrgBookEditor = () => {
             handleNewPageClick={handleNewPageClick}
             showAddNewPage={showAddNewPage}
             selectPage={handleSelectPage}
-            preSelectedPage={selectedPage}
+            preSelectedPage={preSelectedPage}
             handleBackBtnClick={handleBackBtnClick}
             selectedPageDirty={selectedPageDirty}
             onUpdateAction={handleUpdateAction}
             UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
+            onSelectedPageDirty={handleSelectedPageDirty}
           ></OrgBookTableOfContents>
         </TableOfContentsSidebar>
       );
@@ -754,14 +772,6 @@ const OrgBookEditor = () => {
   };
 
   const renderEditorSpace = () => {
-    if (selectedPage) {
-      console.log(
-        "rendering editorspace with selected page: " + selectedPage.name,
-      );
-    } else {
-      console.log("rendering editorspace with no page selected");
-    }
-
     const livePageExists = selectedPage
       ? livePageExistsForSelectedPage()
       : false;
@@ -770,6 +780,8 @@ const OrgBookEditor = () => {
         <OrgBookEditorSpace
           organisation={organisation}
           selectedPage={selectedPage || null}
+          preSelectedPage={preSelectedPage}
+          onClearPreselectedPage={() => setPreselectedPage(null)}
           PAGE_CATEGORIES={PAGE_CATEGORIES}
           UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
           onUpdateAction={handleUpdateAction}
@@ -816,7 +828,15 @@ const OrgBookEditor = () => {
           UNPUBLISH_OPTIONS={UNPUBLISH_OPTIONS}
           showUnpublishOptions={showUnpublishOptions()}
         />
-        {currentUpdateAction !== UPDATE_ACTION_TYPES.movingOffDirtyPageType ? (
+        <ModalMount>
+          <OrgBookEditorContainer>
+            {renderTableOfContents()}
+            <OrgBookEditorContentBox>
+              {renderEditorSpace()}
+            </OrgBookEditorContentBox>
+          </OrgBookEditorContainer>
+        </ModalMount>
+        {/*  {currentUpdateAction !== UPDATE_ACTION_TYPES.movingOffDirtyPageType ? (
           <ModalMount>
             <OrgBookEditorContainer>
               {renderTableOfContents()}
@@ -827,7 +847,7 @@ const OrgBookEditor = () => {
           </ModalMount>
         ) : (
           <Background />
-        )}
+        )} */}
       </div>
     );
   };
