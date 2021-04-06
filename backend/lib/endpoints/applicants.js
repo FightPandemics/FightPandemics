@@ -122,6 +122,7 @@ async function routes(app) {
       const { actor, body: applicantProps } = req;
       
       //Creates the embeded author document
+      //appicantProps.author or .applicant
       applicantProps.author = {
         id: mongoose.Types.ObjectId(actor.id),
         location: actor.location,

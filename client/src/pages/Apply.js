@@ -35,8 +35,8 @@ import {
 import { useHistory } from "react-router-dom";
 import ExitModal from "components/Positions/ExitModal";
 
-const Apply = () => {
-
+const Apply = ( props ) => {
+    // const { isAuthenticated, user } = props;
     const history = useHistory();
     const [visible, setVisible] = useState(false);
 

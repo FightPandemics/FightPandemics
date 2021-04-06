@@ -13,6 +13,7 @@ import { useHistory, Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectActorId } from "reducers/session";
 import axios from "axios";
+import { formToApplicationMappings } from "assets/data/formToApplicationMappings";
 
 const { colors } = theme
 
@@ -69,7 +70,6 @@ span {
 }
 }
 `;
-
 
 const PositionApplicationForm = ({ orgName,
   // organisationId 
@@ -136,25 +136,24 @@ const PositionApplicationForm = ({ orgName,
     if (formData.question1 && formData.question2 && formData.question3) {
       showPopUp()
     };
-    console.log(formData)
+    console.log("PRE API CALL")
 
 
     // e.preventDefault();
     // populateErrors();
 
-    const payload = formData;
-    if (form.organisationId) payload.actorId = form.organisationId;
+    const payload = formToApplicationMappings(formData);
 
-    if (!errors.length) {
-      try {
-        const res = await axios.post("/api/applicants", payload);
-        setPostId(res.data._id);
-        onSuccess(res.data);
-        cleanForm();
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    try {
+      const res = await axios.post("/api/applicants", payload);
+      // setPostId(res.data._id);
+      // onSuccess(res.data);
+      // cleanForm();
+    } catch (error) {
+      console.log(error);
+    }
+    console.log("POST API CALL")
+
   };
 
   const [visible, setVisible] = useState(false);
