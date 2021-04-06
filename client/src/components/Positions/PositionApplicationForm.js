@@ -9,7 +9,10 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import ApplyFormLabel from "./ApplyFormLabel";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectActorId } from "reducers/session";
+import axios from "axios";
 
 const { colors } = theme
 
@@ -67,16 +70,27 @@ span {
 }
 `;
 
-const initialState = {
-  formData: {
-    question1: "",
-    question2: "",
-    question3: "",
-  },
-  errors: [],
-};
 
-const PositionApplicationForm = ({ orgName, organisationId, ...props }) => {
+const PositionApplicationForm = ({ orgName,
+  // organisationId 
+}) => {
+
+  const actorId = useSelector(selectActorId);
+  const { id } = useParams()
+  const organisationId = id
+  const initialState = {
+    //combine questions into "answers" for backend
+    formData: {
+      question1: "",
+      question2: "",
+      question3: "",
+      organisationId: organisationId,
+      actorId: actorId,
+      status: "applied"
+    },
+    errors: [],
+  };
+
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState(initialState.formData);
@@ -115,12 +129,31 @@ const PositionApplicationForm = ({ orgName, organisationId, ...props }) => {
     setErrors([...errors, ...newErrors]);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.props) {
       populateErrors()
     };
     if (formData.question1 && formData.question2 && formData.question3) {
       showPopUp()
+    };
+    console.log(formData)
+
+
+    // e.preventDefault();
+    // populateErrors();
+
+    const payload = formData;
+    if (form.organisationId) payload.actorId = form.organisationId;
+
+    if (!errors.length) {
+      try {
+        const res = await axios.post("/api/applicants", payload);
+        setPostId(res.data._id);
+        onSuccess(res.data);
+        cleanForm();
+      } catch (error) {
+        console.log(error);
+      }
     };
   };
 
