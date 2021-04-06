@@ -37,6 +37,7 @@ const UndoAllButton = styled(Button).attrs((props) => {
     &:before {
       content: normal !important;
     }
+    padding-bottom: 0px !important; //NEW
   }
   &.am-button > span {
     margin-left: 1rem;

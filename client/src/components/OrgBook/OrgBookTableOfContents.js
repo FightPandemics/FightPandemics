@@ -14,6 +14,7 @@ import lockClosedIcon from "../../assets/icons/orgbook-lock-closed.svg";
 import lockOpenIcon from "../../assets/icons/orgbook-lock-open.svg";
 import pageIcon from "../../assets/icons/orgbook-page.svg";
 import plusIcon from "../../assets/icons/orgbook-plus.svg";
+import OrgBookConfirmModal from "./OrgBookConfirmModal";
 
 const { colors, typography } = theme;
 const { white, black, lightGray, mediumGray } = colors;
@@ -120,15 +121,14 @@ const OrgBookTableOfContents = (props) => {
     preSelectedPage,
     handleBackBtnClick,
     selectedPageDirty,
-    onUpdateAction,
     UPDATE_ACTION_TYPES,
-    onSelectedPageDirty,
   } = props;
   const { t } = useTranslation();
   const [selectedPage, setSelectedPage] = useState(preSelectedPage || null);
   const [sortedCurrentOrgBookPages, setSortedCurrentOrgBookPages] = useState(
     null,
   );
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
   const LIVE_PAGE_VIEW_TYPES = {
     //correspond to private, public for live pages only
@@ -138,10 +138,6 @@ const OrgBookTableOfContents = (props) => {
   const PAGE_CATEGORIES = {
     liveCategory: "live",
     draftCategory: "draft",
-  };
-  const UNPUBLISH_OPTIONS = {
-    leaveDraftContent: 1,
-    replaceDraftContent: 2,
   };
 
   const initialize = () => {
@@ -169,6 +165,23 @@ const OrgBookTableOfContents = (props) => {
     selectPage(page);
   };
 
+  const onBackButtonClick = () => {
+    if (selectedPageDirty) {
+      setConfirmModalVisible(true);
+    } else {
+      handleBackBtnClick();
+    }
+  };
+
+  const handleOnConfirm = async () => {
+    setConfirmModalVisible(false);
+    handleBackBtnClick();
+  };
+
+  const handleOnCancelConfirm = () => {
+    setConfirmModalVisible(false);
+  };
+
   const renderEyeIcon = (page) => {
     const eyeIcon =
       page.status === PAGE_CATEGORIES.draftCategory
@@ -188,22 +201,29 @@ const OrgBookTableOfContents = (props) => {
       : false;
   };
 
-  const livePageExistsForSelectedPage = () => {
-    if (
-      !currentOrgBookPages ||
-      currentOrgBookPages.length === 0 ||
-      !selectedPage
-    ) {
-      return false;
-    }
-    return currentOrgBookPages.some(
-      (page) =>
-        page.pageGroupNumber == selectedPage.pageGroupNumber &&
-        page.status === PAGE_CATEGORIES.liveCategory,
-    )
-      ? true
-      : false;
+  const renderConfirmModal = () => {
+    return (
+      <div>
+        <OrgBookConfirmModal
+          mask={false}
+          action={UPDATE_ACTION_TYPES.goingBackWithDirtyPage}
+          selectedPage={selectedPage}
+          visible={confirmModalVisible}
+          onCancelConfirm={handleOnCancelConfirm}
+          onConfirm={handleOnConfirm}
+          UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
+          livePageExists={false}
+          UNPUBLISH_OPTIONS={{}}
+          showUnpublishOptions={false}
+        />
+        <Background />
+      </div>
+    );
   };
+
+  if (confirmModalVisible) {
+    return renderConfirmModal();
+  }
 
   return (
     sortedCurrentOrgBookPages && (
@@ -214,7 +234,8 @@ const OrgBookTableOfContents = (props) => {
           </OrgBookHeaderLabelContainer>
           <HeaderSpacerContainer />
           <BackArrowButton
-            handleClick={handleBackBtnClick}
+            //handleClick={handleBackBtnClick}
+            handleClick={onBackButtonClick}
             id={GTM.orgBook.prefix + GTM.orgBook.back}
             label={t("onboarding.common.previous")}
             color={white}

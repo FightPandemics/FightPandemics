@@ -55,6 +55,14 @@ const OrgBookContentChangedContainer = styled.div`
   justify-content: space-between;
 `;
 
+const ChngdInEditorOnlyWrapper = styled.div`
+  padding: 0.6rem 0rem 0rem 0rem !important;
+`;
+
+const ClickOrUndoWrapper = styled.div`
+  padding: 0.6rem 0rem 0rem 0rem !important;
+`;
+
 const MainEditorContainer = styled.div`
   height: 85vh;
   background-color: ${white};
@@ -130,10 +138,7 @@ const OrgBookEditorSpace = (props) => {
   const [currentLanguage, setCurrentLanguage] = useState("en");
   const [currentLanguageUrl, setCurrentLanguageUrl] = useState("");
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
-  // const UNPUBLISH_OPTIONS = {
-  //   leaveDraftContent: 1,
-  //   replaceDraftContent: 2,
-  // };
+  const [originalContent, setOriginalContent] = useState("");
 
   const onInit = useCallback(
     (editor) => {
@@ -142,14 +147,20 @@ const OrgBookEditorSpace = (props) => {
       if (selectedPage) {
         const withoutSpace = selectedPage.content.replace(/ /g, "");
         setNumberOfCharacters(withoutSpace.length);
+        if (originalContent.length === 0 && selectedPage) {
+          setOriginalContent(selectedPage.content);
+        }
       }
     },
-    [selectedPage],
+    [originalContent.length, selectedPage],
   );
 
   useEffect(() => {
     setTinyMceLanguage();
-  }, []);
+    if (originalContent.length === 0 && selectedPage) {
+      setOriginalContent(selectedPage.content);
+    }
+  }, [originalContent.length, selectedPage]);
 
   const setTinyMceLanguage = () => {
     const { language } = getLang();
@@ -185,9 +196,11 @@ const OrgBookEditorSpace = (props) => {
   };
 
   const handleOnConfirm = async () => {
-    console.log("in ed sp, handleOnonfirm forundoAllChangesType");
-
-    setConfirmModalVisible(true);
+    if (tinyMce.current) {
+      tinyMce.current.setContent(originalContent, { no_events: true });
+    }
+    onSelectedPageDirty(false);
+    setConfirmModalVisible(false);
   };
 
   const handleOnCancelConfirm = () => {
@@ -252,13 +265,10 @@ const OrgBookEditorSpace = (props) => {
   };
 
   const renderConfirmModal = () => {
-    //const livePageExists = livePageExistsForSelectedPage();
-
     return (
       <div>
         <OrgBookConfirmModal
           mask={false}
-          //getContainer="#modalMount"
           action={UPDATE_ACTION_TYPES.undoAllChangesType}
           selectedPage={selectedPage}
           visible={confirmModalVisible}
@@ -324,8 +334,14 @@ const OrgBookEditorSpace = (props) => {
       </OrgBookEditorSpaceHeader>
       {selectedPage && selectedPageDirty ? (
         <OrgBookContentChangedContainer>
-          <div>{t("orgBook.contentChanged")}</div>
-          <div>
+          <ChngdInEditorOnlyWrapper>
+            {t("orgBook.contentChanged")}
+          </ChngdInEditorOnlyWrapper>
+          <HeaderSpacerContainer />
+          <HeaderSpacerContainer />
+          <HeaderSpacerContainer />
+          <HeaderSpacerContainer />
+          <ClickOrUndoWrapper>
             <span>{t("orgBook.click")}</span>
             <span>
               {selectedPage.status === PAGE_CATEGORIES.draftCategory
@@ -333,14 +349,14 @@ const OrgBookEditorSpace = (props) => {
                 : t("orgBook.republish")}
             </span>
             <span>{t("orgBook.belowOr")}</span>
-            <UndoAllChangesButton
-              handleClick={handleUndoAllBtnClick}
-              id={GTM.orgBook.prefix + GTM.orgBook.undoAll}
-              label={t("orgBook.undoAllMyChanges")}
-              color={black}
-              bgcolor="transparent"
-            ></UndoAllChangesButton>
-          </div>
+          </ClickOrUndoWrapper>
+          <UndoAllChangesButton
+            handleClick={handleUndoAllBtnClick}
+            id={GTM.orgBook.prefix + GTM.orgBook.undoAll}
+            label={t("orgBook.undoAllMyChanges")}
+            color={black}
+            bgcolor="transparent"
+          ></UndoAllChangesButton>
         </OrgBookContentChangedContainer>
       ) : (
         <WhiteSpace />

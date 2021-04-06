@@ -53,6 +53,7 @@ const UPDATE_ACTION_TYPES = {
   unpublishType: "unpublish",
   deleteDraftType: "deleteDraft",
   undoAllChangesType: "undoAllChanges",
+  goingBackWithDirtyPageType: "goingBackWithDirtyPage",
 };
 
 const UNPUBLISH_OPTIONS = {
@@ -375,8 +376,6 @@ const OrgBookEditor = () => {
   };
 
   const handleSelectPage = (page) => {
-    console.log("setting to selectedPage: " + page.name);
-    //setSelectedPage(page);
     setSelectedPage(currentOrgBookPages.find((p) => p.pageId === page.pageId));
     forceUpdate();
   };
@@ -428,11 +427,6 @@ const OrgBookEditor = () => {
         setCurrentUpdateAction(action);
         setConfirmModalVisible(true);
         break;
-
-      // case UPDATE_ACTION_TYPES.movingOffDirtyPageType:
-      //   console.log('hit update action for moving off dirty page in editor');
-      //   setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
-      //  break;
 
       default:
         break;
@@ -486,17 +480,6 @@ const OrgBookEditor = () => {
         await updateOrgBookAndCheckForReturn(orgBookPages);
 
         break;
-
-      // case UPDATE_ACTION_TYPES.movingOffDirtyPageType:
-      //   const targetPage = currentOrgBookPages.find(
-      //     (page) => page.pageId === targetPageId,
-      //   );
-      //   //console.log("going to targetPage: " + targetPage.name);
-      //   setSelectedPage(
-      //     currentOrgBookPages.find((page) => page.pageId === targetPageId),
-      //   );
-
-      //   break;
 
       default:
         break;
@@ -667,6 +650,7 @@ const OrgBookEditor = () => {
     switch (unpublishOption) {
       case UNPUBLISH_OPTIONS.leaveDraftContent:
         unpublishRemoveLive();
+
         break;
 
       case UNPUBLISH_OPTIONS.replaceDraftContent:
@@ -718,24 +702,12 @@ const OrgBookEditor = () => {
     return orgBookPages;
   };
 
-  const handleOnCancelConfirm = (backToPage = null) => {
-    // if (currentUpdateAction === UPDATE_ACTION_TYPES.movingOffDirtyPageType) {
-    //   alert('in editor, handleOnCancelConfirm for movingoffdirypage for selectedPage: ' + selectedPage.name);
-    //   //console.log('handleOnCancelConfirm for movingoffdirypage with selectPage: ' + backToPage.name);
-    //   setSelectedPage(
-    //     currentOrgBookPages.find((page) => page.pageId === backToPage.pageId),
-    //   );
-    // };
-    setSelectedPageDirty(false);
-    //setTargetPageId("");
+  const handleOnCancelConfirm = () => {
     setConfirmModalVisible(false);
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
   };
 
   const handleSelectedPageDirty = (toggle) => {
-    console.log(
-      "in orgbook editor handleSelectedPageDirty, toggle to: " + toggle,
-    );
     setSelectedPageDirty(toggle);
   };
 
@@ -762,9 +734,7 @@ const OrgBookEditor = () => {
             preSelectedPage={preSelectedPage}
             handleBackBtnClick={handleBackBtnClick}
             selectedPageDirty={selectedPageDirty}
-            onUpdateAction={handleUpdateAction}
             UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
-            onSelectedPageDirty={handleSelectedPageDirty}
           ></OrgBookTableOfContents>
         </TableOfContentsSidebar>
       );
@@ -836,18 +806,6 @@ const OrgBookEditor = () => {
             </OrgBookEditorContentBox>
           </OrgBookEditorContainer>
         </ModalMount>
-        {/*  {currentUpdateAction !== UPDATE_ACTION_TYPES.movingOffDirtyPageType ? (
-          <ModalMount>
-            <OrgBookEditorContainer>
-              {renderTableOfContents()}
-              <OrgBookEditorContentBox>
-                {renderEditorSpace()}
-              </OrgBookEditorContentBox>
-            </OrgBookEditorContainer>
-          </ModalMount>
-        ) : (
-          <Background />
-        )} */}
       </div>
     );
   };
