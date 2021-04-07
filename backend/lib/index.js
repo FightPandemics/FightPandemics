@@ -74,8 +74,9 @@ module.exports = function createApp(config) {
   app.register(users, { prefix: "/api/users" });
   app.register(reports, { prefix: "/api/reports" });
   app.register(sendgrid, { prefix: "/api/sendgrid" });
-  app.get("/api/version", version);
   app.register(applicants, { prefix: "/api/applicants" });
+  app.get("/api/version", version);
+
 
   return app;
 };

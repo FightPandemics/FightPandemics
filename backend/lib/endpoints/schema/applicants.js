@@ -1,4 +1,4 @@
-const s = require("fluent-schema");
+const S = require("fluent-schema");
 const { APPLICANT_STATUS } = require("../../models/Applicant");
 const { strictQueryStringSchema, strictSchema } = require("./utils");
 

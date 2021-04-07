@@ -129,7 +129,8 @@ const PositionApplicationForm = ({ orgName,
     setErrors([...errors, ...newErrors]);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!formData.props) {
       populateErrors()
     };
