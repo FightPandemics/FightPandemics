@@ -514,7 +514,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 }}>
               <JoinOrgButton
                 id={GTM.organisation.joinOrg}>
-                {t("profile.individual.joinOrg") + ` ${name}`}
+                {t("profile.individual.joinOrg")}
               </JoinOrgButton>
             </Link>
           </JoinOrgContainer> : null}

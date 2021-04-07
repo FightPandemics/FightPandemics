@@ -72,7 +72,7 @@ export const SocialIcon = styled(SvgIcon)`
 `;
 
 export const NameDiv = styled(TextLabel)`
-  display: flex;
+  /* display: flex;
   width: 100%;
   align-self: flex-start;
   overflow-wrap: break-word;
@@ -88,13 +88,13 @@ export const NameDiv = styled(TextLabel)`
     padding: 0;
     margin-top: 2.5rem;
     flex-direction: column;
-  }
+  } */
 
-  .name-container {
+  /* .name-container {
     display: flex;
     flex-direction: column;
     width: 100%;
-  }
+  } */
 
   .address-container {
     color: #939393;
@@ -285,6 +285,7 @@ export const PositionTitle = styled.h1`
 
 export const PositionDescription = styled.p`
   color: ${colors.mediumGray};
+  font-style: 'Work Sans';
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 1.9rem;
@@ -351,9 +352,11 @@ export const PageTitle = styled(TextLabel)`
 export const PositionsContainer = styled.div`
     
   p {
+    font-family: 'Work Sans';
     color: ${colors.black};
     font-size: 1.6rem;
     font-weight: 400;
+    letter-spacing:.07rem;
     color: ${colors.black};
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       font-size: 1.2rem;

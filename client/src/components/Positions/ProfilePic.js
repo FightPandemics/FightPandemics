@@ -54,7 +54,7 @@ const ProfilePic = ({ initials, resolution, user }) => {
 export default ProfilePic;
 
 const InitialsContainer = styled.div`
-  margin: auto;
+  /* margin: auto;
   border-radius: 50%;
   border: 0.2rem solid #425af2;
   color: #425af2;
@@ -63,7 +63,7 @@ const InitialsContainer = styled.div`
   text-align: center;
   font-weight: 500;
   background-color: #f3f4fe;
-  font-size: 0.5vw;
+  font-size: 0.5vw; */
 `;
 
 export const ProfilePhoto = ({ initials, user }) => {

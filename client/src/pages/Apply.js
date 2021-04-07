@@ -2,7 +2,8 @@ import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
 import PositionApplicationForm, { Title } from "components/Positions/PositionApplicationForm";
-import ProfilePic from "components/Positions/ProfilePic";
+// import ProfilePic from "components/Positions/ProfilePic";
+import ProfilePic from "components/Picture/ProfilePic";
 import {
     OrganisationContext,
     withOrganisationContext
@@ -35,7 +36,7 @@ import {
 import { useHistory } from "react-router-dom";
 import ExitModal from "components/Positions/ExitModal";
 
-const Apply = ( props ) => {
+const Apply = (props) => {
     // const { isAuthenticated, user } = props;
     const history = useHistory();
     const [visible, setVisible] = useState(false);
@@ -143,31 +144,32 @@ const Apply = ( props ) => {
 
                 <ProfileBackgroup />
                 <ProfileLayout>
+
+                    <UserInfoContainer>
+                        <AvatarPhotoContainer>
+                            <ProfilePic
+                                user={organisation}
+                                initials={getInitialsFromFullName(name)}
+                            />
+                        </AvatarPhotoContainer>
+                        <UserInfoDesktop>
+                            <NameDiv>
+                                <div className="name-container">
+                                    <NamePara>
+                                        {name}
+                                    </NamePara>
+                                    {address && (
+                                        <div title={address} className="address-container">
+                                            <img src={locationIcon} alt={address} />
+                                            {address}
+                                        </div>
+                                    )}
+                                </div>
+                            </NameDiv>
+                            {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+                        </UserInfoDesktop>
+                    </UserInfoContainer>
                     <PositionsContainer>
-                        <UserInfoContainer>
-                            <AvatarPhotoContainer>
-                                <ProfilePic
-                                    user={organisation}
-                                    initials={getInitialsFromFullName(name)}
-                                />
-                            </AvatarPhotoContainer>
-                            <UserInfoDesktop>
-                                <NameDiv>
-                                    <div className="name-container">
-                                        <NamePara>
-                                            {name}
-                                        </NamePara>
-                                        {address && (
-                                            <div title={address} className="address-container">
-                                                <img src={locationIcon} alt={address} />
-                                                {address}
-                                            </div>
-                                        )}
-                                    </div>
-                                </NameDiv>
-                                {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-                            </UserInfoDesktop>
-                        </UserInfoContainer>
                         <PositionApplicationForm
                             orgName={name}
                             organisationId={organisationId}

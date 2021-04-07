@@ -2,7 +2,8 @@ import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
 import ApplyButton, { ApplyButtonContainer } from "components/Positions/PositionsButton";
-import ProfilePic from "components/Positions/ProfilePic";
+// import ProfilePic from "components/Positions/ProfilePic";
+import ProfilePic from "components/Picture/ProfilePic";
 import {
     OrganisationContext,
     withOrganisationContext
@@ -111,35 +112,41 @@ const Positions = () => {
             <>
                 <ProfileBackgroup />
                 <ProfileLayout>
+                    <UserInfoContainer>
+                        <AvatarPhotoContainer>
+                            <ProfilePic
+                                user={organisation}
+                                initials={getInitialsFromFullName(name)}
+                            />
+                        </AvatarPhotoContainer>
+                        <UserInfoDesktop>
+                            <NameDiv>
+                                <div className="name-container">
+                                    <NamePara>
+                                        {name}
+                                    </NamePara>
+                                    {address && (
+                                        <div title={address} className="address-container">
+                                            <img src={locationIcon} alt={address} />
+                                            {address}
+                                        </div>
+                                    )}
+                                </div>
+
+                            </NameDiv>
+                            {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+
+                            {/* <IconsContainer>
+                <div className="social-icons">{renderURL()}</div>
+              </IconsContainer> */}
+
+                        </UserInfoDesktop>
+                    </UserInfoContainer>
+                    {   // Position title and description to be pulled from backend / API
+                        // Placeholder text for ONE position is being used below
+                        // Component will be needed for multiple positions (based on backend schema / structure)
+                    }
                     <PositionsContainer>
-                        <UserInfoContainer>
-                            <AvatarPhotoContainer>
-                                <ProfilePic
-                                    user={organisation}
-                                    initials={getInitialsFromFullName(name)}
-                                />
-                            </AvatarPhotoContainer>
-                            <UserInfoDesktop>
-                                <NameDiv>
-                                    <div className="name-container">
-                                        <NamePara>
-                                            {name}
-                                        </NamePara>
-                                        {address && (
-                                            <div title={address} className="address-container">
-                                                <img src={locationIcon} alt={address} />
-                                                {address}
-                                            </div>
-                                        )}
-                                    </div>
-                                </NameDiv>
-                                {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-                            </UserInfoDesktop>
-                        </UserInfoContainer>
-                        {   // Position title and description to be pulled from backend / API
-                            // Placeholder text for ONE position is being used below
-                            // Component will be needed for multiple positions (based on backend schema / structure)
-                        }
                         <PositionTitle>Volunteer Position</PositionTitle>
                         <PositionDescription>
                             <p>Aliquam dictum et nulla gravida. A viverra nascetur malesuada sodales id scelerisque. Iaculis egestas odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor.
