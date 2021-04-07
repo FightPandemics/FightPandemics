@@ -497,7 +497,8 @@
     "contentChanged": "Content changed in editor only.",
     "click": "Click \"",
     "belowOr": "\" below to save when ready or ",
-    "undoAllMyChanges": "Undo All My Changes"
+    "undoAllMyChanges": "Undo All My Changes",
+    "backToViewOrgProfile": "Back to View Org Profile"
   },
   "auth": {
     "signIn": "Sign In",

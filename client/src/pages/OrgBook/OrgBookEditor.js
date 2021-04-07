@@ -53,7 +53,6 @@ const UPDATE_ACTION_TYPES = {
   unpublishType: "unpublish",
   deleteDraftType: "deleteDraft",
   undoAllChangesType: "undoAllChanges",
-  goingBackWithDirtyPageType: "goingBackWithDirtyPage",
 };
 
 const UNPUBLISH_OPTIONS = {
@@ -734,7 +733,6 @@ const OrgBookEditor = () => {
             preSelectedPage={preSelectedPage}
             handleBackBtnClick={handleBackBtnClick}
             selectedPageDirty={selectedPageDirty}
-            UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
           ></OrgBookTableOfContents>
         </TableOfContentsSidebar>
       );

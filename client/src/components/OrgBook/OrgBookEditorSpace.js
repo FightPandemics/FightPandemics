@@ -354,6 +354,7 @@ const OrgBookEditorSpace = (props) => {
             handleClick={handleUndoAllBtnClick}
             id={GTM.orgBook.prefix + GTM.orgBook.undoAll}
             label={t("orgBook.undoAllMyChanges")}
+            title={t("orgBook.undoAllMyChanges")}
             color={black}
             bgcolor="transparent"
           ></UndoAllChangesButton>

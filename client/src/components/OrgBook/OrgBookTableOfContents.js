@@ -14,7 +14,7 @@ import lockClosedIcon from "../../assets/icons/orgbook-lock-closed.svg";
 import lockOpenIcon from "../../assets/icons/orgbook-lock-open.svg";
 import pageIcon from "../../assets/icons/orgbook-page.svg";
 import plusIcon from "../../assets/icons/orgbook-plus.svg";
-import OrgBookConfirmModal from "./OrgBookConfirmModal";
+import { OrgBookStyledModalContainer } from "./OrgBookStyledModal";
 
 const { colors, typography } = theme;
 const { white, black, lightGray, mediumGray } = colors;
@@ -121,7 +121,6 @@ const OrgBookTableOfContents = (props) => {
     preSelectedPage,
     handleBackBtnClick,
     selectedPageDirty,
-    UPDATE_ACTION_TYPES,
   } = props;
   const { t } = useTranslation();
   const [selectedPage, setSelectedPage] = useState(preSelectedPage || null);
@@ -156,7 +155,7 @@ const OrgBookTableOfContents = (props) => {
 
   useEffect(initialize, []);
 
-  useEffect(() => {}, [selectedPageDirty]);
+  useEffect(() => {}, [selectedPageDirty, confirmModalVisible]); //added confirmModalVisible
 
   const handlePageClick = (e, page) => {
     e.persist();
@@ -202,21 +201,23 @@ const OrgBookTableOfContents = (props) => {
   };
 
   const renderConfirmModal = () => {
+    const title = t("orgBook.confirmGoingBackWithDirtyPageTitle");
+    const okText = t("orgBook.confirmGoingBackWithDirtyPageOkText");
+    const confirmPrompt = t("orgBook.confirmGoingBackWithDirtyPagePrompt");
+    const cancelText = t("orgBook.cancel");
+
     return (
       <div>
-        <OrgBookConfirmModal
-          mask={false}
-          action={UPDATE_ACTION_TYPES.goingBackWithDirtyPage}
-          selectedPage={selectedPage}
+        <OrgBookStyledModalContainer
+          title={title}
+          okText={okText}
+          cancelText={cancelText}
           visible={confirmModalVisible}
-          onCancelConfirm={handleOnCancelConfirm}
-          onConfirm={handleOnConfirm}
-          UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
-          livePageExists={false}
-          UNPUBLISH_OPTIONS={{}}
-          showUnpublishOptions={false}
-        />
-        <Background />
+          onOk={handleOnConfirm}
+          onCancel={handleOnCancelConfirm}
+        >
+          <p>{confirmPrompt}</p>
+        </OrgBookStyledModalContainer>
       </div>
     );
   };
@@ -234,10 +235,10 @@ const OrgBookTableOfContents = (props) => {
           </OrgBookHeaderLabelContainer>
           <HeaderSpacerContainer />
           <BackArrowButton
-            //handleClick={handleBackBtnClick}
             handleClick={onBackButtonClick}
             id={GTM.orgBook.prefix + GTM.orgBook.back}
             label={t("onboarding.common.previous")}
+            title={t("orgBook.backToViewOrgProfile")}
             color={white}
             bgcolor="transparent"
           ></BackArrowButton>

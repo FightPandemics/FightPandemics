@@ -44,10 +44,10 @@ const UndoAllButton = styled(Button).attrs((props) => {
   }
 `;
 
-const UndoAllChangesButton = ({ label, handleClick, ...props }) => {
+const UndoAllChangesButton = ({ label, handleClick, title, ...props }) => {
   return (
     <UndoAllButton {...props} onClick={handleClick}>
-      <SvgIcon src={backArrow} title="Back to View Org Profile" />
+      <SvgIcon src={backArrow} title={title} />
       <span>{label}</span>
     </UndoAllButton>
   );

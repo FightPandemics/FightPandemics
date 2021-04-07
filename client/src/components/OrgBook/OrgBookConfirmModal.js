@@ -72,12 +72,6 @@ const OrgBookConfirmModal = ({
       });
       break;
 
-    case UPDATE_ACTION_TYPES.goingBackWithDirtyPage:
-      title = t("orgBook.confirmGoingBackWithDirtyPageTitle");
-      okText = t("orgBook.confirmGoingBackWithDirtyPageOkText");
-      confirmPrompt = t("orgBook.confirmGoingBackWithDirtyPagePrompt");
-      break;
-
     default:
       break;
   }
@@ -142,6 +136,8 @@ const OrgBookConfirmModal = ({
             onConfirm(action);
           }
         }}
+        destroyOnClose={true}
+        maskClosable={true}
       >
         <p>{confirmPrompt}</p>
         {showUnpublishOptions

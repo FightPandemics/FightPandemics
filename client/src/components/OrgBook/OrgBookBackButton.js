@@ -43,10 +43,10 @@ const BackButton = styled(Button).attrs((props) => {
   }
 `;
 
-const BackArrowButton = ({ label, handleClick, ...props }) => {
+const BackArrowButton = ({ label, handleClick, title, ...props }) => {
   return (
     <BackButton {...props} onClick={handleClick}>
-      <SvgIcon src={backArrow} title="Back to View Org Profile" />
+      <SvgIcon src={backArrow} title={title} />
       <span>{label}</span>
     </BackButton>
   );
