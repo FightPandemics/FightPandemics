@@ -34,7 +34,6 @@ const NotifyType = {
   share: "post.share_plural",
   comment: "comment.comment_plural",
   message: "message.message_plural",
-  orgposts: "OrgPosts",
 };
 
 const NotifyFreq = {
@@ -91,8 +90,10 @@ const NotifyPreferenceInput = ({
               <Label key={(key1, label1)}>{t(label1)}</Label>
               {Object.entries(key1 !== "digest" ? NotifyType : NotifyFreq).map(
                 ([subkey, sublabel]) =>
-                  (subkey.toLowerCase() === "orgposts" && enableOrgPosts) ||
-                  subkey.toLowerCase() !== "orgposts" ? (
+                  (subkey.toLowerCase() === "orgposts" && enableOrgPosts) 
+                  || subkey.toLowerCase() !== "orgpost" 
+                  ? 
+                  (
                     <CheckBoxWrapper key={(key1, subkey)}>
                       <Controller
                         key={(key1, subkey)}
