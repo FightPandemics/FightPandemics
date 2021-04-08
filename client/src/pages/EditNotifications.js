@@ -46,6 +46,7 @@ function EditNotifications(props) {
       like: false,
       comment: false,
       share: false,
+      orgPosts: false,
     },
     digest: { daily: false, weekly: false, biweekly: false },
   };
