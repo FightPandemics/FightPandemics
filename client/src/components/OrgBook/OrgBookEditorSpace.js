@@ -157,20 +157,12 @@ const OrgBookEditorSpace = (props) => {
     setTinyMceLanguage();
     if (selectedPage) {
       setOriginalContent(selectedPage.content);
-      console.log(
-        "111111111  in useEffect, originalcontent set for selectedpage: " +
-          selectedPage?.name,
-      );
     }
   }, [selectedPage]); // orig [originalContent.length, selectedPage]
 
   useEffect(() => {
     if (selectedPage) {
       setOriginalContent(selectedPage.content);
-      console.log(
-        "222222222  in useEffect, originalcontent set for selectedpage: " +
-          selectedPage?.name,
-      );
     }
   }, [selectedPage]);
 
@@ -209,10 +201,8 @@ const OrgBookEditorSpace = (props) => {
 
   const handleOnConfirm = async () => {
     if (tinyMce.current) {
-      console.log("in handle on confirm, editor seeded with original content.");
       tinyMce.current.setContent(originalContent, { no_events: true });
     }
-    console.log("selectedPageDirty turned off in handleonconfirm");
     onSelectedPageDirty(false);
     setConfirmModalVisible(false);
   };

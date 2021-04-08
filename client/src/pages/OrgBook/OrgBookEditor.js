@@ -149,11 +149,10 @@ const OrgBookEditor = () => {
   const [maxContentExceeded, setMaxContentExceeded] = useState(false);
   const [minContentNotMet, setMinContentNotMet] = useState(false);
   const [noOfContentChars, setNoOfContentChars] = useState(0);
-  //const [targetPageId, setTargetPageId] = useState("");
+  const [targetPageId, setTargetPageId] = useState("");
   const [currentUpdateAction, setCurrentUpdateAction] = useState(
     UPDATE_ACTION_TYPES.noAction,
   );
-
   const [currentEditOrgBookMode, setCurrentEditOrgBookMode] = useState(
     editOrgBookMode,
   );
@@ -396,7 +395,7 @@ const OrgBookEditor = () => {
     setMinContentNotMet(false);
     selectedPage.content = editedpageContent;
     setNoOfContentChars(numberOfCharacters);
-    //setTargetPageId(targetPageId);
+    setTargetPageId(targetPageId);
 
     switch (action) {
       case UPDATE_ACTION_TYPES.saveProgressType:
@@ -478,6 +477,7 @@ const OrgBookEditor = () => {
         break;
 
       case UPDATE_ACTION_TYPES.deleteDraftType:
+        setConfirmModalVisible(false);
         orgBookPages = deleteSelectedPage(orgBookPages);
         await updateOrgBookAndCheckForReturn(orgBookPages);
 
@@ -488,15 +488,17 @@ const OrgBookEditor = () => {
     }
     setSelectedPageDirty(false);
     //setTargetPageId("");
-    setConfirmModalVisible(false);
+    if (action !== UPDATE_ACTION_TYPES.deleteDraftType) {
+      setConfirmModalVisible(false);
+    }
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
   };
 
   const updateOrgBookAndCheckForReturn = async (orgBookPages) => {
+    setCurrentOrgBookPages(orgBookPages);
     await updateOrgBookPages(orgBookPages);
     return new Promise((resolve) => {
       setTimeout(() => {
-        setConfirmModalVisible(false);
         setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
         if (orgBookPages.orgBookPages.length == 0) {
           history.push(`/organisation/${organisation._id}`);
