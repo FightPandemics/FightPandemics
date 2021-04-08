@@ -9,7 +9,11 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import ApplyFormLabel from "./ApplyFormLabel";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectActorId } from "reducers/session";
+import axios from "axios";
+import { formToApplicationMappings } from "assets/data/formToApplicationMappings";
 
 const { colors } = theme
 
@@ -49,27 +53,44 @@ margin: auto;
 width: 33.4rem;
 height: 5.4rem;
 font-weight: 500;
-font-size: 1.6rem;
 line-height: 2.02rem;
 margin-bottom: 40rem;
+
+span {
+  font-size: 1.6rem;
+}
 @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
   width: 15.5rem;
   height: 4.8rem;
   margin-top: 2rem;
   margin-bottom: 5rem;
+
+  span {
+  font-size: 1.4rem;
+}
 }
 `;
 
-const initialState = {
-  formData: {
-    question1: "",
-    question2: "",
-    question3: "",
-  },
-  errors: [],
-};
+const PositionApplicationForm = ({ orgName,
+  // organisationId 
+}) => {
 
-const PositionApplicationForm = ({ orgName }) => {
+  const actorId = useSelector(selectActorId);
+  const { id } = useParams()
+  const organisationId = id
+  const initialState = {
+    //combine questions into "answers" for backend
+    formData: {
+      question1: "",
+      question2: "",
+      question3: "",
+      organisationId: organisationId,
+      actorId: actorId,
+      status: "applied"
+    },
+    errors: [],
+  };
+
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState(initialState.formData);
@@ -108,13 +129,33 @@ const PositionApplicationForm = ({ orgName }) => {
     setErrors([...errors, ...newErrors]);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!formData.props) {
       populateErrors()
     };
     if (formData.question1 && formData.question2 && formData.question3) {
       showPopUp()
     };
+    console.log("PRE API CALL")
+
+
+    // e.preventDefault();
+    // populateErrors();
+
+    // API call goes inside of function for submit modal onclick
+    const payload = formToApplicationMappings(formData);
+
+    try {
+      const res = await axios.post("/api/applicants", payload);
+      // setPostId(res.data._id);
+      // onSuccess(res.data);
+      // cleanForm();
+    } catch (error) {
+      console.log(error);
+    }
+    console.log("POST API CALL")
+
   };
 
   const [visible, setVisible] = useState(false);
@@ -134,8 +175,9 @@ const PositionApplicationForm = ({ orgName }) => {
     setVisibleTwo(false);
   };
 
-  const showPopUpTwo = async (e) => {
+  const showPopUpTwo = async (formData) => {
     handleCancel()
+    // submit form to backend
     setVisibleTwo(true);
   };
 
@@ -166,6 +208,7 @@ const PositionApplicationForm = ({ orgName }) => {
             formData={formData}
           // rows={formData.question1.length > 0 ? 3 : 1}
           />
+
           <CharCounter
             className={
               formData.question1.length > 250 ? "has-error" : ""}
@@ -234,7 +277,7 @@ const PositionApplicationForm = ({ orgName }) => {
         <ErrorMsg className="has-error">{renderError("question3")}</ErrorMsg>
       </OuterWrapper>
 
-      
+
       <ApplyModal
         visible={visible}
         width={564}
@@ -252,6 +295,7 @@ const PositionApplicationForm = ({ orgName }) => {
               {t("positions.cancelModal")}
             </StyledCancelButton>
             <StyledSubmitButton
+              // submit form to backend onClick
               onClick={showPopUpTwo}
             >
               {t("positions.submitModal")}
@@ -273,11 +317,16 @@ const PositionApplicationForm = ({ orgName }) => {
           <img src={applicationConfirmation} alt="" />
           <h2>{t("positions.applicationSubmitted")}</h2>
           <p>{applicationReceived}</p>
-          <PositionsButton
+          <Link
             onClick={handleCancelTwo}
+            to={`/organisation/${organisationId}`}
           >
-            {t("positions.okay")}
-          </PositionsButton>
+            <PositionsButton
+            // onClick={handleCancelTwo}
+            >
+              {t("positions.okay")}
+            </PositionsButton>
+          </Link>
         </PositionSubmitModal>
       </ApplyModal>
 
