@@ -33,6 +33,7 @@ import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
 import Positions from "./pages/Positions";
 import SeeAll from "./pages/SeeAllPost";
+import Apply from "./pages/Apply";
 
 import { SCOPES } from "constants/permissions";
 
@@ -288,9 +289,15 @@ const routes = [
     component: Positions,
     props: {
       isProfile: true,
-      hideFooter: true,
-      hideHeader: true,
-    },
+    }
+  },
+  {
+    path: "/organisation/:id/apply",
+    component: Apply,
+    props: {
+      hideFooter: false,
+      hideHeader: false
+    }
   },
   {
     path: "*",

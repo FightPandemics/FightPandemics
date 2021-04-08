@@ -8,7 +8,8 @@ const applicantSchema = new Schema(
     organizationId: {
       ref: "OrganisationUser",
       required: true,
-      type: Schema.Types.ObjectId,
+      // type: Schema.Types.ObjectId,
+      type: ObjectId,
     },
     postApplied: {
       required: true,
@@ -30,9 +31,9 @@ const applicantSchema = new Schema(
 
 /* eslint-disable sort-keys */
 applicantSchema.index(
-  {
-    createdAt: -1,
-  },
+  // {
+  //   createdAt: -1,
+  // },
   // {
   //   expireAfterSeconds: 1296000, // 15 days
   // },
