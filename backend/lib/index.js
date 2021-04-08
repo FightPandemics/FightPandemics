@@ -15,7 +15,7 @@ const reports = require("./endpoints/reports");
 const users = require("./endpoints/users");
 const sendgrid = require("./endpoints/sendgrid");
 const version = require("./endpoints/version");
-const applicants = require("./endpoints/applicants2");
+const applicants = require("./endpoints/applicants");
 
 module.exports = function createApp(config) {
   const logger = {

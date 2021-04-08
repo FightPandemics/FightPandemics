@@ -13,9 +13,12 @@ const { setElapsedTimeText } = require("../utils");
  * /api/applicants
  */
 async function routes(app) {
-  const Applicant = app.mongo.model("Applicant");
+  // const { mongo } = app;
+  const Applicant = app.mongo.model("Applicants");
   const User = app.mongo.model("IndividualUser");
-  const Organization = app.mongo.model("Organization"); 
+  // const Organization = app.mongo.model("Organization");
+  const Organization = app.mongo.model("OrganisationUser");
+  // const User = app.mongo.model("User");
 
   const APPLICANT_PAGE_SIZE = 10;
 
@@ -35,14 +38,14 @@ async function routes(app) {
         Applicant.findById(applicantId)
       );
 
-      if(applicantErr){
-        if(applicantErr instanceof mongoose.Error.CastError) {
+      if (applicantErr) {
+        if (applicantErr instanceof mongoose.Error.CastError) {
           req.log.error(applicantErr, "Can't find a applicant with the given id.");
           throw app.httpErrors.badRequest();
         }
         throw app.httpErrors.internalServerError();
       }
-      else if (applicant == null){
+      else if (applicant == null) {
         throw app.httpErrors.notFound();
       }
 
@@ -55,18 +58,18 @@ async function routes(app) {
   app.get(
     "/",
     {
-      preValidation: [authenticateOptional],
+      preValidation: [app.authenticateOptional],
       schema: getApplicantsSchema
     },
     async (req) => {
-      const { limit, skip, organizationId } = req.query;
+      const { limit, skip, organizationId, includeMeta } = req.query;
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate([
-          {
-            $match: {
-              organizationId: mongoose.Types.ObjectId(organizationId)
-            }
-          },
+          // {
+          //   $match: {
+          //     organizationId: mongoose.Types.ObjectId(organizationId)
+          //   }
+          // },
           {
             $skip: parseInt(skip, 10) || 0,
           },
@@ -83,7 +86,6 @@ async function routes(app) {
           return applicants;
         })
       );
-
       const applicantsResponse = (response) => {
         if (!includeMeta) {
           return response;
@@ -98,11 +100,11 @@ async function routes(app) {
         };
       };
 
-      if(applicantsErr){
+      if (applicantsErr) {
         req.log.error(applicantsErr, "Failed requesting applicants");
         throw app.httpErrors.internalServerError();
       }
-      else if(applicants === null){
+      else if (applicants === null) {
         return applicantsResponse([]);
       }
       else {
@@ -115,25 +117,25 @@ async function routes(app) {
   app.post(
     "/",
     {
-      preValidation: [app.authenticate, app.setActor],
-      schema: createApplicantSchema
+      preValidation: [app.authenticateOptional, app.setActor],
+      schema: createApplicantSchema,
     },
     async (req, reply) => {
       const { actor, body: applicantProps } = req;
-      
+
       //Creates the embeded author document
-      applicantProps.author = {
-        id: mongoose.Types.ObjectId(actor.id),
-        location: actor.location,
-        name: actor.name,
-        photo: actor.photo,
-        type: actor.type,
-        verified: actor.verification && actor.verification.status === "approved",
-      };
+      // applicantProps.author = {
+      //   id: mongoose.Types.ObjectId(actor.id),
+      //   location: actor.location,
+      //   name: actor.name,
+      //   photo: actor.photo,
+      //   type: actor.type,
+      //   verified: actor.verification && actor.verification.status === "approved",
+      // };
 
       const [err, applicant] = await app.to(new Applicant(applicantProps).save());
 
-      if(err) {
+      if (err) {
         req.log.error(err, "Failed creating applicant.");
         throw app.httpErrors.internalServerError();
       }
@@ -146,47 +148,47 @@ async function routes(app) {
     }
   );
 
-  app.patch(
-    "/:applicantId",
-    {
-      preValidation: [app.authenticate],
-      schema: updateApplicantStatusSchema
-    },
-    async (req) => {
-      const {
-        params: applicantId,
-        organizationId
-      } = req;
+  // app.patch(
+  //   "/:applicantId",
+  //   {
+  //     preValidation: [app.authenticate],
+  //     schema: updateApplicantStatusSchema
+  //   },
+  //   async (req) => {
+  //     const {
+  //       params: applicantId,
+  //       organizationId
+  //     } = req;
 
-      const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
-      // const [orgErr, org] = await app.to(Organization.findById(organizationId));
-      if(applicantErr){
-        req.log.error(applicantErr, "Failed retrieving data for applicant");
-        throw app.httpErrors.internalServerError();
-      } else if(applicant === null){
-        throw app.httpErrors.notFound();
-      } /* We need to check below wcenario if it can occur. If not then we can delete below check */
-      else if(!applicant.organizationId.equals(organizationId)){
-        req.log.error("Organization owner/admin not allowed to update the application status.");
-        throw app.httpErrors.forbidden();
-      }
+  //     const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
+  //     // const [orgErr, org] = await app.to(Organization.findById(organizationId));
+  //     if (applicantErr) {
+  //       req.log.error(applicantErr, "Failed retrieving data for applicant");
+  //       throw app.httpErrors.internalServerError();
+  //     } else if (applicant === null) {
+  //       throw app.httpErrors.notFound();
+  //     } /* We need to check below wcenario if it can occur. If not then we can delete below check */
+  //     else if (!applicant.organizationId.equals(organizationId)) {
+  //       req.log.error("Organization owner/admin not allowed to update the application status.");
+  //       throw app.httpErrors.forbidden();
+  //     }
 
-      const [updateErr, updateApplicant] = await app.to(
-        Object.assign(applicant, req.body).save());
+  //     const [updateErr, updateApplicant] = await app.to(
+  //       Object.assign(applicant, req.body).save());
 
-      if (updateErr){
-        if(updateErr.name === "ValidationError" ||
-          updateErr.name === "MongoError"
-          ) {
-            throw app.httpErrors.conflict("Validation error.");
-          }
-          req.log.error(updateErr, "Failed updating applicant status.");
-          throw app.httpErrors.internalServerError();
-      }
+  //     if (updateErr) {
+  //       if (updateErr.name === "ValidationError" ||
+  //         updateErr.name === "MongoError"
+  //       ) {
+  //         throw app.httpErrors.conflict("Validation error.");
+  //       }
+  //       req.log.error(updateErr, "Failed updating applicant status.");
+  //       throw app.httpErrors.internalServerError();
+  //     }
 
-      return updateApplicant;
-    }
-  );
+  //     return updateApplicant;
+  //   }
+  // );
 
 };
 

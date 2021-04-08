@@ -2,7 +2,6 @@ import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
 import ApplyButton, { ApplyButtonContainer } from "components/Positions/PositionsButton";
-// import ProfilePic from "components/Positions/ProfilePic";
 import ProfilePic from "components/Picture/ProfilePic";
 import {
     OrganisationContext,
