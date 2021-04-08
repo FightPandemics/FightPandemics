@@ -228,7 +228,8 @@ const OrgBookEditor = () => {
   };
 
   const getContentForNewPage = (pagename) => {
-    return `<p><span style="display: block; text-align: center; font-size: 24px;font-family: Arial;">${pagename}</span></p><p>&nbsp;</p>`;
+    //if any new properties get changed or oadded, make sure to include a space after semi-colon (due to tinymce updating)
+    return `<p><span style="display: block; text-align: center; font-size: 24px; font-family: Arial;">${pagename}</span></p><p>&nbsp;</p>`;
   };
 
   const addFirstOrgBookDraftPage = (formData) => {
@@ -244,6 +245,7 @@ const OrgBookEditor = () => {
     newPages.push(newOrgBookPage);
     setSelectedPage(newOrgBookPage);
     setPreselectedPage(newOrgBookPage);
+    setSelectedPageDirty(false);
     let orgBookPages = {
       orgBookPages: newPages,
     };
@@ -288,6 +290,7 @@ const OrgBookEditor = () => {
     currentOrgBookPages.push(newOrgBookPage);
     setSelectedPage(newOrgBookPage);
     setPreselectedPage(newOrgBookPage);
+    setSelectedPageDirty(false);
     let orgBookPages = {
       orgBookPages: currentOrgBookPages,
     };

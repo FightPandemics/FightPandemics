@@ -13,6 +13,7 @@ import OrgBookConfirmModal from "./OrgBookConfirmModal";
 import SvgIcon from "../Icon/SvgIcon";
 import eyeClosedIcon from "../../assets/icons/orgbook-eye-closed.svg";
 import eyeOpenIcon from "../../assets/icons/orgbook-eye-open.svg";
+import { stubFalse } from "lodash";
 
 const { colors, typography } = theme;
 const { white, royalBlue, black, red, mediumGray } = colors;
@@ -147,20 +148,31 @@ const OrgBookEditorSpace = (props) => {
       if (selectedPage) {
         const withoutSpace = selectedPage.content.replace(/ /g, "");
         setNumberOfCharacters(withoutSpace.length);
-        if (originalContent.length === 0 && selectedPage) {
-          setOriginalContent(selectedPage.content);
-        }
       }
     },
-    [originalContent.length, selectedPage],
+    [selectedPage], //orig  [originalContent.length, selectedPage]
   );
 
   useEffect(() => {
     setTinyMceLanguage();
-    if (originalContent.length === 0 && selectedPage) {
+    if (selectedPage) {
       setOriginalContent(selectedPage.content);
+      console.log(
+        "111111111  in useEffect, originalcontent set for selectedpage: " +
+          selectedPage?.name,
+      );
     }
-  }, [originalContent.length, selectedPage]);
+  }, [selectedPage]); // orig [originalContent.length, selectedPage]
+
+  useEffect(() => {
+    if (selectedPage) {
+      setOriginalContent(selectedPage.content);
+      console.log(
+        "222222222  in useEffect, originalcontent set for selectedpage: " +
+          selectedPage?.name,
+      );
+    }
+  }, [selectedPage]);
 
   const setTinyMceLanguage = () => {
     const { language } = getLang();
@@ -197,8 +209,10 @@ const OrgBookEditorSpace = (props) => {
 
   const handleOnConfirm = async () => {
     if (tinyMce.current) {
+      console.log("in handle on confirm, editor seeded with original content.");
       tinyMce.current.setContent(originalContent, { no_events: true });
     }
+    console.log("selectedPageDirty turned off in handleonconfirm");
     onSelectedPageDirty(false);
     setConfirmModalVisible(false);
   };
@@ -210,12 +224,24 @@ const OrgBookEditorSpace = (props) => {
   const handleEditorChange = (content, editor) => {
     const wordcount = editor.plugins.wordcount;
     setNumberOfCharacters(wordcount.body.getCharacterCountWithoutSpaces());
+
     if (preSelectedPage) {
+      setOriginalContent(preSelectedPage.content);
       onClearPreselectedPage();
+    }
+    const selPageWithoutNewline = selectedPage.content
+      .replace(/ /g, "")
+      .trim()
+      .replace("\n", "");
+    const contentWithoutNewline = content
+      .replace(/ /g, "")
+      .trim()
+      .replace("\n", "");
+
+    if (contentWithoutNewline !== selPageWithoutNewline) {
+      onSelectedPageDirty(true);
     } else {
-      if (content !== selectedPage.content) {
-        onSelectedPageDirty(true);
-      }
+      onSelectedPageDirty(false); //new
     }
   };
 
@@ -380,6 +406,7 @@ const OrgBookEditorSpace = (props) => {
                 );
               }}
               to="#"
+              id={GTM.orgBook.prefix + GTM.orgBook.deleteDraft}
             >
               <span>{t("orgBook.deleteDraft")}</span>
             </Link>

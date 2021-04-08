@@ -137,6 +137,7 @@ module.exports = {
     prefix: "OB",
     back: "_BA",
     undoAll: "_UA",
+    deleteDraft: "_DD",
   },
   providersFilters: {
     individual: "_IN",
