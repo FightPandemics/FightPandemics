@@ -57,6 +57,7 @@ async function routes(app) {
 
   app.get(
     "/",
+    // TODO - change authenticateOptional to authenticate
     {
       preValidation: [app.authenticateOptional],
       schema: getApplicantsSchema
@@ -116,6 +117,7 @@ async function routes(app) {
 
   app.post(
     "/",
+    // TODO - change authenticateOptional to authenticate
     {
       preValidation: [app.authenticateOptional, app.setActor],
       schema: createApplicantSchema,
@@ -124,14 +126,14 @@ async function routes(app) {
       const { actor, body: applicantProps } = req;
 
       //Creates the embeded author document
-      // applicantProps.author = {
-      //   id: mongoose.Types.ObjectId(actor.id),
-      //   location: actor.location,
-      //   name: actor.name,
-      //   photo: actor.photo,
-      //   type: actor.type,
-      //   verified: actor.verification && actor.verification.status === "approved",
-      // };
+      applicantProps.applicant = {
+        id: mongoose.Types.ObjectId(actor.id),
+        location: actor.location,
+        name: actor.name,
+        photo: actor.photo,
+        type: actor.type,
+        verified: actor.verification && actor.verification.status === "approved",
+      };
 
       const [err, applicant] = await app.to(new Applicant(applicantProps).save());
 

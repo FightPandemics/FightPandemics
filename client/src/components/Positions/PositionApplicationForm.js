@@ -143,6 +143,7 @@ const PositionApplicationForm = ({ orgName,
     // e.preventDefault();
     // populateErrors();
 
+    // API call goes inside of function for submit modal onclick
     const payload = formToApplicationMappings(formData);
 
     try {
