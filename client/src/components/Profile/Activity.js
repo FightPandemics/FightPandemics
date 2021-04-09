@@ -35,7 +35,7 @@ const Activity = ({
   gtmIdPost,
 }) => {
   const posts = Object.entries(filteredPosts);
-  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
   const [hiddenPosts, setHiddenPosts] = useState(
     JSON.parse(localStorage.getItem("hiddenPosts")) || {},
   );

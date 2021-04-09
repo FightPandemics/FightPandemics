@@ -37,7 +37,7 @@ import {
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 import { ProfileTabs, ProfileTabPane } from "components/OrganisationProfile/ProfileTabs";
-import { TestMembers } from "components/OrganisationProfile/OrgMembers";
+import TestMembers from "components/OrganisationProfile/OrgMembers";
 
 
 const AdminProfileTESTPAGE = () => {
