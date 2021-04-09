@@ -19,8 +19,9 @@ import {
     fetchUserSuccess
 } from "hooks/actions/userActions";
 import React, {
-    useContext, useEffect
+    useContext, useEffect, useState
 } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -36,9 +37,9 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
+import isEqual from "lodash/isEqual";
 
 const Positions = () => {
-
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 2];
     const { orgProfileState, orgProfileDispatch } = useContext(
@@ -110,6 +111,7 @@ const Positions = () => {
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
                 <ProfileBackgroup />
+                <div>yooo</div>
                 <ProfileLayout>
                     <UserInfoContainer>
                         <AvatarPhotoContainer>
@@ -167,7 +169,9 @@ const Positions = () => {
                 </ProfileLayout>
             </>
         );
+
     }
+
 }
 
 export default withUserContext(withOrganisationContext(Positions));
