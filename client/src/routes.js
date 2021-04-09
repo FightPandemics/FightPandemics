@@ -299,7 +299,7 @@ const routes = [
       hideFooter: false,
       hideHeader: false,
       props: {
-        loggedInOnly: true,
+        // loggedInOnly: true,
       }
     }
   },

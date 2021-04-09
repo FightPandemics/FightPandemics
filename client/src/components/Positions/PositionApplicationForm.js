@@ -79,6 +79,7 @@ const PositionApplicationForm = ({ orgName,
   const { id } = useParams()
   const organisationId = id
   const initialState = {
+    //combine questions into "answers" for backend
     formData: {
       question1: "",
       question2: "",
@@ -94,7 +95,6 @@ const PositionApplicationForm = ({ orgName,
 
   const [formData, setFormData] = useState(initialState.formData);
   const [errors, setErrors] = useState(initialState.errors);
-  const cleanForm = () => setFormData(initialState.formData);
 
   const errorMsg = {
     title: t("post.title"),
@@ -137,22 +137,15 @@ const PositionApplicationForm = ({ orgName,
     if (formData.question1 && formData.question2 && formData.question3) {
       showPopUp()
     };
-    console.log("PRE API CALL")
+    console.log("PRE API CALL" + formData)
 
 
     // e.preventDefault();
     // populateErrors();
 
-    // API call goes inside of function for submit modal onclick
-    const payload = formToApplicationMappings(formData);
+    // api call goes inside of function for submit modal
 
-    try {
-      const res = await axios.post("/api/applicants", payload);
-      cleanForm();
-    } catch (error) {
-      console.log(error);
-    }
-    console.log("POST API CALL")
+
   };
 
   const [visible, setVisible] = useState(false);
@@ -172,9 +165,16 @@ const PositionApplicationForm = ({ orgName,
     setVisibleTwo(false);
   };
 
-  const showPopUpTwo = async (formData) => {
+  const showPopUpTwo = async () => {
     handleCancel()
-    // submit form to backend
+    const payload = formToApplicationMappings(formData);
+
+    try {
+      await axios.post("/api/applicants", payload);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log("POST API CALL")
     setVisibleTwo(true);
   };
 
