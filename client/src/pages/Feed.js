@@ -117,7 +117,6 @@ export const NoPosts = styled.div`
 
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-
 const Feed = (props) => {
   const window = useWindowDimensions();
   const { t } = useTranslation();
