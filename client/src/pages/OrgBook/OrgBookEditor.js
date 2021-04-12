@@ -53,11 +53,22 @@ const UPDATE_ACTION_TYPES = {
   unpublishType: "unpublish",
   deleteDraftType: "deleteDraft",
   undoAllChangesType: "undoAllChanges",
+  changeLiveToPublicViewType: "changeLiveToPublic",
+  changeLiveToPrivateViewType: "changeLiveToPrivateView",
 };
-
 const UNPUBLISH_OPTIONS = {
   leaveDraftContent: 1,
   replaceDraftContent: 2,
+};
+const PUBLISH_OPTIONS = {
+  publicView: 1,
+  privateView: 2,
+};
+const VIEW_LEVELS = {
+  //org (private), public correspond to live pages only
+  publicView: "public",
+  orgView: "org",
+  notApplicable: "n/a",
 };
 
 const MAX_PAGEGROUP_NUMBER = 5;
@@ -260,13 +271,29 @@ const OrgBookEditor = () => {
     );
   };
 
-  const getNewOrgBookPage = (pageName, pageGroupNumber, category, content) => {
+  const getNewOrgBookPage = (
+    pageName,
+    pageGroupNumber,
+    category,
+    content,
+    publishOption = null,
+  ) => {
+    let viewLevel = VIEW_LEVELS.notApplicable;
+    if (category !== PAGE_CATEGORIES.draftCategory) {
+      if (publishOption && publishOption === PUBLISH_OPTIONS.privateView) {
+        viewLevel = VIEW_LEVELS.orgView;
+      } else {
+        viewLevel = VIEW_LEVELS.publicView;
+      }
+    }
+
     return {
       pageId: uuidv4(),
       name: pageName,
       pageGroupNumber: pageGroupNumber,
       status: category,
       locked: false,
+      viewLevel: viewLevel,
       content: content,
       updated_by: "",
       updated_at: "",
@@ -429,12 +456,18 @@ const OrgBookEditor = () => {
         setConfirmModalVisible(true);
         break;
 
+      case UPDATE_ACTION_TYPES.changeLiveToPublicViewType:
+      case UPDATE_ACTION_TYPES.changeLiveToPrivateViewType:
+        setCurrentUpdateAction(action);
+        setConfirmModalVisible(true);
+        break;
+
       default:
         break;
     }
   };
 
-  const handleOnConfirm = async (action, unpublishOption = null) => {
+  const handleOnConfirm = async (action, option = null) => {
     let orgBookPages = {};
 
     switch (action) {
@@ -447,7 +480,7 @@ const OrgBookEditor = () => {
 
       case UPDATE_ACTION_TYPES.publishType:
         orgBookPages = replaceContentForSelectedPage(orgBookPages);
-        orgBookPages = saveLivePageForPublish(orgBookPages);
+        orgBookPages = saveLivePageForPublish(orgBookPages, option);
         updateOrgBookPages(orgBookPages);
 
         break;
@@ -470,7 +503,7 @@ const OrgBookEditor = () => {
             unpublishRemoveLive();
           } else {
             //If the content is different on live and draft, leave or replace draft content for option user chose
-            unpublishHandleOption(unpublishOption);
+            unpublishHandleOption(option);
           }
         }
 
@@ -483,11 +516,17 @@ const OrgBookEditor = () => {
 
         break;
 
+      case UPDATE_ACTION_TYPES.changeLiveToPublicViewType:
+      case UPDATE_ACTION_TYPES.changeLiveToPrivateViewType:
+        orgBookPages = updateViewTypeForSelectedPage(orgBookPages, action);
+        updateOrgBookPages(orgBookPages);
+
+        break;
+
       default:
         break;
     }
     setSelectedPageDirty(false);
-    //setTargetPageId("");
     if (action !== UPDATE_ACTION_TYPES.deleteDraftType) {
       setConfirmModalVisible(false);
     }
@@ -564,7 +603,7 @@ const OrgBookEditor = () => {
       : false;
   };
 
-  const saveLivePageForPublish = (updatedOrgBookPages) => {
+  const saveLivePageForPublish = (updatedOrgBookPages, option) => {
     let orgBookPages = {};
     const livePageExists = livePageExistsForSelectedPage();
 
@@ -574,7 +613,9 @@ const OrgBookEditor = () => {
         selectedPage.pageGroupNumber,
         PAGE_CATEGORIES.liveCategory,
         selectedPage.content,
+        option,
       );
+
       updatedOrgBookPages.orgBookPages.push(newOrgBookPage);
       setCurrentOrgBookPages(updatedOrgBookPages.orgBookPages);
       setSelectedPage(newOrgBookPage);
@@ -706,6 +747,31 @@ const OrgBookEditor = () => {
     return orgBookPages;
   };
 
+  const updateViewTypeForSelectedPage = (orgBookPages, action) => {
+    const oldOrgBookPages = [...currentOrgBookPages];
+    const newOrgBookPages = oldOrgBookPages.map((page) =>
+      page.pageId === selectedPage.pageId
+        ? {
+            ...page,
+            viewLevel:
+              action === UPDATE_ACTION_TYPES.changeLiveToPrivateViewType
+                ? VIEW_LEVELS.orgView
+                : VIEW_LEVELS.publicView,
+            updated_by: organisation.ownerId,
+            updated_at: new Date().toLocaleString().replace(",", ""),
+          }
+        : page,
+    );
+    orgBookPages = {
+      orgBookPages: newOrgBookPages,
+    };
+    setCurrentOrgBookPages(newOrgBookPages);
+    setSelectedPage(
+      newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
+    );
+    return orgBookPages;
+  };
+
   const handleOnCancelConfirm = () => {
     setConfirmModalVisible(false);
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
@@ -761,6 +827,7 @@ const OrgBookEditor = () => {
           livePageExists={livePageExists}
           selectedPageDirty={selectedPageDirty}
           onSelectedPageDirty={handleSelectedPageDirty}
+          VIEW_LEVELS={VIEW_LEVELS}
         ></OrgBookEditorSpace>
       );
     }
@@ -799,6 +866,7 @@ const OrgBookEditor = () => {
           UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
           livePageExists={livePageExists}
           UNPUBLISH_OPTIONS={UNPUBLISH_OPTIONS}
+          PUBLISH_OPTIONS={PUBLISH_OPTIONS}
           showUnpublishOptions={showUnpublishOptions()}
         />
         <ModalMount>

@@ -91,6 +91,13 @@ const FooterDeleteDraftContainer = styled.div`
   padding: 0 0 0 0;
 `;
 
+const FooterChangeViewContainer = styled.div`
+  font-size: small;
+  color: ${black};
+  text-decoration: underline;
+  padding: 0 0 0 0;
+`;
+
 const FooterSaveProgressContainer = styled.div`
   font-size: medium;
   color: ${royalBlue};
@@ -132,6 +139,7 @@ const OrgBookEditorSpace = (props) => {
     livePageExists,
     selectedPageDirty,
     onSelectedPageDirty,
+    VIEW_LEVELS,
   } = props;
   const { t } = useTranslation();
   const tinyMce = useRef();
@@ -192,7 +200,18 @@ const OrgBookEditorSpace = (props) => {
       selectedPage.status === PAGE_CATEGORIES.draftCategory
         ? t("orgBook.draft")
         : t("orgBook.live");
-    return `${organisation.name}\xa0\xa0\xa0/\xa0\xa0\xa0${selectedPage.name}\xa0\xa0\xa0-\xa0\xa0\xa0${status}`;
+
+    if (selectedPage.status === PAGE_CATEGORIES.draftCategory) {
+      return `${organisation.name}\xa0\xa0\xa0/\xa0\xa0\xa0${selectedPage.name}\xa0\xa0\xa0-\xa0\xa0\xa0${status}`;
+    } else {
+      let viewLevel = "";
+      if (selectedPage.viewLevel === VIEW_LEVELS.orgView) {
+        viewLevel = t("orgBook.orgViewOnly");
+      } else {
+        viewLevel = t("orgBook.publicView");
+      }
+      return `${organisation.name}\xa0\xa0\xa0/\xa0\xa0\xa0${selectedPage.name}\xa0\xa0\xa0-\xa0\xa0\xa0${status}\xa0\xa0\xa0-\xa0\xa0\xa0${viewLevel}`;
+    }
   };
 
   const handleUndoAllBtnClick = () => {
@@ -293,6 +312,7 @@ const OrgBookEditorSpace = (props) => {
           UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
           livePageExists={false}
           UNPUBLISH_OPTIONS={{}}
+          PUBLISH_OPTIONS={{}}
           showUnpublishOptions={false}
         />
         <Background />
@@ -404,6 +424,33 @@ const OrgBookEditorSpace = (props) => {
             <WhiteSpace />
           )}
         </FooterDeleteDraftContainer>
+        <FooterChangeViewContainer>
+          {selectedPage &&
+          selectedPage.status === PAGE_CATEGORIES.liveCategory ? (
+            <Link
+              onClick={() => {
+                onUpdateAction(
+                  selectedPage.viewLevel === VIEW_LEVELS.orgView
+                    ? UPDATE_ACTION_TYPES.changeLiveToPublicViewType
+                    : UPDATE_ACTION_TYPES.changeLiveToPrivateViewType,
+                  selectedPage.pageId,
+                  tinyMce.current.getContent(),
+                  numberOfCharacters,
+                );
+              }}
+              to="#"
+              id={GTM.orgBook.prefix + GTM.orgBook.changeLiveViewType}
+            >
+              <span>
+                {selectedPage.viewLevel === VIEW_LEVELS.orgView
+                  ? t("orgBook.changeToPublicView")
+                  : t("orgBook.changeToPrivateView")}
+              </span>
+            </Link>
+          ) : (
+            <WhiteSpace />
+          )}
+        </FooterChangeViewContainer>
         <FooterSpacerContainer />
         <FooterSpacerContainer />
         <FooterSpacerContainer />

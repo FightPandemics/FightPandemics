@@ -12,11 +12,15 @@ const OrgBookConfirmModal = ({
   UPDATE_ACTION_TYPES,
   livePageExists,
   UNPUBLISH_OPTIONS,
+  PUBLISH_OPTIONS,
   showUnpublishOptions,
 }) => {
   const { t } = useTranslation();
   const [unpublishOption, setUnpublishOption] = useState(null);
   const [defaultUnpublishOption, setDefaultUnpublishOption] = useState(null);
+
+  const [publishOption, setPublishOption] = useState(null);
+  const [defaultPublishOption, setDefaultPublishOption] = useState(null);
 
   let title = "";
   let okText = "";
@@ -25,6 +29,10 @@ const OrgBookConfirmModal = ({
   let unpublishOption1 = "";
   let unpublishOption2 = "";
   let unpublishOptionText = "";
+
+  let publishOption1 = "";
+  let publishOption2 = "";
+  let publishOptionText = "";
 
   switch (action) {
     case UPDATE_ACTION_TYPES.saveProgressType:
@@ -45,6 +53,10 @@ const OrgBookConfirmModal = ({
       confirmPrompt = livePageExists
         ? t("orgBook.confirmPublishPromptLivePageExists", { pageName })
         : t("orgBook.confirmPublishPromptNoLivePageYet", { pageName });
+      publishOption1 = t("orgBook.confirmPublishOption1");
+      publishOption2 = t("orgBook.confirmPublishOption2");
+      publishOptionText = t("orgBook.confirmPublishOptionText");
+
       break;
 
     case UPDATE_ACTION_TYPES.unpublishType:
@@ -72,6 +84,18 @@ const OrgBookConfirmModal = ({
       });
       break;
 
+    case UPDATE_ACTION_TYPES.changeLiveToPublicViewType:
+      title = t("orgBook.confirmChangeToPublicTitle");
+      okText = t("orgBook.confirmChangeToPublicOkText");
+      confirmPrompt = t("orgBook.confirmChangeToPublicPrompt", { pageName });
+      break;
+
+    case UPDATE_ACTION_TYPES.changeLiveToPrivateViewType:
+      title = t("orgBook.confirmChangeToPrivateTitle");
+      okText = t("orgBook.confirmChangeToPrivateOkText");
+      confirmPrompt = t("orgBook.confirmChangeToPrivatePrompt", { pageName });
+      break;
+
     default:
       break;
   }
@@ -89,6 +113,19 @@ const OrgBookConfirmModal = ({
     },
   ];
 
+  const publishradioButtonOptions = [
+    {
+      index: PUBLISH_OPTIONS.publicView,
+      value: publishOption1,
+      defaultChecked: true,
+    },
+    {
+      index: PUBLISH_OPTIONS.privateView,
+      value: publishOption2,
+      defaultChecked: false,
+    },
+  ];
+
   const initialize = () => {
     if (action === UPDATE_ACTION_TYPES.unpublishType) {
       setUnpublishOption(
@@ -98,6 +135,18 @@ const OrgBookConfirmModal = ({
       );
       setDefaultUnpublishOption(
         unpublishradioButtonOptions.find(
+          (option) => option.defaultChecked === true,
+        ),
+      );
+    }
+    if (action === UPDATE_ACTION_TYPES.publishType) {
+      setPublishOption(
+        publishradioButtonOptions.find(
+          (option) => option.defaultChecked === true,
+        ),
+      );
+      setDefaultPublishOption(
+        publishradioButtonOptions.find(
           (option) => option.defaultChecked === true,
         ),
       );
@@ -114,10 +163,35 @@ const OrgBookConfirmModal = ({
     );
   };
 
+  const handlePublishOptionChange = (e) => {
+    setPublishOption(
+      publishradioButtonOptions.find(
+        (option) => option.value === e.target.value,
+      ),
+    );
+  };
+
+  const getMaxModalBodyHeight = () => {
+    let maxModalBodyHeight = "10rem";
+    switch (action) {
+      case UPDATE_ACTION_TYPES.unpublishType:
+        if (showUnpublishOptions) {
+          maxModalBodyHeight = "49.6rem";
+        }
+        break;
+      case UPDATE_ACTION_TYPES.publishType:
+        maxModalBodyHeight = "20rem";
+        break;
+      default:
+        break;
+    }
+    return maxModalBodyHeight;
+  };
+
   return (
     selectedPage && (
       <OrgBookStyledModalContainer
-        MaxModalBodyHeight={showUnpublishOptions ? "49.6rem" : "10rem"}
+        MaxModalBodyHeight={getMaxModalBodyHeight()}
         MinModalBodyHeight={showUnpublishOptions ? "25.7rem" : "10rem"}
         width={450}
         visible={visible}
@@ -130,10 +204,16 @@ const OrgBookConfirmModal = ({
         }}
         cancelButtonProps={{ disabled: false }}
         onOk={() => {
-          if (action === UPDATE_ACTION_TYPES.unpublishType) {
-            onConfirm(action, unpublishOption.index);
-          } else {
-            onConfirm(action);
+          switch (action) {
+            case UPDATE_ACTION_TYPES.unpublishType:
+              onConfirm(action, unpublishOption.index);
+              break;
+            case UPDATE_ACTION_TYPES.publishType:
+              onConfirm(action, publishOption.index);
+              break;
+            default:
+              onConfirm(action);
+              break;
           }
         }}
         destroyOnClose={true}
@@ -150,6 +230,21 @@ const OrgBookConfirmModal = ({
                   defaultValue={defaultUnpublishOption.value}
                   onChange={(e) => handleUnpublishOptionChange(e)}
                   options={unpublishradioButtonOptions}
+                  padding="1rem 1rem"
+                />
+              </>
+            )
+          : ""}
+        {action === UPDATE_ACTION_TYPES.publishType
+          ? defaultPublishOption && (
+              <>
+                <span>{publishOptionText}</span>
+                <OrgBookRadioGroup
+                  name="confirmPublishOption"
+                  value={publishOption.value}
+                  defaultValue={defaultPublishOption.value}
+                  onChange={(e) => handlePublishOptionChange(e)}
+                  options={publishradioButtonOptions}
                   padding="1rem 1rem"
                 />
               </>

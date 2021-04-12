@@ -129,11 +129,6 @@ const OrgBookTableOfContents = (props) => {
   );
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
-  const LIVE_PAGE_VIEW_TYPES = {
-    //correspond to private, public for live pages only
-    orgView: "org",
-    publicView: "public",
-  };
   const PAGE_CATEGORIES = {
     liveCategory: "live",
     draftCategory: "draft",

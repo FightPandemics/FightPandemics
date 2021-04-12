@@ -138,6 +138,7 @@ module.exports = {
     back: "_BA",
     undoAll: "_UA",
     deleteDraft: "_DD",
+    changeLiveViewType: "_CL",
   },
   providersFilters: {
     individual: "_IN",
