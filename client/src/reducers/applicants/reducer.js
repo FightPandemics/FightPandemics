@@ -2,7 +2,7 @@ import { POSTS_ACTIONS } from "./actions";
 import { isPostExpired } from "components/Feed/utils";
 
 const initialState = {
-  posts: [],
+  applicants: [],
   page: 0,
   error: null,
   isLoading: false,
@@ -30,7 +30,7 @@ export const getProfileModeProp = (mode) => {
   return modeMap[mode];
 };
 
-const postsReducer = (state = initialState, action) => {
+const applicantsReducer = (state = initialState, action) => {
   switch (action.type) {
     case POSTS_ACTIONS.FETCH_POSTS_BEGIN:
       return {
@@ -42,13 +42,13 @@ const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        posts: payload,
+        applicants: payload,
         isLoading: false,
       };
     }
 
     case POSTS_ACTIONS.FETCH_PROFILE_POSTS_SUCCESS: {
-      let { posts, userId, objective, mode } = action.payload;
+      let { applicants, userId, objective, mode } = action.payload;
       objective = getProfileObjectiveProp(objective);
       mode = getProfileModeProp(mode);
       return {
@@ -60,7 +60,7 @@ const postsReducer = (state = initialState, action) => {
             ...state.profilePosts[userId],
             [objective]: {
               ...state.profilePosts[userId]?.[objective],
-              [mode]: posts,
+              [mode]: applicants,
             },
           },
         },
@@ -68,21 +68,21 @@ const postsReducer = (state = initialState, action) => {
       };
     }
     case POSTS_ACTIONS.UPDATE_PROFILE_POST_SUCCESS: {
-      let { post, userId } = action.payload;
-      const isExpired = isPostExpired(post);
-      const objective = getProfileObjectiveProp(post.objective);
+      let { applicant, userId } = action.payload;
+      const isExpired = isPostExpired(applicant);
+      const objective = getProfileObjectiveProp(applicant.objective);
 
       // map though all Profile Posts to update (likes, edits, etc.)
       let currentPosts = state.profilePosts[userId]?.[objective]?.all;
       currentPosts =
         currentPosts !== undefined
           ? currentPosts.map((currentPost) => {
-              if (currentPost._id !== post._id) {
+              if (currentPost._id !== applicant._id) {
                 return currentPost;
               }
               return {
                 ...currentPost,
-                ...post,
+                ...applicant,
               };
             })
           : undefined;
@@ -92,30 +92,30 @@ const postsReducer = (state = initialState, action) => {
         state.profilePosts[userId]?.[objective]?.inactive;
 
       if (!isExpired) {
-        // map through active Profile posts to update
+        // map through active Profile applicants to update
         currentActivePosts =
           currentActivePosts !== undefined
             ? currentActivePosts.map((currentActivePost) => {
-                if (currentActivePost._id !== post._id) {
+                if (currentActivePost._id !== applicant._id) {
                   return currentActivePost;
                 }
                 return {
                   ...currentActivePost,
-                  ...post,
+                  ...applicant,
                 };
               })
             : undefined;
       } else {
-        // map though achived Profile posts to update
+        // map though achived Profile applicants to update
         currentInActivePosts =
           currentInActivePosts !== undefined
             ? currentInActivePosts.map((currentInActivePost) => {
-                if (currentInActivePost._id !== post._id) {
+                if (currentInActivePost._id !== applicant._id) {
                   return currentInActivePost;
                 }
                 return {
                   ...currentInActivePost,
-                  ...post,
+                  ...applicant,
                 };
               })
             : undefined;
@@ -141,7 +141,7 @@ const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         error: payload,
-        posts: [],
+        applicants: [],
         isLoading: false,
       };
     }
@@ -155,7 +155,7 @@ const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         page: 0,
-        posts: [],
+        applicants: [],
         loadMore: payload.loadMore,
         isLoading: payload.isLoading,
       };
@@ -170,11 +170,11 @@ const postsReducer = (state = initialState, action) => {
       const { payload } = action;
       return {
         ...state,
-        posts: {
-          ...state.posts,
-          [payload.post._id]: {
-            ...state.posts[payload.post._id],
-            liked: payload.post.liked,
+        applicants: {
+          ...state.applicants,
+          [payload.applicant._id]: {
+            ...state.applicants[payload.applicant._id],
+            liked: payload.applicant.liked,
             likesCount: payload.count,
           },
         },
@@ -184,10 +184,10 @@ const postsReducer = (state = initialState, action) => {
       const { payload } = action;
       return {
         ...state,
-        posts: {
-          ...state.posts,
-          [payload.postId]: {
-            ...state.posts[payload.postId],
+        applicants: {
+          ...state.applicants,
+          [payload.organizationId]: {
+            ...state.applicants[payload.organizationId],
             didReport: true,
           },
         },
@@ -197,10 +197,10 @@ const postsReducer = (state = initialState, action) => {
       const { payload } = action;
       return {
         ...state,
-        posts: {
-          ...state.posts,
-          [payload.postId]: {
-            ...state.posts[payload.postId],
+        applicants: {
+          ...state.applicants,
+          [payload.organizationId]: {
+            ...state.applicants[payload.organizationId],
             reportsCount: 0,
           },
         },
@@ -211,4 +211,4 @@ const postsReducer = (state = initialState, action) => {
   }
 };
 
-export default postsReducer;
+export default applicantsReducer;

@@ -116,6 +116,15 @@ const HorizontalRule = styled.hr`
   }
 `;
 
+
+
+// const cellMeasurerCache = new CellMeasurerCache({
+//     fixedWidth: true,
+//     defaultHeight: 1000,
+//     rowHeight: 1000,
+//     _rowHeight: 1000
+// });
+
 const cellMeasurerCache = new CellMeasurerCache({
     fixedWidth: true,
     defaultHeight: 80,
@@ -143,6 +152,8 @@ const TestMembers = ({
     // cellMeasurerCache
 }) => {
 
+
+    // console.log("cell measure:" + JSON.stringify(cellMeasurerCache))
 
     const scrollIndex = useRef(0);
     const history = useHistory();

@@ -6,11 +6,11 @@ import { getInitialsFromFullName } from "utils/userInfo";
 const { colors } = theme;
 
 
-export const AllMembers = styled.div`
+export const AllApplicants = styled.div`
     max-height: 90px !important;
 `;
 
-export const MemberContainer = styled.div`
+export const ApplicantContainer = styled.div`
 display: flex;
 justify-content: flex-start;
 align-items: center;
@@ -19,7 +19,7 @@ box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
 
 `;
 
-export const MemberPic = styled.div`
+export const ApplicantPic = styled.div`
 display: flex;
 align-items: center;
 justify-self: flex-start;
@@ -49,43 +49,43 @@ export const Name = styled.p`
     margin-left: 2rem;
 `;
 
-// export const TestMembers = () => {
+// export const TestApplicants = () => {
 //     // const names = []
 //     return (
-//         <AllMembers>
+//         <AllApplicants>
 
 //             {/* {names.map((names) => { } */}
 
 //                 return (
 //             <>
-//                 <MemberContainer>
-//                     <MemberPic>
+//                 <ApplicantContainer>
+//                     <ApplicantPic>
 //                         <Initials>{getInitialsFromFullName(names)}</Initials>
 
-//                     </MemberPic>
+//                     </ApplicantPic>
 //                     <Name>{names}</Name>
-//                 </MemberContainer>
+//                 </ApplicantContainer>
 
 //             </>
 //                 )
 //             })
 //             <center style={{ "color": "red" }}>TEST DATA</center>
-//         </AllMembers>
+//         </AllApplicants>
 //     )
 // }
 
 const Member = ({ members }) => {
     return (
-        <AllMembers>
-            <MemberContainer>
-                <MemberPic>
+        <AllApplicants>
+            <ApplicantContainer>
+                <ApplicantPic>
                     <Initials>
                         {getInitialsFromFullName(members.author.name)}
                     </Initials>
-                </MemberPic>
+                </ApplicantPic>
                 <Name>{members.author.name}</Name>
-            </MemberContainer>
-        </AllMembers>
+            </ApplicantContainer>
+        </AllApplicants>
     )
 
 }
