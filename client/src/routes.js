@@ -198,7 +198,7 @@ const routes = [
     path: "/adminprofiletestpage/:id",
     component: AdminProfileTESTPAGE,
     props: {
-      isProfile: true,
+      // isProfile: true,
     },
   },
 

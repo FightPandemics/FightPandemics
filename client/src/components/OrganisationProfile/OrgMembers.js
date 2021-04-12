@@ -89,7 +89,8 @@
 
 // }
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
     InfiniteLoader,
     AutoSizer,
@@ -101,11 +102,25 @@ import {
 import Post from "../Feed/Post";
 import Loader from "components/Feed/StyledLoader";
 import GTM from "constants/gtm-tags";
+import Member from "components/OrganisationProfile/Member";
+import styled from "styled-components";
+import { mq } from "constants/theme";
+
+const HorizontalRule = styled.hr`
+  display: none;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    border: 0;
+    height: 0;
+    display: block;
+    max-width: 325px;
+  }
+`;
 
 const cellMeasurerCache = new CellMeasurerCache({
     fixedWidth: true,
-    defaultHeight: 380,
+    defaultHeight: 80,
 });
+
 const TestMembers = ({
     postDispatch,
     filteredPosts,
@@ -119,33 +134,79 @@ const TestMembers = ({
     loadNextPage,
     isNextPageLoading,
     itemCount,
-    // isItemLoaded,
+    isItemLoaded,
     hasNextPage,
     totalPostCount,
     isProfile,
     gtmIdPost,
+    page,
+    // cellMeasurerCache
 }) => {
+
+
+    const scrollIndex = useRef(0);
+    const history = useHistory();
+    const scrollToIndex = () => {
+        if (history?.location?.state) {
+            let { keepScrollIndex, keepScroll } = history.location.state;
+            if (keepScroll) return keepScrollIndex;
+        }
+        return -1;
+    };
+
     // TEST VARIABLES FOR PROPS
-    const isItemLoaded = () => { return true }
+    // const isItemLoaded = () => { return true }
 
 
     // const posts = Object.entries(filteredPosts);
     // test activity
-    const posts = [
-        ["yooo", { author: { name: "yoo2" }, types: "typetest" }]
-        
-    ]
+    // const posts = [
+    //     ["yooo", { author: { name: "yoo2" }, types: "typetest" }]
 
+    // ]
 
+    // const filteredPosts = [
+    //     { author: { name: "Amy Smith" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } },
+    //     { author: { name: "Juan Matias" } },
+    //     { author: { name: "Richard James" } },
+    //     { author: { name: "Emily Johnson" } }
+    // ]
 
-    const printInput = async (e) => {
-        console.log(e)
-        console.log("yooo!")
-    };
+    const posts = Object.entries(filteredPosts)
 
-    // printInput(posts)
-
-    const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [hiddenPosts, setHiddenPosts] = useState(
         JSON.parse(localStorage.getItem("hiddenPosts")) || {},
     );
@@ -172,35 +233,45 @@ const TestMembers = ({
         [hiddenPosts],
     );
 
+    const loadMoreItems = isNextPageLoading
+        ? () => {
+            console.log("total Post Count:" + totalPostCount)
+            if (history?.location?.state) {
+                const { keepScrollIndex, keepScroll } = history.location.state;
+                if (keepScroll && scrollIndex.current < keepScrollIndex) {
+                    scrollIndex.current = keepScrollIndex;
+                } else {
+                    history.location.state.keepScrollIndex = scrollIndex.current;
+                    history.location.state.keepScroll = false;
+                    history.location.state.keepPostsState = undefined;
+                    history.location.state.keepPageState = undefined;
+                }
+            }
+
+        }
+        : loadNextPage;
+
+    // ADMIN PROFILE postItem
+
     const postItem = useCallback(
         ({ key, index, style, parent }) => {
             let content;
+            scrollIndex.current = index;
             if (!isItemLoaded(index) && hasNextPage) {
                 content = <Loader />;
             } else if (posts[index]) {
                 content = (
-                    <Post
-                        //     postDispatch={postDispatch}
-                        currentPost={posts[index][1]}
-                    //     updateComments={updateComments}
-                    //     postDelete={postDelete}
-                    //     user={user}
-                    //     deleteModalVisibility={deleteModalVisibility}
-                    //     onChange={handlePostDelete}
-                    //     handleCancelPostDelete={handleCancelPostDelete}
-                    //     onSelect={handleEditPost}
-                    //     gtmPrefix={GTM.profile.viewProfilePrefix}
-                    //     isHidden={hiddenPosts[posts[index][1]?._id]}
-                    //     onPostHide={hidePost}
-                    //     onPostUnhide={unhidePost}
-                    //     convertTextToURL={false}
-                    //     isProfile={isProfile}
-                    //     gtmIdPost={gtmIdPost}
-                    />
-                    // <div>Yoo</div>
+                    <>
+                        <HorizontalRule />
+                        <Member
+                            members={posts[index][1]}
+
+                        />
+                        {/* <HorizontalRule /> */}
+                    </>
                 );
-                // printInput("PRINT CONTENT" + content)
             }
+
             return (
                 <CellMeasurer
                     key={key}
@@ -219,72 +290,63 @@ const TestMembers = ({
         },
         [
             deleteModalVisibility,
-            gtmIdPost,
+            filteredPosts,
             handleCancelPostDelete,
-            handleEditPost,
             handlePostDelete,
             hasNextPage,
             hiddenPosts,
             hidePost,
+            // highlightWords,
+            // isAuthenticated,
             isItemLoaded,
-            isProfile,
+            page,
             postDelete,
             postDispatch,
             posts,
             unhidePost,
-            updateComments,
             user,
         ],
     );
+
     return (
         <div className="activity">
-            {
-                // !posts.length && isNextPageLoading ? (
-                !posts ? (
-                    <Loader />
-                ) : (
-                    <WindowScroller>
-                        {({ height, isScrolling, scrollTop, onChildScroll }) => (
-                            <InfiniteLoader
-                                isRowLoaded={isItemLoaded}
-                                // isRowLoaded={true}
-                                // loadMoreRows={loadMoreItems}
-                                loadMoreRows={false}
-                                // rowCount={totalPostCount}
-                                rowCount={5}
-                                threshold={5}
-                            >
-                                {({ onRowsRendered }) => (
-                                    <AutoSizer disableHeight>
-                                        {({ width }) => (
-                                            <List
-                                                autoHeight
-                                                height={height}
-                                                width={width}
-                                                isScrolling={isScrolling}
-                                                onRowsRendered={onRowsRendered}
-                                                // rowCount={itemCount}
-                                                rowCount={4}
-                                                rowHeight={cellMeasurerCache.rowHeight}
-                                                deferredMeasurementCache={cellMeasurerCache}
-                                                rowRenderer={postItem}
-                                                scrollTop={scrollTop}
-                                                onScroll={onChildScroll}
-                                                overscanRowCount={10}
-                                                scrollToAlignment={"start"}
-                                            />
-
-                                        )}
-                                    </AutoSizer>
-
-                                )}
-
-
-                            </InfiniteLoader>
-                        )}
-
-                    </WindowScroller>
-                )}
+            {!posts.length && isNextPageLoading ? (
+                <Loader />
+            ) : (
+                <WindowScroller>
+                    {({ height, isScrolling, scrollTop, onChildScroll }) => (
+                        <InfiniteLoader
+                            isRowLoaded={isItemLoaded}
+                            loadMoreRows={loadMoreItems}
+                            rowCount={totalPostCount}
+                            threshold={5}
+                        >
+                            {({ onRowsRendered }) => (
+                                <AutoSizer disableHeight>
+                                    {({ width }) => (
+                                        <List
+                                            autoHeight
+                                            height={height}
+                                            width={width}
+                                            isScrolling={isScrolling}
+                                            onRowsRendered={onRowsRendered}
+                                            rowCount={itemCount}
+                                            rowHeight={cellMeasurerCache.getHeight()}
+                                            deferredMeasurementCache={cellMeasurerCache}
+                                            rowRenderer={postItem}
+                                            scrollTop={scrollTop}
+                                            onScroll={onChildScroll}
+                                            overscanRowCount={1}
+                                            scrollToAlignment={"center"}
+                                            scrollToIndex={scrollToIndex()}
+                                        />
+                                    )}
+                                </AutoSizer>
+                            )}
+                        </InfiniteLoader>
+                    )}
+                </WindowScroller>
+            )}
         </div>
     );
 };
