@@ -21,9 +21,15 @@ const getApplicantsSchema = {
 
 const createApplicantSchema = {
   body: strictSchema()
-    .prop("postApplied", S.string())
+    .prop("organizationId", S.string().required())
+    .prop("applicantApplied", S.string())
+    // answers may need to be object
     .prop(
-      "answers", S.array().items(S.string().required())
+      "answers",
+      S.object()
+        .prop("q1", S.string())
+        .prop("q2", S.string())
+        .prop("q3", S.string())
     )
     .prop("status", S.string().enum(APPLICANT_STATUS).required()),
 };

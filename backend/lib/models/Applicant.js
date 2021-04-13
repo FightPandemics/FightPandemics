@@ -11,7 +11,7 @@ const applicantSchema = new Schema(
       // type: Schema.Types.ObjectId,
       type: ObjectId,
     },
-    postApplied: {
+    applicantApplied: {
       required: true,
       type: String
     },
@@ -40,7 +40,101 @@ applicantSchema.index(
   // },
 );
 /* eslint-enable */
+applicantSchema.index({ "applicant.location.coordinates": "2dsphere" });
+applicantSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // Location filter
+  "location.country": 1,
+  "location.state": 1,
+  "location.city": 1,
+  "location.neighborhood": 1,
+  // Author type filter
+  "applicant.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "applicant.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
+applicantSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // Location filter
+  "location.country": 1,
+  "location.state": 1,
+  "location.city": 1,
+  // Author type filter
+  "applicant.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "applicant.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
+applicantSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // Location filter
+  "location.country": 1,
+  "location.state": 1,
+  // Author type filter
+  "applicant.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "applicant.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
+applicantSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // Location filter
+  "location.country": 1,
+  // Author type filter
+  "applicant.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "applicant.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
+applicantSchema.index({
+  // Expiration Filter
+  expireAt: -1,
+  // No Location filter
+  // Author type filter
+  "applicant.type": 1,
+  // Post type filter
+  types: 1,
+  // Objective filter
+  objective: 1,
+  // Distance sorting
+  "applicant.location.coordinates": "2dsphere",
+  // Simple most recent sorting
+  createdAt: -1,
+});
 
+// Index for applicant's foreign key for lookup performance
+applicantSchema.index({ "applicant.id": 1, createdAt: -1 });
+
+// Index for like's foreign key for lookup performance
+applicantSchema.index({ likes: 1 });
+/* eslint-enable */
+
+// index title and content for search
 applicantSchema.index(
   {
     "applicant.name": "text",
@@ -64,6 +158,11 @@ applicantSchema.index(
     },
   },
 );
+// report status index
+applicantSchema.index({ status: 1 });
+
+// reportedBy user id index
+applicantSchema.index({ "reportedBy.id": 1 });
 
 const Applicants = model("Applicants", applicantSchema);
 

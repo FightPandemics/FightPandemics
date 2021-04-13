@@ -298,6 +298,7 @@ const routes = [
     component: Positions,
     props: {
       isProfile: true,
+      loggedInOnly: true,
     }
   },
   {
@@ -305,7 +306,10 @@ const routes = [
     component: Apply,
     props: {
       hideFooter: false,
-      hideHeader: false
+      hideHeader: false,
+      props: {
+        // loggedInOnly: true,
+      }
     }
   },
   {
