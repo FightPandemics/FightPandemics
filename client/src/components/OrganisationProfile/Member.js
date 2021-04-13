@@ -7,7 +7,6 @@ const { colors } = theme;
 
 
 export const AllApplicants = styled.div`
-    /* height: 80px */
 `;
 
 export const ApplicantContainer = styled.div`
@@ -65,7 +64,6 @@ const Member = ({ applicant }) => {
             </ApplicantContainer>
         </AllApplicants>
     )
-
 }
 
 export default Member;

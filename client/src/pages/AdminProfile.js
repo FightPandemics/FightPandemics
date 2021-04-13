@@ -62,7 +62,6 @@ const AdminProfile = (props) => {
     const [feedState, feedDispatch] = useReducer(feedReducer, {
         ...initialState
     });
-    //   const organisationId = useSelector(selectOrganisationId);
     const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
     const applicants = useSelector(selectApplicants);
     //react-virtualized loaded rows and row count.
@@ -102,20 +101,17 @@ const AdminProfile = (props) => {
 
     const refetchApplicants = (isLoading, loadMore, softRefresh = false) => {
         if (!softRefresh) {
-            console.log("refetch")
             dispatchAction(SET_VALUE, "applyFilters", true);
             dispatch(applicantsActions.resetPageAction({ isLoading, loadMore }));
             if (page === 0) {
                 setToggleRefetch(!toggleRefetch);
             }
         }
-        console.log("refetch")
     };
 
     const loadApplicants = async () => {
         const limit = PAGINATION_LIMIT;
         const skip = page * limit;
-        let _isMounted = false;
         let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
         let endpoint = baseURL
         dispatch(applicantsActions.fetchApplicantsBegin());
@@ -124,8 +120,6 @@ const AdminProfile = (props) => {
             const {
                 data: { data: applicants, meta },
             } = await axios.get(endpoint);
-            console.log(meta.total)
-            console.log(applicants.length)
             if (applicants.length && meta.total) {
 
                 if (prevTotalApplicantCount !== meta.total) {
@@ -134,13 +128,11 @@ const AdminProfile = (props) => {
 
                 const lastPage = Math.ceil(meta.total / limit) - 1;
                 if (page === lastPage) {
-                    console.log("yo2")
                     dispatch(applicantsActions.finishLoadingAction());
                 }
 
                 let applicantsInState;
                 if (history.location.state) {
-                    console.log("yo3")
                     const { keepApplicantsState, keepPageState } = history.location.state;
                     applicantsInState = keepApplicantsState;
                     if (keepPageState >= page) {
@@ -148,7 +140,6 @@ const AdminProfile = (props) => {
                     }
                 }
                 if (applicantsInState) {
-                    console.log("yo4")
                     if (Object.keys(applicantsInState).length === meta.total) {
                         dispatch(applicantsActions.finishLoadingAction());
                     }
@@ -156,19 +147,16 @@ const AdminProfile = (props) => {
 
                 const loadedApplicants = applicants.reduce((obj, item) => {
                     obj[item._id] = item;
-                    console.log("load Applicants")
                     return obj;
                 }, {});
 
                 if (applicantsInState) {
-                    console.log("yo5")
                     dispatch(
                         applicantsActions.fetchApplicantsSuccess({
                             applicants: { ...applicantsInState, ...loadedApplicants },
                         }),
                     );
                 } else if (Object.keys(applicantsList).length && page) {
-                    console.log("yo6")
                     dispatch(
                         applicantsActions.fetchApplicantsSuccess({
                             applicants: { ...applicantsList, ...loadedApplicants },
@@ -183,7 +171,6 @@ const AdminProfile = (props) => {
                 }
             }
             else if (applicants) {
-                console.log("else if")
                 dispatch(
                     applicantsActions.fetchApplicantsSuccess({
                         applicants: { ...applicantsList },
@@ -191,13 +178,11 @@ const AdminProfile = (props) => {
                 );
                 dispatch(applicantsActions.finishLoadingAction());
             } else {
-                console.log("else")
                 dispatch(applicantsActions.finishLoadingAction());
             }
         } catch (error) {
             dispatch(applicantsActions.fetchApplicantsError(error));
         }
-        console.log("end of load applicants")
     };
 
     useEffect(() => { }, [ignoreUserLocation]);
@@ -357,9 +342,11 @@ const AdminProfile = (props) => {
                                 // Component will be needed for multiple positions (based on backend schema / structure)
                             }
                             <ProfileTabs>
-                                <ProfileTabPane tab={t("profile.views.applicants")} key="members">
+                                <ProfileTabPane
+                                    className="single-tab"
+                                    tab={t("profile.views.applicants") + ` (${totalApplicantCount})`} key="members">
                                     <div style={{ textAlign: "center" }}>
-                                        {emptyFeed() && <>"No Posts to display."</>}
+                                        {emptyFeed() && <>"No Applicants to display."</>}
                                     </div>
                                     <Applicants
                                         itemCount={itemCount}

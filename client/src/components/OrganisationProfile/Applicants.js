@@ -32,8 +32,16 @@ const cellMeasurerCache = new CellMeasurerCache({
 });
 
 const SeeAllLink = styled.div`
+    display: none;
+
+@media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: block;
     color: ${colors.royalBlue};
+    font-size: 1.4rem;
+    font-weight: normal;
     text-align: center;
+    
+    }
 `
 
 const Applicants = ({
@@ -67,7 +75,6 @@ const Applicants = ({
                         <Member
                             applicant={applicants[index][1]}
                         />
-                        <div>yooo</div>
                     </>
                 );
             }
@@ -117,11 +124,10 @@ const Applicants = ({
                                             width={width}
                                             isScrolling={isScrolling}
                                             onRowsRendered={onRowsRendered}
-                                            rowCount={itemCount}
-                                            // rowCount={seeAll ? itemCount :
-                                            //     windowWidth > 767 ? 4 : 3}
-                                            rowHeight={cellMeasurerCache.rowHeight}
-                                            // rowHeight={cellMeasurerCache.getHeight()}
+                                            // rowCount={itemCount}
+                                            rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
+                                            // rowHeight={cellMeasurerCache.rowHeight}
+                                            rowHeight={cellMeasurerCache.getHeight()}
                                             deferredMeasurementCache={cellMeasurerCache}
                                             rowRenderer={applicantItem}
                                             scrollTop={scrollTop}
@@ -140,11 +146,12 @@ const Applicants = ({
             <Link
                 onClick={handleSeeAll}
             >
-                <SeeAllLink>
+
+                < SeeAllLink>
                     See All
                 </SeeAllLink>
             </Link>
-        </div>
+        </div >
     );
 };
 
