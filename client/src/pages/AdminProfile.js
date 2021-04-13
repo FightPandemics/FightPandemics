@@ -102,17 +102,20 @@ const AdminProfile = (props) => {
 
     const refetchApplicants = (isLoading, loadMore, softRefresh = false) => {
         if (!softRefresh) {
+            console.log("refetch")
             dispatchAction(SET_VALUE, "applyFilters", true);
             dispatch(applicantsActions.resetPageAction({ isLoading, loadMore }));
             if (page === 0) {
                 setToggleRefetch(!toggleRefetch);
             }
         }
+        console.log("refetch")
     };
 
     const loadApplicants = async () => {
         const limit = PAGINATION_LIMIT;
         const skip = page * limit;
+        let _isMounted = false;
         let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
         let endpoint = baseURL
         dispatch(applicantsActions.fetchApplicantsBegin());
@@ -121,19 +124,23 @@ const AdminProfile = (props) => {
             const {
                 data: { data: applicants, meta },
             } = await axios.get(endpoint);
-
+            console.log(meta.total)
+            console.log(applicants.length)
             if (applicants.length && meta.total) {
+
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);
                 }
 
                 const lastPage = Math.ceil(meta.total / limit) - 1;
                 if (page === lastPage) {
+                    console.log("yo2")
                     dispatch(applicantsActions.finishLoadingAction());
                 }
 
                 let applicantsInState;
                 if (history.location.state) {
+                    console.log("yo3")
                     const { keepApplicantsState, keepPageState } = history.location.state;
                     applicantsInState = keepApplicantsState;
                     if (keepPageState >= page) {
@@ -141,6 +148,7 @@ const AdminProfile = (props) => {
                     }
                 }
                 if (applicantsInState) {
+                    console.log("yo4")
                     if (Object.keys(applicantsInState).length === meta.total) {
                         dispatch(applicantsActions.finishLoadingAction());
                     }
@@ -148,16 +156,19 @@ const AdminProfile = (props) => {
 
                 const loadedApplicants = applicants.reduce((obj, item) => {
                     obj[item._id] = item;
+                    console.log("load Applicants")
                     return obj;
                 }, {});
 
                 if (applicantsInState) {
+                    console.log("yo5")
                     dispatch(
                         applicantsActions.fetchApplicantsSuccess({
                             applicants: { ...applicantsInState, ...loadedApplicants },
                         }),
                     );
                 } else if (Object.keys(applicantsList).length && page) {
+                    console.log("yo6")
                     dispatch(
                         applicantsActions.fetchApplicantsSuccess({
                             applicants: { ...applicantsList, ...loadedApplicants },
@@ -172,6 +183,7 @@ const AdminProfile = (props) => {
                 }
             }
             else if (applicants) {
+                console.log("else if")
                 dispatch(
                     applicantsActions.fetchApplicantsSuccess({
                         applicants: { ...applicantsList },
@@ -179,15 +191,20 @@ const AdminProfile = (props) => {
                 );
                 dispatch(applicantsActions.finishLoadingAction());
             } else {
+                console.log("else")
                 dispatch(applicantsActions.finishLoadingAction());
             }
         } catch (error) {
             dispatch(applicantsActions.fetchApplicantsError(error));
         }
-
+        console.log("end of load applicants")
     };
 
     useEffect(() => { }, [ignoreUserLocation]);
+
+    useEffect(() => {
+        // getStateFromQuery();
+    }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetch)
@@ -223,6 +240,8 @@ const AdminProfile = (props) => {
     useEffect(() => {
         setItemCount(loadMore ? feedApplicants.length + 1 : feedApplicants.length);
     }, [feedApplicants.length, loadMore]);
+
+    const emptyFeed = () => applicantsList.length < 1 && !isLoading;
 
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 1];
@@ -292,7 +311,7 @@ const AdminProfile = (props) => {
         return (
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
-                {/* <FeedContext.Provider
+                <FeedContext.Provider
                     value={{
                         isAuthenticated,
                         filters,
@@ -305,56 +324,58 @@ const AdminProfile = (props) => {
                         showFilters,
                         totalApplicantCount,
                     }}
-                > */}
-                <ProfileBackgroup />
-                <ProfileLayout>
-                    <PositionsContainer>
-                        <UserInfoContainer>
-                            <AvatarPhotoContainer>
-                                <ProfilePic
-                                    user={organisation}
-                                    initials={getInitialsFromFullName(name)}
-                                />
-                            </AvatarPhotoContainer>
-                            <UserInfoDesktop>
-                                <NameDiv>
-                                    <div className="name-container">
-                                        <NamePara>
-                                            {name}
-                                        </NamePara>
-                                        {address && (
-                                            <div title={address} className="address-container">
-                                                <img src={locationIcon} alt={address} />
-                                                {address}
-                                            </div>
-                                        )}
+                >
+                    <ProfileBackgroup />
+                    <ProfileLayout>
+                        <PositionsContainer>
+                            <UserInfoContainer>
+                                <AvatarPhotoContainer>
+                                    <ProfilePic
+                                        user={organisation}
+                                        initials={getInitialsFromFullName(name)}
+                                    />
+                                </AvatarPhotoContainer>
+                                <UserInfoDesktop>
+                                    <NameDiv>
+                                        <div className="name-container">
+                                            <NamePara>
+                                                {name}
+                                            </NamePara>
+                                            {address && (
+                                                <div title={address} className="address-container">
+                                                    <img src={locationIcon} alt={address} />
+                                                    {address}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </NameDiv>
+                                    {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+                                </UserInfoDesktop>
+                            </UserInfoContainer>
+                            {   // Position title and description to be pulled from backend / API
+                                // Placeholder text for ONE position is being used below
+                                // Component will be needed for multiple positions (based on backend schema / structure)
+                            }
+                            <ProfileTabs>
+                                <ProfileTabPane tab={t("profile.views.applicants")} key="members">
+                                    <div style={{ textAlign: "center" }}>
+                                        {emptyFeed() && <>"No Posts to display."</>}
                                     </div>
-                                </NameDiv>
-                                {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-                            </UserInfoDesktop>
-                        </UserInfoContainer>
-                        {   // Position title and description to be pulled from backend / API
-                            // Placeholder text for ONE position is being used below
-                            // Component will be needed for multiple positions (based on backend schema / structure)
-                        }
-                        <ProfileTabs>
-                            <ProfileTabPane tab={t("profile.views.applicants")} key="members">
-                                <Applicants
-                                    itemCount={itemCount}
-                                    isItemLoaded={isItemLoaded}
-                                    isNextPageLoading={isLoading}
-                                    loadNextPage={loadNextPage}
-                                    hasNextPage={loadMore}
-                                    filteredApplicants={applicantsList}
-                                    totalApplicantCount={totalApplicantCount}
-                                    page={page}
-
-                                />
-                            </ProfileTabPane>
-                        </ProfileTabs>
-                    </PositionsContainer >
-                </ProfileLayout>
-                {/* </FeedContext.Provider> */}
+                                    <Applicants
+                                        itemCount={itemCount}
+                                        isItemLoaded={isItemLoaded}
+                                        isNextPageLoading={isLoading}
+                                        loadNextPage={loadNextPage}
+                                        hasNextPage={loadMore}
+                                        filteredApplicants={applicantsList}
+                                        totalApplicantCount={totalApplicantCount}
+                                        page={page}
+                                    />
+                                </ProfileTabPane>
+                            </ProfileTabs>
+                        </PositionsContainer >
+                    </ProfileLayout>
+                </FeedContext.Provider>
             </>
         );
 

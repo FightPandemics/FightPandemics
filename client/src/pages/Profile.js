@@ -414,6 +414,7 @@ const Profile = ({
                 );
               }
             } else if (prevUserId === userId && posts) {
+              console.log("else if prev userid")
               dispatch(
                 postsActions.fetchPostsSuccess({
                   posts: { ...postsList },

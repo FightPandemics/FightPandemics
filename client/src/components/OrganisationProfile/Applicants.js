@@ -49,6 +49,11 @@ const Applicants = ({
     const applicants = Object.entries(filteredApplicants);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
+
+    const handleSeeAll = () => {
+        setSeeAll(prevState => !prevState)
+    }
+
     const windowWidth = window.innerWidth
     const applicantItem = useCallback(
         ({ key, index, style, parent }) => {
@@ -62,6 +67,7 @@ const Applicants = ({
                         <Member
                             applicant={applicants[index][1]}
                         />
+                        <div>yooo</div>
                     </>
                 );
             }
@@ -111,10 +117,11 @@ const Applicants = ({
                                             width={width}
                                             isScrolling={isScrolling}
                                             onRowsRendered={onRowsRendered}
-                                            rowCount={seeAll ? itemCount :
-                                                windowWidth > 767 ? 4 : 3}
-                                            // rowHeight={cellMeasurerCache.rowHeight}
-                                            rowHeight={cellMeasurerCache.getHeight()}
+                                            rowCount={itemCount}
+                                            // rowCount={seeAll ? itemCount :
+                                            //     windowWidth > 767 ? 4 : 3}
+                                            rowHeight={cellMeasurerCache.rowHeight}
+                                            // rowHeight={cellMeasurerCache.getHeight()}
                                             deferredMeasurementCache={cellMeasurerCache}
                                             rowRenderer={applicantItem}
                                             scrollTop={scrollTop}
@@ -131,7 +138,7 @@ const Applicants = ({
                 </WindowScroller>
             )}
             <Link
-                onClick={setSeeAll}
+                onClick={handleSeeAll}
             >
                 <SeeAllLink>
                     See All
