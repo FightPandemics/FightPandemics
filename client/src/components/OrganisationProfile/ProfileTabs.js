@@ -57,11 +57,6 @@ export const ProfileTabs = styled(Tabs)`
     color: ${colors.black};
   }
 
-  .ant-tabs-tab-btn{ 
-    cursor: none;
-  }
-  
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
     .ant-tabs-tab {
     margin-right: 2.5rem;
