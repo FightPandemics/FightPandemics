@@ -1,59 +1,51 @@
+import filterOptions from "assets/data/filterOptions";
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
-import ApplyButton, { ApplyButtonContainer } from "components/Positions/PositionsButton";
+import { setQueryKeysValue } from "components/Feed/utils";
+import Applicants from "components/OrganisationProfile/Applicants";
+import { ProfileTabPane, ProfileTabs } from "components/OrganisationProfile/ProfileTabs";
 import ProfilePic from "components/Positions/ProfilePic";
 import {
     OrganisationContext,
     withOrganisationContext
 } from "context/OrganisationContext";
 import { UserContext, withUserContext } from "context/UserContext";
+import {
+    ADD_OPTION,
 
+    REMOVE_ALL_OPTIONS, REMOVE_OPTION,
+
+    SET_OPTIONS,
+
+    SET_VALUE, TOGGLE_STATE
+} from "hooks/actions/feedActions";
 //hooks, actions, reducers
 import {
     fetchOrganisation,
     fetchOrganisationError,
     fetchOrganisationSuccess
-} from "hooks/actions/organisationActions"
-import {
-    optionsReducer,
-    feedReducer,
-    deletePostModalreducer,
-    deletePostState,
-} from "hooks/reducers/feedReducers";
+} from "hooks/actions/organisationActions";
 import {
     fetchUser,
     fetchUserError,
     fetchUserSuccess
 } from "hooks/actions/userActions";
-import { selectPosts, postsActions } from "reducers/posts";
-import { selectApplicants, applicantsActions } from "reducers/applicants";
 import {
-    ADD_OPTION,
-    REMOVE_OPTION,
-    REMOVE_ALL_OPTIONS,
-    SET_OPTIONS,
-    TOGGLE_STATE,
-    SET_VALUE,
-    SET_DELETE_MODAL_VISIBILITY,
-    DELETE_MODAL_POST,
-    DELETE_MODAL_HIDE,
-} from "hooks/actions/feedActions";
-import { setQueryKeysValue } from "components/Feed/utils";
-import filterOptions from "assets/data/filterOptions";
-
-import React, {
-    useContext, useEffect, useReducer, useState, useRef, useCallback
-} from "react";
-import { useSelector, useDispatch } from "react-redux";
+    deletePostModalreducer,
+    deletePostState, feedReducer, optionsReducer
+} from "hooks/reducers/feedReducers";
+import qs from "query-string";
+import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from "react";
+import TagManager from "react-gtm-module";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { applicantsActions, selectApplicants } from "reducers/applicants";
+import { LOGIN } from "templates/RouteWithSubRoutes";
 import { getInitialsFromFullName } from "utils/userInfo";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import {
-    PositionDescription, PositionsContainer,
-    PositionTitle
-} from "../components/Profile/PositionsComponents";
+import { PositionsContainer } from "../components/Profile/PositionsComponents";
 import {
     AvatarPhotoContainer, DescriptionDesktop, NameDiv,
     NamePara,
@@ -61,24 +53,6 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
-import { ProfileTabs, ProfileTabPane } from "components/OrganisationProfile/ProfileTabs";
-import TestMembers from "components/OrganisationProfile/OrgMembers";
-
-
-import TagManager from "react-gtm-module";
-
-import { LOGIN } from "templates/RouteWithSubRoutes";
-import { isAuthorUser, isAuthorOrg } from "utils/userInfo";
-import qs from "query-string";
-import {
-    InfiniteLoader,
-    AutoSizer,
-    WindowScroller,
-    List,
-    CellMeasurer,
-    CellMeasurerCache,
-} from "react-virtualized";
-
 
 
 // IMPORTED FROM Feed Page
@@ -88,7 +62,7 @@ const initialState = {
     showCreatePostModal: false,
     applyFilters: false,
     activePanel: null,
-    location: null,
+    // location: null,
     ignoreUserLocation: true,
 };
 
@@ -104,7 +78,7 @@ let HELP_TYPE = {
 };
 // END OF FEED PAGE CODE
 
-const AdminProfileTESTPAGE = (props) => {
+const AdminProfile = (props) => {
     //IMPORTED FROM Feed Page
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -118,8 +92,7 @@ const AdminProfileTESTPAGE = (props) => {
     );
     //   const organisationId = useSelector(selectOrganisationId);
     const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-    const posts = useSelector(selectPosts);
-    // const posts = { posts: [{ author: {name: "meeee"} }] }
+    const applicants = useSelector(selectApplicants);
     //react-virtualized loaded rows and row count.
     const [itemCount, setItemCount] = useState(0);
     const [toggleRefetch, setToggleRefetch] = useState(false);
@@ -135,20 +108,20 @@ const AdminProfileTESTPAGE = (props) => {
         ignoreUserLocation,
     } = feedState;
     const filters = Object.values(filterOptions);
-    // const workMode = Object.values(createPostSettings.workMode);
     const {
         error: postsError,
         isLoading,
         loadMore,
         page,
-        posts: postsList,
-    } = posts;
+        applicants: applicantsList,
+    } = applicants;
+
     const { deleteModalVisibility } = deleteModal;
-    const feedPosts = Object.entries(postsList);
+    const feedPosts = Object.entries(applicantsList);
     const prevTotalPostCount = usePrevious(totalPostCount);
     const [queryParams, setQueryParams] = useState({});
     const SEARCH_OPTIONS = [
-        { name: "feed.search.options.posts", id: "POSTS", default: true },
+        { name: "feed.search.options.applicants", id: "POSTS", default: true },
         {
             name: "feed.search.options.orgs",
             id: "ORGANISATIONS",
@@ -226,46 +199,46 @@ const AdminProfileTESTPAGE = (props) => {
     };
 
     // Sets query state for filters
-    // const setQueryFromState = () => {
-    //     const newQuery = {};
-    //     const oldFiltersLength =
-    //         (queryParams.filters?.type || []).length +
-    //         (queryParams.filters?.providers || []).length +
-    //         (queryParams.filters?.workMode || []).length;
-    //     const newFiltersLength =
-    //         (selectedOptions?.type || []).length +
-    //         (selectedOptions?.providers || []).length +
-    //         (selectedOptions?.workMode || []).length;
-    //     if (applyFilters && location) {
-    //         newQuery.location = btoa(JSON.stringify(location));
-    //     }
-    //     if (applyFilters && selectedOptions.lookingFor?.length) {
-    //         const selectedType =
-    //             (selectedOptions["lookingFor"][1] ||
-    //                 selectedOptions["lookingFor"][0]) === "Request Help"
-    //                 ? "REQUEST"
-    //                 : "OFFER";
-    //         newQuery.objective = selectedType;
-    //         if (selectedOptions.lookingFor.length > 1) {
-    //             optionsDispatch({
-    //                 type: REMOVE_OPTION,
-    //                 payload: {
-    //                     option: selectedOptions.lookingFor[0],
-    //                     label: "lookingFor",
-    //                 },
-    //             });
-    //             return;
-    //         }
-    //     }
+    const setQueryFromState = () => {
+        const newQuery = {};
+        const oldFiltersLength =
+            (queryParams.filters?.type || []).length +
+            (queryParams.filters?.providers || []).length +
+            (queryParams.filters?.workMode || []).length;
+        const newFiltersLength =
+            (selectedOptions?.type || []).length +
+            (selectedOptions?.providers || []).length +
+            (selectedOptions?.workMode || []).length;
+        if (applyFilters && location) {
+            newQuery.location = btoa(JSON.stringify(location));
+        }
+        if (applyFilters && selectedOptions.lookingFor?.length) {
+            const selectedType =
+                (selectedOptions["lookingFor"][1] ||
+                    selectedOptions["lookingFor"][0]) === "Request Help"
+                    ? "REQUEST"
+                    : "OFFER";
+            newQuery.objective = selectedType;
+            if (selectedOptions.lookingFor.length > 1) {
+                optionsDispatch({
+                    type: REMOVE_OPTION,
+                    payload: {
+                        option: selectedOptions.lookingFor[0],
+                        label: "lookingFor",
+                    },
+                });
+                return;
+            }
+        }
 
-    //     if (newFiltersLength) {
-    //         if (applyFilters || oldFiltersLength > newFiltersLength) {
-    //             newQuery.filters = btoa(JSON.stringify(selectedOptions));
-    //         }
-    //     } else if (queryParams.filters && !newFiltersLength)
-    //         newQuery.filters = null;
-    //     setQueryKeysValue(history, newQuery);
-    // };
+        if (newFiltersLength) {
+            if (applyFilters || oldFiltersLength > newFiltersLength) {
+                newQuery.filters = btoa(JSON.stringify(selectedOptions));
+            }
+        } else if (queryParams.filters && !newFiltersLength)
+            newQuery.filters = null;
+        setQueryKeysValue(history, newQuery);
+    };
 
     const handleFilterModal = () => {
         dispatchAction(TOGGLE_STATE, "filterModal");
@@ -305,23 +278,6 @@ const AdminProfileTESTPAGE = (props) => {
         refetchPosts(null, null, true);
     };
 
-    const toggleShowNearMe = (e) => {
-        if (e.target.checked) {
-            setQueryKeysValue(history, {
-                s_keyword: null,
-                location: null,
-                near_me: e.target.checked,
-            });
-            dispatchAction(SET_VALUE, "location", null);
-            setSortValue("proximity-near");
-        } else {
-            setQueryKeysValue(history, {
-                near_me: e.target.checked,
-            });
-            setSortValue("createdAt");
-        }
-    };
-
     const changeHelpType = (selectedValue) => {
         switch (selectedValue) {
             case "INDIVIDUALS":
@@ -341,25 +297,6 @@ const AdminProfileTESTPAGE = (props) => {
                     OFFER: "feed.offer",
                 };
                 break;
-        }
-    };
-
-    const handleLocation = (value) => {
-        if (applyFilters) {
-            dispatch(applicantsActions.resetPageAction({}));
-        }
-        if (value) {
-            setQueryKeysValue(history, {
-                s_keyword: null,
-                near_me: false,
-            });
-            dispatchAction(SET_VALUE, "location", value);
-            setSortValue("proximity-location");
-        } else {
-            setSortValue("createdAt");
-        }
-        if (!value && queryParams.location) {
-            setQueryKeysValue(history, { location: null });
         }
     };
 
@@ -392,21 +329,7 @@ const AdminProfileTESTPAGE = (props) => {
         }
     };
 
-    const handleChangeType = (e) => {
-        const value = e.key;
-        if (value && queryParams.objective?.toUpperCase() !== value) {
-            setQueryKeysValue(history, {
-                objective: e.key === "ALL" ? null : e.key,
-            });
-        }
-    };
-
-    const handleShowFilters = (e) => {
-        // desktop
-        dispatchAction(TOGGLE_STATE, "showFilters");
-        dispatchAction(SET_VALUE, "applyFilters", false);
-    };
-
+    
     const handleOnClose = () => {
         dispatchAction(SET_VALUE, "filterModal", false);
         dispatchAction(TOGGLE_STATE, "showFilters");
@@ -414,46 +337,7 @@ const AdminProfileTESTPAGE = (props) => {
         dispatchAction(SET_VALUE, "location", null);
     };
 
-    // const handlePostDelete = () => {
-    //     deleteModalDispatch({
-    //         type: SET_DELETE_MODAL_VISIBILITY,
-    //         visibility: DELETE_MODAL_POST,
-    //     });
-    // };
-
-    // const handleCancelPostDelete = () => {
-    //     deleteModalDispatch({
-    //         type: SET_DELETE_MODAL_VISIBILITY,
-    //         visibility: DELETE_MODAL_HIDE,
-    //     });
-    // };
-
-    // TEST CODE
-
-    // const loadPostsTest = async () => {
-    //     let endpoint = `/api/posts`
-    //     // dispatch(applicantsActions.fetchPostsBegin());
-    //     try {
-    //         const testPosts = axios.get(endpoint)
-    //         console.log("posts:" + testPosts.data)
-    //     }
-    //     catch (error) {
-    //         console.log("fetch error");
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     if (applyFilters) {
-    //         loadPostsTest();
-    //     }
-    // },
-    //     // [toggleRefetch, page]
-    // ); // eslint-disable-line react-hooks/exhaustive-deps
-
-    // TEST CODE
-
     const loadPosts = async () => {
-        console.log("pre API call" + posts.length)
         if (!applyFilters) return;
         dispatchAction(SET_VALUE, "applyFilters", false);
         const filterURL = () => {
@@ -486,141 +370,110 @@ const AdminProfileTESTPAGE = (props) => {
             }
         };
         const searchKeyword = queryParams.s_keyword;
-        // const sortQuery = () => {
-        //     if (
-        //         sortValue === "proximity-location" ||
-        //         sortValue === "proximity-near"
-        //     ) {
-        //         return `&ignoreUserLocation=${ignoreUserLocation}`;
-        //     } else if (sortValue === t("feed.filters.sortBy")) {
-        //         return "";
-        //     } else if (sortValue === "relevance") {
-        //         if (searchKeyword)
-        //             return `&keywords=${encodeURIComponent(searchKeyword)}`;
-        //         else return "";
-        //     } else {
-        //         return `&sortValue=${sortValue}`;
-        //     }
-        // };
+        const sortQuery = () => {
+            if (
+                sortValue === "proximity-location" ||
+                sortValue === "proximity-near"
+            ) {
+                return `&ignoreUserLocation=${ignoreUserLocation}`;
+            } else if (sortValue === t("feed.filters.sortBy")) {
+                return "";
+            } else if (sortValue === "relevance") {
+                if (searchKeyword)
+                    return `&keywords=${encodeURIComponent(searchKeyword)}`;
+                else return "";
+            } else {
+                return `&sortValue=${sortValue}`;
+            }
+        };
         const limit = PAGINATION_LIMIT;
         const skip = page * limit;
         let baseURL = getPostsBaseURL(organisationId, limit, skip);
-        // ${searchURL()}&ignoreUserLocation=${ignoreUserLocation}
-        switch (queryParams.s_category) {
-            case "POSTS":
-                break;
-            case "INDIVIDUALS":
-                baseURL = `/api/users?includeMeta=true&limit=${limit}&skip=${skip}`;
-                break;
-            case "ORGANISATIONS":
-                baseURL = `/api/organisations/?includeMeta=true&limit=${limit}&skip=${skip}`;
-                break;
-            default:
-                break;
-        }
-        // let endpoint = `${baseURL}${objectiveURL()}${filterURL()}${sortQuery()}`;
-        // let endpoint = `${baseURL}${objectiveURL()}${filterURL()}`;
-        let endpoint = `${baseURL}`;
-
+        let endpoint = baseURL
+        dispatch(applicantsActions.fetchPostsBegin());
 
 
         try {
             const {
                 data: { data: applicants, meta },
                 // } = await axios.get(endpoint);
-            } = await axios.get("/api/applicants");
-            // const {
-            //     data: { data: applicants },
-            //     // } = await axios.get(endpoint);
-            // } = await axios.get("/api/applicants");
-            // const res = await axios.get("/api/applicants");
-            console.log("API data:" + JSON.stringify(applicants.applicants))
-            // console.log("API data:" + JSON.stringify(res.data))
-            // console.log(posts)
-            // if (searchKeyword) {
-            //     TagManager.dataLayer({
-            //         dataLayer: {
-            //             event: "SEARCH_KEYWORD",
-            //             keyword: searchKeyword,
-            //             category: queryParams.s_category || "POSTS",
-            //             resultsCount: meta.total,
-            //         },
-            //     });
-            //     // clear the DataLayer
-            //     TagManager.dataLayer({
-            //         dataLayer: {
-            //             event: -1,
-            //             keyword: -1,
-            //             category: -1,
-            //             resultsCount: -1,
-            //         },
-            //     });
+            } = await axios.get(endpoint);
+            if (searchKeyword) {
+                TagManager.dataLayer({
+                    dataLayer: {
+                        event: "SEARCH_KEYWORD",
+                        keyword: searchKeyword,
+                        category: queryParams.s_category || "POSTS",
+                        resultsCount: meta.total,
+                    },
+                });
+                // clear the DataLayer
+                TagManager.dataLayer({
+                    dataLayer: {
+                        event: -1,
+                        keyword: -1,
+                        category: -1,
+                        resultsCount: -1,
+                    },
+                });
 
-            // }
+            }
+            if (applicants.length && meta.total) {
+                if (prevTotalPostCount !== meta.total) {
+                    setTotalPostCount(meta.total);
+                }
 
-            // if (posts.length && meta.total) {
-            if (posts.length) {
-                // console.log("api call TEST!" + JSON.stringify(posts))
-                // if (prevTotalPostCount !== meta.total) {
-                //     setTotalPostCount(meta.total);
-                // }
-
-                // const lastPage = Math.ceil(meta.total / limit) - 1;
-                // if (page === lastPage) {
-                //     dispatch(applicantsActions.finishLoadingAction());
-                // }
+                const lastPage = Math.ceil(meta.total / limit) - 1;
+                if (page === lastPage) {
+                    dispatch(applicantsActions.finishLoadingAction());
+                }
 
                 let postsInState;
                 if (history.location.state) {
-                    // console.log("api call TEST!")
                     const { keepPostsState, keepPageState } = history.location.state;
                     postsInState = keepPostsState;
                     if (keepPageState >= page) {
                         dispatch(applicantsActions.setPageAction(keepPageState));
                     }
-                }
-                // if (postsInState) {
-                //     console.log("api call TEST!")
-                //     if (Object.keys(postsInState).length === meta.total) {
-                //         dispatch(applicantsActions.finishLoadingAction());
-                //     }
-                // }
 
-                const loadedPosts = posts.reduce((obj, item) => {
+                }
+                if (postsInState) {
+                    if (Object.keys(postsInState).length === meta.total) {
+                        dispatch(applicantsActions.finishLoadingAction());
+                    }
+                }
+
+                const loadedPosts = applicants.reduce((obj, item) => {
                     obj[item._id] = item;
-                    console.log("posts:" + JSON.stringify(posts))
                     return obj;
                 }, {});
 
 
                 if (postsInState) {
-
                     dispatch(
                         applicantsActions.fetchPostsSuccess({
                             applicants: { ...postsInState, ...loadedPosts },
                         }),
                     );
-                } else if (Object.keys(postsList).length && page) {
+                } else if (Object.keys(applicantsList).length && page) {
                     dispatch(
                         applicantsActions.fetchPostsSuccess({
-                            posts: { ...postsList, ...loadedPosts },
+                            applicants: { ...applicantsList, ...loadedPosts },
                         }),
                     );
                 } else {
                     dispatch(
                         applicantsActions.fetchPostsSuccess({
-                            posts: { ...loadedPosts },
+                            applicants: { ...loadedPosts },
                         }),
                     );
                 }
-                console.log("loadedPosts")
             }
 
-            else if (posts) {
-
+            else if (applicants) {
                 dispatch(
                     applicantsActions.fetchPostsSuccess({
-                        applicants: { ...postsList },
+                        applicants: { ...applicantsList },
                     }),
                 );
                 dispatch(applicantsActions.finishLoadingAction());
@@ -639,50 +492,47 @@ const AdminProfileTESTPAGE = (props) => {
         getStateFromQuery();
     }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // useEffect(() => {
-    //     setQueryFromState();
-    // }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        setQueryFromState();
+    }, [applyFilters, selectedOptions, location]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // useEffect(() => {
-    //     if (typeof queryParams.s_keyword !== "undefined") {
-    //         setQueryKeysValue(history, {
-    //             location: null,
-    //             near_me: false,
-    //         });
-    //         dispatchAction(SET_VALUE, "location", null);
-    //         setSortValue("relevance");
-    //     } else if (location) {
-    //         if (ignoreUserLocation) {
-    //             setQueryKeysValue(history, {
-    //                 near_me: false,
-    //             });
-    //         }
-    //         setSortValue("proximity-location");
-    //     } else if (!ignoreUserLocation) {
-    //         if (location) {
-    //             setQueryKeysValue(history, {
-    //                 location: null,
-    //             });
-    //         }
-    //         dispatchAction(SET_VALUE, "location", null);
-    //         setSortValue("proximity-near");
-    //     } else if (
-    //         sortValue !== "views" &&
-    //         sortValue !== "shares" &&
-    //         sortValue !== "likes"
-    //     ) {
-    //         setSortValue("createdAt");
-    //     }
-    // }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        if (typeof queryParams.s_keyword !== "undefined") {
+            setQueryKeysValue(history, {
+                location: null,
+                near_me: false,
+            });
+            dispatchAction(SET_VALUE, "location", null);
+            setSortValue("relevance");
+        } else if (location) {
+            if (ignoreUserLocation) {
+                setQueryKeysValue(history, {
+                    near_me: false,
+                });
+            }
+            setSortValue("proximity-location");
+        } else if (!ignoreUserLocation) {
+            if (location) {
+                setQueryKeysValue(history, {
+                    location: null,
+                });
+            }
+            dispatchAction(SET_VALUE, "location", null);
+            setSortValue("proximity-near");
+        } else if (
+            sortValue !== "views" &&
+            sortValue !== "shares" &&
+            sortValue !== "likes"
+        ) {
+            setSortValue("createdAt");
+        }
+    }, [queryParams, ignoreUserLocation]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
     }, [sortValue, queryParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        // if (applyFilters) {
-        // loadPosts() was inside
-        // }
         loadPosts();
     }, [toggleRefetch, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -700,7 +550,7 @@ const AdminProfileTESTPAGE = (props) => {
     const loadNextPage = useCallback(
 
         ({ stopIndex }) => {
-            // console.log("loadNextPage")
+            console.log("loadNextPage")
             if (
                 !isLoading &&
                 loadMore &&
@@ -721,54 +571,18 @@ const AdminProfileTESTPAGE = (props) => {
 
     useEffect(() => {
         setItemCount(loadMore ? feedPosts.length + 1 : feedPosts.length);
+        console.log("item count:" + itemCount)
     }, [feedPosts.length, loadMore]);
 
-    // const postDelete = async (post) => {
-    //     let deleteResponse;
-    //     const endPoint = `/api/posts/${post._id}`;
-
-    //     if (
-    //         isAuthenticated &&
-    //         user &&
-    //         (isAuthorUser(user, post) || isAuthorOrg(user.organisations, post.author))
-    //     ) {
-    //         try {
-    //             deleteResponse = await axios.delete(endPoint);
-    //             if (deleteResponse && deleteResponse.data.success === true) {
-    //                 const allPosts = {
-    //                     ...postsList,
-    //                 };
-    //                 delete allPosts[post._id];
-
-    //                 setTotalPostCount(totalPostCount - 1);
-    //                 if (totalPostCount < 10) {
-    //                     const isLoading = true;
-    //                     const loadMore = false;
-    //                     refetchPosts(isLoading, loadMore);
-    //                 } else {
-    //                     refetchPosts();
-    //                 }
-    //             }
-    //             setTotalPostCount(totalPostCount - 1);
-    //         } catch (error) {
-    //             console.log({
-    //                 error,
-    //             });
-    //         }
-    //     }
-    // };
-
-    // const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
-    // const handleSortDropdown = (value) => {
-    //     setQueryKeysValue(history, {
-    //         s_keyword: null,
-    //         location: null,
-    //         near_me: false,
-    //     });
-    //     setSortValue(value);
-    // };
-    // console.log("TEST!!!!!")
-    // FEED PAGE CODE END
+    const emptyFeed = () => Object.keys(applicantsList).length < 1 && !isLoading;
+    const handleSortDropdown = (value) => {
+        setQueryKeysValue(history, {
+            s_keyword: null,
+            location: null,
+            near_me: false,
+        });
+        setSortValue(value);
+    };
 
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 1];
@@ -835,7 +649,6 @@ const AdminProfileTESTPAGE = (props) => {
     }
     else {
         const { address } = location;
-        // loadPostsTest()
         return (
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
@@ -849,16 +662,9 @@ const AdminProfileTESTPAGE = (props) => {
                         ignoreUserLocation,
                         dispatchAction,
                         selectedOptions,
-                        // handleShowFilters,
-                        // handleOption,
                         handleFilterModal,
-                        // handleQuit,
-                        // handleLocation,
-                        // handleOnClose,
-                        // toggleShowNearMe,
                         showFilters,
                         totalPostCount,
-                        // workMode,
                     }}
                 >
                     <ProfileBackgroup />
@@ -894,17 +700,17 @@ const AdminProfileTESTPAGE = (props) => {
                             }
                             <ProfileTabs>
                                 <ProfileTabPane tab={t("profile.views.applicants")} key="members">
-                                    {/* <TestMembers
+                                    <Applicants
                                         itemCount={itemCount}
                                         isItemLoaded={isItemLoaded}
                                         isNextPageLoading={isLoading}
                                         loadNextPage={loadNextPage}
                                         hasNextPage={loadMore}
-                                        filteredPosts={postsList}
+                                        filteredPosts={applicantsList}
                                         totalPostCount={totalPostCount}
                                         page={page}
 
-                                    /> */}
+                                    />
                                 </ProfileTabPane>
                             </ProfileTabs>
                         </PositionsContainer >
@@ -919,9 +725,7 @@ const AdminProfileTESTPAGE = (props) => {
 
 const getPostsBaseURL = (organisationId, limit, skip) => {
     const actorId = organisationId ? `&actorId=${organisationId}` : "";
-    // return `/api/applicants?&includeMeta=true&limit=${limit}&skip=${skip}${actorId}`;
-    // return `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}`;
-    return `/api/applicants`;
+    return `/api/applicants?&includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
-export default withUserContext(withOrganisationContext(AdminProfileTESTPAGE));
+export default withUserContext(withOrganisationContext(AdminProfile));

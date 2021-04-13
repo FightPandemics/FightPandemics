@@ -83,14 +83,14 @@ export const setLoadingAction = ({ isLoading, loadMore }) => ({
   payload: { isLoading, loadMore },
 });
 
-export const setReported = ({ organizationId }) => ({
+export const setReported = ({ applicantId }) => ({
   type: POSTS_ACTIONS.SET_REPORTED,
-  payload: { organizationId },
+  payload: { applicantId },
 });
 
-export const showAnyway = ({ organizationId }) => ({
+export const showAnyway = ({ applicantId }) => ({
   type: POSTS_ACTIONS.SHOW_ANYWAY,
-  payload: { organizationId },
+  payload: { applicantId },
 });
 
 export const applicantsActions = {

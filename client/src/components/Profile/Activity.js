@@ -153,7 +153,7 @@ const Activity = ({
                       rowRenderer={postItem}
                       scrollTop={scrollTop}
                       onScroll={onChildScroll}
-                      overscanRowCount={10}
+                      overscanRowCount={1}
                       scrollToAlignment={"start"}
                     />
                   )}

@@ -34,7 +34,7 @@ import EditSecurity from "./pages/EditSecurity";
 import Positions from "./pages/Positions";
 import SeeAll from "./pages/SeeAllPost";
 import Apply from "./pages/Apply";
-import AdminProfileTESTPAGE from "./pages/AdminProfileTESTPAGE";
+import AdminProfile from "./pages/AdminProfile";
 
 import { SCOPES } from "constants/permissions";
 
@@ -195,8 +195,8 @@ const routes = [
     },
   },
   {
-    path: "/adminprofiletestpage/:id",
-    component: AdminProfileTESTPAGE,
+    path: "/admin/:id",
+    component: AdminProfile,
     props: {
       // isProfile: true,
     },

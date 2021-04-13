@@ -7,7 +7,7 @@ const { colors } = theme;
 
 
 export const AllApplicants = styled.div`
-    max-height: 90px !important;
+    /* max-height: 90px !important; */
 `;
 
 export const ApplicantContainer = styled.div`
@@ -74,16 +74,19 @@ export const Name = styled.p`
 //     )
 // }
 
-const Member = ({ members }) => {
+const Member = ({ applicant }) => {
+    
     return (
         <AllApplicants>
             <ApplicantContainer>
                 <ApplicantPic>
                     <Initials>
-                        {getInitialsFromFullName(members.author.name)}
+                        {applicant?.applicant?.name && getInitialsFromFullName(applicant?.applicant?.name) || ""}
                     </Initials>
                 </ApplicantPic>
-                <Name>{members.author.name}</Name>
+                <Name>
+                    {applicant?.applicant?.name && applicant?.applicant?.name || ""}
+                </Name>
             </ApplicantContainer>
         </AllApplicants>
     )

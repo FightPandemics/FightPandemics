@@ -15,16 +15,17 @@ const getApplicantByIdSchema = {
 const getApplicantsSchema = {
   queryString: strictQueryStringSchema()
     .prop("applicantId", S.string())
-    .prop("skip", S.integer()),
+    .prop("skip", S.integer())
+    .prop("includeMeta", S.boolean().default(false)),
 };
 
 const createApplicantSchema = {
   body: strictSchema()
-  .prop("postApplied", S.string())
-  .prop(
-    "answers", S.array().items(S.string().required())
-  )
-  .prop("status", S.string().enum(APPLICANT_STATUS).required()),
+    .prop("postApplied", S.string())
+    .prop(
+      "answers", S.array().items(S.string().required())
+    )
+    .prop("status", S.string().enum(APPLICANT_STATUS).required()),
 };
 
 const updateApplicantStatusSchema = {

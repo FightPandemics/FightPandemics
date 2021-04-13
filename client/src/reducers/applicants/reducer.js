@@ -186,8 +186,8 @@ const applicantsReducer = (state = initialState, action) => {
         ...state,
         applicants: {
           ...state.applicants,
-          [payload.organizationId]: {
-            ...state.applicants[payload.organizationId],
+          [payload.applicantId]: {
+            ...state.applicants[payload.applicantId],
             didReport: true,
           },
         },
@@ -199,8 +199,8 @@ const applicantsReducer = (state = initialState, action) => {
         ...state,
         applicants: {
           ...state.applicants,
-          [payload.organizationId]: {
-            ...state.applicants[payload.organizationId],
+          [payload.applicantId]: {
+            ...state.applicants[payload.applicantId],
             reportsCount: 0,
           },
         },

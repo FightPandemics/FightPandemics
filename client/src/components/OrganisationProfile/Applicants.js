@@ -130,7 +130,9 @@ const cellMeasurerCache = new CellMeasurerCache({
     defaultHeight: 80,
 });
 
-const TestMembers = ({
+
+
+const Applicants = ({
     postDispatch,
     filteredPosts,
     updateComments,
@@ -150,74 +152,10 @@ const TestMembers = ({
     gtmIdPost,
     page,
     // cellMeasurerCache
+
 }) => {
-
-
-    // console.log("cell measure:" + JSON.stringify(cellMeasurerCache))
-
-    const scrollIndex = useRef(0);
-    const history = useHistory();
-    const scrollToIndex = () => {
-        if (history?.location?.state) {
-            let { keepScrollIndex, keepScroll } = history.location.state;
-            if (keepScroll) return keepScrollIndex;
-        }
-        return -1;
-    };
-
-    // TEST VARIABLES FOR PROPS
-    // const isItemLoaded = () => { return true }
-
-
-    // const posts = Object.entries(filteredPosts);
-    // test activity
-    // const posts = [
-    //     ["yooo", { author: { name: "yoo2" }, types: "typetest" }]
-
-    // ]
-
-    // const filteredPosts = [
-    //     { author: { name: "Amy Smith" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } },
-    //     { author: { name: "Juan Matias" } },
-    //     { author: { name: "Richard James" } },
-    //     { author: { name: "Emily Johnson" } }
-    // ]
-
-    const posts = Object.entries(filteredPosts)
-
+    const posts = Object.entries(filteredPosts);
+    const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [hiddenPosts, setHiddenPosts] = useState(
         JSON.parse(localStorage.getItem("hiddenPosts")) || {},
     );
@@ -244,45 +182,18 @@ const TestMembers = ({
         [hiddenPosts],
     );
 
-    const loadMoreItems = isNextPageLoading
-        ? () => {
-            console.log("total Post Count:" + totalPostCount)
-            if (history?.location?.state) {
-                const { keepScrollIndex, keepScroll } = history.location.state;
-                if (keepScroll && scrollIndex.current < keepScrollIndex) {
-                    scrollIndex.current = keepScrollIndex;
-                } else {
-                    history.location.state.keepScrollIndex = scrollIndex.current;
-                    history.location.state.keepScroll = false;
-                    history.location.state.keepPostsState = undefined;
-                    history.location.state.keepPageState = undefined;
-                }
-            }
-
-        }
-        : loadNextPage;
-
-    // ADMIN PROFILE postItem
-
     const postItem = useCallback(
         ({ key, index, style, parent }) => {
             let content;
-            scrollIndex.current = index;
             if (!isItemLoaded(index) && hasNextPage) {
                 content = <Loader />;
             } else if (posts[index]) {
                 content = (
-                    <>
-                        <HorizontalRule />
-                        <Member
-                            members={posts[index][1]}
-
-                        />
-                        {/* <HorizontalRule /> */}
-                    </>
+                    <Member
+                        applicant={posts[index][1]}
+                    />
                 );
             }
-
             return (
                 <CellMeasurer
                     key={key}
@@ -301,20 +212,20 @@ const TestMembers = ({
         },
         [
             deleteModalVisibility,
-            filteredPosts,
+            gtmIdPost,
             handleCancelPostDelete,
+            handleEditPost,
             handlePostDelete,
             hasNextPage,
             hiddenPosts,
             hidePost,
-            // highlightWords,
-            // isAuthenticated,
             isItemLoaded,
-            page,
+            isProfile,
             postDelete,
             postDispatch,
             posts,
             unhidePost,
+            updateComments,
             user,
         ],
     );
@@ -342,14 +253,13 @@ const TestMembers = ({
                                             isScrolling={isScrolling}
                                             onRowsRendered={onRowsRendered}
                                             rowCount={itemCount}
-                                            rowHeight={cellMeasurerCache.getHeight()}
+                                            rowHeight={cellMeasurerCache.rowHeight}
                                             deferredMeasurementCache={cellMeasurerCache}
                                             rowRenderer={postItem}
                                             scrollTop={scrollTop}
                                             onScroll={onChildScroll}
                                             overscanRowCount={1}
-                                            scrollToAlignment={"center"}
-                                            scrollToIndex={scrollToIndex()}
+                                            scrollToAlignment={"start"}
                                         />
                                     )}
                                 </AutoSizer>
@@ -362,6 +272,6 @@ const TestMembers = ({
     );
 };
 
-export default TestMembers;
+export default Applicants;
 
 

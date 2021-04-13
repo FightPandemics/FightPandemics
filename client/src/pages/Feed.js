@@ -515,6 +515,7 @@ const Feed = (props) => {
       const {
         data: { data: posts, meta },
       } = await axios.get(endpoint);
+      console.log(posts)
       if (searchKeyword) {
         TagManager.dataLayer({
           dataLayer: {
@@ -533,9 +534,7 @@ const Feed = (props) => {
             resultsCount: -1,
           },
         });
-        console.log("posts.length")
       }
-      console.log(posts.length)
       if (posts.length && meta.total) {
         if (prevTotalPostCount !== meta.total) {
           setTotalPostCount(meta.total);
@@ -648,7 +647,6 @@ const Feed = (props) => {
   useEffect(() => {
     if (applyFilters) {
       loadPosts();
-      console.log("post loadPosts inside useffect" + "page:" + page)
     }
   }, [toggleRefetch, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -665,7 +663,6 @@ const Feed = (props) => {
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
-      console.log("loadNextPage")
       if (
         !isLoading &&
         loadMore &&

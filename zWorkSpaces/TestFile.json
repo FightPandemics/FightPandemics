@@ -1,409 +1,276 @@
-[
+applicants: [
     {
-        "_id": "60735d7ae6ac2150e80b5402",
-        "isEdited": false,
-        "language": [],
-        "views": 0,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Business"
+        "_id": "606e59ecc7e707225076e230",
+        "answers": [
+            "This is test answers"
         ],
-        "title": "TEST TITLE",
-        "visibility": "city",
-        "expireAt": "2021-05-11T20:35:06.208Z",
-        "workMode": "both",
-        "objective": "offer",
-        "author": {
-            "id": "603be1140789a03df4bdb17c",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "Test Org",
-            "type": "Startup"
-        },
-        "createdAt": "2021-04-11T20:35:06.210Z",
-        "updatedAt": "2021-04-11T20:35:06.210Z",
-        "distance": 0,
-        "commentsCount": 0,
-        "content": "TEST POST",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
-        "elapsedTimeText": {
-            "created": {
-                "count": 1,
-                "unit": "hour"
-            },
-            "isEdited": false
-        }
-    },
-    {
-        "_id": "60735d44e6ac2150e80b53d9",
-        "isEdited": false,
-        "language": [],
-        "views": 0,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Volunteer"
+        "status": [
+            "applied"
         ],
-        "title": "Another Post",
-        "visibility": "city",
-        "expireAt": "2021-05-11T20:34:12.381Z",
-        "workMode": "both",
-        "objective": "offer",
-        "author": {
-            "id": "603bd1ff3601fb12005bddbe",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "TestUser -",
-            "type": "Individual"
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "postApplied TEST",
+        "applicant": {
+            "name": "This is a test applicant"
         },
-        "createdAt": "2021-04-11T20:34:12.398Z",
-        "updatedAt": "2021-04-11T20:34:12.398Z",
-        "distance": 0,
-        "commentsCount": 0,
-        "content": "fff",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
-        "elapsedTimeText": {
-            "created": {
-                "count": 1,
-                "unit": "hour"
-            },
-            "isEdited": false
-        }
-    },
-    {
-        "_id": "607355a4e6ac2150e80b5148",
-        "isEdited": false,
-        "language": [],
-        "views": 0,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Volunteer"
-        ],
-        "title": "Test Another request",
-        "visibility": "city",
-        "expireAt": "2021-05-11T20:01:40.572Z",
-        "workMode": "both",
-        "objective": "request",
-        "author": {
-            "id": "603be1140789a03df4bdb17c",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "Test Org",
-            "type": "Startup"
-        },
-        "createdAt": "2021-04-11T20:01:40.577Z",
-        "updatedAt": "2021-04-11T20:01:40.577Z",
-        "distance": 0,
-        "commentsCount": 0,
-        "content": "post",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
-        "elapsedTimeText": {
-            "created": {
-                "count": 2,
-                "unit": "hour"
-            },
-            "isEdited": false
-        }
-    },
-    {
-        "_id": "60735548e6ac2150e80b512d",
-        "isEdited": false,
-        "language": [],
-        "views": 0,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Childcare"
-        ],
-        "title": "TEST REQUEST POST",
-        "visibility": "city",
-        "expireAt": "2021-05-11T20:00:08.895Z",
-        "workMode": "both",
-        "objective": "request",
-        "author": {
-            "id": "603bd1ff3601fb12005bddbe",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "TestUser -",
-            "type": "Individual"
-        },
-        "createdAt": "2021-04-11T20:00:08.911Z",
-        "updatedAt": "2021-04-11T20:00:08.911Z",
-        "distance": 0,
-        "commentsCount": 0,
-        "content": "TEST",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
-        "elapsedTimeText": {
-            "created": {
-                "count": 2,
-                "unit": "hour"
-            },
-            "isEdited": false
-        }
-    },
-    {
-        "_id": "607332c2a76a906fa0d3400b",
-        "isEdited": false,
-        "language": [],
-        "views": 28,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Information"
-        ],
-        "title": "Another Post - TEST ORG",
-        "visibility": "city",
-        "expireAt": "2021-05-11T17:32:50.195Z",
-        "workMode": "both",
-        "objective": "offer",
-        "author": {
-            "id": "603be1140789a03df4bdb17c",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "Test Org",
-            "type": "Startup"
-        },
-        "createdAt": "2021-04-11T17:32:50.231Z",
-        "updatedAt": "2021-04-11T17:48:31.645Z",
-        "distance": 0,
-        "commentsCount": 0,
-        "content": "Post body",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
-        "elapsedTimeText": {
-            "created": {
-                "count": 4,
-                "unit": "hour"
-            },
-            "isEdited": false
-        }
-    },
-    {
-        "_id": "607100b5df449b31905a1a47",
-        "isEdited": false,
-        "language": [],
-        "views": 0,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Volunteer"
-        ],
-        "title": "test pos",
-        "visibility": "city",
-        "expireAt": "2021-05-10T01:34:45.884Z",
-        "workMode": "both",
-        "objective": "offer",
-        "author": {
-            "id": "603bd1ff3601fb12005bddbe",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "TestUser -",
-            "type": "Individual"
-        },
-        "createdAt": "2021-04-10T01:34:45.905Z",
-        "updatedAt": "2021-04-10T01:34:45.905Z",
-        "distance": 0,
-        "commentsCount": 0,
-        "content": "poss",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
-        "elapsedTimeText": {
-            "created": {
-                "count": 2,
-                "unit": "day"
-            },
-            "isEdited": false
-        }
-    },
-    {
-        "_id": "6070dd15376ca14ab4c95a52",
-        "isEdited": false,
-        "language": [],
-        "views": 0,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Volunteer"
-        ],
-        "title": "JOIN OUR ORG",
-        "visibility": "city",
-        "expireAt": "2021-05-09T23:02:45.485Z",
-        "workMode": "both",
-        "objective": "offer",
-        "author": {
-            "id": "6070dc86376ca14ab4c95a13",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "TEST ORG 2",
-            "type": "Health care provider"
-        },
-        "createdAt": "2021-04-09T23:02:45.488Z",
-        "updatedAt": "2021-04-09T23:02:45.488Z",
-        "distance": 331.78594290078854,
-        "commentsCount": 0,
-        "content": "BODY TEST",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
-        "elapsedTimeText": {
-            "created": {
-                "count": 2,
-                "unit": "day"
-            },
-            "isEdited": false
-        }
-    },
-    {
-        "_id": "6070dcba376ca14ab4c95a21",
-        "isEdited": false,
-        "language": [],
-        "views": 2,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Tech"
-        ],
-        "title": "join our org",
-        "visibility": "city",
-        "expireAt": "2021-05-09T23:01:14.189Z",
-        "workMode": "both",
-        "objective": "offer",
-        "author": {
-            "id": "6052a31d21775411007141aa",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "test2 user2",
-            "type": "Individual"
-        },
-        "createdAt": "2021-04-09T23:01:14.218Z",
-        "updatedAt": "2021-04-09T23:01:16.539Z",
-        "distance": 331.78594290078854,
-        "commentsCount": 0,
-        "content": "body test",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
-        "elapsedTimeText": {
-            "created": {
-                "count": 2,
-                "unit": "day"
-            },
-            "isEdited": false
-        }
-    },
-    {
-        "_id": "6070645cead1ba495cc10e90",
-        "isEdited": false,
-        "language": [],
-        "views": 2,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Medical Supplies"
-        ],
-        "title": "Offer 2 title",
-        "visibility": "city",
-        "expireAt": "2021-05-09T14:27:40.047Z",
-        "workMode": "in-person",
-        "objective": "offer",
-        "author": {
-            "id": "6052a31d21775411007141aa",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "test2 user2",
-            "type": "Individual"
-        },
-        "createdAt": "2021-04-09T14:27:40.074Z",
-        "updatedAt": "2021-04-09T16:19:23.135Z",
-        "distance": 331.78594290078854,
-        "commentsCount": 0,
-        "content": "Offer 2 posts",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
-        "elapsedTimeText": {
-            "created": {
-                "count": 2,
-                "unit": "day"
-            },
-            "isEdited": false
-        }
-    },
-    {
-        "_id": "606cc8f3020a105ef0b0de75",
-        "isEdited": false,
-        "language": [],
-        "views": 2,
-        "shares": 0,
-        "status": "public",
-        "types": [
-            "Medical Supplies"
-        ],
-        "title": "Test title",
-        "visibility": "city",
-        "expireAt": "2021-05-06T20:47:47.527Z",
-        "workMode": "in-person",
-        "objective": "offer",
-        "author": {
-            "id": "6052a31d21775411007141aa",
-            "location": {
-                "city": "Venice",
-                "country": "US",
-                "state": "FL"
-            },
-            "name": "test2 user2",
-            "type": "Individual"
-        },
-        "createdAt": "2021-04-06T20:47:47.632Z",
-        "updatedAt": "2021-04-06T20:47:53.882Z",
-        "distance": 331.78594290078854,
-        "commentsCount": 0,
-        "content": "Test Post",
-        "liked": false,
-        "likesCount": 0,
-        "reportsCount": 0,
+        "createdAt": "2021-04-08T01:18:36.503Z",
+        "updatedAt": "2021-04-08T01:18:36.503Z",
+        "__v": 0,
         "elapsedTimeText": {
             "created": {
                 "count": 5,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "606e5f461e76c54e20b19c15",
+        "answers": [
+            "This is test answers"
+        ],
+        "status": [
+            "applied"
+        ],
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "postApplied TEST",
+        "applicant": {
+            "name": "This is a test applicant"
+        },
+        "createdAt": "2021-04-08T01:41:26.252Z",
+        "updatedAt": "2021-04-08T01:41:26.252Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 5,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "606e5fd3f1e86365e81e8bbc",
+        "answers": [
+            "This is test answers"
+        ],
+        "status": [
+            "applied"
+        ],
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "postApplied TEST",
+        "applicant": {
+            "name": "This is a test applicant"
+        },
+        "createdAt": "2021-04-08T01:43:47.564Z",
+        "updatedAt": "2021-04-08T01:43:47.564Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 5,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "606e5ff4f1e86365e81e8bbf",
+        "answers": [
+            "This is test answers"
+        ],
+        "status": [
+            "applied"
+        ],
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "postApplied TEST",
+        "applicant": {
+            "name": "This is a test applicant"
+        },
+        "createdAt": "2021-04-08T01:44:20.873Z",
+        "updatedAt": "2021-04-08T01:44:20.873Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 5,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "606e631981744e36c4b289dd",
+        "answers": [
+            "This is test answers"
+        ],
+        "status": [
+            "applied"
+        ],
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "postApplied TEST",
+        "applicant": {
+            "name": "This is a test applicant"
+        },
+        "createdAt": "2021-04-08T01:57:45.281Z",
+        "updatedAt": "2021-04-08T01:57:45.281Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 5,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "606e63c8aa46b16790c5dd62",
+        "answers": [
+            "This is test answers"
+        ],
+        "status": [
+            "applied"
+        ],
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "postApplied TEST",
+        "applicant": {
+            "name": "This is a test applicant"
+        },
+        "createdAt": "2021-04-08T02:00:40.331Z",
+        "updatedAt": "2021-04-08T02:00:40.331Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 5,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "606f2b48aab7db35f4e0a6d0",
+        "answers": [
+            "This is test answers"
+        ],
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "postApplied TEST",
+        "status": "applied",
+        "applicant": {
+            "name": "This is a test applicant"
+        },
+        "createdAt": "2021-04-08T16:11:52.643Z",
+        "updatedAt": "2021-04-08T16:11:52.643Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 4,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "606f34ae887ea862e8009f6f",
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "Volunteer",
+        "answers": {
+            "q1": "asfadfsaf",
+            "q2": "asfasf",
+            "q3": "asfsadfasdf"
+        },
+        "status": "applied",
+        "applicant": {
+            "id": "6052a31d21775411007141aa",
+            "location": {
+                "address": "Venice Beach, Venice, FL 34285, USA",
+                "city": "Venice",
+                "coordinates": [
+                    -82.4575967,
+                    27.1000553
+                ],
+                "country": "US",
+                "state": "FL",
+                "zip": "34285"
+            },
+            "name": "test2 user2",
+            "type": "Individual"
+        },
+        "createdAt": "2021-04-08T16:51:58.975Z",
+        "updatedAt": "2021-04-08T16:51:58.975Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 4,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "606f353f887ea862e8009f72",
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "Volunteer",
+        "answers": {
+            "q1": "asfadfsaf",
+            "q2": "asfasf",
+            "q3": "asfsadfasdf"
+        },
+        "status": "applied",
+        "applicant": {
+            "id": "6052a31d21775411007141aa",
+            "location": {
+                "address": "Venice Beach, Venice, FL 34285, USA",
+                "city": "Venice",
+                "coordinates": [
+                    -82.4575967,
+                    27.1000553
+                ],
+                "country": "US",
+                "state": "FL",
+                "zip": "34285"
+            },
+            "name": "test2 user2",
+            "type": "Individual"
+        },
+        "createdAt": "2021-04-08T16:54:23.661Z",
+        "updatedAt": "2021-04-08T16:54:23.661Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 4,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "606f3754ead1ba495cc10ddf",
+        "organizationId": "603be1140789a03df4bdb17c",
+        "postApplied": "Volunteer",
+        "answers": {
+            "q1": "asfadfsaf",
+            "q2": "asfasf",
+            "q3": "asfsadfasdf"
+        },
+        "status": "applied",
+        "applicant": {
+            "id": "6052a31d21775411007141aa",
+            "location": {
+                "address": "Venice Beach, Venice, FL 34285, USA",
+                "city": "Venice",
+                "coordinates": [
+                    -82.4575967,
+                    27.1000553
+                ],
+                "country": "US",
+                "state": "FL",
+                "zip": "34285"
+            },
+            "name": "test2 user2",
+            "type": "Individual"
+        },
+        "createdAt": "2021-04-08T17:03:16.228Z",
+        "updatedAt": "2021-04-08T17:03:16.228Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 4,
                 "unit": "day"
             },
             "isEdited": false

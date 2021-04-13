@@ -106,7 +106,7 @@ import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
-import TestMembers from "components/OrganisationProfile/OrgMembers"
+import TestMembers from "components/OrganisationProfile/Applicants"
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -499,7 +499,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           </UserInfoContainer>
           <Link
             style={{ "color": "red" }}
-            to={`/adminprofiletestpage/${organisationId}`}
+            to={`/admin/${organisationId}`}
           >ADMIN TEST PAGE</Link>
           {isSelf && !verified && <Verification />}
           <WhiteSpace />
