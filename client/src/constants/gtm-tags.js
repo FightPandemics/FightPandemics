@@ -139,6 +139,11 @@ module.exports = {
     undoAll: "_UA",
     deleteDraft: "_DD",
     changeLiveViewType: "_CL",
+    saveContent: "_SC",
+    pubOrUnpublish: "_PU",
+    renamePage: "_RP",
+    seePreview: "_SP",
+    pageContainer: "_PC",
   },
   providersFilters: {
     individual: "_IN",

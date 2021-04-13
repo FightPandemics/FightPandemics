@@ -252,6 +252,7 @@ const OrgBookTableOfContents = (props) => {
               onClick={(e) => {
                 handlePageClick(e, page);
               }}
+              id={GTM.orgBook.prefix + GTM.orgBook.pageContainer + idx}
             >
               <PageIconAndNameContainer>
                 <PageSvgIcon src={pageIcon} />
@@ -267,6 +268,7 @@ const OrgBookTableOfContents = (props) => {
               selectedDirty={selectedPageDirty}
               key={"add-new-page"}
               onClick={handleNewPageClick}
+              id={GTM.orgBook.prefix + GTM.orgBook.addNewPage}
             >
               <NewPageIconContainer>
                 <PageSvgIcon src={plusIcon} />

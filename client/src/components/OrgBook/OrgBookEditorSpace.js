@@ -250,7 +250,7 @@ const OrgBookEditorSpace = (props) => {
     if (contentWithoutNewline !== selPageWithoutNewline) {
       onSelectedPageDirty(true);
     } else {
-      onSelectedPageDirty(false); //new
+      onSelectedPageDirty(false);
     }
   };
 
@@ -341,6 +341,7 @@ const OrgBookEditorSpace = (props) => {
                 tinyMce.current.execCommand("mcePreview");
               }}
               to="#"
+              id={GTM.orgBook.prefix + GTM.orgBook.seePreview}
             >
               <span>{t("orgBook.seePreview")}</span>
             </Link>
@@ -360,6 +361,7 @@ const OrgBookEditorSpace = (props) => {
                 );
               }}
               to="#"
+              id={GTM.orgBook.prefix + GTM.orgBook.renamePage}
             >
               <span>{t("orgBook.renamePage")}</span>
             </Link>
@@ -470,6 +472,7 @@ const OrgBookEditorSpace = (props) => {
                 );
               }}
               to="#"
+              id={GTM.orgBook.prefix + GTM.orgBook.saveContent}
             >
               <span>
                 {selectedPage.status === PAGE_CATEGORIES.draftCategory
@@ -493,6 +496,7 @@ const OrgBookEditorSpace = (props) => {
                 numberOfCharacters,
               );
             }}
+            id={GTM.orgBook.prefix + GTM.orgBook.pubOrUnpublish}
           >
             <PublishButtonLabel>
               {selectedPage.status === PAGE_CATEGORIES.draftCategory
