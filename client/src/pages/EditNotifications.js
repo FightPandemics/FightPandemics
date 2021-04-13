@@ -75,6 +75,7 @@ function EditNotifications(props) {
       try {
         const res = await axios.get("/api/users/current");
         let { _id, ...prefs } = res.data.notifyPrefs;
+        //console.log("the res data is " + JSON.stringify(res) );
         let isOwner = false;
         if (res) {
           if (res.data) {
