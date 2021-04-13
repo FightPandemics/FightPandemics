@@ -48,7 +48,7 @@ export const Name = styled.p`
     margin-left: 2rem;
 `;
 
-const Member = ({ applicant }) => {
+const Applicant = ({ applicant }) => {
 
     return (
         <AllApplicants>
@@ -66,4 +66,4 @@ const Member = ({ applicant }) => {
     )
 }
 
-export default Member;
+export default Applicant;

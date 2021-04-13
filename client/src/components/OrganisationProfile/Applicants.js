@@ -1,5 +1,5 @@
 import Loader from "components/Feed/StyledLoader";
-import Member from "components/OrganisationProfile/Member";
+import Member from "components/OrganisationProfile/Applicant";
 import { mq } from "constants/theme";
 import React, { useCallback, useState } from "react";
 import {
