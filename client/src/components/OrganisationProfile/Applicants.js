@@ -1,96 +1,7 @@
-// import React from "react";
-// import styled from "styled-components";
-// import { theme } from "constants/theme";
-// import { getInitialsFromFullName } from "utils/userInfo";
-
-// const { colors } = theme;
-
-
-// export const AllMembers = styled.div`
-
-// `;
-
-// export const MemberContainer = styled.div`
-// display: flex;
-// justify-content: flex-start;
-// align-items: center;
-// margin: .5rem 0;
-// box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
-
-// `;
-
-// export const MemberPic = styled.div`
-// display: flex;
-// align-items: center;
-// justify-self: flex-start;
-// justify-content: center;
-// margin: 1rem 0;
-// border-radius: 50%;
-// border: 0.1rem solid ${colors.royalBlue};
-// color: ${colors.royalBlue};
-// width: 4rem;
-// height: 4rem;
-// text-align: center;
-// font-size: 1.6rem;
-// font-weight: 500;
-// line-height: 2rem;
-// `;
-
-// export const Initials = styled.div`
-//     font-size: 1.5rem;
-// `;
-
-// export const Name = styled.p`
-//     color: ${colors.black};
-//     font-size: 1.6rem;
-//     line-height: 1.9rem;
-//     font-weight: 400;
-//     margin: 0;
-//     margin-left: 2rem;
-// `;
-
-
-
-// export const TestMembers = () => {
-//     const names = ["Amy Smith", "Juan Matias", "Richard James", "Emily Johnson"]
-//     return (
-//         <AllMembers>
-
-//             {names.map((names) => {
-
-//                 return (
-//                     <>
-//                         <MemberContainer>
-//                             <MemberPic>
-//                                 <Initials>{getInitialsFromFullName(names)}</Initials>
-
-//                             </MemberPic>
-//                             <Name>{names}</Name>
-//                         </MemberContainer>
-
-//                     </>
-//                 )
-//             })}
-//             <center style={{ "color": "red" }}>TEST DATA</center>
-//         </AllMembers>
-//     )
-// }
-
-// const Members = (name) => {
-//     return (
-//         <AllMembers>
-//             <MemberContainer>
-//                 <MemberPic>
-//                     <Initials></Initials>
-//                 </MemberPic>
-//             </MemberContainer>
-//         </AllMembers>
-//     )
-
-// }
-
-import React, { useCallback, useState, useRef, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import Loader from "components/Feed/StyledLoader";
+import Member from "components/OrganisationProfile/Member";
+import { mq } from "constants/theme";
+import React, { useCallback, useState } from "react";
 import {
     InfiniteLoader,
     AutoSizer,
@@ -99,12 +10,11 @@ import {
     CellMeasurer,
     CellMeasurerCache,
 } from "react-virtualized";
-import Post from "../Feed/Post";
-import Loader from "components/Feed/StyledLoader";
-import GTM from "constants/gtm-tags";
-import Member from "components/OrganisationProfile/Member";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { mq } from "constants/theme";
+import { theme } from "constants/theme";
+
+const { colors } = theme
 
 const HorizontalRule = styled.hr`
   display: none;
@@ -116,82 +26,43 @@ const HorizontalRule = styled.hr`
   }
 `;
 
-
-
-// const cellMeasurerCache = new CellMeasurerCache({
-//     fixedWidth: true,
-//     defaultHeight: 1000,
-//     rowHeight: 1000,
-//     _rowHeight: 1000
-// });
-
 const cellMeasurerCache = new CellMeasurerCache({
     fixedWidth: true,
     defaultHeight: 80,
 });
 
-
+const SeeAllLink = styled.div`
+    color: ${colors.royalBlue};
+    text-align: center;
+`
 
 const Applicants = ({
-    postDispatch,
-    filteredPosts,
-    updateComments,
+    filteredApplicants,
     user,
-    handlePostDelete,
-    handleEditPost,
-    handleCancelPostDelete,
-    postDelete,
-    deleteModalVisibility,
     loadNextPage,
     isNextPageLoading,
     itemCount,
     isItemLoaded,
     hasNextPage,
-    totalPostCount,
-    isProfile,
-    gtmIdPost,
-    page,
-    // cellMeasurerCache
-
+    totalApplicantCount,
 }) => {
-    const posts = Object.entries(filteredPosts);
+    const applicants = Object.entries(filteredApplicants);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
-    const [hiddenPosts, setHiddenPosts] = useState(
-        JSON.parse(localStorage.getItem("hiddenPosts")) || {},
-    );
-
-    const hidePost = useCallback(
-        (postId) => {
-            localStorage.setItem(
-                "hiddenPosts",
-                JSON.stringify({ ...hiddenPosts, [postId]: true }),
-            ); // objects are fast, better than looking for postId in an Array
-            setHiddenPosts({ ...hiddenPosts, [postId]: true });
-        },
-        [hiddenPosts],
-    );
-
-    const unhidePost = useCallback(
-        (postId) => {
-            localStorage.setItem(
-                "hiddenPosts",
-                JSON.stringify({ ...hiddenPosts, [postId]: null }),
-            );
-            setHiddenPosts({ ...hiddenPosts, [postId]: null });
-        },
-        [hiddenPosts],
-    );
-
-    const postItem = useCallback(
+    const [seeAll, setSeeAll] = useState(false)
+    const windowWidth = window.innerWidth
+    const applicantItem = useCallback(
         ({ key, index, style, parent }) => {
             let content;
             if (!isItemLoaded(index) && hasNextPage) {
                 content = <Loader />;
-            } else if (posts[index]) {
+            } else if (applicants[index]) {
                 content = (
-                    <Member
-                        applicant={posts[index][1]}
-                    />
+                    <>
+                        <HorizontalRule />
+                        <Member
+                            applicant={applicants[index][1]}
+                        />
+                    </>
                 );
             }
             return (
@@ -211,28 +82,16 @@ const Applicants = ({
             );
         },
         [
-            deleteModalVisibility,
-            gtmIdPost,
-            handleCancelPostDelete,
-            handleEditPost,
-            handlePostDelete,
             hasNextPage,
-            hiddenPosts,
-            hidePost,
             isItemLoaded,
-            isProfile,
-            postDelete,
-            postDispatch,
-            posts,
-            unhidePost,
-            updateComments,
+            applicants,
             user,
         ],
     );
 
     return (
         <div className="activity">
-            {!posts.length && isNextPageLoading ? (
+            {!applicants.length && isNextPageLoading ? (
                 <Loader />
             ) : (
                 <WindowScroller>
@@ -240,7 +99,7 @@ const Applicants = ({
                         <InfiniteLoader
                             isRowLoaded={isItemLoaded}
                             loadMoreRows={loadMoreItems}
-                            rowCount={totalPostCount}
+                            rowCount={totalApplicantCount}
                             threshold={5}
                         >
                             {({ onRowsRendered }) => (
@@ -252,14 +111,17 @@ const Applicants = ({
                                             width={width}
                                             isScrolling={isScrolling}
                                             onRowsRendered={onRowsRendered}
-                                            rowCount={itemCount}
-                                            rowHeight={cellMeasurerCache.rowHeight}
+                                            rowCount={seeAll ? itemCount :
+                                                windowWidth > 767 ? 4 : 3}
+                                            // rowHeight={cellMeasurerCache.rowHeight}
+                                            rowHeight={cellMeasurerCache.getHeight()}
                                             deferredMeasurementCache={cellMeasurerCache}
-                                            rowRenderer={postItem}
+                                            rowRenderer={applicantItem}
                                             scrollTop={scrollTop}
                                             onScroll={onChildScroll}
                                             overscanRowCount={1}
                                             scrollToAlignment={"start"}
+
                                         />
                                     )}
                                 </AutoSizer>
@@ -268,6 +130,13 @@ const Applicants = ({
                     )}
                 </WindowScroller>
             )}
+            <Link
+                onClick={setSeeAll}
+            >
+                <SeeAllLink>
+                    See All
+                </SeeAllLink>
+            </Link>
         </div>
     );
 };

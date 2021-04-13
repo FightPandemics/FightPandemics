@@ -7,7 +7,7 @@ const { colors } = theme;
 
 
 export const AllApplicants = styled.div`
-    /* max-height: 90px !important; */
+    /* height: 80px */
 `;
 
 export const ApplicantContainer = styled.div`
@@ -49,33 +49,8 @@ export const Name = styled.p`
     margin-left: 2rem;
 `;
 
-// export const TestApplicants = () => {
-//     // const names = []
-//     return (
-//         <AllApplicants>
-
-//             {/* {names.map((names) => { } */}
-
-//                 return (
-//             <>
-//                 <ApplicantContainer>
-//                     <ApplicantPic>
-//                         <Initials>{getInitialsFromFullName(names)}</Initials>
-
-//                     </ApplicantPic>
-//                     <Name>{names}</Name>
-//                 </ApplicantContainer>
-
-//             </>
-//                 )
-//             })
-//             <center style={{ "color": "red" }}>TEST DATA</center>
-//         </AllApplicants>
-//     )
-// }
-
 const Member = ({ applicant }) => {
-    
+
     return (
         <AllApplicants>
             <ApplicantContainer>

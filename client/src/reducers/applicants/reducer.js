@@ -1,6 +1,7 @@
-import { POSTS_ACTIONS } from "./actions";
+import { APPLICANTS_ACTIONS } from "./actions";
 import { isPostExpired } from "components/Feed/utils";
 
+//TODO remove expired
 const initialState = {
   applicants: [],
   page: 0,
@@ -32,12 +33,12 @@ export const getProfileModeProp = (mode) => {
 
 const applicantsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case POSTS_ACTIONS.FETCH_POSTS_BEGIN:
+    case APPLICANTS_ACTIONS.FETCH_APPLICANTS_BEGIN:
       return {
         ...state,
         isLoading: true,
       };
-    case POSTS_ACTIONS.FETCH_POSTS_SUCCESS: {
+    case APPLICANTS_ACTIONS.FETCH_APPLICANTS_SUCCESS: {
       const { payload } = action;
       return {
         ...state,
@@ -47,19 +48,19 @@ const applicantsReducer = (state = initialState, action) => {
       };
     }
 
-    case POSTS_ACTIONS.FETCH_PROFILE_POSTS_SUCCESS: {
+    case APPLICANTS_ACTIONS.FETCH_PROFILE_APPLICANTS_SUCCESS: {
       let { applicants, userId, objective, mode } = action.payload;
       objective = getProfileObjectiveProp(objective);
       mode = getProfileModeProp(mode);
       return {
         ...state,
         error: null,
-        profilePosts: {
-          ...state.profilePosts,
+        profileApplicants: {
+          ...state.profileApplicants,
           [userId]: {
-            ...state.profilePosts[userId],
+            ...state.profileApplicants[userId],
             [objective]: {
-              ...state.profilePosts[userId]?.[objective],
+              ...state.profileApplicants[userId]?.[objective],
               [mode]: applicants,
             },
           },
@@ -67,76 +68,76 @@ const applicantsReducer = (state = initialState, action) => {
         isLoading: false,
       };
     }
-    case POSTS_ACTIONS.UPDATE_PROFILE_POST_SUCCESS: {
+    case APPLICANTS_ACTIONS.UPDATE_PROFILE_APPLICANT_SUCCESS: {
       let { applicant, userId } = action.payload;
       const isExpired = isPostExpired(applicant);
       const objective = getProfileObjectiveProp(applicant.objective);
 
-      // map though all Profile Posts to update (likes, edits, etc.)
-      let currentPosts = state.profilePosts[userId]?.[objective]?.all;
-      currentPosts =
-        currentPosts !== undefined
-          ? currentPosts.map((currentPost) => {
-              if (currentPost._id !== applicant._id) {
-                return currentPost;
-              }
-              return {
-                ...currentPost,
-                ...applicant,
-              };
-            })
+      // map though all Profile Applicants to update
+      let currentApplicants = state.profileApplicants[userId]?.[objective]?.all;
+      currentApplicants =
+        currentApplicants !== undefined
+          ? currentApplicants.map((currentApplicant) => {
+            if (currentApplicant._id !== applicant._id) {
+              return currentApplicant;
+            }
+            return {
+              ...currentApplicant,
+              ...applicant,
+            };
+          })
           : undefined;
 
-      let currentActivePosts = state.profilePosts[userId]?.[objective]?.active;
-      let currentInActivePosts =
-        state.profilePosts[userId]?.[objective]?.inactive;
+      let currentActiveApplicants = state.profileApplicants[userId]?.[objective]?.active;
+      let currentInActiveApplicants =
+        state.profileApplicants[userId]?.[objective]?.inactive;
 
       if (!isExpired) {
         // map through active Profile applicants to update
-        currentActivePosts =
-          currentActivePosts !== undefined
-            ? currentActivePosts.map((currentActivePost) => {
-                if (currentActivePost._id !== applicant._id) {
-                  return currentActivePost;
-                }
-                return {
-                  ...currentActivePost,
-                  ...applicant,
-                };
-              })
+        currentActiveApplicants =
+          currentActiveApplicants !== undefined
+            ? currentActiveApplicants.map((currentActiveApplicant) => {
+              if (currentActiveApplicant._id !== applicant._id) {
+                return currentActiveApplicant;
+              }
+              return {
+                ...currentActiveApplicant,
+                ...applicant,
+              };
+            })
             : undefined;
       } else {
         // map though achived Profile applicants to update
-        currentInActivePosts =
-          currentInActivePosts !== undefined
-            ? currentInActivePosts.map((currentInActivePost) => {
-                if (currentInActivePost._id !== applicant._id) {
-                  return currentInActivePost;
-                }
-                return {
-                  ...currentInActivePost,
-                  ...applicant,
-                };
-              })
+        currentInActiveApplicants =
+          currentInActiveApplicants !== undefined
+            ? currentInActiveApplicants.map((currentInActiveApplicant) => {
+              if (currentInActiveApplicant._id !== applicant._id) {
+                return currentInActiveApplicant;
+              }
+              return {
+                ...currentInActiveApplicant,
+                ...applicant,
+              };
+            })
             : undefined;
       }
       return {
         ...state,
         error: null,
-        profilePosts: {
-          ...state.profilePosts,
+        profileApplicants: {
+          ...state.profileApplicants,
           [userId]: {
-            ...state.profilePosts[userId],
+            ...state.profileApplicants[userId],
             [objective]: {
-              active: currentActivePosts,
-              inactive: currentInActivePosts,
-              all: currentPosts,
+              active: currentActiveApplicants,
+              inactive: currentInActiveApplicants,
+              all: currentApplicants,
             },
           },
         },
       };
     }
-    case POSTS_ACTIONS.FETCH_POSTS_ERROR: {
+    case APPLICANTS_ACTIONS.FETCH_APPLICANTS_ERROR: {
       const { payload } = action;
       return {
         ...state,
@@ -145,12 +146,12 @@ const applicantsReducer = (state = initialState, action) => {
         isLoading: false,
       };
     }
-    case POSTS_ACTIONS.NEXT_PAGE:
+    case APPLICANTS_ACTIONS.NEXT_PAGE:
       return { ...state, page: state.page + 1 };
-    case POSTS_ACTIONS.SET_PAGE:
+    case APPLICANTS_ACTIONS.SET_PAGE:
       const { payload } = action;
       return { ...state, page: payload.page };
-    case POSTS_ACTIONS.RESET_PAGE: {
+    case APPLICANTS_ACTIONS.RESET_PAGE: {
       const { payload } = action;
       return {
         ...state,
@@ -160,27 +161,13 @@ const applicantsReducer = (state = initialState, action) => {
         isLoading: payload.isLoading,
       };
     }
-    case POSTS_ACTIONS.FINISH_LOADING:
+    case APPLICANTS_ACTIONS.FINISH_LOADING:
       return {
         ...state,
         isLoading: false,
         loadMore: false,
       };
-    case POSTS_ACTIONS.SET_LIKE: {
-      const { payload } = action;
-      return {
-        ...state,
-        applicants: {
-          ...state.applicants,
-          [payload.applicant._id]: {
-            ...state.applicants[payload.applicant._id],
-            liked: payload.applicant.liked,
-            likesCount: payload.count,
-          },
-        },
-      };
-    }
-    case POSTS_ACTIONS.SET_REPORTED: {
+    case APPLICANTS_ACTIONS.SET_REPORTED: {
       const { payload } = action;
       return {
         ...state,
@@ -193,7 +180,7 @@ const applicantsReducer = (state = initialState, action) => {
         },
       };
     }
-    case POSTS_ACTIONS.SHOW_ANYWAY: {
+    case APPLICANTS_ACTIONS.SHOW_ANYWAY: {
       const { payload } = action;
       return {
         ...state,
