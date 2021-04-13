@@ -150,7 +150,7 @@ const OrgBookTableOfContents = (props) => {
 
   useEffect(initialize, []);
 
-  useEffect(() => {}, [selectedPageDirty, confirmModalVisible]); //added confirmModalVisible
+  useEffect(() => {}, [selectedPageDirty, confirmModalVisible]);
 
   const handlePageClick = (e, page) => {
     e.persist();

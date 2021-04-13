@@ -347,6 +347,9 @@ const OrgBookEditor = () => {
     setSelectedPage(
       newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
     );
+    setPreselectedPage(
+      newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
+    );
     updateOrgBookPages(orgBookPages);
   };
 
@@ -473,13 +476,13 @@ const OrgBookEditor = () => {
     switch (action) {
       case UPDATE_ACTION_TYPES.saveProgressType:
       case UPDATE_ACTION_TYPES.republishType:
-        orgBookPages = replaceContentForSelectedPage(orgBookPages);
+        orgBookPages = replaceContentForSelectedPage(orgBookPages, true);
         updateOrgBookPages(orgBookPages);
 
         break;
 
       case UPDATE_ACTION_TYPES.publishType:
-        orgBookPages = replaceContentForSelectedPage(orgBookPages);
+        orgBookPages = replaceContentForSelectedPage(orgBookPages, false);
         orgBookPages = saveLivePageForPublish(orgBookPages, option);
         updateOrgBookPages(orgBookPages);
 
@@ -547,7 +550,7 @@ const OrgBookEditor = () => {
     });
   };
 
-  const replaceContentForSelectedPage = (orgBookPages) => {
+  const replaceContentForSelectedPage = (orgBookPages, preSelectPage) => {
     const oldOrgBookPages = [...currentOrgBookPages];
     const newOrgBookPages = oldOrgBookPages.map((page) =>
       page.pageId === selectedPage.pageId
@@ -566,6 +569,11 @@ const OrgBookEditor = () => {
     setSelectedPage(
       newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
     );
+    if (preSelectPage) {
+      setPreselectedPage(
+        newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
+      );
+    }
     return orgBookPages;
   };
 
@@ -619,6 +627,7 @@ const OrgBookEditor = () => {
       updatedOrgBookPages.orgBookPages.push(newOrgBookPage);
       setCurrentOrgBookPages(updatedOrgBookPages.orgBookPages);
       setSelectedPage(newOrgBookPage);
+      setPreselectedPage(newOrgBookPage);
       orgBookPages = {
         orgBookPages: updatedOrgBookPages.orgBookPages,
       };
@@ -629,6 +638,10 @@ const OrgBookEditor = () => {
         page.status === PAGE_CATEGORIES.liveCategory
           ? {
               ...page,
+              viewLevel:
+                option === PUBLISH_OPTIONS.privateView
+                  ? VIEW_LEVELS.orgView
+                  : VIEW_LEVELS.publicView,
               content: selectedPage.content,
               updated_by: organisation.ownerId,
               updated_at: new Date().toLocaleString().replace(",", ""),
@@ -640,6 +653,13 @@ const OrgBookEditor = () => {
       };
       setCurrentOrgBookPages(newOrgBookPages);
       setSelectedPage(
+        newOrgBookPages.find(
+          (page) =>
+            page.pageGroupNumber === selectedPage.pageGroupNumber &&
+            page.status === PAGE_CATEGORIES.liveCategory,
+        ),
+      );
+      setPreselectedPage(
         newOrgBookPages.find(
           (page) =>
             page.pageGroupNumber === selectedPage.pageGroupNumber &&
@@ -669,6 +689,9 @@ const OrgBookEditor = () => {
     setSelectedPage(
       newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
     );
+    setPreselectedPage(
+      newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
+    );
     updateOrgBookPages(orgBookPages);
   };
 
@@ -682,6 +705,13 @@ const OrgBookEditor = () => {
     };
     setCurrentOrgBookPages(newOrgBookPages);
     setSelectedPage(
+      newOrgBookPages.find(
+        (page) =>
+          page.pageGroupNumber === selectedPage.pageGroupNumber &&
+          page.status === PAGE_CATEGORIES.draftCategory,
+      ),
+    );
+    setPreselectedPage(
       newOrgBookPages.find(
         (page) =>
           page.pageGroupNumber === selectedPage.pageGroupNumber &&
@@ -719,6 +749,13 @@ const OrgBookEditor = () => {
         };
         setCurrentOrgBookPages(newOrgBookPages);
         setSelectedPage(
+          newOrgBookPages.find(
+            (page) =>
+              page.pageGroupNumber === selectedPage.pageGroupNumber &&
+              page.status === PAGE_CATEGORIES.draftCategory,
+          ),
+        );
+        setPreselectedPage(
           newOrgBookPages.find(
             (page) =>
               page.pageGroupNumber === selectedPage.pageGroupNumber &&
@@ -767,6 +804,9 @@ const OrgBookEditor = () => {
     };
     setCurrentOrgBookPages(newOrgBookPages);
     setSelectedPage(
+      newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
+    );
+    setPreselectedPage(
       newOrgBookPages.find((page) => page.pageId === selectedPage.pageId),
     );
     return orgBookPages;
