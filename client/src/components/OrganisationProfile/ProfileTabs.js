@@ -10,7 +10,7 @@ export const ProfileTabs = styled(Tabs)`
   font-weight: 600;
   font-size: 1.6rem;
   line-height: 24px;
-  margin-top: 10.1rem
+  margin-top: 10.1rem;
 
 .ant-tabs-nav {
   margin-bottom: 0;
@@ -35,7 +35,7 @@ export const ProfileTabs = styled(Tabs)`
 }
   .ant-tabs-nav-list {
     margin: 0;
-    margin-top: 5rem;
+    /* margin-top: 5rem; */
   }
   
   .ant-tabs-tab {

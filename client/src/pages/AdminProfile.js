@@ -4,7 +4,8 @@ import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
 import Applicants from "components/OrganisationProfile/Applicants";
 import { ProfileTabPane, ProfileTabs } from "components/OrganisationProfile/ProfileTabs";
-import ProfilePic from "components/Positions/ProfilePic";
+// import ProfilePic from "components/Positions/ProfilePic";
+import ProfilePic from "components/Picture/ProfilePic";
 import {
     OrganisationContext,
     withOrganisationContext
@@ -41,8 +42,8 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
+import { WhiteSpace } from "antd-mobile";
 
-// IMPORTED FROM Feed Page
 const initialState = {
     showFilters: false,
     filterModal: true,
@@ -312,31 +313,32 @@ const AdminProfile = (props) => {
                 >
                     <ProfileBackgroup />
                     <ProfileLayout>
+                        <UserInfoContainer>
+                            <AvatarPhotoContainer>
+                                <ProfilePic
+                                    user={organisation}
+                                    initials={getInitialsFromFullName(name)}
+                                />
+                            </AvatarPhotoContainer>
+                            <UserInfoDesktop>
+                                <NameDiv>
+                                    <div className="name-container">
+                                        <NamePara>
+                                            {name}
+                                        </NamePara>
+                                        {address && (
+                                            <div title={address} className="address-container">
+                                                <img src={locationIcon} alt={address} />
+                                                {address}
+                                            </div>
+                                        )}
+                                    </div>
+                                </NameDiv>
+                                {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+                            </UserInfoDesktop>
+                        </UserInfoContainer>
+                        <WhiteSpace />
                         <PositionsContainer>
-                            <UserInfoContainer>
-                                <AvatarPhotoContainer>
-                                    <ProfilePic
-                                        user={organisation}
-                                        initials={getInitialsFromFullName(name)}
-                                    />
-                                </AvatarPhotoContainer>
-                                <UserInfoDesktop>
-                                    <NameDiv>
-                                        <div className="name-container">
-                                            <NamePara>
-                                                {name}
-                                            </NamePara>
-                                            {address && (
-                                                <div title={address} className="address-container">
-                                                    <img src={locationIcon} alt={address} />
-                                                    {address}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </NameDiv>
-                                    {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-                                </UserInfoDesktop>
-                            </UserInfoContainer>
                             {   // Position title and description to be pulled from backend / API
                                 // Placeholder text for ONE position is being used below
                                 // Component will be needed for multiple positions (based on backend schema / structure)
