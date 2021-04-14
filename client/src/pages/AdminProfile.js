@@ -124,7 +124,7 @@ const AdminProfile = (props) => {
 
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);
-                    setRawTotalApplicants(meta.total)
+                    setRawTotalApplicants(applicants.total)
                 }
 
                 const lastPage = Math.ceil(meta.total / limit) - 1;
@@ -344,7 +344,7 @@ const AdminProfile = (props) => {
                                 <ProfileTabPane
                                     className="single-tab"
                                     tab={t("profile.views.applicants") + ` (${rawTotalApplicantCount})`} key="members">
-                                    { rawTotalApplicantCount == 0 ?
+                                    {rawTotalApplicantCount == 0 ?
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No Applicants to display.
                                     </div> :
@@ -359,7 +359,7 @@ const AdminProfile = (props) => {
                                             page={page}
                                             emptyFeed={emptyFeed}
                                         />
-                                    
+
                                     }
                                 </ProfileTabPane>
                             </ProfileTabs>
