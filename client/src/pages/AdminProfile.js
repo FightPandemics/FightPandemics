@@ -121,7 +121,8 @@ const AdminProfile = (props) => {
                 data: { data: applicants, meta },
             } = await axios.get(endpoint);
             if (applicants.length && meta.total) {
-
+                console.log(JSON.stringify(applicants))
+                console.log(JSON.stringify(meta))
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);
                     setRawTotalApplicants(meta.total)
@@ -373,8 +374,8 @@ const AdminProfile = (props) => {
 }
 
 const getApplicantsBaseURL = (organisationId, limit, skip) => {
-    // NEED TO ADD ORGANSATION ID TO QUERY STRING
-    return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+    // return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+    return `/api/applicants?includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
 export default withUserContext(withOrganisationContext(AdminProfile));

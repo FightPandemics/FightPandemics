@@ -96,13 +96,13 @@ async function routes(app) {
     },
     async (req) => {
       const { limit, skip, organisationId, includeMeta } = req.query;
+      let orgFilter = []
+      // if (organisationId) {
+      //   orgFilter.push(ongoose.Types.ObjectId(organisationId));
+      // }
       const [applicantsErr, applicants] = await app.to(
+
         Applicant.aggregate([
-          {
-            $match: {
-              organizationId: mongoose.Types.ObjectId(organisationId)
-            }
-          },
           {
             $skip: parseInt(skip, 10) || 0,
           },

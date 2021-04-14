@@ -41,6 +41,7 @@ applicantSchema.index(
 );
 /* eslint-enable */
 applicantSchema.index({ "applicant.location.coordinates": "2dsphere" });
+applicantSchema.index({ "organizationId": 1, createdAt: -1 });
 applicantSchema.index({
   // Expiration Filter
   expireAt: -1,
