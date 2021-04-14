@@ -260,6 +260,7 @@ const OrgBookEditorSpace = (props) => {
     //contextmenu appears after right-clicking on editable content
     return (
       <Editor
+        //apiKey={process.env.REACT_APP_TINYMCE_API_KEY}
         apiKey="6wsqfx2q8gaxfha3k31vw5hivcu9rp3su7q4o2kuy8p9qavt"
         initialValue={selectedPage?.content}
         value={selectedPage?.content}

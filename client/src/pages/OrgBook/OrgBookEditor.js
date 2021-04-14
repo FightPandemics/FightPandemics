@@ -4,6 +4,7 @@ import { theme, mq } from "../../constants/theme";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { v4 as uuidv4 } from "uuid";
+import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { refetchUser } from "actions/authActions";
 import {
@@ -19,6 +20,12 @@ import {
   OrganisationContext,
   withOrganisationContext,
 } from "../../context/OrganisationContext";
+import { UserContext, withUserContext } from "context/UserContext";
+import {
+  fetchUser,
+  fetchUserError,
+  fetchUserSuccess,
+} from "hooks/actions/userActions";
 import { Alert } from "antd";
 import SuccessAlert from "../../components/Alert/SuccessAlert";
 import OrgBookTableOfContents from "../../components/OrgBook/OrgBookTableOfContents";
@@ -175,7 +182,12 @@ const OrgBookEditor = () => {
   const { orgProfileState, orgProfileDispatch } = useContext(
     OrganisationContext,
   );
+  const {
+    userProfileState: { user },
+    userProfileDispatch,
+  } = useContext(UserContext);
   const { loading, organisation } = orgProfileState;
+  const [currentUserId, setCurrentUserId] = useState(null);
   const [currentOrgBookPages, setCurrentOrgBookPages] = useState(null);
   const forceUpdate = useForceUpdate();
 
@@ -198,6 +210,7 @@ const OrgBookEditor = () => {
 
   useEffect(() => {
     (async function fetchProfile() {
+      userProfileDispatch(fetchUser());
       orgProfileDispatch(fetchOrganisation());
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
@@ -223,7 +236,27 @@ const OrgBookEditor = () => {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, t]);
+    (async function fetchUserProfile() {
+      userProfileDispatch(fetchUser());
+      try {
+        const res = await axios.get("/api/users/current");
+        userProfileDispatch(fetchUserSuccess(res.data));
+        setCurrentUserId(res.data.id);
+        //console.log('user fetched: ' + JSON.stringify(res.data));
+      } catch (err) {
+        const message = err.response?.data?.message || err.message;
+        const translatedErrorMessage = t([
+          `error.${message}`,
+          `error.http.${message}`,
+        ]);
+        userProfileDispatch(
+          fetchUserError(
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
+        );
+      }
+    })();
+  }, [orgProfileDispatch, organisationId, userProfileDispatch, t]);
 
   const handleOnCreate = (formData) => {
     if (currentEditOrgBookMode === ORGBOOK_CREATE_MODE) {
@@ -297,8 +330,8 @@ const OrgBookEditor = () => {
       content: content,
       updated_by: "",
       updated_at: "",
-      created_by: organisation.ownerId, //this will have to be filled in by be when editors exist
-      created_at: new Date().toLocaleString().replace(",", ""),
+      created_by: currentUserId,
+      created_at: moment(new Date()).utc().format("YYYY-MM-DD HH:mm:ss"),
     };
   };
 
@@ -335,8 +368,8 @@ const OrgBookEditor = () => {
         ? {
             ...page,
             name: formData.pagename,
-            updated_by: organisation.ownerId,
-            updated_at: new Date().toLocaleString().replace(",", ""),
+            updated_by: currentUserId,
+            updated_at: moment(new Date()).utc().format("YYYY-MM-DD HH:mm:ss"),
           }
         : page,
     );
@@ -557,8 +590,8 @@ const OrgBookEditor = () => {
         ? {
             ...page,
             content: selectedPage.content,
-            updated_by: organisation.ownerId,
-            updated_at: new Date().toLocaleString().replace(",", ""),
+            updated_by: currentUserId,
+            updated_at: moment(new Date()).utc().format("YYYY-MM-DD HH:mm:ss"),
           }
         : page,
     );
@@ -643,8 +676,10 @@ const OrgBookEditor = () => {
                   ? VIEW_LEVELS.orgView
                   : VIEW_LEVELS.publicView,
               content: selectedPage.content,
-              updated_by: organisation.ownerId,
-              updated_at: new Date().toLocaleString().replace(",", ""),
+              updated_by: currentUserId,
+              updated_at: moment(new Date())
+                .utc()
+                .format("YYYY-MM-DD HH:mm:ss"),
             }
           : page,
       );
@@ -677,8 +712,8 @@ const OrgBookEditor = () => {
         ? {
             ...page,
             status: PAGE_CATEGORIES.draftCategory,
-            updated_by: organisation.ownerId,
-            updated_at: new Date().toLocaleString().replace(",", ""),
+            updated_by: currentUserId,
+            updated_at: moment(new Date()).utc().format("YYYY-MM-DD HH:mm:ss"),
           }
         : page,
     );
@@ -736,8 +771,10 @@ const OrgBookEditor = () => {
             ? {
                 ...page,
                 content: selectedPage.content,
-                updated_by: organisation.ownerId,
-                updated_at: new Date().toLocaleString().replace(",", ""),
+                updated_by: currentUserId,
+                updated_at: moment(new Date())
+                  .utc()
+                  .format("YYYY-MM-DD HH:mm:ss"),
               }
             : page,
         );
@@ -794,8 +831,8 @@ const OrgBookEditor = () => {
               action === UPDATE_ACTION_TYPES.changeLiveToPrivateViewType
                 ? VIEW_LEVELS.orgView
                 : VIEW_LEVELS.publicView,
-            updated_by: organisation.ownerId,
-            updated_at: new Date().toLocaleString().replace(",", ""),
+            updated_by: currentUserId,
+            updated_at: moment(new Date()).utc().format("YYYY-MM-DD HH:mm:ss"),
           }
         : page,
     );
@@ -1102,4 +1139,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps,
-)(withOrganisationContext(OrgBookEditor));
+)(withUserContext(withOrganisationContext(OrgBookEditor)));
