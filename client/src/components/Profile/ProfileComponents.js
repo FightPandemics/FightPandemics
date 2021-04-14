@@ -307,6 +307,7 @@ export const SeeOrgBookLink = styled.a`
   display: block;
   width: fit-content;
   margin: auto;
+  margin-top: 1rem;
 `; 
 
 export const MobileLocation = styled.div`
