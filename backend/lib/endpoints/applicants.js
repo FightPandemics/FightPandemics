@@ -87,6 +87,16 @@ async function routes(app) {
           return applicants;
         })
       );
+
+      const totalResultsAggregationPipeline = await Applicant.aggregate(
+        // keywords && !location
+        //   ? [
+        //     { $group: { _id: null, count: { $sum: 1 } } },
+        //   ]
+        //   : 
+        [{ $group: { _id: null, count: { $sum: 1 } } }]
+      );
+
       const applicantsResponse = (response) => {
         if (!includeMeta) {
           return response;
