@@ -101,11 +101,9 @@ const AdminProfile = (props) => {
 
     const refetchApplicants = (isLoading, loadMore, softRefresh = false) => {
         if (!softRefresh) {
-            console.log("test1 " + loadMore)
             dispatchAction(SET_VALUE, "applyFilters", true);
             dispatch(applicantsActions.resetPageAction({ isLoading, loadMore }));
             if (page === 0) {
-                console.log("tests2 " + JSON.stringify(loadMore))
                 setToggleRefetch(!toggleRefetch);
             }
         }
@@ -205,22 +203,18 @@ const AdminProfile = (props) => {
     const loadNextPage = useCallback(
 
         ({ stopIndex }) => {
-            console.log("test before 3 and 4 " + JSON.stringify(loadMore))
-            console.log("express " + stopIndex >= feedApplicants.length)
             if (
                 !isLoading &&
                 loadMore &&
                 stopIndex >= feedApplicants.length &&
                 feedApplicants.length
             ) {
-                console.log("tests3 " + JSON.stringify(loadMore))
                 return new Promise((resolve) => {
                     dispatch(applicantsActions.setNextPageAction());
                     dispatchAction(SET_VALUE, "applyFilters", true);
                     resolve();
                 });
             } else {
-                console.log("tests4 " + JSON.stringify(loadMore))
                 return Promise.resolve();
             }
         },
@@ -229,7 +223,6 @@ const AdminProfile = (props) => {
 
     useEffect(() => {
         setItemCount(loadMore ? feedApplicants.length + 1 : feedApplicants.length);
-        console.log("tests5 " + JSON.stringify(loadMore))
     }, [feedApplicants.length, loadMore]);
 
     const emptyFeed = () => applicantsList.length < 1 && !isLoading;
@@ -380,7 +373,7 @@ const AdminProfile = (props) => {
 
 const getApplicantsBaseURL = (organisationId, limit, skip) => {
     // NEED TO ADD ORGANSATION ID TO QUERY STRING
-    return `/api/applicants?organisationId=603be1140789a03df4bdb17c&includeMeta=true&limit=${limit}&skip=${skip}`;
+    return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
 export default withUserContext(withOrganisationContext(AdminProfile));
