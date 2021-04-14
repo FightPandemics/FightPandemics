@@ -103,8 +103,8 @@ async function routes(app) {
         }
         return {
           meta: {
-            total: applicants.length
-              ? applicants[0].count
+            total: totalResultsAggregationPipeline.length
+              ? totalResultsAggregationPipeline[0].count
               : 0,
           },
           data: response,
