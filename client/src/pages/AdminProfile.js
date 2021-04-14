@@ -68,6 +68,7 @@ const AdminProfile = (props) => {
     const [itemCount, setItemCount] = useState(0);
     const [toggleRefetch, setToggleRefetch] = useState(false);
     const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
+    const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
     const {
         filterModal,
         activePanel,
@@ -100,9 +101,11 @@ const AdminProfile = (props) => {
 
     const refetchApplicants = (isLoading, loadMore, softRefresh = false) => {
         if (!softRefresh) {
+            console.log("test1 " + loadMore)
             dispatchAction(SET_VALUE, "applyFilters", true);
             dispatch(applicantsActions.resetPageAction({ isLoading, loadMore }));
             if (page === 0) {
+                console.log("tests2 " + JSON.stringify(loadMore))
                 setToggleRefetch(!toggleRefetch);
             }
         }
@@ -123,6 +126,7 @@ const AdminProfile = (props) => {
 
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);
+                    setRawTotalApplicants(meta.total)
                 }
 
                 const lastPage = Math.ceil(meta.total / limit) - 1;
@@ -201,18 +205,22 @@ const AdminProfile = (props) => {
     const loadNextPage = useCallback(
 
         ({ stopIndex }) => {
+            console.log("test before 3 and 4 " + JSON.stringify(loadMore))
+            console.log("express " + stopIndex >= feedApplicants.length)
             if (
                 !isLoading &&
                 loadMore &&
                 stopIndex >= feedApplicants.length &&
                 feedApplicants.length
             ) {
+                console.log("tests3 " + JSON.stringify(loadMore))
                 return new Promise((resolve) => {
                     dispatch(applicantsActions.setNextPageAction());
                     dispatchAction(SET_VALUE, "applyFilters", true);
                     resolve();
                 });
             } else {
+                console.log("tests4 " + JSON.stringify(loadMore))
                 return Promise.resolve();
             }
         },
@@ -221,6 +229,7 @@ const AdminProfile = (props) => {
 
     useEffect(() => {
         setItemCount(loadMore ? feedApplicants.length + 1 : feedApplicants.length);
+        console.log("tests5 " + JSON.stringify(loadMore))
     }, [feedApplicants.length, loadMore]);
 
     const emptyFeed = () => applicantsList.length < 1 && !isLoading;
@@ -341,20 +350,23 @@ const AdminProfile = (props) => {
                             <ProfileTabs>
                                 <ProfileTabPane
                                     className="single-tab"
-                                    tab={t("profile.views.applicants") + ` (${totalApplicantCount})`} key="members">
-                                    <div style={{ textAlign: "center" }}>
-                                        {emptyFeed() && <>"No Applicants to display."</>}
-                                    </div>
-                                    <Applicants
-                                        itemCount={itemCount}
-                                        isItemLoaded={isItemLoaded}
-                                        isNextPageLoading={isLoading}
-                                        loadNextPage={loadNextPage}
-                                        hasNextPage={loadMore}
-                                        filteredApplicants={applicantsList}
-                                        totalApplicantCount={totalApplicantCount}
-                                        page={page}
-                                    />
+                                    tab={t("profile.views.applicants") + ` (${rawTotalApplicantCount})`} key="members">
+                                    {emptyFeed() ?
+                                        <div style={{ textAlign: "center", marginTop: "5rem" }}>
+                                            No Applicants to display.
+                                    </div> :
+                                        <Applicants
+                                            itemCount={itemCount}
+                                            isItemLoaded={isItemLoaded}
+                                            isNextPageLoading={isLoading}
+                                            loadNextPage={loadNextPage}
+                                            hasNextPage={loadMore}
+                                            filteredApplicants={applicantsList}
+                                            totalApplicantCount={totalApplicantCount}
+                                            page={page}
+                                            emptyFeed={emptyFeed}
+                                        />
+                                    }
                                 </ProfileTabPane>
                             </ProfileTabs>
                         </PositionsContainer >
@@ -368,7 +380,7 @@ const AdminProfile = (props) => {
 
 const getApplicantsBaseURL = (organisationId, limit, skip) => {
     // NEED TO ADD ORGANSATION ID TO QUERY STRING
-    return `/api/applicants?&includeMeta=true&limit=${limit}&skip=${skip}`;
+    return `/api/applicants?organisationId=603be1140789a03df4bdb17c&includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
 export default withUserContext(withOrganisationContext(AdminProfile));

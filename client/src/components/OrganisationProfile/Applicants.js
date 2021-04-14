@@ -1,5 +1,5 @@
 import Loader from "components/Feed/StyledLoader";
-import Member from "components/OrganisationProfile/Applicant";
+import Applicant from "components/OrganisationProfile/Applicant";
 import { mq } from "constants/theme";
 import React, { useCallback, useState } from "react";
 import {
@@ -53,6 +53,7 @@ const Applicants = ({
     isItemLoaded,
     hasNextPage,
     totalApplicantCount,
+    emptyFeed
 }) => {
     const applicants = Object.entries(filteredApplicants);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
@@ -72,7 +73,7 @@ const Applicants = ({
                 content = (
                     <>
                         <HorizontalRule />
-                        <Member
+                        <Applicant
                             applicant={applicants[index][1]}
                         />
                     </>
@@ -104,7 +105,7 @@ const Applicants = ({
 
     return (
         <div className="activity">
-            {!applicants.length && isNextPageLoading ? (
+            { !applicants.length ? (
                 <Loader />
             ) : (
                 <WindowScroller>
@@ -115,6 +116,7 @@ const Applicants = ({
                             rowCount={totalApplicantCount}
                             threshold={5}
                         >
+
                             {({ onRowsRendered }) => (
                                 <AutoSizer disableHeight>
                                     {({ width }) => (
@@ -137,6 +139,7 @@ const Applicants = ({
                                     )}
                                 </AutoSizer>
                             )}
+
                         </InfiniteLoader>
                     )}
                 </WindowScroller>

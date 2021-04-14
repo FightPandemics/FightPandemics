@@ -19,6 +19,13 @@ const getApplicantsSchema = {
     .prop("includeMeta", S.boolean().default(false)),
 };
 
+const getOrganizationApplicantsSchema = {
+  queryString: strictQueryStringSchema()
+    .prop("organisationId", S.string())
+    .prop("skip", S.integer())
+    .prop("includeMeta", S.boolean().default(false)),
+};
+
 const createApplicantSchema = {
   body: strictSchema()
     .prop("organizationId", S.string().required())
@@ -45,5 +52,6 @@ module.exports = {
   createApplicantSchema,
   getApplicantByIdSchema,
   getApplicantsSchema,
-  updateApplicantStatusSchema
+  getOrganizationApplicantsSchema,
+  updateApplicantStatusSchema,
 };

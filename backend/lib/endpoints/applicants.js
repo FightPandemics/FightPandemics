@@ -5,7 +5,8 @@ const {
   getApplicantByIdSchema,
   getApplicantsSchema,
   createApplicantSchema,
-  updateApplicantStatusSchema
+  updateApplicantStatusSchema,
+  getOrganizationApplicantsSchema
 } = require("../endpoints/schema/applicants");
 const { setElapsedTimeText } = require("../utils");
 
@@ -13,12 +14,9 @@ const { setElapsedTimeText } = require("../utils");
  * /api/applicants
  */
 async function routes(app) {
-  // const { mongo } = app;
   const Applicant = app.mongo.model("Applicants");
   const User = app.mongo.model("IndividualUser");
-  // const Organization = app.mongo.model("Organization");
   const Organization = app.mongo.model("OrganisationUser");
-  // const User = app.mongo.model("User");
 
   const APPLICANT_PAGE_SIZE = 10;
 
@@ -30,12 +28,46 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { applicantId },
-        organizationId
+        params: { applicantId
+          , orgizationId },
       } = req;
 
       const [applicantErr, applicant] = await app.to(
         Applicant.findById(applicantId)
+      );
+
+      if (applicantErr) {
+        if (applicantErr instanceof mongoose.Error.CastError) {
+          req.log.error(applicantErr, "Can't find a applicant with the given id.");
+          throw app.httpErrors.badRequest();
+        }
+        throw app.httpErrors.internalServerError();
+      }
+
+
+      else if (applicant == null) {
+        throw app.httpErrors.notFound();
+      }
+
+      return {
+        ...applicant.toObject()
+      };
+    }
+  );
+
+  app.get(
+    "/:organizationId/organisationApplicants",
+    {
+      preValidation: [app.authenticateOptional, app.setActor],
+      schema: getOrganizationApplicantsSchema
+    },
+    async (req) => {
+      const {
+        params: { organizationId },
+      } = req;
+
+      const [applicantErr, applicant] = await app.to(
+        Applicant.findById(organizationId)
       );
 
       if (applicantErr) {
@@ -63,20 +95,21 @@ async function routes(app) {
       schema: getApplicantsSchema
     },
     async (req) => {
-      const { limit, skip, organizationId, includeMeta } = req.query;
+      const { limit, skip, organisationId, includeMeta } = req.query;
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate([
-          // {
-          //   $match: {
-          //     organizationId: mongoose.Types.ObjectId(organizationId)
-          //   }
-          // },
+          {
+            $match: {
+              organizationId: mongoose.Types.ObjectId(organisationId)
+            }
+          },
           {
             $skip: parseInt(skip, 10) || 0,
           },
           {
             $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
           }
+
         ]).then((applicants) => {
           applicants.forEach((applicant) => {
             applicant.elapsedTimeText = setElapsedTimeText(

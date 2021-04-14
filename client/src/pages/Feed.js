@@ -297,9 +297,11 @@ const Feed = (props) => {
 
     // softRefresh = only close filter modal etc.. but not RESET_PAGE and refetch posts
     if (!softRefresh) {
+      console.log("test1 " + loadMore)
       dispatchAction(SET_VALUE, "applyFilters", true);
       dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
       if (page === 0) {
+        console.log("tests2 " + JSON.stringify(loadMore))
         setToggleRefetch(!toggleRefetch);
       }
     }
@@ -663,18 +665,22 @@ const Feed = (props) => {
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
+      console.log("test before 3 and 4 " + JSON.stringify(loadMore))
+      
       if (
         !isLoading &&
         loadMore &&
         stopIndex >= feedPosts.length &&
         feedPosts.length
       ) {
+        console.log("test3 " + loadMore)
         return new Promise((resolve) => {
           dispatch(postsActions.setNextPageAction());
           dispatchAction(SET_VALUE, "applyFilters", true);
           resolve();
         });
       } else {
+        console.log("tests4 " + JSON.stringify(loadMore))
         return Promise.resolve();
       }
     },
@@ -683,6 +689,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     setItemCount(loadMore ? feedPosts.length + 1 : feedPosts.length);
+    console.log("tests5 " + JSON.stringify(loadMore))
   }, [feedPosts.length, loadMore]);
 
   const postDelete = async (post) => {
