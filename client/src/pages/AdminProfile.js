@@ -50,7 +50,6 @@ const initialState = {
     showCreatePostModal: false,
     applyFilters: false,
     activePanel: null,
-    ignoreUserLocation: true,
 };
 
 const PAGINATION_LIMIT = 10;
@@ -73,7 +72,6 @@ const AdminProfile = (props) => {
         filterModal,
         activePanel,
         showFilters,
-        ignoreUserLocation,
     } = feedState;
     const filters = Object.values(filterOptions);
     const {
@@ -186,10 +184,8 @@ const AdminProfile = (props) => {
         }
     };
 
-    useEffect(() => { }, [ignoreUserLocation]);
 
     useEffect(() => {
-        // getStateFromQuery();
     }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
@@ -304,7 +300,6 @@ const AdminProfile = (props) => {
                         filterModal,
                         activePanel,
                         location,
-                        ignoreUserLocation,
                         dispatchAction,
                         selectedOptions,
                         showFilters,
