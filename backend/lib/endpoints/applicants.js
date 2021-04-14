@@ -13,12 +13,9 @@ const { setElapsedTimeText } = require("../utils");
  * /api/applicants
  */
 async function routes(app) {
-  // const { mongo } = app;
   const Applicant = app.mongo.model("Applicants");
   const User = app.mongo.model("IndividualUser");
-  // const Organization = app.mongo.model("Organization");
   const Organization = app.mongo.model("OrganisationUser");
-  // const User = app.mongo.model("User");
 
   const APPLICANT_PAGE_SIZE = 10;
 
