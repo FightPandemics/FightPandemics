@@ -344,7 +344,7 @@ const AdminProfile = (props) => {
                                 <ProfileTabPane
                                     className="single-tab"
                                     tab={t("profile.views.applicants") + ` (${rawTotalApplicantCount})`} key="members">
-                                    {emptyFeed() ?
+                                    { rawTotalApplicantCount == 0 ?
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No Applicants to display.
                                     </div> :
@@ -359,6 +359,7 @@ const AdminProfile = (props) => {
                                             page={page}
                                             emptyFeed={emptyFeed}
                                         />
+                                    
                                     }
                                 </ProfileTabPane>
                             </ProfileTabs>

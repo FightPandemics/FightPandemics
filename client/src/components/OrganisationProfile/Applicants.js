@@ -105,7 +105,7 @@ const Applicants = ({
 
     return (
         <div className="activity">
-            { !applicants.length ? (
+            { !applicants.length && isNextPageLoading ? (
                 <Loader />
             ) : (
                 <WindowScroller>
