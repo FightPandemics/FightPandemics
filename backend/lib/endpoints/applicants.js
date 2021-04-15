@@ -96,21 +96,33 @@ async function routes(app) {
     },
     async (req) => {
       const { limit, skip, organisationId, includeMeta } = req.query;
-      let orgFilter = []
-      // if (organisationId) {
-      //   orgFilter.push(ongoose.Types.ObjectId(organisationId));
-      // }
       const [applicantsErr, applicants] = await app.to(
+        Applicant.aggregate(
+          organisationId
+            ?
+            [
+              {
+                $match: {
+                  organizationId: mongoose.Types.ObjectId(organisationId)
+                }
+              },
+              {
+                $skip: parseInt(skip, 10) || 0,
+              },
+              {
+                $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+              }
+            ] :
+            [
+              {
+                $skip: parseInt(skip, 10) || 0,
+              },
+              {
+                $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+              }
+            ]
 
-        Applicant.aggregate([
-          {
-            $skip: parseInt(skip, 10) || 0,
-          },
-          {
-            $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-          }
-
-        ]).then((applicants) => {
+        ).then((applicants) => {
           applicants.forEach((applicant) => {
             applicant.elapsedTimeText = setElapsedTimeText(
               applicant.createdAt,
@@ -121,14 +133,6 @@ async function routes(app) {
         })
       );
 
-      const totalResultsAggregationPipeline = await Applicant.aggregate(
-        // keywords && !location
-        //   ? [
-        //     { $group: { _id: null, count: { $sum: 1 } } },
-        //   ]
-        //   : 
-        [{ $group: { _id: null, count: { $sum: 1 } } }]
-      );
       const applicantsResponse = (response) => {
         if (!includeMeta) {
           return response;
