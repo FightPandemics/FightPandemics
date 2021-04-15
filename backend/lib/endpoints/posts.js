@@ -32,7 +32,7 @@ async function routes(app) {
   const User = mongo.model("User");
 
   // /posts
-  const POST_PAGE_SIZE = 5;
+  const POST_PAGE_SIZE = 10;
   const UNLOGGED_POST_SIZE = 120;
   const EXPIRATION_OPTIONS = ["day", "week", "month"];
 

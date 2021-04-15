@@ -60,21 +60,34 @@ async function routes(app) {
       schema: getApplicantsSchema
     },
     async (req) => {
-      const { limit, skip, organizationId, includeMeta } = req.query;
+      const { limit, skip, organisationId, includeMeta } = req.query;
       const [applicantsErr, applicants] = await app.to(
-        Applicant.aggregate([
-          // {
-          //   $match: {
-          //     organizationId: mongoose.Types.ObjectId(organizationId)
-          //   }
-          // },
-          {
-            $skip: parseInt(skip, 10) || 0,
-          },
-          {
-            $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-          }
-        ]).then((applicants) => {
+        Applicant.aggregate(
+          organisationId
+            ?
+            [
+              {
+                $match: {
+                  organizationId: mongoose.Types.ObjectId(organisationId)
+                }
+              },
+              {
+                $skip: parseInt(skip, 10) || 0,
+              },
+              {
+                $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+              }
+            ] :
+            [
+              {
+                $skip: parseInt(skip, 10) || 0,
+              },
+              {
+                $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+              }
+            ]
+
+        ).then((applicants) => {
           applicants.forEach((applicant) => {
             applicant.elapsedTimeText = setElapsedTimeText(
               applicant.createdAt,
@@ -85,23 +98,14 @@ async function routes(app) {
         })
       );
 
-      const totalResultsAggregationPipeline = await Applicant.aggregate(
-        // keywords && !location
-        //   ? [
-        //     { $group: { _id: null, count: { $sum: 1 } } },
-        //   ]
-        //   : 
-        [{ $group: { _id: null, count: { $sum: 1 } } }]
-      );
-
       const applicantsResponse = (response) => {
         if (!includeMeta) {
           return response;
         }
         return {
           meta: {
-            total: totalResultsAggregationPipeline.length
-              ? totalResultsAggregationPipeline[0].count
+            total: applicants.length
+              ? applicants[0].count
               : 0,
           },
           data: response,
