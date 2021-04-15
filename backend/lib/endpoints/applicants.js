@@ -103,15 +103,18 @@ async function routes(app) {
             [
               {
                 $match: {
+
                   organizationId: mongoose.Types.ObjectId(organisationId)
                 }
-              },
+              }
+              ,
               {
                 $skip: parseInt(skip, 10) || 0,
               },
               {
                 $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-              }
+              },
+              // { $group: { _id: null, count: { $sum: 1 } } },
             ] :
             [
               {
@@ -119,7 +122,8 @@ async function routes(app) {
               },
               {
                 $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-              }
+              },
+              // { $group: { _id: null, count: { $sum: 1 } } },
             ]
 
         ).then((applicants) => {
@@ -133,6 +137,17 @@ async function routes(app) {
         })
       );
 
+      const totalResultsAggregationPipeline = await Applicant.aggregate(
+        organisationId
+          ? [
+            { $match: { organizationId: mongoose.Types.ObjectId(organisationId) } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ]
+          : [
+            { $match: { organizationId: mongoose.Types.ObjectId(organisationId) } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ],
+      );
       const applicantsResponse = (response) => {
         if (!includeMeta) {
           return response;
