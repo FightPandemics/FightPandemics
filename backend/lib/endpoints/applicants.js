@@ -114,7 +114,6 @@ async function routes(app) {
               {
                 $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
               },
-              // { $group: { _id: null, count: { $sum: 1 } } },
             ] :
             [
               {
@@ -123,7 +122,6 @@ async function routes(app) {
               {
                 $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
               },
-              // { $group: { _id: null, count: { $sum: 1 } } },
             ]
 
         ).then((applicants) => {

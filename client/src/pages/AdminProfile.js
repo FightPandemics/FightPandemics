@@ -120,7 +120,7 @@ const AdminProfile = (props) => {
             const {
                 data: { data: applicants, meta },
             } = await axios.get(endpoint);
-           
+
             if (applicants.length && meta.total) {
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);
@@ -347,7 +347,7 @@ const AdminProfile = (props) => {
                                     {rawTotalApplicantCount == 0 ?
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No Applicants to display.
-                                    </div> :
+                                        </div> :
                                         <Applicants
                                             itemCount={itemCount}
                                             isItemLoaded={isItemLoaded}
