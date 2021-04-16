@@ -60,7 +60,7 @@ async function routes(app) {
       schema: getApplicantsSchema
     },
     async (req) => {
-      const { limit, skip, organisationId, includeMeta } = req.query;
+      const { limit, skip, organisationId, includeMeta, application } = req.query;
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
           organisationId

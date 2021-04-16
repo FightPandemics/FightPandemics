@@ -34,6 +34,7 @@ import EditSecurity from "./pages/EditSecurity";
 import Positions from "./pages/Positions";
 import SeeAll from "./pages/SeeAllPost";
 import Apply from "./pages/Apply";
+import Applications from "./pages/Applications";
 
 import { SCOPES } from "constants/permissions";
 
@@ -295,6 +296,17 @@ const routes = [
   {
     path: "/organisation/:id/apply",
     component: Apply,
+    props: {
+      hideFooter: false,
+      hideHeader: false,
+      props: {
+        // loggedInOnly: true,
+      }
+    }
+  },
+  {
+    path: "/organisation/:id/applications",
+    component: Applications,
     props: {
       hideFooter: false,
       hideHeader: false,

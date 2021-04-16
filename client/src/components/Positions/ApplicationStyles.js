@@ -25,7 +25,34 @@ export const InputField = styled(TextArea)`
   width: 100%;
   flex-basis: 40rem;
   overflow-wrap: break-word;
-  
+ 
+
+  &.ant-input[disabled] {
+  cursor: default;
+  /* color: magenta; */
+  font-size: 1.4rem;
+  resize: none;
+  border: none;
+  border-radius: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 2.1rem;
+  margin-bottom: 2.8rem;
+  /* margin-top: 2rem; */
+  overflow: hidden;
+  box-shadow: none;
+  color: ${colors.darkishGray};
+  flex-grow: 2;
+  font-family: 'Work Sans';
+  background-color: transparent;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  font-weight: 400;
+  width: 100%;
+  flex-basis: 40rem;
+  overflow-wrap: break-word;
+  align-self: center;
+}
   &.ant-input {
     min-height: 0 !important;
     max-height: 1.8rem !important;
@@ -79,6 +106,10 @@ export const InputWrapper = styled.div`
   max-height: 7rem;
   margin: 0;
 
+&.application-input {
+  margin-bottom: 10rem;
+}
+
   &.has-error {
     border-bottom: 1px solid ${colors.red};
     color: ${colors.red};
@@ -96,6 +127,8 @@ export const InputWrapper = styled.div`
   }
   }
 `;
+
+
 
 const Prefix = styled.span`
   padding-bottom: 0.5rem;
@@ -146,4 +179,6 @@ export const ErrorMsg = styled.p`
   }
   
 `;
+
+// export const QuestionAnswer = styled()
 
