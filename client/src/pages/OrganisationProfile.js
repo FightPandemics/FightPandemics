@@ -47,6 +47,7 @@ import {
   PlaceholderIcon,
   DescriptionDesktop,
   IconsContainer,
+  SeeOrgBookLink,
   SocialIcon,
   SectionHeader,
   CreatePostDiv,
@@ -171,7 +172,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const isSelf = organisation && actorOrganisationId == organisation._id;
 
   const [editOrgBookMode, setEditOrgBookMode] = useState("create");
-  const [orgBookLinkLabel, setOrgBookLinkLabel] = useState(
+  const [editOrgBookLinkLabel, setEditOrgBookLinkLabel] = useState(
     t("profile.org.createOrgBook").toString(),
   );
 
@@ -190,7 +191,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     setEditOrgBookMode(
       orgBookPages && orgBookPages.length > 0 ? "edit" : "create",
     );
-    setOrgBookLinkLabel(
+    setEditOrgBookLinkLabel(
       orgBookPages && orgBookPages.length > 0
         ? t("profile.org.editOrgBook")
         : t("profile.org.createOrgBook"),
@@ -504,6 +505,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <IconsContainer>
                 <div className="social-icons">{renderURL()}</div>
               </IconsContainer>
+
+              <SeeOrgBookLink to={`/orgbook-viewer/${organisationId}`}>
+                {t("profile.org.seeOrgBook")}
+              </SeeOrgBookLink>
             </UserInfoDesktop>
           </UserInfoContainer>
           {isSelf && !verified && <Verification />}
@@ -595,7 +600,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 <Link
                   to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
                 >
-                  {orgBookLinkLabel}{" "}
+                  {editOrgBookLinkLabel}{" "}
                 </Link>
               </DrawerHeader>
             </CustomDrawer>

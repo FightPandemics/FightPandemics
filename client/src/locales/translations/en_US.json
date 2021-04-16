@@ -413,7 +413,8 @@
       "editOrgAccount": "Edit Organization Account",
       "editOrgNotification": "Edit Organization Notification",
       "editOrgBook": "Edit OrgBook",
-      "createOrgBook": "Create OrgBook"
+      "createOrgBook": "Create OrgBook",
+      "seeOrgBook": "See OrgBook"
     },
     "views": {
       "activity": "Activity",

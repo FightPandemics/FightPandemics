@@ -8,6 +8,7 @@ import EditOrganisationProfile from "./pages/EditOrganisationProfile";
 import EditOrganisationAccount from "./pages/EditOrganisationAccount";
 import EditOrganisationNotifications from "./pages/EditOrganisationNotifications";
 import OrgBookEditor from "./pages/OrgBook/OrgBookEditor";
+import OrgBookViewer from "./pages/OrgBook/OrgBookViewer";
 import Medical from "./pages/Medical";
 import SymptomsCheck from "./pages/SymptomsCheck";
 import TermsConditions from "./pages/TermsConditions";
@@ -141,6 +142,10 @@ const routes = [
     props: {
       loggedInOnly: true,
     },
+  },
+  {
+    path: "/orgbook-viewer",
+    component: OrgBookViewer,
   },
   {
     path: "/medical",

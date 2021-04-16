@@ -11,9 +11,8 @@ import GTM from "../../constants/gtm-tags";
 import UndoAllChangesButton from "./OrgBookUndoAllButton";
 import OrgBookConfirmModal from "./OrgBookConfirmModal";
 import SvgIcon from "../Icon/SvgIcon";
-import eyeClosedIcon from "../../assets/icons/orgbook-eye-closed.svg";
-import eyeOpenIcon from "../../assets/icons/orgbook-eye-open.svg";
-import { stubFalse } from "lodash";
+import privateIcon from "../../assets/icons/orgbook-private.svg";
+import publicIcon from "../../assets/icons/orgbook-public.svg";
 
 const { colors, typography } = theme;
 const { white, royalBlue, black, red, mediumGray } = colors;
@@ -31,7 +30,12 @@ const OrgBookEditorSpaceHeader = styled.div`
   justify-content: space-between;
 `;
 
-const HeaderPageNameContainer = styled.div``;
+const HeaderPageNameContainer = styled.div`
+  img {
+    width: 2.7rem !important;
+    height: 2.7rem !important;
+  }
+`;
 
 const HeaderSpacerContainer = styled.div`
   width: 50px;
@@ -210,7 +214,7 @@ const OrgBookEditorSpace = (props) => {
       } else {
         viewLevel = t("orgBook.publicView");
       }
-      return `${organisation.name}\xa0\xa0\xa0/\xa0\xa0\xa0${selectedPage.name}\xa0\xa0\xa0-\xa0\xa0\xa0${status}\xa0\xa0\xa0-\xa0\xa0\xa0${viewLevel}`;
+      return `${organisation.name}\xa0\xa0\xa0/\xa0\xa0\xa0${selectedPage.name}\xa0\xa0\xa0-\xa0\xa0\xa0${status}\xa0\xa0\xa0-\xa0\xa0\xa0${viewLevel}\xa0\xa0\xa0-\xa0\xa0\xa0`;
     }
   };
 
@@ -330,6 +334,25 @@ const OrgBookEditorSpace = (props) => {
       <OrgBookEditorSpaceHeader>
         <HeaderPageNameContainer>
           {selectedPage ? getHeaderPageName() : t("orgBook.clickPageOnLeft")}
+          {selectedPage &&
+          selectedPage.status === PAGE_CATEGORIES.liveCategory &&
+          selectedPage.viewLevel === VIEW_LEVELS.orgView ? (
+            <SvgIcon
+              src={privateIcon}
+              title={t("orgBook.orgViewOnly")}
+              width={"3rem !important"}
+              height={"3rem !important"}
+            />
+          ) : (
+            ""
+          )}
+          {selectedPage &&
+          selectedPage.status === PAGE_CATEGORIES.liveCategory &&
+          selectedPage.viewLevel === VIEW_LEVELS.publicView ? (
+            <SvgIcon src={publicIcon} title={t("orgBook.publicView")} />
+          ) : (
+            ""
+          )}
         </HeaderPageNameContainer>
         <HeaderSpacerContainer />
         <HeaderSpacerContainer />

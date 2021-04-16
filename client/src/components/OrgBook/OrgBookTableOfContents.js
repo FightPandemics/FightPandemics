@@ -8,8 +8,8 @@ import BackArrowButton from "./OrgBookBackButton";
 import { getInitialsFromFullName } from "utils/userInfo";
 import GTM from "../../constants/gtm-tags";
 import SvgIcon from "../Icon/SvgIcon";
-import eyeClosedIcon from "../../assets/icons/orgbook-eye-closed.svg";
-import eyeOpenIcon from "../../assets/icons/orgbook-eye-open.svg";
+import draftPageIcon from "../../assets/icons/orgbook-draft-page.svg";
+import livePageIcon from "../../assets/icons/orgbook-live-page.svg";
 import lockClosedIcon from "../../assets/icons/orgbook-lock-closed.svg";
 import lockOpenIcon from "../../assets/icons/orgbook-lock-open.svg";
 import pageIcon from "../../assets/icons/orgbook-page.svg";
@@ -100,6 +100,10 @@ const PageSvgIcon = styled(SvgIcon)`
 const EyeIconContainer = styled.div`
   margin-left: 5%;
   justify-content: flex-end;
+  img {
+    width: 1.4rem !important;
+    height: 1.4rem !important;
+  }
 `;
 
 const EyeSvgIcon = styled(SvgIcon)`
@@ -179,8 +183,8 @@ const OrgBookTableOfContents = (props) => {
   const renderEyeIcon = (page) => {
     const eyeIcon =
       page.status === PAGE_CATEGORIES.draftCategory
-        ? eyeClosedIcon
-        : eyeOpenIcon;
+        ? draftPageIcon
+        : livePageIcon;
 
     return (
       <EyeIconContainer>
