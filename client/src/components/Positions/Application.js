@@ -32,7 +32,6 @@ font-size: 2.2rem;
   }
 }
 
-}
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 1.4rem;
     line-height: 1.8rem;
@@ -99,7 +98,7 @@ const Application = ({ orgName,
             question3: "",
             organisationId: organisationId,
             actorId: actorId,
-            status: "applied"
+            status: "applied",
         },
         errors: [],
     };
@@ -151,7 +150,7 @@ const Application = ({ orgName,
         //     showPopUp()
         // };
         // console.log("PRE API CALL" + formData)
-
+        setFormData({ formData, status: "rejected" });
         showRejectModal()
 
         // api call goes inside of function for submit modal
@@ -168,8 +167,9 @@ const Application = ({ orgName,
         //     showPopUp()
         // };
         // console.log("PRE API CALL" + formData)
-
+        setFormData({ formData, status: "accepted" });
         showAcceptModal()
+
 
         // api call goes inside of function for submit modal
 
@@ -181,6 +181,7 @@ const Application = ({ orgName,
     const [successVisible, setSuccessVisible] = useState(false);
 
     const handleCancel = async (e) => {
+        setFormData({ formData, status: "applied" });
         setRejectVisible(false);
         setAcceptVisible(false);
     };
@@ -194,26 +195,38 @@ const Application = ({ orgName,
     };
 
     const handleConfirmation = async (e) => {
-
+        console.log(formData.status)
         setSuccessVisible(false);
+       
     };
 
+    // const endPoint = `/api/applicants/${applicantId}`
+
     const handleRejectSuccess = async () => {
-        handleCancel()
-        // INSERT API CALL TO POST REVIEW STATUS
+        console.log(formData.status)
+        setRejectVisible(false);
+        // handleCancel()
+        // setFormData({ formData, status: "rejected" });
+
+        // INSERT API CALL TO PATCH REVIEW STATUS
         // try {
-        //     await axios.post("/api/applicants", payload);
+        //     await axios.patch(endPoint, formData);
         // } catch (error) {
         //     console.log(error);
         // }
         setSuccessVisible(true);
+
     };
 
     const handleAcceptSuccess = async () => {
-        handleCancel()
-        // INSERT API CALL TO POST REVIEW STATUS
+        console.log(formData.status)
+        // handleCancel()
+        setAcceptVisible(false);
+        // setFormData({ formData, status: "accepted" });
+
+        // INSERT API CALL TO PATCH REVIEW STATUS
         // try {
-        //     await axios.post("/api/applicants", payload);
+        //     await axios.post(endPoint, formData);
         // } catch (error) {
         //     console.log(error);
         // }
@@ -294,7 +307,7 @@ const Application = ({ orgName,
                     />
                 </InputWrapper>
             </OuterWrapper>
-            
+
             <ApplyModal
                 visible={rejectVisible}
                 width={564}
@@ -362,6 +375,7 @@ const Application = ({ orgName,
                     <Link
                         onClick={handleConfirmation}
                     // Send to admin page
+                    // to={}
                     >
                         <PositionsButton
                         >

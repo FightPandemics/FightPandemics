@@ -161,47 +161,48 @@ async function routes(app) {
     }
   );
 
-  // app.patch(
-  //   "/:applicantId",
-  //   {
-  //     preValidation: [app.authenticate],
-  //     schema: updateApplicantStatusSchema
-  //   },
-  //   async (req) => {
-  //     const {
-  //       params: applicantId,
-  //       organizationId
-  //     } = req;
+  app.patch(
+    "/:applicantId",
+    {
+      preValidation: [app.authenticate],
+      schema: updateApplicantStatusSchema
+    },
+    async (req) => {
+      const {
+        params: applicantId,
+        organizationId,
+        status
+      } = req;
 
-  //     const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
-  //     // const [orgErr, org] = await app.to(Organization.findById(organizationId));
-  //     if (applicantErr) {
-  //       req.log.error(applicantErr, "Failed retrieving data for applicant");
-  //       throw app.httpErrors.internalServerError();
-  //     } else if (applicant === null) {
-  //       throw app.httpErrors.notFound();
-  //     } /* We need to check below wcenario if it can occur. If not then we can delete below check */
-  //     else if (!applicant.organizationId.equals(organizationId)) {
-  //       req.log.error("Organization owner/admin not allowed to update the application status.");
-  //       throw app.httpErrors.forbidden();
-  //     }
+      const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
+      // const [orgErr, org] = await app.to(Organization.findById(organizationId));
+      if (applicantErr) {
+        req.log.error(applicantErr, "Failed retrieving data for applicant");
+        throw app.httpErrors.internalServerError();
+      } else if (applicant === null) {
+        throw app.httpErrors.notFound();
+      } /* We need to check below wcenario if it can occur. If not then we can delete below check */
+      else if (!applicant.organizationId.equals(organizationId)) {
+        req.log.error("Organization owner/admin not allowed to update the application status.");
+        throw app.httpErrors.forbidden();
+      }
 
-  //     const [updateErr, updateApplicant] = await app.to(
-  //       Object.assign(applicant, req.body).save());
+      const [updateErr, updateApplicant] = await app.to(
+        Object.assign(applicant, req.body).save());
 
-  //     if (updateErr) {
-  //       if (updateErr.name === "ValidationError" ||
-  //         updateErr.name === "MongoError"
-  //       ) {
-  //         throw app.httpErrors.conflict("Validation error.");
-  //       }
-  //       req.log.error(updateErr, "Failed updating applicant status.");
-  //       throw app.httpErrors.internalServerError();
-  //     }
+      if (updateErr) {
+        if (updateErr.name === "ValidationError" ||
+          updateErr.name === "MongoError"
+        ) {
+          throw app.httpErrors.conflict("Validation error.");
+        }
+        req.log.error(updateErr, "Failed updating applicant status.");
+        throw app.httpErrors.internalServerError();
+      }
 
-  //     return updateApplicant;
-  //   }
-  // );
+      return updateApplicant;
+    }
+  );
 
 };
 
