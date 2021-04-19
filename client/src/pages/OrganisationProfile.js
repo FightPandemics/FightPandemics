@@ -497,10 +497,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
             </UserInfoDesktop>
           </UserInfoContainer>
-          <Link
-            style={{ "color": "red" }}
-            to={`/admin/${organisationId}`}
-          >ADMIN TEST PAGE</Link>
+
           {isSelf && !verified && <Verification />}
           <WhiteSpace />
           {// Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
