@@ -116,7 +116,8 @@ export const NameDiv = styled(TextLabel)`
     backgroun-color: red;
 
     img {
-      margin-right: 0.8rem;
+      margin-right: 0.4rem;
+      height: 2rem;
     }
   }
 `;
@@ -305,7 +306,7 @@ export const MobileLocation = styled.div`
   font-weight: normal;
   font-family: Poppins;
   margin-top: 0.5rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 140%;
   white-space: nowrap;
   overflow: hidden;
@@ -313,7 +314,8 @@ export const MobileLocation = styled.div`
   max-width: calc(100% - 1.6rem);
 
   img {
-    margin-right: 0.5rem;
+    margin-right: 0.4rem;
+    height: 1rem;
   }
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: none;
@@ -324,7 +326,7 @@ export const DesktopLocation = styled.div`
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
     display: initial;
     width: auto;
-    height: 1.5rem;
+    height: 2rem;
     white-space: nowrap;
     overflow: hidden;
     font-family: Poppins;
@@ -332,6 +334,7 @@ export const DesktopLocation = styled.div`
     font-weight: normal;
     font-size: 1.1rem;
     line-height: 1rem;
+    margin-top: 1rem;
   }
 `;
 

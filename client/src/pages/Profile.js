@@ -100,7 +100,7 @@ import twitterBlue from "assets/icons/social-tw.svg";
 import githubIcon from "assets/icons/social-github.svg";
 import websiteIcon from "assets/icons/website-icon.svg";
 
-import locationIcon from "assets/icons/status-indicator.svg";
+import locationIcon from "assets/icons/map-pin.svg";
 import useWindowDimensions from "../utils/windowSize";
 import { lowerCase } from "lodash";
 
