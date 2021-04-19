@@ -374,7 +374,6 @@ const AdminProfile = (props) => {
 
 const getApplicantsBaseURL = (organisationId, limit, skip) => {
     return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
-    // return `/api/applicants?includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
 export default withUserContext(withOrganisationContext(AdminProfile));
