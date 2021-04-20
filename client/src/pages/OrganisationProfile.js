@@ -505,8 +505,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <IconsContainer>
                 <div className="social-icons">{renderURL()}</div>
               </IconsContainer>
-
-              <SeeOrgBookLink to={`/orgbook-viewer/${organisationId}`}>
+              <SeeOrgBookLink to={`/orgbook-viewer`}>
                 {t("profile.org.seeOrgBook")}
               </SeeOrgBookLink>
             </UserInfoDesktop>

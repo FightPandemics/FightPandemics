@@ -1,38 +1,40 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
-import { connect } from "react-redux";
+import { useSelector, connect } from "react-redux";
 import { useTranslation } from "react-i18next";
-import moment from "moment";
 import { useHistory } from "react-router-dom";
-import { refetchUser } from "actions/authActions";
-import {
-  fetchOrganisation,
-  fetchOrganisationError,
-  fetchOrganisationSuccess,
-  updateOrganisation,
-  updateOrganisationError,
-  updateOrganisationSuccess,
-} from "hooks/actions/organisationActions";
+import GTM from "constants/gtm-tags";
 import axios from "axios";
+import { selectOrganisationId } from "reducers/session";
+
 import {
-  OrganisationContext,
-  withOrganisationContext,
-} from "../../context/OrganisationContext";
-import { UserContext, withUserContext } from "context/UserContext";
+  ProfileLayout,
+  UserInfoContainer,
+  EditIcon,
+  UserInfoDesktop,
+  NameDiv,
+  PlaceholderIcon,
+  DescriptionDesktop,
+  IconsContainer,
+  SocialIcon,
+  SectionHeader,
+  CreatePostDiv,
+  CreatePostIcon,
+  //DrawerHeader,
+  //CustomDrawer,
+  PhotoUploadButton,
+  AvatarPhotoContainer,
+  NamePara,
+  ProfileBackgroup,
+} from "../../components/Profile/ProfileComponents";
+import UploadPic from "../../components/Picture/UploadPic";
+import ProfilePic from "../../components/Picture/ProfilePic";
 import {
-  fetchUser,
-  fetchUserError,
-  fetchUserSuccess,
-} from "hooks/actions/userActions";
-// import { Alert } from "antd";
-// import SuccessAlert from "../../components/Alert/SuccessAlert";
-// import OrgBookTableOfContents from "../../components/OrgBook/OrgBookTableOfContents";
-// import OrgBookEditorSpace from "../../components/OrgBook/OrgBookEditorSpace";
-// import OrgBookModal from "../../components/OrgBook/OrgBookModal";
-// import OrgBookInfoModal from "../../components/OrgBook/OrgBookInfoModal";
-// import OrgBookConfirmModal from "../../components/OrgBook/OrgBookConfirmModal";
-// import { ORANGE_RED, WHITE } from "../../constants/colors";
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser,
+} from "utils/userInfo";
 
 const { colors, typography } = theme;
 const {
@@ -50,6 +52,7 @@ const PAGE_CATEGORIES = {
   liveCategory: "live",
   draftCategory: "draft",
 };
+
 const VIEW_LEVELS = {
   //org (private), public correspond to live pages only
   publicView: "public",
@@ -78,25 +81,15 @@ const VIEW_LEVELS = {
   }
 `; */
 
-const OrgBookViewer = () => {
+const OrgBookViewer = (props) => {
   const url = window.location.pathname.split("/");
-  const organisationId = url[url.length - 1];
-  //const editOrgBookMode = url[url.length - 2];
+  const sourceOrganisationId = url.length > 2 ? url[url.length - 1] : "";
 
   //const [isMobile, setIsMobile] = useState(false);
 
   const [selectedPage, setSelectedPage] = useState(null);
-  //const [preSelectedPage, setPreselectedPage] = useState(null);
-  const { orgProfileState, orgProfileDispatch } = useContext(
-    OrganisationContext,
-  );
-  const {
-    userProfileState: { user },
-    userProfileDispatch,
-  } = useContext(UserContext);
-  const { loading, organisation } = orgProfileState;
-  const [currentUserId, setCurrentUserId] = useState(null);
-  const [currentOrgBookPages, setCurrentOrgBookPages] = useState(null);
+  const [organisation, setOrganisation] = useState(null);
+  const [orgBookPages, setOrgBookPages] = useState(null);
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -104,60 +97,59 @@ const OrgBookViewer = () => {
   const initialize = () => {
     // if (window.screen.width <= parseInt(mq.phone.wide.maxWidth)) {
     //   setIsMobile(true);
-    // }
+    // }()
+    if (sourceOrganisationId.length === 0) {
+      //if orgbook view depends on current user's particular org profile, get them from current session organisation
+      setOrganisation(
+        props.user.organisations.find(
+          (org) => org._id === props.organisationId,
+        ),
+      );
+      setOrgBookPages(
+        props.user.organisations.find((org) => org._id === props.organisationId)
+          .orgBookPages,
+      );
+    } else {
+      //even though particular user not logged in as org, indiv user may still have an id in session
+      if (props.user && props.isAuthenticated) {
+        setOrganisation(
+          props.user.organisations.find(
+            (org) => org._id === sourceOrganisationId,
+          ),
+        );
+        setOrgBookPages(
+          props.user.organisations.find(
+            (org) => org._id === sourceOrganisationId,
+          ).orgBookPages,
+        );
+      } else {
+        loadOrgBookPages(sourceOrganisationId);
+      }
+    }
   };
 
   useEffect(initialize, []);
 
-  useEffect(() => {
-    (async function fetchProfile() {
-      userProfileDispatch(fetchUser());
-      orgProfileDispatch(fetchOrganisation());
-      try {
-        const res = await axios.get(`/api/organisations/${organisationId}`);
-        // console.log(
-        //   "in orgbookeditor, got res.data.orgBookPages: " +
-        //     JSON.stringify(res.data.orgBookPages),
-        // );
-        orgProfileDispatch(fetchOrganisationSuccess(res.data));
-        if (res.data.orgBookPages && res.data.orgBookPages.length > 0) {
-          setCurrentOrgBookPages(res.data.orgBookPages);
-        }
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        const translatedErrorMessage = t([
-          `error.${message}`,
-          `error.http.${message}`,
-        ]);
-        console.log("got err:  " + message);
-        orgProfileDispatch(
-          fetchOrganisationError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
-          ),
-        );
+  const loadOrgBookPages = async (organisationId) => {
+    try {
+      const res = await axios.get(`/api/organisations/${organisationId}`);
+      // console.log(
+      //   "in orgbookViewer, got res.data.orgBookPages for non-registered user: " +
+      //     JSON.stringify(res.data.orgBookPages),
+      // );
+      setOrganisation(res.data);
+      if (res.data.orgBookPages) {
+        setOrgBookPages(res.data.orgBookPages);
       }
-    })();
-    (async function fetchUserProfile() {
-      userProfileDispatch(fetchUser());
-      try {
-        const res = await axios.get("/api/users/current");
-        userProfileDispatch(fetchUserSuccess(res.data));
-        setCurrentUserId(res.data.id);
-        //console.log('user fetched: ' + JSON.stringify(res.data));
-      } catch (err) {
-        const message = err.response?.data?.message || err.message;
-        const translatedErrorMessage = t([
-          `error.${message}`,
-          `error.http.${message}`,
-        ]);
-        userProfileDispatch(
-          fetchUserError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
-          ),
-        );
-      }
-    })();
-  }, [orgProfileDispatch, organisationId, userProfileDispatch, t]);
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      const translatedErrorMessage = t([
+        `error.${message}`,
+        `error.http.${message}`,
+      ]);
+      console.log("got err:  " + message);
+    }
+  };
 
   // const handleSelectPage = (page) => {
   //   setSelectedPage(currentOrgBookPages.find((p) => p.pageId === page.pageId));
@@ -217,14 +209,38 @@ const OrgBookViewer = () => {
 
   //if (loading) return <div>"{t("profile.common.loading")}"</div>;
 
-  return <div>Orgbook Viewer</div>;
+  return (
+    <>
+      <ProfileBackgroup />
+      <ProfileLayout>
+        <UserInfoContainer>
+          <AvatarPhotoContainer>
+            {organisation && (
+              <ProfilePic
+                user={organisation}
+                initials={getInitialsFromFullName(organisation.name)}
+              />
+            )}
+            <PhotoUploadButton>
+              {organisation && props.organisationId == organisation._id && (
+                <UploadPic
+                  gtmPrefix={GTM.organisation.orgPrefix}
+                  user={organisation}
+                />
+              )}
+            </PhotoUploadButton>
+          </AvatarPhotoContainer>
+        </UserInfoContainer>
+      </ProfileLayout>
+    </>
+  );
 };
 
-const mapDispatchToProps = {
-  refetchUser,
+const mapStateToProps = ({ session }) => {
+  return {
+    isAuthenticated: session.isAuthenticated,
+    user: session.user,
+  };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(withUserContext(withOrganisationContext(OrgBookViewer)));
+export default connect(mapStateToProps)(OrgBookViewer);
