@@ -64,6 +64,7 @@ const AdminProfile = (props) => {
     });
     const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
     const applicants = useSelector(selectApplicants);
+    
     //react-virtualized loaded rows and row count.
     const [itemCount, setItemCount] = useState(0);
     const [toggleRefetch, setToggleRefetch] = useState(false);

@@ -1,5 +1,5 @@
 import Loader from "components/Feed/StyledLoader";
-import Applicant from "components/OrganisationProfile/Applicant";
+import Applicant from "components/OrganisationProfile/ApplicantOrMember";
 import { mq } from "constants/theme";
 import React, { useCallback, useState } from "react";
 import {
@@ -56,6 +56,7 @@ const Applicants = ({
     emptyFeed
 }) => {
     const applicants = Object.entries(filteredApplicants);
+    console.log(JSON.stringify(filteredApplicants))
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
