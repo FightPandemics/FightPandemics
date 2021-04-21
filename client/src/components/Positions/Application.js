@@ -108,15 +108,16 @@ const Application = ({ orgName,
     const [formData, setFormData] = useState(initialState.formData);
     const [errors, setErrors] = useState(initialState.errors);
 
-    const errorMsg = {
-        title: t("post.title"),
-        description: t("orgJoinQ.required"),
-        question1: t("orgJoinQ.required"),
-        question2: t("orgJoinQ.required"),
-        question3: t("orgJoinQ.required"),
-        question1count: "",
-        asterisk: "*",
-    };
+    // const errorMsg = {
+    //     title: t("post.title"),
+    //     description: t("orgJoinQ.required"),
+    //     question1: t("orgJoinQ.required"),
+    //     question2: t("orgJoinQ.required"),
+    //     question3: t("orgJoinQ.required"),
+    //     // question1count: "",
+    //     // asterisk: "*",
+    // };
+
     const handleFormData = (field) => (e) => {
         setFormData({ ...formData, [field]: e.target.value });
 
@@ -242,7 +243,7 @@ const Application = ({ orgName,
     // const loadApplicant = async (e) => {
     //     const endPoint = `/api/applicants?applicantId=${userId}&organisationId=${organisationId}`
     //     try {
-    //         response = await axios.get()
+    //         res = await axios.get(endPoint)
     //     }
     //     catch (error) {
     //         console.log({ error });
@@ -276,7 +277,7 @@ const Application = ({ orgName,
                 <InputWrapper className="application-input">
                     <InputField
                         disabled={true}
-                        // VALUE WILL COME FROM BACKEND API CALL
+                        // value={res.answers.q1}
                         value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor. odio feortor dolor."
                     />
                 </InputWrapper>
@@ -288,7 +289,7 @@ const Application = ({ orgName,
                 <InputWrapper className="application-input">
                     <InputField
                         disabled={true}
-                        // VALUE WILL COME FROM BACKEND API CALL
+                        // value={res.answers.q2}
                         value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
                     />
 
@@ -302,7 +303,7 @@ const Application = ({ orgName,
                 <InputWrapper className="application-input">
                     <InputField
                         disabled={true}
-                        // VALUE WILL COME FROM BACKEND API CALL
+                        // value={res.answers.q3}
                         value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
                     />
                 </InputWrapper>
