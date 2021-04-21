@@ -84,7 +84,9 @@ margin: 0;
 `;
 
 const Application = ({ orgName,
-    // organisationId 
+    application
+    // organisationId,
+
 }) => {
 
     const actorId = useSelector(selectActorId);
@@ -198,7 +200,7 @@ const Application = ({ orgName,
     const handleConfirmation = async (e) => {
         console.log(formData.status)
         setSuccessVisible(false);
-       
+
     };
 
     // const endPoint = `/api/applicants/${applicantId}`
