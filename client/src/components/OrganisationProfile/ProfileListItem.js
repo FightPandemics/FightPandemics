@@ -39,19 +39,31 @@ export const ProfilePic = styled.div`
     font-size: 1.5rem;
 `;
 
+export const TextContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+    justify-content: center;
+    /* align-items: center; */
+`;
+
 export const Name = styled.p`
     color: ${colors.black};
     font-size: 1.6rem;
     line-height: 1.9rem;
     font-weight: 400;
     margin: 0;
-    margin-left: 2rem;
+    
 `;
 
 export const Title = styled.p`
     font-size: 1rem;
     line-height: 1.8rem;
-    color: ${colors.lightGray};
+    color: rgba(0, 0, 0, 0.5);
+    color: ${colors.lightishGray};
+    opacity: 50%;
+    margin: 0;
+    margin-top: 1rem;
 `;
 
 const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
@@ -84,28 +96,30 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
                                 />)
                                 :
                                 orgsList ?
-                                    (<img 
+                                    (<img
                                     // src will be org profile generic image
                                     />)
                                     :
                                     (item?.[list]?.name && getInitialsFromFullName(item?.[list]?.name) || "")}
                     </ProfilePic>
                 </ProfilePicContainer>
-                <Name>
-                    {item?.[list]?.name && item?.[list]?.name || ""}
-                </Name>
-                <Title>
-                    {
-                        // //ORG PERMISSIONS OR POSITION TITLE
-                        // orgsList ?
-                        // // org permissions prop
-                        // : 
-                        // // member position title prop 
-                        
-                    }
-
-
-                </Title>
+                <TextContainer>
+                    <Name>
+                        {item?.[list]?.name && item?.[list]?.name || ""}
+                    </Name>
+                    {applicantsList ? "" :
+                        <Title>
+                            {
+                                //ORG PERMISSIONS OR POSITION TITLE
+                                orgsList ?
+                                    // org permissions prop (test placeholder is below)
+                                    ("Editor")
+                                    :
+                                    // member position title prop (test placeholder is below)
+                                    ("Volunteer")
+                            }
+                        </Title>}
+                </TextContainer>
             </ProfileContainer>
         </AllItems>
     )
