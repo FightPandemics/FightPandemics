@@ -1,5 +1,5 @@
 import Loader from "components/Feed/StyledLoader";
-import Applicant from "components/OrganisationProfile/Applicant";
+import ProfileListItem from "components/OrganisationProfile/ProfileListItem";
 import { mq } from "constants/theme";
 import React, { useCallback, useState } from "react";
 import {
@@ -43,9 +43,10 @@ const SeeAllLink = styled.div`
     
     }
 `
-
-const Applicants = ({
+const ProfileList = ({
     filteredApplicants,
+    filteredMembers,
+    filteredOrgs,
     user,
     loadNextPage,
     isNextPageLoading,
@@ -55,7 +56,12 @@ const Applicants = ({
     totalApplicantCount,
     emptyFeed
 }) => {
-    const applicants = Object.entries(filteredApplicants);
+    console.log(JSON.stringify(filteredApplicants))
+
+    const applicantsList = filteredApplicants && true
+    const membersList = filteredMembers && true
+    const orgsList = filteredOrgs && true
+    const items = Object.entries(filteredApplicants);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
@@ -69,12 +75,16 @@ const Applicants = ({
             let content;
             if (!isItemLoaded(index) && hasNextPage) {
                 content = <Loader />;
-            } else if (applicants[index]) {
+            } else if (items[index]) {
                 content = (
                     <>
                         <HorizontalRule />
-                        <Applicant
-                            applicant={applicants[index][1]}
+                        <ProfileListItem
+                            item={items[index][1]}
+                            applicantsList={applicantsList}
+                            membersList={membersList}
+                            orgList={orgsList}
+
                         />
                     </>
                 );
@@ -98,14 +108,14 @@ const Applicants = ({
         [
             hasNextPage,
             isItemLoaded,
-            applicants,
+            items,
             user,
         ],
     );
 
     return (
         <div className="activity">
-            { !applicants.length && isNextPageLoading ? (
+            { !items.length && isNextPageLoading ? (
                 <Loader />
             ) : (
                 <WindowScroller>
@@ -156,6 +166,6 @@ const Applicants = ({
     );
 };
 
-export default Applicants;
+export default ProfileList;
 
 

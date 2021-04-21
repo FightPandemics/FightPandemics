@@ -106,7 +106,7 @@ import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
-import TestMembers from "components/OrganisationProfile/Applicants"
+import TestMembers from "components/OrganisationProfile/ProfileList"
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],

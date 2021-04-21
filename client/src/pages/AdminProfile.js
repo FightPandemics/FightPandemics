@@ -2,7 +2,7 @@ import filterOptions from "assets/data/filterOptions";
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
-import Applicants from "components/OrganisationProfile/Applicants";
+import ProfileList from "components/OrganisationProfile/ProfileList";
 import { ProfileTabPane, ProfileTabs } from "components/OrganisationProfile/ProfileTabs";
 // import ProfilePic from "components/Positions/ProfilePic";
 import ProfilePic from "components/Picture/ProfilePic";
@@ -292,6 +292,8 @@ const AdminProfile = (props) => {
     }
     else {
         const { address } = location;
+
+        console.log("applicants list: " + JSON.stringify(applicantsList))
         return (
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
@@ -348,7 +350,7 @@ const AdminProfile = (props) => {
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No Applicants to display.
                                         </div> :
-                                        <Applicants
+                                        <ProfileList
                                             itemCount={itemCount}
                                             isItemLoaded={isItemLoaded}
                                             isNextPageLoading={isLoading}
