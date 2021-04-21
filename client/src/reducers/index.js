@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   session,
   posts,
   webSocket,
-  memberOrganistions
+  memberOrganisations
 });
 
 export default rootReducer;
