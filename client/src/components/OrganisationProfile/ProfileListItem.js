@@ -48,6 +48,12 @@ export const Name = styled.p`
     margin-left: 2rem;
 `;
 
+export const Title = styled.p`
+    font-size: 1rem;
+    line-height: 1.8rem;
+    color: ${colors.lightGray};
+`;
+
 const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
 
     let list
@@ -88,6 +94,18 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
                 <Name>
                     {item?.[list]?.name && item?.[list]?.name || ""}
                 </Name>
+                <Title>
+                    {
+                        // //ORG PERMISSIONS OR POSITION TITLE
+                        // orgsList ?
+                        // // org permissions prop
+                        // : 
+                        // // member position title prop 
+                        
+                    }
+
+
+                </Title>
             </ProfileContainer>
         </AllItems>
     )
