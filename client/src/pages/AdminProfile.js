@@ -292,8 +292,6 @@ const AdminProfile = (props) => {
     }
     else {
         const { address } = location;
-
-        console.log("applicants list: " + JSON.stringify(applicantsList))
         return (
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
