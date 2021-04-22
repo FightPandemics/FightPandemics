@@ -71,24 +71,24 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     let itemState
     let list
     let itemPath
-
     if (applicantsList) {
         list = "applicant"
+        itemPath = `/application/${item._id}`
         itemState = {
-            post: post,
-            postId: post._id,
-            from: window.location.href,
-            user,
-            keepScrollIndex,
-            keepPageState,
-            keepPostsState, 
+            "applicant": item,
+            "applicantId": item?._id,
         }
-        itemPath = `/application/`
-
     }
+
     if (membersList) {
         list = "member"
+        itemPath = `/profile/${item?.[list]?.id}`
+        itemState = {
+            "member": item,
+            "applicantId": item?._id,
+        }
     }
+
     if (orgsList) {
         list = "organisation"
     }
@@ -96,8 +96,10 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     return (
         <Link
             to={{
-                pathname: `/post/${post._id}`,
-                state: { stateProps },
+                pathname: itemPath,
+                state: [itemState, {
+                    from: window.location.href,
+                }],
             }}
         >
             <AllItems>
