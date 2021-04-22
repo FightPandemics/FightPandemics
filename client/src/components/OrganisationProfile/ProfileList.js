@@ -59,7 +59,7 @@ const ProfileList = ({
     const applicantsList = filteredApplicants && true
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true
-    const items = Object.entries(filteredApplicants);
+    const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
