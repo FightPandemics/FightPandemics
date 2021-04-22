@@ -44,7 +44,6 @@ export const TextContainer = styled.div`
     flex-direction: column;
     margin-left: 2rem;
     justify-content: center;
-    /* align-items: center; */
 `;
 
 export const Name = styled.p`

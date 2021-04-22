@@ -35,7 +35,6 @@ export const ProfileTabs = styled(Tabs)`
 }
   .ant-tabs-nav-list {
     margin: 0;
-    /* margin-top: 5rem; */
   }
   
   .ant-tabs-tab {
