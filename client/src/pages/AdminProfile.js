@@ -355,7 +355,7 @@ const AdminProfile = (props) => {
                                             loadNextPage={loadNextPage}
                                             hasNextPage={loadMore}
                                             filteredApplicants={applicantsList}
-                                            totalApplicantCount={totalApplicantCount}
+                                            totalCount={totalApplicantCount}
                                             page={page}
                                             emptyFeed={emptyFeed}
                                         />
