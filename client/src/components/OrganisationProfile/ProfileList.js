@@ -53,7 +53,7 @@ const ProfileList = ({
     itemCount,
     isItemLoaded,
     hasNextPage,
-    totalApplicantCount,
+    totalCount,
     emptyFeed
 }) => {
     const applicantsList = filteredApplicants && true
@@ -68,7 +68,7 @@ const ProfileList = ({
     }
 
     const windowWidth = window.innerWidth
-    const applicantItem = useCallback(
+    const profileItem = useCallback(
         ({ key, index, style, parent }) => {
             let content;
             if (!isItemLoaded(index) && hasNextPage) {
@@ -121,7 +121,7 @@ const ProfileList = ({
                         <InfiniteLoader
                             isRowLoaded={isItemLoaded}
                             loadMoreRows={loadMoreItems}
-                            rowCount={totalApplicantCount}
+                            rowCount={totalCount}
                             threshold={5}
                         >
 
@@ -137,7 +137,7 @@ const ProfileList = ({
                                             rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
                                             rowHeight={cellMeasurerCache.getHeight()}
                                             deferredMeasurementCache={cellMeasurerCache}
-                                            rowRenderer={applicantItem}
+                                            rowRenderer={profileItem}
                                             scrollTop={scrollTop}
                                             onScroll={onChildScroll}
                                             overscanRowCount={1}
@@ -156,9 +156,9 @@ const ProfileList = ({
                 onClick={handleSeeAll}
             >
 
-                < SeeAllLink>
+                <SeeAllLink>
                     See All
-                </SeeAllLink>
+            </SeeAllLink>
             </Link>
         </div >
     );

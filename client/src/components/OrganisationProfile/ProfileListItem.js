@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "constants/theme";
 import { getInitialsFromFullName } from "utils/userInfo";
@@ -67,9 +68,23 @@ export const Title = styled.p`
 
 const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
 
+    let itemState
     let list
+    let itemPath
+
     if (applicantsList) {
         list = "applicant"
+        itemState = {
+            post: post,
+            postId: post._id,
+            from: window.location.href,
+            user,
+            keepScrollIndex,
+            keepPageState,
+            keepPostsState, 
+        }
+        itemPath = `/application/`
+
     }
     if (membersList) {
         list = "member"
@@ -79,48 +94,55 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     }
 
     return (
-        <AllItems>
-            <ProfileContainer>
-                <ProfilePicContainer>
-                    <ProfilePic>
-                        {
-                            item?.[list]?.photo ?
-                                (<img
-                                    style={{
-                                        maxWidth: "100%",
-                                        borderRadius: "50%",
-                                        boxSizing: "content-box",
-                                    }}
-                                    src={item?.[list]?.photo}
-                                />)
-                                :
-                                orgsList ?
+        <Link
+            to={{
+                pathname: `/post/${post._id}`,
+                state: { stateProps },
+            }}
+        >
+            <AllItems>
+                <ProfileContainer>
+                    <ProfilePicContainer>
+                        <ProfilePic>
+                            {
+                                item?.[list]?.photo ?
                                     (<img
-                                    // src will be org profile generic image
+                                        style={{
+                                            maxWidth: "100%",
+                                            borderRadius: "50%",
+                                            boxSizing: "content-box",
+                                        }}
+                                        src={item?.[list]?.photo}
                                     />)
                                     :
-                                    (item?.[list]?.name && getInitialsFromFullName(item?.[list]?.name) || "")}
-                    </ProfilePic>
-                </ProfilePicContainer>
-                <TextContainer>
-                    <Name>
-                        {item?.[list]?.name && item?.[list]?.name || ""}
-                    </Name>
-                    {applicantsList ? "" :
-                        <Title>
-                            {
-                                //ORG PERMISSIONS OR POSITION TITLE
-                                orgsList ?
-                                    // org permissions prop (test placeholder is below)
-                                    ("Editor")
-                                    :
-                                    // member position title prop (test placeholder is below)
-                                    ("Volunteer")
-                            }
-                        </Title>}
-                </TextContainer>
-            </ProfileContainer>
-        </AllItems>
+                                    orgsList ?
+                                        (<img
+                                        // src will be org profile generic image
+                                        />)
+                                        :
+                                        (item?.[list]?.name && getInitialsFromFullName(item?.[list]?.name) || "")}
+                        </ProfilePic>
+                    </ProfilePicContainer>
+                    <TextContainer>
+                        <Name>
+                            {item?.[list]?.name && item?.[list]?.name || ""}
+                        </Name>
+                        {applicantsList ? "" :
+                            <Title>
+                                {
+                                    //ORG PERMISSIONS OR POSITION TITLE
+                                    orgsList ?
+                                        // org permissions prop (test placeholder is below)
+                                        ("Editor")
+                                        :
+                                        // member position title prop (test placeholder is below)
+                                        ("Volunteer")
+                                }
+                            </Title>}
+                    </TextContainer>
+                </ProfileContainer>
+            </AllItems>
+        </Link>
     )
 }
 
