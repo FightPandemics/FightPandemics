@@ -75,7 +75,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
         list = "member"
     }
     if (orgsList) {
-        list = "organisation"
+        // list = "organisation"
     }
 
     return (

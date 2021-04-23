@@ -114,6 +114,8 @@ import {
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
 } from "hooks/actions/feedActions";
+import ProfileList from "components/OrganisationProfile/ProfileList"
+import { TestMemberOfOrgs } from "utils/TestMemberOfOrgs";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -310,9 +312,9 @@ const Profile = ({
         gtm: "posts",
       });
       baseMenu.splice(1, 0, {
-        name: "Organisation",
+        name: "Organisations",
         disable: false,
-        gtm: "organisation",
+        gtm: "organisations",
       });
       setSectionView(t("profile.views.posts"));
       setInternalTab(t("profile.views.requests"));
@@ -857,7 +859,11 @@ const Profile = ({
                   </Menu.Item>
                 ))}
               </DesktopMenuWrapper>
-
+              {sectionView === "Organisations" ? (
+                <ProfileList
+                  filteredOrgs={TestMemberOfOrgs}
+                />
+              ) : null}
               {sectionView === "Requests" ||
                 sectionView === "Offers" ||
                 sectionView === "Posts" ? (
