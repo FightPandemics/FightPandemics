@@ -82,9 +82,10 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     return (
         <AllItems>
             <ProfileContainer>
+                <div>yooo</div>
                 <ProfilePicContainer>
                     <ProfilePic>
-                        {
+                        Test {
                             item?.[list]?.photo ?
                                 (<img
                                     style={{
@@ -105,7 +106,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
                 </ProfilePicContainer>
                 <TextContainer>
                     <Name>
-                        {item?.[list]?.name && item?.[list]?.name || ""}
+                        Test {item?.[list]?.name && item?.[list]?.name || ""}
                     </Name>
                     {applicantsList ? "" :
                         <Title>
@@ -118,9 +119,11 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
                                     // member position title prop (test placeholder is below)
                                     ("Volunteer")
                             }
+                            Test
                         </Title>}
                 </TextContainer>
             </ProfileContainer>
+            <div>yooo</div>
         </AllItems>
     )
 }
