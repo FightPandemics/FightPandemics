@@ -229,8 +229,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-        ? "A"
-        : "D";
+          ? "A"
+          : "D";
     }
     return undefined;
   }, [sectionView, internalTab]);
@@ -308,6 +308,11 @@ const Profile = ({
         name: t("profile.views.posts"),
         disable: false,
         gtm: "posts",
+      });
+      baseMenu.splice(1, 0, {
+        name: "Organisation",
+        disable: false,
+        gtm: "organisation",
       });
       setSectionView(t("profile.views.posts"));
       setInternalTab(t("profile.views.requests"));
@@ -854,14 +859,14 @@ const Profile = ({
               </DesktopMenuWrapper>
 
               {sectionView === "Requests" ||
-              sectionView === "Offers" ||
-              sectionView === "Posts" ? (
+                sectionView === "Offers" ||
+                sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>
                       <FeedWrapper isProfile>
                         <WhiteSpace size={"xl"}></WhiteSpace>
-                        <ProfileDesktop
+                        {/* <ProfileDesktop
                           setInternalTab={setTab}
                           isOrg={false}
                           isAuthenticated={isAuthenticated}
@@ -881,7 +886,7 @@ const Profile = ({
                           hasNextPage={loadMore}
                           totalPostCount={totalPostCount}
                           isProfile={true}
-                        ></ProfileDesktop>
+                        ></ProfileDesktop> */}
                       </FeedWrapper>
                     </SeeAllContentWrapper>
                   </SeeAllTabsWrapper>
