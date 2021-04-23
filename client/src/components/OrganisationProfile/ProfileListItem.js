@@ -68,7 +68,7 @@ export const Title = styled.p`
 const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
 
     let list
-    if (applicantsList) {
+    if (applicantsList || membersList) {
         list = "applicant"
     }
     if (membersList) {
@@ -76,6 +76,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     }
     if (orgsList) {
         // list = "organisation"
+        list = "applicant"
     }
 
     return (
