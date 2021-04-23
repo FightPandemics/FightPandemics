@@ -16,6 +16,7 @@ import { theme, mq } from "constants/theme";
 
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
+import NoJoinOrg from "components/Profile/NoJoinOrg";
 import {
   FeedWrapper,
   SeeAllTabsWrapper,
@@ -767,6 +768,7 @@ const Profile = ({
                   </Menu.Item>
                 ))}
               </MobileMenuWrapper>
+              {/* <NoJoinOrg /> */}
               <div style={{ width: "100%" }}>
                 {sectionView === "Requests" && (
                   <PostTabCard
@@ -853,6 +855,7 @@ const Profile = ({
                 ))}
               </DesktopMenuWrapper>
 
+              {/* <NoJoinOrg /> */}
               {sectionView === "Requests" ||
               sectionView === "Offers" ||
               sectionView === "Posts" ? (
