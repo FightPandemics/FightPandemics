@@ -127,7 +127,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
                     </ProfilePicContainer>
                     <TextContainer>
                         <Name>
-                            {item?.[list]?.name && item?.[list]?.name || ""}
+                            {item?.[list]?.name && item?.[list]?.name || ""} 
                         </Name>
                         {applicantsList ? "" :
                             <Title>
