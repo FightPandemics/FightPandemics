@@ -107,6 +107,7 @@ import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import TestMembers from "components/OrganisationProfile/ProfileList"
+import { TestMembersList } from "utils/TestMembersList";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -429,6 +430,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
   const { TabPane } = Tabs
+  const filteredMembers = TestMembersList
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -582,7 +584,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 )}
               </FeedWrapper>
             </div></ProfileTabPane>
-            <ProfileTabPane tab={t("profile.views.members")} key="members"><TestMembers /></ProfileTabPane>
+            <ProfileTabPane tab={t("profile.views.members")} key="members">
+              <TestMembers
+                filteredMembersList={filteredMembers}
+              />
+            </ProfileTabPane>
           </ProfileTabs>
 
           {isSelf && (

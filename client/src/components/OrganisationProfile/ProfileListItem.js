@@ -81,10 +81,10 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     }
 
     if (membersList) {
-        list = "member"
+        // list = "member"
         itemPath = `/profile/${item?.[list]?.id}`
         itemState = {
-            "member": item,
+            "applicant": item,
             "applicantId": item?._id,
         }
     }

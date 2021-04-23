@@ -56,6 +56,7 @@ const ProfileList = ({
     totalCount,
     emptyFeed
 }) => {
+    
     const applicantsList = filteredApplicants && true
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true
