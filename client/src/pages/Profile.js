@@ -768,7 +768,7 @@ const Profile = ({
                   </Menu.Item>
                 ))}
               </MobileMenuWrapper>
-              {/* <NoJoinOrg /> */}
+              {/* <NoJoinOrg isSelf={isSelf} /> */}
               <div style={{ width: "100%" }}>
                 {sectionView === "Requests" && (
                   <PostTabCard
@@ -855,7 +855,7 @@ const Profile = ({
                 ))}
               </DesktopMenuWrapper>
 
-              {/* <NoJoinOrg /> */}
+              {/* <NoJoinOrg isSelf={isSelf} /> */}
               {sectionView === "Requests" ||
               sectionView === "Offers" ||
               sectionView === "Posts" ? (
