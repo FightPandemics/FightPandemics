@@ -45,7 +45,7 @@ const SeeAllLink = styled.div`
     }
 `
 const ProfileList = ({
-    // filteredApplicants,
+    filteredApplicants,
     filteredMembers,
     filteredOrgs,
     user,
@@ -57,11 +57,12 @@ const ProfileList = ({
     totalApplicantCount,
     emptyFeed
 }) => {
-    const filteredApplicants = TestMemberOfOrgs
+    console.log("applicants post list: " + JSON.stringify(filteredApplicants))
+    const filteredTEST = TestMemberOfOrgs
     const applicantsList = filteredApplicants && true
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true
-    const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
+    const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs || filteredTEST);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
