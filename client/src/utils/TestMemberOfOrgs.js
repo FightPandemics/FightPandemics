@@ -1,5 +1,5 @@
-export const TestMemberOfOrgs = 
-    {
+export const TestMemberOfOrgs =
+    [{
         "_id": "606e59ecc7e707225076e230",
         "answers": [
             "This is test answers"
@@ -276,4 +276,4 @@ export const TestMemberOfOrgs =
             "isEdited": false
         }
     }
-]
+    ]
