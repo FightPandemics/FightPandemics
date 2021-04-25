@@ -72,6 +72,7 @@ import {
   getProfileObjectiveProp,
   getProfileModeProp,
 } from "reducers/posts";
+import { memberOrgsActions, selectMemberOrgs } from "reducers/memberOrganisations";
 
 import {
   fetchUser,
@@ -108,6 +109,8 @@ import { lowerCase } from "lodash";
 import {
   deletePostModalreducer,
   deletePostState,
+  feedReducer,
+  optionsReducer
 } from "hooks/reducers/feedReducers";
 import {
   SET_DELETE_MODAL_VISIBILITY,
@@ -148,6 +151,7 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const Profile = ({
+  props,
   isAuthenticated,
   match: {
     params: { id: pathUserId },
@@ -605,6 +609,200 @@ const Profile = ({
   const filterMode = getProfileModeProp(mode);
   filteredPost = posts.profilePosts[userId]?.[filterView]?.[filterMode] ?? [];
 
+  // ORGANISATIONS FEED
+
+  // const dispatch = useDispatch();
+  // const [feedState, feedDispatch] = useReducer(feedReducer, {
+  //   ...initialState
+  // });
+  // const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
+
+
+  const applicants = useSelector(selectMemberOrgs);
+
+  // const applicants = TestMemberOfOrgs
+  //react-virtualized loaded rows and row count.
+  const [itemCount, setItemCount] = useState(0);
+  const [toggleRefetchOrgs, setToggleRefetchOrgs] = useState(false);
+  const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
+  const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
+  // const {
+  //   filterModal,
+  //   activePanel,
+  //   showFilters,
+  // } = feedState;
+  // const filters = Object.values(filterOptions);
+  const {
+    error: applicantsError,
+    isLoadingOrgs,
+    loadMoreOrgs,
+    pageOrgs,
+    applicants: applicantsList,
+  } = applicants;
+
+  // const feedApplicants = Object.entries(applicantsList);
+  const feedApplicants = Object.entries(TestMemberOfOrgs);
+  const prevTotalApplicantCount = usePrevious(totalApplicantCount);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  const { history } = props;
+
+  // const dispatchAction = (type, key, value) =>
+  //   feedDispatch({ type, key, value });
+
+  const refetchApplicants = (isLoading, loadMore, softRefresh = false) => {
+    if (!softRefresh) {
+      // dispatchAction(SET_VALUE, "applyFilters", true);
+      dispatch(memberOrgsActions.resetPageAction({ isLoading, loadMore }));
+      if (page === 0) {
+        setToggleRefetch(!toggleRefetch);
+      }
+    }
+  };
+  const getApplicantsBaseURL = (limit, skip) => {
+    return `/api/applicants?includeMeta=true&limit=${limit}&skip=${skip}`;
+  };
+  const loadApplicants = async () => {
+    const limit = PAGINATION_LIMIT;
+    const skip = page * limit;
+    let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
+    let endpoint = baseURL
+    dispatch(memberOrgsActions.fetchApplicantsBegin());
+
+    try {
+      const {
+        data: { data: applicants, meta },
+      } = await axios.get(endpoint);
+
+      if (applicants.length && meta.total) {
+        if (prevTotalApplicantCount !== meta.total) {
+          setTotalApplicantCount(meta.total);
+          setRawTotalApplicants(meta.total)
+        }
+
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        if (page === lastPage) {
+          dispatch(memberOrgsActions.finishLoadingAction());
+        }
+
+        let applicantsInState;
+        if (history.location.state) {
+          const { keepApplicantsState, keepPageState } = history.location.state;
+          applicantsInState = keepApplicantsState;
+          if (keepPageState >= page) {
+            dispatch(memberOrgsActions.setPageAction(keepPageState));
+          }
+        }
+        if (applicantsInState) {
+          if (Object.keys(applicantsInState).length === meta.total) {
+            dispatch(memberOrgsActions.finishLoadingAction());
+          }
+        }
+
+        const loadedApplicants = applicants.reduce((obj, item) => {
+          obj[item._id] = item;
+          return obj;
+        }, {});
+
+        if (applicantsInState) {
+          dispatch(
+            memberOrgsActions.fetchApplicantsSuccess({
+              applicants: { ...applicantsInState, ...loadedApplicants },
+            }),
+          );
+        } else if (Object.keys(applicantsList).length && page) {
+          dispatch(
+            memberOrgsActions.fetchApplicantsSuccess({
+              applicants: { ...applicantsList, ...loadedApplicants },
+            }),
+          );
+        } else {
+          dispatch(
+            memberOrgsActions.fetchApplicantsSuccess({
+              applicants: { ...loadedApplicants },
+            }),
+          );
+        }
+      }
+      else if (applicants) {
+        dispatch(
+          memberOrgsActions.fetchApplicantsSuccess({
+            applicants: { ...applicantsList },
+          }),
+        );
+        dispatch(memberOrgsActions.finishLoadingAction());
+      } else {
+        dispatch(memberOrgsActions.finishLoadingAction());
+      }
+    } catch (error) {
+      dispatch(memberOrgsActions.fetchApplicantsError(error));
+    }
+  };
+
+
+  useEffect(() => {
+  }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetch)
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    loadApplicants();
+  }, [toggleRefetch, page]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const isItemLoadedOrgs = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
+
+  const loadNextPageOrgs = useCallback(
+
+    ({ stopIndex }) => {
+      if (
+        !isLoading &&
+        loadMore &&
+        stopIndex >= feedApplicants.length &&
+        feedApplicants.length
+      ) {
+        return new Promise((resolve) => {
+          dispatch(memberOrgsActions.setNextPageAction());
+          // dispatchAction(SET_VALUE, "applyFilters", true);
+          resolve();
+        });
+      } else {
+        return Promise.resolve();
+      }
+    },
+    [feedApplicants.length, isLoading, loadMore], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
+  useEffect(() => {
+    setItemCount(loadMore ? feedApplicants.length + 1 : feedApplicants.length);
+  }, [feedApplicants.length, loadMore]);
+
+  const emptyFeedOrgs = () => applicantsList.length < 1 && !isLoading;
+
+  let url = window.location.pathname.split("/");
+  // const organisationId = url[url.length - 1];
+  // const { orgProfileState, orgProfileDispatch } = useContext(
+  //   OrganisationContext,
+  // );
+  // const { error, loading, organisation } = orgProfileState;
+  // const {
+  //   userProfileDispatch,
+  // } = useContext(UserContext);
+  // const { t } = useTranslation();
+  // const {
+  //   name,
+  //   location = {},
+  //   about = "",
+  // } = organisation || {};
+
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -636,6 +834,8 @@ const Profile = ({
   if (authLoading == null || authLoading === true) {
     return <></>;
   }
+
+
 
   return (
     <>
