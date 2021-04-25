@@ -10,6 +10,7 @@ import GTM from "constants/gtm-tags";
 import WithSummitBanner from "components/WithSummitBanner";
 import CloudLanding from "assets/home-cloud.gif";
 import FPCity from "assets/homecity.png";
+import DataTestIds from "utils/constants";
 
 const { typography } = theme;
 const { black, royalBlue, white, offWhite } = theme.colors;
@@ -228,7 +229,11 @@ const Home = (props) => {
               FightPandemics
             </Title> */}
 
-              <StyledStrapline level={2} margin="none">
+              <StyledStrapline
+                data-testid={DataTestIds.HOME_HEAD_LINE}
+                level={2}
+                margin="none"
+              >
                 {t("headline")}
               </StyledStrapline>
               <Trans
@@ -243,6 +248,7 @@ const Home = (props) => {
               <FlexChild>
                 <ImageButton
                   id={GTM.homePage.prefix + GTM.homePage.requestHelp}
+                  data-testid={DataTestIds.HOME_NEED_HELP_BUTTON}
                   type="ghost"
                   inactiveImg={needHelpInactive}
                   activeImg={needHelpActive}
@@ -254,6 +260,7 @@ const Home = (props) => {
               <FlexChild>
                 <ImageButton
                   id={GTM.homePage.prefix + GTM.homePage.offerHelp}
+                  data-testid={DataTestIds.HOME_GIVE_HELP_BUTTON}
                   type="ghost"
                   inactiveImg={offerHelpInactive}
                   activeImg={offerHelpActive}
@@ -263,7 +270,7 @@ const Home = (props) => {
                 </ImageButton>
               </FlexChild>
 
-              <Link to="/feed">
+              <Link to="/feed" data-testid={DataTestIds.HOME_VIEW_FEED_LINK}>
                 <StyleLink id={GTM.homePage.prefix + GTM.homePage.viewCommPost}>
                   {t("common.viewFeed")}
                 </StyleLink>
