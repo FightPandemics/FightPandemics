@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "constants/theme";
+import { TestMemberOfOrgs } from "utils/TestMemberOfOrgs";
 
 const { colors } = theme
 
@@ -44,7 +45,7 @@ const SeeAllLink = styled.div`
     }
 `
 const ProfileList = ({
-    filteredApplicants,
+    // filteredApplicants,
     filteredMembers,
     filteredOrgs,
     user,
@@ -56,6 +57,7 @@ const ProfileList = ({
     totalApplicantCount,
     emptyFeed
 }) => {
+    const filteredApplicants = TestMemberOfOrgs
     const applicantsList = filteredApplicants && true
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true

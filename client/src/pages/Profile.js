@@ -151,7 +151,7 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const Profile = ({
-  props,
+  history,
   isAuthenticated,
   match: {
     params: { id: pathUserId },
@@ -481,9 +481,16 @@ const Profile = ({
     return posts.profilePosts?.[userId]?.[filterView]?.[filterMode] == null;
   };
 
+
   useEffect(() => {
-    refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
+    if (sectionView.toUpperCase() == "POSTS") {
+      refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
+    }
+    if (sectionView.toUpperCase() == "ORGANISATIONS") {
+      refetchApplicants();
+    }
   }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -492,6 +499,7 @@ const Profile = ({
         setToggleRefetch(!toggleRefetch);
       }
     }
+    console.log("refetch posts!")
   };
 
   const loadNextPage = useCallback(
@@ -618,9 +626,10 @@ const Profile = ({
   // const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
 
 
-  const applicants = useSelector(selectMemberOrgs);
+  // const applicants = useSelector(selectMemberOrgs);
 
-  // const applicants = TestMemberOfOrgs
+  const applicants = TestMemberOfOrgs
+
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetchOrgs, setToggleRefetchOrgs] = useState(false);
@@ -642,6 +651,7 @@ const Profile = ({
 
   // const feedApplicants = Object.entries(applicantsList);
   const feedApplicants = Object.entries(TestMemberOfOrgs);
+  console.log("members: " + JSON.stringify(feedApplicants))
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
 
   function usePrevious(value) {
@@ -652,29 +662,30 @@ const Profile = ({
     return ref.current;
   }
 
-  const { history } = props;
+  // const { history } = props;
 
   // const dispatchAction = (type, key, value) =>
   //   feedDispatch({ type, key, value });
 
-  const refetchApplicants = (isLoading, loadMore, softRefresh = false) => {
+  const refetchApplicants = (isLoadingOrgs, loadMoreOrgs, softRefresh = false) => {
     if (!softRefresh) {
       // dispatchAction(SET_VALUE, "applyFilters", true);
-      dispatch(memberOrgsActions.resetPageAction({ isLoading, loadMore }));
-      if (page === 0) {
-        setToggleRefetch(!toggleRefetch);
+      dispatch(memberOrgsActions.resetPageAction({ isLoadingOrgs, loadMoreOrgs }));
+      if (pageOrgs === 0) {
+        setToggleRefetchOrgs(!toggleRefetchOrgs);
       }
     }
+    console.log("fetch applicants!")
   };
-  const getApplicantsBaseURL = (limit, skip) => {
-    return `/api/applicants?includeMeta=true&limit=${limit}&skip=${skip}`;
+  const getApplicantsBaseURL = (limit, skip, userId) => {
+    return `/api/applicants?applicantId=${userId}&includeMeta=true&limit=${limit}&skip=${skip}`;
   };
   const loadApplicants = async () => {
     const limit = PAGINATION_LIMIT;
-    const skip = page * limit;
+    const skip = pageOrgs * limit;
     let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
     let endpoint = baseURL
-    dispatch(memberOrgsActions.fetchApplicantsBegin());
+    dispatch(memberOrgsActions.fetchMemberOrgsBegin());
 
     try {
       const {
@@ -688,7 +699,7 @@ const Profile = ({
         }
 
         const lastPage = Math.ceil(meta.total / limit) - 1;
-        if (page === lastPage) {
+        if (pageOrgs === lastPage) {
           dispatch(memberOrgsActions.finishLoadingAction());
         }
 
@@ -696,7 +707,7 @@ const Profile = ({
         if (history.location.state) {
           const { keepApplicantsState, keepPageState } = history.location.state;
           applicantsInState = keepApplicantsState;
-          if (keepPageState >= page) {
+          if (keepPageState >= pageOrgs) {
             dispatch(memberOrgsActions.setPageAction(keepPageState));
           }
         }
@@ -713,19 +724,19 @@ const Profile = ({
 
         if (applicantsInState) {
           dispatch(
-            memberOrgsActions.fetchApplicantsSuccess({
+            memberOrgsActions.fetchMemberOrgsSuccess({
               applicants: { ...applicantsInState, ...loadedApplicants },
             }),
           );
-        } else if (Object.keys(applicantsList).length && page) {
+        } else if (Object.keys(applicantsList).length && pageOrgs) {
           dispatch(
-            memberOrgsActions.fetchApplicantsSuccess({
+            memberOrgsActions.fetchMemberOrgsSuccess({
               applicants: { ...applicantsList, ...loadedApplicants },
             }),
           );
         } else {
           dispatch(
-            memberOrgsActions.fetchApplicantsSuccess({
+            memberOrgsActions.fetchMemberOrgsSuccess({
               applicants: { ...loadedApplicants },
             }),
           );
@@ -733,7 +744,7 @@ const Profile = ({
       }
       else if (applicants) {
         dispatch(
-          memberOrgsActions.fetchApplicantsSuccess({
+          memberOrgsActions.fetchMemberOrgsSuccess({
             applicants: { ...applicantsList },
           }),
         );
@@ -742,7 +753,7 @@ const Profile = ({
         dispatch(memberOrgsActions.finishLoadingAction());
       }
     } catch (error) {
-      dispatch(memberOrgsActions.fetchApplicantsError(error));
+      dispatch(memberOrgsActions.fetchMemberOrgsError(error));
     }
   };
 
@@ -751,12 +762,12 @@ const Profile = ({
   }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetch)
+    refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchOrgs)
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadApplicants();
-  }, [toggleRefetch, page]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [toggleRefetchOrgs, pageOrgs]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isItemLoadedOrgs = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
 
@@ -764,8 +775,8 @@ const Profile = ({
 
     ({ stopIndex }) => {
       if (
-        !isLoading &&
-        loadMore &&
+        !isLoadingOrgs &&
+        loadMoreOrgs &&
         stopIndex >= feedApplicants.length &&
         feedApplicants.length
       ) {
@@ -778,16 +789,16 @@ const Profile = ({
         return Promise.resolve();
       }
     },
-    [feedApplicants.length, isLoading, loadMore], // eslint-disable-line react-hooks/exhaustive-deps
+    [feedApplicants.length, isLoadingOrgs, loadMoreOrgs], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(() => {
-    setItemCount(loadMore ? feedApplicants.length + 1 : feedApplicants.length);
-  }, [feedApplicants.length, loadMore]);
+    setItemCount(loadMoreOrgs ? feedApplicants.length + 1 : feedApplicants.length);
+  }, [feedApplicants.length, loadMoreOrgs]);
 
-  const emptyFeedOrgs = () => applicantsList.length < 1 && !isLoading;
+  const emptyFeedOrgs = () => applicantsList.length < 1 && !isLoadingOrgs;
 
-  let url = window.location.pathname.split("/");
+  // let url = window.location.pathname.split("/");
   // const organisationId = url[url.length - 1];
   // const { orgProfileState, orgProfileDispatch } = useContext(
   //   OrganisationContext,
@@ -829,7 +840,7 @@ const Profile = ({
     }
   };
 
-  const emptyFeed = () => filteredPost.length < 1 && !isLoading;
+  const emptyFeed = () => filteredPost.length < 1 && !isLoadingOrgs;
 
   if (authLoading == null || authLoading === true) {
     return <></>;
@@ -1061,7 +1072,15 @@ const Profile = ({
               </DesktopMenuWrapper>
               {sectionView === "Organisations" ? (
                 <ProfileList
-                  filteredOrgs={TestMemberOfOrgs}
+                  itemCount={itemCount}
+                  isItemLoaded={isItemLoadedOrgs}
+                  isNextPageLoading={isLoadingOrgs}
+                  loadNextPage={loadNextPageOrgs}
+                  hasNextPage={loadMoreOrgs}
+                  filteredApplicants={applicantsList}
+                  totalCount={totalApplicantCount}
+                  page={pageOrgs}
+                  emptyFeed={emptyFeed}
                 />
               ) : null}
               {sectionView === "Requests" ||
@@ -1072,7 +1091,7 @@ const Profile = ({
                     <SeeAllContentWrapper>
                       <FeedWrapper isProfile>
                         <WhiteSpace size={"xl"}></WhiteSpace>
-                        {/* <ProfileDesktop
+                        <ProfileDesktop
                           setInternalTab={setTab}
                           isOrg={false}
                           isAuthenticated={isAuthenticated}
@@ -1092,7 +1111,7 @@ const Profile = ({
                           hasNextPage={loadMore}
                           totalPostCount={totalPostCount}
                           isProfile={true}
-                        ></ProfileDesktop> */}
+                        ></ProfileDesktop>
                       </FeedWrapper>
                     </SeeAllContentWrapper>
                   </SeeAllTabsWrapper>
