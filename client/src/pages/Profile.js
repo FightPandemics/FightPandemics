@@ -116,6 +116,7 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
+  SET_VALUE
 } from "hooks/actions/feedActions";
 import ProfileList from "components/OrganisationProfile/ProfileList"
 import { TestMemberOfOrgs } from "utils/TestMemberOfOrgs";
@@ -491,6 +492,12 @@ const Profile = ({
     }
   }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // useEffect(() => {
+
+  //   if (sectionView.toUpperCase() == "ORGANISATIONS") {
+  //     refetchApplicants();
+  //   }
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -628,7 +635,8 @@ const Profile = ({
 
   // const applicants = useSelector(selectMemberOrgs);
 
-  const applicants = TestMemberOfOrgs
+  const memberOrgs = TestMemberOfOrgs
+  // const memberOrgs = useSelector(selectMemberOrgs)
 
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
@@ -646,12 +654,13 @@ const Profile = ({
     isLoadingOrgs,
     loadMoreOrgs,
     pageOrgs,
-    applicants: applicantsList,
-  } = applicants;
+    memberOrgs: memberOrgsList,
+  } = memberOrgs;
 
-  // const feedApplicants = Object.entries(applicantsList);
-  const feedApplicants = Object.entries(TestMemberOfOrgs);
-  console.log("members: " + JSON.stringify(feedApplicants))
+  const feedApplicants = Object.entries(memberOrgsList);
+  console.log("feed applicants: " + JSON.stringify(feedApplicants))
+  // const feedApplicants = Object.entries(TestMemberOfOrgs);
+  // console.log("members: " + JSON.stringify(feedApplicants))
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
 
   function usePrevious(value) {
@@ -692,6 +701,8 @@ const Profile = ({
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
 
+       
+      console.log("APPLICANTS API REQUEST!: " + JSON.stringify(applicants))
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
@@ -725,19 +736,19 @@ const Profile = ({
         if (applicantsInState) {
           dispatch(
             memberOrgsActions.fetchMemberOrgsSuccess({
-              applicants: { ...applicantsInState, ...loadedApplicants },
+              memberOrgs: { ...applicantsInState, ...loadedApplicants },
             }),
           );
-        } else if (Object.keys(applicantsList).length && pageOrgs) {
+        } else if (Object.keys(memberOrgsList).length && pageOrgs) {
           dispatch(
             memberOrgsActions.fetchMemberOrgsSuccess({
-              applicants: { ...applicantsList, ...loadedApplicants },
+              memberOrgs: { ...memberOrgsList, ...loadedApplicants },
             }),
           );
         } else {
           dispatch(
             memberOrgsActions.fetchMemberOrgsSuccess({
-              applicants: { ...loadedApplicants },
+              memberOrgs: { ...loadedApplicants },
             }),
           );
         }
@@ -745,7 +756,7 @@ const Profile = ({
       else if (applicants) {
         dispatch(
           memberOrgsActions.fetchMemberOrgsSuccess({
-            applicants: { ...applicantsList },
+            memberOrgs: { ...memberOrgsList },
           }),
         );
         dispatch(memberOrgsActions.finishLoadingAction());
@@ -795,8 +806,8 @@ const Profile = ({
   useEffect(() => {
     setItemCount(loadMoreOrgs ? feedApplicants.length + 1 : feedApplicants.length);
   }, [feedApplicants.length, loadMoreOrgs]);
-
-  const emptyFeedOrgs = () => applicantsList.length < 1 && !isLoadingOrgs;
+  console.log("feed applicants length: " + feedApplicants.length)
+  const emptyFeedOrgs = () => memberOrgsList.length < 1 && !isLoadingOrgs;
 
   // let url = window.location.pathname.split("/");
   // const organisationId = url[url.length - 1];
@@ -1070,19 +1081,25 @@ const Profile = ({
                   </Menu.Item>
                 ))}
               </DesktopMenuWrapper>
-              {sectionView === "Organisations" ? (
-                <ProfileList
-                  itemCount={itemCount}
-                  isItemLoaded={isItemLoadedOrgs}
-                  isNextPageLoading={isLoadingOrgs}
-                  loadNextPage={loadNextPageOrgs}
-                  hasNextPage={loadMoreOrgs}
-                  filteredApplicants={applicantsList}
-                  totalCount={totalApplicantCount}
-                  page={pageOrgs}
-                  emptyFeed={emptyFeed}
-                />
-              ) : null}
+              {sectionView === "Organisations" ?
+                // rawTotalApplicantCount == 0 ?
+                itemCount == 0 ?
+                  <div style={{ textAlign: "center", marginTop: "5rem" }}>
+                    No Applicants to display.
+                </div> :
+                  (
+                    <ProfileList
+                      itemCount={itemCount}
+                      isItemLoaded={isItemLoadedOrgs}
+                      isNextPageLoading={isLoadingOrgs}
+                      loadNextPage={loadNextPageOrgs}
+                      hasNextPage={loadMoreOrgs}
+                      filteredApplicants={memberOrgsList}
+                      totalCount={totalApplicantCount}
+                      page={pageOrgs}
+                      emptyFeed={emptyFeed}
+                    />
+                  ) : null}
               {sectionView === "Requests" ||
                 sectionView === "Offers" ||
                 sectionView === "Posts" ? (

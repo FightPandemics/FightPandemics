@@ -58,11 +58,11 @@ const ProfileList = ({
     emptyFeed
 }) => {
     console.log("applicants post list: " + JSON.stringify(filteredApplicants))
-    const filteredTEST = TestMemberOfOrgs
+    // const filteredTEST = TestMemberOfOrgs
     const applicantsList = filteredApplicants && true
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true
-    const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs || filteredTEST);
+    const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
@@ -87,7 +87,6 @@ const ProfileList = ({
                             orgList={orgsList}
 
                         />
-                        <div>yooo</div>
                     </>
                 );
             }
@@ -125,10 +124,10 @@ const ProfileList = ({
                         <InfiniteLoader
                             isRowLoaded={isItemLoaded}
                             loadMoreRows={loadMoreItems}
-                            rowCount={totalApplicantCount}
+                            // rowCount={totalApplicantCount}
+                            rowCount={4}
                             threshold={5}
                         >
-
                             {({ onRowsRendered }) => (
                                 <AutoSizer disableHeight>
                                     {({ width }) => (
