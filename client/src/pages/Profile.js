@@ -665,6 +665,8 @@ const Profile = ({
     applicants: applicantsList,
   } = applicants;
 
+  console.log(JSON.stringify(applicantsList))
+
   const feedApplicants = Object.entries(applicantsList);
   // console.log("feed applicants: " + JSON.stringify(feedApplicants))
   // const feedApplicants = Object.entries(TestMemberOfOrgs);
