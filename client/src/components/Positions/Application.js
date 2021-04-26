@@ -129,20 +129,20 @@ const Application = ({ orgName,
         }
     };
 
-    const renderError = (field) => {
-        if (errors.includes(field) && (!formData[field] || !formData[field].length))
-            return errorMsg[field];
-    };
+    // const renderError = (field) => {
+    //     if (errors.includes(field) && (!formData[field] || !formData[field].length))
+    //         return errorMsg[field];
+    // };
 
-    const populateErrors = () => {
-        const newErrors = [];
-        for (let field in errorMsg) {
-            if (!errors.includes(field)) {
-                newErrors.push(field);
-            }
-        }
-        setErrors([...errors, ...newErrors]);
-    };
+    // const populateErrors = () => {
+    //     const newErrors = [];
+    //     for (let field in errorMsg) {
+    //         if (!errors.includes(field)) {
+    //             newErrors.push(field);
+    //         }
+    //     }
+    //     setErrors([...errors, ...newErrors]);
+    // };
 
     const handleReject = async (e) => {
         e.preventDefault();
