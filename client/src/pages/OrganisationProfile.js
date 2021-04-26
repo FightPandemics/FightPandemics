@@ -107,7 +107,7 @@ import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import TestMembers from "components/OrganisationProfile/ProfileList"
-import { TestMembersList } from "utils/TestMembersList";
+import { TestMembersList, FilteredApplicants } from "utils/TestMembersList";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -586,7 +586,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             </div></ProfileTabPane>
             <ProfileTabPane tab={t("profile.views.members")} key="members">
               <TestMembers
-                filteredMembersList={filteredMembers}
+                filteredMembers={filteredMembers}
               />
             </ProfileTabPane>
           </ProfileTabs>
