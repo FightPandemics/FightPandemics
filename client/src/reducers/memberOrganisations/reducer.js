@@ -1,9 +1,9 @@
-import { MEMBER_ORGS_ACTIONS } from "./actions";
+import { APPLICANTS_ACTIONS } from "./actions";
 import { isPostExpired } from "components/Feed/utils";
 
 //TODO remove expired
 const initialState = {
-  memberOrgs: [],
+  applicants: [],
   page: 0,
   error: null,
   isLoading: false,
@@ -31,92 +31,92 @@ export const getProfileModeProp = (mode) => {
   return modeMap[mode];
 };
 
-const memberOrgsReducer = (state = initialState, action) => {
+const applicantsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case MEMBER_ORGS_ACTIONS.FETCH_MEMBER_ORGS_BEGIN:
+    case APPLICANTS_ACTIONS.FETCH_APPLICANTS_BEGIN:
       return {
         ...state,
         isLoading: true,
       };
-    case MEMBER_ORGS_ACTIONS.FETCH_MEMBER_ORGS_SUCCESS: {
+    case APPLICANTS_ACTIONS.FETCH_APPLICANTS_SUCCESS: {
       const { payload } = action;
       return {
         ...state,
         error: null,
-        memberOrgs: payload,
+        applicants: payload,
         isLoading: false,
       };
     }
 
-    case MEMBER_ORGS_ACTIONS.FETCH_PROFILE_MEMBER_ORGS_SUCCESS: {
-      let { memberOrgs, userId, objective, mode } = action.payload;
+    case APPLICANTS_ACTIONS.FETCH_PROFILE_APPLICANTS_SUCCESS: {
+      let { applicants, userId, objective, mode } = action.payload;
       objective = getProfileObjectiveProp(objective);
       mode = getProfileModeProp(mode);
       return {
         ...state,
         error: null,
-        profileMembers: {
-          ...state.profileMembers,
+        profileApplicants: {
+          ...state.profileApplicants,
           [userId]: {
-            ...state.profileMembers[userId],
+            ...state.profileApplicants[userId],
             [objective]: {
-              ...state.profileMembers[userId]?.[objective],
-              [mode]: memberOrgs,
+              ...state.profileApplicants[userId]?.[objective],
+              [mode]: applicants,
             },
           },
         },
         isLoading: false,
       };
     }
-    case MEMBER_ORGS_ACTIONS.UPDATE_PROFILE_MEMBER_ORG_SUCCESS: {
-      let { memberOrg, userId } = action.payload;
-      const isExpired = isPostExpired(memberOrg);
-      const objective = getProfileObjectiveProp(memberOrg.objective);
+    case APPLICANTS_ACTIONS.UPDATE_PROFILE_APPLICANT_SUCCESS: {
+      let { applicant, userId } = action.payload;
+      const isExpired = isPostExpired(applicant);
+      const objective = getProfileObjectiveProp(applicant.objective);
 
-      // map though all Profile Members to update
-      let currentMembers = state.profileMembers[userId]?.[objective]?.all;
-      currentMembers =
-        currentMembers !== undefined
-          ? currentMembers.map((currentMember) => {
-            if (currentMember._id !== memberOrg._id) {
-              return currentMember;
+      // map though all Profile Applicants to update
+      let currentApplicants = state.profileApplicants[userId]?.[objective]?.all;
+      currentApplicants =
+        currentApplicants !== undefined
+          ? currentApplicants.map((currentApplicant) => {
+            if (currentApplicant._id !== applicant._id) {
+              return currentApplicant;
             }
             return {
-              ...currentMember,
-              ...memberOrg,
+              ...currentApplicant,
+              ...applicant,
             };
           })
           : undefined;
 
-      let currentActiveMembers = state.profileMembers[userId]?.[objective]?.active;
-      let currentInActiveMembers =
-        state.profileMembers[userId]?.[objective]?.inactive;
+      let currentActiveApplicants = state.profileApplicants[userId]?.[objective]?.active;
+      let currentInActiveApplicants =
+        state.profileApplicants[userId]?.[objective]?.inactive;
 
       if (!isExpired) {
-        // map through active Profile memberOrgs to update
-        currentActiveMembers =
-          currentActiveMembers !== undefined
-            ? currentActiveMembers.map((currentActiveMember) => {
-              if (currentActiveMember._id !== memberOrg._id) {
-                return currentActiveMember;
+        // map through active Profile applicants to update
+        currentActiveApplicants =
+          currentActiveApplicants !== undefined
+            ? currentActiveApplicants.map((currentActiveApplicant) => {
+              if (currentActiveApplicant._id !== applicant._id) {
+                return currentActiveApplicant;
               }
               return {
-                ...currentActiveMember,
-                ...memberOrg,
+                ...currentActiveApplicant,
+                ...applicant,
               };
             })
             : undefined;
       } else {
-        // map though achived Profile memberOrgs to update
-        currentInActiveMembers =
-          currentInActiveMembers !== undefined
-            ? currentInActiveMembers.map((currentInActiveMember) => {
-              if (currentInActiveMember._id !== memberOrg._id) {
-                return currentInActiveMember;
+        // map though achived Profile applicants to update
+        currentInActiveApplicants =
+          currentInActiveApplicants !== undefined
+            ? currentInActiveApplicants.map((currentInActiveApplicant) => {
+              if (currentInActiveApplicant._id !== applicant._id) {
+                return currentInActiveApplicant;
               }
               return {
-                ...currentInActiveMember,
-                ...memberOrg,
+                ...currentInActiveApplicant,
+                ...applicant,
               };
             })
             : undefined;
@@ -124,70 +124,70 @@ const memberOrgsReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        profileMembers: {
-          ...state.profileMembers,
+        profileApplicants: {
+          ...state.profileApplicants,
           [userId]: {
-            ...state.profileMembers[userId],
+            ...state.profileApplicants[userId],
             [objective]: {
-              active: currentActiveMembers,
-              inactive: currentInActiveMembers,
-              all: currentMembers,
+              active: currentActiveApplicants,
+              inactive: currentInActiveApplicants,
+              all: currentApplicants,
             },
           },
         },
       };
     }
-    case MEMBER_ORGS_ACTIONS.FETCH_MEMBER_ORGS_ERROR: {
+    case APPLICANTS_ACTIONS.FETCH_APPLICANTS_ERROR: {
       const { payload } = action;
       return {
         ...state,
         error: payload,
-        memberOrgs: [],
+        applicants: [],
         isLoading: false,
       };
     }
-    case MEMBER_ORGS_ACTIONS.NEXT_PAGE:
+    case APPLICANTS_ACTIONS.NEXT_PAGE:
       return { ...state, page: state.page + 1 };
-    case MEMBER_ORGS_ACTIONS.SET_PAGE:
+    case APPLICANTS_ACTIONS.SET_PAGE:
       const { payload } = action;
       return { ...state, page: payload.page };
-    case MEMBER_ORGS_ACTIONS.RESET_PAGE: {
+    case APPLICANTS_ACTIONS.RESET_PAGE: {
       const { payload } = action;
       return {
         ...state,
         page: 0,
-        memberOrgs: [],
+        applicants: [],
         loadMore: payload.loadMore,
         isLoading: payload.isLoading,
       };
     }
-    case MEMBER_ORGS_ACTIONS.FINISH_LOADING:
+    case APPLICANTS_ACTIONS.FINISH_LOADING:
       return {
         ...state,
         isLoading: false,
         loadMore: false,
       };
-    case MEMBER_ORGS_ACTIONS.SET_REPORTED: {
+    case APPLICANTS_ACTIONS.SET_REPORTED: {
       const { payload } = action;
       return {
         ...state,
-        memberOrgs: {
-          ...state.memberOrgs,
-          [payload.memberOrgId]: {
-            ...state.memberOrgs[payload.memberOrgId],
+        applicants: {
+          ...state.applicants,
+          [payload.applicantId]: {
+            ...state.applicants[payload.applicantId],
             didReport: true,
           },
         },
       };
     }
-    case MEMBER_ORGS_ACTIONS.SHOW_ANYWAY: {
+    case APPLICANTS_ACTIONS.SHOW_ANYWAY: {
       const { payload } = action;
       return {
         ...state,
-        memberOrgs: {
-          ...state.memberOrgs,
-          [payload.memberOrgId]: {
-            ...state.memberOrgs[payload.memberOrgId],
+        applicants: {
+          ...state.applicants,
+          [payload.applicantId]: {
+            ...state.applicants[payload.applicantId],
             reportsCount: 0,
           },
         },
@@ -198,4 +198,4 @@ const memberOrgsReducer = (state = initialState, action) => {
   }
 };
 
-export default memberOrgsReducer;
+export default applicantsReducer;

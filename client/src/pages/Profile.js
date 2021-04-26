@@ -9,7 +9,7 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { theme, mq } from "constants/theme";
@@ -72,7 +72,7 @@ import {
   getProfileObjectiveProp,
   getProfileModeProp,
 } from "reducers/posts";
-import { memberOrgsActions, selectMemberOrgs } from "reducers/memberOrganisations";
+import { applicantsActions, selectMemberOrgs } from "reducers/memberOrganisations";
 
 import {
   fetchUser,
@@ -119,7 +119,7 @@ import {
   SET_VALUE
 } from "hooks/actions/feedActions";
 import ProfileList from "components/OrganisationProfile/ProfileList"
-import { TestMemberOfOrgs } from "utils/TestMemberOfOrgs";
+import { TestMemberOfOrgs, Applicants, Meta } from "utils/TestMemberOfOrgs";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -152,7 +152,7 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const Profile = ({
-  history,
+  // history,
   isAuthenticated,
   match: {
     params: { id: pathUserId },
@@ -321,7 +321,8 @@ const Profile = ({
         disable: false,
         gtm: "organisations",
       });
-      setSectionView(t("profile.views.posts"));
+      // setSectionView(t("profile.views.posts"));
+      setSectionView("Organisations");
       setInternalTab(t("profile.views.requests"));
     }
     setNavMenu(baseMenu);
@@ -506,7 +507,7 @@ const Profile = ({
         setToggleRefetch(!toggleRefetch);
       }
     }
-    console.log("refetch posts!")
+    // console.log("refetch posts!")
   };
 
   const loadNextPage = useCallback(
@@ -635,8 +636,8 @@ const Profile = ({
 
   // const applicants = useSelector(selectMemberOrgs);
 
-  const memberOrgs = TestMemberOfOrgs
-  // const memberOrgs = useSelector(selectMemberOrgs)
+  const applicants = TestMemberOfOrgs
+  // const applicants = useSelector(selectMemberOrgs)
 
   //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
@@ -654,11 +655,11 @@ const Profile = ({
     isLoadingOrgs,
     loadMoreOrgs,
     pageOrgs,
-    memberOrgs: memberOrgsList,
-  } = memberOrgs;
+    applicants: applicantsList,
+  } = applicants;
 
-  const feedApplicants = Object.entries(memberOrgsList);
-  console.log("feed applicants: " + JSON.stringify(feedApplicants))
+  const feedApplicants = Object.entries(applicantsList);
+  // console.log("feed applicants: " + JSON.stringify(feedApplicants))
   // const feedApplicants = Object.entries(TestMemberOfOrgs);
   // console.log("members: " + JSON.stringify(feedApplicants))
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
@@ -670,7 +671,7 @@ const Profile = ({
     });
     return ref.current;
   }
-
+  const history = useHistory();
   // const { history } = props;
 
   // const dispatchAction = (type, key, value) =>
@@ -679,8 +680,9 @@ const Profile = ({
   const refetchApplicants = (isLoadingOrgs, loadMoreOrgs, softRefresh = false) => {
     if (!softRefresh) {
       // dispatchAction(SET_VALUE, "applyFilters", true);
-      dispatch(memberOrgsActions.resetPageAction({ isLoadingOrgs, loadMoreOrgs }));
+      dispatch(applicantsActions.resetPageAction({ isLoadingOrgs, loadMoreOrgs }));
       if (pageOrgs === 0) {
+        console.log("yo11")
         setToggleRefetchOrgs(!toggleRefetchOrgs);
       }
     }
@@ -689,42 +691,48 @@ const Profile = ({
   const getApplicantsBaseURL = (limit, skip, userId) => {
     return `/api/applicants?applicantId=${userId}&includeMeta=true&limit=${limit}&skip=${skip}`;
   };
+
   const loadApplicants = async () => {
     const limit = PAGINATION_LIMIT;
-    const skip = pageOrgs * limit;
+    const skip = page * limit;
     let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
     let endpoint = baseURL
-    dispatch(memberOrgsActions.fetchMemberOrgsBegin());
+    dispatch(applicantsActions.fetchApplicantsBegin());
 
     try {
-      const {
-        data: { data: applicants, meta },
-      } = await axios.get(endpoint);
+      // const {
+      //     data: { data: applicants, meta },
+      // } = await axios.get(endpoint);
 
-       
-      console.log("APPLICANTS API REQUEST!: " + JSON.stringify(applicants))
+      const applicants = Applicants
+      const meta = Meta
+
       if (applicants.length && meta.total) {
+        console.log("yo1")
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
           setRawTotalApplicants(meta.total)
         }
 
         const lastPage = Math.ceil(meta.total / limit) - 1;
-        if (pageOrgs === lastPage) {
-          dispatch(memberOrgsActions.finishLoadingAction());
+        if (page === lastPage) {
+          console.log("yo3")
+          dispatch(applicantsActions.finishLoadingAction());
         }
 
         let applicantsInState;
         if (history.location.state) {
+          console.log("yo4")
           const { keepApplicantsState, keepPageState } = history.location.state;
           applicantsInState = keepApplicantsState;
-          if (keepPageState >= pageOrgs) {
-            dispatch(memberOrgsActions.setPageAction(keepPageState));
+          if (keepPageState >= page) {
+            dispatch(applicantsActions.setPageAction(keepPageState));
           }
         }
         if (applicantsInState) {
+          console.log("yo5")
           if (Object.keys(applicantsInState).length === meta.total) {
-            dispatch(memberOrgsActions.finishLoadingAction());
+            dispatch(applicantsActions.finishLoadingAction());
           }
         }
 
@@ -734,40 +742,45 @@ const Profile = ({
         }, {});
 
         if (applicantsInState) {
+          console.log("yo6")
           dispatch(
-            memberOrgsActions.fetchMemberOrgsSuccess({
-              memberOrgs: { ...applicantsInState, ...loadedApplicants },
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...applicantsInState, ...loadedApplicants },
             }),
           );
-        } else if (Object.keys(memberOrgsList).length && pageOrgs) {
+        } else if (Object.keys(applicantsList).length && page) {
+          console.log("yo7")
           dispatch(
-            memberOrgsActions.fetchMemberOrgsSuccess({
-              memberOrgs: { ...memberOrgsList, ...loadedApplicants },
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...applicantsList, ...loadedApplicants },
             }),
           );
         } else {
+          console.log("yo8")
           dispatch(
-            memberOrgsActions.fetchMemberOrgsSuccess({
-              memberOrgs: { ...loadedApplicants },
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...loadedApplicants },
             }),
           );
         }
       }
       else if (applicants) {
+        console.log("yo9")
         dispatch(
-          memberOrgsActions.fetchMemberOrgsSuccess({
-            memberOrgs: { ...memberOrgsList },
+          applicantsActions.fetchApplicantsSuccess({
+            applicants: { ...applicantsList },
           }),
         );
-        dispatch(memberOrgsActions.finishLoadingAction());
+        dispatch(applicantsActions.finishLoadingAction());
       } else {
-        dispatch(memberOrgsActions.finishLoadingAction());
+        console.log("yo10")
+        dispatch(applicantsActions.finishLoadingAction());
       }
     } catch (error) {
-      dispatch(memberOrgsActions.fetchMemberOrgsError(error));
+      console.log("yo11")
+      dispatch(applicantsActions.fetchApplicantsError(error));
     }
   };
-
 
   useEffect(() => {
   }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -792,7 +805,7 @@ const Profile = ({
         feedApplicants.length
       ) {
         return new Promise((resolve) => {
-          dispatch(memberOrgsActions.setNextPageAction());
+          dispatch(applicantsActions.setNextPageAction());
           // dispatchAction(SET_VALUE, "applyFilters", true);
           resolve();
         });
@@ -806,8 +819,8 @@ const Profile = ({
   useEffect(() => {
     setItemCount(loadMoreOrgs ? feedApplicants.length + 1 : feedApplicants.length);
   }, [feedApplicants.length, loadMoreOrgs]);
-  console.log("feed applicants length: " + feedApplicants.length)
-  const emptyFeedOrgs = () => memberOrgsList.length < 1 && !isLoadingOrgs;
+  // console.log("feed applicants length: " + feedApplicants.length)
+  const emptyFeedOrgs = () => applicantsList.length < 1 && !isLoadingOrgs;
 
   // let url = window.location.pathname.split("/");
   // const organisationId = url[url.length - 1];
@@ -1094,7 +1107,7 @@ const Profile = ({
                       isNextPageLoading={isLoadingOrgs}
                       loadNextPage={loadNextPageOrgs}
                       hasNextPage={loadMoreOrgs}
-                      filteredApplicants={memberOrgsList}
+                      filteredApplicants={applicantsList}
                       totalCount={totalApplicantCount}
                       page={pageOrgs}
                       emptyFeed={emptyFeed}

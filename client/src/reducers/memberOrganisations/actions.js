@@ -1,10 +1,10 @@
-export const MEMBER_ORGS_ACTIONS = {
+export const APPLICANTS_ACTIONS = {
   FINISH_LOADING: "FINISH_LOADING",
-  FETCH_MEMBER_ORGS_SUCCESS: "FETCH_MEMBER_ORGS_SUCCESS",
-  FETCH_MEMBER_ORGS_BEGIN: "FETCH_MEMBER_ORGS_BEGIN",
-  FETCH_MEMBER_ORGS_ERROR: "FETCH_MEMBER_ORGS_ERROR",
-  FETCH_PROFILE_MEMBER_ORGS_SUCCESS: "FETCH_PROFILE_MEMBER_ORGS_SUCCESS",
-  UPDATE_PROFILE_MEMBER_ORG_SUCCESS: "UPDATE_PROFILE_MEMBER_ORG_SUCCESS",
+  FETCH_APPLICANTS_SUCCESS: "FETCH_APPLICANTS_SUCCESS",
+  FETCH_APPLICANTS_BEGIN: "FETCH_APPLICANTS_BEGIN",
+  FETCH_APPLICANTS_ERROR: "FETCH_APPLICANTS_ERROR",
+  FETCH_PROFILE_APPLICANTS_SUCCESS: "FETCH_PROFILE_APPLICANTS_SUCCESS",
+  UPDATE_PROFILE_APPLICANT_SUCCESS: "UPDATE_PROFILE_APPLICANT_SUCCESS",
   NEXT_PAGE: "NEXT_PAGE",
   SET_PAGE: "SET_PAGE",
   RESET_PAGE: "RESET_PAGE",
@@ -12,86 +12,83 @@ export const MEMBER_ORGS_ACTIONS = {
   SET_REPORTED: "SET_REPORTED",
   SHOW_ANYWAY: "SHOW_ANYWAY",
 };
- 
+
 export const resetPageAction = ({ isLoading = false, loadMore = true }) => ({
-  type: MEMBER_ORGS_ACTIONS.RESET_PAGE,
+  type: APPLICANTS_ACTIONS.RESET_PAGE,
   payload: {
     isLoading,
     loadMore,
   },
 });
- 
-export const fetchMemberOrgsBegin = () => ({
-  type: MEMBER_ORGS_ACTIONS.FETCH_MEMBER_ORGS_BEGIN,
+
+export const fetchApplicantsBegin = () => ({
+  type: APPLICANTS_ACTIONS.FETCH_APPLICANTS_BEGIN,
 });
- 
-export const fetchMemberOrgsSuccess = ({ memberOrgs }) => ({
-  type: MEMBER_ORGS_ACTIONS.FETCH_MEMBER_ORGS_SUCCESS,
-  payload: memberOrgs,
+
+export const fetchApplicantsSuccess = ({ applicants }) => ({
+  type: APPLICANTS_ACTIONS.FETCH_APPLICANTS_SUCCESS,
+  payload: applicants,
 });
- 
-export const fetchProfileMemberOrgSuccess = ({
-  memberOrgs,
+
+export const fetchProfileApplicantSuccess = ({
+  applicants,
   userId,
   objective,
   mode,
 }) => ({
-  type: MEMBER_ORGS_ACTIONS.FETCH_PROFILE_MEMBER_ORGS_SUCCESS,
-  payload: { memberOrgs, userId, objective, mode },
+  type: APPLICANTS_ACTIONS.FETCH_PROFILE_APPLICANTS_SUCCESS,
+  payload: { applicants, userId, objective, mode },
 });
- 
-export const updateProfileMemberOrgSucess = ({ memberOrg, userId }) => ({
-  type: MEMBER_ORGS_ACTIONS.UPDATE_PROFILE_MEMBER_ORG_SUCCESS,
-  payload: { memberOrg, userId },
+
+export const updateProfileApplicantSucess = ({ applicant, userId }) => ({
+  type: APPLICANTS_ACTIONS.UPDATE_PROFILE_APPLICANT_SUCCESS,
+  payload: { applicant, userId },
 });
- 
-export const fetchMemberOrgsError = (error) => ({
-  type: MEMBER_ORGS_ACTIONS.FETCH_MEMBER_ORGS_ERROR,
+
+export const fetchApplicantsError = (error) => ({
+  type: APPLICANTS_ACTIONS.FETCH_APPLICANTS_ERROR,
   payload: error,
 });
- 
+
 export const finishLoadingAction = () => ({
-  type: MEMBER_ORGS_ACTIONS.FINISH_LOADING,
+  type: APPLICANTS_ACTIONS.FINISH_LOADING,
 });
- 
+
 export const setNextPageAction = () => ({
-  type: MEMBER_ORGS_ACTIONS.NEXT_PAGE,
+  type: APPLICANTS_ACTIONS.NEXT_PAGE,
 });
- 
+
 export const setPageAction = (page) => ({
-  type: MEMBER_ORGS_ACTIONS.SET_PAGE,
+  type: APPLICANTS_ACTIONS.SET_PAGE,
   payload: { page },
 });
- 
+
 export const setLoadingAction = ({ isLoading, loadMore }) => ({
-  type: MEMBER_ORGS_ACTIONS.SET_LOADING,
+  type: APPLICANTS_ACTIONS.SET_LOADING,
   payload: { isLoading, loadMore },
 });
- 
-export const setReported = ({ memberOrgId }) => ({
-  type: MEMBER_ORGS_ACTIONS.SET_REPORTED,
-  payload: { memberOrgId },
+
+export const setReported = ({ applicantId }) => ({
+  type: APPLICANTS_ACTIONS.SET_REPORTED,
+  payload: { applicantId },
 });
- 
-export const showAnyway = ({ memberOrgId }) => ({
-  type: MEMBER_ORGS_ACTIONS.SHOW_ANYWAY,
-  payload: { memberOrgId },
+
+export const showAnyway = ({ applicantId }) => ({
+  type: APPLICANTS_ACTIONS.SHOW_ANYWAY,
+  payload: { applicantId },
 });
- 
-export const memberOrgsActions = {
+
+export const applicantsActions = {
   resetPageAction,
-  fetchMemberOrgsBegin,
-  fetchMemberOrgsSuccess,
-  fetchProfileMemberOrgSuccess,
-  fetchMemberOrgsError,
+  fetchApplicantsBegin,
+  fetchApplicantsSuccess,
+  fetchProfileApplicantSuccess,
+  fetchApplicantsError,
   finishLoadingAction,
   setLoadingAction,
   setNextPageAction,
   setPageAction,
   setReported,
   showAnyway,
-  updateProfileMemberOrgSucess,
+  updateProfileApplicantSucess,
 };
- 
- 
-

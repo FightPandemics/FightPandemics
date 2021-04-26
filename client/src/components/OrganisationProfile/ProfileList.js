@@ -28,7 +28,7 @@ const HorizontalRule = styled.hr`
 `;
 
 const cellMeasurerCache = new CellMeasurerCache({
-    fixedWidth: true,
+    // fixedWidth: true,
     defaultHeight: 80,
 });
 
@@ -54,15 +54,17 @@ const ProfileList = ({
     itemCount,
     isItemLoaded,
     hasNextPage,
-    totalApplicantCount,
+    totalCount,
     emptyFeed
 }) => {
-    console.log("applicants post list: " + JSON.stringify(filteredApplicants))
+    // console.log("applicants post list: " + JSON.stringify(filteredApplicants))
     // const filteredTEST = TestMemberOfOrgs
     const applicantsList = filteredApplicants && true
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true
     const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
+    // console.log("items: " + JSON.stringify(items[1][1]))
+    // console.log("items length: " + items.length)
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
@@ -76,6 +78,7 @@ const ProfileList = ({
             let content;
             if (!isItemLoaded(index) && hasNextPage) {
                 content = <Loader />;
+                // console.log("loader!")
             } else if (items[index]) {
                 content = (
                     <>
@@ -115,7 +118,10 @@ const ProfileList = ({
     );
 
     return (
-        <div className="activity">
+        <div className="activity"
+            style={{ width: "100%" }}
+        >
+
             { !items.length && isNextPageLoading ? (
                 <Loader />
             ) : (
@@ -124,12 +130,15 @@ const ProfileList = ({
                         <InfiniteLoader
                             isRowLoaded={isItemLoaded}
                             loadMoreRows={loadMoreItems}
-                            // rowCount={totalApplicantCount}
+                            rowCount={totalCount}
                             rowCount={4}
                             threshold={5}
                         >
                             {({ onRowsRendered }) => (
-                                <AutoSizer disableHeight>
+                                <AutoSizer
+                                    disableHeight
+                                    className="autosizer"
+                                >
                                     {({ width }) => (
                                         <List
                                             autoHeight
@@ -137,14 +146,19 @@ const ProfileList = ({
                                             width={width}
                                             isScrolling={isScrolling}
                                             onRowsRendered={onRowsRendered}
-                                            rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
-                                            rowHeight={cellMeasurerCache.getHeight()}
+                                            // rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
+                                            rowCount={5}
+                                            // rowHeight={cellMeasurerCache.getHeight()}
+                                            rowHeight={cellMeasurerCache.rowHeight}
+                                            // rowHeight={50}
                                             deferredMeasurementCache={cellMeasurerCache}
                                             rowRenderer={applicantItem}
                                             scrollTop={scrollTop}
                                             onScroll={onChildScroll}
-                                            overscanRowCount={1}
+                                            // overscanRowCount={1}
+                                            overscanRowCount={5}
                                             scrollToAlignment={"start"}
+
 
                                         />
                                     )}
@@ -158,11 +172,11 @@ const ProfileList = ({
             <Link
                 onClick={handleSeeAll}
             >
-
                 < SeeAllLink>
                     See All
                 </SeeAllLink>
             </Link>
+            {/* <div>TEST</div> */}
         </div >
     );
 };
