@@ -627,10 +627,17 @@ const Profile = ({
 
   // ORGANISATIONS FEED
 
+  const initialState = {
+    showFilters: false,
+    filterModal: true,
+    showCreatePostModal: false,
+    applyFilters: false,
+    activePanel: null,
+  };
   // const dispatch = useDispatch();
-  // const [feedState, feedDispatch] = useReducer(feedReducer, {
-  //   ...initialState
-  // });
+  const [feedState, feedDispatch] = useReducer(feedReducer, {
+    ...initialState
+  });
   // const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
 
 
@@ -707,6 +714,7 @@ const Profile = ({
       const applicants = Applicants
       const meta = Meta
 
+      console.log("state: " + window.state)
       if (applicants.length && meta.total) {
         console.log("yo1")
         if (prevTotalApplicantCount !== meta.total) {
@@ -723,6 +731,7 @@ const Profile = ({
         let applicantsInState;
         if (history.location.state) {
           console.log("yo4")
+
           const { keepApplicantsState, keepPageState } = history.location.state;
           applicantsInState = keepApplicantsState;
           if (keepPageState >= page) {
@@ -740,7 +749,7 @@ const Profile = ({
           obj[item._id] = item;
           return obj;
         }, {});
-
+        console.log("applicantsinState: " + JSON.stringify(applicantsInState))
         if (applicantsInState) {
           console.log("yo6")
           dispatch(
@@ -757,6 +766,7 @@ const Profile = ({
           );
         } else {
           console.log("yo8")
+          console.log(JSON.stringify(loadedApplicants))
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
               applicants: { ...loadedApplicants },
