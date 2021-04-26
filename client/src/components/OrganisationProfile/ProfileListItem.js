@@ -71,7 +71,8 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     let itemState
     let list
     let itemPath
-    if (applicantsList) {
+    
+    if (applicantsList || membersList) {
         list = "applicant"
         itemPath = `/application/${item._id}`
         itemState = {
@@ -80,14 +81,14 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
         }
     }
 
-    if (membersList) {
-        // list = "member"
-        itemPath = `/profile/${item?.[list]?.id}`
-        itemState = {
-            "applicant": item,
-            "applicantId": item?._id,
-        }
-    }
+    // if (membersList) {
+    //     // list = "member"
+    //     itemPath = `/profile/${item?.[list]?.id}`
+    //     itemState = {
+    //         "applicant": item,
+    //         "applicantId": item?._id,
+    //     }
+    // }
 
     if (orgsList) {
         list = "organisation"
