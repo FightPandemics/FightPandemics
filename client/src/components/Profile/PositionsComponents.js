@@ -358,6 +358,7 @@ export const PositionsContainer = styled.div`
     font-weight: 400;
     letter-spacing:.07rem;
     color: ${colors.black};
+    
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       font-size: 1.2rem;
   }

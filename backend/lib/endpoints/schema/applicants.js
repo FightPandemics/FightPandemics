@@ -15,16 +15,31 @@ const getApplicantByIdSchema = {
 const getApplicantsSchema = {
   queryString: strictQueryStringSchema()
     .prop("applicantId", S.string())
-    .prop("skip", S.integer()),
+    .prop("organisationId", S.string())
+    .prop("skip", S.integer())
+    .prop("includeMeta", S.boolean().default(false)),
+};
+
+const getOrganizationApplicantsSchema = {
+  queryString: strictQueryStringSchema()
+    .prop("organisationId", S.string())
+    .prop("skip", S.integer())
+    .prop("includeMeta", S.boolean().default(false)),
 };
 
 const createApplicantSchema = {
   body: strictSchema()
-  .prop("postApplied", S.string())
-  .prop(
-    "answers", S.array().items(S.string().required())
-  )
-  .prop("status", S.string().enum(APPLICANT_STATUS).required()),
+    .prop("organizationId", S.string().required())
+    .prop("applicantApplied", S.string())
+    // answers may need to be object
+    .prop(
+      "answers",
+      S.object()
+        .prop("q1", S.string())
+        .prop("q2", S.string())
+        .prop("q3", S.string())
+    )
+    .prop("status", S.string().enum(APPLICANT_STATUS).required()),
 };
 
 const updateApplicantStatusSchema = {
@@ -38,5 +53,6 @@ module.exports = {
   createApplicantSchema,
   getApplicantByIdSchema,
   getApplicantsSchema,
-  updateApplicantStatusSchema
+  getOrganizationApplicantsSchema,
+  updateApplicantStatusSchema,
 };

@@ -137,23 +137,14 @@ const PositionApplicationForm = ({ orgName,
     if (formData.question1 && formData.question2 && formData.question3) {
       showPopUp()
     };
-    console.log("PRE API CALL")
+    console.log("PRE API CALL" + formData)
 
 
     // e.preventDefault();
     // populateErrors();
 
-    const payload = formToApplicationMappings(formData);
+    // api call goes inside of function for submit modal
 
-    try {
-      const res = await axios.post("/api/applicants", payload);
-      // setPostId(res.data._id);
-      // onSuccess(res.data);
-      // cleanForm();
-    } catch (error) {
-      console.log(error);
-    }
-    console.log("POST API CALL")
 
   };
 
@@ -174,9 +165,16 @@ const PositionApplicationForm = ({ orgName,
     setVisibleTwo(false);
   };
 
-  const showPopUpTwo = async (formData) => {
+  const showPopUpTwo = async () => {
     handleCancel()
-    // submit form to backend
+    const payload = formToApplicationMappings(formData);
+
+    try {
+      await axios.post("/api/applicants", payload);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log("POST API CALL")
     setVisibleTwo(true);
   };
 
