@@ -16,6 +16,14 @@ import { theme } from "constants/theme";
 
 const { colors } = theme
 
+const ListContainer = styled.div`
+    background-color: ${colors.white};
+    border-radius: 1.2rem;
+    overflow: hidden;
+    margin-top: .3rem;
+    box-shadow: ${colors.shadowBlack};
+`;
+
 const HorizontalRule = styled.hr`
   display: none;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -113,7 +121,7 @@ const ProfileList = ({
     );
 
     return (
-        <div className="activity">
+        <ListContainer className="activity">
             { !items.length && isNextPageLoading ? (
                 <Loader />
             ) : (
@@ -143,6 +151,7 @@ const ProfileList = ({
                                             onScroll={onChildScroll}
                                             overscanRowCount={1}
                                             scrollToAlignment={"start"}
+                                            style={{ "margin-top": "3rem" }}
 
                                         />
                                     )}
@@ -161,7 +170,7 @@ const ProfileList = ({
                     See All
             </SeeAllLink>
             </Link>
-        </div >
+        </ListContainer >
     );
 };
 

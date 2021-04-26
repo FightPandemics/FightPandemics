@@ -31,7 +31,6 @@ export const ProfileTabs = styled(Tabs)`
 
 .ant-tabs-content {
   border-radius: 1.2rem;
-  box-shadow: 0px 0px 2rem ${colors.shadowBlack};
 }
   .ant-tabs-nav-list {
     margin: 0;

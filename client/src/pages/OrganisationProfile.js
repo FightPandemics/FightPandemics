@@ -110,7 +110,7 @@ import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
-import TestMembers from "components/OrganisationProfile/ProfileList"
+import ProfileList from "components/OrganisationProfile/ProfileList"
 import { TestMembersList, FilteredApplicants, Applicants, Meta } from "utils/TestMembersList";
 
 const URLS = {
@@ -776,7 +776,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </FeedWrapper>
             </div></ProfileTabPane>
             <ProfileTabPane tab={t("profile.views.members")} key="members">
-              <TestMembers
+              <ProfileList
                 filteredMembers={applicantsList}
                 itemCount={itemCountApplicants}
                 isItemLoaded={isApplicantLoaded}
