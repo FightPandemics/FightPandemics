@@ -647,8 +647,8 @@ const Profile = ({
   const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
   const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
-  console.log("TOTAL APPLICANT COUNT:" + totalApplicantCount)
-  console.log("RAW TOTAL APPLICANT:" + rawTotalApplicantCount)
+  // console.log("TOTAL APPLICANT COUNT:" + totalApplicantCount)
+  // console.log("RAW TOTAL APPLICANT:" + rawTotalApplicantCount)
   const {
     filterModal,
     activePanel,
@@ -664,7 +664,7 @@ const Profile = ({
   } = applicants;
   // console.log("applicants list: " + JSON.stringify(applicantsList))
   const feedApplicants = Object.entries(applicantsList);
-  console.log("feedApplicants length:" + feedApplicants.length)
+  // console.log("feedApplicants length:" + feedApplicants.length)
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
 
   function usePrevious(value) {
@@ -716,11 +716,11 @@ const Profile = ({
       const meta = Meta
 
       // console.log("Applicants:" + JSON.stringify(Applicants))
-      console.log("Meta:" + JSON.stringify(Meta))
-      console.log("applicants length:" + applicants.length)
-      console.log("meta total:" + meta.total)
+      // console.log("Meta:" + JSON.stringify(Meta))
+      // console.log("applicants length:" + applicants.length)
+      // console.log("meta total:" + meta.total)
       if (applicants.length && meta.total) {
-        console.log("yo1")
+        // console.log("yo1")
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
           setRawTotalApplicants(meta.total)
@@ -730,13 +730,13 @@ const Profile = ({
 
         const lastPage = Math.ceil(meta.total / limit) - 1;
         if (pageApplicants === lastPage) {
-          console.log("yo2")
+          // console.log("yo2")
           dispatch(applicantsActions.finishLoadingAction());
         }
 
         let applicantsInState;
         if (history.location.state) {
-          console.log("yo3")
+          // console.log("yo3")
           const { keepApplicantsState, keepPageState } = history.location.state;
           applicantsInState = keepApplicantsState;
           if (keepPageState >= pageApplicants) {
@@ -744,7 +744,7 @@ const Profile = ({
           }
         }
         if (applicantsInState) {
-          console.log("yo4")
+          // console.log("yo4")
           if (Object.keys(applicantsInState).length === meta.total) {
             dispatch(applicantsActions.finishLoadingAction());
           }
@@ -757,21 +757,21 @@ const Profile = ({
         }, {});
 
         if (applicantsInState) {
-          console.log("yo6")
+          // console.log("yo6")
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
               applicants: { ...applicantsInState, ...loadedApplicants },
             }),
           );
         } else if (Object.keys(applicantsList).length && pageApplicants) {
-          console.log("yo7")
+          // console.log("yo7")
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
               applicants: { ...applicantsList, ...loadedApplicants },
             }),
           );
         } else {
-          console.log("yo8")
+          // console.log("yo8")
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
               applicants: { ...loadedApplicants },
@@ -780,7 +780,7 @@ const Profile = ({
         }
       }
       else if (applicants) {
-        console.log("yo9")
+        // console.log("yo9")
         dispatch(
           applicantsActions.fetchApplicantsSuccess({
             applicants: { ...applicantsList },
@@ -788,11 +788,11 @@ const Profile = ({
         );
         dispatch(applicantsActions.finishLoadingAction());
       } else {
-        console.log("yo10")
+        // console.log("yo10")
         dispatch(applicantsActions.finishLoadingAction());
       }
     } catch (error) {
-      console.log("yo11")
+      // console.log("yo11")
       dispatch(applicantsActions.fetchApplicantsError(error));
     }
   };
@@ -836,7 +836,8 @@ const Profile = ({
   );
 
   useEffect(() => {
-    loadMoreApplicants
+    console.log("useEffect feedApplicants: " + feedApplicants.length)
+    
     // setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
   }, [feedApplicants.length, loadMoreApplicants]);
 
