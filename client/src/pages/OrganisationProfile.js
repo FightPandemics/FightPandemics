@@ -597,7 +597,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
-  console.log("feed length" + JSON.stringify(feedApplicants))
   const loadNextPageApplicant = useCallback(
 
     ({ stopIndex }) => {
