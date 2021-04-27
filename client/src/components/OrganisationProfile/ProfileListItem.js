@@ -26,11 +26,9 @@ margin: .5rem 0;
 box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
 padding: 0 1rem;
 width: 100%;
-/* margin: 0; */
 
 @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     &.organisation-card {
-    /* padding: 0 10rem; */
     }}
 `;
 
@@ -49,7 +47,6 @@ text-align: center;
 font-size: 1.6rem;
 font-weight: 500;
 line-height: 2rem;
-/* margin: 0; */
 
 @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     &.organisation-card {
@@ -99,16 +96,13 @@ export const Title = styled.p`
     margin-top: 1rem;
 `;
 
-const ProfileListItem = ({ item, applicantsList, membersList, orgsList, type }) => {
+const ProfileListItem = ({ item, isSelf, type }) => {
     let list
-    if (applicantsList || membersList) {
+    if (type != "orgs") {
         list = "applicant"
     }
-    if (membersList) {
-        list = "member"
-    }
+
     if (type == "orgs") {
-        // list = "organisation"
         list = "organisation"
     }
 
@@ -152,13 +146,13 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList, type }) 
                             item?.[list]?.name && item?.[list]?.name || ""
                         }
                     </Name>
-                    {applicantsList ? "" :
+                    {type == "applicant" ? null :
                         <Title>
                             {
                                 //ORG PERMISSIONS OR POSITION TITLE
-                                orgsList ?
+                                type == "orgs" ?
                                     // org permissions prop (test placeholder is below)
-                                    ("Editor")
+                                    ("Your Role: Editor")
                                     :
                                     // member position title prop (test placeholder is below)
                                     ("Volunteer")

@@ -330,6 +330,7 @@ const Profile = ({
         disable: false,
         gtm: "organisations",
       });
+      // sets default tab (set to "Organisations" for testing)
       // setSectionView(t("profile.views.posts"));
       setSectionView("Organisations");
       setInternalTab(t("profile.views.requests"));
@@ -497,17 +498,16 @@ const Profile = ({
     if (sectionView.toUpperCase() == "POSTS") {
       refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
     }
+    // if (sectionView.toUpperCase() == "ORGANISATIONS") {
+    //   refetchApplicants();
+    // }
+  }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     if (sectionView.toUpperCase() == "ORGANISATIONS") {
       refetchApplicants();
     }
-  }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // useEffect(() => {
-
-  //   if (sectionView.toUpperCase() == "ORGANISATIONS") {
-  //     refetchApplicants();
-  //   }
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -516,7 +516,6 @@ const Profile = ({
         setToggleRefetch(!toggleRefetch);
       }
     }
-    // console.log("refetch posts!")
   };
 
   const loadNextPage = useCallback(
@@ -634,9 +633,6 @@ const Profile = ({
   const filterMode = getProfileModeProp(mode);
   filteredPost = posts.profilePosts[userId]?.[filterView]?.[filterMode] ?? [];
 
-  // MEMBER ORGS
-
-
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState
   });
@@ -644,18 +640,14 @@ const Profile = ({
   const applicants = useSelector(selectApplicants);
   //react-virtualized loaded rows and row count.
   const [itemCountApplicants, setItemCountApplicants] = useState(0);
-  // console.log("itemCountApplicants:" + itemCountApplicants)
   const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
   const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
-  // console.log("TOTAL APPLICANT COUNT:" + totalApplicantCount)
-  // console.log("RAW TOTAL APPLICANT:" + rawTotalApplicantCount)
   const {
     filterModal,
     activePanel,
     showFilters,
   } = feedState;
-  // const filters = Object.values(filterOptions);
   const {
     error: applicantsError,
     isLoadingApplicants,
@@ -663,9 +655,7 @@ const Profile = ({
     pageApplicants,
     applicants: applicantsList,
   } = applicants;
-  // console.log("applicants list: " + JSON.stringify(applicantsList))
   const feedApplicants = Object.entries(applicantsList);
-  // console.log("feedApplicants length:" + feedApplicants.length)
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
 
   function usePrevious(value) {
@@ -675,13 +665,6 @@ const Profile = ({
     });
     return ref.current;
   }
-
-  // const { 
-  //   // history,
-  //   isAuthenticated,
-  //   // user 
-  // } = props;
-
   const history = useHistory();
 
   const dispatchAction = (type, key, value) =>
@@ -708,6 +691,7 @@ const Profile = ({
     dispatch(applicantsActions.fetchApplicantsBegin());
 
     try {
+      // TODO - CONFIGURE API ONCE BE IS DONE
       // const {
       //     data: { data: applicants, meta },
       // } = await axios.get(endpoint);
@@ -716,28 +700,19 @@ const Profile = ({
       const applicants = MemberOrgs
       const meta = Meta
 
-      // console.log("Applicants:" + JSON.stringify(Applicants))
-      // console.log("Meta:" + JSON.stringify(Meta))
-      // console.log("applicants length:" + applicants.length)
-      // console.log("meta total:" + meta.total)
       if (applicants.length && meta.total) {
-        // console.log("yo1")
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
           setRawTotalApplicants(meta.total)
         }
 
-
-
         const lastPage = Math.ceil(meta.total / limit) - 1;
         if (pageApplicants === lastPage) {
-          // console.log("yo2")
           dispatch(applicantsActions.finishLoadingAction());
         }
 
         let applicantsInState;
         if (history.location.state) {
-          // console.log("yo3")
           const { keepApplicantsState, keepPageState } = history.location.state;
           applicantsInState = keepApplicantsState;
           if (keepPageState >= pageApplicants) {
@@ -745,34 +720,29 @@ const Profile = ({
           }
         }
         if (applicantsInState) {
-          // console.log("yo4")
           if (Object.keys(applicantsInState).length === meta.total) {
             dispatch(applicantsActions.finishLoadingAction());
           }
         }
 
         const loadedApplicants = applicants.reduce((obj, item) => {
-          // console.log("yo5")
           obj[item._id] = item;
           return obj;
         }, {});
 
         if (applicantsInState) {
-          // console.log("yo6")
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
               applicants: { ...applicantsInState, ...loadedApplicants },
             }),
           );
         } else if (Object.keys(applicantsList).length && pageApplicants) {
-          // console.log("yo7")
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
               applicants: { ...applicantsList, ...loadedApplicants },
             }),
           );
         } else {
-          // console.log("yo8")
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
               applicants: { ...loadedApplicants },
@@ -781,7 +751,6 @@ const Profile = ({
         }
       }
       else if (applicants) {
-        // console.log("yo9")
         dispatch(
           applicantsActions.fetchApplicantsSuccess({
             applicants: { ...applicantsList },
@@ -789,11 +758,9 @@ const Profile = ({
         );
         dispatch(applicantsActions.finishLoadingAction());
       } else {
-        // console.log("yo10")
         dispatch(applicantsActions.finishLoadingAction());
       }
     } catch (error) {
-      // console.log("yo11")
       dispatch(applicantsActions.fetchApplicantsError(error));
     }
   };
@@ -811,7 +778,6 @@ const Profile = ({
   }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
-  // console.log("feed length" + JSON.stringify(feedApplicants))
   const loadNextPageApplicant = useCallback(
 
     ({ stopIndex }) => {
@@ -821,42 +787,21 @@ const Profile = ({
         stopIndex >= feedApplicants.length &&
         feedApplicants.length
       ) {
-        console.log("stop index1")
         return new Promise((resolve) => {
           dispatch(applicantsActions.setNextPageAction());
           dispatchAction(SET_VALUE, "applyFilters", true);
           resolve();
         });
       } else {
-        console.log("stop index2")
         return Promise.resolve();
       }
-      console.log("stop index3")
     },
     [feedApplicants.length, isLoadingApplicants, loadMoreApplicants], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(() => {
-    // console.log("useEffect feedApplicants: " + loadMoreApplicants ? console.log("true") : console.log("false"))
-
     setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
   }, [feedApplicants.length, loadMoreApplicants]);
-
-  // let url = window.location.pathname.split("/");
-  // const organisationId = url[url.length - 1];
-  // const { orgProfileState, orgProfileDispatch } = useContext(
-  //   OrganisationContext,
-  // );
-  // const { error, loading, organisation } = orgProfileState;
-  // const {
-  //   userProfileDispatch,
-  // } = useContext(UserContext);
-  // const { t } = useTranslation();
-  // const {
-  //   name,
-  //   location = {},
-  //   about = "",
-  // } = organisation || {};
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -890,8 +835,6 @@ const Profile = ({
   if (authLoading == null || authLoading === true) {
     return <></>;
   }
-
-
 
   return (
     <>
