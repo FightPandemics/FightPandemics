@@ -64,8 +64,6 @@ const ProfileList = ({
     totalCount,
     emptyFeed
 }) => {
-    console.log(JSON.stringify(filteredApplicants))
-    console.log(itemCount)
     const applicantsList = filteredApplicants && true
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true
