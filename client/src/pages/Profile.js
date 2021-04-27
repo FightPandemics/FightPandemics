@@ -643,6 +643,7 @@ const Profile = ({
   const applicants = useSelector(selectApplicants);
   //react-virtualized loaded rows and row count.
   const [itemCountApplicants, setItemCountApplicants] = useState(0);
+  console.log("itemCountApplicants:" + itemCountApplicants)
   const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
   const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
@@ -835,7 +836,8 @@ const Profile = ({
   );
 
   useEffect(() => {
-    setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
+    loadMoreApplicants
+    // setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
   }, [feedApplicants.length, loadMoreApplicants]);
 
   // let url = window.location.pathname.split("/");
