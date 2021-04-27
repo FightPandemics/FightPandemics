@@ -35,7 +35,7 @@ import Positions from "./pages/Positions";
 import SeeAll from "./pages/SeeAllPost";
 import Apply from "./pages/Apply";
 import AdminProfile from "./pages/AdminProfile";
-import OrgWorkSpace from "./pages/OrgWorkSpace";
+import Application from "./pages/Application";
 
 import { SCOPES } from "constants/permissions";
 
@@ -312,8 +312,8 @@ const routes = [
     }
   },
   {
-    path: "/orgworkspace/:id",
-    component: OrgWorkSpace,
+    path: "/application/:id",
+    component: Application,
     props: {
       props: {
         // loggedInOnly: true,

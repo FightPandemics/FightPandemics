@@ -519,6 +519,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </JoinOrgButton>
             </Link>
           </JoinOrgContainer> : null}
+          <Link
+            to={`/admin/${organisationId}`}>
+            <div style={{ "color": "red" }}>TEST ADMIN</div>
+          </Link>
           {// TABS
           }
           <ProfileTabs defaultActiveKey="activity">
