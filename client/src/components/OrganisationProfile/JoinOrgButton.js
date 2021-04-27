@@ -6,6 +6,10 @@ import { theme, mq } from "constants/theme";
 export const JoinOrgContainer = styled.div`
   max-width: 33.4rem;
   margin: auto;
+  margin-top: 5.3rem;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
+    margin-top: 2rem;
+  }
 `;
 const JoinOrgBtn = styled(BaseButton)`
   border-radius: 4.6rem;
@@ -18,8 +22,7 @@ const JoinOrgBtn = styled(BaseButton)`
   margin: auto;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width:fit-content;
-    
+    width: 15.5rem;
   }
  `;
 
