@@ -72,7 +72,8 @@ import {
   getProfileObjectiveProp,
   getProfileModeProp,
 } from "reducers/posts";
-import { applicantsActions, selectMemberOrgs } from "reducers/memberOrganisations";
+// import { applicantsActions, selectMemberOrgs } from "reducers/memberOrganisations";
+import { applicantsActions, selectApplicants } from "reducers/applicants";
 
 import {
   fetchUser,
@@ -130,6 +131,14 @@ const URLS = {
   website: [websiteIcon],
 };
 
+const initialState = {
+  showFilters: false,
+  filterModal: true,
+  showCreatePostModal: false,
+  applyFilters: false,
+  activePanel: null,
+};
+
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
 const TAB_TYPE = {
@@ -152,7 +161,6 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const Profile = ({
-  // history,
   isAuthenticated,
   match: {
     params: { id: pathUserId },
@@ -625,52 +633,37 @@ const Profile = ({
   const filterMode = getProfileModeProp(mode);
   filteredPost = posts.profilePosts[userId]?.[filterView]?.[filterMode] ?? [];
 
-  // ORGANISATIONS FEED
+  // MEMBER ORGS
 
-  const initialState = {
-    showFilters: false,
-    filterModal: true,
-    showCreatePostModal: false,
-    applyFilters: false,
-    activePanel: null,
-  };
-  // const dispatch = useDispatch();
+
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState
   });
-  // const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
-
-
-  // const applicants = useSelector(selectMemberOrgs);
-
-  const applicants = TestMemberOfOrgs
-  // const applicants = useSelector(selectMemberOrgs)
-
+  const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
+  const applicants = useSelector(selectApplicants);
   //react-virtualized loaded rows and row count.
-  const [itemCount, setItemCount] = useState(0);
-  const [toggleRefetchOrgs, setToggleRefetchOrgs] = useState(false);
+  const [itemCountApplicants, setItemCountApplicants] = useState(0);
+  const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
   const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
-  // const {
-  //   filterModal,
-  //   activePanel,
-  //   showFilters,
-  // } = feedState;
+  console.log("TOTAL APPLICANT COUNT:" + totalApplicantCount)
+  console.log("RAW TOTAL APPLICANT:" + rawTotalApplicantCount)
+  const {
+    filterModal,
+    activePanel,
+    showFilters,
+  } = feedState;
   // const filters = Object.values(filterOptions);
   const {
     error: applicantsError,
-    isLoadingOrgs,
-    loadMoreOrgs,
-    pageOrgs,
+    isLoadingApplicants,
+    loadMoreApplicants,
+    pageApplicants,
     applicants: applicantsList,
   } = applicants;
-
-  console.log(JSON.stringify(applicantsList))
-
+  // console.log("applicants list: " + JSON.stringify(applicantsList))
   const feedApplicants = Object.entries(applicantsList);
-  // console.log("feed applicants: " + JSON.stringify(feedApplicants))
-  // const feedApplicants = Object.entries(TestMemberOfOrgs);
-  // console.log("members: " + JSON.stringify(feedApplicants))
+  console.log("feedApplicants length:" + feedApplicants.length)
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
 
   function usePrevious(value) {
@@ -680,30 +673,34 @@ const Profile = ({
     });
     return ref.current;
   }
+
+  // const { 
+  //   // history,
+  //   isAuthenticated,
+  //   // user 
+  // } = props;
+
   const history = useHistory();
-  // const { history } = props;
 
-  // const dispatchAction = (type, key, value) =>
-  //   feedDispatch({ type, key, value });
+  const dispatchAction = (type, key, value) =>
+    feedDispatch({ type, key, value });
 
-  const refetchApplicants = (isLoadingOrgs, loadMoreOrgs, softRefresh = false) => {
+  const refetchApplicants = (isLoadingApplicants, loadMoreApplicants, softRefresh = false) => {
     if (!softRefresh) {
-      // dispatchAction(SET_VALUE, "applyFilters", true);
-      dispatch(applicantsActions.resetPageAction({ isLoadingOrgs, loadMoreOrgs }));
-      if (pageOrgs === 0) {
-        console.log("yo11")
-        setToggleRefetchOrgs(!toggleRefetchOrgs);
+      dispatchAction(SET_VALUE, "applyFilters", true);
+      dispatch(applicantsActions.resetPageAction({ isLoadingApplicants, loadMoreApplicants }));
+      if (pageApplicants === 0) {
+        setToggleRefetchApplicants(!toggleRefetchApplicants);
       }
     }
-    console.log("fetch applicants!")
-  };
-  const getApplicantsBaseURL = (limit, skip, userId) => {
-    return `/api/applicants?applicantId=${userId}&includeMeta=true&limit=${limit}&skip=${skip}`;
   };
 
   const loadApplicants = async () => {
     const limit = PAGINATION_LIMIT;
-    const skip = page * limit;
+    const skip = pageApplicants * limit;
+    const getApplicantsBaseURL = (organisationId, limit, skip) => {
+      return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+    };
     let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
     let endpoint = baseURL
     dispatch(applicantsActions.fetchApplicantsBegin());
@@ -713,10 +710,14 @@ const Profile = ({
       //     data: { data: applicants, meta },
       // } = await axios.get(endpoint);
 
+      // TEST DATA
       const applicants = Applicants
       const meta = Meta
 
-      console.log("state: " + window.state)
+      // console.log("Applicants:" + JSON.stringify(Applicants))
+      console.log("Meta:" + JSON.stringify(Meta))
+      console.log("applicants length:" + applicants.length)
+      console.log("meta total:" + meta.total)
       if (applicants.length && meta.total) {
         console.log("yo1")
         if (prevTotalApplicantCount !== meta.total) {
@@ -724,34 +725,36 @@ const Profile = ({
           setRawTotalApplicants(meta.total)
         }
 
+
+
         const lastPage = Math.ceil(meta.total / limit) - 1;
-        if (page === lastPage) {
-          console.log("yo3")
+        if (pageApplicants === lastPage) {
+          console.log("yo2")
           dispatch(applicantsActions.finishLoadingAction());
         }
 
         let applicantsInState;
         if (history.location.state) {
-          console.log("yo4")
-
+          console.log("yo3")
           const { keepApplicantsState, keepPageState } = history.location.state;
           applicantsInState = keepApplicantsState;
-          if (keepPageState >= page) {
+          if (keepPageState >= pageApplicants) {
             dispatch(applicantsActions.setPageAction(keepPageState));
           }
         }
         if (applicantsInState) {
-          console.log("yo5")
+          console.log("yo4")
           if (Object.keys(applicantsInState).length === meta.total) {
             dispatch(applicantsActions.finishLoadingAction());
           }
         }
 
         const loadedApplicants = applicants.reduce((obj, item) => {
+          console.log("yo5")
           obj[item._id] = item;
           return obj;
         }, {});
-        console.log("applicantsinState: " + JSON.stringify(applicantsInState))
+
         if (applicantsInState) {
           console.log("yo6")
           dispatch(
@@ -759,7 +762,7 @@ const Profile = ({
               applicants: { ...applicantsInState, ...loadedApplicants },
             }),
           );
-        } else if (Object.keys(applicantsList).length && page) {
+        } else if (Object.keys(applicantsList).length && pageApplicants) {
           console.log("yo7")
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
@@ -768,7 +771,6 @@ const Profile = ({
           );
         } else {
           console.log("yo8")
-          console.log(JSON.stringify(loadedApplicants))
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
               applicants: { ...loadedApplicants },
@@ -794,45 +796,47 @@ const Profile = ({
     }
   };
 
+
   useEffect(() => {
   }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchOrgs)
+    refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadApplicants();
-  }, [toggleRefetchOrgs, pageOrgs]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const isItemLoadedOrgs = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
-
-  const loadNextPageOrgs = useCallback(
+  const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
+  // console.log("feed length" + JSON.stringify(feedApplicants))
+  const loadNextPageApplicant = useCallback(
 
     ({ stopIndex }) => {
       if (
-        !isLoadingOrgs &&
-        loadMoreOrgs &&
+        !isLoadingApplicants &&
+        loadMoreApplicants &&
         stopIndex >= feedApplicants.length &&
         feedApplicants.length
       ) {
+        console.log("stop index1")
         return new Promise((resolve) => {
           dispatch(applicantsActions.setNextPageAction());
-          // dispatchAction(SET_VALUE, "applyFilters", true);
+          dispatchAction(SET_VALUE, "applyFilters", true);
           resolve();
         });
       } else {
+        console.log("stop index2")
         return Promise.resolve();
       }
+      console.log("stop index3")
     },
-    [feedApplicants.length, isLoadingOrgs, loadMoreOrgs], // eslint-disable-line react-hooks/exhaustive-deps
+    [feedApplicants.length, isLoadingApplicants, loadMoreApplicants], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(() => {
-    setItemCount(loadMoreOrgs ? feedApplicants.length + 1 : feedApplicants.length);
-  }, [feedApplicants.length, loadMoreOrgs]);
-  // console.log("feed applicants length: " + feedApplicants.length)
-  const emptyFeedOrgs = () => applicantsList.length < 1 && !isLoadingOrgs;
+    setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
+  }, [feedApplicants.length, loadMoreApplicants]);
 
   // let url = window.location.pathname.split("/");
   // const organisationId = url[url.length - 1];
@@ -876,7 +880,8 @@ const Profile = ({
     }
   };
 
-  const emptyFeed = () => filteredPost.length < 1 && !isLoadingOrgs;
+  const emptyFeedApplicants = () => Object.keys(applicantsList).length < 1 && !isLoadingApplicants;
+  const emptyFeed = () => filteredPost.length < 1 && !isLoading;
 
   if (authLoading == null || authLoading === true) {
     return <></>;
@@ -1108,21 +1113,23 @@ const Profile = ({
               </DesktopMenuWrapper>
               {sectionView === "Organisations" ?
                 // rawTotalApplicantCount == 0 ?
-                itemCount == 0 ?
+                // itemCountApplicants == 0 ?
+                emptyFeedApplicants ?
                   <div style={{ textAlign: "center", marginTop: "5rem" }}>
                     No Applicants to display.
                 </div> :
                   (
                     <ProfileList
-                      itemCount={itemCount}
-                      isItemLoaded={isItemLoadedOrgs}
-                      isNextPageLoading={isLoadingOrgs}
-                      loadNextPage={loadNextPageOrgs}
-                      hasNextPage={loadMoreOrgs}
+                      filteredMembers={applicantsList}
+                      itemCount={itemCountApplicants}
+                      isItemLoaded={isApplicantLoaded}
+                      isNextPageLoading={isLoading}
+                      loadNextPage={loadNextPageApplicant}
+                      hasNextPage={loadMoreApplicants}
                       filteredApplicants={applicantsList}
                       totalCount={totalApplicantCount}
-                      page={pageOrgs}
-                      emptyFeed={emptyFeed}
+                      page={pageApplicants}
+                      emptyFeed={emptyFeedApplicants}
                     />
                   ) : null}
               {sectionView === "Requests" ||
