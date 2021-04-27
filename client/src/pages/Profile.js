@@ -121,6 +121,7 @@ import {
 } from "hooks/actions/feedActions";
 import ProfileList from "components/OrganisationProfile/ProfileList"
 import { TestMemberOfOrgs, MemberOrgs, Applicants, Meta } from "utils/TestMemberOfOrgs";
+import NoJoinOrg from "components/Profile/NoJoinOrg";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -643,7 +644,7 @@ const Profile = ({
   const applicants = useSelector(selectApplicants);
   //react-virtualized loaded rows and row count.
   const [itemCountApplicants, setItemCountApplicants] = useState(0);
-  console.log("itemCountApplicants:" + itemCountApplicants)
+  // console.log("itemCountApplicants:" + itemCountApplicants)
   const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
   const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
@@ -751,7 +752,7 @@ const Profile = ({
         }
 
         const loadedApplicants = applicants.reduce((obj, item) => {
-          console.log("yo5")
+          // console.log("yo5")
           obj[item._id] = item;
           return obj;
         }, {});
@@ -836,7 +837,7 @@ const Profile = ({
   );
 
   useEffect(() => {
-    console.log("useEffect feedApplicants: " + loadMoreApplicants ? console.log("true") : console.log("false"))
+    // console.log("useEffect feedApplicants: " + loadMoreApplicants ? console.log("true") : console.log("false"))
 
     setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
   }, [feedApplicants.length, loadMoreApplicants]);
@@ -1116,9 +1117,8 @@ const Profile = ({
               </DesktopMenuWrapper>
               {sectionView === "Organisations" ?
                 rawTotalApplicantCount == 0 ?
-                  <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                    No Applicants to display.
-                </div> :
+                  <NoJoinOrg />
+                  :
                   (
                     <ProfileList
                       filteredOrgs={applicantsList}
@@ -1131,6 +1131,7 @@ const Profile = ({
                       totalCount={totalApplicantCount}
                       page={pageApplicants}
                       emptyFeed={emptyFeedApplicants}
+                      type="orgs"
                     />
                   ) : null}
               {sectionView === "Requests" ||

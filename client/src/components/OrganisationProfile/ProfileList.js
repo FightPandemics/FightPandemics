@@ -28,8 +28,9 @@ const HorizontalRule = styled.hr`
 `;
 
 const cellMeasurerCache = new CellMeasurerCache({
-    // fixedWidth: true,
-    defaultHeight: 80,
+    fixedWidth: true,
+    // defaultHeight: 140,
+    // rowHeight: 250
 });
 
 const SeeAllLink = styled.div`
@@ -55,16 +56,19 @@ const ProfileList = ({
     isItemLoaded,
     hasNextPage,
     totalCount,
-    emptyFeed
+    emptyFeed,
+    type
 }) => {
     // console.log("applicants post list: " + JSON.stringify(filteredApplicants))
     // const filteredTEST = TestMemberOfOrgs
+    console.log({ "orgsList expression": filteredOrgs && true })
     const applicantsList = filteredApplicants && true
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true
+    console.log("orgsList: " + orgsList)
     const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
     // console.log("items: " + JSON.stringify(items[1][1]))
-    console.log("items length: " + items.length)
+    // console.log("items length: " + items.length)
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
@@ -88,6 +92,7 @@ const ProfileList = ({
                             applicantsList={applicantsList}
                             membersList={membersList}
                             orgList={orgsList}
+                            type={type}
 
                         />
                     </>
@@ -116,7 +121,6 @@ const ProfileList = ({
             user,
         ],
     );
-    console.log("total count: " + totalCount)
     return (
         <div className="activity"
             style={{ "width": "100%", "height": "100%", }}
@@ -143,12 +147,12 @@ const ProfileList = ({
                                             autoHeight
                                             height={height}
                                             width={width}
-                                            width={1000}
+                                            // width={1000}
                                             isScrolling={isScrolling}
                                             onRowsRendered={onRowsRendered}
                                             rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
                                             // rowCount={10}
-                                            // rowHeight={cellMeasurerCache.getHeight()}
+                                            rowHeight={cellMeasurerCache.getHeight()}
                                             rowHeight={cellMeasurerCache.rowHeight}
                                             // rowHeight={50}
                                             deferredMeasurementCache={cellMeasurerCache}
