@@ -101,7 +101,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
                                     // src will be org profile generic image
                                     />)
                                     :
-                                    (item?.[list]?.name && getInitialsFromFullName(item?.[list]?.name) || "")}
+                                    (item?.[list]?.organisation?.name && getInitialsFromFullName(item?.[list]?.organisation?.name) || "")}
                     </ProfilePic>
                 </ProfilePicContainer>
                 <TextContainer>

@@ -120,7 +120,7 @@ import {
   SET_VALUE
 } from "hooks/actions/feedActions";
 import ProfileList from "components/OrganisationProfile/ProfileList"
-import { TestMemberOfOrgs, Applicants, Meta } from "utils/TestMemberOfOrgs";
+import { TestMemberOfOrgs, MemberOrgs, Applicants, Meta } from "utils/TestMemberOfOrgs";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -712,7 +712,7 @@ const Profile = ({
       // } = await axios.get(endpoint);
 
       // TEST DATA
-      const applicants = Applicants
+      const applicants = MemberOrgs
       const meta = Meta
 
       // console.log("Applicants:" + JSON.stringify(Applicants))
@@ -836,9 +836,9 @@ const Profile = ({
   );
 
   useEffect(() => {
-    console.log("useEffect feedApplicants: " + feedApplicants.length)
-    
-    // setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
+    console.log("useEffect feedApplicants: " + loadMoreApplicants ? console.log("true") : console.log("false"))
+
+    setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
   }, [feedApplicants.length, loadMoreApplicants]);
 
   // let url = window.location.pathname.split("/");
@@ -1115,15 +1115,13 @@ const Profile = ({
                 ))}
               </DesktopMenuWrapper>
               {sectionView === "Organisations" ?
-                // rawTotalApplicantCount == 0 ?
-                // itemCountApplicants == 0 ?
-                emptyFeedApplicants ?
+                rawTotalApplicantCount == 0 ?
                   <div style={{ textAlign: "center", marginTop: "5rem" }}>
                     No Applicants to display.
                 </div> :
                   (
                     <ProfileList
-                      filteredMembers={applicantsList}
+                      filteredOrgs={applicantsList}
                       itemCount={itemCountApplicants}
                       isItemLoaded={isApplicantLoaded}
                       isNextPageLoading={isLoading}

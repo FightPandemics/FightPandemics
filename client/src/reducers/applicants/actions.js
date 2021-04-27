@@ -58,9 +58,9 @@ export const setNextPageAction = () => ({
   type: APPLICANTS_ACTIONS.NEXT_PAGE,
 });
 
-export const setPageAction = (page) => ({
+export const setPageAction = (pageApplicants) => ({
   type: APPLICANTS_ACTIONS.SET_PAGE,
-  payload: { page },
+  payload: { pageApplicants },
 });
 
 export const setLoadingAction = ({ isLoading, loadMore }) => ({

@@ -423,6 +423,153 @@ export const Applicants = [
     }
 ]
 
+export const MemberOrgs = [
+    {
+        "_id": "6070bc05ead1ba495cc110b8",
+        "organizationId": "603be1140789a03df4bdb17c",
+        "organisation": {
+            "name": "CareDAO & FightPandemics"
+        },
+        "postApplied": "Volunteer",
+        "answers": {
+            "q1": "asfasfsaf",
+            "q2": "asfsafadf",
+            "q3": "asfsfsadfsfd"
+        },
+        "status": "applied",
+        "applicant": {
+            "id": "6052a31d21775411007141aa",
+            "location": {
+                "address": "Venice Beach, Venice, FL 34285, USA",
+                "city": "Venice",
+                "coordinates": [
+                    -82.4575967,
+                    27.1000553
+                ],
+                "country": "US",
+                "state": "FL",
+                "zip": "34285"
+            },
+            "name": "test2 user2",
+            "type": "Individual"
+        },
+        "createdAt": "2021-04-09T20:41:41.858Z",
+        "updatedAt": "2021-04-09T20:41:41.858Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 17,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "6070da52376ca14ab4c959df",
+        "organizationId": "603be1140789a03df4bdb17c",
+        "organisation": {
+            "name": "CareDAO & FightPandemics"
+        },
+        "postApplied": "Volunteer",
+        "answers": {
+            "q1": "afsafad",
+            "q2": "asdfsadfsa",
+            "q3": "asaaaaaaaaa"
+        },
+        "status": "applied",
+        "applicant": {
+            "id": "6052a31d21775411007141aa",
+            "location": {
+                "address": "Venice Beach, Venice, FL 34285, USA",
+                "city": "Venice",
+                "coordinates": [
+                    -82.4575967,
+                    27.1000553
+                ],
+                "country": "US",
+                "state": "FL",
+                "zip": "34285"
+            },
+            "name": "test2 user2",
+            "type": "Individual"
+        },
+        "createdAt": "2021-04-09T22:50:58.536Z",
+        "updatedAt": "2021-04-09T22:50:58.536Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 17,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "6070db09376ca14ab4c959f6",
+        "organizationId": "603be1140789a03df4bdb17c",
+        "organisation": {
+            "name": "CareDAO & FightPandemics"
+        },
+        "postApplied": "Volunteer",
+        "answers": {
+            "q1": "ttttttttttt",
+            "q2": "ttttttttt",
+            "q3": "tttttttttttttttt"
+        },
+        "status": "applied",
+        "applicant": {
+            "id": "6052a31d21775411007141aa",
+            "location": {
+                "address": "Venice Beach, Venice, FL 34285, USA",
+                "city": "Venice",
+                "coordinates": [
+                    -82.4575967,
+                    27.1000553
+                ],
+                "country": "US",
+                "state": "FL",
+                "zip": "34285"
+            },
+            "name": "test2 user2",
+            "type": "Individual"
+        },
+        "createdAt": "2021-04-09T22:54:01.137Z",
+        "updatedAt": "2021-04-09T22:54:01.137Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 17,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    },
+    {
+        "_id": "6070fa6eefb0a324c0f14c88",
+        "organizationId": "603be1140789a03df4bdb17c",
+        "organisation": {
+            "name": "CareDAO & FightPandemics"
+        },
+        "applicantApplied": "Volunteer",
+        "answers": {
+            "q1": "llllllllll",
+            "q2": "asfasf",
+            "q3": "asfsadfasdf"
+        },
+        "status": "applied",
+        "createdAt": "2021-04-10T01:07:58.484Z",
+        "updatedAt": "2021-04-10T01:07:58.484Z",
+        "__v": 0,
+        "elapsedTimeText": {
+            "created": {
+                "count": 17,
+                "unit": "day"
+            },
+            "isEdited": false
+        }
+    }
+]
+
 export const Meta = {
     "total": 14
 }

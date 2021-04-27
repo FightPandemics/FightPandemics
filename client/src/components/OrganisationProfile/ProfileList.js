@@ -64,7 +64,7 @@ const ProfileList = ({
     const orgsList = filteredOrgs && true
     const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
     // console.log("items: " + JSON.stringify(items[1][1]))
-    // console.log("items length: " + items.length)
+    console.log("items length: " + items.length)
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
@@ -116,12 +116,11 @@ const ProfileList = ({
             user,
         ],
     );
-
+    console.log("total count: " + totalCount)
     return (
         <div className="activity"
-            style={{ width: "100%" }}
+            style={{ "width": "100%", "height": "100%", }}
         >
-
             { !items.length && isNextPageLoading ? (
                 <Loader />
             ) : (
@@ -131,7 +130,7 @@ const ProfileList = ({
                             isRowLoaded={isItemLoaded}
                             loadMoreRows={loadMoreItems}
                             rowCount={totalCount}
-                            rowCount={4}
+                            // rowCount={2}
                             threshold={5}
                         >
                             {({ onRowsRendered }) => (
@@ -144,10 +143,11 @@ const ProfileList = ({
                                             autoHeight
                                             height={height}
                                             width={width}
+                                            width={1000}
                                             isScrolling={isScrolling}
                                             onRowsRendered={onRowsRendered}
-                                            // rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
-                                            rowCount={5}
+                                            rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
+                                            // rowCount={10}
                                             // rowHeight={cellMeasurerCache.getHeight()}
                                             rowHeight={cellMeasurerCache.rowHeight}
                                             // rowHeight={50}
@@ -155,8 +155,8 @@ const ProfileList = ({
                                             rowRenderer={applicantItem}
                                             scrollTop={scrollTop}
                                             onScroll={onChildScroll}
-                                            // overscanRowCount={1}
-                                            overscanRowCount={5}
+                                            overscanRowCount={1}
+                                            // overscanRowCount={5}
                                             scrollToAlignment={"start"}
 
 
