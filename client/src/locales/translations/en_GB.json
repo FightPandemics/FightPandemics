@@ -433,6 +433,8 @@
     "pleaseEnterPageNameCreate": "Please enter the page name for the first page in your OrgBook.",
     "pleaseEnterPageNameAdd": "Please enter the page name for the new page in your OrgBook.",
     "page1": "Page 1",
+    "welcome": "Welcome",
+    "welcomeToOrgBook": "Welcome to OrgBook",
     "add": "Add",
     "create": "Create",
     "rename": "Rename",

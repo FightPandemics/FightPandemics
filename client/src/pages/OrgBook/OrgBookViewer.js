@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import { connect } from "react-redux";
@@ -53,7 +53,7 @@ const {
   royalBlue,
   black,
   offWhite,
-  darkishGray,
+  lightGray,
   mediumGray,
 } = colors;
 const PAGE_CATEGORIES = {
@@ -83,25 +83,34 @@ const URLS = {
 const TOCSidebarAndPageContainer = styled.div`
   position: absolute;
   top: 35rem;
+  bottom: 35rem;
   z-index: 5;
   width: 100%;
-  margin-left: 5rem;
 `;
 
 const TOCSidebarAndPageWrapper = styled.div`
+  margin-left: 3rem;
+  margin-right: 3rem;
+  background-color: #f0f0f0;
+  //border: solid 1px black;
   display: grid;
-  width: 100%;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: 30rem minmax(15rem, 100%);
   gap: 10px;
-  grid-auto-rows: 100px;
-  grid-template-areas: "a a b b b b";
+  //grid-auto-rows: 36vmax;
+  grid-auto-rows: minmax(100%, 100%);
+  grid-template-areas: "a b";
+
+  overflow-y: auto; /*added*/
 `;
 
 const TableOfContentsSidebar = styled.div`
   grid-area: a;
   align-self: start;
-  background-color: ${offWhite};
+  background-color: #f0f0f0;
   color: ${black};
+
+  overflow-y: scroll; /*added*/
+  //scroll-behavior: smooth;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
   }
@@ -111,6 +120,19 @@ const OrgBookViewerContentBox = styled.div`
   grid-area: b;
   align-self: start;
   background-color: ${white};
+
+  overflow-y: scroll; /*added*/
+  //scroll-behavior: smooth;
+`;
+
+const PageContentWrapper = styled.div`
+  background-color: ${white};
+  color: ${black};
+
+  overflow-y: scroll;
+  //scroll-behavior: smooth;
+  //scrollbar-color: light;
+  padding: 0 0 0 0;
 `;
 
 const OrgBookViewer = (props) => {
@@ -134,13 +156,13 @@ const OrgBookViewer = (props) => {
     loadOrgBookPages();
   };
 
-  const loadOrgBookPages = () => {
+  const loadOrgBookPages = async () => {
     if (sourceOrganisationId.length === 0) {
       setOrganisationId(props.organisationId);
-      getOrgBookPages(props.organisationId);
+      await getOrgBookPages(props.organisationId);
     } else {
       setOrganisationId(sourceOrganisationId);
-      getOrgBookPages(sourceOrganisationId);
+      await getOrgBookPages(sourceOrganisationId);
     }
   };
 
@@ -165,13 +187,13 @@ const OrgBookViewer = (props) => {
       if (res.data.orgBookPages) {
         setOrgBookPages(res.data.orgBookPages);
         if (res.data.orgBookPages.length > 0) {
-          setPreselectedPage(
-            res.data.orgBookPages.find(
-              (page) =>
-                page.name === "Welcome" &&
-                page.status === PAGE_CATEGORIES.liveCategory,
-            ),
+          const preSelPage = res.data.orgBookPages.find(
+            (page) =>
+              page.name === t("orgBook.welcome") &&
+              page.status === PAGE_CATEGORIES.liveCategory,
           );
+          setPreselectedPage(preSelPage);
+          setSelectedPage(preSelPage);
         }
       }
     } catch (err) {
@@ -186,7 +208,6 @@ const OrgBookViewer = (props) => {
 
   const handleSelectPage = (page) => {
     setSelectedPage(orgBookPages.find((p) => p.pageId === page.pageId));
-    //forceUpdate();
   };
 
   // const handleBackBtnClick = () => {
@@ -279,47 +300,27 @@ const OrgBookViewer = (props) => {
       );
     }
 
-    return (
-      <TableOfContentsSidebar>
-        {filteredOrgBookPages.length === 0 ? (
+    if (filteredOrgBookPages.length === 0) {
+      return (
+        <TableOfContentsSidebar>
           <span>no orgbook pages to show</span>
-        ) : (
+        </TableOfContentsSidebar>
+      );
+    }
+
+    return (
+      selectedPage && (
+        <TableOfContentsSidebar>
           <OrgBookViewerTableOfContents
             organisation={organisation}
-            filteredOrgBookPages={filteredOrgBookPages} //NEW
+            filteredOrgBookPages={filteredOrgBookPages}
             selectPage={handleSelectPage}
             preSelectedPage={preSelectedPage}
           ></OrgBookViewerTableOfContents>
-        )}
-      </TableOfContentsSidebar>
+        </TableOfContentsSidebar>
+      )
     );
   };
-
-  const renderViewerSpace = () => {
-    return <div>viewer space here</div>;
-    // const livePageExists = selectedPage
-    //   ? livePageExistsForSelectedPage()
-    //   : false;
-    // if (organisation) {
-    //   return (
-    //     <OrgBookEditorSpace
-    //       organisation={organisation}
-    //       selectedPage={selectedPage || null}
-    //       preSelectedPage={preSelectedPage}
-    //       onClearPreselectedPage={() => setPreselectedPage(null)}
-    //       PAGE_CATEGORIES={PAGE_CATEGORIES}
-    //       UPDATE_ACTION_TYPES={UPDATE_ACTION_TYPES}
-    //       onUpdateAction={handleUpdateAction}
-    //       livePageExists={livePageExists}
-    //       selectedPageDirty={selectedPageDirty}
-    //       onSelectedPageDirty={handleSelectedPageDirty}
-    //       VIEW_LEVELS={VIEW_LEVELS}
-    //     ></OrgBookEditorSpace>
-    //   );
-    // }
-  };
-
-  //if (loading) return <div>"{t("profile.common.loading")}"</div>;
 
   return (
     <>
@@ -382,7 +383,19 @@ const OrgBookViewer = (props) => {
           <TOCSidebarAndPageWrapper>
             {renderTableOfContents()}
             <OrgBookViewerContentBox>
-              {renderViewerSpace()}
+              {selectedPage && (
+                <PageContentWrapper
+                  dangerouslySetInnerHTML={{ __html: selectedPage.content }}
+                ></PageContentWrapper>
+              )}
+              {!selectedPage && (
+                <PageContentWrapper
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "<p><span style='display: block; height: 500px'>&nbsp;</span></p>",
+                  }}
+                ></PageContentWrapper>
+              )}
             </OrgBookViewerContentBox>
           </TOCSidebarAndPageWrapper>
         </TOCSidebarAndPageContainer>

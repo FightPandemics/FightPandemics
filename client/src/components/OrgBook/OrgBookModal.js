@@ -85,7 +85,10 @@ const OrgBookModal = ({
                   },
                 ]}
               >
-                <Input style={{ width: "225px" }} />
+                <Input
+                  style={{ width: "225px" }}
+                  disabled={defaultPageName === t("orgBook.welcome")}
+                />
               </Form.Item>
             </Col>
           </Row>

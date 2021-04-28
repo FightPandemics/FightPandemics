@@ -260,7 +260,7 @@ const OrgBookEditor = () => {
 
   const handleOnCreate = (formData) => {
     if (currentEditOrgBookMode === ORGBOOK_CREATE_MODE) {
-      addFirstOrgBookDraftPage(formData);
+      addFirstOrgBookPages(formData);
     }
     setCreateFormVisible(false);
   };
@@ -271,23 +271,45 @@ const OrgBookEditor = () => {
   };
 
   const getContentForNewPage = (pagename) => {
+    const title =
+      pagename === t("orgBook.welcome")
+        ? t("orgBook.welcomeToOrgBook")
+        : pagename;
     //if any new properties get changed or oadded, make sure to include a space after semi-colon (due to tinymce updating)
-    return `<p><span style="display: block; text-align: center; font-size: 24px; font-family: Arial;">${pagename}</span></p><p>&nbsp;</p>`;
+    return `<p><span style="display: block; text-align: center; font-size: 24px; font-family: Arial;">${title}</span></p><p>&nbsp;</p>`;
   };
 
-  const addFirstOrgBookDraftPage = (formData) => {
+  const addFirstOrgBookPages = (formData) => {
     let newPages = [];
 
-    const newOrgBookPage = getNewOrgBookPage(
+    //create live for first/Welcome page - default to public view
+    let newOrgBookPage = getNewOrgBookPage(
+      formData.pagename,
+      1,
+      PAGE_CATEGORIES.liveCategory,
+      getContentForNewPage(formData.pagename),
+    );
+    newPages.push(newOrgBookPage);
+
+    //create draft for first/Welcome page
+    newOrgBookPage = getNewOrgBookPage(
       formData.pagename,
       1,
       PAGE_CATEGORIES.draftCategory,
       getContentForNewPage(formData.pagename),
     );
-
     newPages.push(newOrgBookPage);
-    setSelectedPage(newOrgBookPage);
-    setPreselectedPage(newOrgBookPage);
+
+    const liveWelcomePage = newPages.find(
+      (page) =>
+        page.pageGroupNumber === 1 &&
+        page.status === PAGE_CATEGORIES.liveCategory,
+    );
+
+    //preselect live Welcome page
+    setSelectedPage(liveWelcomePage);
+    setPreselectedPage(liveWelcomePage);
+
     setSelectedPageDirty(false);
     let orgBookPages = {
       orgBookPages: newPages,
@@ -393,8 +415,6 @@ const OrgBookEditor = () => {
         `/api/organisations/${organisationId}`,
         orgBookPages,
       );
-      // console.log(
-      //   "res.data in addFirstOrgBookDraftPage" + JSON.stringify(res.data));
       setCurrentEditOrgBookMode(ORGBOOK_EDIT_MODE);
       orgProfileDispatch(updateOrganisationSuccess(res.data));
       setCurrentOrgBookPages(res.data.orgBookPages);
@@ -1114,7 +1134,7 @@ const OrgBookEditor = () => {
           title={t("orgBook.newOrgBook")}
           okText={t("orgBook.create")}
           requiredPageNameMessage={t("orgBook.pleaseEnterPageNameCreate")}
-          defaultPageName={t("orgBook.page1")}
+          defaultPageName={t("orgBook.welcome")}
           visible={createFormVisible}
           onCancel={handleOnCancel}
           onCreate={handleOnCreate}

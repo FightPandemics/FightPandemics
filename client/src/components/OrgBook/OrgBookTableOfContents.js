@@ -41,7 +41,6 @@ const HeaderSpacerContainer = styled.div`
 const MainNavigationContainer = styled.div`
   color: ${white};
   overflow-y: auto;
-  height: 600px;
   scroll-behavior: smooth;
   scrollbar-color: light;
   padding: 1.4rem 1.4rem 3.4rem 1.4rem;
