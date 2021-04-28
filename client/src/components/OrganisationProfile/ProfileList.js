@@ -1,7 +1,7 @@
 import Loader from "components/Feed/StyledLoader";
 import ProfileListItem from "components/OrganisationProfile/ProfileListItem";
 import { mq } from "constants/theme";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import {
     InfiniteLoader,
     AutoSizer,
@@ -13,6 +13,8 @@ import {
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "constants/theme";
+import UpArrow from "../../components/Icon/up-arrow.js";
+import ScrollToTop from "components/Scroll/ScrollTop";
 
 const { colors } = theme
 
@@ -54,6 +56,7 @@ const ProfileList = ({
     isItemLoaded,
     hasNextPage,
     totalCount,
+    // activateArrow,
     emptyFeed
 }) => {
     const applicantsList = filteredApplicants && true
@@ -63,9 +66,20 @@ const ProfileList = ({
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
+
+
     const handleSeeAll = () => {
         setSeeAll(prevState => !prevState)
     }
+
+    const [scrollActive, setScrollActive] = useState(false);
+    // const prevScroll = usePrevious(scrollActive);
+
+    window.addEventListener('scroll', () => seeAll ? setScrollActive(true) : null);
+
+    const activateArrow = scrollActive
+
+    const scrollTop = async () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
     const windowWidth = window.innerWidth
     const profileItem = useCallback(
@@ -152,14 +166,24 @@ const ProfileList = ({
                     )}
                 </WindowScroller>
             )}
-            <Link
-                onClick={handleSeeAll}
-            >
-
-                <SeeAllLink>
-                    See All
-            </SeeAllLink>
-            </Link>
+            {windowWidth < 767 ?
+                <>
+                    <Link
+                        onClick={handleSeeAll}
+                        style={seeAll ? { display: "none" } : null}
+                    >
+                        <SeeAllLink>
+                            See All
+                </SeeAllLink>
+                    </Link>
+                    <Link
+                        onClick={scrollTop}
+                    >
+                        <UpArrow
+                            activate={seeAll}
+                        />
+                    </Link>
+                </> : null}
         </div >
     );
 };

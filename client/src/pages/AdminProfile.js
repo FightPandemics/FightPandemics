@@ -43,6 +43,8 @@ import {
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 import { WhiteSpace } from "antd-mobile";
+import UpArrow from "../components/Icon/up-arrow.js";
+import { Link } from "react-router-dom";
 
 const initialState = {
     showFilters: false,
@@ -282,6 +284,19 @@ const AdminProfile = (props) => {
             }
         })();
     }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // const [scrollActive, setScrollActive] = useState(false);
+    // // const prevScroll = usePrevious(scrollActive);
+
+    // useEffect((() => {
+    //     window.addEventListener('scroll', () => setScrollActive(true));
+    // }), [scrollActive])
+
+    // const activateArrow = scrollActive
+
+    // console.log(activateArrow)
+
+
     if (error) {
         return <ErrorAlert message={error} type="error" />;
     }
@@ -340,6 +355,7 @@ const AdminProfile = (props) => {
                                 // Placeholder text for ONE position is being used below
                                 // Component will be needed for multiple positions (based on backend schema / structure)
                             }
+
                             <ProfileTabs>
                                 <ProfileTabPane
                                     className="single-tab"
@@ -358,6 +374,7 @@ const AdminProfile = (props) => {
                                             totalCount={totalApplicantCount}
                                             page={page}
                                             emptyFeed={emptyFeed}
+                                            // activateArrow={activateArrow}
                                         />
 
                                     }
