@@ -59,6 +59,11 @@ class TemplateBuilder {
           subject: "{{triggeredBy.name}} shared your post: {{post.title}}",
           text: this._loadTemplateFile("../templates/instant/share.txt"),
         },
+        newapplicant: {
+          html: this._loadTemplateFile("../templates/instant/newapplicant.html"),
+          subject: "a new applicant was added",
+          text: this._loadTemplateFile("../templates/instant/newapplicant.txt"),
+        },
       },
       post: {
         html: this._loadTemplateFile("../templates/digests/_post.html"),
