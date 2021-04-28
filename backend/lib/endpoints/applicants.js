@@ -95,7 +95,7 @@ async function routes(app) {
       schema: getApplicantsSchema
     },
     async (req) => {
-      const { limit, skip, organisationId, includeMeta } = req.query;
+      const { limit, skip, organisationId, includeMeta, permissions, userId } = req.query;
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
           organisationId
@@ -103,8 +103,7 @@ async function routes(app) {
             [
               {
                 $match: {
-
-                  organizationId: mongoose.Types.ObjectId(organisationId)
+                  organization.id: mongoose.Types.ObjectId(organisationId)
                 }
               }
               ,
@@ -138,11 +137,11 @@ async function routes(app) {
       const totalResultsAggregationPipeline = await Applicant.aggregate(
         organisationId
           ? [
-            { $match: { organizationId: mongoose.Types.ObjectId(organisationId) } },
+            { $match: { organization.id: mongoose.Types.ObjectId(organisationId) } },
             { $group: { _id: null, count: { $sum: 1 } } },
           ]
           : [
-            { $match: { organizationId: mongoose.Types.ObjectId(organisationId) } },
+            { $match: { organization.id: mongoose.Types.ObjectId(organisationId) } },
             { $group: { _id: null, count: { $sum: 1 } } },
           ],
       );
