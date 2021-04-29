@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
+const sgMail = require("@sendgrid/mail");
+const {
+  config: { sendgrid: sendgridConfig }
+} = require("../../config");
+
+sgMail.setApiKey(sendgridConfig.apiKey);
 
 const {
   getApplicantByIdSchema,
@@ -28,8 +34,7 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { applicantId
-          , orgizationId },
+        params: { applicantId, orgizationId }
       } = req;
 
       const [applicantErr, applicant] = await app.to(
@@ -38,14 +43,14 @@ async function routes(app) {
 
       if (applicantErr) {
         if (applicantErr instanceof mongoose.Error.CastError) {
-          req.log.error(applicantErr, "Can't find a applicant with the given id.");
+          req.log.error(
+            applicantErr,
+            "Can't find a applicant with the given id."
+          );
           throw app.httpErrors.badRequest();
         }
         throw app.httpErrors.internalServerError();
-      }
-
-
-      else if (applicant == null) {
+      } else if (applicant == null) {
         throw app.httpErrors.notFound();
       }
 
@@ -63,7 +68,7 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { organizationId },
+        params: { organizationId }
       } = req;
 
       const [applicantErr, applicant] = await app.to(
@@ -72,12 +77,14 @@ async function routes(app) {
 
       if (applicantErr) {
         if (applicantErr instanceof mongoose.Error.CastError) {
-          req.log.error(applicantErr, "Can't find a applicant with the given id.");
+          req.log.error(
+            applicantErr,
+            "Can't find a applicant with the given id."
+          );
           throw app.httpErrors.badRequest();
         }
         throw app.httpErrors.internalServerError();
-      }
-      else if (applicant == null) {
+      } else if (applicant == null) {
         throw app.httpErrors.notFound();
       }
 
@@ -99,31 +106,27 @@ async function routes(app) {
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
           organisationId
-            ?
-            [
-              {
-                $match: {
-
-                  organizationId: mongoose.Types.ObjectId(organisationId)
+            ? [
+                {
+                  $match: {
+                    organizationId: mongoose.Types.ObjectId(organisationId)
+                  }
+                },
+                {
+                  $skip: parseInt(skip, 10) || 0
+                },
+                {
+                  $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
                 }
-              }
-              ,
-              {
-                $skip: parseInt(skip, 10) || 0,
-              },
-              {
-                $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-              },
-            ] :
-            [
-              {
-                $skip: parseInt(skip, 10) || 0,
-              },
-              {
-                $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-              },
-            ]
-
+              ]
+            : [
+                {
+                  $skip: parseInt(skip, 10) || 0
+                },
+                {
+                  $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+                }
+              ]
         ).then((applicants) => {
           applicants.forEach((applicant) => {
             applicant.elapsedTimeText = setElapsedTimeText(
@@ -138,13 +141,21 @@ async function routes(app) {
       const totalResultsAggregationPipeline = await Applicant.aggregate(
         organisationId
           ? [
-            { $match: { organizationId: mongoose.Types.ObjectId(organisationId) } },
-            { $group: { _id: null, count: { $sum: 1 } } },
-          ]
+              {
+                $match: {
+                  organizationId: mongoose.Types.ObjectId(organisationId)
+                }
+              },
+              { $group: { _id: null, count: { $sum: 1 } } }
+            ]
           : [
-            { $match: { organizationId: mongoose.Types.ObjectId(organisationId) } },
-            { $group: { _id: null, count: { $sum: 1 } } },
-          ],
+              {
+                $match: {
+                  organizationId: mongoose.Types.ObjectId(organisationId)
+                }
+              },
+              { $group: { _id: null, count: { $sum: 1 } } }
+            ]
       );
       const applicantsResponse = (response) => {
         if (!includeMeta) {
@@ -154,23 +165,20 @@ async function routes(app) {
           meta: {
             total: totalResultsAggregationPipeline.length
               ? totalResultsAggregationPipeline[0].count
-              : 0,
+              : 0
           },
-          data: response,
+          data: response
         };
       };
 
       if (applicantsErr) {
         req.log.error(applicantsErr, "Failed requesting applicants");
         throw app.httpErrors.internalServerError();
-      }
-      else if (applicants === null) {
+      } else if (applicants === null) {
         return applicantsResponse([]);
-      }
-      else {
+      } else {
         return applicantsResponse(applicants);
       }
-
     }
   );
 
@@ -179,7 +187,7 @@ async function routes(app) {
     // TODO - change authenticateOptional to authenticate
     {
       preValidation: [app.authenticateOptional, app.setActor],
-      schema: createApplicantSchema,
+      schema: createApplicantSchema
     },
     async (req, reply) => {
       const { actor, body: applicantProps } = req;
@@ -191,21 +199,39 @@ async function routes(app) {
         name: actor.name,
         photo: actor.photo,
         type: actor.type,
-        verified: actor.verification && actor.verification.status === "approved",
+        verified: actor.verification && actor.verification.status === "approved"
       };
 
-      const [err, applicant] = await app.to(new Applicant(applicantProps).save());
+      const [err, applicant] = await app.to(
+        new Applicant(applicantProps).save()
+      );
 
       if (err) {
         req.log.error(err, "Failed creating applicant.");
         throw app.httpErrors.internalServerError();
       }
 
-      reply.code(201);
-      return {
-        ...applicant.toObject(),
+      // Send email confirmation
+      const msg = {
+        to: actor.email, // Change to your recipient
+        from: sendgridConfig.verifiedSender, // Change to your verified sender
+        subject: "Sending with SendGrid is Fun",
+        text: "and easy to do anywhere, even with Node.js",
+        html: "<strong>and easy to do anywhere, even with Node.js</strong>"
       };
 
+      try {
+        await sgMail.send(msg);
+      } catch (error) {
+        if (error.response) {
+          console.error(error.response.body);
+        }
+      }
+
+      reply.code(201);
+      return {
+        ...applicant.toObject()
+      };
     }
   );
 
@@ -250,7 +276,6 @@ async function routes(app) {
   //     return updateApplicant;
   //   }
   // );
-
-};
+}
 
 module.exports = routes;

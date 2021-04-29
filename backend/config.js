@@ -21,11 +21,11 @@ const configData = envSchema({
     .prop("AWS_REGION", S.string().default("us-east-1"))
     .prop(
       "AWS_SECRET_ACCESS_KEY",
-      S.string().default("dummy_secret_access_key"),
+      S.string().default("dummy_secret_access_key")
     )
     .prop(
       "CDN_BASE_URL",
-      S.string().default("http://localhost:4566/fp-dev-cdn"),
+      S.string().default("http://localhost:4566/fp-dev-cdn")
     )
     .prop("COMMIT_HASH", S.string())
     .prop("GOOGLE_MAPS_API_KEY", S.string())
@@ -42,15 +42,16 @@ const configData = envSchema({
     .prop("SENTRY_DSN", S.string())
     .prop("SENDGRID_API_KEY", S.string())
     .prop("SENDGRID_CONTACTS_LIST_ID", S.string())
+    .prop("SENDGRID_VERIFIED_SENDER", S.string())
     .prop("VERIFF_BASE_URL", S.string().default("https://api.veriff.me/"))
     .prop("VERIFF_PUBLIC_KEY", S.string())
-    .prop("VERIFF_PRIVATE_KEY", S.string()),
+    .prop("VERIFF_PRIVATE_KEY", S.string())
 });
 
 const config = {
   airtable: {
     apiKey: configData.AIRTABLE_API_KEY,
-    baseId: configData.AIRTABLE_BASE_ID,
+    baseId: configData.AIRTABLE_BASE_ID
   },
   appDomain: configData.APP_DOMAIN,
   auth: {
@@ -60,7 +61,7 @@ const config = {
     domain: `https://${configData.AUTH_DOMAIN}`,
     jwtMongoIdKey: url.resolve(configData.AUTH_APP_URL, "mongo_id"),
     secretKey: configData.AUTH_SECRET_KEY,
-    state: configData.AUTH_STATE,
+    state: configData.AUTH_STATE
   },
   cdn: {
     awsAccessKeyId: configData.AWS_ACCESS_KEY_ID,
@@ -68,59 +69,60 @@ const config = {
     awsRegion: configData.AWS_REGION,
     awsSecretAccessKey: configData.AWS_SECRET_ACCESS_KEY,
     baseUrl: configData.CDN_BASE_URL,
-    s3Bucket: configData.S3_CDN_BUCKET,
+    s3Bucket: configData.S3_CDN_BUCKET
   },
   env: configData.NODE_ENV,
   errorNotifier: {
     environment: configData.NODE_ENV,
     release: configData.COMMIT_HASH,
-    url: configData.SENTRY_DSN,
+    url: configData.SENTRY_DSN
   },
   geo: {
-    googleMapsApiKey: configData.GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: configData.GOOGLE_MAPS_API_KEY
   },
   logger: {
     appname: `fp-backend-${configData.NODE_ENV}`,
     host: configData.LOGGER_HOST,
     level: configData.LOGGER_LEVEL,
-    port: configData.LOGGER_PORT,
+    port: configData.LOGGER_PORT
   },
   mongo: {
     params: {
       useFindAndModify: false,
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      useUnifiedTopology: true
     },
     uri:
       configData.MONGO_URI.startsWith("mongodb://") ||
       configData.MONGO_URI.startsWith("mongodb+srv://")
         ? configData.MONGO_URI
-        : `mongodb://${configData.MONGO_URI}`,
+        : `mongodb://${configData.MONGO_URI}`
   },
   name,
   query: {
-    maxLimit: configData.QUERY_LIMIT_MAX,
+    maxLimit: configData.QUERY_LIMIT_MAX
   },
   sendgrid: {
     apiKey: configData.SENDGRID_API_KEY,
     contactsListId: configData.SENDGRID_CONTACTS_LIST_ID,
+    verifiedSender: configData.SENDGRID_VERIFIED_SENDER
   },
   server: {
-    port: configData.PORT,
+    port: configData.PORT
   },
   socket: {
     options: {
-      pingInterval: 10000,
+      pingInterval: 10000
     },
     redis: {
       host: configData.REDIS_HOST,
-      port: configData.REDIS_PORT,
+      port: configData.REDIS_PORT
     }
   },
   veriff: {
     baseUrl: configData.VERIFF_BASE_URL,
     publicKey: configData.VERIFF_PUBLIC_KEY,
-    privateKey: configData.VERIFF_PRIVATE_KEY,    
+    privateKey: configData.VERIFF_PRIVATE_KEY
   }
 };
 
