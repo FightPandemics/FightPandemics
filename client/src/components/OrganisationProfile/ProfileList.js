@@ -68,13 +68,11 @@ const ProfileList = ({
     const [seeAll, setSeeAll] = useState(false)
 
 
-
     const handleSeeAll = async () => {
         setSeeAll(prevState => !prevState)
     }
 
     const [scrollActive, setScrollActive] = useState(false);
-    // const prevScroll = usePrevious(scrollActive);
 
     window.addEventListener('scroll', () => seeAll ? setScrollActive(true) : null);
 
