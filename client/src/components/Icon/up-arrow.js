@@ -20,7 +20,7 @@ const ArrowContainer = styled.div`
   right: 20%;
   bottom: 3rem;
   z-index: 5;
-  transition: all .35s ease;
+  transition: all .25s ease;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
     display: unset;
