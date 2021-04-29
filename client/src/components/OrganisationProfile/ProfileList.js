@@ -56,6 +56,7 @@ const ProfileList = ({
     isItemLoaded,
     hasNextPage,
     totalCount,
+    windowWidth,
     // activateArrow,
     emptyFeed
 }) => {
@@ -68,7 +69,7 @@ const ProfileList = ({
 
 
 
-    const handleSeeAll = () => {
+    const handleSeeAll = async () => {
         setSeeAll(prevState => !prevState)
     }
 
@@ -81,7 +82,6 @@ const ProfileList = ({
 
     const scrollTop = async () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    const windowWidth = window.innerWidth
     const profileItem = useCallback(
         ({ key, index, style, parent }) => {
             let content;

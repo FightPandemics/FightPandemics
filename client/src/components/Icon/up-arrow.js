@@ -14,7 +14,6 @@ const DownArrow = styled(SvgIcon).attrs((props) => ({
 `;
 
 const ArrowContainer = styled.div`
-  /* display: none; */
   img {transform: rotate(180deg) !important}
   width: fit-content;
   position: fixed;
@@ -40,7 +39,6 @@ const UpArrow = ({ activate }) => {
     else {
       setScrollBottom(false)
     }
-    console.log(isScrollBottom)
   };
 
   return (

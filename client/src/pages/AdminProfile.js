@@ -229,6 +229,25 @@ const AdminProfile = (props) => {
 
     const emptyFeed = () => applicantsList.length < 1 && !isLoading;
 
+    const [windowWidth, setWindowWidth] = useState()
+
+    // useEffect(() => {
+
+    //     // const getWindowWidth = async () => {
+    //     //     window.innerWidth()
+    //     //     // setWindowWidth(window.innerWidth())
+
+    //     // }
+    //     console.log(window.innerWidth)
+    // }
+    //     , [windowWidth])
+
+    window.addEventListener("resize", () => {
+        setWindowWidth(window.innerWidth)
+        // console.log(windowWidth)
+    });
+
+
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 1];
     const { orgProfileState, orgProfileDispatch } = useContext(
@@ -359,7 +378,9 @@ const AdminProfile = (props) => {
                             <ProfileTabs>
                                 <ProfileTabPane
                                     className="single-tab"
-                                    tab={t("profile.views.applicants") + ` ( ${rawTotalApplicantCount} )`} key="members">
+                                    tab={t("profile.views.applicants") + (windowWidth < 767 ? ` ( ${rawTotalApplicantCount} )` : "")}
+                                    key="members"
+                                >
                                     {rawTotalApplicantCount == 0 ?
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No Applicants to display.
@@ -374,7 +395,8 @@ const AdminProfile = (props) => {
                                             totalCount={totalApplicantCount}
                                             page={page}
                                             emptyFeed={emptyFeed}
-                                            // activateArrow={activateArrow}
+                                            windowWidth={windowWidth}
+                                        // activateArrow={activateArrow}
                                         />
 
                                     }
