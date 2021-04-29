@@ -231,6 +231,7 @@ const AdminProfile = (props) => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
+    
     // useEffect(() => {
 
     //     // const getWindowWidth = async () => {
