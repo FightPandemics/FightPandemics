@@ -229,7 +229,7 @@ const AdminProfile = (props) => {
 
     const emptyFeed = () => applicantsList.length < 1 && !isLoading;
 
-    const [windowWidth, setWindowWidth] = useState()
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
     // useEffect(() => {
 
