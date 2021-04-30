@@ -15,6 +15,7 @@ import styled from "styled-components";
 import { theme } from "constants/theme";
 import UpArrow from "../../components/Icon/up-arrow.js";
 import ScrollToTop from "components/Scroll/ScrollTop";
+import { set } from "lodash";
 
 const { colors } = theme
 
@@ -57,7 +58,6 @@ const ProfileList = ({
     hasNextPage,
     totalCount,
     windowWidth,
-    // activateArrow,
     emptyFeed
 }) => {
     const applicantsList = filteredApplicants && true
@@ -67,20 +67,14 @@ const ProfileList = ({
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
-
     const handleSeeAll = async () => {
         setSeeAll(prevState => !prevState)
     }
 
-    const [scrollActive, setScrollActive] = useState(false);
-
-    window.addEventListener('scroll', () => seeAll ? setScrollActive(true) : null);
-
-    const activateArrow = scrollActive
-
     const scrollTop = async () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
     const profileItem = useCallback(
+
         ({ key, index, style, parent }) => {
             let content;
             if (!isItemLoaded(index) && hasNextPage) {
@@ -124,7 +118,8 @@ const ProfileList = ({
     );
 
     return (
-        <div className="activity">
+        <div id="profile-list" className="activity"
+        >
             { !items.length && isNextPageLoading ? (
                 <Loader />
             ) : (
@@ -147,15 +142,14 @@ const ProfileList = ({
                                             isScrolling={isScrolling}
                                             onRowsRendered={onRowsRendered}
                                             rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
-                                            rowHeight={cellMeasurerCache.getHeight()}
+                                            rowHeight={cellMeasurerCache.rowHeight}
                                             deferredMeasurementCache={cellMeasurerCache}
                                             rowRenderer={profileItem}
                                             scrollTop={scrollTop}
                                             onScroll={onChildScroll}
                                             overscanRowCount={1}
                                             scrollToAlignment={"start"}
- 
-                                            
+
                                         />
                                     )}
                                 </AutoSizer>

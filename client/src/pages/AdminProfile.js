@@ -231,6 +231,11 @@ const AdminProfile = (props) => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
+    useEffect(() => {
+        // const objDiv = document.getElementById('profile-list').offsetTop
+        // console.log(objDiv)
+    }, [])
+
     // useEffect(() => {
 
     //     // const getWindowWidth = async () => {
@@ -315,6 +320,41 @@ const AdminProfile = (props) => {
 
     // console.log(activateArrow)
 
+    // const objDiv = document.getElementById('profile-list').offsetTop
+    // console.log(objDiv)
+
+    // const [boxBottom, setBoxBottom] = useState()
+
+    // const objDiv = document.getElementById('profile-list')
+
+    // const height = useCallback(() => {
+
+    //     setBoxBottom(objDiv)
+    // }, [])
+
+    // console.log()
+
+    // const inputRef = useRef()
+    // useEffect(() => {
+    //     // const height = inputRef.current.offsetHeight;
+    //     // console.log('Input height', height);
+    //     console.log("test:" + JSON.stringify(inputRef.current.getBoundingClientRect().top))
+    // }, [inputRef])
+
+    const inputRef = useRef()
+
+    const handleLoad = (e) => {
+        console.log({ clientHeight: e.target.clientHeight })
+        console.log({ inputRef: inputRef })
+    }
+    // useEffect(() => {
+    //     // const height = inputRef.current.offsetHeight;
+    //     // console.log('Input height', height);
+    //     if (inputRef.current) {
+
+    //     }
+    //     console.log({ current: inputRef.current })
+    // }, [inputRef])
 
     if (error) {
         return <ErrorAlert message={error} type="error" />;
@@ -329,6 +369,9 @@ const AdminProfile = (props) => {
         return (
             // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
+                <img
+
+                />
                 <FeedContext.Provider
                     value={{
                         isAuthenticated,
@@ -341,19 +384,25 @@ const AdminProfile = (props) => {
                         showFilters,
                         totalApplicantCount,
                     }}
+
                 >
                     <ProfileBackgroup />
-                    <ProfileLayout>
+                    <ProfileLayout
+
+                    >
                         <UserInfoContainer>
                             <AvatarPhotoContainer>
                                 <ProfilePic
                                     user={organisation}
                                     initials={getInitialsFromFullName(name)}
+                                    ref={inputRef}
                                 />
                             </AvatarPhotoContainer>
                             <UserInfoDesktop>
                                 <NameDiv>
-                                    <div className="name-container">
+                                    <div
+                                        ref={inputRef}
+                                        className="name-container">
                                         <NamePara>
                                             {name}
                                         </NamePara>
@@ -396,7 +445,7 @@ const AdminProfile = (props) => {
                                             page={page}
                                             emptyFeed={emptyFeed}
                                             windowWidth={windowWidth}
-                                        // activateArrow={activateArrow}
+                                            onLoad={handleLoad}
                                         />
 
                                     }
