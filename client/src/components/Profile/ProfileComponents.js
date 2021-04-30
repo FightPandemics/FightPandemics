@@ -303,11 +303,15 @@ export const DescriptionDesktop = styled.div`
 
 export const SeeOrgBookLink = styled.a`
   color: ${colors.royalBlue};
+  width: 12rem;
+  height: 2rem;
   align-self: center;  
   display: block;
-  width: fit-content;
   margin: auto;
   margin-top: 1rem;
+  font-size: 1.6rem;
+  font-family: Poppins;
+  font-weight: 500;  
 `; 
 
 export const MobileLocation = styled.div`
