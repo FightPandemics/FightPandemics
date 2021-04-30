@@ -17,7 +17,7 @@ const ArrowContainer = styled.div`
   img {transform: rotate(180deg) !important}
   width: fit-content;
   position: fixed;
-  right: 20%;
+  right: 10%;
   bottom: 3rem;
   z-index: 5;
   transition: all .1s ease;
