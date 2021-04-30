@@ -258,6 +258,20 @@ const OrgBookEditorSpace = (props) => {
     }
   };
 
+  const showPublishBtn = () => {
+    if (selectedPage.status === PAGE_CATEGORIES.draftCategory) {
+      return true;
+    }
+    if (
+      selectedPage.status === PAGE_CATEGORIES.liveCategory &&
+      selectedPage.name === t("orgBook.welcome")
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const renderDistractionFreeEditor = () => {
     //quickbars_insert_toolbar appears on clicking on a new line (empty line following previously set/entered content)
     //quickbars_selection_toolbar appears after double-clicking (selecting) existing content or empty space
@@ -374,7 +388,7 @@ const OrgBookEditorSpace = (props) => {
           )}
         </HeaderSeePreviewContainer>
         <HeaderRenamePageContainer>
-          {selectedPage ? (
+          {selectedPage && selectedPage.name !== t("orgBook.welcome") ? (
             <Link
               onClick={() => {
                 onUpdateAction(
@@ -452,6 +466,7 @@ const OrgBookEditorSpace = (props) => {
         </FooterDeleteDraftContainer>
         <FooterChangeViewContainer>
           {selectedPage &&
+          selectedPage.name !== t("orgBook.welcome") &&
           selectedPage.status === PAGE_CATEGORIES.liveCategory ? (
             <Link
               onClick={() => {
@@ -508,7 +523,7 @@ const OrgBookEditorSpace = (props) => {
             <WhiteSpace />
           )}
         </FooterSaveProgressContainer>
-        {selectedPage ? (
+        {selectedPage && showPublishBtn() ? (
           <PublishButtonContainer
             onClick={(e) => {
               onUpdateAction(

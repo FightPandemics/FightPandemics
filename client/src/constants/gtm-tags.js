@@ -144,6 +144,7 @@ module.exports = {
     renamePage: "_RP",
     seePreview: "_SP",
     pageContainer: "_PC",
+    joinOrgContainer: "_JO",
   },
   providersFilters: {
     individual: "_IN",

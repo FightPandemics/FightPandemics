@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import OrgBookRadioGroup from "./OrgBookRadioGroup";
 import { OrgBookStyledModalContainer } from "./OrgBookStyledModal";
+import SvgIcon from "../Icon/SvgIcon";
+import privateIcon from "../../assets/icons/orgbook-private-alt.svg";
+import publicIcon from "../../assets/icons/orgbook-public-alt.svg";
 
 const OrgBookConfirmModal = ({
   action,
@@ -219,7 +222,30 @@ const OrgBookConfirmModal = ({
         destroyOnClose={true}
         maskClosable={true}
       >
-        <p>{confirmPrompt}</p>
+        <p>
+          {action === UPDATE_ACTION_TYPES.changeLiveToPublicViewType ? (
+            <>
+              <SvgIcon src={publicIcon} title={t("orgBook.publicView")} />
+              {"    "}
+            </>
+          ) : (
+            ""
+          )}
+          {action === UPDATE_ACTION_TYPES.changeLiveToPrivateViewType ? (
+            <>
+              <SvgIcon
+                src={privateIcon}
+                title={t("orgBook.orgViewOnly")}
+                width={"3rem !important"}
+                height={"3rem !important"}
+              />
+              {"    "}
+            </>
+          ) : (
+            ""
+          )}
+          {confirmPrompt}
+        </p>
         {showUnpublishOptions
           ? defaultUnpublishOption && (
               <>

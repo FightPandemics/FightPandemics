@@ -91,12 +91,9 @@ const TOCSidebarAndPageContainer = styled.div`
 const TOCSidebarAndPageWrapper = styled.div`
   margin-left: 3rem;
   margin-right: 3rem;
-  background-color: #f0f0f0;
-  //border: solid 1px black;
   display: grid;
   grid-template-columns: 30rem minmax(15rem, 100%);
   gap: 10px;
-  //grid-auto-rows: 36vmax;
   grid-auto-rows: minmax(100%, 100%);
   grid-template-areas: "a b";
 
@@ -108,7 +105,6 @@ const TableOfContentsSidebar = styled.div`
   align-self: start;
   background-color: #f0f0f0;
   color: ${black};
-
   overflow-y: scroll; /*added*/
   //scroll-behavior: smooth;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -120,7 +116,6 @@ const OrgBookViewerContentBox = styled.div`
   grid-area: b;
   align-self: start;
   background-color: ${white};
-
   overflow-y: scroll; /*added*/
   //scroll-behavior: smooth;
 `;

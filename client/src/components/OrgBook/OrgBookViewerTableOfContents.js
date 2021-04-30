@@ -6,14 +6,19 @@ import { WhiteSpace } from "antd-mobile";
 import GTM from "../../constants/gtm-tags";
 
 const { colors, typography } = theme;
-const { white, black, lightGray, mediumGray } = colors;
+const { white, black, lightGray, mediumGray, royalBlue } = colors;
 
 const MainNavigationContainer = styled.div`
   color: ${black};
-  overflow-y: auto;
+  overflow-y: scroll;
   scroll-behavior: smooth;
   scrollbar-color: light;
   padding: 1.4rem 1.4rem 3.4rem 1.4rem;
+`;
+
+const LearnMoreContainer = styled.div`
+  font-size: ${typography.size.large};
+  font-weight: bold;
 `;
 
 const PageListContainer = styled.div`
@@ -31,6 +36,21 @@ const PageListContainer = styled.div`
   font-size: ${(props) =>
     props.selected ? typography.size.xlarge : typography.size.large};
   font-weight: ${(props) => (props.selected ? "bold" : "normal")};
+  color: ${(props) => (props.selected ? royalBlue : black)};
+`;
+
+const JoinOrgContainer = styled.button`
+  type: submit;
+  width: 9rem;
+  height: 3rem;
+  border-radius: 4rem;
+  background-color: #f0f0f0;
+  margin-left: 7rem;
+`;
+
+const JoinOrgLabel = styled.div`
+  color: ${black};
+  white-space: nowrap;
 `;
 
 export const Background = styled.div`
@@ -84,6 +104,10 @@ const OrgBookViewerTableOfContents = (props) => {
     sortedFilteredOrgBookPages && (
       <MainNavigationContainer>
         <WhiteSpace />
+        <LearnMoreContainer>{t("orgBook.learnMore")}</LearnMoreContainer>
+        <WhiteSpace />
+        <WhiteSpace />
+        <WhiteSpace />
         {sortedFilteredOrgBookPages.map((page, idx) => (
           <PageListContainer
             key={idx}
@@ -96,6 +120,17 @@ const OrgBookViewerTableOfContents = (props) => {
             {page.name}
           </PageListContainer>
         ))}
+        <WhiteSpace />
+        <WhiteSpace />
+        <WhiteSpace />
+        <JoinOrgContainer
+          onClick={() => {
+            console.log("clicked join org");
+          }}
+          id={GTM.orgBook.prefix + GTM.orgBook.joinOrgContainer}
+        >
+          <JoinOrgLabel>{t("orgBook.joinUs")}</JoinOrgLabel>
+        </JoinOrgContainer>
       </MainNavigationContainer>
     )
   );

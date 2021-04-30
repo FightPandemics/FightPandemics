@@ -1,8 +1,12 @@
 import React from "react";
 import { Radio } from "antd";
+import SvgIcon from "../Icon/SvgIcon";
+import privateIcon from "../../assets/icons/orgbook-private-alt.svg";
+import publicIcon from "../../assets/icons/orgbook-public-alt.svg";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { theme } from "constants/theme";
-const { royalBlue, black } = theme.colors;
+const { royalBlue, black, darkGray } = theme.colors;
 const { medium } = theme.typography.size;
 const { display } = theme.typography.font.family;
 
@@ -47,6 +51,8 @@ const OrgBookRadioGroup = ({
   flex,
   padding,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <StyledRadioGroup
       name={name}
@@ -59,6 +65,27 @@ const OrgBookRadioGroup = ({
     >
       {options.map((option, idx) => (
         <Radio value={option.value} key={idx}>
+          {name === "confirmPublishOption" && idx === 0 ? (
+            <>
+              <SvgIcon src={publicIcon} title={t("orgBook.publicView")} />
+              {"  "}
+            </>
+          ) : (
+            ""
+          )}
+          {name === "confirmPublishOption" && idx === 1 ? (
+            <>
+              <SvgIcon
+                src={privateIcon}
+                title={t("orgBook.orgViewOnly")}
+                width={"3rem !important"}
+                height={"3rem !important"}
+              />
+              {"  "}
+            </>
+          ) : (
+            ""
+          )}
           {option.value}
         </Radio>
       ))}
