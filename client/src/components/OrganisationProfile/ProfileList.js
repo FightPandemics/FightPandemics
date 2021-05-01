@@ -159,7 +159,7 @@ const ProfileList = ({
                     )}
                 </WindowScroller>
             )}
-            {windowWidth < 767 ?
+            {windowWidth < 767 && totalCount >= 3 ?
                 <>
                     <Link
                         onClick={handleSeeAll}
