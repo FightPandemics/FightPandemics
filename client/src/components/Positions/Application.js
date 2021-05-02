@@ -100,7 +100,7 @@ const Application = ({ orgName,
             // question3: "",
             // organisationId: organisationId,
             // actorId: actorId,
-            // status: "applied",
+            status: "applied",
         },
         errors: [],
     };
@@ -212,11 +212,11 @@ const Application = ({ orgName,
         // setFormData({ formData, status: "rejected" });
 
         // INSERT API CALL TO PATCH REVIEW STATUS
-        // try {
-        //     await axios.patch(endPoint, formData);
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            await axios.patch(endPoint, formData);
+        } catch (error) {
+            console.log(error);
+        }
         setSuccessVisible(true);
 
     };
@@ -377,7 +377,7 @@ const Application = ({ orgName,
                     <p>Your decision has successfully been submitted and the candidate has been notified via email.</p>
                     <Link
                         onClick={handleConfirmation}
-                    // Send to admin page
+                    // TODO Send to applicants page
                     // to={}
                     >
                         <PositionsButton
