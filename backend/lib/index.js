@@ -24,9 +24,9 @@ module.exports = function createApp(config) {
         ? {
             colorize: true,
             translateTime: "SYS:standard",
-            // cors: {
-            //         origin: '0.0.0',
-            //       }
+            cors: {
+                    origin: '0.0.0.0',
+                  }
           }
         : false,
   };

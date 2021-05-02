@@ -10,8 +10,9 @@ class DatabaseHelper {
     this.dbName = config.database;
     this.db = null;
     this.instantUnreadLookbackInterval = config.instantUnreadLookbackInterval;
+    console.log("THREAD1")
   }
-
+  
   async connect(cachedDb = null) {
     if (cachedDb && cachedDb.serverConfig.isConnected()) {
       this.db = cachedDb;
@@ -181,7 +182,8 @@ class DatabaseHelper {
     );
   }
 
-  async setThreadParticipantEmailSent(threadId, userId) {
+  async (threadId, userId) {
+    console.log("THREAD")
     return this.db.collection("threads").findOneAndUpdate(
       {
         _id: threadId,

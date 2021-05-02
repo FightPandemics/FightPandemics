@@ -3,24 +3,19 @@ require("dotenv").config();
 const createServer = require("./lib");
 const { config } = require("./config");
 
-const server = createServer(config)
-// const server = createServer(config, {
-//     cors: {
-//       origin: '0.0.0',
-//     }
-//   });
+// TODO DEACTIVATE / REPLACE 'TEMP SERVER CONFIG' WITH 'ORIGINAL SERVER CONFIG'
 
-// const http = require('http').Server(server);
+// ORIGINAL SERVER CONFIG
+// const server = createServer(config)
+//
 
-
-
-// const io = require('socket.io')(server, {
-//   cors: {
-//     origin: '*',
-//   }
-// });
-
-// io.set('origins', 'http://0.0.0.0:8000');
+// TEMP SERVER CONFIG
+const server = createServer(config, {
+  cors: {
+    origin: '0.0.0.0',
+  }
+});
+//
 
 server.ready(async () => {
   await server.oas();

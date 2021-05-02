@@ -239,12 +239,14 @@ function onSocketConnect(socket) {
   });
 
   socket.on("SEND_MESSAGE", async (data, res) => {
+    console.log("THREAD")
     const { userId } = socket;
     const userInRoom = await isUserInRoom(this, data.threadId, socket.id);
     if (!data.threadId && !userInRoom)
       return res({ code: 401, message: "Unauthorized" });
     const [threadErr, thread] = await this.to(
       Thread.findOne({
+
         _id: data.threadId,
         "participants.id": userId,
       }),
