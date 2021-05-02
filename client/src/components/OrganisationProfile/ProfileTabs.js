@@ -10,6 +10,7 @@ export const ProfileTabs = styled(Tabs)`
   font-weight: 600;
   font-size: 1.6rem;
   line-height: 24px;
+  margin-top: 10.1rem;
 
 .ant-tabs-nav {
   margin-bottom: 0;
@@ -21,6 +22,7 @@ export const ProfileTabs = styled(Tabs)`
   position:absolute;
   left:0;
   right:0;
+  bottom: 0;
 }
 
 .ant-tabs-ink-bar {
@@ -29,16 +31,16 @@ export const ProfileTabs = styled(Tabs)`
 
 .ant-tabs-content {
   border-radius: 1.2rem;
-  box-shadow: 0px 0px 2rem ${colors.shadowBlack};
 }
   .ant-tabs-nav-list {
     margin: 0;
-    margin-top: 5rem;
   }
   
   .ant-tabs-tab {
     margin-right: 10rem;
     border-radius: 30.2rem;
+    padding: 0;
+    padding-bottom: 2.2rem;
 
     :hover {
       color: ${colors.darkGray};
@@ -52,7 +54,6 @@ export const ProfileTabs = styled(Tabs)`
   .ant-tabs-tab-active .ant-tabs-tab-btn{
     color: ${colors.black};
   }
-  
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
     .ant-tabs-tab {
@@ -63,5 +64,4 @@ export const ProfileTabs = styled(Tabs)`
 
 export const ProfileTabPane = styled(ProfileTabs.TabPane)`
   margin: 0;
-  
 `

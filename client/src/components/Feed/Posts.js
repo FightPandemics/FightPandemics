@@ -87,19 +87,20 @@ const Posts = ({
 
   const loadMoreItems = isNextPageLoading
     ? () => {
-        if (history?.location?.state) {
-          const { keepScrollIndex, keepScroll } = history.location.state;
-          if (keepScroll && scrollIndex.current < keepScrollIndex) {
-            scrollIndex.current = keepScrollIndex;
-          } else {
-            history.location.state.keepScrollIndex = scrollIndex.current;
-            history.location.state.keepScroll = false;
-            history.location.state.keepPostsState = undefined;
-            history.location.state.keepPageState = undefined;
-          }
+      if (history?.location?.state) {
+        const { keepScrollIndex, keepScroll } = history.location.state;
+        if (keepScroll && scrollIndex.current < keepScrollIndex) {
+          scrollIndex.current = keepScrollIndex;
+        } else {
+          history.location.state.keepScrollIndex = scrollIndex.current;
+          history.location.state.keepScroll = false;
+          history.location.state.keepPostsState = undefined;
+          history.location.state.keepPageState = undefined;
         }
       }
+    }
     : loadNextPage;
+    
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;

@@ -5,7 +5,8 @@ const {
   getApplicantByIdSchema,
   getApplicantsSchema,
   createApplicantSchema,
-  updateApplicantStatusSchema
+  updateApplicantStatusSchema,
+  getOrganizationApplicantsSchema
 } = require("../endpoints/schema/applicants");
 const { setElapsedTimeText } = require("../utils");
 
@@ -27,12 +28,46 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { applicantId },
-        organizationId
+        params: { applicantId
+          , orgizationId },
       } = req;
 
       const [applicantErr, applicant] = await app.to(
         Applicant.findById(applicantId)
+      );
+
+      if (applicantErr) {
+        if (applicantErr instanceof mongoose.Error.CastError) {
+          req.log.error(applicantErr, "Can't find a applicant with the given id.");
+          throw app.httpErrors.badRequest();
+        }
+        throw app.httpErrors.internalServerError();
+      }
+
+
+      else if (applicant == null) {
+        throw app.httpErrors.notFound();
+      }
+
+      return {
+        ...applicant.toObject()
+      };
+    }
+  );
+
+  app.get(
+    "/:organizationId/organisationApplicants",
+    {
+      preValidation: [app.authenticateOptional, app.setActor],
+      schema: getOrganizationApplicantsSchema
+    },
+    async (req) => {
+      const {
+        params: { organizationId },
+      } = req;
+
+      const [applicantErr, applicant] = await app.to(
+        Applicant.findById(organizationId)
       );
 
       if (applicantErr) {
@@ -60,7 +95,7 @@ async function routes(app) {
       schema: getApplicantsSchema
     },
     async (req) => {
-      const { limit, skip, organisationId, includeMeta, application } = req.query;
+      const { limit, skip, organisationId, includeMeta, permissions, userId } = req.query;
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
           organisationId
@@ -68,15 +103,16 @@ async function routes(app) {
             [
               {
                 $match: {
-                  organizationId: mongoose.Types.ObjectId(organisationId)
+                  organization: { id: mongoose.Types.ObjectId(organisationId) }
                 }
-              },
+              }
+              ,
               {
                 $skip: parseInt(skip, 10) || 0,
               },
               {
                 $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-              }
+              },
             ] :
             [
               {
@@ -84,7 +120,7 @@ async function routes(app) {
               },
               {
                 $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-              }
+              },
             ]
 
         ).then((applicants) => {
@@ -98,14 +134,25 @@ async function routes(app) {
         })
       );
 
+      const totalResultsAggregationPipeline = await Applicant.aggregate(
+        organisationId
+          ? [
+            { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ]
+          : [
+            { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ],
+      );
       const applicantsResponse = (response) => {
         if (!includeMeta) {
           return response;
         }
         return {
           meta: {
-            total: applicants.length
-              ? applicants[0].count
+            total: totalResultsAggregationPipeline.length
+              ? totalResultsAggregationPipeline[0].count
               : 0,
           },
           data: response,
@@ -164,7 +211,8 @@ async function routes(app) {
   app.patch(
     "/:applicantId",
     {
-      preValidation: [app.authenticate],
+    // TODO - change authenticateOptional to authenticate
+      preValidation: [app.authenticateOptional],
       schema: updateApplicantStatusSchema
     },
     async (req) => {

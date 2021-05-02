@@ -174,6 +174,7 @@ const Apply = (props) => {
                         <Application
                             orgName={name}
                             organisationId={organisationId}
+                            application="test"
                         ></Application>
                     </PositionsContainer >
                     <ExitModal

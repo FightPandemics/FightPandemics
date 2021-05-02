@@ -1,7 +1,7 @@
 import { POSTS_ACTIONS } from "./actions";
 import { isPostExpired } from "components/Feed/utils";
 
-const innitialState = {
+const initialState = {
   posts: [],
   page: 0,
   error: null,
@@ -30,7 +30,7 @@ export const getProfileModeProp = (mode) => {
   return modeMap[mode];
 };
 
-const postsReducer = (state = innitialState, action) => {
+const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case POSTS_ACTIONS.FETCH_POSTS_BEGIN:
       return {

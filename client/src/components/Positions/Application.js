@@ -95,12 +95,12 @@ const Application = ({ orgName,
     const initialState = {
         //combine questions into "answers" for backend
         formData: {
-            question1: "",
-            question2: "",
-            question3: "",
-            organisationId: organisationId,
-            actorId: actorId,
-            status: "applied",
+            // question1: "",
+            // question2: "",
+            // question3: "",
+            // organisationId: organisationId,
+            // actorId: actorId,
+            // status: "applied",
         },
         errors: [],
     };
@@ -203,7 +203,7 @@ const Application = ({ orgName,
 
     };
 
-    // const endPoint = `/api/applicants/${applicantId}`
+    const endPoint = `/api/applicants/${application._id}`
 
     const handleRejectSuccess = async () => {
         console.log(formData.status)
@@ -228,11 +228,11 @@ const Application = ({ orgName,
         // setFormData({ formData, status: "accepted" });
 
         // INSERT API CALL TO PATCH REVIEW STATUS
-        // try {
-        //     await axios.post(endPoint, formData);
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            await axios.patch(endPoint, formData);
+        } catch (error) {
+            console.log(error);
+        }
         setSuccessVisible(true);
     };
 
