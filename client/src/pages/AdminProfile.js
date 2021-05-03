@@ -43,7 +43,7 @@ import {
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 import { WhiteSpace } from "antd-mobile";
-import UpArrow from "../components/Icon/up-arrow.js";
+// import UpArrow from "../components/Icon/up-arrow.js";
 import { Link } from "react-router-dom";
 
 const initialState = {
