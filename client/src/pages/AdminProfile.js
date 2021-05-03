@@ -228,6 +228,12 @@ const AdminProfile = (props) => {
 
     const emptyFeed = () => applicantsList.length < 1 && !isLoading;
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+    window.addEventListener("resize", () => {
+        setWindowWidth(window.innerWidth)
+    });
+
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 1];
     const { orgProfileState, orgProfileDispatch } = useContext(
