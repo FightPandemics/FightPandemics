@@ -231,25 +231,8 @@ const AdminProfile = (props) => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-    useEffect(() => {
-        // const objDiv = document.getElementById('profile-list').offsetTop
-        // console.log(objDiv)
-    }, [])
-
-    // useEffect(() => {
-
-    //     // const getWindowWidth = async () => {
-    //     //     window.innerWidth()
-    //     //     // setWindowWidth(window.innerWidth())
-
-    //     // }
-    //     console.log(window.innerWidth)
-    // }
-    //     , [windowWidth])
-
     window.addEventListener("resize", () => {
         setWindowWidth(window.innerWidth)
-        // console.log(windowWidth)
     });
 
 
