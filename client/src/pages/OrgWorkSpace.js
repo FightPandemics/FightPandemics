@@ -233,6 +233,12 @@ const OrgWorkSpace = (props) => {
 
     const emptyFeed = () => applicantsList.length < 1 && !isLoading;
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+    window.addEventListener("resize", () => {
+        setWindowWidth(window.innerWidth)
+    });
+
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 1];
     const { orgProfileState, orgProfileDispatch } = useContext(
@@ -348,10 +354,10 @@ const OrgWorkSpace = (props) => {
                             <ProfileTabs>
                                 <ProfileTabPane
                                     className="single-tab"
-                                    tab={t("profile.views.members") + ` ( ${rawTotalApplicantCount} )`} key="members">
+                                    tab={t("profile.views.members") + (windowWidth < 767 ? ` ( ${rawTotalApplicantCount} )` : "")} key="members">
                                     {rawTotalApplicantCount == 0 ?
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                                            No Applicants to display.
+                                            No members to display.
                                         </div> :
                                         <ProfileList
                                             itemCount={itemCount}

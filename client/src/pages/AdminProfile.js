@@ -350,7 +350,7 @@ const AdminProfile = (props) => {
                             <ProfileTabs>
                                 <ProfileTabPane
                                     className="single-tab"
-                                    tab={t("profile.views.applicants") + ` ( ${rawTotalApplicantCount} )`} key="members">
+                                    tab={t("profile.views.applicants") + (windowWidth < 767 ? ` ( ${rawTotalApplicantCount} )` : "")} key="members">
                                     {rawTotalApplicantCount == 0 ?
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No Applicants to display.
