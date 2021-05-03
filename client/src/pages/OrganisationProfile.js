@@ -252,7 +252,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
-
+          console.log({posts: posts})
           if (prevOrgId !== organisationId) {
             dispatch(
               postsActions.fetchPostsSuccess({

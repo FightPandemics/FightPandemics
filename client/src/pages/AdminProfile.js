@@ -121,7 +121,7 @@ const AdminProfile = (props) => {
             const {
                 data: { data: applicants, meta },
             } = await axios.get(endpoint);
-
+            console.log({applicants: applicants})
             if (applicants.length && meta.total) {
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);

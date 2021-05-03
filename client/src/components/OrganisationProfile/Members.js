@@ -60,111 +60,110 @@ const Members = ({
 
     const filteredMembers =
         [
-        
+
         ]
 
-           
 
-const members = Object.entries(filteredMembers);
-console.log(JSON.stringify(members))
-const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
-const [seeAll, setSeeAll] = useState(false)
 
-const handleSeeAll = () => {
-    setSeeAll(prevState => !prevState)
-}
+    const members = Object.entries(filteredMembers);
+    const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
+    const [seeAll, setSeeAll] = useState(false)
 
-const windowWidth = window.innerWidth
-const applicantItem = useCallback(
-    ({ key, index, style, parent }) => {
-        let content;
-        if (!isItemLoaded(index) && hasNextPage) {
-            content = <Loader />;
-        } else if (members[index]) {
-            content = (
-                <>
-                    <HorizontalRule />
-                    <ApplicantOrMember
-                        applicant={members[index][1]}
-                    />
-                </>
+    const handleSeeAll = () => {
+        setSeeAll(prevState => !prevState)
+    }
+
+    const windowWidth = window.innerWidth
+    const applicantItem = useCallback(
+        ({ key, index, style, parent }) => {
+            let content;
+            if (!isItemLoaded(index) && hasNextPage) {
+                content = <Loader />;
+            } else if (members[index]) {
+                content = (
+                    <>
+                        <HorizontalRule />
+                        <ApplicantOrMember
+                            applicant={members[index][1]}
+                        />
+                    </>
+                );
+            }
+            return (
+                <CellMeasurer
+                    key={key}
+                    cache={cellMeasurerCache}
+                    parent={parent}
+                    columnIndex={0}
+                    rowIndex={index}
+                >
+                    {({ measure, registerChild }) => (
+                        <div key={key} ref={registerChild} onLoad={measure} style={style}>
+                            {content}
+                        </div>
+                    )}
+                </CellMeasurer>
             );
-        }
-        return (
-            <CellMeasurer
-                key={key}
-                cache={cellMeasurerCache}
-                parent={parent}
-                columnIndex={0}
-                rowIndex={index}
+        },
+        [
+            hasNextPage,
+            isItemLoaded,
+            members,
+            user,
+        ],
+    );
+
+    return (
+        <div className="activity">
+            { !members.length && isNextPageLoading ? (
+                <Loader />
+            ) : (
+                <WindowScroller>
+                    {({ height, isScrolling, scrollTop, onChildScroll }) => (
+                        <InfiniteLoader
+                            isRowLoaded={isItemLoaded}
+                            loadMoreRows={loadMoreItems}
+                            rowCount={totalApplicantCount}
+                            threshold={5}
+                        >
+
+                            {({ onRowsRendered }) => (
+                                <AutoSizer disableHeight>
+                                    {({ width }) => (
+                                        <List
+                                            autoHeight
+                                            height={height}
+                                            width={width}
+                                            isScrolling={isScrolling}
+                                            onRowsRendered={onRowsRendered}
+                                            rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
+                                            rowHeight={cellMeasurerCache.getHeight()}
+                                            deferredMeasurementCache={cellMeasurerCache}
+                                            rowRenderer={applicantItem}
+                                            scrollTop={scrollTop}
+                                            onScroll={onChildScroll}
+                                            overscanRowCount={1}
+                                            scrollToAlignment={"start"}
+
+                                        />
+                                    )}
+                                </AutoSizer>
+                            )}
+
+                        </InfiniteLoader>
+                    )}
+                </WindowScroller>
+            )}
+            <Link
+                onClick={handleSeeAll}
             >
-                {({ measure, registerChild }) => (
-                    <div key={key} ref={registerChild} onLoad={measure} style={style}>
-                        {content}
-                    </div>
-                )}
-            </CellMeasurer>
-        );
-    },
-    [
-        hasNextPage,
-        isItemLoaded,
-        members,
-        user,
-    ],
-);
 
-return (
-    <div className="activity">
-        { !members.length && isNextPageLoading ? (
-            <Loader />
-        ) : (
-            <WindowScroller>
-                {({ height, isScrolling, scrollTop, onChildScroll }) => (
-                    <InfiniteLoader
-                        isRowLoaded={isItemLoaded}
-                        loadMoreRows={loadMoreItems}
-                        rowCount={totalApplicantCount}
-                        threshold={5}
-                    >
-
-                        {({ onRowsRendered }) => (
-                            <AutoSizer disableHeight>
-                                {({ width }) => (
-                                    <List
-                                        autoHeight
-                                        height={height}
-                                        width={width}
-                                        isScrolling={isScrolling}
-                                        onRowsRendered={onRowsRendered}
-                                        rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
-                                        rowHeight={cellMeasurerCache.getHeight()}
-                                        deferredMeasurementCache={cellMeasurerCache}
-                                        rowRenderer={applicantItem}
-                                        scrollTop={scrollTop}
-                                        onScroll={onChildScroll}
-                                        overscanRowCount={1}
-                                        scrollToAlignment={"start"}
-
-                                    />
-                                )}
-                            </AutoSizer>
-                        )}
-
-                    </InfiniteLoader>
-                )}
-            </WindowScroller>
-        )}
-        <Link
-            onClick={handleSeeAll}
-        >
-
-            < SeeAllLink>
-                See All
+                < SeeAllLink>
+                    See All
                 </SeeAllLink>
-        </Link>
-    </div >
-);
+            </Link>
+        </div >
+    );
 };
 
 export default Members;

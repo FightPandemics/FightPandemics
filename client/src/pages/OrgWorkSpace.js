@@ -64,7 +64,7 @@ const OrgWorkSpace = (props) => {
     });
     const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
     const applicants = useSelector(selectApplicants);
-    
+
     //react-virtualized loaded rows and row count.
     const [itemCount, setItemCount] = useState(0);
     const [toggleRefetch, setToggleRefetch] = useState(false);
@@ -115,13 +115,15 @@ const OrgWorkSpace = (props) => {
         const skip = page * limit;
         let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
         let endpoint = baseURL
+        endpoint = "/api/applicants?organisationId=603be1140789a03df4bdb17c&includeMeta=true&limit=10&skip=0"
         dispatch(applicantsActions.fetchApplicantsBegin());
 
         try {
             const {
                 data: { data: applicants, meta },
             } = await axios.get(endpoint);
-
+            console.log({ applicants: applicants })
+            console.log({ meta: meta })
             if (applicants.length && meta.total) {
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);
