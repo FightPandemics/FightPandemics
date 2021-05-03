@@ -115,7 +115,15 @@ const OrgWorkSpace = (props) => {
         const skip = page * limit;
         let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
         let endpoint = baseURL
+        endpoint = "/api/applicants?includeMeta=true"
         dispatch(applicantsActions.fetchApplicantsBegin());
+
+        try {
+            const res = await axios.get(endpoint)
+            console.log({ res: res })
+        } catch (error) {
+            console.log(error)
+        }
 
         try {
             const {
