@@ -141,7 +141,7 @@ async function routes(app) {
             { $group: { _id: null, count: { $sum: 1 } } },
           ]
           : [
-            { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
+            // { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
             { $group: { _id: null, count: { $sum: 1 } } },
           ],
       );
