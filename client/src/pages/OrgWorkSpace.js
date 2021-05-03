@@ -115,7 +115,6 @@ const OrgWorkSpace = (props) => {
         const skip = page * limit;
         let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
         let endpoint = baseURL
-        endpoint = "/api/applicants?organisationId=603be1140789a03df4bdb17c&includeMeta=true&limit=10&skip=0"
         dispatch(applicantsActions.fetchApplicantsBegin());
 
         try {
@@ -296,7 +295,6 @@ const OrgWorkSpace = (props) => {
     else {
         const { address } = location;
         return (
-            // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
                 <FeedContext.Provider
                     value={{
@@ -346,7 +344,7 @@ const OrgWorkSpace = (props) => {
                             <ProfileTabs>
                                 <ProfileTabPane
                                     className="single-tab"
-                                    tab={t("profile.views.applicants") + ` ( ${rawTotalApplicantCount} )`} key="members">
+                                    tab={t("profile.views.members") + ` ( ${rawTotalApplicantCount} )`} key="members">
                                     {rawTotalApplicantCount == 0 ?
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No Applicants to display.
@@ -376,7 +374,7 @@ const OrgWorkSpace = (props) => {
 }
 
 const getApplicantsBaseURL = (organisationId, limit, skip) => {
-    return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+    return `/api/applicants?organisationId=${organisationId}&status="accepted"&includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
 export default withUserContext(withOrganisationContext(OrgWorkSpace));

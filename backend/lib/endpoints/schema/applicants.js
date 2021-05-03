@@ -15,7 +15,11 @@ const getApplicantByIdSchema = {
 const getApplicantsSchema = {
   queryString: strictQueryStringSchema()
     .prop("applicantId", S.string())
-    .prop("organisationId", S.string())
+    .prop(
+      "organization",
+      S.object()
+        .prop("id", S.string().required())
+    )
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false))
     .prop("permissions", S.string())
@@ -25,13 +29,18 @@ const getApplicantsSchema = {
 const getOrganizationApplicantsSchema = {
   queryString: strictQueryStringSchema()
     .prop("organisationId", S.string())
+    .prop("status", S.string())
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false)),
 };
 
 const createApplicantSchema = {
   body: strictSchema()
-    .prop("organizationId", S.string().required())
+    .prop(
+      "organization",
+      S.object()
+        .prop("id", S.string().required())
+    )
     .prop("applicantApplied", S.string())
     .prop(
       "answers",
