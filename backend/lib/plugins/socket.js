@@ -355,6 +355,7 @@ function onSocketConnect(socket) {
 
     this.io.to(data.threadId).emit("MESSAGE_RECEIVED", message);
     res({ code: 200, message: "Success" });
+    console.log("MESSAGE RECEIVED!")
   });
 
   socket.on("DELETE_MESSAGE", async (messageId) => {

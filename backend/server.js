@@ -6,8 +6,8 @@ const { config } = require("./config");
 // TODO DEACTIVATE / REPLACE 'TEMP SERVER CONFIG' WITH 'ORIGINAL SERVER CONFIG'
 
 // ORIGINAL SERVER CONFIG
-// const server = createServer(config)
-//
+const server = createServer(config)
+
 
 // TEMP SERVER CONFIG
 const server = createServer(config, {
@@ -15,7 +15,7 @@ const server = createServer(config, {
     origin: '0.0.0.0',
   }
 });
-//
+
 
 server.ready(async () => {
   await server.oas();

@@ -13,6 +13,7 @@ function setCachedDb(db) {
 
 exports.handler = async (event, context) => {
   try {
+    console.log("mailer11")
     context.callbackWaitsForEmptyEventLoop = false;
     const frequency = event.frequency;
     const service = new NotificationService(config);
@@ -24,6 +25,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
     };
   } catch (error) {
+    console.log("mailer12")
     log.error(error, "Internal Server Error");
     await errorNotifier.capture(error);
     return {

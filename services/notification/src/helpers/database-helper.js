@@ -22,8 +22,9 @@ class DatabaseHelper {
       });
       this.db = client.db(this.dbName);
     }
+    console.log("THREAD2")
   }
-
+ 
   async findNotifications(frequency) {
     if (frequency === EmailFrequency.INSTANT) {
       return this._findInstantNotifications();
@@ -105,7 +106,7 @@ class DatabaseHelper {
       .toArray();
 
     const threadIds = threads.map((thread) => thread._id);
-
+    console.log("THREAD3")
     // Convert threads array to object keyed by thread ID for O(1) lookup
     // See https://www.olioapps.com/blog/map-reduce/ for indexing an array of objects
     const threadsObject = threads.reduce(
@@ -183,7 +184,7 @@ class DatabaseHelper {
   }
 
   async (threadId, userId) {
-    console.log("THREAD")
+    console.log("THREAD4")
     return this.db.collection("threads").findOneAndUpdate(
       {
         _id: threadId,
@@ -202,8 +203,9 @@ class DatabaseHelper {
       },
     );
   }
-
+  
   async _findInstantNotifications() {
+    console.log("THREAD4")
     const cursor = this.db.collection("notifications").aggregate([
       {
         $match: {
@@ -238,10 +240,12 @@ class DatabaseHelper {
       notifications.map((notification) => notification._id),
       EmailFrequency.INSTANT,
     );
+    console.log("THREAD4")
     return notifications;
   }
 
   async _findDigestNotifications(frequency) {
+    console.log("THREAD4")
     let intervalDays;
     if (frequency === EmailFrequency.DAILY) {
       intervalDays = 1;
@@ -290,6 +294,7 @@ class DatabaseHelper {
     const processedNotificationIds = [];
 
     while (await notificationsByReceiverCursor.hasNext()) {
+      console.log("THREAD4")
       const receiver = await notificationsByReceiverCursor.next();
       const topThreePosts = this._aggregateNotifications(
         receiver.notifications,
@@ -310,6 +315,7 @@ class DatabaseHelper {
   }
 
   _aggregateNotifications(notifications) {
+    console.log("THREAD4")
     const notificationCountsByPost = {};
     for (const notification of notifications) {
       const postId = notification.post.id;
@@ -351,6 +357,7 @@ class DatabaseHelper {
   }
 
   _buildUri(config) {
+    console.log("THREAD4")
     const usernamePassword =
       config.username && config.password
         ? `${config.username}:${config.password}@`
