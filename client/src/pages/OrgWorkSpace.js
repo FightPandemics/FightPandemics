@@ -69,7 +69,7 @@ const OrgWorkSpace = (props) => {
     const [itemCount, setItemCount] = useState(0);
     const [toggleRefetch, setToggleRefetch] = useState(false);
     const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
-    const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
+    const [rawTotalApplicantCount, setRawTotalApplicants] = useState();
     const {
         filterModal,
         activePanel,
@@ -115,15 +115,7 @@ const OrgWorkSpace = (props) => {
         const skip = page * limit;
         let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
         let endpoint = baseURL
-        endpoint = "/api/applicants?includeMeta=true"
         dispatch(applicantsActions.fetchApplicantsBegin());
-
-        try {
-            const res = await axios.get(endpoint)
-            console.log({ res: res })
-        } catch (error) {
-            console.log(error)
-        }
 
         try {
             const {
@@ -131,10 +123,14 @@ const OrgWorkSpace = (props) => {
             } = await axios.get(endpoint);
             console.log({ applicants: applicants })
             console.log({ meta: meta })
+            if (!meta.total) {
+                setRawTotalApplicants(0)
+            }
             if (applicants.length && meta.total) {
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);
                     setRawTotalApplicants(meta.total)
+
                 }
 
                 const lastPage = Math.ceil(meta.total / limit) - 1;
