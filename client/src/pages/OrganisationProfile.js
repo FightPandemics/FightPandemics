@@ -11,7 +11,7 @@ import React, {
   useRef,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // ICONS
@@ -93,20 +93,26 @@ import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
+  SET_VALUE
 } from "hooks/actions/feedActions";
 import {
   deletePostModalreducer,
   deletePostState,
+  feedReducer,
+  optionsReducer
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
 import { selectPosts, postsActions } from "reducers/posts";
+import { applicantsActions, selectApplicants } from "reducers/applicants";
 import { selectOrganisationId } from "reducers/session";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import { TestMembers } from "components/OrganisationProfile/TestMembers";
+import ProfileList from "components/OrganisationProfile/ProfileList"
+import { TestMembersList, FilteredApplicants, Applicants, Meta } from "utils/TestMembersList";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -118,6 +124,14 @@ const URLS = {
   github: [githubIcon, GITHUB_URL],
   website: [websiteIcon],
   email: [envelopeBlue],
+};
+
+const initialState = {
+  showFilters: false,
+  filterModal: true,
+  showCreatePostModal: false,
+  applyFilters: false,
+  activePanel: null,
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
@@ -429,6 +443,185 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
   const { TabPane } = Tabs
+  // const filteredMembers = TestMembersList
+
+  const [feedState, feedDispatch] = useReducer(feedReducer, {
+    ...initialState
+  });
+  const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
+  const applicants = useSelector(selectApplicants);
+  //react-virtualized loaded rows and row count.
+  const [itemCountApplicants, setItemCountApplicants] = useState(0);
+  const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
+  const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
+  const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
+  const {
+    filterModal,
+    activePanel,
+    showFilters,
+  } = feedState;
+  // const filters = Object.values(filterOptions);
+  const {
+    error: applicantsError,
+    isLoadingApplicants,
+    loadMoreApplicants,
+    pageApplicants,
+    applicants: applicantsList,
+  } = applicants;
+
+  const feedApplicants = Object.entries(applicantsList);
+  const prevTotalApplicantCount = usePrevious(totalApplicantCount);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  // const { 
+  //   // history,
+  //   isAuthenticated,
+  //   // user 
+  // } = props;
+
+  const history = useHistory();
+
+  const dispatchAction = (type, key, value) =>
+    feedDispatch({ type, key, value });
+
+  const refetchApplicants = (isLoadingApplicants, loadMoreApplicants, softRefresh = false) => {
+    if (!softRefresh) {
+      dispatchAction(SET_VALUE, "applyFilters", true);
+      dispatch(applicantsActions.resetPageAction({ isLoadingApplicants, loadMoreApplicants }));
+      if (pageApplicants === 0) {
+        setToggleRefetchApplicants(!toggleRefetchApplicants);
+      }
+    }
+  };
+
+  const loadApplicants = async () => {
+    const limit = PAGINATION_LIMIT;
+    const skip = pageApplicants * limit;
+    const getApplicantsBaseURL = (organisationId, limit, skip) => {
+      return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+    };
+    let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
+    let endpoint = baseURL
+    dispatch(applicantsActions.fetchApplicantsBegin());
+
+    try {
+      // const {
+      //     data: { data: applicants, meta },
+      // } = await axios.get(endpoint);
+
+      // TEST DATA
+      const applicants = Applicants
+      const meta = Meta
+
+      if (applicants.length && meta.total) {
+        if (prevTotalApplicantCount !== meta.total) {
+          setTotalApplicantCount(meta.total);
+          setRawTotalApplicants(meta.total)
+        }
+
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        if (pageApplicants === lastPage) {
+          dispatch(applicantsActions.finishLoadingAction());
+        }
+
+        let applicantsInState;
+        if (history.location.state) {
+          const { keepApplicantsState, keepPageState } = history.location.state;
+          applicantsInState = keepApplicantsState;
+          if (keepPageState >= pageApplicants) {
+            dispatch(applicantsActions.setPageAction(keepPageState));
+          }
+        }
+        if (applicantsInState) {
+          if (Object.keys(applicantsInState).length === meta.total) {
+            dispatch(applicantsActions.finishLoadingAction());
+          }
+        }
+
+        const loadedApplicants = applicants.reduce((obj, item) => {
+          obj[item._id] = item;
+          return obj;
+        }, {});
+
+        if (applicantsInState) {
+          dispatch(
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...applicantsInState, ...loadedApplicants },
+            }),
+          );
+        } else if (Object.keys(applicantsList).length && pageApplicants) {
+          dispatch(
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...applicantsList, ...loadedApplicants },
+            }),
+          );
+        } else {
+          dispatch(
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...loadedApplicants },
+            }),
+          );
+        }
+      }
+      else if (applicants) {
+        dispatch(
+          applicantsActions.fetchApplicantsSuccess({
+            applicants: { ...applicantsList },
+          }),
+        );
+        dispatch(applicantsActions.finishLoadingAction());
+      } else {
+        dispatch(applicantsActions.finishLoadingAction());
+      }
+    } catch (error) {
+      dispatch(applicantsActions.fetchApplicantsError(error));
+    }
+  };
+
+
+  useEffect(() => {
+  }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    loadApplicants();
+  }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
+  const loadNextPageApplicant = useCallback(
+
+    ({ stopIndex }) => {
+      if (
+        !isLoadingApplicants &&
+        loadMoreApplicants &&
+        stopIndex >= feedApplicants.length &&
+        feedApplicants.length
+      ) {
+        return new Promise((resolve) => {
+          dispatch(applicantsActions.setNextPageAction());
+          dispatchAction(SET_VALUE, "applyFilters", true);
+          resolve();
+        });
+      } else {
+        return Promise.resolve();
+      }
+    },
+    [feedApplicants.length, isLoadingApplicants, loadMoreApplicants], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
+  useEffect(() => {
+    setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
+  }, [feedApplicants.length, loadMoreApplicants]);
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -582,7 +775,20 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 )}
               </FeedWrapper>
             </div></ProfileTabPane>
-            <ProfileTabPane tab={t("profile.views.members")} key="members"><TestMembers /></ProfileTabPane>
+            <ProfileTabPane tab={t("profile.views.members")} key="members">
+              <ProfileList
+                filteredMembers={applicantsList}
+                itemCount={itemCountApplicants}
+                isItemLoaded={isApplicantLoaded}
+                isNextPageLoading={isLoading}
+                loadNextPage={loadNextPageApplicant}
+                hasNextPage={loadMoreApplicants}
+                filteredApplicants={applicantsList}
+                totalCount={totalApplicantCount}
+                page={pageApplicants}
+                emptyFeed={emptyFeed}
+              />
+            </ProfileTabPane>
           </ProfileTabs>
 
           {isSelf && (

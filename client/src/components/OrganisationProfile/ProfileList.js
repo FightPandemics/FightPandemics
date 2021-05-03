@@ -1,5 +1,6 @@
 import Loader from "components/Feed/StyledLoader";
 import Applicant from "components/OrganisationProfile/ApplicantOrMember";
+import ProfileListItem from "components/OrganisationProfile/ProfileListItem";
 import { mq } from "constants/theme";
 import React, { useCallback, useState } from "react";
 import {
@@ -15,6 +16,14 @@ import styled from "styled-components";
 import { theme } from "constants/theme";
 
 const { colors } = theme
+
+const ListContainer = styled.div`
+    background-color: ${colors.white};
+    border-radius: 1.2rem;
+    overflow: hidden;
+    margin-top: .3rem;
+    box-shadow: ${colors.shadowBlack};
+`;
 
 const HorizontalRule = styled.hr`
   display: none;
@@ -43,20 +52,25 @@ const SeeAllLink = styled.div`
     
     }
 `
-
-const Applicants = ({
+const ProfileList = ({
     filteredApplicants,
+    filteredMembers,
+    filteredOrgs,
     user,
     loadNextPage,
     isNextPageLoading,
     itemCount,
     isItemLoaded,
     hasNextPage,
-    totalApplicantCount,
+    totalCount,
     emptyFeed
 }) => {
     const applicants = Object.entries(filteredApplicants);
     console.log(JSON.stringify(filteredApplicants))
+    const applicantsList = filteredApplicants && true
+    const membersList = filteredMembers && true
+    const orgsList = filteredOrgs && true
+    const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
@@ -65,17 +79,20 @@ const Applicants = ({
     }
 
     const windowWidth = window.innerWidth
-    const applicantItem = useCallback(
+    const profileItem = useCallback(
         ({ key, index, style, parent }) => {
             let content;
             if (!isItemLoaded(index) && hasNextPage) {
                 content = <Loader />;
-            } else if (applicants[index]) {
+            } else if (items[index]) {
                 content = (
                     <>
                         <HorizontalRule />
-                        <Applicant
-                            applicant={applicants[index][1]}
+                        <ProfileListItem
+                            item={items[index][1]}
+                            applicantsList={applicantsList}
+                            membersList={membersList}
+                            orgList={orgsList}
                         />
                     </>
                 );
@@ -99,14 +116,14 @@ const Applicants = ({
         [
             hasNextPage,
             isItemLoaded,
-            applicants,
+            items,
             user,
         ],
     );
 
     return (
-        <div className="activity">
-            { !applicants.length && isNextPageLoading ? (
+        <ListContainer className="activity">
+            { !items.length && isNextPageLoading ? (
                 <Loader />
             ) : (
                 <WindowScroller>
@@ -114,7 +131,7 @@ const Applicants = ({
                         <InfiniteLoader
                             isRowLoaded={isItemLoaded}
                             loadMoreRows={loadMoreItems}
-                            rowCount={totalApplicantCount}
+                            rowCount={totalCount}
                             threshold={5}
                         >
 
@@ -130,11 +147,12 @@ const Applicants = ({
                                             rowCount={windowWidth > 767 ? itemCount : seeAll ? itemCount : 3}
                                             rowHeight={cellMeasurerCache.getHeight()}
                                             deferredMeasurementCache={cellMeasurerCache}
-                                            rowRenderer={applicantItem}
+                                            rowRenderer={profileItem}
                                             scrollTop={scrollTop}
                                             onScroll={onChildScroll}
                                             overscanRowCount={1}
                                             scrollToAlignment={"start"}
+                                            style={{ "margin-top": "3rem" }}
 
                                         />
                                     )}
@@ -149,14 +167,14 @@ const Applicants = ({
                 onClick={handleSeeAll}
             >
 
-                < SeeAllLink>
+                <SeeAllLink>
                     See All
-                </SeeAllLink>
+            </SeeAllLink>
             </Link>
-        </div >
+        </ListContainer >
     );
 };
 
-export default Applicants;
+export default ProfileList;
 
 

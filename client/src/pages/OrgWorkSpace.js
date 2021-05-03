@@ -43,6 +43,29 @@ import {
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 import { WhiteSpace } from "antd-mobile";
+// import {
+//     OrganisationContext,
+//     withOrganisationContext,
+// } from "context/OrganisationContext";
+import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
+import {
+    SET_DELETE_MODAL_VISIBILITY,
+    DELETE_MODAL_POST,
+    DELETE_MODAL_HIDE,
+} from "hooks/actions/feedActions";
+import {
+    deletePostModalreducer,
+    deletePostState,
+} from "hooks/reducers/feedReducers";
+// import { UserContext, withUserContext } from "context/UserContext";
+import GTM from "constants/gtm-tags";
+import { selectPosts, postsActions } from "reducers/posts";
+import { selectOrganisationId } from "reducers/session";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
+import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
+import { LOGIN } from "templates/RouteWithSubRoutes";
+import TestMembers from "components/OrganisationProfile/ProfileList"
 
 const initialState = {
     showFilters: false,
@@ -50,7 +73,18 @@ const initialState = {
     showCreatePostModal: false,
     applyFilters: false,
     activePanel: null,
-};
+}
+// const URLS = {
+//     playStore: [playStoreIcon, PLAYSTORE_URL],
+//     appStore: [appStoreIcon, APPSTORE_URL],
+//     facebook: [facebookIcon, FACEBOOK_URL],
+//     instagram: [instagramIcon, INSTAGRAM_URL],
+//     linkedin: [linkedinBlue, LINKEDIN_URL],
+//     twitter: [twitterBlue, TWITTER_URL],
+//     github: [githubIcon, GITHUB_URL],
+//     website: [websiteIcon],
+//     email: [envelopeBlue],
+// };
 
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
@@ -114,13 +148,24 @@ const AdminProfile = (props) => {
         const skip = page * limit;
         let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
         let endpoint = baseURL
+        endpoint = `/api/posts/`
         dispatch(applicantsActions.fetchApplicantsBegin());
+
+        try {
+            const { data: { data: applicants, meta } } = await axios.get("/api/posts");
+            console.log({ applicants2: applicants })
+        } catch (error) {
+            console.log(error);
+        }
+
 
         try {
             const {
                 data: { data: applicants, meta },
-            } = await axios.get(endpoint);
-
+                // } = await axios.get(endpoint);
+            } = await axios.get("/api/posts");
+            console.log({ applicants: applicants })
+            console.log({ endpoint: endpoint })
             if (applicants.length && meta.total) {
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);

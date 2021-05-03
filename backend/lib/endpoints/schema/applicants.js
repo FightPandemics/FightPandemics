@@ -17,7 +17,9 @@ const getApplicantsSchema = {
     .prop("applicantId", S.string())
     .prop("organisationId", S.string())
     .prop("skip", S.integer())
-    .prop("includeMeta", S.boolean().default(false)),
+    .prop("includeMeta", S.boolean().default(false))
+    .prop("permissions", S.string())
+    .prop("userId", S.string()),
 };
 
 const getOrganizationApplicantsSchema = {
@@ -31,7 +33,6 @@ const createApplicantSchema = {
   body: strictSchema()
     .prop("organizationId", S.string().required())
     .prop("applicantApplied", S.string())
-    // answers may need to be object
     .prop(
       "answers",
       S.object()
