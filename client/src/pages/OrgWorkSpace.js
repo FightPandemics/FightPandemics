@@ -2,7 +2,7 @@ import filterOptions from "assets/data/filterOptions";
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
-import Members from "components/OrganisationProfile/Members";
+import ProfileList from "components/OrganisationProfile/ProfileList";
 import { ProfileTabPane, ProfileTabs } from "components/OrganisationProfile/ProfileTabs";
 // import ProfilePic from "components/Positions/ProfilePic";
 import ProfilePic from "components/Picture/ProfilePic";
@@ -43,29 +43,6 @@ import {
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 import { WhiteSpace } from "antd-mobile";
-// import {
-//     OrganisationContext,
-//     withOrganisationContext,
-// } from "context/OrganisationContext";
-import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
-import {
-    SET_DELETE_MODAL_VISIBILITY,
-    DELETE_MODAL_POST,
-    DELETE_MODAL_HIDE,
-} from "hooks/actions/feedActions";
-import {
-    deletePostModalreducer,
-    deletePostState,
-} from "hooks/reducers/feedReducers";
-// import { UserContext, withUserContext } from "context/UserContext";
-import GTM from "constants/gtm-tags";
-import { selectPosts, postsActions } from "reducers/posts";
-import { selectOrganisationId } from "reducers/session";
-import CreatePostButton from "components/Feed/CreatePostButton";
-import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
-import JoinOrgButton, { JoinOrgContainer } from "components/OrganisationProfile/JoinOrgButton";
-import { LOGIN } from "templates/RouteWithSubRoutes";
-import TestMembers from "components/OrganisationProfile/ProfileList"
 
 const initialState = {
     showFilters: false,
@@ -73,31 +50,21 @@ const initialState = {
     showCreatePostModal: false,
     applyFilters: false,
     activePanel: null,
-}
-// const URLS = {
-//     playStore: [playStoreIcon, PLAYSTORE_URL],
-//     appStore: [appStoreIcon, APPSTORE_URL],
-//     facebook: [facebookIcon, FACEBOOK_URL],
-//     instagram: [instagramIcon, INSTAGRAM_URL],
-//     linkedin: [linkedinBlue, LINKEDIN_URL],
-//     twitter: [twitterBlue, TWITTER_URL],
-//     github: [githubIcon, GITHUB_URL],
-//     website: [websiteIcon],
-//     email: [envelopeBlue],
-// };
+};
 
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 export const FeedContext = React.createContext();
 
-const AdminProfile = (props) => {
+const OrgWorkSpace = (props) => {
     const dispatch = useDispatch();
     const [feedState, feedDispatch] = useReducer(feedReducer, {
         ...initialState
     });
     const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
     const applicants = useSelector(selectApplicants);
+    
     //react-virtualized loaded rows and row count.
     const [itemCount, setItemCount] = useState(0);
     const [toggleRefetch, setToggleRefetch] = useState(false);
@@ -148,24 +115,13 @@ const AdminProfile = (props) => {
         const skip = page * limit;
         let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
         let endpoint = baseURL
-        endpoint = `/api/posts/`
         dispatch(applicantsActions.fetchApplicantsBegin());
-
-        try {
-            const { data: { data: applicants, meta } } = await axios.get("/api/posts");
-            console.log({ applicants2: applicants })
-        } catch (error) {
-            console.log(error);
-        }
-
 
         try {
             const {
                 data: { data: applicants, meta },
-                // } = await axios.get(endpoint);
-            } = await axios.get("/api/posts");
-            console.log({ applicants: applicants })
-            console.log({ endpoint: endpoint })
+            } = await axios.get(endpoint);
+
             if (applicants.length && meta.total) {
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);
@@ -393,14 +349,14 @@ const AdminProfile = (props) => {
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No Applicants to display.
                                         </div> :
-                                        <Members
+                                        <ProfileList
                                             itemCount={itemCount}
                                             isItemLoaded={isItemLoaded}
                                             isNextPageLoading={isLoading}
                                             loadNextPage={loadNextPage}
                                             hasNextPage={loadMore}
-                                            filteredMembers={applicantsList}
-                                            totalApplicantCount={totalApplicantCount}
+                                            filteredApplicants={applicantsList}
+                                            totalCount={totalApplicantCount}
                                             page={page}
                                             emptyFeed={emptyFeed}
                                         />
@@ -421,4 +377,4 @@ const getApplicantsBaseURL = (organisationId, limit, skip) => {
     return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
-export default withUserContext(withOrganisationContext(AdminProfile));
+export default withUserContext(withOrganisationContext(OrgWorkSpace));
