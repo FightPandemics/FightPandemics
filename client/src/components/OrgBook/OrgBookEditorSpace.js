@@ -13,6 +13,7 @@ import OrgBookConfirmModal from "./OrgBookConfirmModal";
 import SvgIcon from "../Icon/SvgIcon";
 import privateIcon from "../../assets/icons/orgbook-private.svg";
 import publicIcon from "../../assets/icons/orgbook-public.svg";
+import deleteBookIcon from "../../assets/icons/orgbook-delete-book.svg";
 
 const { colors, typography } = theme;
 const { white, royalBlue, black, red, mediumGray } = colors;
@@ -88,6 +89,11 @@ const OrgBookEditorSpaceFooter = styled.div`
   justify-content: space-between;
 `;
 
+const FooterDeleteOrgBookWrapper = styled.div`
+  color: #f0f0f0;
+  cursor: pointer;
+`;
+
 const FooterDeleteDraftContainer = styled.div`
   font-size: small;
   color: ${red};
@@ -144,6 +150,7 @@ const OrgBookEditorSpace = (props) => {
     selectedPageDirty,
     onSelectedPageDirty,
     VIEW_LEVELS,
+    isOwner,
   } = props;
   const { t } = useTranslation();
   const tinyMce = useRef();
@@ -162,17 +169,11 @@ const OrgBookEditorSpace = (props) => {
         setNumberOfCharacters(withoutSpace.length);
       }
     },
-    [selectedPage], //orig  [originalContent.length, selectedPage]
+    [selectedPage],
   );
 
   useEffect(() => {
     setTinyMceLanguage();
-    if (selectedPage) {
-      setOriginalContent(selectedPage.content);
-    }
-  }, [selectedPage]); // orig [originalContent.length, selectedPage]
-
-  useEffect(() => {
     if (selectedPage) {
       setOriginalContent(selectedPage.content);
     }
@@ -442,6 +443,26 @@ const OrgBookEditorSpace = (props) => {
         {selectedPage ? renderDistractionFreeEditor() : <WhiteSpace />}
       </MainEditorContainer>
       <OrgBookEditorSpaceFooter>
+        <FooterDeleteOrgBookWrapper>
+          {isOwner ? (
+            <SvgIcon
+              src={deleteBookIcon}
+              title={t("orgBook.deleteOrgBook")}
+              // width={"3rem !important"}
+              // height={"3rem !important"}
+              onClick={() => {
+                onUpdateAction(
+                  UPDATE_ACTION_TYPES.deleteOrgBookType,
+                  "",
+                  "",
+                  0,
+                );
+              }}
+            />
+          ) : (
+            <WhiteSpace />
+          )}
+        </FooterDeleteOrgBookWrapper>
         <FooterDeleteDraftContainer>
           {selectedPage &&
           livePageExists === false &&

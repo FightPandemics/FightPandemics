@@ -62,6 +62,7 @@ const UPDATE_ACTION_TYPES = {
   undoAllChangesType: "undoAllChanges",
   changeLiveToPublicViewType: "changeLiveToPublic",
   changeLiveToPrivateViewType: "changeLiveToPrivateView",
+  deleteOrgBookType: "deleteOrgBook",
 };
 const UNPUBLISH_OPTIONS = {
   leaveDraftContent: 1,
@@ -189,6 +190,7 @@ const OrgBookEditor = () => {
   const { loading, organisation } = orgProfileState;
   const [currentUserId, setCurrentUserId] = useState(null);
   const [currentOrgBookPages, setCurrentOrgBookPages] = useState(null);
+  const [isOwner, setIsOwner] = useState(false);
   const forceUpdate = useForceUpdate();
 
   const history = useHistory();
@@ -215,9 +217,10 @@ const OrgBookEditor = () => {
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         // console.log(
-        //   "in orgbookeditor, got res.data.orgBookPages: " +
-        //     JSON.stringify(res.data.orgBookPages),
+        //   "******in orgbookeditor, got res.data: " +
+        //     JSON.stringify(res.data),
         // );
+        setIsOwner(res.data.isOwner);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
         if (res.data.orgBookPages && res.data.orgBookPages.length > 0) {
           setCurrentOrgBookPages(res.data.orgBookPages);
@@ -476,7 +479,9 @@ const OrgBookEditor = () => {
   ) => {
     setMaxContentExceeded(false);
     setMinContentNotMet(false);
-    selectedPage.content = editedpageContent;
+    if (selectedPage) {
+      selectedPage.content = editedpageContent;
+    }
     setNoOfContentChars(numberOfCharacters);
     setTargetPageId(targetPageId);
 
@@ -514,6 +519,11 @@ const OrgBookEditor = () => {
 
       case UPDATE_ACTION_TYPES.changeLiveToPublicViewType:
       case UPDATE_ACTION_TYPES.changeLiveToPrivateViewType:
+        setCurrentUpdateAction(action);
+        setConfirmModalVisible(true);
+        break;
+
+      case UPDATE_ACTION_TYPES.deleteOrgBookType:
         setCurrentUpdateAction(action);
         setConfirmModalVisible(true);
         break;
@@ -576,6 +586,13 @@ const OrgBookEditor = () => {
       case UPDATE_ACTION_TYPES.changeLiveToPrivateViewType:
         orgBookPages = updateViewTypeForSelectedPage(orgBookPages, action);
         updateOrgBookPages(orgBookPages);
+
+        break;
+
+      case UPDATE_ACTION_TYPES.deleteOrgBookType:
+        setConfirmModalVisible(false);
+        orgBookPages = deleteOrgBook();
+        await updateOrgBookAndCheckForReturn(orgBookPages);
 
         break;
 
@@ -869,6 +886,16 @@ const OrgBookEditor = () => {
     return orgBookPages;
   };
 
+  const deleteOrgBook = () => {
+    const newOrgBookPages = [];
+    const orgBookPages = {
+      orgBookPages: newOrgBookPages,
+    };
+    setCurrentOrgBookPages(newOrgBookPages);
+    setSelectedPage(null);
+    return orgBookPages;
+  };
+
   const handleOnCancelConfirm = () => {
     setConfirmModalVisible(false);
     setCurrentUpdateAction(UPDATE_ACTION_TYPES.noAction);
@@ -911,6 +938,7 @@ const OrgBookEditor = () => {
     const livePageExists = selectedPage
       ? livePageExistsForSelectedPage()
       : false;
+
     if (organisation) {
       return (
         <OrgBookEditorSpace
@@ -925,13 +953,17 @@ const OrgBookEditor = () => {
           selectedPageDirty={selectedPageDirty}
           onSelectedPageDirty={handleSelectedPageDirty}
           VIEW_LEVELS={VIEW_LEVELS}
+          isOwner={isOwner}
         ></OrgBookEditorSpace>
       );
     }
   };
 
   const renderConfirmModal = () => {
-    const livePageExists = livePageExistsForSelectedPage();
+    let livePageExists = false;
+    if (currentUpdateAction !== UPDATE_ACTION_TYPES.deleteOrgBookType) {
+      livePageExists = livePageExistsForSelectedPage();
+    }
 
     const showUnpublishOptions = () => {
       if (currentUpdateAction !== UPDATE_ACTION_TYPES.unpublishType)

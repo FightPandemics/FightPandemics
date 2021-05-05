@@ -99,6 +99,12 @@ const OrgBookConfirmModal = ({
       confirmPrompt = t("orgBook.confirmChangeToPrivatePrompt", { pageName });
       break;
 
+    case UPDATE_ACTION_TYPES.deleteOrgBookType:
+      title = t("orgBook.confirmDeleteOrgBookTitle");
+      okText = t("orgBook.confirmDeleteOrgBookOkText");
+      confirmPrompt = t("orgBook.confirmDeleteOrgBookPrompt");
+      break;
+
     default:
       break;
   }
@@ -191,8 +197,15 @@ const OrgBookConfirmModal = ({
     return maxModalBodyHeight;
   };
 
+  const getModalDependency = () => {
+    return (
+      (selectedPage && action !== UPDATE_ACTION_TYPES.deleteOrgBookType) ||
+      action === UPDATE_ACTION_TYPES.deleteOrgBookType
+    );
+  };
+
   return (
-    selectedPage && (
+    getModalDependency() && (
       <OrgBookStyledModalContainer
         MaxModalBodyHeight={getMaxModalBodyHeight()}
         MinModalBodyHeight={showUnpublishOptions ? "25.7rem" : "10rem"}

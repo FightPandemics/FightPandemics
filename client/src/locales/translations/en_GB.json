@@ -508,7 +508,11 @@
     "changeToPublicView": "Change View To Public",
     "changeToPrivateView": "Change View To Private (org only)",
     "learnMore": "Learn more about us...",
-    "joinUs": "Join Us"
+    "joinUs": "Join Us",
+    "deleteOrgBook": "Delete OrgBook",
+    "confirmDeleteOrgBookTitle": "Delete OrgBook",
+    "confirmDeleteOrgBookOkText": "Delete",
+    "confirmDeleteOrgBookPrompt": "Delete whole OrgBook?  This will delete any and all pages, including live and draft copies."
   },
   "auth": {
     "signIn": "Sign In",
