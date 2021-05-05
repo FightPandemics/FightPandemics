@@ -200,6 +200,7 @@ const routes = [
     component: AdminProfile,
     props: {
       // isProfile: true,
+      loggedInOnly: true,
     },
   },
 
@@ -307,6 +308,7 @@ const routes = [
     component: Apply,
     props: {
       props: {
+        // TODO ENABLE loggedInOnly
         // loggedInOnly: true,
       }
     }
@@ -316,6 +318,7 @@ const routes = [
     component: Application,
     props: {
       props: {
+        // TODO ENABLE loggedInOnly
         // loggedInOnly: true,
       }
     }
