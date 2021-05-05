@@ -6,6 +6,7 @@ const ORG_MEMBERS_TYPES = ["volunteer", "wikieditor", "admin"];
 // --Schema
 const applicantSchema = new Schema(
   {
+    // 6.1 has a different structure (organisationId)
     organization: {
       id: {
         ref: "OrganisationUser",
