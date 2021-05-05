@@ -195,7 +195,7 @@ async function routes(app) {
           status
         },
       } = req;
-      console.log({orgId: organisationId})
+      console.log({ orgId: organisationId })
       // console.log({ req: req.query })
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
