@@ -1,7 +1,7 @@
 import applicationConfirmation from "assets/icons/application-received.svg";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 import { ApplyModal, ButtonsContainer, StyledCancelButton, StyledContainer, StyledSubmitButton } from "components/Positions/ApplicationModalStyles";
-import { CharCounter, ErrorMsg, InputField, InputWrapper, OuterWrapper } from "components/Positions/ApplicationStyles";
+import { CharCounter, ErrorMsg, InputField, InputWrapper, OuterWrapper, ResponseField } from "components/Positions/ApplicationStyles";
 import PositionsButton from "components/Positions/PositionsButton";
 import { PositionSubmitModal } from "components/Positions/PositionSubmitModal";
 import { mq, theme } from "constants/theme";
@@ -22,9 +22,9 @@ font-size: 2.2rem;
   font-weight: 400;
   line-height: 3.3rem;
 
-:after {
+/* :after {
   content: " *";
-}
+} */
 
 &.asterisk-error {
   :after {
@@ -46,12 +46,24 @@ const Title = styled.h2`
 &.application {
     font-size: 2.2rem;
 }
+
+&.review {
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        font-size: 1.3rem;
+        font-weight: 500;
+        margin: 2rem 0;
+    }
+}
 `;
 
 const ApplicationButtonsContainer = styled.div`
     display: flex;
     justify-content: center;
     gap: 7.2rem;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        gap: 1.3rem
+    }
 `;
 
 const ApplyFormSubmit = styled(Submit)`
@@ -265,7 +277,7 @@ const Application = ({ orgName,
 
     return (
         <>
-            <OuterWrapper>
+            <OuterWrapper className="review">
                 <Title
                     className="application review"
                 >
@@ -276,24 +288,28 @@ const Application = ({ orgName,
                         label={t("orgJoinQ.question1") + ` ${orgName}` + "?"}
                     />
                 </LabelContainer>
-                <InputWrapper className="application-input">
-                    <InputField
+                <InputWrapper className="application-input review">
+                    {/* <InputField
                         disabled={true}
                         // value={res.answers.q1}
                         value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor. odio feortor dolor."
-                    />
+                    /> */}
+
+                    <ResponseField
+                    >odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor. odio feortor dolor.</ResponseField>
                 </InputWrapper>
                 <LabelContainer>
                     <ApplyFormLabel
                         label={t("orgJoinQ.question2") + ` ${orgName}` + "?"}
                     />
                 </LabelContainer>
-                <InputWrapper className="application-input">
-                    <InputField
+                <InputWrapper className="application-input review">
+                    {/* <InputField
                         disabled={true}
                         // value={res.answers.q2}
                         value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
-                    />
+                    /> */}
+                    <ResponseField>odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra.</ResponseField>
 
                 </InputWrapper>
                 <LabelContainer
@@ -302,12 +318,14 @@ const Application = ({ orgName,
                         label={t("orgJoinQ.question3") + "?"}
                     />
                 </LabelContainer>
-                <InputWrapper className="application-input">
-                    <InputField
+                <InputWrapper className="application-input review">
+                    {/* <InputField
                         disabled={true}
                         // value={res.answers.q3}
                         value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
-                    />
+                    /> */}
+                    <ResponseField>odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra.</ResponseField>
+
                 </InputWrapper>
             </OuterWrapper>
 

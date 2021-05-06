@@ -96,6 +96,8 @@ const ApplicantIntroTitle = styled.p`
     font-family: 'Poppins';
     font-weight: 600;
     margin-top: 2.6rem;
+
+    
 `;
 
 const AppilcantIntroBody = styled.p`
@@ -108,8 +110,11 @@ const AppilcantIntroBody = styled.p`
     transition: all .5s ease;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        max-height: 7.6rem;
+        max-height: 8.2rem;
         letter-spacing: .04rem;
+        font-size: 1.4rem;
+        color: ${colors.darkishGray};
+        margin-bottom: 2rem;
     }
 
 `;
@@ -123,6 +128,7 @@ const ApplicantSeeAll = styled.h3`
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
         font-size: 1.4rem;
+        margin-bottom: 1rem;
     }
 `;
 
