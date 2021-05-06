@@ -267,7 +267,7 @@ const Application = ({ orgName,
         <>
             <OuterWrapper>
                 <Title
-                    className="hide-mobile application"
+                    className="application review"
                 >
                     Application
                 </Title>
