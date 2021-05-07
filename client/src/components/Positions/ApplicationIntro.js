@@ -111,7 +111,7 @@ const AppilcantIntroBody = styled.p`
     transition: all .5s ease;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        max-height: 7.2rem;
+        max-height: 7.5rem;
         letter-spacing: .04rem;
         font-size: 1.3rem;
         color: ${colors.darkishGray};
