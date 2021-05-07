@@ -81,8 +81,6 @@ export const InputField = styled(TextArea)`
 
 `;
 
-
-
 export const ResponseField = styled.p`
   font-size: 1.8rem;
   margin-top: 2.1rem;
@@ -143,6 +141,7 @@ export const InputWrapper = styled.div`
 &.review {
   border: none;
   margin-bottom: 0;
+  max-height: 100%;
 }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}){ 

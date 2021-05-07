@@ -150,7 +150,7 @@ export const PositionsBackgroup = styled.div`
 export const CategoryBackgroup = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${colors.ghostWhite};
+  /* background-color: ${colors.ghostWhite}; */
   width: 100%;
   height: 5.2rem;  
   padding: 1rem 0 1rem 3.3rem;
@@ -162,10 +162,10 @@ export const BackgroupContainer = styled.div`
   `;
 
 export const ProfileLayout = styled.div`
-  background-color: ${colors.offWhite};
+  /* background-color: ${colors.offWhite}; */
   
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    background-color: #f6f7fb;
+    /* background-color: #f6f7fb; */
   }
 `;
 
