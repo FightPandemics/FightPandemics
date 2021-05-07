@@ -90,6 +90,7 @@ export const ResponseField = styled.p`
   padding-bottom: 2.8rem;
   border-bottom: solid 1px ${colors.royalBlue};
   width: 100%;
+  line-height: normal;
   /* color: ${colors.darkishGray} !important; */
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 1.2rem;

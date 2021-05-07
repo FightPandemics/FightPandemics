@@ -101,6 +101,7 @@ const ApplicantIntroTitle = styled.p`
 `;
 
 const AppilcantIntroBody = styled.p`
+    font-family: 'Work Sans';
     font-size: 1.6rem;
     overflow: hidden;
     font-style: normal;
@@ -110,11 +111,12 @@ const AppilcantIntroBody = styled.p`
     transition: all .5s ease;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        max-height: 8.2rem;
+        max-height: 7.2rem;
         letter-spacing: .04rem;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         color: ${colors.darkishGray};
         margin-bottom: 2rem;
+        line-height: normal;
     }
 
 `;
