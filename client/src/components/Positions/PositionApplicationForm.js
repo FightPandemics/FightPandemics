@@ -137,9 +137,6 @@ const PositionApplicationForm = ({ orgName,
     if (formData.question1 && formData.question2 && formData.question3) {
       showPopUp()
     };
-    console.log("PRE API CALL" + formData)
-
-
     // e.preventDefault();
     // populateErrors();
 
@@ -174,7 +171,6 @@ const PositionApplicationForm = ({ orgName,
     } catch (error) {
       console.log(error);
     }
-    console.log("POST API CALL")
     setVisibleTwo(true);
   };
 

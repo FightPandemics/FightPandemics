@@ -63,7 +63,7 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { organizationId },
+        params: { organizationId, status },
       } = req;
 
       const [applicantErr, applicant] = await app.to(
@@ -95,7 +95,7 @@ async function routes(app) {
       schema: getApplicantsSchema
     },
     async (req) => {
-      const { limit, skip, organisationId, includeMeta, permissions, userId } = req.query;
+      const { limit, skip, organisationId, includeMeta, permissions, userId, status } = req.query;
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
           organisationId
@@ -140,10 +140,127 @@ async function routes(app) {
             { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
             { $group: { _id: null, count: { $sum: 1 } } },
           ]
+
           : [
             // { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
             { $group: { _id: null, count: { $sum: 1 } } },
           ],
+      );
+      const applicantsResponse = (response) => {
+        if (!includeMeta) {
+          return response;
+        }
+        return {
+          meta: {
+            total: totalResultsAggregationPipeline.length
+              ? totalResultsAggregationPipeline[0].count
+              : 0,
+          },
+          data: response,
+        };
+      };
+
+      if (applicantsErr) {
+        req.log.error(applicantsErr, "Failed requesting applicants");
+        throw app.httpErrors.internalServerError();
+      }
+      else if (applicants === null) {
+        return applicantsResponse([]);
+      }
+      else {
+        return applicantsResponse(applicants);
+      }
+
+    }
+  );
+
+  // Applicants for orgasniation
+  app.get(
+    "/:organisationId/status",
+    // TODO - change authenticateOptional to authenticate
+    {
+      preValidation: [app.authenticateOptional],
+      schema: getOrganizationApplicantsSchema
+    },
+    async (req) => {
+      const {
+        params: { organisationId },
+        query: {
+          // organisationId,
+          limit,
+          skip,
+          includeMeta,
+          // permissions, 
+          // userId, 
+          status
+        },
+      } = req;
+      console.log({ orgId: organisationId })
+      // console.log({ req: req.query })
+      const [applicantsErr, applicants] = await app.to(
+        Applicant.aggregate(
+          // organisationId
+          // ?
+          [
+            // { $match: { organization: { id: mongoose.Types.ObjectId("603be1140789a03df4bdb17c") } } },
+
+            // {
+            //   $match: {
+            //     $and: [
+            //       { organization: { id: mongoose.Types.ObjectId(organisationId) } },
+            //       // { status: "accepted" },
+            //     ]
+            //   }
+            // },
+            {
+              $skip: parseInt(skip, 10) || 0,
+            },
+            {
+              $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+            },
+          ]
+          // :
+          // [
+          //   {
+          //     $skip: parseInt(skip, 10) || 0,
+          //   },
+          //   {
+          //     $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+          //   },
+          // ]
+
+        ).then((applicants) => {
+          console.log({ applicants: applicants })
+          applicants.forEach((applicant) => {
+            applicant.elapsedTimeText = setElapsedTimeText(
+              applicant.createdAt,
+              applicant.updatedAt
+            );
+          });
+          console.log({ applicants: applicants })
+          return applicants;
+        })
+      );
+
+      const totalResultsAggregationPipeline = await Applicant.aggregate(
+        // organisationId
+        // ? 
+        [
+          // {
+          //   $match: {
+          //     $and: [
+          //       { organization: { id: mongoose.Types.ObjectId(organisationId) } },
+          //       // { status: "accepted" },
+          //     ]
+          //   }
+          // },
+          { $group: { _id: null, count: { $sum: 1 } } },
+        ]
+
+        // : [
+        //   // { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
+        //   { $group: { _id: null, count: { $sum: 1 } } },
+        // ],
       );
       const applicantsResponse = (response) => {
         if (!includeMeta) {
@@ -207,7 +324,6 @@ async function routes(app) {
 
     }
   );
-
   app.patch(
     "/:applicantId",
     {
