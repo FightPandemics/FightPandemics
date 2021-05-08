@@ -74,7 +74,7 @@ const ProfileList = ({
     const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
-    
+
     const handleSeeAll = () => {
         setSeeAll(prevState => !prevState)
     }
@@ -125,7 +125,7 @@ const ProfileList = ({
     );
 
     return (
-        <ListContainer className="activity">
+        <ListContainer id="profile-list" className="activity">
             { !items.length && isNextPageLoading ? (
                 <Loader />
             ) : (
@@ -166,21 +166,24 @@ const ProfileList = ({
                     )}
                 </WindowScroller>
             )}
-            <Link
-                onClick={handleSeeAll}
-            >
-
-                <SeeAllLink>
-                    See All
-            </SeeAllLink>
-            </Link>
-            <Link
-                onClick={scrollTop}
-            >
-                <UpArrow
-                    activate={seeAll}
-                />
-            </Link>
+            {windowWidth < 767 && totalCount >= 3 ?
+                <>
+                    <Link
+                        onClick={handleSeeAll}
+                        style={seeAll ? { display: "none" } : null}
+                    >
+                        <SeeAllLink>
+                            See All
+                </SeeAllLink>
+                    </Link>
+                    <Link
+                        onClick={scrollTop}
+                    >
+                        <UpArrow
+                            activate={seeAll}
+                        />
+                    </Link>
+                </> : null}
         </ListContainer >
     );
 };

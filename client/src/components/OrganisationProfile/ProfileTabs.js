@@ -6,9 +6,7 @@ const { colors } = theme;
 
 
 export const ProfileTabs = styled(Tabs)`
-  /* .ant-tabs-content-holder { 
-  box-shadow: 0px 0px 16px 11px #000000;
-  } */
+  position: relative;
   padding: 0 2rem;
   color: ${colors.darkGray};
   font-family: 'Poppins';
@@ -17,17 +15,34 @@ export const ProfileTabs = styled(Tabs)`
   line-height: 24px;
   margin-top: 10.1rem;
 
+.ant-tabs-nav-wrap {
+  margin-bottom: 2.4rem !important;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-bottom: 1rem !important;
+  }
+}
+
 .ant-tabs-nav {
   margin-bottom: 0;
 }
-
 
 .ant-tabs-nav::after {
   content: "";
   border-bottom: solid .1rem ${colors.mediumishGray};
   position: absolute;
   left:-50%;
+  bottom: 0;
+  
   width: 4000px;
+}
+
+.ant-tabs-nav-wrap::after {
+  content: "";
+  /* border-bottom: solid .1rem ${colors.mediumishGray}; */
+  border-bottom: solid .1rem red;
+  position: absolute;
+  left:-50%;
+  width: 4000px; 
 }
 
 .ant-tabs-ink-bar {
@@ -45,7 +60,7 @@ export const ProfileTabs = styled(Tabs)`
     margin-right: 10rem;
     border-radius: 30.2rem;
     padding: 0;
-    padding-bottom: 2.2rem;
+    /* padding-bottom: 2.2rem; */
     overflow: visible;
 
     :hover {
@@ -66,6 +81,8 @@ export const ProfileTabs = styled(Tabs)`
   }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
+    padding: 0;
+
     .ant-tabs-tab {
     margin-right: 2.5rem;
     }

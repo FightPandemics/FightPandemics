@@ -43,6 +43,7 @@ import {
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 import { WhiteSpace } from "antd-mobile";
+import styled from "styled-components";
 
 const initialState = {
     showFilters: false,
@@ -353,7 +354,13 @@ const OrgWorkSpace = (props) => {
                                 // Placeholder text for ONE position is being used below
                                 // Component will be needed for multiple positions (based on backend schema / structure)
                             }
+
                             <ProfileTabs>
+                                {/* 
+                                <ContentContainer
+                                    className="content-container"
+                                /> */}
+
                                 <ProfileTabPane
                                     className="single-tab"
                                     tab={t("profile.views.members") + (windowWidth < 767 ? ` ( ${rawTotalApplicantCount} )` : "")} key="members">
@@ -361,6 +368,7 @@ const OrgWorkSpace = (props) => {
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No members to display.
                                         </div> :
+
                                         <ProfileList
                                             itemCount={itemCount}
                                             isItemLoaded={isItemLoaded}
@@ -372,10 +380,11 @@ const OrgWorkSpace = (props) => {
                                             page={page}
                                             emptyFeed={emptyFeed}
                                         />
-
                                     }
                                 </ProfileTabPane>
+
                             </ProfileTabs>
+
                         </PositionsContainer >
                     </ProfileLayout>
                 </FeedContext.Provider>
