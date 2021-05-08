@@ -14,6 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "constants/theme";
+import UpArrow from "../../components/Icon/up-arrow.js";
 
 const { colors } = theme
 
@@ -23,8 +24,6 @@ const ListContainer = styled.div`
     overflow: hidden;
     margin-top: .3rem;
     box-shadow:  0 0 20px 0 ${colors.shadowBlack};
-
-
 `;
 
 const HorizontalRule = styled.hr`
@@ -75,10 +74,12 @@ const ProfileList = ({
     const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
-    console.log(applicantsList)
+    
     const handleSeeAll = () => {
         setSeeAll(prevState => !prevState)
     }
+
+    const scrollTop = async () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
     const windowWidth = window.innerWidth
     const profileItem = useCallback(
@@ -172,6 +173,13 @@ const ProfileList = ({
                 <SeeAllLink>
                     See All
             </SeeAllLink>
+            </Link>
+            <Link
+                onClick={scrollTop}
+            >
+                <UpArrow
+                    activate={seeAll}
+                />
             </Link>
         </ListContainer >
     );
