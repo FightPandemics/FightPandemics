@@ -320,7 +320,9 @@ const OrgWorkSpace = (props) => {
                     }}
                 >
                     <ProfileBackgroup />
-                    <ProfileLayout>
+                    <ProfileLayout
+                        className="profile-list-page"
+                    >
                         <UserInfoContainer>
                             <AvatarPhotoContainer>
                                 <ProfilePic
@@ -365,7 +367,7 @@ const OrgWorkSpace = (props) => {
                                             isNextPageLoading={isLoading}
                                             loadNextPage={loadNextPage}
                                             hasNextPage={loadMore}
-                                            filteredApplicants={applicantsList}
+                                            filteredMembers={applicantsList}
                                             totalCount={totalApplicantCount}
                                             page={page}
                                             emptyFeed={emptyFeed}

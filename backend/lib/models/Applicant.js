@@ -6,12 +6,12 @@ const ORG_MEMBERS_TYPES = ["volunteer", "wikieditor", "admin"];
 // --Schema
 const applicantSchema = new Schema(
   {
-    organization: {
-      id: {
-        ref: "OrganisationUser",
-        required: true,
-        type: ObjectId,
-      },
+    organizationId: {
+      ref: "OrganisationUser",
+      required: true,
+      type: ObjectId,
+    },
+    organisation: {
       name: String,
       permissions: {
         enum: ORG_MEMBERS_TYPES,

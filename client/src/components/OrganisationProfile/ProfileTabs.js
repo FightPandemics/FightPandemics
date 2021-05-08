@@ -4,7 +4,12 @@ import { mq, theme } from "constants/theme";
 
 const { colors } = theme;
 
+
 export const ProfileTabs = styled(Tabs)`
+  /* .ant-tabs-content-holder { 
+  box-shadow: 0px 0px 16px 11px #000000;
+  } */
+  padding: 0 2rem;
   color: ${colors.darkGray};
   font-family: 'Poppins';
   font-weight: 600;
@@ -16,13 +21,13 @@ export const ProfileTabs = styled(Tabs)`
   margin-bottom: 0;
 }
 
+
 .ant-tabs-nav::after {
   content: "";
-  border-bottom: solid .1rem ${colors.lightGray};
-  position:absolute;
-  left:0;
-  right:0;
-  bottom: 0;
+  border-bottom: solid .1rem ${colors.mediumishGray};
+  position: absolute;
+  left:-50%;
+  width: 4000px;
 }
 
 .ant-tabs-ink-bar {
@@ -41,6 +46,7 @@ export const ProfileTabs = styled(Tabs)`
     border-radius: 30.2rem;
     padding: 0;
     padding-bottom: 2.2rem;
+    overflow: visible;
 
     :hover {
       color: ${colors.darkGray};
@@ -55,6 +61,10 @@ export const ProfileTabs = styled(Tabs)`
     color: ${colors.black};
   }
 
+  &.ant-tabs{
+    overflow: visible;
+  }
+
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
     .ant-tabs-tab {
     margin-right: 2.5rem;
@@ -63,5 +73,6 @@ export const ProfileTabs = styled(Tabs)`
 `;
 
 export const ProfileTabPane = styled(ProfileTabs.TabPane)`
+ 
   margin: 0;
 `

@@ -180,6 +180,10 @@ export const ProfileLayout = styled.div`
   border-radius: 0.8rem;
   margin-bottom: 4rem;
 
+  &.profile-list-page {
+    overflow: visible;
+  }
+
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 90vw;
     margin-left: auto;

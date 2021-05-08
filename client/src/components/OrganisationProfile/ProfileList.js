@@ -22,7 +22,9 @@ const ListContainer = styled.div`
     border-radius: 1.2rem;
     overflow: hidden;
     margin-top: .3rem;
-    box-shadow: ${colors.shadowBlack};
+    box-shadow:  0 0 20px 0 ${colors.shadowBlack};
+
+
 `;
 
 const HorizontalRule = styled.hr`
@@ -37,7 +39,7 @@ const HorizontalRule = styled.hr`
 
 const cellMeasurerCache = new CellMeasurerCache({
     fixedWidth: true,
-    defaultHeight: 80,
+    defaultHeight: 70,
 });
 
 const SeeAllLink = styled.div`
@@ -65,15 +67,15 @@ const ProfileList = ({
     totalCount,
     emptyFeed
 }) => {
-    const applicants = Object.entries(filteredApplicants);
-    console.log(JSON.stringify(filteredApplicants))
+    // const applicants = Object.entries(filteredApplicants);
+    // console.log(JSON.stringify(filteredApplicants))
     const applicantsList = filteredApplicants && true
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true
     const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
-
+    console.log(applicantsList)
     const handleSeeAll = () => {
         setSeeAll(prevState => !prevState)
     }

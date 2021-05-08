@@ -7,15 +7,18 @@ const { colors } = theme;
 
 
 export const AllItems = styled.div`
+
 `;
 
 export const ProfileContainer = styled.div`
 display: flex;
 justify-content: flex-start;
 align-items: center;
-margin: .5rem 0;
+flex-wrap: wrap;
+margin: .25rem 0;
 box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
-padding: 0 1rem;
+padding: .5rem 1rem;
+/* padding-bottom: .5rem; */
 
 `;
 
@@ -28,6 +31,7 @@ margin: 1rem 0;
 border-radius: 50%;
 border: 0.1rem solid ${colors.royalBlue};
 color: ${colors.royalBlue};
+background-color: ${colors.selago};
 width: 4rem;
 height: 4rem;
 text-align: center;
@@ -56,14 +60,19 @@ export const Name = styled.p`
     
 `;
 
-export const Title = styled.p`
+export const Permissions = styled.div`
+    font-style: 'Work Sans';
     font-size: 1rem;
     line-height: 1.8rem;
     color: rgba(0, 0, 0, 0.5);
     color: ${colors.lightishGray};
     opacity: 50%;
     margin: 0;
-    margin-top: 1rem;
+    margin-top: .2rem;
+    width: 100%;
+    position: absolute;
+    bottom: .2rem;
+    /* margin: 1rem 0; */
 `;
 
 const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
@@ -71,7 +80,8 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     let itemState
     let list
     let itemPath
-    
+    console.log({ applicantsList: applicantsList })
+    console.log({ membersList: membersList })
     if (applicantsList || membersList) {
         list = "applicant"
         itemPath = `/application/${item._id}`
@@ -128,21 +138,23 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
                     </ProfilePicContainer>
                     <TextContainer>
                         <Name>
-                            {item?.[list]?.name && item?.[list]?.name || ""} 
+                            {item?.[list]?.name && item?.[list]?.name || ""}
                         </Name>
-                        {applicantsList ? "" :
-                            <Title>
+                        {applicantsList ? null :
+                            <Permissions>
                                 {
-                                    //ORG PERMISSIONS OR POSITION TITLE
+                                    //ORG PERMISSIONS
                                     orgsList ?
                                         // org permissions prop (test placeholder is below)
-                                        ("Editor")
+                                        "(Editor)"
                                         :
                                         // member position title prop (test placeholder is below)
-                                        ("Volunteer")
+                                        // item?.[list].organization.permissions
+                                        "(Volunteer)"
                                 }
-                            </Title>}
+                            </Permissions>}
                     </TextContainer>
+
                 </ProfileContainer>
             </AllItems>
         </Link>

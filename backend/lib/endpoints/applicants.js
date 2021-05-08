@@ -103,7 +103,7 @@ async function routes(app) {
             [
               {
                 $match: {
-                  organization: { id: mongoose.Types.ObjectId(organisationId) }
+                  organizationId: mongoose.Types.ObjectId(organisationId)
                 }
               }
               ,
@@ -137,7 +137,7 @@ async function routes(app) {
       const totalResultsAggregationPipeline = await Applicant.aggregate(
         organisationId
           ? [
-            { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
+            { $match: { organizationId: mongoose.Types.ObjectId(organisationId) } },
             { $group: { _id: null, count: { $sum: 1 } } },
           ]
           : [
