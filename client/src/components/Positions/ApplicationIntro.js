@@ -88,9 +88,11 @@ const ApplicantPosition = styled.p`
 `;
 
 const ApplicantBottom = styled.p`
+ @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
  .applicant-margin {
      margin: 0 2.2rem;
- }  
+ } 
+ } 
 `
 const ApplicantIntroTitle = styled.p`
     font-family: 'Poppins';
