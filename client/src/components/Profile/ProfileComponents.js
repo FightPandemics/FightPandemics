@@ -158,6 +158,11 @@ export const EditIcon = styled(SvgIcon)`
   top: 2.4rem;
 `;
 
+export const PositionEditIcon = styled(SvgIcon)`
+  color: ${colors.offWhite};
+  float: right;
+`;
+
 export const ProfileBackgroup = styled.div`
   background-color: ${colors.royalBlue};
   position: absolute;

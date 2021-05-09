@@ -428,7 +428,8 @@
       "drafts": "drafts",
       "editOrgNotification": "Edit Organization Notification",
       "members": "Members",
-      "applicants": "Applicants"
+      "applicants": "Applicants",
+      "positions": "Positions"
     }
   },
   "auth": {
