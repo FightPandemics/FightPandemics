@@ -1,10 +1,10 @@
 // import React from "react";
 import { Radio } from "antd";
-import PermissionsRadioGroup from "components/AdminProfile/PermissionsRadioGroup";
+import PermissionsRadioGroup, { PermissionsApplyButton } from "components/AdminProfile/PermissionsRadioGroup";
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
-import Application, { Title } from "components/Positions/Application";
+// import Application, { Title } from "components/Positions/Application";
 import ProfilePic from "components/Picture/ProfilePic";
 import {
     OrganisationContext,
@@ -35,11 +35,11 @@ import {
     UserInfoContainer,
     UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import ExitModal from "components/Positions/ExitModal";
 import ApplicationIntro from "components/Positions/ApplicationIntro";
 
-const MemberPermissions = (props) => {
+const MemberPermissions = (props, applicantId) => {
     // const { isAuthenticated, user } = props;
     const history = useHistory();
     const [visible, setVisible] = useState(false);
@@ -66,7 +66,7 @@ const MemberPermissions = (props) => {
 
 
     let url = window.location.pathname.split("/");
-    const organisationId = url[url.length - 2];
+    const organisationId = url[url.length - 3];
     const { orgProfileState, orgProfileDispatch } = useContext(
         OrganisationContext,
     );
@@ -130,6 +130,24 @@ const MemberPermissions = (props) => {
         })();
     }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    const [permissions, setPermissions] = useState()
+
+    const onChange = (data) => {
+        console.log({ data: data })
+        setPermissions(data)
+        console.log({ permissions: permissions })
+    }
+
+    const handleApply = async () => {
+        // TODO - pull applicantId from state in Org Profile ProfileListItem link
+        const endpoint = `/applicants/${applicantId}?permissions=${permissions}`
+        try {
+            const res = await axios.patch(endpoint)
+        } catch (error) {
+            return error
+        }
+    }
+
     if (error) {
         return <ErrorAlert message={error} type="error" />;
     }
@@ -141,8 +159,9 @@ const MemberPermissions = (props) => {
     else {
         const { address } = location;
 
+
+
         return (
-            // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
 
                 <ProfileBackgroup />
@@ -172,13 +191,30 @@ const MemberPermissions = (props) => {
                             {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
                         </UserInfoDesktop>
                     </UserInfoContainer>
-                    <ApplicationIntro />
+                    <ApplicationIntro
+                    // TODO GET MEMBER INFO FROM STATE (6.1)
+                    // name
+                    // permissions
+                    />
                     <PositionsContainer>
-                        <Application
-                            orgName={name}
-                            organisationId={organisationId}
-                            application="test"
-                        ></Application>
+                        <PermissionsRadioGroup
+                            onChange={(e) => { onChange(e) }}
+                        />
+                        {// TODO - add button text to en_us
+                        }
+                        <div style={{display: "flex"}}>
+                            <Link
+                            style={{width: "fit-content", margin: "auto"}}
+                            onClick={handleApply}
+                            // TODO - redirect to Org Page
+                                //to=`/organisation/${organisationId}`
+                            >
+                                <PermissionsApplyButton
+                                style={{margin: 0}}
+                            
+                                >Apply</PermissionsApplyButton>
+                            </Link>
+                        </div>
                     </PositionsContainer >
                     <ExitModal
                         visible={visible}
