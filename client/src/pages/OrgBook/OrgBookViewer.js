@@ -46,16 +46,8 @@ import UploadPic from "../../components/Picture/UploadPic";
 import ProfilePic from "../../components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
 
-const { colors, typography } = theme;
-const {
-  lighterGray,
-  white,
-  royalBlue,
-  black,
-  offWhite,
-  lightGray,
-  mediumGray,
-} = colors;
+const { colors } = theme;
+const { white, black } = colors;
 const PAGE_CATEGORIES = {
   liveCategory: "live",
   draftCategory: "draft",
@@ -217,7 +209,7 @@ const OrgBookViewer = (props) => {
     const urlsAndEmail = {
       ...organisation.urls,
       email:
-        props.organisationId == organisation._id ? null : organisation.email,
+        props.organisationId === organisation._id ? null : organisation.email,
     };
     const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 
@@ -279,6 +271,13 @@ const OrgBookViewer = (props) => {
     }
   };
 
+  const showEditIcon = () => {
+    if (isMobile) {
+      return false;
+    }
+    return true;
+  };
+
   const renderTableOfContents = () => {
     let filteredOrgBookPages = [];
     if (isOrgMember) {
@@ -290,7 +289,7 @@ const OrgBookViewer = (props) => {
       //if user is non-registered, show only live public pages
       filteredOrgBookPages = organisation.orgBookPages.filter(
         (page) =>
-          page.viewLevel == VIEW_LEVELS.publicView &&
+          page.viewLevel === VIEW_LEVELS.publicView &&
           page.status === PAGE_CATEGORIES.liveCategory,
       );
     }
@@ -355,7 +354,7 @@ const OrgBookViewer = (props) => {
                     </div>
                   )}
                 </div>
-                {props.organisationId == organisation._id && (
+                {showEditIcon() && (
                   <EditIcon
                     src={edit}
                     id={GTM.organisation.orgPrefix + GTM.profile.modify}

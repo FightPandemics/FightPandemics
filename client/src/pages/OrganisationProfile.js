@@ -48,6 +48,8 @@ import {
   DescriptionDesktop,
   IconsContainer,
   SeeOrgBookLink,
+  SeeOrgBookDisabled,
+  CreateOrgBookLink,
   SocialIcon,
   SectionHeader,
   CreatePostDiv,
@@ -98,7 +100,7 @@ import {
   deletePostState,
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
-import GTM from "constants/gtm-tags";
+import GTM, { orgBook } from "constants/gtm-tags";
 import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
 import CreatePostButton from "components/Feed/CreatePostButton";
@@ -153,6 +155,18 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     urls = {},
     verified,
   } = organisation || {};
+  const ORGBOOK_CREATE_MODE = "create";
+  const ORGBOOK_EDIT_MODE = "edit";
+  const PAGE_CATEGORIES = {
+    liveCategory: "live",
+    draftCategory: "draft",
+  };
+  const VIEW_LEVELS = {
+    //org (private), public correspond to live pages only
+    publicView: "public",
+    orgView: "org",
+    notApplicable: "n/a",
+  };
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
   if (isOwner) sessionStorage.removeItem("msgModal");
@@ -169,9 +183,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
-  const isSelf = organisation && actorOrganisationId == organisation._id;
+  const isSelf = organisation && actorOrganisationId === organisation._id;
 
-  const [editOrgBookMode, setEditOrgBookMode] = useState("create");
+  const [orgBookPages, setOrgBookPages] = useState(null);
+  const [editOrgBookMode, setEditOrgBookMode] = useState(ORGBOOK_CREATE_MODE);
   const [editOrgBookLinkLabel, setEditOrgBookLinkLabel] = useState(
     t("profile.org.createOrgBook").toString(),
   );
@@ -188,14 +203,41 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   };
 
   const setOrgBookState = (orgBookPages = null) => {
+    setOrgBookPages(orgBookPages);
     setEditOrgBookMode(
-      orgBookPages && orgBookPages.length > 0 ? "edit" : "create",
+      orgBookPages && orgBookPages.length > 0
+        ? ORGBOOK_EDIT_MODE
+        : ORGBOOK_CREATE_MODE,
     );
     setEditOrgBookLinkLabel(
       orgBookPages && orgBookPages.length > 0
         ? t("profile.org.editOrgBook")
         : t("profile.org.createOrgBook"),
     );
+  };
+
+  const areLivePublicOrgBookPages = () => {
+    if (!orgBookPages || orgBookPages.length === 0) {
+      return false;
+    }
+    return orgBookPages.some(
+      (page) =>
+        page.status === PAGE_CATEGORIES.liveCategory &&
+        page.viewLevel === VIEW_LEVELS.publicView,
+    )
+      ? true
+      : false;
+  };
+
+  const areLiveOrgBookPages = () => {
+    if (!orgBookPages || orgBookPages.length === 0) {
+      return false;
+    }
+    return orgBookPages.some(
+      (page) => page.status === PAGE_CATEGORIES.liveCategory,
+    )
+      ? true
+      : false;
   };
 
   useEffect(() => {
@@ -398,6 +440,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       });
     }
   };
+
   const renderURL = () => {
     if (organisation) {
       if (urlsAndEmail.length !== 0) {
@@ -505,9 +548,43 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <IconsContainer>
                 <div className="social-icons">{renderURL()}</div>
               </IconsContainer>
-              <SeeOrgBookLink to={`/orgbook-viewer`}>
-                {t("profile.org.seeOrgBook")}
-              </SeeOrgBookLink>
+
+              {editOrgBookMode === ORGBOOK_EDIT_MODE ? (
+                isSelf ? ( //this condition should eventually be isOrgMember
+                  areLiveOrgBookPages() ? (
+                    <SeeOrgBookLink to={`/orgbook-viewer`}>
+                      {t("profile.org.seeOrgBook")}
+                    </SeeOrgBookLink>
+                  ) : (
+                    //this condition would only be reached if another user deleted all live pgs
+                    <CreateOrgBookLink
+                      to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                    >
+                      {t("profile.org.createOrgBook")}
+                    </CreateOrgBookLink>
+                  )
+                ) : areLivePublicOrgBookPages() ? ( //this is only for non-members
+                  <SeeOrgBookLink to={`/orgbook-viewer`}>
+                    {t("profile.org.seeOrgBook")}
+                  </SeeOrgBookLink>
+                ) : (
+                  <SeeOrgBookDisabled>
+                    {t("profile.org.seeOrgBook")}
+                  </SeeOrgBookDisabled>
+                )
+              ) : //edit mode is "create"
+              isSelf ? ( //this is correct, only owners can create
+                <CreateOrgBookLink
+                  to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                >
+                  {t("profile.org.createOrgBook")}
+                </CreateOrgBookLink>
+              ) : (
+                //all other members cannot create and there is no orgbook yet to see
+                <SeeOrgBookDisabled>
+                  {t("profile.org.seeOrgBook")}
+                </SeeOrgBookDisabled>
+              )}
             </UserInfoDesktop>
           </UserInfoContainer>
           {isSelf && !verified && <Verification />}

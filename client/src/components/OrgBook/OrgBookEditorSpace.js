@@ -1,8 +1,8 @@
 import React, { useRef, useState, useCallback, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import styled from "styled-components";
-import { theme, mq } from "../../constants/theme";
+import { theme } from "../../constants/theme";
 import { useTranslation } from "react-i18next";
 import { WhiteSpace } from "antd-mobile";
 import { getLang } from "i18n";
@@ -15,7 +15,7 @@ import privateIcon from "../../assets/icons/orgbook-private.svg";
 import publicIcon from "../../assets/icons/orgbook-public.svg";
 import deleteBookIcon from "../../assets/icons/orgbook-delete-book.svg";
 
-const { colors, typography } = theme;
+const { colors } = theme;
 const { white, royalBlue, black, red, mediumGray } = colors;
 
 const OrgBookEditorSpaceWrapper = styled.div`
@@ -290,7 +290,6 @@ const OrgBookEditorSpace = (props) => {
           max_height: 700,
           menubar: false,
           inline: true,
-          contextmenu: false,
           resize: false,
           language: currentLanguage,
           language_url: currentLanguageUrl,
@@ -448,8 +447,7 @@ const OrgBookEditorSpace = (props) => {
             <SvgIcon
               src={deleteBookIcon}
               title={t("orgBook.deleteOrgBook")}
-              // width={"3rem !important"}
-              // height={"3rem !important"}
+              id={GTM.orgBook.prefix + GTM.orgBook.deleteOrgBook}
               onClick={() => {
                 onUpdateAction(
                   UPDATE_ACTION_TYPES.deleteOrgBookType,

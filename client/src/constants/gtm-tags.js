@@ -145,6 +145,7 @@ module.exports = {
     seePreview: "_SP",
     pageContainer: "_PC",
     joinOrgContainer: "_JO",
+    deleteOrgBook: "_DO",
   },
   providersFilters: {
     individual: "_IN",
