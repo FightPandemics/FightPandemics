@@ -149,7 +149,7 @@ const OrgBookEditorSpace = (props) => {
     livePageExists,
     selectedPageDirty,
     onSelectedPageDirty,
-    VIEW_LEVELS,
+    LIVE_PAGE_VIEW_LEVELS,
     isOwner,
   } = props;
   const { t } = useTranslation();
@@ -210,7 +210,7 @@ const OrgBookEditorSpace = (props) => {
       return `${organisation.name}\xa0\xa0\xa0/\xa0\xa0\xa0${selectedPage.name}\xa0\xa0\xa0-\xa0\xa0\xa0${status}`;
     } else {
       let viewLevel = "";
-      if (selectedPage.viewLevel === VIEW_LEVELS.orgView) {
+      if (selectedPage.viewLevel === LIVE_PAGE_VIEW_LEVELS.orgView) {
         viewLevel = t("orgBook.orgViewOnly");
       } else {
         viewLevel = t("orgBook.publicView");
@@ -350,7 +350,7 @@ const OrgBookEditorSpace = (props) => {
           {selectedPage ? getHeaderPageName() : t("orgBook.clickPageOnLeft")}
           {selectedPage &&
           selectedPage.status === PAGE_CATEGORIES.liveCategory &&
-          selectedPage.viewLevel === VIEW_LEVELS.orgView ? (
+          selectedPage.viewLevel === LIVE_PAGE_VIEW_LEVELS.orgView ? (
             <SvgIcon
               src={privateIcon}
               title={t("orgBook.orgViewOnly")}
@@ -362,7 +362,7 @@ const OrgBookEditorSpace = (props) => {
           )}
           {selectedPage &&
           selectedPage.status === PAGE_CATEGORIES.liveCategory &&
-          selectedPage.viewLevel === VIEW_LEVELS.publicView ? (
+          selectedPage.viewLevel === LIVE_PAGE_VIEW_LEVELS.publicView ? (
             <SvgIcon src={publicIcon} title={t("orgBook.publicView")} />
           ) : (
             ""
@@ -490,7 +490,7 @@ const OrgBookEditorSpace = (props) => {
             <Link
               onClick={() => {
                 onUpdateAction(
-                  selectedPage.viewLevel === VIEW_LEVELS.orgView
+                  selectedPage.viewLevel === LIVE_PAGE_VIEW_LEVELS.orgView
                     ? UPDATE_ACTION_TYPES.changeLiveToPublicViewType
                     : UPDATE_ACTION_TYPES.changeLiveToPrivateViewType,
                   selectedPage.pageId,
@@ -502,7 +502,7 @@ const OrgBookEditorSpace = (props) => {
               id={GTM.orgBook.prefix + GTM.orgBook.changeLiveViewType}
             >
               <span>
-                {selectedPage.viewLevel === VIEW_LEVELS.orgView
+                {selectedPage.viewLevel === LIVE_PAGE_VIEW_LEVELS.orgView
                   ? t("orgBook.changeToPublicView")
                   : t("orgBook.changeToPrivateView")}
               </span>

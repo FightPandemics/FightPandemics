@@ -53,8 +53,7 @@ const PAGE_CATEGORIES = {
   draftCategory: "draft",
 };
 
-const VIEW_LEVELS = {
-  //org (private), public correspond to live pages only
+const LIVE_PAGE_VIEW_LEVELS = {
   publicView: "public",
   orgView: "org",
   notApplicable: "n/a",
@@ -289,7 +288,7 @@ const OrgBookViewer = (props) => {
       //if user is non-registered, show only live public pages
       filteredOrgBookPages = organisation.orgBookPages.filter(
         (page) =>
-          page.viewLevel === VIEW_LEVELS.publicView &&
+          page.viewLevel === LIVE_PAGE_VIEW_LEVELS.publicView &&
           page.status === PAGE_CATEGORIES.liveCategory,
       );
     }

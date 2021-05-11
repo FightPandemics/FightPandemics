@@ -161,8 +161,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     liveCategory: "live",
     draftCategory: "draft",
   };
-  const VIEW_LEVELS = {
-    //org (private), public correspond to live pages only
+  const LIVE_PAGE_VIEW_LEVELS = {
     publicView: "public",
     orgView: "org",
     notApplicable: "n/a",
@@ -223,7 +222,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     return orgBookPages.some(
       (page) =>
         page.status === PAGE_CATEGORIES.liveCategory &&
-        page.viewLevel === VIEW_LEVELS.publicView,
+        page.viewLevel === LIVE_PAGE_VIEW_LEVELS.publicView,
     )
       ? true
       : false;

@@ -72,8 +72,7 @@ const PUBLISH_OPTIONS = {
   publicView: 1,
   privateView: 2,
 };
-const VIEW_LEVELS = {
-  //org (private), public correspond to live pages only
+const LIVE_PAGE_VIEW_LEVELS = {
   publicView: "public",
   orgView: "org",
   notApplicable: "n/a",
@@ -336,12 +335,12 @@ const OrgBookEditor = () => {
     content,
     publishOption = null,
   ) => {
-    let viewLevel = VIEW_LEVELS.notApplicable;
+    let viewLevel = LIVE_PAGE_VIEW_LEVELS.notApplicable;
     if (category !== PAGE_CATEGORIES.draftCategory) {
       if (publishOption && publishOption === PUBLISH_OPTIONS.privateView) {
-        viewLevel = VIEW_LEVELS.orgView;
+        viewLevel = LIVE_PAGE_VIEW_LEVELS.orgView;
       } else {
-        viewLevel = VIEW_LEVELS.publicView;
+        viewLevel = LIVE_PAGE_VIEW_LEVELS.publicView;
       }
     }
 
@@ -710,8 +709,8 @@ const OrgBookEditor = () => {
               ...page,
               viewLevel:
                 option === PUBLISH_OPTIONS.privateView
-                  ? VIEW_LEVELS.orgView
-                  : VIEW_LEVELS.publicView,
+                  ? LIVE_PAGE_VIEW_LEVELS.orgView
+                  : LIVE_PAGE_VIEW_LEVELS.publicView,
               content: selectedPage.content,
               updated_by: currentUserId,
               updated_at: moment(new Date())
@@ -866,8 +865,8 @@ const OrgBookEditor = () => {
             ...page,
             viewLevel:
               action === UPDATE_ACTION_TYPES.changeLiveToPrivateViewType
-                ? VIEW_LEVELS.orgView
-                : VIEW_LEVELS.publicView,
+                ? LIVE_PAGE_VIEW_LEVELS.orgView
+                : LIVE_PAGE_VIEW_LEVELS.publicView,
             updated_by: currentUserId,
             updated_at: moment(new Date()).utc().format("YYYY-MM-DD HH:mm:ss"),
           }
@@ -952,7 +951,7 @@ const OrgBookEditor = () => {
           livePageExists={livePageExists}
           selectedPageDirty={selectedPageDirty}
           onSelectedPageDirty={handleSelectedPageDirty}
-          VIEW_LEVELS={VIEW_LEVELS}
+          LIVE_PAGE_VIEW_LEVELS={LIVE_PAGE_VIEW_LEVELS}
           isOwner={isOwner}
         ></OrgBookEditorSpace>
       );
