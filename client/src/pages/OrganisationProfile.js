@@ -774,7 +774,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 )}
               </FeedWrapper>
             </div></ProfileTabPane>
-            <ProfileTabPane tab={t("profile.views.members")} key="members">
+            {!isSelf && <ProfileTabPane tab={t("profile.views.members")} key="members">
               <ProfileList
                 filteredMembers={applicantsList}
                 itemCount={itemCountApplicants}
@@ -787,7 +787,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 page={pageApplicants}
                 emptyFeed={emptyFeed}
               />
-            </ProfileTabPane>
+            </ProfileTabPane>}
           </ProfileTabs>
 
           {isSelf && (
