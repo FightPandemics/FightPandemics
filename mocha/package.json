@@ -12,7 +12,7 @@
     "http-status": "^1.4.2",
     "mocha": "^8.1.0",
     "mochawesome": "^6.2.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mongoose": "^5.10.13",
     "should": "^13.2.3",
     "supertest": "^4.0.2"
