@@ -7,6 +7,7 @@ export const MINT_GREEN = "#22D9A2";
 export const GREEN = "#209d7f";
 export const LIGHTER_GRAY = "#F9F9F9";
 export const LIGHT_GRAY = "#D7D7D7";
+export const LIGHTISH_GRAY = "rgba(255, 255, 255, 0.5)";
 export const MEDIUM_GRAY = "#C5C5C5";
 export const DARK_GRAY = "#939393";
 export const DARKISH_GRAY = "#515151";
