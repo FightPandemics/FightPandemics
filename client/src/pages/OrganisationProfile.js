@@ -42,17 +42,10 @@ import UploadPic from "components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
-import SvgIcon from "components/Icon/SvgIcon";
 
 import { theme, mq } from "../constants/theme";
 import styled from "styled-components";
-import EdiText from "react-editext";
-//import TextArea from "../components/Input/TextArea";
-import { Input } from "antd";
-import TextAreaContainer from "./TextAreaContainer";
-//import { Drawer, Modal } from "antd-mobile";
 import { Modal, Button } from "antd";
-//import { Modal, Button } from "antd-mobile";
 
 import Loader from "components/Feed/StyledLoader";
 import {
