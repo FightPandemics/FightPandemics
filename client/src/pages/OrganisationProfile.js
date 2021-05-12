@@ -991,6 +991,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       <PositionEditIcon
                         src={edit}
                         onClick={() => {
+                          if (!checksEnabled) return;
                           if (inputRef.current) {
                             setDisplayText(inputRef.current.value);
                           }
