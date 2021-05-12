@@ -1,28 +1,39 @@
 // -- Imports
 const { Schema, model, ObjectId } = require("mongoose");
 const APPLICANT_STATUS = ["applied", "accepted", "rejected"];
+const ORG_MEMBERS_TYPES = ["volunteer", "wikieditor", "admin"];
 
 // --Schema
 const applicantSchema = new Schema(
   {
-    organizationId: {
-      ref: "OrganisationUser",
-      required: true,
-      // type: Schema.Types.ObjectId,
-      type: ObjectId,
+    // 6.1 has a different structure (organisationId)
+    organization: {
+      id: {
+        ref: "OrganisationUser",
+        required: true,
+        type: ObjectId,
+      },
+      name: String,
+      permissions: {
+        enum: ORG_MEMBERS_TYPES,
+        default: "volunteer",
+        required: true,
+        type: String
+      }
     },
     applicantApplied: {
       required: true,
       type: String
     },
     applicant: Object, //Author Schema
-    // answers: {
-    //   required: true,
-    //   type: [String]
-    // },
+    answers: {
+      required: true,
+      type: [String]
+    },
     answers: Object,
     status: {
       enum: APPLICANT_STATUS,
+      default: "applied",
       required: true,
       type: String
     },
@@ -41,7 +52,7 @@ applicantSchema.index(
 );
 /* eslint-enable */
 applicantSchema.index({ "applicant.location.coordinates": "2dsphere" });
-applicantSchema.index({ "organizationId": 1, createdAt: -1 });
+applicantSchema.index({ "organization.id": 1, createdAt: -1 });
 applicantSchema.index({
   // Expiration Filter
   expireAt: -1,
