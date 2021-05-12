@@ -951,20 +951,22 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 </FeedWrapper>
               </div>
             </ProfileTabPane>
-            <ProfileTabPane tab={t("profile.views.members")} key="members">
-              <ProfileList
-                filteredMembers={applicantsList}
-                itemCount={itemCountApplicants}
-                isItemLoaded={isApplicantLoaded}
-                isNextPageLoading={isLoading}
-                loadNextPage={loadNextPageApplicant}
-                hasNextPage={loadMoreApplicants}
-                filteredApplicants={applicantsList}
-                totalCount={totalApplicantCount}
-                page={pageApplicants}
-                emptyFeed={emptyFeed}
-              />
-            </ProfileTabPane>
+            {!isSelf && (
+              <ProfileTabPane tab={t("profile.views.members")} key="members">
+                <ProfileList
+                  filteredMembers={applicantsList}
+                  itemCount={itemCountApplicants}
+                  isItemLoaded={isApplicantLoaded}
+                  isNextPageLoading={isLoading}
+                  loadNextPage={loadNextPageApplicant}
+                  hasNextPage={loadMoreApplicants}
+                  filteredApplicants={applicantsList}
+                  totalCount={totalApplicantCount}
+                  page={pageApplicants}
+                  emptyFeed={emptyFeed}
+                />
+              </ProfileTabPane>
+            )}
             <ProfileTabPane tab={t("profile.views.positions")} key="positions">
               <Row>
                 <Col flex={1}>
@@ -978,7 +980,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   <FPSwitch
                     checkedChildren={t("profile.common.on")}
                     unCheckedChildren={t("profile.common.off")}
-                    onChange={(checked) => setSwitchOnOff(checked)}
+                    onChange={(checked) => setSwitchOnOff(checked)} //TODO Join Us CTA
                     checked={switchOnOff}
                   />
                 </Col>
