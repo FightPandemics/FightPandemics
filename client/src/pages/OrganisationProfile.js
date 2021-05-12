@@ -24,6 +24,7 @@ import locationIcon from "assets/icons/location.svg";
 import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 import playStoreIcon from "assets/icons/play-store-icon.svg";
 import appStoreIcon from "assets/icons/app-store-icon.svg";
+import applicationConfirmation from "assets/icons/application-received.svg";
 
 import instagramIcon from "assets/icons/social-instagram.svg";
 import linkedinBlue from "assets/icons/social-linkedin.svg";
@@ -41,6 +42,7 @@ import UploadPic from "components/Picture/UploadPic";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
+import SvgIcon from "components/Icon/SvgIcon";
 
 import { theme, mq } from "../constants/theme";
 import styled from "styled-components";
@@ -48,6 +50,9 @@ import EdiText from "react-editext";
 //import TextArea from "../components/Input/TextArea";
 import { Input } from "antd";
 import TextAreaContainer from "./TextAreaContainer";
+//import { Drawer, Modal } from "antd-mobile";
+import { Modal, Button } from "antd";
+//import { Modal, Button } from "antd-mobile";
 
 import Loader from "components/Feed/StyledLoader";
 import {
@@ -235,6 +240,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     letter-spacing: normal;
     text-align: left;
     color: black;
+    margin-bottom: 31px;
   `;
 
   const StyledTextarea = styled.textarea`
@@ -251,23 +257,61 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const DisplayText = styled.label`
     word-break: break-word;
   `;
-  // const TextArea = styled(EdiText)`
-  //   button[editext='save-button'] {
-  //     display: none;
-  //   }
-  //   button[editext='edit-button'] {
-  //     display: none;
-  //   }
-  //   button[editext='cancel-button'] {
-  //     display: none;
-  //   }
-  //   textarea {
-  //     height: 8em;
-  //   }
-  //   div[editext='view-container'] {
-  //     height: 100%;
-  //   }
-  // `;
+
+  const StyledPostButton = styled(Button)`
+    color: blue;
+    font-weight: ${({ name }) => {
+      switch (name) {
+        case "post":
+          return "bold";
+      }
+    }};
+  `;
+
+  const StyledPositionModal = styled(Modal)`
+    .ant-modal-title {
+      text-align: center;
+    }
+    .ant-modal-footer {
+      border-top: 0px;
+    }
+    .ant-modal-header {
+      border-bottom: 0px;
+    }
+  `;
+
+  const StyledConfirmModal = styled(Modal)`
+    .ant-modal-header,
+    .ant-modal-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .ant-modal-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .ant-modal-footer {
+      border-top: 0px;
+    }
+    .ant-modal-header {
+      border-bottom: 0px;
+    }
+    p:first-child {
+      font-weight: bold;
+    }
+  `;
+
+  const ConfirmButton = styled(Button)`
+    width: 195px;
+    height: 43px;
+    flex-grow: 0;
+    padding: 12px 76px 12px;
+    border-radius: 100px;
+    background-color: #425af2;
+  `;
 
   function usePrevious(value) {
     const ref = useRef();
@@ -539,10 +583,12 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
   const [switchOnOff, setSwitchOnOff] = useState(false);
   const [checksEnabled, setChecksEnabled] = useState(true);
-  const [editing, setEditing] = useState(false);
-  const [displayText, setDisplayText] = useState("XXXXX");
+  const [displayText, setDisplayText] = useState("");
   const [isEditable, setIsEditable] = useState(false);
   const inputRef = useRef("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [postLoading, setPostLoading] = useState(false);
+  const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
 
   const { filterModal, activePanel, showFilters } = feedState;
   // const filters = Object.values(filterOptions);
@@ -593,6 +639,21 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         setToggleRefetchApplicants(!toggleRefetchApplicants);
       }
     }
+  };
+
+  const handleOk = () => {
+    setPostLoading(true);
+    setTimeout(() => {
+      setPostLoading(false);
+      setIsModalVisible(false);
+      setConfirmModalVisible(true);
+    }, 3000);
+
+    //TODO pass data to backend
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   const loadApplicants = async () => {
@@ -692,11 +753,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     loadApplicants();
   }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // useEffect(() => {
-  //   if(inputRef.current){
-  //     setText(inputRef.current.value);
-  //   }
-  // },[inputRef]);
+  useEffect(() => {
+    setDisplayText(t("position.text1") + name + t("position.text2"));
+  }, [name, t]);
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
     feedApplicants,
@@ -726,6 +785,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length,
     );
   }, [feedApplicants.length, loadMoreApplicants]);
+
+  //const [displayText, setDisplayText] = useState(name);
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -909,7 +970,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 <Col flex={1}>
                   {
                     <JoinPositionStyles>
-                      Allow volunteers to join your organization
+                      {t("position.allowVolunteer")}
                     </JoinPositionStyles>
                   }
                 </Col>
@@ -925,7 +986,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <Row>
                 <DescContainer>
                   <HeaderTitle>
-                    Volunteer Position *
+                    {t("position.volunteerposition")} *
                     {!isEditable ? (
                       <PositionEditIcon
                         src={edit}
@@ -962,10 +1023,55 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 </DescContainer>
               </Row>
               <Row justify="center">
-                <PostPositionButton disabled={!checksEnabled} primary="true">
-                  {t("profile.common.saveChanges")}
+                <PostPositionButton
+                  disabled={!checksEnabled}
+                  primary="true"
+                  onClick={() => setIsModalVisible(true)}
+                >
+                  {t("position.title")}
                 </PostPositionButton>
               </Row>
+              <StyledPositionModal
+                closable={false}
+                visible={isModalVisible}
+                title={t("position.title")}
+                footer={[
+                  <StyledPostButton
+                    name="cancel"
+                    type="text"
+                    onClick={handleCancel}
+                  >
+                    {t("position.cancel")}
+                  </StyledPostButton>,
+                  <StyledPostButton
+                    name="post"
+                    type="text"
+                    loading={postLoading}
+                    onClick={handleOk}
+                  >
+                    {t("position.post")}
+                  </StyledPostButton>,
+                ]}
+              >
+                <p>{t("position.content")}</p>
+              </StyledPositionModal>
+              <StyledConfirmModal
+                closable={false}
+                visible={isConfirmModalVisible}
+                title={<img src={applicationConfirmation} />}
+                footer={[
+                  <ConfirmButton
+                    key="submit"
+                    type="primary"
+                    onClick={() => setConfirmModalVisible(false)}
+                  >
+                    {t("position.Okay")}
+                  </ConfirmButton>,
+                ]}
+              >
+                <p>{t("position.confirmTitle")}</p>
+                <p>{t("position.confirmDescription")}</p>
+              </StyledConfirmModal>
             </ProfileTabPane>
           </ProfileTabs>
 
