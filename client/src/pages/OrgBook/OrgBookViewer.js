@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import { connect } from "react-redux";
 import OrgBookViewerTableOfContents from "../../components/OrgBook/OrgBookViewerTableOfContents";
+import OrgBookViewerTOCMobile from "../../components/OrgBook/OrgBookViewerTOCMobile";
 
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -45,8 +46,9 @@ import {
 import UploadPic from "../../components/Picture/UploadPic";
 import ProfilePic from "../../components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
+import { ROYAL_BLUE } from "constants/colors";
 
-const { colors } = theme;
+const { colors, typography } = theme;
 const { white, black } = colors;
 const PAGE_CATEGORIES = {
   liveCategory: "live",
@@ -71,9 +73,35 @@ const URLS = {
   email: [envelopeBlue],
 };
 
+const JoinOrgContainer = styled.div`
+  position: absolute;
+  top: 15rem;
+  height: 4.5rem;
+  left: 0rem;
+  z-index: 5;
+  width: 100%;
+  background-color: ${ROYAL_BLUE};
+`;
+
+const JoinOrgButton = styled.button`
+  margin-left: 70rem;
+  right: 1rem;
+  width: 9rem;
+  height: 3rem;
+  border-radius: 4rem;
+  background-color: ${white};
+  margin-right: 7rem;
+`;
+
+const JoinOrgLabel = styled.div`
+  color: ${black};
+  white-space: nowrap;
+  font-size: ${typography.size.medium};
+`;
+
 const TOCSidebarAndPageContainer = styled.div`
   position: absolute;
-  top: 35rem;
+  top: 40rem;
   bottom: 35rem;
   z-index: 5;
   width: 100%;
@@ -270,16 +298,28 @@ const OrgBookViewer = (props) => {
     }
   };
 
+  const isOwner = () => {
+    if (!props.isAuthenticated) {
+      return false;
+    } else {
+      if (props.user.id === organisation.ownerId) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+
   const showEditIcon = () => {
     if (isMobile) {
       return false;
     }
-    return true;
+    return isOwner() ? true : false;
   };
 
   const renderTableOfContents = () => {
     let filteredOrgBookPages = [];
-    if (isOrgMember) {
+    if (isOrgMember()) {
       //if registered member, filter for all live pages (public and private)
       filteredOrgBookPages = organisation.orgBookPages.filter(
         (page) => page.status === PAGE_CATEGORIES.liveCategory,
@@ -301,18 +341,31 @@ const OrgBookViewer = (props) => {
       );
     }
 
-    return (
-      selectedPage && (
-        <TableOfContentsSidebar>
-          <OrgBookViewerTableOfContents
+    if (isMobile) {
+      return (
+        selectedPage && (
+          <OrgBookViewerTOCMobile
             organisation={organisation}
             filteredOrgBookPages={filteredOrgBookPages}
             selectPage={handleSelectPage}
             preSelectedPage={preSelectedPage}
-          ></OrgBookViewerTableOfContents>
-        </TableOfContentsSidebar>
-      )
-    );
+          ></OrgBookViewerTOCMobile>
+        )
+      );
+    } else {
+      return (
+        selectedPage && (
+          <TableOfContentsSidebar>
+            <OrgBookViewerTableOfContents
+              organisation={organisation}
+              filteredOrgBookPages={filteredOrgBookPages}
+              selectPage={handleSelectPage}
+              preSelectedPage={preSelectedPage}
+            ></OrgBookViewerTableOfContents>
+          </TableOfContentsSidebar>
+        )
+      );
+    }
   };
 
   return (
@@ -353,6 +406,22 @@ const OrgBookViewer = (props) => {
                     </div>
                   )}
                 </div>
+
+                {organisation && !isOrgMember() ? (
+                  <JoinOrgContainer>
+                    <JoinOrgButton
+                      onClick={() => {
+                        console.log("clicked join org");
+                      }}
+                      id={GTM.orgBook.prefix + GTM.orgBook.joinOrgContainer}
+                    >
+                      <JoinOrgLabel>{t("orgBook.joinUs")}</JoinOrgLabel>
+                    </JoinOrgButton>
+                  </JoinOrgContainer>
+                ) : (
+                  ""
+                )}
+
                 {showEditIcon() && (
                   <EditIcon
                     src={edit}
@@ -371,7 +440,42 @@ const OrgBookViewer = (props) => {
           </UserInfoContainer>
         )}
       </ProfileLayout>
-      {organisation && (
+
+      {organisation &&
+        (isMobile ? (
+          <TOCSidebarAndPageContainer>
+            {renderTableOfContents()}
+          </TOCSidebarAndPageContainer>
+        ) : (
+          <TOCSidebarAndPageContainer>
+            <TOCSidebarAndPageWrapper>
+              {renderTableOfContents()}
+              <OrgBookViewerContentBox>
+                {selectedPage && (
+                  <PageContentWrapper
+                    dangerouslySetInnerHTML={{ __html: selectedPage.content }}
+                  ></PageContentWrapper>
+                )}
+                {!selectedPage && (
+                  <PageContentWrapper
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        "<p><span style='display: block; height: 500px'>&nbsp;</span></p>",
+                    }}
+                  ></PageContentWrapper>
+                )}
+              </OrgBookViewerContentBox>
+            </TOCSidebarAndPageWrapper>
+          </TOCSidebarAndPageContainer>
+        ))}
+
+      {/*   {organisation && isMobile === true (
+        <TOCSidebarAndPageContainer>
+          {renderTableOfContents()}
+        </TOCSidebarAndPageContainer>
+      )}
+
+      {organisation && isMobile === false (
         <TOCSidebarAndPageContainer>
           <TOCSidebarAndPageWrapper>
             {renderTableOfContents()}
@@ -392,7 +496,7 @@ const OrgBookViewer = (props) => {
             </OrgBookViewerContentBox>
           </TOCSidebarAndPageWrapper>
         </TOCSidebarAndPageContainer>
-      )}
+      )} */}
     </>
   );
 };

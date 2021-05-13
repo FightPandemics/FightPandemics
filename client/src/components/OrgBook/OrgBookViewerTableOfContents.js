@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import { useTranslation } from "react-i18next";
@@ -36,21 +36,8 @@ const PageListContainer = styled.div`
   font-size: ${(props) =>
     props.selected ? typography.size.xlarge : typography.size.large};
   font-weight: ${(props) => (props.selected ? "bold" : "normal")};
-  color: ${(props) => (props.selected ? royalBlue : black)};
-`;
-
-const JoinOrgContainer = styled.button`
-  type: submit;
-  width: 9rem;
-  height: 3rem;
-  border-radius: 4rem;
-  background-color: #f0f0f0;
-  margin-left: 7rem;
-`;
-
-const JoinOrgLabel = styled.div`
   color: ${black};
-  white-space: nowrap;
+  text-decoration-line: ${(props) => (props.selected ? "underline" : "none")};
 `;
 
 export const Background = styled.div`
@@ -120,17 +107,6 @@ const OrgBookViewerTableOfContents = (props) => {
             {page.name}
           </PageListContainer>
         ))}
-        <WhiteSpace />
-        <WhiteSpace />
-        <WhiteSpace />
-        <JoinOrgContainer
-          onClick={() => {
-            console.log("clicked join org");
-          }}
-          id={GTM.orgBook.prefix + GTM.orgBook.joinOrgContainer}
-        >
-          <JoinOrgLabel>{t("orgBook.joinUs")}</JoinOrgLabel>
-        </JoinOrgContainer>
       </MainNavigationContainer>
     )
   );

@@ -146,6 +146,7 @@ module.exports = {
     pageContainer: "_PC",
     joinOrgContainer: "_JO",
     deleteOrgBook: "_DO",
+    openOrgBookTOCMenu: "_OM",
   },
   providersFilters: {
     individual: "_IN",

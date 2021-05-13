@@ -562,8 +562,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       {t("profile.org.createOrgBook")}
                     </CreateOrgBookLink>
                   )
-                ) : areLivePublicOrgBookPages() ? ( //this is only for non-members
-                  <SeeOrgBookLink to={`/orgbook-viewer`}>
+                ) : areLivePublicOrgBookPages() ? ( //this is only for non-members and non-registered
+                  <SeeOrgBookLink to={`/orgbook-viewer/${organisationId}`}>
                     {t("profile.org.seeOrgBook")}
                   </SeeOrgBookLink>
                 ) : (
@@ -572,7 +572,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   </SeeOrgBookDisabled>
                 )
               ) : //edit mode is "create"
-              isSelf ? ( //this is correct, only owners can create
+              isSelf ? ( //only owners can create
                 <CreateOrgBookLink
                   to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
                 >
