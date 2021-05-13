@@ -7,7 +7,7 @@ const { colors } = theme;
 
 export const ProfileTabs = styled(Tabs)`
   position: relative;
-  padding: 0 2rem;
+  padding: 0;
   color: ${colors.darkGray};
   font-family: 'Poppins';
   font-weight: 600;
@@ -30,10 +30,8 @@ export const ProfileTabs = styled(Tabs)`
   content: "";
   border-bottom: solid .1rem ${colors.mediumishGray};
   position: absolute;
-  left:-50%;
+  left:0;
   bottom: 0;
-  
-  width: 4000px;
 }
 
 .ant-tabs-nav-wrap::after {

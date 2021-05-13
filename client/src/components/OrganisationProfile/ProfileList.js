@@ -46,6 +46,8 @@ const SeeAllLink = styled.div`
 
 @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: block;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
     color: ${colors.royalBlue};
     font-size: 1.4rem;
     font-weight: normal;
