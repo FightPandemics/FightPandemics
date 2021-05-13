@@ -9,6 +9,7 @@ const NoJoinOrg = ({ isSelf }) => {
   const othersText =
     "It looks like this person hasn’t joined an organization yet! ";
 
+
   return (
     <Wrapper>
       <div className="wrapper-content">
@@ -16,6 +17,7 @@ const NoJoinOrg = ({ isSelf }) => {
           <img src={noJoinOrgPic} alt="no join org pic" />
         </div>
         {isSelf ? <p>{ownText}</p> : <p>{othersText}</p>}
+
       </div>
     </Wrapper>
   );
