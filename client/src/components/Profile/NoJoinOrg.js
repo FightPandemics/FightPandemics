@@ -3,18 +3,21 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 import noJoinOrgPic from "assets/no-org-animal.svg";
 
-const NoJoinOrg = () => {
+const NoJoinOrg = ({ isSelf }) => {
+  const ownText =
+    "It looks like you haven't joined an organization yet! To join an organization, please go to the organization's profile page and click to Join button under the description.";
+  const othersText =
+    "It looks like this person hasn’t joined an organization yet! ";
+
+
   return (
     <Wrapper>
       <div className="wrapper-content">
         <div className="no-join-org-pic">
           <img src={noJoinOrgPic} alt="no join org pic" />
         </div>
-        <p>
-          It looks like you haven't joined an organization yet! To join an
-          organization, please go to the organization's profile page and click
-          to Join button under the description.
-        </p>
+        {isSelf ? <p>{ownText}</p> : <p>{othersText}</p>}
+
       </div>
     </Wrapper>
   );

@@ -16,6 +16,7 @@ import { theme, mq } from "constants/theme";
 
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
+import NoJoinOrg from "components/Profile/NoJoinOrg";
 import {
   FeedWrapper,
   SeeAllTabsWrapper,
@@ -102,7 +103,7 @@ import twitterBlue from "assets/icons/social-tw.svg";
 import githubIcon from "assets/icons/social-github.svg";
 import websiteIcon from "assets/icons/website-icon.svg";
 
-import locationIcon from "assets/icons/status-indicator.svg";
+import locationIcon from "assets/icons/map-pin.svg";
 import useWindowDimensions from "../utils/windowSize";
 import { lowerCase } from "lodash";
 
@@ -973,6 +974,7 @@ const Profile = ({
                   </Menu.Item>
                 ))}
               </MobileMenuWrapper>
+              {/* <NoJoinOrg isSelf={isSelf} /> */}
               <div style={{ width: "100%" }}>
                 {sectionView === "Requests" && (
                   <PostTabCard
@@ -1058,9 +1060,10 @@ const Profile = ({
                   </Menu.Item>
                 ))}
               </DesktopMenuWrapper>
+
               {sectionView === "Organisations" ?
                 rawTotalApplicantCount == 0 ?
-                  <NoJoinOrg />
+                  <NoJoinOrg isSelf={isSelf} />
                   :
                   (
                     <ProfileList
