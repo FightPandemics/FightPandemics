@@ -16,11 +16,12 @@ import { theme, mq } from "constants/theme";
 
 import CreatePost from "components/CreatePost/CreatePost";
 import ErrorAlert from "../components/Alert/ErrorAlert";
-import NoJoinOrg from "components/Profile/NoJoinOrg";
 import {
   FeedWrapper,
   SeeAllTabsWrapper,
   SeeAllContentWrapper,
+  SeeAllTabsWrapperOrg,
+  SeeAllContentWrapperOrg,
 } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
@@ -112,16 +113,21 @@ import {
   deletePostModalreducer,
   deletePostState,
   feedReducer,
-  optionsReducer
+  optionsReducer,
 } from "hooks/reducers/feedReducers";
 import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
-  SET_VALUE
+  SET_VALUE,
 } from "hooks/actions/feedActions";
-import ProfileList from "components/OrganisationProfile/ProfileList"
-import { TestMemberOfOrgs, MemberOrgs, Applicants, Meta } from "utils/TestMemberOfOrgs";
+import ProfileList from "components/OrganisationProfile/ProfileList";
+import {
+  TestMemberOfOrgs,
+  MemberOrgs,
+  Applicants,
+  Meta,
+} from "utils/TestMemberOfOrgs";
 import NoJoinOrg from "components/Profile/NoJoinOrg";
 
 const URLS = {
@@ -246,8 +252,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-          ? "A"
-          : "D";
+        ? "A"
+        : "D";
     }
     return undefined;
   }, [sectionView, internalTab]);
@@ -494,7 +500,6 @@ const Profile = ({
     return posts.profilePosts?.[userId]?.[filterView]?.[filterMode] == null;
   };
 
-
   useEffect(() => {
     if (sectionView.toUpperCase() == "POSTS") {
       refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
@@ -635,20 +640,18 @@ const Profile = ({
   filteredPost = posts.profilePosts[userId]?.[filterView]?.[filterMode] ?? [];
 
   const [feedState, feedDispatch] = useReducer(feedReducer, {
-    ...initialState
+    ...initialState,
   });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const applicants = useSelector(selectApplicants);
   //react-virtualized loaded rows and row count.
   const [itemCountApplicants, setItemCountApplicants] = useState(0);
   const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
-  const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
+  const [totalApplicantCount, setTotalApplicantCount] = useState(
+    ARBITRARY_LARGE_NUM,
+  );
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
-  const {
-    filterModal,
-    activePanel,
-    showFilters,
-  } = feedState;
+  const { filterModal, activePanel, showFilters } = feedState;
   const {
     error: applicantsError,
     isLoadingApplicants,
@@ -671,10 +674,19 @@ const Profile = ({
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
-  const refetchApplicants = (isLoadingApplicants, loadMoreApplicants, softRefresh = false) => {
+  const refetchApplicants = (
+    isLoadingApplicants,
+    loadMoreApplicants,
+    softRefresh = false,
+  ) => {
     if (!softRefresh) {
       dispatchAction(SET_VALUE, "applyFilters", true);
-      dispatch(applicantsActions.resetPageAction({ isLoadingApplicants, loadMoreApplicants }));
+      dispatch(
+        applicantsActions.resetPageAction({
+          isLoadingApplicants,
+          loadMoreApplicants,
+        }),
+      );
       if (pageApplicants === 0) {
         setToggleRefetchApplicants(!toggleRefetchApplicants);
       }
@@ -688,7 +700,7 @@ const Profile = ({
       return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
     let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
-    let endpoint = baseURL
+    let endpoint = baseURL;
     dispatch(applicantsActions.fetchApplicantsBegin());
 
     try {
@@ -698,13 +710,13 @@ const Profile = ({
       // } = await axios.get(endpoint);
 
       // TEST DATA
-      const applicants = MemberOrgs
-      const meta = Meta
+      const applicants = MemberOrgs;
+      const meta = Meta;
 
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
-          setRawTotalApplicants(meta.total)
+          setRawTotalApplicants(meta.total);
         }
 
         const lastPage = Math.ceil(meta.total / limit) - 1;
@@ -750,8 +762,7 @@ const Profile = ({
             }),
           );
         }
-      }
-      else if (applicants) {
+      } else if (applicants) {
         dispatch(
           applicantsActions.fetchApplicantsSuccess({
             applicants: { ...applicantsList },
@@ -766,9 +777,7 @@ const Profile = ({
     }
   };
 
-
-  useEffect(() => {
-  }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
@@ -778,9 +787,10 @@ const Profile = ({
     loadApplicants();
   }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
+  const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
+    feedApplicants,
+  ]);
   const loadNextPageApplicant = useCallback(
-
     ({ stopIndex }) => {
       if (
         !isLoadingApplicants &&
@@ -801,7 +811,9 @@ const Profile = ({
   );
 
   useEffect(() => {
-    setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
+    setItemCountApplicants(
+      loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length,
+    );
   }, [feedApplicants.length, loadMoreApplicants]);
 
   if (error) {
@@ -830,7 +842,8 @@ const Profile = ({
     }
   };
 
-  const emptyFeedApplicants = () => Object.keys(applicantsList).length < 1 && !isLoadingApplicants;
+  const emptyFeedApplicants = () =>
+    Object.keys(applicantsList).length < 1 && !isLoadingApplicants;
   const emptyFeed = () => filteredPost.length < 1 && !isLoading;
 
   if (authLoading == null || authLoading === true) {
@@ -1061,28 +1074,32 @@ const Profile = ({
                 ))}
               </DesktopMenuWrapper>
 
-              {sectionView === "Organisations" ?
-                rawTotalApplicantCount == 0 ?
+              {sectionView === "Organisations" ? (
+                rawTotalApplicantCount == 0 ? (
                   <NoJoinOrg isSelf={isSelf} />
-                  :
-                  (
-                    <ProfileList
-                      filteredOrgs={applicantsList}
-                      itemCount={itemCountApplicants}
-                      isItemLoaded={isApplicantLoaded}
-                      isNextPageLoading={isLoading}
-                      loadNextPage={loadNextPageApplicant}
-                      hasNextPage={loadMoreApplicants}
-                      filteredApplicants={applicantsList}
-                      totalCount={totalApplicantCount}
-                      page={pageApplicants}
-                      emptyFeed={emptyFeedApplicants}
-                      type="orgs"
-                    />
-                  ) : null}
+                ) : (
+                  <SeeAllTabsWrapperOrg>
+                    <SeeAllContentWrapperOrg>
+                      <ProfileList
+                        filteredOrgs={applicantsList}
+                        itemCount={itemCountApplicants}
+                        isItemLoaded={isApplicantLoaded}
+                        isNextPageLoading={isLoading}
+                        loadNextPage={loadNextPageApplicant}
+                        hasNextPage={loadMoreApplicants}
+                        filteredApplicants={applicantsList}
+                        totalCount={totalApplicantCount}
+                        page={pageApplicants}
+                        emptyFeed={emptyFeedApplicants}
+                        type="orgs"
+                      />
+                    </SeeAllContentWrapperOrg>
+                  </SeeAllTabsWrapperOrg>
+                )
+              ) : null}
               {sectionView === "Requests" ||
-                sectionView === "Offers" ||
-                sectionView === "Posts" ? (
+              sectionView === "Offers" ||
+              sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>

@@ -179,3 +179,14 @@ export const SeeAllContentWrapper = styled(Content)`
   margin: auto;
   background: ${white};
 `;
+
+export const SeeAllTabsWrapperOrg = styled(Content)`
+  background: transparent;
+`;
+
+export const SeeAllContentWrapperOrg = styled(Content)`
+  // overflow-x: visible !important;
+  width: 98%;
+  margin-top: 0rem;
+  margin-left: 0rem;
+`;
