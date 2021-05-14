@@ -49,6 +49,7 @@ import {
   PlaceholderIcon,
   DescriptionDesktop,
   IconsContainer,
+  SeeOrgBookLink,
   SocialIcon,
   SectionHeader,
   CreatePostDiv,
@@ -135,6 +136,7 @@ const initialState = {
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
+const getOrgBookLink = (orgBookLink) => (orgBookLink.startsWith("http") ? orgBookLink : window.location.pathname + `/${orgBookLink}`);
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 const OrganisationProfile = ({ isAuthenticated }) => {
@@ -170,6 +172,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     isOwner,
     urls = {},
     verified,
+    orgBookLink,
   } = organisation || {};
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
@@ -439,6 +442,16 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     }
   };
 
+  const orgBookURL = () => {
+    if (organisation) {
+      if (orgBookLink) {
+        return getOrgBookLink(orgBookLink) ;
+      } else {
+        return;
+      }
+    }
+  };
+
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
@@ -688,6 +701,12 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 <div className="social-icons">{renderURL()}</div>
               </IconsContainer> */}
 
+              {
+                (<SeeOrgBookLink>
+                  <a href={orgBookURL()}  target="_blank">See Org Book</a>
+                </SeeOrgBookLink>)
+              }
+
             </UserInfoDesktop>
           </UserInfoContainer>
 
@@ -775,7 +794,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 )}
               </FeedWrapper>
             </div></ProfileTabPane>
-            <ProfileTabPane tab={t("profile.views.members")} key="members">
+            {!isSelf && <ProfileTabPane tab={t("profile.views.members")} key="members">
               <ProfileList
                 filteredMembers={applicantsList}
                 itemCount={itemCountApplicants}
@@ -788,7 +807,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 page={pageApplicants}
                 emptyFeed={emptyFeed}
               />
-            </ProfileTabPane>
+            </ProfileTabPane>}
           </ProfileTabs>
 
           {isSelf && (

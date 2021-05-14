@@ -305,6 +305,20 @@ export const DescriptionDesktop = styled.div`
     color: #282828;
   }
 `;
+
+export const SeeOrgBookLink = styled.a`
+  color: ${colors.royalBlue};
+  width: 12rem;
+  height: 2rem;
+  align-self: center;  
+  display: block;
+  margin: auto;
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  font-family: Poppins;
+  font-weight: 500;  
+`; 
+
 export const MobileLocation = styled.div`
   color: #939393;
   font-weight: normal;
