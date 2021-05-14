@@ -255,7 +255,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
-          console.log({posts: posts})
+          console.log({ posts: posts })
           if (prevOrgId !== organisationId) {
             dispatch(
               postsActions.fetchPostsSuccess({
@@ -445,7 +445,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const orgBookURL = () => {
     if (organisation) {
       if (orgBookLink) {
-        return getOrgBookLink(orgBookLink) ;
+        return getOrgBookLink(orgBookLink);
       } else {
         return;
       }
@@ -703,12 +703,19 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
               {
                 (<SeeOrgBookLink>
-                  <a href={orgBookURL()}  target="_blank">See Org Book</a>
+                  <a href={orgBookURL()} target="_blank">See Org Book</a>
                 </SeeOrgBookLink>)
               }
 
             </UserInfoDesktop>
           </UserInfoContainer>
+          {
+            // TODO - REMOVE ORG WORKSPACE TEST LINK
+          }
+          <Link
+            style={{ color: "red", "font-weight": "bold" }}
+            to={`/orgworkspace/${organisationId}`}
+          >TEST ORG WORKSPACE LINK</Link>
 
           {isSelf && !verified && <Verification />}
           <WhiteSpace />

@@ -80,8 +80,6 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     let itemState
     let list
     let itemPath
-    console.log({ applicantsList: applicantsList })
-    console.log({ membersList: membersList })
     if (applicantsList || membersList) {
         list = "applicant"
         itemPath = `/application/${item._id}`

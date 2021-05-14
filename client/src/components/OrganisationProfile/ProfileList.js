@@ -77,6 +77,8 @@ const ProfileList = ({
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
+    console.log({items: items})
+
     const handleSeeAll = () => {
         setSeeAll(prevState => !prevState)
     }
