@@ -861,7 +861,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               {/* <IconsContainer>
                 <div className="social-icons">{renderURL()}</div>
               </IconsContainer> */}
-
               {
                 <SeeOrgBookLink>
                   <a href={orgBookURL()} target="_blank">
