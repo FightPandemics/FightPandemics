@@ -795,8 +795,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     );
   }, [feedApplicants.length, loadMoreApplicants]);
 
-  //const [displayText, setDisplayText] = useState(name);
-
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
