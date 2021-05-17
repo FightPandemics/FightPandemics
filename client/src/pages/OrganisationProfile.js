@@ -658,7 +658,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       setConfirmModalVisible(true);
     }, 3000);
 
-    //TODO pass data to backend
+    //TODO pass data to backend pending
   };
 
   const handleCancel = () => {
