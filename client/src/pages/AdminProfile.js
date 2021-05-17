@@ -292,52 +292,11 @@ const AdminProfile = (props) => {
         })();
     }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // const [scrollActive, setScrollActive] = useState(false);
-    // // const prevScroll = usePrevious(scrollActive);
-
-    // useEffect((() => {
-    //     window.addEventListener('scroll', () => setScrollActive(true));
-    // }), [scrollActive])
-
-    // const activateArrow = scrollActive
-
-    // console.log(activateArrow)
-
-    // const objDiv = document.getElementById('profile-list').offsetTop
-    // console.log(objDiv)
-
-    // const [boxBottom, setBoxBottom] = useState()
-
-    // const objDiv = document.getElementById('profile-list')
-
-    // const height = useCallback(() => {
-
-    //     setBoxBottom(objDiv)
-    // }, [])
-
-    // console.log()
-
-    // const inputRef = useRef()
-    // useEffect(() => {
-    //     // const height = inputRef.current.offsetHeight;
-    //     // console.log('Input height', height);
-    //     console.log("test:" + JSON.stringify(inputRef.current.getBoundingClientRect().top))
-    // }, [inputRef])
 
     const inputRef = useRef()
 
     const handleLoad = (e) => {
-        console.log({ clientHeight: e.target.clientHeight })
-        console.log({ inputRef: inputRef })
     }
-    // useEffect(() => {
-    //     // const height = inputRef.current.offsetHeight;
-    //     // console.log('Input height', height);
-    //     if (inputRef.current) {
-
-    //     }
-    //     console.log({ current: inputRef.current })
-    // }, [inputRef])
 
     if (error) {
         return <ErrorAlert message={error} type="error" />;
@@ -444,7 +403,7 @@ const AdminProfile = (props) => {
 }
 
 const getApplicantsBaseURL = (organisationId, limit, skip) => {
-    return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+    return `/api/applicants/organisationId=${organisationId}/status?status=applied&includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
 export default withUserContext(withOrganisationContext(AdminProfile));
