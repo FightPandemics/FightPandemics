@@ -5,11 +5,13 @@ const APPLICANT_STATUS = ["applied", "accepted", "rejected"];
 // --Schema
 const applicantSchema = new Schema(
   {
-    organizationId: {
-      ref: "OrganisationUser",
-      required: true,
-      // type: Schema.Types.ObjectId,
-      type: ObjectId,
+    organization: {
+      id: {
+        ref: "OrganisationUser",
+        required: true,
+        // type: Schema.Types.ObjectId,
+        type: ObjectId,
+      }
     },
     applicantApplied: {
       required: true,

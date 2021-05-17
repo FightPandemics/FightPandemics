@@ -104,7 +104,7 @@ async function routes(app) {
               {
                 $match: {
 
-                  organizationId: mongoose.Types.ObjectId(organisationId)
+                  organization: { id: mongoose.Types.ObjectId(organisationId) }
                 }
               }
               ,
@@ -134,18 +134,25 @@ async function routes(app) {
           return applicants;
         })
       );
-
+      console.log({ organisationId: organisationId })
+      console.log({ applicants: applicants })
       const totalResultsAggregationPipeline = await Applicant.aggregate(
         organisationId
           ? [
-            { $match: { organizationId: mongoose.Types.ObjectId(organisationId) } },
-            { $group: { _id: null, count: { $sum: 1 } } },
+            {
+              $match: {
+
+                organization: { id: mongoose.Types.ObjectId(organisationId) }
+              }
+            }
+            // { $group: { _id: null, count: { $sum: 1 } } },
           ]
           : [
             // { $match: { organizationId: mongoose.Types.ObjectId(organisationId) } },
             { $group: { _id: null, count: { $sum: 1 } } },
           ],
       );
+      console.log({ totalResultsAggregationPipeline: totalResultsAggregationPipeline })
       const applicantsResponse = (response) => {
         if (!includeMeta) {
           return response;
@@ -161,6 +168,7 @@ async function routes(app) {
       };
 
       if (applicantsErr) {
+        console.log("ERRORRRRRRRRRRRR!")
         req.log.error(applicantsErr, "Failed requesting applicants");
         throw app.httpErrors.internalServerError();
       }
