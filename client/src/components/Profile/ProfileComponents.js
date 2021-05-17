@@ -170,7 +170,7 @@ export const ProfileBackgroup = styled.div`
 `;
 
 export const ProfileLayout = styled.div`
-  background-color: ${colors.offWhite};
+  /* background-color: ${colors.offWhite}; */
   max-height: 100%;
   z-index: 1;
   max-width: 80rem;
@@ -184,7 +184,6 @@ export const ProfileLayout = styled.div`
     width: 90vw;
     margin-left: auto;
     margin-right: auto;
-    background-color: #f6f7fb;
   }
 `;
 

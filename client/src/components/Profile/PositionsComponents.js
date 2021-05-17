@@ -213,7 +213,7 @@ export const HelpContainer = styled.div`
 `;
 
 export const UserInfoContainer = styled.div`
-  background-color: ${colors.white};
+  /* background-color: ${colors.white}; */
   box-shadow: 0px 0.2rem 2rem rgba(0, 0, 0, 0.01);
   max-width: 80rem;
   width: 100%;
