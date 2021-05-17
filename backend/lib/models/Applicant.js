@@ -9,7 +9,7 @@ const applicantSchema = new Schema(
     // 6.1 has a different structure (organisationId)
     organization: {
       id: {
-        ref: "OrganisationUser",
+        // ref: "OrganisationUser",
         required: true,
         type: ObjectId,
       },

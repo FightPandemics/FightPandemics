@@ -167,10 +167,13 @@ const PositionApplicationForm = ({ orgName,
     const payload = formToApplicationMappings(formData);
 
     try {
-      await axios.post("/api/applicants", payload);
+      const res = await axios.post("/api/applicants", payload);
+      console.log({ res: res })
     } catch (error) {
       console.log(error);
+      console.log("ERRRORRR!")
     }
+    console.log({ res: "success" })
     setVisibleTwo(true);
   };
 
