@@ -136,7 +136,6 @@ async function routes(app) {
         })
       );
 
-      console.log("GEEEETE!")
       const totalResultsAggregationPipeline = await Applicant.aggregate(
         organisationId
           ? [
@@ -298,9 +297,7 @@ async function routes(app) {
       schema: createApplicantSchema,
     },
     async (req, reply) => {
-      console.log("request!!!!!!!!!!!!!!")
       const { actor, body: applicantProps } = req;
-      console.log({ applicantProps: applicantProps })
       //Creates the embeded author document
       applicantProps.applicant = {
         id: mongoose.Types.ObjectId(actor.id),
@@ -310,9 +307,7 @@ async function routes(app) {
         type: actor.type,
         verified: actor.verification && actor.verification.status === "approved",
       };
-      console.log({ applicantProps: applicantProps })
       const [err, applicant] = await app.to(new Applicant(applicantProps).save());
-      console.log({ applicant: applicant })
       if (err) {
         req.log.error(err, "Failed creating applicant.");
         throw app.httpErrors.internalServerError();
