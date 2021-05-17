@@ -26,6 +26,7 @@ export const ProfileContainer = styled.div`
   padding: 0 1rem;
   width: 100%;
   height: 9rem;
+  background: ${theme.colors.white};
 
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     &.organisation-card {

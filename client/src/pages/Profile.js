@@ -324,6 +324,11 @@ const Profile = ({
         disabled: false,
         gtm: "offers",
       });
+      baseMenu.splice(3, 0, {
+        name: "Organisations",
+        disable: false,
+        gtm: "organisations",
+      });
       setSectionView(t("profile.views.requests"));
       setInternalTab(t("profile.views.active"));
     } else {
@@ -941,23 +946,26 @@ const Profile = ({
         <WhiteSpace />
         <SectionHeader>
           <PlaceholderIcon />
-          {isSelf && (
-            <>
-              <CreatePostIcon
-                id={GTM.user.profilePrefix + GTM.post.createPost}
-                src={createPost}
-                onClick={onToggleCreatePostDrawer}
-              />
-              <CreatePostButton
-                onClick={onToggleCreatePostDrawer}
-                id={GTM.user.profilePrefix + GTM.post.createPost}
-                inline={true}
-                icon={<PlusIcon />}
-              >
-                {t("post.create")}
-              </CreatePostButton>
-            </>
-          )}
+          {isSelf &&
+            (sectionView === "Requests" ||
+              sectionView === "Offers" ||
+              sectionView === "Posts") && (
+              <>
+                <CreatePostIcon
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  src={createPost}
+                  onClick={onToggleCreatePostDrawer}
+                />
+                <CreatePostButton
+                  onClick={onToggleCreatePostDrawer}
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  inline={true}
+                  icon={<PlusIcon />}
+                >
+                  {t("post.create")}
+                </CreatePostButton>
+              </>
+            )}
         </SectionHeader>
         {isSelf && (
           <CreatePost
