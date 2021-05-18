@@ -113,7 +113,7 @@ export const NameDiv = styled(TextLabel)`
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100% - 1.6rem);
-    backgroun-color: red;
+    /* backgroun-color: red; */
 
     img {
       margin-right: 0.8rem;
@@ -179,6 +179,10 @@ export const ProfileLayout = styled.div`
   width: 100vw;
   border-radius: 0.8rem;
   margin-bottom: 4rem;
+
+  &.profile-list-page {
+    overflow: visible;
+  }
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 90vw;

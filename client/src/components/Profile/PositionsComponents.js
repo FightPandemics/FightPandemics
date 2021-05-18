@@ -350,6 +350,7 @@ export const PageTitle = styled(TextLabel)`
 `;
 
 export const PositionsContainer = styled.div`
+    position: relative;
     
   p {
     font-family: 'Work Sans';

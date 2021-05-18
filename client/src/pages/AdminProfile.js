@@ -64,6 +64,7 @@ const AdminProfile = (props) => {
     });
     const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
     const applicants = useSelector(selectApplicants);
+    
     //react-virtualized loaded rows and row count.
     const [itemCount, setItemCount] = useState(0);
     const [toggleRefetch, setToggleRefetch] = useState(false);
@@ -120,7 +121,7 @@ const AdminProfile = (props) => {
             const {
                 data: { data: applicants, meta },
             } = await axios.get(endpoint);
-
+            console.log({applicants: applicants})
             if (applicants.length && meta.total) {
                 if (prevTotalApplicantCount !== meta.total) {
                     setTotalApplicantCount(meta.total);
@@ -226,6 +227,12 @@ const AdminProfile = (props) => {
     }, [feedApplicants.length, loadMore]);
 
     const emptyFeed = () => applicantsList.length < 1 && !isLoading;
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+    window.addEventListener("resize", () => {
+        setWindowWidth(window.innerWidth)
+    });
 
     let url = window.location.pathname.split("/");
     const organisationId = url[url.length - 1];
@@ -343,7 +350,7 @@ const AdminProfile = (props) => {
                             <ProfileTabs>
                                 <ProfileTabPane
                                     className="single-tab"
-                                    tab={t("profile.views.applicants") + ` ( ${rawTotalApplicantCount} )`} key="members">
+                                    tab={t("profile.views.applicants") + (windowWidth < 767 ? ` ( ${rawTotalApplicantCount} )` : "")} key="members">
                                     {rawTotalApplicantCount == 0 ?
                                         <div style={{ textAlign: "center", marginTop: "5rem" }}>
                                             No Applicants to display.

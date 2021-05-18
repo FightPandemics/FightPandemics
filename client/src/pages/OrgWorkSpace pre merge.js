@@ -1,3 +1,4 @@
+// PRE MERGE
 import filterOptions from "assets/data/filterOptions";
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
@@ -45,8 +46,6 @@ import {
 import { WhiteSpace } from "antd-mobile";
 import styled from "styled-components";
 
-import { TestMembersList, Meta } from "utils/TestMembersList";
-
 const initialState = {
     showFilters: false,
     filterModal: true,
@@ -67,6 +66,8 @@ const OrgWorkSpace = (props) => {
     });
     const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
     const applicants = useSelector(selectApplicants);
+
+    //react-virtualized loaded rows and row count.
     const [itemCount, setItemCount] = useState(0);
     const [toggleRefetch, setToggleRefetch] = useState(false);
     const [totalApplicantCount, setTotalApplicantCount] = useState(ARBITRARY_LARGE_NUM);
@@ -119,15 +120,15 @@ const OrgWorkSpace = (props) => {
         dispatch(applicantsActions.fetchApplicantsBegin());
 
         try {
-            // TODO - SWAP OUT MEMBER STATIC TEST DATA FOR API CALL
+            const {
+                data: { data: applicants, meta },
+            } = await axios.get(endpoint);
 
-            // const {
-            //     data: { data: applicants, meta },
-            // } = await axios.get(endpoint);
-            
-            const meta = Meta
-            const { applicants: applicants } = TestMembersList
+            const { data } = await axios.get(endpoint);
 
+            console.log({data: data})
+            // console.log({ applicants: applicants })
+            console.log({ meta2: meta })
             if (!meta.total) {
                 setRawTotalApplicants(0)
             }

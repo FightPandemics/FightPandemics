@@ -413,7 +413,8 @@
       "global": "Global",
       "editOrgAccount": "Edit Organization Account",
       "editOrgNotification": "Edit Organization Notification",
-      "applicants": "Applicants"
+      "applicants": "Applicants",
+      "members": "Members"
     },
     "views": {
       "activity": "Activity",
