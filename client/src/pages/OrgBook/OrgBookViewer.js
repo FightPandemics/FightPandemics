@@ -131,6 +131,15 @@ const TableOfContentsSidebar = styled.div`
   }
 `;
 
+const TOCSidebarAndPageMobile = styled.div`
+  position: absolute;
+  top: 15rem;
+  bottom: 35rem;
+  // z-index: 5;
+  width: 100%;
+  left: 2rem;
+`;
+
 const OrgBookViewerContentBox = styled.div`
   grid-area: b;
   align-self: start;
@@ -147,6 +156,40 @@ const PageContentWrapper = styled.div`
   //scroll-behavior: smooth;
   //scrollbar-color: light;
   padding: 0 0 0 0;
+`;
+
+export const NameParaViewerMobile = styled.p`
+  overflow-wrap: break-word;
+  text-align: left;
+  color: #282828;
+  padding: 0;
+  overflow-wrap: break-word;
+  margin: 0rem 0rem 0rem 2rem !important;
+  text-align: left;
+  max-width: 90%;
+  font-family: Poppins;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.9rem;
+  line-height: 1.9rem;
+  letter-spacing: 0.05rem;
+`;
+
+export const OrgAddressViewerMobile = styled.p`
+  overflow-wrap: break-word;
+  text-align: left;
+  margin: 0rem 0rem 0rem 2rem !important;
+`;
+
+const OrgBookViewerContentBoxMobile = styled.div`
+  position: absolute;
+  top: 6rem;
+  // bottom: 35rem;
+  z-index: 3;
+  align-self: start;
+  background-color: ${white};
+  overflow-y: scroll;
+  //scroll-behavior: smooth;
 `;
 
 const OrgBookViewer = (props) => {
@@ -370,9 +413,10 @@ const OrgBookViewer = (props) => {
 
   return (
     <>
-      <ProfileBackgroup />
-      <ProfileLayout>
-        {organisation && (
+      {!isMobile ? <ProfileBackgroup /> : ""}
+
+      {organisation && !isMobile ? (
+        <ProfileLayout>
           <UserInfoContainer>
             <AvatarPhotoContainer>
               <ProfilePic
@@ -380,13 +424,13 @@ const OrgBookViewer = (props) => {
                 initials={getInitialsFromFullName(organisation.name)}
               />
               {/*  {organisation && props.organisationId == organisation._id && (
-              <PhotoUploadButton>
-                <UploadPic
-                  gtmPrefix={GTM.organisation.orgPrefix}
-                  user={organisation}
-                />
-              </PhotoUploadButton>
-            )} */}
+                <PhotoUploadButton>
+                  <UploadPic
+                    gtmPrefix={GTM.organisation.orgPrefix}
+                    user={organisation}
+                  />
+                </PhotoUploadButton>
+              )} */}
             </AvatarPhotoContainer>
 
             <UserInfoDesktop>
@@ -438,14 +482,64 @@ const OrgBookViewer = (props) => {
               </IconsContainer>
             </UserInfoDesktop>
           </UserInfoContainer>
-        )}
-      </ProfileLayout>
+        </ProfileLayout>
+      ) : (
+        ""
+      )}
+
+      {organisation && isMobile ? (
+        <NameDiv>
+          <div className="name-container">
+            <NameParaViewerMobile>{organisation.name}</NameParaViewerMobile>
+            {organisation.location.address && (
+              <OrgAddressViewerMobile
+                title={organisation.location.address}
+                className="address-container"
+              >
+                <img src={locationIcon} alt={organisation.location.address} />
+                {organisation.location.address}
+              </OrgAddressViewerMobile>
+            )}
+          </div>
+          {organisation && !isOrgMember() ? (
+            <JoinOrgContainer>
+              <JoinOrgButton
+                onClick={() => {
+                  console.log("clicked join org");
+                }}
+                id={GTM.orgBook.prefix + GTM.orgBook.joinOrgContainer}
+              >
+                <JoinOrgLabel>{t("orgBook.joinUs")}</JoinOrgLabel>
+              </JoinOrgButton>
+            </JoinOrgContainer>
+          ) : (
+            ""
+          )}
+        </NameDiv>
+      ) : (
+        ""
+      )}
 
       {organisation &&
         (isMobile ? (
-          <TOCSidebarAndPageContainer>
+          <TOCSidebarAndPageMobile>
             {renderTableOfContents()}
-          </TOCSidebarAndPageContainer>
+            <OrgBookViewerContentBoxMobile>
+              {selectedPage && (
+                <PageContentWrapper
+                  dangerouslySetInnerHTML={{ __html: selectedPage.content }}
+                ></PageContentWrapper>
+              )}
+              {!selectedPage && (
+                <PageContentWrapper
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "<p><span style='display: block; height: 500px'>&nbsp;</span></p>",
+                  }}
+                ></PageContentWrapper>
+              )}
+            </OrgBookViewerContentBoxMobile>
+          </TOCSidebarAndPageMobile>
         ) : (
           <TOCSidebarAndPageContainer>
             <TOCSidebarAndPageWrapper>
@@ -468,35 +562,6 @@ const OrgBookViewer = (props) => {
             </TOCSidebarAndPageWrapper>
           </TOCSidebarAndPageContainer>
         ))}
-
-      {/*   {organisation && isMobile === true (
-        <TOCSidebarAndPageContainer>
-          {renderTableOfContents()}
-        </TOCSidebarAndPageContainer>
-      )}
-
-      {organisation && isMobile === false (
-        <TOCSidebarAndPageContainer>
-          <TOCSidebarAndPageWrapper>
-            {renderTableOfContents()}
-            <OrgBookViewerContentBox>
-              {selectedPage && (
-                <PageContentWrapper
-                  dangerouslySetInnerHTML={{ __html: selectedPage.content }}
-                ></PageContentWrapper>
-              )}
-              {!selectedPage && (
-                <PageContentWrapper
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      "<p><span style='display: block; height: 500px'>&nbsp;</span></p>",
-                  }}
-                ></PageContentWrapper>
-              )}
-            </OrgBookViewerContentBox>
-          </TOCSidebarAndPageWrapper>
-        </TOCSidebarAndPageContainer>
-      )} */}
     </>
   );
 };

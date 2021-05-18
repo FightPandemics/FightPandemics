@@ -9,80 +9,57 @@ import { WhiteSpace } from "antd-mobile";
 import GTM from "../../constants/gtm-tags";
 
 const { colors, typography } = theme;
-const { white, black, lightGray, mediumGray, royalBlue } = colors;
+const { darkerGray, offWhite, black } = colors;
+
+const MainMobileTOCContainer = styled.div`
+  width: 20rem;
+  position: absolute;
+  top: 3rem;
+  bottom: 35rem;
+  z-index: 5;
+`;
 
 const StyledMobileTOCMenuContainer = styled.div`
-  //font-size: ${typography.size.large};
-  //font-weight: bold;
+  border: solid 1px black;
+  width: 20rem;
 `;
 
 export const MobileTOCMenuWrapper = styled(Menu)`
-  //height: 4rem;
-  //margin: 1rem 1rem;
-  //display: flex;
-  //justify-content: space-between;
-  background-color: transparent;
+  background-color: ${offWhite};
 
   &.ant-menu {
     li.ant-menu-item {
       margin: 0.8rem 0;
-      height: 3rem;
-      padding-bottom: 0rem;
+      height: 2.4rem;
+      padding-bottom: 1rem;
 
       color: ${theme.colors.darkerGray};
-      font-size: ${theme.typography.size.large};
+      font-size: ${theme.typography.size.medium};
       line-height: 2.1rem;
-      width: 50%;
+      width: 100%;
       &:hover {
         color: ${theme.colors.darkerGray};
       }
-      text-align: center;
+      text-align: left;
+      font-size: ${(props) =>
+        props.selected ? typography.size.xlarge : typography.size.large};
+      font-weight: ${(props) => (props.selected ? "bold" : "normal")};
+      color: ${black};
+      text-decoration-line: ${(props) =>
+        props.selected ? "underline" : "none"};
     }
 
-    &.ant-menu .ant-menu-item-selected {
-      background-color: transparent;
-      border-bottom: 0.2rem solid ${theme.colors.black};
-      font-weight: bold;
-    }
+    // &.ant-menu .ant-menu-item-selected {
+    //   background-color: ${darkerGray};
+    //   border-bottom: 0.2rem solid ${theme.colors.black};
+    //   font-weight: bold;
+    // }
+
+    // .ant-menu-item-selected.customclass {             //new
+    //   background-color: green; /*Overriden property*/
+    // }
   }
 `;
-
-// const MainNavigationContainer = styled.div`
-//   color: ${black};
-//   overflow-y: scroll;
-//   scroll-behavior: smooth;
-//   scrollbar-color: light;
-//   padding: 1.4rem 1.4rem 3.4rem 1.4rem;
-// `;
-
-// const LearnMoreContainer = styled.div`
-//   font-size: ${typography.size.large};
-//   font-weight: bold;
-// `;
-
-// const PageListContainer = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-//   flex-wrap: nowrap;
-//   height: 4vh;
-//   margin: 1.4rem 1.4rem 2.4rem 0.4rem;
-//   cursor: pointer;
-//   :hover {
-//     background-color: ${lightGray};
-//     color: ${black};
-//   }
-//   font-size: ${(props) =>
-//     props.selected ? typography.size.xlarge : typography.size.large};
-//   font-weight: ${(props) => (props.selected ? "bold" : "normal")};
-//   color: ${black};
-//   text-decoration-line: ${(props) => (props.selected ? "underline" : "none")};
-// `;
-
-// export const Background = styled.div`
-//   width: 95%;
-//   background-color: ${mediumGray};
-// `;
 
 const OrgBookViewerTOCMobile = (props) => {
   const {
@@ -114,8 +91,6 @@ const OrgBookViewerTOCMobile = (props) => {
 
   useEffect(initialize, []);
 
-  //useEffect([menuOpen]);
-
   const toggleMenuOpen = () => {
     setMenuOpen(true);
   };
@@ -134,52 +109,36 @@ const OrgBookViewerTOCMobile = (props) => {
   };
 
   return (
-    sortedFilteredOrgBookPages &&
-    (!menuOpen ? (
-      <SvgIcon
-        src={menuIcon}
-        id={GTM.orgBook.prefix + GTM.orgBook.openOrgBookTOCMenu}
-        onClick={(e) => {
-          toggleMenuOpen();
-        }}
-      />
-    ) : (
-      <StyledMobileTOCMenuContainer>
-        <MobileTOCMenuWrapper mode="vertical">
-          {sortedFilteredOrgBookPages.map((page, idx) => (
-            <Menu.Item
-              key={page.name}
-              id={GTM.orgBook.prefix + GTM.orgBook.pageContainer + idx}
-              onClick={() => {
-                handlePageClick(page);
-              }}
-            >
-              {page.name}
-            </Menu.Item>
-          ))}
-        </MobileTOCMenuWrapper>
-      </StyledMobileTOCMenuContainer>
-    ))
-
-    /*  <MainNavigationContainer>
-        <WhiteSpace />
-        <LearnMoreContainer>{t("orgBook.learnMore")}</LearnMoreContainer>
-        <WhiteSpace />
-        <WhiteSpace />
-        <WhiteSpace />
-        {sortedFilteredOrgBookPages.map((page, idx) => (
-          <PageListContainer
-            key={idx}
-            selected={isSelectedPage(page)}
+    sortedFilteredOrgBookPages && (
+      <MainMobileTOCContainer>
+        {!menuOpen ? (
+          <SvgIcon
+            src={menuIcon}
+            id={GTM.orgBook.prefix + GTM.orgBook.openOrgBookTOCMenu}
             onClick={(e) => {
-              handlePageClick(e, page);
+              toggleMenuOpen();
             }}
-            id={GTM.orgBook.prefix + GTM.orgBook.pageContainer + idx}
-          >
-            {page.name}
-          </PageListContainer>
-        ))}
-      </MainNavigationContainer> */
+          />
+        ) : (
+          <StyledMobileTOCMenuContainer>
+            <MobileTOCMenuWrapper mode="vertical">
+              {sortedFilteredOrgBookPages.map((page, idx) => (
+                <Menu.Item
+                  selected={isSelectedPage(page)}
+                  key={page.name}
+                  id={GTM.orgBook.prefix + GTM.orgBook.pageContainer + idx}
+                  onClick={() => {
+                    handlePageClick(page);
+                  }}
+                >
+                  {page.name}
+                </Menu.Item>
+              ))}
+            </MobileTOCMenuWrapper>
+          </StyledMobileTOCMenuContainer>
+        )}
+      </MainMobileTOCContainer>
+    )
   );
 };
 
