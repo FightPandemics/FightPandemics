@@ -252,8 +252,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-        ? "A"
-        : "D";
+          ? "A"
+          : "D";
     }
     return undefined;
   }, [sectionView, internalTab]);
@@ -368,110 +368,121 @@ const Profile = ({
   };
 
   useEffect(() => {
-    let _isMounted = false;
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
 
-    const fetchPosts = async () => {
-      if (!isInit) {
-        return;
-      }
+    if (sectionView.toUpperCase() == "POSTS") {
+      let _isMounted = false;
+      const CancelToken = axios.CancelToken;
+      const source = CancelToken.source();
 
-      const limit = PAGINATION_LIMIT;
-      const skip = page * limit;
-      if (!shouldRefetchPost()) {
-        return;
-      }
+      const fetchPosts = async () => {
+        if (!isInit) {
+          return;
+        }
 
-      dispatch(postsActions.fetchPostsBegin());
-      try {
-        if (userId) {
-          let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
-          const view = getView();
+        const limit = PAGINATION_LIMIT;
+        const skip = page * limit;
+        if (!shouldRefetchPost()) {
+          return;
+        }
 
-          const objURL = `&objective=${view}`;
+        dispatch(postsActions.fetchPostsBegin());
 
-          const mode = getMode();
 
-          const modeURL = `&postMode=${mode}`;
-          const endpoint = `${baseURL}${objURL}${modeURL}`;
 
-          const {
-            data: { data: posts, meta },
-          } = await axios.get(endpoint);
+        try {
+          if (userId) {
+            let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
+            const view = getView();
 
-          if (!_isMounted) {
-            //mobile fetch
-            dispatch(
-              postsActions.fetchProfilePostSuccess({
-                posts: [...filteredPost, ...posts],
-                userId,
-                objective: view,
-                mode: mode,
-              }),
-            );
+            const objURL = `&objective=${view}`;
 
-            //desktop fetch
-            if (prevUserId !== userId) {
+            const mode = getMode();
+
+            const modeURL = `&postMode=${mode}`;
+            // const modeURL = `&postMode=A`;
+            const endpoint = `${baseURL}${objURL}${modeURL}`;
+
+            const {
+              data: { data: posts, meta },
+            } = await axios.get(endpoint);
+
+            console.log({ posts: posts })
+            console.log({ error: postsError })
+
+            if (!_isMounted) {
+              //mobile fetch
               dispatch(
-                postsActions.fetchPostsSuccess({
-                  posts: [],
+                postsActions.fetchProfilePostSuccess({
+                  posts: [...filteredPost, ...posts],
+                  userId,
+                  objective: view,
+                  mode: mode,
                 }),
               );
-            }
-            if (posts.length && meta.total) {
-              if (prevTotalPostCount !== meta.total) {
-                setTotalPostCount(meta.total);
-              }
-              if (posts.length < limit) {
-                dispatch(postsActions.finishLoadingAction());
-              } else if (meta.total === limit) {
-                dispatch(postsActions.finishLoadingAction());
-              }
-              const loadedPosts = posts.reduce((obj, item) => {
-                obj[item._id] = item;
-                return obj;
-              }, {});
 
-              if (prevUserId === userId && postsList) {
+              //desktop fetch
+              if (prevUserId !== userId) {
                 dispatch(
                   postsActions.fetchPostsSuccess({
-                    posts: { ...postsList, ...loadedPosts },
+                    posts: [],
                   }),
                 );
+              }
+              if (posts.length && meta.total) {
+                if (prevTotalPostCount !== meta.total) {
+                  setTotalPostCount(meta.total);
+                }
+                if (posts.length < limit) {
+                  dispatch(postsActions.finishLoadingAction());
+                } else if (meta.total === limit) {
+                  dispatch(postsActions.finishLoadingAction());
+                }
+                const loadedPosts = posts.reduce((obj, item) => {
+                  obj[item._id] = item;
+                  return obj;
+                }, {});
+
+                if (prevUserId === userId && postsList) {
+                  dispatch(
+                    postsActions.fetchPostsSuccess({
+                      posts: { ...postsList, ...loadedPosts },
+                    }),
+                  );
+                } else {
+                  dispatch(
+                    postsActions.fetchPostsSuccess({
+                      posts: { ...loadedPosts },
+                    }),
+                  );
+                }
+              } else if (prevUserId === userId && posts) {
+                dispatch(
+                  postsActions.fetchPostsSuccess({
+                    posts: { ...postsList },
+                  }),
+                );
+                dispatch(postsActions.finishLoadingAction());
               } else {
-                dispatch(
-                  postsActions.fetchPostsSuccess({
-                    posts: { ...loadedPosts },
-                  }),
-                );
+                dispatch(postsActions.finishLoadingAction());
               }
-            } else if (prevUserId === userId && posts) {
-              dispatch(
-                postsActions.fetchPostsSuccess({
-                  posts: { ...postsList },
-                }),
-              );
-              dispatch(postsActions.finishLoadingAction());
-            } else {
-              dispatch(postsActions.finishLoadingAction());
             }
           }
+        } catch (error) {
+          console.log("Error - ", error);
+          dispatch(postsActions.fetchPostsError(error));
+          if (axios.isCancel(error)) {
+            console.log(`request cancelled:${error.message}`);
+          } else {
+            console.log("Error:" + error.message);
+            console.log({ fetchPostError: posts })
+          }
         }
-      } catch (error) {
-        console.log("Error - ", error);
-        dispatch(postsActions.fetchPostsError(error));
-        if (axios.isCancel(error)) {
-          console.log(`request cancelled:${error.message}`);
-        } else {
-          console.log("Error:" + error.message);
-        }
-      }
-    };
-    fetchPosts();
-    return () => {
-      _isMounted = true;
-      source.cancel("Cancelling is cleanup");
+      };
+      fetchPosts();
+      return () => {
+        _isMounted = true;
+        source.cancel("Cancelling is cleanup");
+      };
     };
   }, [userId, page, toggleRefetch, isInit]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -518,7 +529,7 @@ const Profile = ({
     if (sectionView.toUpperCase() == "ORGANISATIONS") {
       refetchApplicants();
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -782,11 +793,11 @@ const Profile = ({
     }
   };
 
-  useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadApplicants();
@@ -1061,6 +1072,29 @@ const Profile = ({
                     viewType={sectionView.toUpperCase()}
                   />
                 )}
+                {sectionView === "Organisations" ? (
+                  rawTotalApplicantCount == 0 ? (
+                    <NoJoinOrg isSelf={isSelf} />
+                  ) : (
+                    <SeeAllTabsWrapperOrg>
+                      <SeeAllContentWrapperOrg>
+                        <ProfileList
+                          filteredOrgs={applicantsList}
+                          itemCount={itemCountApplicants}
+                          isItemLoaded={isApplicantLoaded}
+                          isNextPageLoading={isLoading}
+                          loadNextPage={loadNextPageApplicant}
+                          hasNextPage={loadMoreApplicants}
+                          filteredApplicants={applicantsList}
+                          totalCount={totalApplicantCount}
+                          page={pageApplicants}
+                          emptyFeed={emptyFeedApplicants}
+                          type="orgs"
+                        />
+                      </SeeAllContentWrapperOrg>
+                    </SeeAllTabsWrapperOrg>
+                  )
+                ) : null}
               </div>
             </StyledMobileMenuContainer>
           ) : null}
@@ -1106,8 +1140,8 @@ const Profile = ({
                 )
               ) : null}
               {sectionView === "Requests" ||
-              sectionView === "Offers" ||
-              sectionView === "Posts" ? (
+                sectionView === "Offers" ||
+                sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>
