@@ -61,11 +61,10 @@ export const Name = styled.p`
 `;
 
 export const Permissions = styled.div`
-    font-style: 'Work Sans';
+    font-family: 'Work Sans';
     font-size: 1rem;
     line-height: 1.8rem;
-    color: rgba(0, 0, 0, 0.5);
-    color: ${colors.lightishGray};
+    color: ${colors.mediumishGray};
     opacity: 50%;
     margin: 0;
     margin-top: .2rem;
