@@ -710,6 +710,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           </UserInfoContainer>
 
           {isSelf && !verified && <Verification />}
+
+          <Link
+            to={`/organisation/${organisationId}/applications`}
+          ><div style={{ color: "red" }}>TEST APPLICATION REVIEW PAGE</div></Link>
           <WhiteSpace />
           {// Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }

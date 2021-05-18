@@ -1,7 +1,7 @@
 import applicationConfirmation from "assets/icons/application-received.svg";
 import { Footer, Submit } from "components/CreatePost/StyledModal";
 import { ApplyModal, ButtonsContainer, StyledCancelButton, StyledContainer, StyledSubmitButton } from "components/Positions/ApplicationModalStyles";
-import { CharCounter, ErrorMsg, InputField, InputWrapper, OuterWrapper } from "components/Positions/ApplyFormInputStyles";
+import { CharCounter, ErrorMsg, InputField, InputWrapper, OuterWrapper } from "components/Positions/ApplicationStyles";
 import PositionsButton from "components/Positions/PositionsButton";
 import { PositionSubmitModal } from "components/Positions/PositionSubmitModal";
 import { mq, theme } from "constants/theme";

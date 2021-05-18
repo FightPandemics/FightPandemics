@@ -57,7 +57,7 @@ const createApplicantSchema = {
 
 const updateApplicantStatusSchema = {
   body: strictSchema()
-    .prop("status", S.string().enum(APPLICANT_STATUS).required()),
+    .prop("status", S.string().enum(APPLICANT_STATUS)),
   params: strictSchema()
     .prop("applicantId", S.string().required()),
 };

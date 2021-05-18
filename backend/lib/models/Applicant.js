@@ -18,7 +18,8 @@ const applicantSchema = new Schema(
         enum: ORG_MEMBERS_TYPES,
         default: "volunteer",
         required: true,
-        type: String
+        type: String,
+        default: "volunteer",
       }
     },
     applicantApplied: {
@@ -35,7 +36,8 @@ const applicantSchema = new Schema(
       enum: APPLICANT_STATUS,
       default: "applied",
       required: true,
-      type: String
+      type: String,
+      applied: "applied"
     },
   },
   { collection: "applicants", timestamps: true },
