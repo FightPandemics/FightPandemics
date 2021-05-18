@@ -254,7 +254,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   `;
 
   const DisplayText = styled.label`
-    word-break: break-word;
+    display: block;
+    overflow: auto;
   `;
 
   const StyledPostButton = styled(Button)`

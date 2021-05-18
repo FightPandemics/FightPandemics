@@ -106,6 +106,9 @@ export const PostPositionButton = styled(SubmitButton)`
     width: 30rem;
     align-self: center;
   }
+  @media screen and (min-width: ${mq.phone.narrow.maxWidth}) {
+    width: 20rem;
+  }
 `;
 
 export const OptionDiv = styled.div`
