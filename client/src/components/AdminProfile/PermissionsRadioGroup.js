@@ -31,8 +31,12 @@ const RadioContainer = styled(Radio.Group)`
         display: flex;
         align-items: center;
         align-self: center;
-        transition: max-height .25s ease;
+        /* transition: max-height .25s ease; */
     }
+
+    
+        /* transition: all .5s ease !important; */
+    
 
 
     span:nth-child(2) {
@@ -74,22 +78,29 @@ const RadioContainer = styled(Radio.Group)`
         
     }
     .ant-radio span {
-        /* align-self: center; */
         position: absolute;
         top: .5rem;
         color: magenta;
+        height: 1.4rem !important;
+        width: 1.4rem !important;
     }
 
     .ant-radio-input {
-        /* grid-area: b; */
         color: magenta;
     }
 
+    
     .ant-radio-inner {
         display: none;
         border: .1em solid ${colors.royalBlue};
+        box-shadow: none !important;
         ::after {
             background-color: ${colors.royalBlue};
+            display: inline-block;
+            height: 50%;
+            width: 50%;
+            top: 25%;
+            left: 25%;
         }
     }
 
@@ -99,17 +110,12 @@ const RadioContainer = styled(Radio.Group)`
         max-height: 100%;
         box-shadow: 0 4px 20px 0 ${colors.shadowBlack};
         padding: 1.5rem;
-        /* box-shadow: 1px 1px 15px 10px #000000; */
-        transition: max-height .25s ease;
         z-index: 99;
     }
 
     .radio-title::after{
         content: " +";
         font-size: 1.5rem;
-        /* position: absolute; */
-        /* right: 0;
-        top: 0; */
         align-self: center;
         
     }
@@ -167,9 +173,6 @@ const RadioContainer = styled(Radio.Group)`
         .permissions {
         max-height: 100%;
     }
-     
-        /* position: absolute; */
-        /* right: 0; */
     }
 
     .list-items {
@@ -181,7 +184,6 @@ const RadioContainer = styled(Radio.Group)`
     .ant-radio-checked::after {
         display: none;
     }
-
 `;
 
 export const PermissionsApplyButton = styled(BaseButton)`

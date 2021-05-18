@@ -109,7 +109,7 @@ const AppilcantIntroBody = styled.p`
     font-style: normal;
     line-height: normal;
     letter-spacing: .1rem;
-    max-height: 11.4rem;
+    max-height: 11rem;
     transition: all .5s ease;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
