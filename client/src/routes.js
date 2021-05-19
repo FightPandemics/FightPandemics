@@ -38,7 +38,7 @@ import Applications from "./pages/Applications";
 import AdminProfile from "./pages/AdminProfile";
 import OrgWorkSpace from "./pages/OrgWorkSpace";
 import MemberPermissions from "./pages/MemberPermissions";
-import Application from "./pages/Application";
+// import Application from "./pages/Application";
 
 import { SCOPES } from "constants/permissions";
 
@@ -199,7 +199,7 @@ const routes = [
     },
   },
   {
-    path: "/admin/:id",
+    path: "/applicants/:id",
     component: AdminProfile,
     props: {
       // isProfile: true,
@@ -344,16 +344,16 @@ const routes = [
       }
     }
   },
-  {
-    path: "/application/:id",
-    component: Application,
-    props: {
-      props: {
-        // TODO ENABLE loggedInOnly
-        // loggedInOnly: true,
-      }
-    }
-  },
+  // {
+  //   path: "/application/:id",
+  //   component: Application,
+  //   props: {
+  //     props: {
+  //       // TODO ENABLE loggedInOnly
+  //       // loggedInOnly: true,
+  //     }
+  //   }
+  // },
   {
     path: "*",
     component: NotFoundPage,
