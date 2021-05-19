@@ -63,7 +63,8 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { organizationId, status },
+        params: { organizationId },
+        query: { status }
       } = req;
 
       const [applicantErr, applicant] = await app.to(
@@ -176,7 +177,7 @@ async function routes(app) {
 
   // Applicants for orgasniation
   app.get(
-    "/:organisationId/status",
+    "/:organizationId/status",
     // TODO - change authenticateOptional to authenticate
     {
       preValidation: [app.authenticateOptional],
@@ -184,34 +185,34 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { organisationId },
+        params: { organizationId },
         query: {
-          // organisationId,
           limit,
           skip,
           includeMeta,
-          // permissions, 
+          permissions,
           // userId, 
           status
         },
       } = req;
-      console.log({ orgId: organisationId })
+      console.log({ orgId: organizationId })
       // console.log({ req: req.query })
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
           // organisationId
           // ?
           [
-            // { $match: { organization: { id: mongoose.Types.ObjectId("603be1140789a03df4bdb17c") } } },
-
-            // {
-            //   $match: {
-            //     $and: [
-            //       { organization: { id: mongoose.Types.ObjectId(organisationId) } },
-            //       // { status: "accepted" },
-            //     ]
-            //   }
-            // },
+            // { $match: { "organization.id": mongoose.Types.ObjectId(organizationId) } },
+            // { $match: { status: "accepted" } },
+            {
+              $match: {
+                $and: [
+                  { "organization.id": mongoose.Types.ObjectId(organizationId) },
+                  status ? { status: status } : {},
+                  permissions ? { "organization.permissions": permissions } : {},
+                ]
+              }
+            },
             {
               $skip: parseInt(skip, 10) || 0,
             },
@@ -237,7 +238,7 @@ async function routes(app) {
               applicant.updatedAt
             );
           });
-          console.log({ applicants: applicants })
+          console.log({ applicants: applicants[0].organization.id })
           return applicants;
         })
       );
@@ -333,9 +334,8 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        body,
+        body: { organizationId, status, permissions },
         params: { applicantId },
-        organizationId,
       } = req;
       // const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
       // // const [orgErr, org] = await app.to(Organization.findById(organizationId));
@@ -358,7 +358,8 @@ async function routes(app) {
         // console.log("update test!")
         Applicant.findOneAndUpdate(
           { _id: applicantId },
-          { $set: { status: body.status } }
+          status ? { $set: { status: status } } : {},
+          permissions ? { $set: { "organization.permissions": permissions } } : {}
         ),
       );
       if (updateErr) {

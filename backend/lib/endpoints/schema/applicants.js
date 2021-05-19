@@ -27,6 +27,7 @@ const getOrganizationApplicantsSchema = {
     .prop("organizationId", S.string().required()),
   queryString: strictQueryStringSchema()
     .prop("status", S.string())
+    .prop("permissions", S.string())
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false)),
 

@@ -518,20 +518,20 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
     const getApplicantsBaseURL = (organisationId, limit, skip) => {
-      return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+      return `/api/applicants/${organisationId}/status?status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
     let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
     let endpoint = baseURL
     dispatch(applicantsActions.fetchApplicantsBegin());
 
     try {
-      // const {
-      //     data: { data: applicants, meta },
-      // } = await axios.get(endpoint);
+      const {
+          data: { data: applicants, meta },
+      } = await axios.get(endpoint);
 
       // TEST DATA
-      const applicants = Applicants
-      const meta = Meta
+      // const applicants = Applicants
+      // const meta = Meta
 
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
