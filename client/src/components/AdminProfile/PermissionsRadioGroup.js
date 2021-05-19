@@ -15,29 +15,16 @@ const RadioContainer = styled(Radio.Group)`
     } */
     .ant-radio-wrapper {
         width: 100%;
-        /* background-color: magenta; */
         max-height: 33px; // normal height for unchecked
-        /* max-height: 300px; // testing height */
         overflow: hidden;
-        /* transition: all .25s ease; */
-        /* display: flex; */
-        display: flex;
         margin: 0;
         padding: 0 1.5rem;
         margin-bottom: 5rem;
-        /* padding: 1.5rem; */
         span:nth-child(2){
-        /* background-color: blue; */
         display: flex;
         align-items: center;
         align-self: center;
-        /* transition: max-height .25s ease; */
     }
-
-    
-        /* transition: all .5s ease !important; */
-    
-
 
     span:nth-child(2) {
         grid-area: c;
@@ -53,8 +40,6 @@ const RadioContainer = styled(Radio.Group)`
         justify-content: space-between;
         font-weight: 500;
         letter-spacing: 0.04rem;
-
-        /* grid-area: c; */
     }
 
     h4 {
@@ -62,21 +47,15 @@ const RadioContainer = styled(Radio.Group)`
         font-size: 1.6rem;
         margin-bottom: 2.1rem;
         font-weight: 500;
-
     }
-
-    /* .permissions {
-        grid-area: l;
-        position: absolute;
-    } */
 
     .ant-radio {
         display: flex;
         grid-area: b;
         align-items: center;
         flex: 0 0 auto;
-        
     }
+
     .ant-radio span {
         position: absolute;
         top: .5rem;
@@ -88,7 +67,6 @@ const RadioContainer = styled(Radio.Group)`
     .ant-radio-input {
         color: magenta;
     }
-
     
     .ant-radio-inner {
         display: none;
@@ -103,7 +81,6 @@ const RadioContainer = styled(Radio.Group)`
             left: 25%;
         }
     }
-
     }
     
     .ant-radio-wrapper-checked {
@@ -117,9 +94,7 @@ const RadioContainer = styled(Radio.Group)`
         content: " +";
         font-size: 1.5rem;
         align-self: center;
-        
     }
-
     
     .radio-content {
         display: flex;
@@ -127,9 +102,10 @@ const RadioContainer = styled(Radio.Group)`
         width: 100%;
         margin-left: 6rem;
         overflow: hidden;
+        @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+            margin-left: 1.5rem;
+        }
     }
-
-   
 
     .permissions {
         margin: 0;
@@ -138,25 +114,18 @@ const RadioContainer = styled(Radio.Group)`
            font-size: 1.6rem;
            font-family: 'Work Sans';
            line-height: 1.9rem;
-           /* margin-bottom: 1.5rem; */
            list-style-position: inside;
         }
 
         li::marker {
         color: ${colors.royalBlue} !important;
     }
-
     }
-    
 
     .ant-radio-wrapper .permissions {
         max-height: 0;
         overflow: hidden;
     }
-
-    /* .ant-radio-wrapper-checked .permissions {
-        max-height: 100%;
-    } */
 
     .ant-radio-wrapper-checked {
         
