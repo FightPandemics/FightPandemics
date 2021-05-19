@@ -333,7 +333,7 @@ async function routes(app) {
         params: { applicantId },
         organizationId,
       } = req;
-      // const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
+      //  const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
       // // const [orgErr, org] = await app.to(Organization.findById(organizationId));
       // if (applicantErr) {
       //   req.log.error(applicantErr, "Failed retrieving data for applicant");
