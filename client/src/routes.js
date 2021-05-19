@@ -38,6 +38,7 @@ import Applications from "./pages/Applications";
 import AdminProfile from "./pages/AdminProfile";
 import OrgWorkSpace from "./pages/OrgWorkSpace";
 import MemberPermissions from "./pages/MemberPermissions";
+import Application from "./pages/Application";
 
 import { SCOPES } from "constants/permissions";
 
@@ -339,6 +340,16 @@ const routes = [
       hideFooter: false,
       hideHeader: false,
       props: {
+        // loggedInOnly: true,
+      }
+    }
+  },
+  {
+    path: "/application/:id",
+    component: Application,
+    props: {
+      props: {
+        // TODO ENABLE loggedInOnly
         // loggedInOnly: true,
       }
     }
