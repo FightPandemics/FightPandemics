@@ -337,7 +337,7 @@ async function routes(app) {
         body: { organizationId, status, permissions },
         params: { applicantId },
       } = req;
-      // const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
+      //  const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
       // // const [orgErr, org] = await app.to(Organization.findById(organizationId));
       // console.log("BE TEST!")
       // // console.log({ applicant: req })
