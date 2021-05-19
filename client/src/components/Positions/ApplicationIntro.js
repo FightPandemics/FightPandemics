@@ -80,7 +80,6 @@ const ApplicantName = styled.h3`
 
 const ApplicantPosition = styled.p`
     color: ${colors.lightishGray};
-    /* color: red; */
     
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
         font-size: 1.2rem;

@@ -807,6 +807,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             </div></ProfileTabPane>
             {!isSelf && <ProfileTabPane tab={t("profile.views.members")} key="members">
               <ProfileList
+                // TODO -conditionally show role / permissions and permissions link
                 filteredMembers={applicantsList}
                 itemCount={itemCountApplicants}
                 isItemLoaded={isApplicantLoaded}
