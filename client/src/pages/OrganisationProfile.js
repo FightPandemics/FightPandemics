@@ -526,7 +526,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
     try {
       const {
-          data: { data: applicants, meta },
+        data: { data: applicants, meta },
       } = await axios.get(endpoint);
 
       // TEST DATA
@@ -713,15 +713,21 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             // TODO - REMOVE ORG WORKSPACE TEST LINK
           }
           <Link
+            to={`/organisation/${organisationId}/applications`}
+          ><div style={{ color: "red", "font-weight": "bold" }}>TEST APPLICATION REVIEW PAGE (6.1)</div></Link>
+          <Link
             style={{ color: "red", "font-weight": "bold" }}
             to={`/orgworkspace/${organisationId}`}
-          >TEST ORG WORKSPACE LINK</Link>
+          >TEST ORG WORKSPACE PAGE (8.1)</Link>
+
+          <Link
+            style={{ color: "red", "font-weight": "bold", display: "block" }}
+            to={`/${organisationId}/permissions/test`}
+          >TEST MEMBER PERMISSIONS PAGE (9.1)</Link>
 
           {isSelf && !verified && <Verification />}
 
-          <Link
-            to={`/organisation/${organisationId}/applications`}
-          ><div style={{ color: "red" }}>TEST APPLICATION REVIEW PAGE</div></Link>
+
           <WhiteSpace />
           {// Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }

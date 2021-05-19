@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 import { Link } from "react-router-dom";
+import { getInitialsFromFullName } from "utils/userInfo";
 
 const { colors } = theme
 
@@ -60,6 +61,7 @@ const ApplicantInitials = styled.h3`
     color: ${colors.royalBlue};
     font-size: 2.2rem;
     margin: 0;
+    
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
         font-size: 1.2rem;
     }
@@ -98,8 +100,6 @@ const ApplicantIntroTitle = styled.p`
     font-family: 'Poppins';
     font-weight: 600;
     margin-top: 2.6rem;
-
-    
 `;
 
 const AppilcantIntroBody = styled.p`
@@ -120,7 +120,6 @@ const AppilcantIntroBody = styled.p`
         margin-bottom: 2rem;
         line-height: normal;
     }
-
 `;
 
 const ApplicantSeeAll = styled.h3`
@@ -136,7 +135,7 @@ const ApplicantSeeAll = styled.h3`
     }
 `;
 
-const ApplicationIntro = () => {
+const ApplicationIntro = (name, intro, position) => {
     const [introHeight, setIntroHeight] = useState("")
     const [seeAllVisible, setSeeAllVisible] = useState()
     const [seeAllActive, setSeeAllActive] = useState(false)
@@ -152,14 +151,26 @@ const ApplicationIntro = () => {
                 <ApplicantTop>
                     <ApplicantAvatar>
                         <ApplicantInitials>
+                            {
+                                // TODO ENABLE AFTER NAME IS PASSED IN FROM MEMBERPERMISSIONS PAGE
+                                // {getInitialsFromFullName(name)}
+                            }
                             AS
                     </ApplicantInitials>
                     </ApplicantAvatar>
                     <div className="applicant-margin">
                         <ApplicantName>
+                            {
+                                // TODO ENABLE AFTER NAME IS PASSED IN FROM MEMBERPERMISSIONS PAGE
+                                // {name}
+                            }
                             Amy Smith
                         </ApplicantName>
                         <ApplicantPosition>
+                            {
+                                // TODO ENABLE AFTER POSITION IS PASSED IN FROM MEMBERPERMISSIONS PAGE
+                                // {position}
+                            }
                             Volunteer
                         </ApplicantPosition>
                     </div>
@@ -167,11 +178,18 @@ const ApplicationIntro = () => {
                 <ApplicantBottom>
                     <div className="applicant-margin applicant-bottom">
                         <ApplicantIntroTitle>
+                            {
+                                // SWAP OUT TEXT VIA en_us
+                            }
                             Profile
                         </ApplicantIntroTitle>
                         <AppilcantIntroBody
                             style={{ "max-height": seeAllActive && introHeight }}
                         >
+                            {
+                                // TODO ENABLE AFTER intro IS PASSED IN FROM MEMBERPERMISSIONS PAGE
+                                // {intro}
+                            }
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non justo vehicula, sollicitudin lorem sit amet, congue lorem. Donec eu bibendum turpis, eget vehicula leo. Donec cursus tristique nulla a eleifend. Aliquam vitae egestas nisl, vitae ullamcorper libero. Curabitur luctus, sem et maximus aliquam, odio tellus placerat justo, ac porta tellus sapien vel sem. Aenean placerat magna mi, eget placerat eros tempus vitae. Suspendisse commodo finibus elementum. Donec quis risus vitae nulla consectetur eleifend at sit amet tellus. Sed vehicula venenatis luctus.
                         </AppilcantIntroBody>
                         <Link

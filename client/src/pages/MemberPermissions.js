@@ -39,6 +39,7 @@ import { useHistory, Link } from "react-router-dom";
 import ExitModal from "components/Positions/ExitModal";
 import ApplicationIntro from "components/Positions/ApplicationIntro";
 
+
 const MemberPermissions = (props, applicantId) => {
     // const { isAuthenticated, user } = props;
     const history = useHistory();
@@ -158,9 +159,6 @@ const MemberPermissions = (props, applicantId) => {
     }
     else {
         const { address } = location;
-
-
-
         return (
             <>
 
@@ -202,16 +200,16 @@ const MemberPermissions = (props, applicantId) => {
                         />
                         {// TODO - add button text to en_us
                         }
-                        <div style={{display: "flex"}}>
+                        <div style={{ display: "flex" }}>
                             <Link
-                            style={{width: "fit-content", margin: "auto"}}
-                            onClick={handleApply}
-                            // TODO - redirect to Org Page
-                                //to=`/organisation/${organisationId}`
+                                style={{ width: "fit-content", margin: "auto" }}
+                                onClick={handleApply}
+                                // TODO - redirect to Org Page
+                                to={`/organisation/${organisationId}`}
                             >
                                 <PermissionsApplyButton
-                                style={{margin: 0}}
-                            
+                                    style={{ margin: 0 }}
+
                                 >Apply</PermissionsApplyButton>
                             </Link>
                         </div>
