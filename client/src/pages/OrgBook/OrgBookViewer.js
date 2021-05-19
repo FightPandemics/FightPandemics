@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import { connect } from "react-redux";
+import dompurify from "dompurify";
 import OrgBookViewerTableOfContents from "../../components/OrgBook/OrgBookViewerTableOfContents";
 import OrgBookViewerTOCMobile from "../../components/OrgBook/OrgBookViewerTOCMobile";
 
@@ -48,6 +49,7 @@ import ProfilePic from "../../components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ROYAL_BLUE } from "constants/colors";
 
+const sanitizer = dompurify.sanitize;
 const { colors, typography } = theme;
 const { white, black } = colors;
 const PAGE_CATEGORIES = {
@@ -83,6 +85,16 @@ const JoinOrgContainer = styled.div`
   background-color: ${ROYAL_BLUE};
 `;
 
+const JoinOrgContainerMobile = styled.div`
+  position: absolute;
+  top: 15rem;
+  height: 4.5rem;
+  left: 20rem;
+  z-index: 5;
+  //width: 100%;
+  background-color: ${white};
+`;
+
 const JoinOrgButton = styled.button`
   margin-left: 70rem;
   right: 1rem;
@@ -91,6 +103,16 @@ const JoinOrgButton = styled.button`
   border-radius: 4rem;
   background-color: ${white};
   margin-right: 7rem;
+`;
+
+const JoinOrgButtonMobile = styled.button`
+  // margin-left: 70rem;
+  right: 1rem;
+  width: 9rem;
+  height: 3rem;
+  border-radius: 4rem;
+  background-color: ${white};
+  // margin-right: 7rem;
 `;
 
 const JoinOrgLabel = styled.div`
@@ -144,17 +166,15 @@ const OrgBookViewerContentBox = styled.div`
   grid-area: b;
   align-self: start;
   background-color: ${white};
-  overflow-y: scroll; /*added*/
-  //scroll-behavior: smooth;
 `;
 
 const PageContentWrapper = styled.div`
+  height: 45vh;
   background-color: ${white};
   color: ${black};
-
-  overflow-y: scroll;
-  //scroll-behavior: smooth;
-  //scrollbar-color: light;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scrollbar-color: light;
   padding: 0 0 0 0;
 `;
 
@@ -502,16 +522,16 @@ const OrgBookViewer = (props) => {
             )}
           </div>
           {organisation && !isOrgMember() ? (
-            <JoinOrgContainer>
-              <JoinOrgButton
+            <JoinOrgContainerMobile>
+              <JoinOrgButtonMobile
                 onClick={() => {
                   console.log("clicked join org");
                 }}
                 id={GTM.orgBook.prefix + GTM.orgBook.joinOrgContainer}
               >
                 <JoinOrgLabel>{t("orgBook.joinUs")}</JoinOrgLabel>
-              </JoinOrgButton>
-            </JoinOrgContainer>
+              </JoinOrgButtonMobile>
+            </JoinOrgContainerMobile>
           ) : (
             ""
           )}
@@ -527,14 +547,17 @@ const OrgBookViewer = (props) => {
             <OrgBookViewerContentBoxMobile>
               {selectedPage && (
                 <PageContentWrapper
-                  dangerouslySetInnerHTML={{ __html: selectedPage.content }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizer(selectedPage.content),
+                  }}
                 ></PageContentWrapper>
               )}
               {!selectedPage && (
                 <PageContentWrapper
                   dangerouslySetInnerHTML={{
-                    __html:
+                    __html: sanitizer(
                       "<p><span style='display: block; height: 500px'>&nbsp;</span></p>",
+                    ),
                   }}
                 ></PageContentWrapper>
               )}
@@ -547,14 +570,17 @@ const OrgBookViewer = (props) => {
               <OrgBookViewerContentBox>
                 {selectedPage && (
                   <PageContentWrapper
-                    dangerouslySetInnerHTML={{ __html: selectedPage.content }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizer(selectedPage.content),
+                    }}
                   ></PageContentWrapper>
                 )}
                 {!selectedPage && (
                   <PageContentWrapper
                     dangerouslySetInnerHTML={{
-                      __html:
+                      __html: sanitizer(
                         "<p><span style='display: block; height: 500px'>&nbsp;</span></p>",
+                      ),
                     }}
                   ></PageContentWrapper>
                 )}

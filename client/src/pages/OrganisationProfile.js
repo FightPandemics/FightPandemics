@@ -11,6 +11,7 @@ import React, {
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { mq } from "constants/theme";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -189,6 +190,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [editOrgBookLinkLabel, setEditOrgBookLinkLabel] = useState(
     t("profile.org.createOrgBook").toString(),
   );
+  const [isMobile, setIsMobile] = useState(false);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -238,6 +240,14 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       ? true
       : false;
   };
+
+  useEffect(() => {
+    (function initialSet() {
+      if (window.screen.width <= parseInt(mq.phone.wide.maxWidth)) {
+        setIsMobile(true);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
@@ -549,13 +559,17 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </IconsContainer>
 
               {editOrgBookMode === ORGBOOK_EDIT_MODE ? (
-                isSelf ? ( //this condition should eventually be isOrgMember
+                isSelf ? ( //this condition should eventually be isEditor
                   areLiveOrgBookPages() ? (
                     <SeeOrgBookLink to={`/orgbook-viewer`}>
                       {t("profile.org.seeOrgBook")}
                     </SeeOrgBookLink>
+                  ) : //this condition would only be reached if another user deleted all live pgs
+                  isMobile ? (
+                    <SeeOrgBookDisabled>
+                      {t("profile.org.seeOrgBook")}
+                    </SeeOrgBookDisabled>
                   ) : (
-                    //this condition would only be reached if another user deleted all live pgs
                     <CreateOrgBookLink
                       to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
                     >
@@ -572,12 +586,18 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   </SeeOrgBookDisabled>
                 )
               ) : //edit mode is "create"
-              isSelf ? ( //only owners can create
-                <CreateOrgBookLink
-                  to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
-                >
-                  {t("profile.org.createOrgBook")}
-                </CreateOrgBookLink>
+              isSelf ? ( //only owners can create but not if mobile
+                isMobile ? (
+                  <SeeOrgBookDisabled>
+                    {t("profile.org.seeOrgBook")}
+                  </SeeOrgBookDisabled>
+                ) : (
+                  <CreateOrgBookLink
+                    to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                  >
+                    {t("profile.org.createOrgBook")}
+                  </CreateOrgBookLink>
+                )
               ) : (
                 //all other members cannot create and there is no orgbook yet to see
                 <SeeOrgBookDisabled>

@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import { useTranslation } from "react-i18next";
-import { Menu } from "antd";
+import { Menu, Divider } from "antd";
 import SvgIcon from "../Icon/SvgIcon";
 import menuIcon from "assets/icons/menu.svg";
-import { WhiteSpace } from "antd-mobile";
 import GTM from "../../constants/gtm-tags";
 
 const { colors, typography } = theme;
@@ -30,7 +29,7 @@ export const MobileTOCMenuWrapper = styled(Menu)`
   &.ant-menu {
     li.ant-menu-item {
       margin: 0.8rem 0;
-      height: 2.4rem;
+      height: 2rem;
       padding-bottom: 1rem;
 
       color: ${theme.colors.darkerGray};
@@ -48,16 +47,6 @@ export const MobileTOCMenuWrapper = styled(Menu)`
       text-decoration-line: ${(props) =>
         props.selected ? "underline" : "none"};
     }
-
-    // &.ant-menu .ant-menu-item-selected {
-    //   background-color: ${darkerGray};
-    //   border-bottom: 0.2rem solid ${theme.colors.black};
-    //   font-weight: bold;
-    // }
-
-    // .ant-menu-item-selected.customclass {             //new
-    //   background-color: green; /*Overriden property*/
-    // }
   }
 `;
 
@@ -96,7 +85,6 @@ const OrgBookViewerTOCMobile = (props) => {
   };
 
   const handlePageClick = (page) => {
-    console.log("clicked on page: " + page.name);
     setSelectedPage(page);
     setMenuOpen(false);
     selectPage(page);
@@ -123,16 +111,19 @@ const OrgBookViewerTOCMobile = (props) => {
           <StyledMobileTOCMenuContainer>
             <MobileTOCMenuWrapper mode="vertical">
               {sortedFilteredOrgBookPages.map((page, idx) => (
-                <Menu.Item
-                  selected={isSelectedPage(page)}
-                  key={page.name}
-                  id={GTM.orgBook.prefix + GTM.orgBook.pageContainer + idx}
-                  onClick={() => {
-                    handlePageClick(page);
-                  }}
-                >
-                  {page.name}
-                </Menu.Item>
+                <>
+                  <Menu.Item
+                    selected={isSelectedPage(page)}
+                    key={page.name}
+                    id={GTM.orgBook.prefix + GTM.orgBook.pageContainer + idx}
+                    onClick={() => {
+                      handlePageClick(page);
+                    }}
+                  >
+                    {page.name}
+                  </Menu.Item>
+                  <Divider />
+                </>
               ))}
             </MobileTOCMenuWrapper>
           </StyledMobileTOCMenuContainer>

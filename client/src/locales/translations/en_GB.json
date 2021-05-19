@@ -476,7 +476,7 @@
     "confirmPublishPromptLivePageExists": "Publish content for: {{pageName}}?  Warning - This will overwrite the live page for this draft.",
     "confirmPublishOptionText": "Set view level to:",
     "confirmPublishOption1": "Public View (Everyone)",
-    "confirmPublishOption2": "Private View (Org members only).",
+    "confirmPublishOption2": "Private View (Org members only)",
     "confirmUnpublishTitle": "Unpublish Live Page",
     "confirmUnpublishOkText": "Unpublish",
     "confirmUnpublishPrompt": "Unpublish live page: {{pageName}}? Unpublishing will remove this live page.",
