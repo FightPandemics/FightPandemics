@@ -40,7 +40,8 @@ import {
     NamePara,
     ProfileBackgroup, ProfileLayout,
     UserInfoContainer,
-    UserInfoDesktop
+    UserInfoDesktop,
+    SeeOrgBookLink,
 } from "../components/Profile/ProfileComponents";
 import { WhiteSpace } from "antd-mobile";
 import styled from "styled-components";
@@ -59,6 +60,7 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 export const FeedContext = React.createContext();
+const getOrgBookLink = (orgBookLink) => (orgBookLink.startsWith("http") ? orgBookLink : window.location.pathname + `/${orgBookLink}`);
 
 const OrgWorkSpace = (props) => {
     const dispatch = useDispatch();
@@ -124,7 +126,7 @@ const OrgWorkSpace = (props) => {
             // const {
             //     data: { data: applicants, meta },
             // } = await axios.get(endpoint);
-            
+
             const meta = Meta
             const { applicants: applicants } = TestMembersList
 
@@ -258,6 +260,7 @@ const OrgWorkSpace = (props) => {
         name,
         location = {},
         about = "",
+        orgBookLink,
     } = organisation || {};
 
     useEffect(() => {
@@ -299,6 +302,17 @@ const OrgWorkSpace = (props) => {
             }
         })();
     }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const orgBookURL = () => {
+        if (organisation) {
+            if (orgBookLink) {
+                return getOrgBookLink(orgBookLink);
+            } else {
+                return;
+            }
+        }
+    };
+
     if (error) {
         return <ErrorAlert message={error} type="error" />;
     }
@@ -350,6 +364,12 @@ const OrgWorkSpace = (props) => {
                                     </div>
                                 </NameDiv>
                                 {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+                                {
+                                    (<SeeOrgBookLink>
+                                        <a href={orgBookURL()} target="_blank">See Org Book</a>
+                                    </SeeOrgBookLink>)
+                                }
+
                             </UserInfoDesktop>
                         </UserInfoContainer>
                         <WhiteSpace />
