@@ -35,9 +35,25 @@ import {
 import { useHistory } from "react-router-dom";
 import ExitModal from "components/Positions/ExitModal";
 import ApplicationIntro from "components/Positions/ApplicationIntro";
+import { LOCAL_NOTIFICATION_MARK_AS_CLEARED } from "actions/wsActions";
+import { applicantsActions, selectApplicants } from "reducers/applicants";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+
+const initialState = {
+    applicant: { name: "-" },
+    organization: { permissions: "" },
+    intro: "",
+    answers: {
+        q1: "",
+        q2: "",
+        q3: ""
+    }
+}
 
 const Apply = (props) => {
     // const { isAuthenticated, user } = props;
+    const [applicantState, setApplicantState] = useState(initialState);
     const history = useHistory();
     const [visible, setVisible] = useState(false);
 
@@ -60,6 +76,7 @@ const Apply = (props) => {
             initialBackRequest();
         };
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 
 
     let url = window.location.pathname.split("/");
@@ -127,6 +144,45 @@ const Apply = (props) => {
         })();
     }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    // console.table({ locationstate: history.location.state[0].name })
+    const params = useParams()
+    const [applicantName, setApplicantName] = useState()
+    useEffect(() => {
+
+        setApplicantName("params")
+        // setApplicantName(history.location.state[0].name)
+
+    }, [false])
+
+    console.log({ params: params.applicantId })
+
+    const loadApplicant = async () => {
+        const endpoint = `/api/applicants/${params.applicantId}`
+        try {
+            const {
+                data
+            } = await axios.get(endpoint);
+            console.log({ "applicant!!!!": data })
+            setApplicantState(data)
+        } catch (error) {
+            return error
+        }
+        console.log({ applicantState: applicantState })
+    }
+
+
+    useEffect(() => {
+        loadApplicant()
+    }, [applicantName])
+
+    // const applicants = useSelector(selectApplicants);
+    // console.log({ applicants: applicants })
+
+
+    // const applicantName = "yoooooo!"
+    // console.log({ applicantName: applicantName })
+
+
     if (error) {
         return <ErrorAlert message={error} type="error" />;
     }
@@ -169,12 +225,18 @@ const Apply = (props) => {
                             {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
                         </UserInfoDesktop>
                     </UserInfoContainer>
-                    <ApplicationIntro />
+                    <ApplicationIntro
+                        // applicantName={applicantName}
+                        applicantName={applicantState.applicant.name}
+                        initials={getInitialsFromFullName(applicantState.applicant.name)}
+                        permissions={applicantState.organization.permissions}
+                    />
                     <PositionsContainer>
                         <Application
                             orgName={name}
                             organisationId={organisationId}
-                            application="test"
+                            application={applicantState}
+
                         ></Application>
                     </PositionsContainer >
                     <ExitModal

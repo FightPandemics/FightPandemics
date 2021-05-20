@@ -66,6 +66,7 @@ const ProfileList = ({
     isItemLoaded,
     hasNextPage,
     totalCount,
+    organisationId,
     emptyFeed
 }) => {
     // const applicants = Object.entries(filteredApplicants);
@@ -77,7 +78,7 @@ const ProfileList = ({
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
-    console.log({items: items})
+    console.log({ items: items })
 
     const handleSeeAll = () => {
         setSeeAll(prevState => !prevState)
@@ -100,6 +101,7 @@ const ProfileList = ({
                             applicantsList={applicantsList}
                             membersList={membersList}
                             orgList={orgsList}
+                            organisationId={organisationId}
                         />
                     </>
                 );

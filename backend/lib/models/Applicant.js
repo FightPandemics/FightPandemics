@@ -1,7 +1,7 @@
 // -- Imports
 const { Schema, model, ObjectId } = require("mongoose");
 const APPLICANT_STATUS = ["applied", "accepted", "rejected"];
-const ORG_MEMBERS_TYPES = ["volunteer", "wikieditor", "admin"];
+const ORG_MEMBERS_TYPES = ["Volunteer", "Wikieditor", "Admin"];
 
 // --Schema
 const applicantSchema = new Schema(

@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import { selectActorId } from "reducers/session";
 import axios from "axios";
 import { formToApplicationMappings } from "assets/data/formToApplicationMappings";
+import { applicantsActions, selectApplicants } from "reducers/applicants";
+import { useDispatch } from "react-redux";
 
 const { colors } = theme
 
@@ -96,7 +98,7 @@ margin: 0;
 `;
 
 const Application = ({ orgName,
-    application
+    application,
     // organisationId,
 
 }) => {
@@ -248,6 +250,10 @@ const Application = ({ orgName,
         setSuccessVisible(true);
     };
 
+    const applicants = useSelector(selectApplicants);
+    console.log({ applicants: applicants })
+
+    const [applicantName, setApplicantName] = useState()
 
     const applicationReceived = t("positions.applicationReceived").replace("{orgName}", orgName);
     const history = useHistory();
@@ -295,8 +301,7 @@ const Application = ({ orgName,
                         value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor. odio feortor dolor."
                     /> */}
 
-                    <ResponseField
-                    >odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor. odio feortor dolor.</ResponseField>
+                    <ResponseField > {application.answers.q1} </ResponseField>
                 </InputWrapper>
                 <LabelContainer>
                     <ApplyFormLabel
@@ -309,7 +314,7 @@ const Application = ({ orgName,
                         // value={res.answers.q2}
                         value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
                     /> */}
-                    <ResponseField>odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra.</ResponseField>
+                    <ResponseField>{application.answers.q2}</ResponseField>
 
                 </InputWrapper>
                 <LabelContainer
@@ -324,7 +329,7 @@ const Application = ({ orgName,
                         // value={res.answers.q3}
                         value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
                     /> */}
-                    <ResponseField>odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra.</ResponseField>
+                    <ResponseField>{application.answers.q3}</ResponseField>
 
                 </InputWrapper>
             </OuterWrapper>

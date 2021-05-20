@@ -109,7 +109,7 @@ const AppilcantIntroBody = styled.p`
     font-style: normal;
     line-height: normal;
     letter-spacing: .1rem;
-    max-height: 11rem;
+    max-height: 11.4rem;
     transition: all .5s ease;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
@@ -135,7 +135,8 @@ const ApplicantSeeAll = styled.h3`
     }
 `;
 
-const ApplicationIntro = (name, intro, position) => {
+
+const ApplicationIntro = ({ name, intro, position, applicantName, initials, permissions }) => {
     const [introHeight, setIntroHeight] = useState("")
     const [seeAllVisible, setSeeAllVisible] = useState()
     const [seeAllActive, setSeeAllActive] = useState(false)
@@ -144,7 +145,9 @@ const ApplicationIntro = (name, intro, position) => {
         setIntroHeight("100%")
         setSeeAllVisible("none")
     }
-
+    console.log({ "initials!!!!": initials })
+    console.log({ applicantName: applicantName })
+    const nameNoNums = applicantName.replace(/[0-9]/g, '')
     return (
         <ApplicantCardContainer>
             <ApplicantCard>
@@ -152,26 +155,20 @@ const ApplicationIntro = (name, intro, position) => {
                     <ApplicantAvatar>
                         <ApplicantInitials>
                             {
-                                // TODO ENABLE AFTER NAME IS PASSED IN FROM MEMBERPERMISSIONS PAGE
-                                // {getInitialsFromFullName(name)}
+                                // getInitialsFromFullName(applicantName)
+                                initials
                             }
-                            AS
-                    </ApplicantInitials>
+                        </ApplicantInitials>
                     </ApplicantAvatar>
                     <div className="applicant-margin">
                         <ApplicantName>
-                            {
-                                // TODO ENABLE AFTER NAME IS PASSED IN FROM MEMBERPERMISSIONS PAGE
-                                // {name}
-                            }
-                            Amy Smith
+                            {applicantName}
                         </ApplicantName>
                         <ApplicantPosition>
                             {
                                 // TODO ENABLE AFTER POSITION IS PASSED IN FROM MEMBERPERMISSIONS PAGE
-                                // {position}
+                                permissions
                             }
-                            Volunteer
                         </ApplicantPosition>
                     </div>
                 </ApplicantTop>

@@ -74,7 +74,7 @@ export const Permissions = styled.div`
     /* margin: 1rem 0; */
 `;
 
-const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
+const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organizationId }) => {
 
     let itemState
     let list
@@ -104,10 +104,12 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList }) => {
     return (
         <Link
             to={{
-                pathname: itemPath,
-                state: [itemState, {
+                pathname: `/application/${item?.organization.id}/${item?._id}`,
+                state:
+                {
+                    name: item?.[list]?.name,
                     from: window.location.href,
-                }],
+                },
             }}
         >
             <AllItems>
