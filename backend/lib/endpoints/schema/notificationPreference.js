@@ -9,7 +9,7 @@ const notifyPreferenceSchema = strictSchema()
       .prop("comment", S.boolean().default(true))
       .prop("share", S.boolean().default(true))
       .prop("message", S.boolean().default(true))
-      .prop("orgPosts", S.boolean().default(false))
+      .prop("orgposts", S.boolean().default(false))
       .prop("newapplicant", S.boolean().default(false)),
 
   )
