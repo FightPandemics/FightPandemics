@@ -145,9 +145,6 @@ const ApplicationIntro = ({ name, intro, position, applicantName, initials, perm
         setIntroHeight("100%")
         setSeeAllVisible("none")
     }
-    console.log({ "initials!!!!": initials })
-    console.log({ applicantName: applicantName })
-    const nameNoNums = applicantName.replace(/[0-9]/g, '')
     return (
         <ApplicantCardContainer>
             <ApplicantCard>
