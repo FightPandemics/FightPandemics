@@ -325,7 +325,7 @@ const routes = [
   },
   ,
   {
-    path: "/:organisationId/permissions/:id",
+    path: "/:organisationId/permissions/:applicationId/:id",
     component: MemberPermissions,
     props: {
       props: {

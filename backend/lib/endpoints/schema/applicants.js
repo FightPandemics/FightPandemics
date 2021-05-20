@@ -9,7 +9,7 @@ const { strictQueryStringSchema, strictSchema } = require("./utils");
 // };
 
 const getApplicantByIdSchema = {
-  queryString: S.object().prop("applicantId", S.string().required()),
+  params: S.object().prop("applicantId", S.string().required()),
 };
 
 const getApplicantsSchema = {

@@ -67,6 +67,7 @@ const ProfileList = ({
     hasNextPage,
     totalCount,
     organisationId,
+    isOwner,
     emptyFeed
 }) => {
     // const applicants = Object.entries(filteredApplicants);
@@ -75,7 +76,7 @@ const ProfileList = ({
     const membersList = filteredMembers && true
     const orgsList = filteredOrgs && true
     const items = Object.entries(filteredApplicants || filteredMembers || filteredOrgs);
-    console.log({"items!!!!": items})
+    console.log({ "items!!!!": items })
     const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
     const [seeAll, setSeeAll] = useState(false)
 
@@ -103,6 +104,7 @@ const ProfileList = ({
                             membersList={membersList}
                             orgList={orgsList}
                             organisationId={organisationId}
+                            isOwner={isOwner}
                         />
                     </>
                 );

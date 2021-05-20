@@ -721,13 +721,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             to={`/orgworkspace/${organisationId}`}
           >TEST ORG WORKSPACE PAGE (8.1)</Link>
 
-          <Link
-            style={{ color: "red", "font-weight": "bold", display: "block" }}
-            to={`/${organisationId}/permissions/test`}
-          >TEST MEMBER PERMISSIONS PAGE (9.1)</Link>
-
           {isSelf && !verified && <Verification />}
-
 
           <WhiteSpace />
           {// Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
@@ -825,6 +819,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 totalCount={totalApplicantCount}
                 page={pageApplicants}
                 emptyFeed={emptyFeed}
+                isOwner={isOwner}
               />
             </ProfileTabPane>}
           </ProfileTabs>

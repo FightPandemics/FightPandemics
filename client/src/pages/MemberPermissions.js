@@ -38,10 +38,19 @@ import {
 import { useHistory, Link } from "react-router-dom";
 import ExitModal from "components/Positions/ExitModal";
 import ApplicationIntro from "components/Positions/ApplicationIntro";
+import { useParams } from "react-router-dom";
 
 
 const MemberPermissions = (props, applicantId) => {
     // const { isAuthenticated, user } = props;
+    const initialState = {
+        applicant: { name: "-" },
+        intro: "",
+    }
+
+
+
+    const { applicationId } = useParams()
     const history = useHistory();
     const [visible, setVisible] = useState(false);
 
@@ -67,7 +76,9 @@ const MemberPermissions = (props, applicantId) => {
 
 
     let url = window.location.pathname.split("/");
-    const organisationId = url[url.length - 3];
+    // const organisationId = url[url.length - 3];
+    const { organisationId } = useParams()
+
     const { orgProfileState, orgProfileDispatch } = useContext(
         OrganisationContext,
     );
@@ -131,12 +142,33 @@ const MemberPermissions = (props, applicantId) => {
         })();
     }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    const [applicantState, setApplicantState] = useState(initialState);
+
+    const [applicantLoaded, setApplicantLoaded] = useState(false)
+
+    const loadApplicant = async () => {
+        const endpoint = `/api/applicants/${applicationId}`
+        try {
+            const {
+                data
+            } = await axios.get(endpoint);
+            if (data) {
+                setApplicantState(data)
+                setApplicantLoaded(true)
+            }
+        } catch (error) {
+            return error
+        }
+    }
+    useEffect(() => {
+        if (!applicantLoaded) {
+            loadApplicant()
+        }
+    }, [applicantLoaded])
     const [permissions, setPermissions] = useState()
 
     const onChange = (data) => {
-        console.log({ data: data })
         setPermissions(data)
-        console.log({ permissions: permissions })
     }
 
     const handleApply = async () => {
@@ -190,9 +222,10 @@ const MemberPermissions = (props, applicantId) => {
                         </UserInfoDesktop>
                     </UserInfoContainer>
                     <ApplicationIntro
-                    // TODO GET MEMBER INFO FROM STATE (6.1)
-                    // name
-                    // permissions
+                        // TODO GET MEMBER INFO FROM STATE (6.1)
+                        // TODO GET INTRO FROM BACKEND
+                        initials={getInitialsFromFullName(applicantState.applicant.name)}
+                        applicantName={applicantState.applicant.name}
                     />
                     <PositionsContainer>
                         <PermissionsRadioGroup

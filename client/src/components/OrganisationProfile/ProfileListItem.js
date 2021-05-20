@@ -74,7 +74,7 @@ export const Permissions = styled.div`
     /* margin: 1rem 0; */
 `;
 
-const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organizationId }) => {
+const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organizationId, isOwner }) => {
 
     let itemState
     let list
@@ -97,6 +97,10 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organiza
         }
     }
 
+    if (isOwner) {
+        itemPath = `/${item?.organization?.id}/permissions/${item?._id}/${item?.[list]?.id}`
+    }
+
     if (orgsList) {
         list = "organisation"
     }
@@ -110,6 +114,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organiza
                     name: item?.[list]?.name,
                     from: window.location.href,
                 },
+
             }}
         >
             <AllItems>

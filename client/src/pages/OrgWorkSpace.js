@@ -403,6 +403,7 @@ const OrgWorkSpace = (props) => {
                                             totalCount={totalApplicantCount}
                                             page={page}
                                             emptyFeed={emptyFeed}
+                                            isOwner={true}
                                         />
                                     }
                                 </ProfileTabPane>
