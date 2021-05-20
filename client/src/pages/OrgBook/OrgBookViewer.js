@@ -44,7 +44,6 @@ import {
   APPSTORE_URL,
   PLAYSTORE_URL,
 } from "constants/urls";
-import UploadPic from "../../components/Picture/UploadPic";
 import ProfilePic from "../../components/Picture/ProfilePic";
 import { getInitialsFromFullName } from "utils/userInfo";
 import { ROYAL_BLUE } from "constants/colors";
@@ -91,7 +90,6 @@ const JoinOrgContainerMobile = styled.div`
   height: 4.5rem;
   left: 20rem;
   z-index: 5;
-  //width: 100%;
   background-color: ${white};
 `;
 
@@ -106,13 +104,11 @@ const JoinOrgButton = styled.button`
 `;
 
 const JoinOrgButtonMobile = styled.button`
-  // margin-left: 70rem;
   right: 1rem;
   width: 9rem;
   height: 3rem;
   border-radius: 4rem;
   background-color: ${white};
-  // margin-right: 7rem;
 `;
 
 const JoinOrgLabel = styled.div`
@@ -146,8 +142,7 @@ const TableOfContentsSidebar = styled.div`
   align-self: start;
   background-color: #f0f0f0;
   color: ${black};
-  overflow-y: scroll; /*added*/
-  //scroll-behavior: smooth;
+  overflow-y: scroll;
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     display: none;
   }
@@ -157,7 +152,6 @@ const TOCSidebarAndPageMobile = styled.div`
   position: absolute;
   top: 15rem;
   bottom: 35rem;
-  // z-index: 5;
   width: 100%;
   left: 2rem;
 `;
@@ -169,13 +163,17 @@ const OrgBookViewerContentBox = styled.div`
 `;
 
 const PageContentWrapper = styled.div`
-  height: 45vh;
+  height: 35vh;
   background-color: ${white};
   color: ${black};
   overflow-y: auto;
   scroll-behavior: smooth;
   scrollbar-color: light;
   padding: 0 0 0 0;
+
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    height: 45vh;
+  }
 `;
 
 export const NameParaViewerMobile = styled.p`
@@ -204,12 +202,10 @@ export const OrgAddressViewerMobile = styled.p`
 const OrgBookViewerContentBoxMobile = styled.div`
   position: absolute;
   top: 6rem;
-  // bottom: 35rem;
   z-index: 3;
   align-self: start;
   background-color: ${white};
   overflow-y: scroll;
-  //scroll-behavior: smooth;
 `;
 
 const OrgBookViewer = (props) => {
@@ -245,21 +241,9 @@ const OrgBookViewer = (props) => {
 
   useEffect(initialize, []);
 
-  // useEffect(() => {
-  //   if (props.organisationId && props.organisationId !== organisationId)  {
-  //     setOrganisationId(props.organisationId);
-  //     getOrgBookPages(props.organisationId);
-  //   };
-  //  }, [props.user]);
-
   const getOrgBookPages = async (orgId) => {
     try {
       const res = await axios.get(`/api/organisations/${orgId}`);
-      //console.log('getting pages for orgid: ' + orgId)
-      // console.log(
-      //   "in orgbookViewer, got res.data.orgBookPagesr: " +
-      //     JSON.stringify(res.data.orgBookPages),
-      // );
       setOrganisation(res.data);
       if (res.data.orgBookPages) {
         setOrgBookPages(res.data.orgBookPages);
@@ -286,10 +270,6 @@ const OrgBookViewer = (props) => {
   const handleSelectPage = (page) => {
     setSelectedPage(orgBookPages.find((p) => p.pageId === page.pageId));
   };
-
-  // const handleBackBtnClick = () => {
-  //   history.push(`/organisation/${organisation._id}`);
-  // };
 
   const handleEditClick = () => {
     history.push(`/orgbook-editor/edit/${organisation._id}`);
@@ -443,16 +423,7 @@ const OrgBookViewer = (props) => {
                 user={organisation}
                 initials={getInitialsFromFullName(organisation.name)}
               />
-              {/*  {organisation && props.organisationId == organisation._id && (
-                <PhotoUploadButton>
-                  <UploadPic
-                    gtmPrefix={GTM.organisation.orgPrefix}
-                    user={organisation}
-                  />
-                </PhotoUploadButton>
-              )} */}
             </AvatarPhotoContainer>
-
             <UserInfoDesktop>
               <NameDiv>
                 <div className="name-container">

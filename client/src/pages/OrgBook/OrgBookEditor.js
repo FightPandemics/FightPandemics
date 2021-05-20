@@ -35,16 +35,8 @@ import OrgBookInfoModal from "../../components/OrgBook/OrgBookInfoModal";
 import OrgBookConfirmModal from "../../components/OrgBook/OrgBookConfirmModal";
 import { ORANGE_RED, WHITE } from "../../constants/colors";
 
-const { colors, typography } = theme;
-const {
-  lighterGray,
-  white,
-  royalBlue,
-  black,
-  offWhite,
-  darkishGray,
-  mediumGray,
-} = colors;
+const { colors } = theme;
+const { white, black, offWhite, darkishGray, mediumGray } = colors;
 const ORGBOOK_CREATE_MODE = "create";
 const ORGBOOK_EDIT_MODE = "edit";
 const PAGE_CATEGORIES = {
@@ -147,8 +139,8 @@ export const ModalMount = styled.div`
 `;
 
 const useForceUpdate = () => {
-  const [value, setValue] = useState(0); // integer state
-  return () => setValue((value) => value + 1); // update the state to force render
+  const [value, setValue] = useState(0);
+  return () => setValue((value) => value + 1);
 };
 
 const OrgBookEditor = () => {
@@ -156,14 +148,11 @@ const OrgBookEditor = () => {
   const organisationId = url[url.length - 1];
   const editOrgBookMode = url[url.length - 2];
 
-  //const [isMobile, setIsMobile] = useState(false);
-
   const [createFormVisible, setCreateFormVisible] = useState(false);
   const [newPageFormVisible, setNewPageFormVisible] = useState(false);
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [renamePageFormVisible, setRenamePageFormVisible] = useState(false);
-
   const [maxContentExceeded, setMaxContentExceeded] = useState(false);
   const [minContentNotMet, setMinContentNotMet] = useState(false);
   const [noOfContentChars, setNoOfContentChars] = useState(0);
@@ -196,9 +185,6 @@ const OrgBookEditor = () => {
   const { t } = useTranslation();
 
   const initialize = () => {
-    // if (window.screen.width <= parseInt(mq.phone.wide.maxWidth)) {
-    //   setIsMobile(true);
-    // }
     if (editOrgBookMode === ORGBOOK_CREATE_MODE) {
       setCurrentEditOrgBookMode(ORGBOOK_CREATE_MODE);
       setCreateFormVisible(true);
@@ -215,10 +201,6 @@ const OrgBookEditor = () => {
       orgProfileDispatch(fetchOrganisation());
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
-        // console.log(
-        //   "******in orgbookeditor, got res.data: " +
-        //     JSON.stringify(res.data),
-        // );
         setIsOwner(res.data.isOwner);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
         if (res.data.orgBookPages && res.data.orgBookPages.length > 0) {
@@ -230,7 +212,6 @@ const OrgBookEditor = () => {
           `error.${message}`,
           `error.http.${message}`,
         ]);
-        console.log("got err:  " + message);
         orgProfileDispatch(
           fetchOrganisationError(
             `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
@@ -244,7 +225,6 @@ const OrgBookEditor = () => {
         const res = await axios.get("/api/users/current");
         userProfileDispatch(fetchUserSuccess(res.data));
         setCurrentUserId(res.data.id);
-        //console.log('user fetched: ' + JSON.stringify(res.data));
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
