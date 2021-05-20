@@ -165,8 +165,6 @@ const MemberPermissions = (props, applicantId) => {
         }
     }
 
-
-
     const loadApplicantUser = async () => {
 
         const endpoint = `/api/users/${id}`

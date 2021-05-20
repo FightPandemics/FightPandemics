@@ -16,10 +16,9 @@ const applicantSchema = new Schema(
       name: String,
       permissions: {
         enum: ORG_MEMBERS_TYPES,
-        default: "volunteer",
+        default: "Volunteer",
         required: true,
         type: String,
-        default: "volunteer",
       }
     },
     applicantApplied: {

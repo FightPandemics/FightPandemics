@@ -195,7 +195,6 @@ async function routes(app) {
           status
         },
       } = req;
-      console.log({ "status!!!!": status })
       // console.log({ req: req.query })
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
@@ -231,7 +230,6 @@ async function routes(app) {
           // ]
 
         ).then((applicants) => {
-          console.log({ applicants: applicants })
           applicants.forEach((applicant) => {
             applicant.elapsedTimeText = setElapsedTimeText(
               applicant.createdAt,
@@ -274,7 +272,6 @@ async function routes(app) {
       };
       if (applicantsErr) {
         req.log.error(applicantsErr, "Failed requesting applicants");
-        console.log({ "applicantsErr": applicantsErr })
         throw app.httpErrors.internalServerError();
       }
       else if (applicants === null) {
@@ -306,6 +303,7 @@ async function routes(app) {
         type: actor.type,
         verified: actor.verification && actor.verification.status === "approved",
       };
+
 
       const [err, applicant] = await app.to(new Applicant(applicantProps).save());
 
