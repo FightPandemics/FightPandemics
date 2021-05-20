@@ -135,7 +135,6 @@ const ApplicantSeeAll = styled.h3`
     }
 `;
 
-
 const ApplicationIntro = ({ name, intro, position, applicantName, initials, permissions }) => {
     const [introHeight, setIntroHeight] = useState("")
     const [seeAllVisible, setSeeAllVisible] = useState()
@@ -145,8 +144,6 @@ const ApplicationIntro = ({ name, intro, position, applicantName, initials, perm
         setIntroHeight("100%")
         setSeeAllVisible("none")
     }
-    console.log({ "initials!!!!": initials })
-    console.log({ applicantName: applicantName })
     return (
         <ApplicantCardContainer>
             <ApplicantCard>
@@ -182,11 +179,7 @@ const ApplicationIntro = ({ name, intro, position, applicantName, initials, perm
                         <AppilcantIntroBody
                             style={{ "max-height": seeAllActive && introHeight }}
                         >
-                            {
-                                // TODO ENABLE AFTER intro IS PASSED IN FROM MEMBERPERMISSIONS PAGE
-                                // {intro}
-                            }
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non justo vehicula, sollicitudin lorem sit amet, congue lorem. Donec eu bibendum turpis, eget vehicula leo. Donec cursus tristique nulla a eleifend. Aliquam vitae egestas nisl, vitae ullamcorper libero. Curabitur luctus, sem et maximus aliquam, odio tellus placerat justo, ac porta tellus sapien vel sem. Aenean placerat magna mi, eget placerat eros tempus vitae. Suspendisse commodo finibus elementum. Donec quis risus vitae nulla consectetur eleifend at sit amet tellus. Sed vehicula venenatis luctus.
+                            {intro}
                         </AppilcantIntroBody>
                         <Link
                             onClick={handleSeeAll}

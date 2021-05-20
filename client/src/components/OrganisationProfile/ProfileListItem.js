@@ -81,7 +81,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organiza
     let itemPath
     if (applicantsList || membersList) {
         list = "applicant"
-        itemPath = `/application/${item?.organization?.id}/${item?._id}`
+        itemPath = `/application/${item?.organization?.id}/${item?.applicant.id}/${item?._id}`
         itemState = {
             "applicant": item,
             "applicantId": item?._id,

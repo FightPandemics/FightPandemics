@@ -334,7 +334,7 @@ const routes = [
     }
   },
   {
-    path: "/application/:organisationId/:applicantId",
+    path: "/application/:organisationId/:userId/:applicantId",
     component: Applications,
     props: {
       hideFooter: false,

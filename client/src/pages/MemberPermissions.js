@@ -48,9 +48,13 @@ const MemberPermissions = (props, applicantId) => {
         intro: "",
     }
 
+    const [intro, setIntro] = useState()
+    const [introLoaded, setIntroLoaded] = useState(false)
 
 
-    const { applicationId } = useParams()
+
+
+    const { applicationId, id } = useParams()
     const history = useHistory();
     const [visible, setVisible] = useState(false);
 
@@ -160,6 +164,30 @@ const MemberPermissions = (props, applicantId) => {
             return error
         }
     }
+
+
+
+    const loadApplicantUser = async () => {
+
+        const endpoint = `/api/users/${id}`
+        try {
+            const {
+                data
+            } = await axios.get(endpoint);
+            if (data) {
+                setIntro(data.about)
+                setIntroLoaded(true)
+            }
+        } catch (error) {
+            return error
+        }
+    }
+    useEffect(() => {
+        if (!introLoaded) {
+            loadApplicantUser()
+        }
+    }, [introLoaded])
+
     useEffect(() => {
         if (!applicantLoaded) {
             loadApplicant()
@@ -226,6 +254,7 @@ const MemberPermissions = (props, applicantId) => {
                         // TODO GET INTRO FROM BACKEND
                         initials={getInitialsFromFullName(applicantState.applicant.name)}
                         applicantName={applicantState.applicant.name}
+                        intro={intro}
                     />
                     <PositionsContainer>
                         <PermissionsRadioGroup

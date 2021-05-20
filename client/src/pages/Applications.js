@@ -79,8 +79,10 @@ const Apply = (props) => {
 
 
 
-    let url = window.location.pathname.split("/");
-    const organisationId = url[url.length - 2];
+    // let url = window.location.pathname.split("/");
+    // const organisationId = url[url.length - 2];
+
+    const { organisationId, userId } = useParams()
     const { orgProfileState, orgProfileDispatch } = useContext(
         OrganisationContext,
     );
@@ -144,14 +146,10 @@ const Apply = (props) => {
         })();
     }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // console.table({ locationstate: history.location.state[0].name })
     const params = useParams()
     const [applicantName, setApplicantName] = useState()
     useEffect(() => {
-
         setApplicantName("params")
-        // setApplicantName(history.location.state[0].name)
-
     }, [false])
 
     const loadApplicant = async () => {
@@ -171,13 +169,28 @@ const Apply = (props) => {
         loadApplicant()
     }, [applicantName])
 
-    // const applicants = useSelector(selectApplicants);
-    // console.log({ applicants: applicants })
+    const [intro, setIntro] = useState()
+    const [introLoaded, setIntroLoaded] = useState(false)
+    const loadApplicantUser = async () => {
 
-
-    // const applicantName = "yoooooo!"
-    // console.log({ applicantName: applicantName })
-
+        const endpoint = `/api/users/${userId}`
+        try {
+            const {
+                data
+            } = await axios.get(endpoint);
+            if (data) {
+                setIntro(data.about)
+                setIntroLoaded(true)
+            }
+        } catch (error) {
+            return error
+        }
+    }
+    useEffect(() => {
+        if (!introLoaded) {
+            loadApplicantUser()
+        }
+    }, [introLoaded])
 
     if (error) {
         return <ErrorAlert message={error} type="error" />;
@@ -191,9 +204,7 @@ const Apply = (props) => {
         const { address } = location;
 
         return (
-            // Header and class/component container for position info will be needed from new profile design to be consistent
             <>
-
                 <ProfileBackgroup />
                 <ProfileLayout>
 
@@ -226,6 +237,7 @@ const Apply = (props) => {
                         applicantName={applicantState.applicant.name}
                         initials={getInitialsFromFullName(applicantState.applicant.name)}
                         permissions={applicantState.organization.permissions}
+                        intro={intro}
                     />
                     <PositionsContainer>
                         <Application
