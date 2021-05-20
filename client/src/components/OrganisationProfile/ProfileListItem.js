@@ -81,21 +81,21 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organiza
     let itemPath
     if (applicantsList || membersList) {
         list = "applicant"
-        itemPath = `/application/${item?._id}`
+        itemPath = `/application/${item?.organization?.id}/${item?._id}`
         itemState = {
             "applicant": item,
             "applicantId": item?._id,
         }
     }
 
-    // if (membersList) {
-    //     // list = "member"
-    //     itemPath = `/profile/${item?.[list]?.id}`
-    //     itemState = {
-    //         "applicant": item,
-    //         "applicantId": item?._id,
-    //     }
-    // }
+    if (membersList) {
+        // list = "member"
+        itemPath = `/profile/${item?.[list]?.id}`
+        itemState = {
+            "applicant": item,
+            "applicantId": item?._id,
+        }
+    }
 
     if (orgsList) {
         list = "organisation"
@@ -104,7 +104,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organiza
     return (
         <Link
             to={{
-                pathname: `/application/${item?.organization?.id}/${item?._id}`,
+                pathname: itemPath,
                 state:
                 {
                     name: item?.[list]?.name,

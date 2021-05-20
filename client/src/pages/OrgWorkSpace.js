@@ -123,12 +123,12 @@ const OrgWorkSpace = (props) => {
         try {
             // TODO - SWAP OUT MEMBER STATIC TEST DATA FOR API CALL
 
-            // const {
-            //     data: { data: applicants, meta },
-            // } = await axios.get(endpoint);
+            const {
+                data: { data: applicants, meta },
+            } = await axios.get(endpoint);
 
-            const meta = Meta
-            const { applicants: applicants } = TestMembersList
+            // const meta = Meta
+            // const { applicants: applicants } = TestMembersList
 
             if (!meta.total) {
                 setRawTotalApplicants(0)
@@ -419,7 +419,7 @@ const OrgWorkSpace = (props) => {
 }
 
 const getApplicantsBaseURL = (organisationId, limit, skip) => {
-    return `/api/applicants?organisationId=${organisationId}&status="accepted"&includeMeta=true&limit=${limit}&skip=${skip}`;
+    return `/api/applicants/${organisationId}/status?status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
 export default withUserContext(withOrganisationContext(OrgWorkSpace));
