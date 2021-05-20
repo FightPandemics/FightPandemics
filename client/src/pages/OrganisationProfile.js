@@ -715,9 +715,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           <Link
             to={`/applicants/${organisationId}`}
           ><div style={{ color: "red", "font-weight": "bold" }}>TEST ORG APPLICANTS PAGE (6.1)</div></Link>
-          <Link
-            to={`/organisation/${organisationId}/applications`}
-          ><div style={{ color: "red", "font-weight": "bold" }}>TEST APPLICATION REVIEW PAGE (7.1)</div></Link>
+
           <Link
             style={{ color: "red", "font-weight": "bold" }}
             to={`/orgworkspace/${organisationId}`}
