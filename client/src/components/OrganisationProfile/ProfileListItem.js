@@ -81,7 +81,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organiza
     let itemPath
     if (applicantsList || membersList) {
         list = "applicant"
-        itemPath = `/application/${item._id}`
+        itemPath = `/application/${item?._id}`
         itemState = {
             "applicant": item,
             "applicantId": item?._id,
@@ -104,7 +104,7 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organiza
     return (
         <Link
             to={{
-                pathname: `/application/${item?.organization.id}/${item?._id}`,
+                pathname: `/application/${item?.organization?.id}/${item?._id}`,
                 state:
                 {
                     name: item?.[list]?.name,
