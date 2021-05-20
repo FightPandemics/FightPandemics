@@ -14,7 +14,5 @@ export const formToApplicationMappings = (formData) => ({
 })
 
 export const formToApplicationMappingsPatch = (formData) => ({
-    // organizationId: ,
-    // applicant: ,
-    // status:,
+     status: formData.status
 })

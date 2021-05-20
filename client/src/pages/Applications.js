@@ -154,20 +154,16 @@ const Apply = (props) => {
 
     }, [false])
 
-    console.log({ params: params.applicantId })
-
     const loadApplicant = async () => {
         const endpoint = `/api/applicants/${params.applicantId}`
         try {
             const {
                 data
             } = await axios.get(endpoint);
-            console.log({ "applicant!!!!": data })
             setApplicantState(data)
         } catch (error) {
             return error
         }
-        console.log({ applicantState: applicantState })
     }
 
 

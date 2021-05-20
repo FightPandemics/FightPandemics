@@ -195,7 +195,7 @@ async function routes(app) {
           status
         },
       } = req;
-      console.log({ orgId: organizationId })
+      console.log({ "status!!!!": status })
       // console.log({ req: req.query })
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
@@ -238,7 +238,6 @@ async function routes(app) {
               applicant.updatedAt
             );
           });
-          console.log({ applicants: applicants[0].organization.id })
           return applicants;
         })
       );
@@ -247,21 +246,18 @@ async function routes(app) {
         // organisationId
         // ? 
         [
-          // {
-          //   $match: {
-          //     $and: [
-          //       { organization: { id: mongoose.Types.ObjectId(organisationId) } },
-          //       // { status: "accepted" },
-          //     ]
-          //   }
-          // },
-          { $group: { _id: null, count: { $sum: 1 } } },
+          {
+            $match: {
+              $and: [
+                { "organization.id": mongoose.Types.ObjectId(organizationId) },
+                status ? { status: status } : {},
+                permissions ? { "organization.permissions": permissions } : {},
+              ]
+            }
+          },
+          { $group: { _id: null, count: { $sum: 1 } } }
         ]
 
-        // : [
-        //   // { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
-        //   { $group: { _id: null, count: { $sum: 1 } } },
-        // ],
       );
       const applicantsResponse = (response) => {
         if (!includeMeta) {
@@ -276,9 +272,9 @@ async function routes(app) {
           data: response,
         };
       };
-
       if (applicantsErr) {
         req.log.error(applicantsErr, "Failed requesting applicants");
+        console.log({ "applicantsErr": applicantsErr })
         throw app.httpErrors.internalServerError();
       }
       else if (applicants === null) {
@@ -337,25 +333,8 @@ async function routes(app) {
         body: { organizationId, status, permissions },
         params: { applicantId },
       } = req;
-      //  const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
-      // // const [orgErr, org] = await app.to(Organization.findById(organizationId));
-      // console.log("BE TEST!")
-      // // console.log({ applicant: req })
-      // if (applicantErr) {
-      //   req.log.error(applicantErr, "Failed retrieving data for applicant");
-      //   throw app.httpErrors.internalServerError();
-      // } else if (applicant === null) {
-      //   throw app.httpErrors.notFound();
-      // } /* We need to check below wcenario if it can occur. If not then we can delete below check */
-      // else if (!applicant.organizationId.equals(organizationId)) {
-      //   req.log.error("Organization owner/admin not allowed to update the application status.");
-      //   throw app.httpErrors.forbidden();
-      // }
-
-      console.log({ applicantId: applicantId })
 
       const [updateErr, updateApplicant] = await app.to(
-        // console.log("update test!")
         Applicant.findOneAndUpdate(
           { _id: applicantId },
           status ? { $set: { status: status } } : {},
@@ -371,7 +350,6 @@ async function routes(app) {
         req.log.error(updateErr, "Failed updating applicant status.");
         throw app.httpErrors.internalServerError();
       }
-
 
       return updateApplicant;
     }

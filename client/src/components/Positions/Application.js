@@ -16,6 +16,7 @@ import axios from "axios";
 import { formToApplicationMappings } from "assets/data/formToApplicationMappings";
 import { applicantsActions, selectApplicants } from "reducers/applicants";
 import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 
 const { colors } = theme
 
@@ -104,8 +105,9 @@ const Application = ({ orgName,
 }) => {
 
     const actorId = useSelector(selectActorId);
-    const { id } = useParams()
-    const organisationId = id
+    const { organisationId } = useParams()
+    const { applicantId } = useParams()
+    // const organisationId = organisationId
     const initialState = {
         //combine questions into "answers" for backend
         formData: {
@@ -198,7 +200,7 @@ const Application = ({ orgName,
     const [successVisible, setSuccessVisible] = useState(false);
 
     const handleCancel = async (e) => {
-        setFormData({ formData, status: "applied" });
+        setFormData({ formData, status: "accepted" });
         setRejectVisible(false);
         setAcceptVisible(false);
     };
@@ -212,46 +214,33 @@ const Application = ({ orgName,
     };
 
     const handleConfirmation = async (e) => {
-        console.log(formData.status)
         setSuccessVisible(false);
-
     };
 
-    const endPoint = `/api/applicants/${application._id}`
+    const endPoint = `/api/applicants/${applicantId}`
 
     const handleRejectSuccess = async () => {
-        console.log(formData.status)
         setRejectVisible(false);
-        // handleCancel()
-        // setFormData({ formData, status: "rejected" });
-
-        // INSERT API CALL TO PATCH REVIEW STATUS
         try {
-            await axios.patch(endPoint, formData);
+            await axios.patch(endPoint, { status: "rejected" });
         } catch (error) {
-            console.log(error);
+            return error;
         }
         setSuccessVisible(true);
-
     };
 
     const handleAcceptSuccess = async () => {
-        console.log(formData.status)
-        // handleCancel()
         setAcceptVisible(false);
-        // setFormData({ formData, status: "accepted" });
-
-        // INSERT API CALL TO PATCH REVIEW STATUS
         try {
-            await axios.patch(endPoint, formData);
+            await axios.patch(endPoint, { status: "accepted" });
+            console.log({ formdata: formData.status })
         } catch (error) {
-            console.log(error);
+            return error;
         }
         setSuccessVisible(true);
     };
 
     const applicants = useSelector(selectApplicants);
-    console.log({ applicants: applicants })
 
     const [applicantName, setApplicantName] = useState()
 
