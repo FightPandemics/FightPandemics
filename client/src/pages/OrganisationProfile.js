@@ -593,12 +593,15 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
   const [switchOnOff, setSwitchOnOff] = useState(false);
   const [checksEnabled, setChecksEnabled] = useState(true);
-  const [displayText, setDisplayText] = useState("");
+  const [displayText, setDisplayText] = useState(
+    t("position.text1") + name + t("position.text2"),
+  );
   const [isEditable, setIsEditable] = useState(false);
   const inputRef = useRef("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [postLoading, setPostLoading] = useState(false);
   const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [textCount, setTextCount] = useState(1);
 
   const { filterModal, activePanel, showFilters } = feedState;
   // const filters = Object.values(filterOptions);
@@ -766,6 +769,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   useEffect(() => {
     setDisplayText(t("position.text1") + name + t("position.text2"));
   }, [name, t]);
+
+  const textField = () => {
+    if (textCount > 0) return <DisplayText>{displayText}</DisplayText>;
+    else return <div style={{ color: "red" }}>Add a description</div>;
+  };
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
     feedApplicants,
@@ -1020,6 +1028,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                         onClick={() => {
                           if (inputRef.current) {
                             setDisplayText(inputRef.current.value);
+                            setTextCount(inputRef.current.value.length);
                           }
                           setIsEditable(!isEditable);
                         }}
@@ -1036,7 +1045,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       maxLength="500"
                     />
                   ) : (
-                    <DisplayText>{displayText}</DisplayText>
+                    textField()
                   )}
                 </DescContainer>
               </Row>
