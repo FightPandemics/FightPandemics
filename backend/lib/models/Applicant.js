@@ -188,6 +188,7 @@ const Applicants = model("Applicants", applicantSchema);
 
 module.exports = {
   APPLICANT_STATUS,
+  ORG_MEMBERS_TYPES,
   model: Applicants,
   schema: applicantSchema,
 };

@@ -1,5 +1,5 @@
 const S = require("fluent-schema");
-const { APPLICANT_STATUS } = require("../../models/Applicant");
+const { APPLICANT_STATUS, ORG_MEMBERS_TYPES } = require("../../models/Applicant");
 const { strictQueryStringSchema, strictSchema } = require("./utils");
 
 // const applicant = {
@@ -54,7 +54,8 @@ const createApplicantSchema = {
 
 const updateApplicantStatusSchema = {
   body: strictSchema()
-    .prop("status", S.string().enum(APPLICANT_STATUS)),
+    .prop("status", S.string().enum(APPLICANT_STATUS))
+    .prop("permissions", S.string().enum(ORG_MEMBERS_TYPES)),
   params: strictSchema()
     .prop("applicantId", S.string().required()),
 };

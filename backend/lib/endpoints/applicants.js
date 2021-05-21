@@ -336,12 +336,14 @@ async function routes(app) {
         body: { organizationId, status, permissions },
         params: { applicantId },
       } = req;
-
+      console.log({ "permissions!!!!": permissions })
       const [updateErr, updateApplicant] = await app.to(
         Applicant.findOneAndUpdate(
           { _id: applicantId },
-          status ? { $set: { status: status } } : {},
-          permissions ? { $set: { "organization.permissions": permissions } } : {}
+          {
+            status: status,
+            "organization.permissions": permissions
+          }
         ),
       );
       if (updateErr) {
