@@ -185,17 +185,20 @@ async function routes(app) {
     },
     async (req) => {
       const {
+        // actor,
         params: { organizationId },
         query: {
           limit,
           skip,
           includeMeta,
           permissions,
-          // userId, 
+          userId,
           status
         },
       } = req;
       // console.log({ req: req.query })
+      // console.log({ "userId!!!!!": userId })
+
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
           // organisationId
@@ -209,6 +212,7 @@ async function routes(app) {
                   { "organization.id": mongoose.Types.ObjectId(organizationId) },
                   status ? { status: status } : {},
                   permissions ? { "organization.permissions": permissions } : {},
+                  userId ? { "applicant.id": userId } : {}
                 ]
               }
             },
@@ -250,6 +254,7 @@ async function routes(app) {
                 { "organization.id": mongoose.Types.ObjectId(organizationId) },
                 status ? { status: status } : {},
                 permissions ? { "organization.permissions": permissions } : {},
+                userId ? { "applicant.id": userId } : {}
               ]
             }
           },

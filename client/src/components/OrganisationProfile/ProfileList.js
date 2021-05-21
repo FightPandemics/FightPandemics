@@ -68,6 +68,10 @@ const ProfileList = ({
     totalCount,
     organisationId,
     isOwner,
+    isMember,
+    isAdmin,
+    isWiki,
+    isVolunteer,
     emptyFeed
 }) => {
     // const applicants = Object.entries(filteredApplicants);
@@ -103,8 +107,12 @@ const ProfileList = ({
                             applicantsList={applicantsList}
                             membersList={membersList}
                             orgList={orgsList}
-                            organisationId={organisationId}
+                            organizationId={organisationId}
                             isOwner={isOwner}
+                            isMember={isMember}
+                            isAdmin={isAdmin}
+                            isWiki={isWiki}
+                            isVolunteer={isVolunteer}
                         />
                     </>
                 );

@@ -11,7 +11,7 @@ import React, {
   useRef,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // ICONS
@@ -140,6 +140,15 @@ const getOrgBookLink = (orgBookLink) => (orgBookLink.startsWith("http") ? orgBoo
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 const OrganisationProfile = ({ isAuthenticated }) => {
+
+  const [tab, setTab] = useState()
+  const locationLink = useLocation(false)
+  useEffect(() => {
+    if (locationLink.state) {
+      setTab(locationLink.state.tab)
+    }
+  })
+
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -191,7 +200,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
-
+  // console.log({ "actorOrganisationId!!!!": user.about })
+  const actorId = user?.id
+  // console.log({ "actorId": actorId })
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -255,7 +266,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
-          console.log({ posts: posts })
           if (prevOrgId !== organisationId) {
             dispatch(
               postsActions.fetchPostsSuccess({
@@ -513,14 +523,77 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       }
     }
   };
+  const [currentUserPermissions, setCurrentUserPermissions] = useState()
+  const [memberstatus, setMemberstatus] = useState(false)
+  const [isMember, setIsMember] = useState(false)
+
+  const loadPermissions = async (actorId) => {
+    const endpoint = `/api/applicants/${organisationId}/status?status=accepted&userId=${actorId}&includeMeta=true` // &userId=${user.id}
+
+    try {
+      const {
+        data: { data: applicants, meta }
+      } = await axios.get(endpoint);
+      // console.log({ "APPLICANTS!!!": applicants[0].organization.permissions })
+      // console.log({ "META!!!": meta })
+      setActorPermissionsLoaded(true)
+      setCurrentUserPermissions(applicants[0].organization.permissions)
+      setMemberstatus(applicants[0].status)
+    } catch (error) {
+      return error
+    }
+  }
+
+  const permissions = {
+    isVolunteer: currentUserPermissions == "Volunteer" || "WikiEditor" || "Admin",
+    isWikiEditor: currentUserPermissions == "WikiEditor" || "Admin",
+    isAdmin: currentUserPermissions == "Admin"
+  }
+
+  useEffect(() => {
+
+    if (memberstatus == "accepted") {
+      setIsMember(true)
+    }
+
+  })
+
+  // console.log(permissions)
+
+  // if (userId) {
+  //   console.log("user id true!!!!")
+  // }
+
+  const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false)
+
+  useEffect(() => {
+    // if (!actorPermissionsLoaded && actorId) {
+    loadPermissions(actorId)
+    // }
+  }, [actorId])
+
+  const [activeTab, setActiveTab] = useState("activity")
+
 
   const loadApplicants = async () => {
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
+    let baseURL
     const getApplicantsBaseURL = (organisationId, limit, skip) => {
+      return `/api/applicants/${organisationId}/status?includeMeta=true&limit=${limit}&skip=${skip}&status=applied`;
+    };
+    const getMembersBaseURL = (organisationId, limit, skip) => {
       return `/api/applicants/${organisationId}/status?status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
-    let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
+
+    if (activeTab == "members") {
+      baseURL = getMembersBaseURL(organisationId, limit, skip);
+    }
+
+    if (activeTab == "applicants") {
+      baseURL = getApplicantsBaseURL(organisationId, limit, skip)
+    }
+
     let endpoint = baseURL
     dispatch(applicantsActions.fetchApplicantsBegin());
 
@@ -608,7 +681,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
   useEffect(() => {
     loadApplicants();
-  }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [toggleRefetchApplicants, pageApplicants, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
   const loadNextPageApplicant = useCallback(
@@ -631,6 +704,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     },
     [feedApplicants.length, isLoadingApplicants, loadMoreApplicants], // eslint-disable-line react-hooks/exhaustive-deps
   );
+
+
+  console.log({ "activeTab!!!!": activeTab })
 
   useEffect(() => {
     setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
@@ -712,14 +788,21 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           {
             // TODO - REMOVE ORG WORKSPACE TEST LINK
           }
-          <Link
+          {/* <Link
             to={`/applicants/${organisationId}`}
-          ><div style={{ color: "red", "font-weight": "bold" }}>TEST ORG APPLICANTS PAGE (6.1)</div></Link>
+          ><div style={{ color: "red", "font-weight": "bold" }}>TEST ORG APPLICANTS PAGE (6.1)</div></Link> */}
 
-          <Link
+          {/* <Link
             style={{ color: "red", "font-weight": "bold" }}
             to={`/orgworkspace/${organisationId}`}
-          >TEST ORG WORKSPACE PAGE (8.1)</Link>
+          //   LINK THAT GOES IN ORG WORKSPACE
+          //   to={{
+          //   pathname: "/organisation/603be1140789a03df4bdb17c",
+          //   state: {
+          //     tab: "members"
+          //   }
+          // }}
+          >TEST ORG WORKSPACE PAGE (8.1)</Link> */}
 
           {isSelf && !verified && <Verification />}
 
@@ -745,12 +828,18 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           </JoinOrgContainer> : null}
           {// TABS
           }
-          <ProfileTabs defaultActiveKey="activity">
+          <ProfileTabs
+            defaultActiveKey="activity"
+            // retrieve activeKey from incoming link
+            // activeKey={activeTab ? activeTab : "activity"}
+            activeKey={tab ? tab : undefined}
+            onChange={(e) => setActiveTab(e)}
+          >
             <ProfileTabPane tab={t("profile.views.activity")} key="activity"><div>
               <SectionHeader>
                 {/* {t("profile.org.activity")} */}
                 <PlaceholderIcon />
-                {isSelf && (
+                {isSelf || isMember && (
                   <>
                     <CreatePostIcon
                       id={GTM.organisation.orgPrefix + GTM.post.createPost}
@@ -806,22 +895,57 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 )}
               </FeedWrapper>
             </div></ProfileTabPane>
-            {!isSelf && <ProfileTabPane tab={t("profile.views.members")} key="members">
-              <ProfileList
-                // TODO -conditionally show role / permissions and permissions link
-                filteredMembers={applicantsList}
-                itemCount={itemCountApplicants}
-                isItemLoaded={isApplicantLoaded}
-                isNextPageLoading={isLoading}
-                loadNextPage={loadNextPageApplicant}
-                hasNextPage={loadMoreApplicants}
-                filteredApplicants={applicantsList}
-                totalCount={totalApplicantCount}
-                page={pageApplicants}
-                emptyFeed={emptyFeed}
-                isOwner={isOwner}
-              />
+            {<ProfileTabPane tab={t("profile.views.members")} key="members">
+              {rawTotalApplicantCount == 0 ?
+                <div style={{ textAlign: "center", marginTop: "5rem" }}>
+                  No members to display.
+                </div> :
+                <ProfileList
+                  // TODO -conditionally show role / permissions and permissions link
+                  filteredMembers={applicantsList}
+                  itemCount={itemCountApplicants}
+                  isItemLoaded={isApplicantLoaded}
+                  isNextPageLoading={isLoading}
+                  loadNextPage={loadNextPageApplicant}
+                  hasNextPage={loadMoreApplicants}
+                  filteredApplicants={applicantsList}
+                  totalCount={totalApplicantCount}
+                  page={pageApplicants}
+                  emptyFeed={emptyFeed}
+                  isOwner={isOwner}
+                  isMember={isMember}
+                  isAdmin={permissions.isAdmin}
+                  isWiki={permissions.isWiki}
+                  isVolunteer={permissions.isVolunteer}
+                />
+              }
             </ProfileTabPane>}
+            {
+              isOwner || permissions.isAdmin &&
+              <ProfileTabPane tab={t("profile.views.applicants")} key="applicants">
+                {rawTotalApplicantCount == 0 ?
+                  <div style={{ textAlign: "center", marginTop: "5rem" }}>
+                    No applicants to display.
+                </div> :
+                  <ProfileList
+                    filteredMembers={applicantsList}
+                    itemCount={itemCountApplicants}
+                    isItemLoaded={isApplicantLoaded}
+                    isNextPageLoading={isLoading}
+                    loadNextPage={loadNextPageApplicant}
+                    hasNextPage={loadMoreApplicants}
+                    // filteredApplicants={applicantsList}
+                    totalCount={totalApplicantCount}
+                    page={pageApplicants}
+                    emptyFeed={emptyFeed}
+                    isOwner={isOwner}
+                    isMember={isMember}
+                    isAdmin={permissions.isAdmin}
+                    isWiki={permissions.isWiki}
+                    isVolunteer={permissions.isVolunteer}
+                  />
+                }
+              </ProfileTabPane>}
           </ProfileTabs>
 
           {isSelf && (

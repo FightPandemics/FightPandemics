@@ -74,7 +74,17 @@ export const Permissions = styled.div`
     /* margin: 1rem 0; */
 `;
 
-const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organizationId, isOwner }) => {
+const ProfileListItem = ({
+    item,
+    applicantsList,
+    membersList,
+    orgsList,
+    organizationId,
+    isOwner,
+    isMember,
+    isAdmin,
+    isWiki,
+    isVolunteer, }) => {
 
     let itemState
     let list
@@ -144,19 +154,13 @@ const ProfileListItem = ({ item, applicantsList, membersList, orgsList, organiza
                         <Name>
                             {item?.[list]?.name && item?.[list]?.name || ""}
                         </Name>
-                        {applicantsList ? null :
+                        {isWiki || isOwner && applicantsList &&
                             <Permissions>
                                 {
-                                    //ORG PERMISSIONS
-                                    orgsList ?
-                                        // org permissions prop (test placeholder is below)
-                                        "(Editor)"
-                                        :
-                                        // member position title prop (test placeholder is below)
-                                        // item?.[list].organization.permissions
-                                        "(Volunteer)"
+                                    item?.[list].organization.permissions
                                 }
-                            </Permissions>}
+                            </Permissions>
+                        }
                     </TextContainer>
 
                 </ProfileContainer>

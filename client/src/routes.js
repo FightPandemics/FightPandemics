@@ -329,7 +329,7 @@ const routes = [
     component: MemberPermissions,
     props: {
       props: {
-        // loggedInOnly: true,
+        loggedInOnly: true,
       }
     }
   },
@@ -340,7 +340,7 @@ const routes = [
       hideFooter: false,
       hideHeader: false,
       props: {
-        // loggedInOnly: true,
+        loggedInOnly: true,
       }
     }
   },
