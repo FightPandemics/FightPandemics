@@ -18,6 +18,12 @@ import TextFeedbackModal from "components/Feedback/TextFeedbackModal";
 import ThanksModal from "components/Feedback/ThanksModal";
 import withLabel from "components/Input/with-label";
 import ErrorAlert from "components/Alert/ErrorAlert";
+
+
+// New import
+import ProfileNavMenu from "components/ProfileNavMenu/ProfileNavMenu";
+
+
 import { theme } from "constants/theme";
 import {
   TOGGLE_STATE,
@@ -34,6 +40,16 @@ import {
 import Logo from "components/Logo";
 import logo from "assets/logo.svg";
 import DrawerMenu from "components/DrawerMenu";
+
+// Added Styles
+const MainWrapper = styled.div`
+    width: 100vw;
+    margin-left: 10rem;
+`;
+
+const BodyWrapper = styled.div`
+    display: flex;
+`;
 
 const { royalBlue } = theme.colors;
 
@@ -428,23 +444,30 @@ const NavigationLayout = (props) => {
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}
-          <Main isProfile={props?.isProfile}>
-            <props.component {...props} />
-            {feedbackFormState.error && (
-              <ErrorAlert
+
+          <BodyWrapper>
+            <ProfileNavMenu />
+
+            <MainWrapper>
+            <Main isProfile={props?.isProfile}>
+                <props.component {...props} />
+                {feedbackFormState.error && (
+                <ErrorAlert
                 message={feedbackFormState.error}
                 type="error"
                 closable={true}
                 fullWidthBanner={true}
-              />
-            )}
-            {renderRatingModal()}
-            {renderTextFeedbackModal()}
-            {renderRadioModal()}
-            {renderThanksModal()}
-          </Main>
-          {!hideFooter && <Footnote />}
-          <CookieAlert />
+                />
+                )}
+                {renderRatingModal()}
+                {renderTextFeedbackModal()}
+                {renderRadioModal()}
+                {renderThanksModal()}
+            </Main>
+            </MainWrapper>
+            </BodyWrapper>
+            {!hideFooter && <Footnote />}
+            <CookieAlert />
         </StyledDrawer>
       </div>
     );
