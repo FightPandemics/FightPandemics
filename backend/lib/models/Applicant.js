@@ -1,7 +1,7 @@
 // -- Imports
 const { Schema, model, ObjectId } = require("mongoose");
 const APPLICANT_STATUS = ["applied", "accepted", "rejected"];
-const ORG_MEMBERS_TYPES = ["volunteer", "wikieditor", "admin"];
+const ORG_MEMBERS_TYPES = ["Volunteer", "Wikieditor", "Admin"];
 
 // --Schema
 const applicantSchema = new Schema(
@@ -16,9 +16,9 @@ const applicantSchema = new Schema(
       name: String,
       permissions: {
         enum: ORG_MEMBERS_TYPES,
-        default: "volunteer",
+        default: "Volunteer",
         required: true,
-        type: String
+        type: String,
       }
     },
     applicantApplied: {
@@ -35,7 +35,8 @@ const applicantSchema = new Schema(
       enum: APPLICANT_STATUS,
       default: "applied",
       required: true,
-      type: String
+      type: String,
+      applied: "applied"
     },
   },
   { collection: "applicants", timestamps: true },

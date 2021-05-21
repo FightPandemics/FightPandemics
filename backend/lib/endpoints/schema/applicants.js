@@ -9,17 +9,13 @@ const { strictQueryStringSchema, strictSchema } = require("./utils");
 // };
 
 const getApplicantByIdSchema = {
-  queryString: S.object().prop("applicantId", S.string().required()),
+  params: S.object().prop("applicantId", S.string().required()),
 };
 
 const getApplicantsSchema = {
   queryString: strictQueryStringSchema()
     .prop("applicantId", S.string())
-    .prop(
-      "organization",
-      S.object()
-        .prop("id", S.string().required())
-    )
+    .prop("organizationId", S.string().required())
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false))
     .prop("permissions", S.string())
@@ -28,10 +24,10 @@ const getApplicantsSchema = {
 
 const getOrganizationApplicantsSchema = {
   params: strictSchema()
-    .prop("organisationId", S.string().required()),
+    .prop("organizationId", S.string().required()),
   queryString: strictQueryStringSchema()
-    // .prop("organisationId", S.string())
     .prop("status", S.string())
+    .prop("permissions", S.string())
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false)),
 
@@ -57,7 +53,7 @@ const createApplicantSchema = {
 
 const updateApplicantStatusSchema = {
   body: strictSchema()
-    .prop("status", S.string().enum(APPLICANT_STATUS).required()),
+    .prop("status", S.string().enum(APPLICANT_STATUS)),
   params: strictSchema()
     .prop("applicantId", S.string().required()),
 };

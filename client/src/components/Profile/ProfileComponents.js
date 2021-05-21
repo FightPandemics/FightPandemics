@@ -113,7 +113,7 @@ export const NameDiv = styled(TextLabel)`
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100% - 1.6rem);
-    backgroun-color: red;
+    /* backgroun-color: red; */
 
     img {
       margin-right: 0.8rem;
@@ -175,7 +175,7 @@ export const ProfileBackgroup = styled.div`
 `;
 
 export const ProfileLayout = styled.div`
-  background-color: ${colors.offWhite};
+  /* background-color: ${colors.offWhite}; */
   max-height: 100%;
   z-index: 1;
   max-width: 80rem;
@@ -185,11 +185,15 @@ export const ProfileLayout = styled.div`
   border-radius: 0.8rem;
   margin-bottom: 4rem;
 
+  &.profile-list-page {
+    overflow: visible;
+  }
+
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 90vw;
     margin-left: auto;
     margin-right: auto;
-    background-color: #f6f7fb;
+    /* background-color: #f6f7fb; */
   }
 `;
 

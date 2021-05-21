@@ -34,8 +34,11 @@ import EditSecurity from "./pages/EditSecurity";
 import Positions from "./pages/Positions";
 import SeeAll from "./pages/SeeAllPost";
 import Apply from "./pages/Apply";
+import Applications from "./pages/Applications";
 import AdminProfile from "./pages/AdminProfile";
 import OrgWorkSpace from "./pages/OrgWorkSpace";
+import MemberPermissions from "./pages/MemberPermissions";
+// import Application from "./pages/Application";
 
 import { SCOPES } from "constants/permissions";
 
@@ -196,7 +199,7 @@ const routes = [
     },
   },
   {
-    path: "/admin/:id",
+    path: "/applicants/:id",
     component: AdminProfile,
     props: {
       // isProfile: true,
@@ -300,7 +303,7 @@ const routes = [
     props: {
       isProfile: true,
       loggedInOnly: true,
-    }
+    },
   },
   {
     path: "/organisation/:id/apply",
@@ -308,8 +311,8 @@ const routes = [
     props: {
       props: {
         // loggedInOnly: true,
-      }
-    }
+      },
+    },
   },
   {
     path: "/orgworkspace/:id",
@@ -317,9 +320,40 @@ const routes = [
     props: {
       props: {
         // loggedInOnly: true,
-      }
-    }
+      },
+    },
   },
+  ,
+  {
+    path: "/:organisationId/permissions/:applicationId/:id",
+    component: MemberPermissions,
+    props: {
+      props: {
+        // loggedInOnly: true,
+      },
+    },
+  },
+  {
+    path: "/application/:organisationId/:userId/:applicantId",
+    component: Applications,
+    props: {
+      hideFooter: false,
+      hideHeader: false,
+      props: {
+        // loggedInOnly: true,
+      },
+    },
+  },
+  // {
+  //   path: "/application/:id",
+  //   component: Application,
+  //   props: {
+  //     props: {
+  //       // TODO ENABLE loggedInOnly
+  //       // loggedInOnly: true,
+  //     }
+  //   }
+  // },
   {
     path: "*",
     component: NotFoundPage,

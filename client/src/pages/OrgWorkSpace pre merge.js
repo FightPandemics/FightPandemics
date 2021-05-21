@@ -1,3 +1,4 @@
+// PRE MERGE
 import filterOptions from "assets/data/filterOptions";
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
@@ -51,12 +52,9 @@ import {
   ProfileLayout,
   UserInfoContainer,
   UserInfoDesktop,
-  SeeOrgBookLink,
 } from "../components/Profile/ProfileComponents";
 import { WhiteSpace } from "antd-mobile";
 import styled from "styled-components";
-
-import { TestMembersList, Meta } from "utils/TestMembersList";
 
 const initialState = {
   showFilters: false,
@@ -70,10 +68,6 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 export const FeedContext = React.createContext();
-const getOrgBookLink = (orgBookLink) =>
-  orgBookLink.startsWith("http")
-    ? orgBookLink
-    : window.location.pathname + `/${orgBookLink}`;
 
 const OrgWorkSpace = (props) => {
   const dispatch = useDispatch();
@@ -82,6 +76,8 @@ const OrgWorkSpace = (props) => {
   });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const applicants = useSelector(selectApplicants);
+
+  //react-virtualized loaded rows and row count.
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalApplicantCount, setTotalApplicantCount] = useState(
@@ -132,15 +128,15 @@ const OrgWorkSpace = (props) => {
     dispatch(applicantsActions.fetchApplicantsBegin());
 
     try {
-      // TODO - SWAP OUT MEMBER STATIC TEST DATA FOR API CALL
-
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
 
-      // const meta = Meta
-      // const { applicants: applicants } = TestMembersList
+      const { data } = await axios.get(endpoint);
 
+      console.log({ data: data });
+      // console.log({ applicants: applicants })
+      console.log({ meta2: meta });
       if (!meta.total) {
         setRawTotalApplicants(0);
       }
@@ -262,7 +258,7 @@ const OrgWorkSpace = (props) => {
   const { error, loading, organisation } = orgProfileState;
   const { userProfileDispatch } = useContext(UserContext);
   const { t } = useTranslation();
-  const { name, location = {}, about = "", orgBookLink } = organisation || {};
+  const { name, location = {}, about = "" } = organisation || {};
 
   useEffect(() => {
     (async function fetchOrgProfile() {
@@ -303,17 +299,6 @@ const OrgWorkSpace = (props) => {
       }
     })();
   }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const orgBookURL = () => {
-    if (organisation) {
-      if (orgBookLink) {
-        return getOrgBookLink(orgBookLink);
-      } else {
-        return;
-      }
-    }
-  };
-
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -360,13 +345,6 @@ const OrgWorkSpace = (props) => {
                   </div>
                 </NameDiv>
                 {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-                {
-                  <SeeOrgBookLink>
-                    <a href={orgBookURL()} target="_blank">
-                      See Org Book
-                    </a>
-                  </SeeOrgBookLink>
-                }
               </UserInfoDesktop>
             </UserInfoContainer>
             <WhiteSpace />
@@ -406,7 +384,6 @@ const OrgWorkSpace = (props) => {
                       totalCount={totalApplicantCount}
                       page={page}
                       emptyFeed={emptyFeed}
-                      isOwner={true}
                     />
                   )}
                 </ProfileTabPane>
@@ -420,7 +397,7 @@ const OrgWorkSpace = (props) => {
 };
 
 const getApplicantsBaseURL = (organisationId, limit, skip) => {
-  return `/api/applicants/${organisationId}/status?status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
+  return `/api/applicants?organisationId=${organisationId}&status="accepted"&includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
 export default withUserContext(withOrganisationContext(OrgWorkSpace));

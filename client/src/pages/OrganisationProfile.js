@@ -122,6 +122,11 @@ import JoinOrgButton, {
   JoinOrgContainer,
 } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
+
+import { JoinPositionStyles } from "../components/Positions/JoinPositionStyles";
+import { PostPositionButton } from "../components/EditProfile/EditComponents";
+import TextInput from "../components/Input/PositionInput";
+import { TestMembers } from "components/OrganisationProfile/TestMembers";
 import ProfileList from "components/OrganisationProfile/ProfileList";
 import {
   TestMembersList,
@@ -129,9 +134,6 @@ import {
   Applicants,
   Meta,
 } from "utils/TestMembersList";
-import { JoinPositionStyles } from "../components/Positions/JoinPositionStyles";
-import { PostPositionButton } from "../components/EditProfile/EditComponents";
-import TextInput from "../components/Input/PositionInput";
 
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
@@ -376,7 +378,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
-
+          console.log({ posts: posts });
           if (prevOrgId !== organisationId) {
             dispatch(
               postsActions.fetchPostsSuccess({
@@ -673,20 +675,20 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
     const getApplicantsBaseURL = (organisationId, limit, skip) => {
-      return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+      return `/api/applicants/${organisationId}/status?status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
     let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
     let endpoint = baseURL;
     dispatch(applicantsActions.fetchApplicantsBegin());
 
     try {
-      // const {
-      //     data: { data: applicants, meta },
-      // } = await axios.get(endpoint);
+      const {
+        data: { data: applicants, meta },
+      } = await axios.get(endpoint);
 
       // TEST DATA
-      const applicants = Applicants;
-      const meta = Meta;
+      // const applicants = Applicants
+      // const meta = Meta
 
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
@@ -877,8 +879,24 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               }
             </UserInfoDesktop>
           </UserInfoContainer>
+          {
+            // TODO - REMOVE ORG WORKSPACE TEST LINK
+          }
+          <Link to={`/applicants/${organisationId}`}>
+            <div style={{ color: "red", "font-weight": "bold" }}>
+              TEST ORG APPLICANTS PAGE (6.1)
+            </div>
+          </Link>
+
+          <Link
+            style={{ color: "red", "font-weight": "bold" }}
+            to={`/orgworkspace/${organisationId}`}
+          >
+            TEST ORG WORKSPACE PAGE (8.1)
+          </Link>
 
           {isSelf && !verified && <Verification />}
+
           <WhiteSpace />
           {
             // Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
@@ -1100,6 +1118,24 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 <p>{t("position.confirmDescription")}</p>
               </StyledConfirmModal>
             </ProfileTabPane>
+            {!isSelf && (
+              <ProfileTabPane tab={t("profile.views.members")} key="members">
+                <ProfileList
+                  // TODO -conditionally show role / permissions and permissions link
+                  filteredMembers={applicantsList}
+                  itemCount={itemCountApplicants}
+                  isItemLoaded={isApplicantLoaded}
+                  isNextPageLoading={isLoading}
+                  loadNextPage={loadNextPageApplicant}
+                  hasNextPage={loadMoreApplicants}
+                  filteredApplicants={applicantsList}
+                  totalCount={totalApplicantCount}
+                  page={pageApplicants}
+                  emptyFeed={emptyFeed}
+                  isOwner={isOwner}
+                />
+              </ProfileTabPane>
+            )}
           </ProfileTabs>
 
           {isSelf && (
