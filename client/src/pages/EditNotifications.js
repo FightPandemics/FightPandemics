@@ -54,8 +54,6 @@ function EditNotifications(props) {
   const [switchOnOff, setSwitchOnOff] = useState(true);
   const [enableOrgPosts, setEnableOrgPosts] = useState(false);
 
-
-
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
     try {
@@ -85,12 +83,9 @@ function EditNotifications(props) {
         let { _id, ...prefs } = res.data.notifyPrefs;
 
         // THIS LOGIC WILL RELY ON DIFF API CALL
-        // if (res.data.memberOf.length > 0) {
-        //   Object.assign(disabledPrefs.instant, { orgPosts: true });
-        //   Object.assign(prefs.instant, { orgPosts: false });
-        //   console.log(prefs);
-        //   setEnableOrgPosts(true);
-        // }
+        if (res.data.organisations.length > 0) {
+          setEnableOrgPosts(true);
+        }
 
         if (isEqual(prefs, disabledPrefs)) {
           setSwitchOnOff(false); // update switch button
@@ -156,13 +151,11 @@ function EditNotifications(props) {
             <NotifyPreferenceInput
               control={control}
               currPrefs={currPrefs}
-              // enableOrgPosts={enableOrgPosts}
-              // enableOrgPosts set to true until backend is ready
-              enableOrgPosts={true}
+              enableOrgPosts={enableOrgPosts}
               switchOnOff={switchOnOff}
               setSwitchOnOff={setSwitchOnOff}
             />
-            
+
             {/* Button that saves changes */}
             <CustomSubmitButton
               disabled={!formState.isValid}

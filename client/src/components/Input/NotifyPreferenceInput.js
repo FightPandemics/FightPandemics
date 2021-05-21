@@ -49,15 +49,15 @@ const NotifyPreferenceInput = ({
   switchOnOff,
   setSwitchOnOff,
 }) => {
+  if (enableOrgPosts) {
+    Object.assign(NotifyType, { orgposts: "common.orgPosts" });
+  }
   const [checksEnabled, setChecksEnabled] = useState(true);
   const { t } = useTranslation();
-  console.log("currPrefs", currPrefs, enableOrgPosts);
+
   useEffect(() => {
-    if (enableOrgPosts) {
-      Object.assign(NotifyType, { orgposts: "common.orgPosts" });
-    }
     setChecksEnabled(switchOnOff);
-  }, [switchOnOff, enableOrgPosts]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [switchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
@@ -91,7 +91,7 @@ const NotifyPreferenceInput = ({
               {Object.entries(key1 !== "digest" ? NotifyType : NotifyFreq).map(
                 ([subkey, sublabel]) =>
                   (subkey.toLowerCase() === "orgposts" && enableOrgPosts) ||
-                  subkey.toLowerCase() !== "orgpost" ? (
+                  subkey.toLowerCase() !== "orgposts" ? (
                     <CheckBoxWrapper key={(key1, subkey)}>
                       <Controller
                         key={(key1, subkey)}
