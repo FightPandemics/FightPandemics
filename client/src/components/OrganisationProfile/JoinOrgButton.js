@@ -6,6 +6,10 @@ import { theme, mq } from "constants/theme";
 export const JoinOrgContainer = styled.div`
   max-width: 33.4rem;
   margin: auto;
+  margin-top: 5.3rem;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin-top: 2rem;
+  }
 `;
 const JoinOrgBtn = styled(BaseButton)`
   border-radius: 4.6rem;
@@ -15,20 +19,27 @@ const JoinOrgBtn = styled(BaseButton)`
   font-size: 1.4rem;
   display: block;
   max-width: 33.4rem;
+  width: 33.4rem;
+  height: 5.4rem;
   margin: auto;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    width:fit-content;
-    
+    width: 15.5rem;
+    height: 4.8rem;
   }
- `;
+`;
 
 const GtmContainer = styled.span`
   * {
-    font-family: 'Poppins', 'sans-serif';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins", "sans-serif";
     pointer-events: none;
     padding: 0 1rem;
-    }
+    line-height: normal;
+  }
+
   cursor: pointer;
 `;
 

@@ -1,3 +1,4 @@
+// PRE MERGE
 import filterOptions from "assets/data/filterOptions";
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
@@ -53,6 +54,7 @@ import {
   UserInfoDesktop,
 } from "../components/Profile/ProfileComponents";
 import { WhiteSpace } from "antd-mobile";
+import styled from "styled-components";
 
 const initialState = {
   showFilters: false,
@@ -67,7 +69,7 @@ const ARBITRARY_LARGE_NUM = 10000;
 
 export const FeedContext = React.createContext();
 
-const AdminProfile = (props) => {
+const OrgWorkSpace = (props) => {
   const dispatch = useDispatch();
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
@@ -81,7 +83,7 @@ const AdminProfile = (props) => {
   const [totalApplicantCount, setTotalApplicantCount] = useState(
     ARBITRARY_LARGE_NUM,
   );
-  const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
+  const [rawTotalApplicantCount, setRawTotalApplicants] = useState();
   const { filterModal, activePanel, showFilters } = feedState;
   const filters = Object.values(filterOptions);
   const {
@@ -129,7 +131,15 @@ const AdminProfile = (props) => {
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
-      console.log({ applicants: applicants });
+
+      const { data } = await axios.get(endpoint);
+
+      console.log({ data: data });
+      // console.log({ applicants: applicants })
+      console.log({ meta2: meta });
+      if (!meta.total) {
+        setRawTotalApplicants(0);
+      }
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
@@ -299,7 +309,6 @@ const AdminProfile = (props) => {
   } else {
     const { address } = location;
     return (
-      // Header and class/component container for position info will be needed from new profile design to be consistent
       <>
         <FeedContext.Provider
           value={{
@@ -315,7 +324,7 @@ const AdminProfile = (props) => {
           }}
         >
           <ProfileBackgroup />
-          <ProfileLayout>
+          <ProfileLayout className="profile-list-page">
             <UserInfoContainer>
               <AvatarPhotoContainer>
                 <ProfilePic
@@ -345,18 +354,24 @@ const AdminProfile = (props) => {
                 // Placeholder text for ONE position is being used below
                 // Component will be needed for multiple positions (based on backend schema / structure)
               }
+
               <ProfileTabs>
+                {/* 
+                                <ContentContainer
+                                    className="content-container"
+                                /> */}
+
                 <ProfileTabPane
                   className="single-tab"
                   tab={
-                    t("profile.views.applicants") +
+                    t("profile.views.members") +
                     (windowWidth < 767 ? ` ( ${rawTotalApplicantCount} )` : "")
                   }
                   key="members"
                 >
                   {rawTotalApplicantCount == 0 ? (
                     <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                      No Applicants to display.
+                      No members to display.
                     </div>
                   ) : (
                     <ProfileList
@@ -365,11 +380,10 @@ const AdminProfile = (props) => {
                       isNextPageLoading={isLoading}
                       loadNextPage={loadNextPage}
                       hasNextPage={loadMore}
-                      filteredApplicants={applicantsList}
+                      filteredMembers={applicantsList}
                       totalCount={totalApplicantCount}
                       page={page}
                       emptyFeed={emptyFeed}
-                      organizationId={organisationId}
                     />
                   )}
                 </ProfileTabPane>
@@ -383,7 +397,7 @@ const AdminProfile = (props) => {
 };
 
 const getApplicantsBaseURL = (organisationId, limit, skip) => {
-  return `/api/applicants/${organisationId}/status?includeMeta=true&limit=${limit}&skip=${skip}&status=applied`;
+  return `/api/applicants?organisationId=${organisationId}&status="accepted"&includeMeta=true&limit=${limit}&skip=${skip}`;
 };
 
-export default withUserContext(withOrganisationContext(AdminProfile));
+export default withUserContext(withOrganisationContext(OrgWorkSpace));

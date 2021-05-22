@@ -124,7 +124,7 @@ export const NamePara = styled.p`
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     padding: 0;
     font-size: 1.5rem;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
     line-height: 2.8rem;
   }
 `;
@@ -138,7 +138,7 @@ export const EditIcon = styled(SvgIcon)`
 `;
 
 export const PositionsBackgroup = styled.div`
-  background-color: ${colors.royalBlue}; 
+  background-color: ${colors.royalBlue};
   width: 100%;
   height: 5.2rem;
   z-index: 0;
@@ -150,22 +150,22 @@ export const PositionsBackgroup = styled.div`
 export const CategoryBackgroup = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${colors.ghostWhite};
+  /* background-color: ${colors.ghostWhite}; */
   width: 100%;
-  height: 5.2rem;  
+  height: 5.2rem;
   padding: 1rem 0 1rem 3.3rem;
   border-radius: 0 0 1rem 1rem;
- `;
+`;
 
 export const BackgroupContainer = styled.div`
-  filter: drop-shadow(0 .5rem 2rem rgba(0, 0, 0, .1)) ;
-  `;
+  filter: drop-shadow(0 0.5rem 2rem rgba(0, 0, 0, 0.1));
+`;
 
 export const ProfileLayout = styled.div`
-  background-color: ${colors.offWhite};
-  
+  /* background-color: ${colors.offWhite}; */
+
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    background-color: #f6f7fb;
+    /* background-color: #f6f7fb; */
   }
 `;
 
@@ -181,14 +181,14 @@ export const IconsContainer = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     ${(props) =>
-    props.inCard
-      ? `
+      props.inCard
+        ? `
     img {
       width: 2rem;
       height: 2rem;
     }
     `
-      : ""};
+        : ""};
   }
 
   .social-icons {
@@ -267,46 +267,43 @@ export const DescriptionDesktop = styled.div`
 export const PositionTitle = styled.h1`
   font-size: 3.2rem;
   line-height: 3.7rem;
-  letter-spacing: .04rem;
+  letter-spacing: 0.04rem;
   font-weight: 600;
   color: ${colors.black};
   align-self: flex-start;
   margin-top: 10rem;
   margin-bottom: 0;
-  
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
-  margin: 3rem auto 1.6rem auto;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  font-weight: 500;
-  }
 
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    margin: 3rem auto 1.6rem auto;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    font-weight: 500;
+  }
 `;
 
 export const PositionDescription = styled.p`
   color: ${colors.mediumGray};
-  font-style: 'Work Sans';
+  font-style: "Work Sans";
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 1.9rem;
-  letter-spacing: .07rem;
+  letter-spacing: 0.07rem;
   margin-top: 5rem;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) { 
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 1.2rem;
     line-height: 1.4rem;
     margin-top: 2rem;
   }
 `;
 
-export const PositionLisitingContainer = styled.div`
-
-`;
+export const PositionLisitingContainer = styled.div``;
 
 export const TitleContainer = styled.div`
-display: flex;
-align-items: center;
-left: 0;
-margin-bottom: 2.2rem;
+  display: flex;
+  align-items: center;
+  left: 0;
+  margin-bottom: 2.2rem;
 `;
 export const PageTitle = styled(TextLabel)`
   display: flex;
@@ -314,7 +311,6 @@ export const PageTitle = styled(TextLabel)`
   align-self: flex-start;
   overflow-wrap: break-word;
   padding-left: 1rem;
-     
 
   &.ant-typography {
     font-size: 1.5rem;
@@ -323,7 +319,7 @@ export const PageTitle = styled(TextLabel)`
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     padding: 0;
-    padding-left: .5rem;
+    padding-left: 0.5rem;
     flex-direction: column;
   }
 
@@ -350,29 +346,24 @@ export const PageTitle = styled(TextLabel)`
 `;
 
 export const PositionsContainer = styled.div`
-    
+  position: relative;
+
   p {
-    font-family: 'Work Sans';
+    font-family: "Work Sans";
     color: ${colors.black};
     font-size: 1.6rem;
     font-weight: 400;
-    letter-spacing:.07rem;
+    letter-spacing: 0.07rem;
     color: ${colors.black};
-    
+
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       font-size: 1.2rem;
-  }
+    }
   }
 `;
 
 export const OrgCategory = styled.div`
-  font-family: 'Work Sans';
+  font-family: "Work Sans";
   font-size: 1.2rem;
   color: ${colors.darkishGray};
-  
-  `;
-
-
-
-
-
+`;
