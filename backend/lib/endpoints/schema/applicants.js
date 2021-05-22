@@ -19,6 +19,7 @@ const getApplicantsSchema = {
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false))
     .prop("permissions", S.string())
+    .prop("status", S.string())
     .prop("userId", S.string()),
 };
 
@@ -54,10 +55,11 @@ const createApplicantSchema = {
 
 const updateApplicantStatusSchema = {
   body: strictSchema()
-    .prop("status", S.string().enum(APPLICANT_STATUS))
-    .prop("permissions", S.string().enum(ORG_MEMBERS_TYPES)),
+    .prop("status", S.string().enum(APPLICANT_STATUS)),
   params: strictSchema()
     .prop("applicantId", S.string().required()),
+  queryString: strictQueryStringSchema()
+    .prop("permissions", S.string().enum(ORG_MEMBERS_TYPES)),
 };
 
 module.exports = {

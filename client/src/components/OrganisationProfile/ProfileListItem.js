@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "constants/theme";
 import { getInitialsFromFullName } from "utils/userInfo";
+import { useState, useEffect } from "react";
 const { colors } = theme;
 
 
@@ -74,6 +75,8 @@ export const Permissions = styled.div`
     /* margin: 1rem 0; */
 `;
 
+
+
 const ProfileListItem = ({
     item,
     applicantsList,
@@ -84,12 +87,43 @@ const ProfileListItem = ({
     isMember,
     isAdmin,
     isWiki,
-    isVolunteer, }) => {
+    isVolunteer,
+    activeTab,
+    members,
+    applicants
+}) => {
+    const [tabState, setTabState] = useState()
 
     let itemState
     let list
     let itemPath
-    if (applicantsList || membersList) {
+
+    // useEffect(() => {
+    //     if (activeTab = "members") {
+    //         setTabState("members")
+    //     }
+    //     if (activeTab = "applicants") {
+    //         setTabState("applicants")
+    //     }
+    // }, [activeTab])
+
+
+
+    if (activeTab == "members") {
+        list = "applicant"
+        itemPath = `/profile/${item?.applicant?.id}`
+        // itemPath = `/ooooooooooo`
+        itemState = {
+            "applicant": item,
+            "applicantId": item?._id,
+        }
+    }
+
+    if (activeTab == "members" && isOwner || isAdmin) {
+        itemPath = `/${item?.organization?.id}/permissions/${item?._id}/${item?.[list]?.id}`
+    }
+
+    else if (activeTab == "applicants") {
         list = "applicant"
         itemPath = `/application/${item?.organization?.id}/${item?.applicant.id}/${item?._id}`
         itemState = {
@@ -98,22 +132,17 @@ const ProfileListItem = ({
         }
     }
 
-    if (membersList) {
-        // list = "member"
-        itemPath = `/profile/${item?.[list]?.id}`
-        itemState = {
-            "applicant": item,
-            "applicantId": item?._id,
-        }
-    }
 
-    if (isOwner) {
-        itemPath = `/${item?.organization?.id}/permissions/${item?._id}/${item?.[list]?.id}`
-    }
 
-    if (orgsList) {
-        list = "organisation"
-    }
+
+
+    // if (activeTab = "orgs") {
+    //     itemPath = `/${item?.organization?.id}/permissions/${item?._id}/${item?.[list]?.id}`
+    // }
+
+    // if (orgsList) {
+    //     list = "organisation"
+    // }
 
     return (
         <Link
@@ -127,6 +156,7 @@ const ProfileListItem = ({
 
             }}
         >
+            {/* Current Tab {activeTab} */}
             <AllItems>
                 <ProfileContainer>
                     <ProfilePicContainer>
@@ -157,7 +187,7 @@ const ProfileListItem = ({
                         {isWiki || isOwner && applicantsList &&
                             <Permissions>
                                 {
-                                    item?.[list].organization.permissions
+                                    item?.[list]?.organization?.permissions
                                 }
                             </Permissions>
                         }

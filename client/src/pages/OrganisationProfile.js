@@ -200,9 +200,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
-  // console.log({ "actorOrganisationId!!!!": user.about })
   const actorId = user?.id
-  // console.log({ "actorId": actorId })
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -565,14 +563,30 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   // }
 
   const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false)
+  const [activeTab, setActiveTab] = useState("applicants")
+
+  // const preSetActiveTab = (e) => {
+  //   // if (e = "members") {
+  //   //   setActiveTab(e)
+  //   // }
+  //   // else if (e = "applicants") {
+  //   //   setActiveTab(e)
+  //   // }
+  //   // else {
+  //   //   setActiveTab(e)
+  //   // }
+  //   setActiveTab(e)
+  // }
+
 
   useEffect(() => {
     // if (!actorPermissionsLoaded && actorId) {
     loadPermissions(actorId)
+    // preSetActiveTab()
     // }
-  }, [actorId])
+  }, [actorId, activeTab])
 
-  const [activeTab, setActiveTab] = useState("activity")
+
 
 
   const loadApplicants = async () => {
@@ -677,7 +691,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
   useEffect(() => {
     refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadApplicants();
@@ -702,7 +716,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         return Promise.resolve();
       }
     },
-    [feedApplicants.length, isLoadingApplicants, loadMoreApplicants], // eslint-disable-line react-hooks/exhaustive-deps
+    [feedApplicants.length, isLoadingApplicants, loadMoreApplicants, activeTab], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
 
@@ -833,13 +847,13 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             // retrieve activeKey from incoming link
             // activeKey={activeTab ? activeTab : "activity"}
             activeKey={tab ? tab : undefined}
-            onChange={(e) => setActiveTab(e)}
+            onChange={async (e) => setActiveTab(e)}
           >
             <ProfileTabPane tab={t("profile.views.activity")} key="activity"><div>
               <SectionHeader>
                 {/* {t("profile.org.activity")} */}
                 <PlaceholderIcon />
-                {isSelf || isMember && (
+                {isSelf || isMember ? (
                   <>
                     <CreatePostIcon
                       id={GTM.organisation.orgPrefix + GTM.post.createPost}
@@ -855,7 +869,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       {t("post.create")}
                     </CreatePostButton>
                   </>
-                )}
+                ) : null}
               </SectionHeader>
 
               <FeedWrapper isProfile>
@@ -884,7 +898,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   />
                 )}
                 {emptyFeed() && <></>}
-                {isSelf && (
+                {isSelf || isMember ? (
                   <CreatePost
                     gtmPrefix={GTM.organisation.orgPrefix}
                     onCancel={onToggleCreatePostDrawer}
@@ -892,7 +906,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                     visible={modal}
                     user={user}
                   />
-                )}
+                ) : null}
+
               </FeedWrapper>
             </div></ProfileTabPane>
             {<ProfileTabPane tab={t("profile.views.members")} key="members">
@@ -917,35 +932,41 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   isAdmin={permissions.isAdmin}
                   isWiki={permissions.isWiki}
                   isVolunteer={permissions.isVolunteer}
+                  activeTab={activeTab}
                 />
               }
             </ProfileTabPane>}
             {
-              isOwner || permissions.isAdmin &&
-              <ProfileTabPane tab={t("profile.views.applicants")} key="applicants">
-                {rawTotalApplicantCount == 0 ?
-                  <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                    No applicants to display.
+              isOwner || permissions.isAdmin || isSelf ?
+                <ProfileTabPane tab={t("profile.views.applicants")} key="applicants">
+                  {rawTotalApplicantCount == 0 ?
+                    <div style={{ textAlign: "center", marginTop: "5rem" }}>
+                      No applicants to display.
                 </div> :
-                  <ProfileList
-                    filteredMembers={applicantsList}
-                    itemCount={itemCountApplicants}
-                    isItemLoaded={isApplicantLoaded}
-                    isNextPageLoading={isLoading}
-                    loadNextPage={loadNextPageApplicant}
-                    hasNextPage={loadMoreApplicants}
-                    // filteredApplicants={applicantsList}
-                    totalCount={totalApplicantCount}
-                    page={pageApplicants}
-                    emptyFeed={emptyFeed}
-                    isOwner={isOwner}
-                    isMember={isMember}
-                    isAdmin={permissions.isAdmin}
-                    isWiki={permissions.isWiki}
-                    isVolunteer={permissions.isVolunteer}
-                  />
-                }
-              </ProfileTabPane>}
+                    // activeTab == "applicants" ? 
+                    <ProfileList
+                      filteredMembers={applicantsList}
+                      itemCount={itemCountApplicants}
+                      isItemLoaded={isApplicantLoaded}
+                      isNextPageLoading={isLoading}
+                      loadNextPage={loadNextPageApplicant}
+                      hasNextPage={loadMoreApplicants}
+                      totalCount={totalApplicantCount}
+                      page={pageApplicants}
+                      emptyFeed={emptyFeed}
+                      isOwner={isOwner}
+                      isMember={isMember}
+                      isAdmin={permissions.isAdmin}
+                      isWiki={permissions.isWiki}
+                      isVolunteer={permissions.isVolunteer}
+                      activeTab={activeTab}
+                    />
+                    // : null
+                  }
+                </ProfileTabPane>
+                : null
+
+            }
           </ProfileTabs>
 
           {isSelf && (

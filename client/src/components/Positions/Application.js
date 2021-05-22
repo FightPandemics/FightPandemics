@@ -162,37 +162,14 @@ const Application = ({ orgName,
 
     const handleReject = async (e) => {
         e.preventDefault();
-        // if (!formData.props) {
-        //     populateErrors()
-        // };
-        // if (formData.question1 && formData.question2 && formData.question3) {
-        //     showPopUp()
-        // };
-        // console.log("PRE API CALL" + formData)
         setFormData({ formData, status: "rejected" });
         showRejectModal()
-
-        // api call goes inside of function for submit modal
-
-
     };
 
     const handleAccept = async (e) => {
         e.preventDefault();
-        // if (!formData.props) {
-        //     populateErrors()
-        // };
-        // if (formData.question1 && formData.question2 && formData.question3) {
-        //     showPopUp()
-        // };
-        // console.log("PRE API CALL" + formData)
         setFormData({ formData, status: "accepted" });
         showAcceptModal()
-
-
-        // api call goes inside of function for submit modal
-
-
     };
 
     const [rejectVisible, setRejectVisible] = useState(false);
@@ -246,30 +223,6 @@ const Application = ({ orgName,
 
     const applicationReceived = t("positions.applicationReceived").replace("{orgName}", orgName);
     const history = useHistory();
-
-    // GET APPLICANT FROM BACKEND
-
-    // const loadApplicant = async (e) => {
-    //     const endPoint = `/api/applicants?applicantId=${userId}&organisationId=${organisationId}`
-    //     try {
-    //         res = await axios.get(endPoint)
-    //     }
-    //     catch (error) {
-    //         console.log({ error });
-    //         dispatchPostAction(RESET_LOADING);
-    //       }
-    // }
-
-
-    // USE EFFECT > loadApplicants
-
-    // useEffect(() => {
-    //     loadApplicants()
-    //     return () => {
-    //         cleanup
-    //     }
-    // }, [input])
-
     return (
         <>
             <OuterWrapper className="review">
@@ -284,12 +237,6 @@ const Application = ({ orgName,
                     />
                 </LabelContainer>
                 <InputWrapper className="application-input review">
-                    {/* <InputField
-                        disabled={true}
-                        // value={res.answers.q1}
-                        value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor. odio feortor dolor."
-                    /> */}
-
                     <ResponseField > {application.answers.q1} </ResponseField>
                 </InputWrapper>
                 <LabelContainer>
@@ -298,11 +245,6 @@ const Application = ({ orgName,
                     />
                 </LabelContainer>
                 <InputWrapper className="application-input review">
-                    {/* <InputField
-                        disabled={true}
-                        // value={res.answers.q2}
-                        value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
-                    /> */}
                     <ResponseField>{application.answers.q2}</ResponseField>
 
                 </InputWrapper>
@@ -313,11 +255,7 @@ const Application = ({ orgName,
                     />
                 </LabelContainer>
                 <InputWrapper className="application-input review">
-                    {/* <InputField
-                        disabled={true}
-                        // value={res.answers.q3}
-                        value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
-                    /> */}
+
                     <ResponseField>{application.answers.q3}</ResponseField>
 
                 </InputWrapper>
@@ -366,7 +304,6 @@ const Application = ({ orgName,
                             {t("positions.cancelModal")}
                         </StyledCancelButton>
                         <StyledSubmitButton
-                            // submit form to backend onClick
                             onClick={handleAcceptSuccess}
                         >
                             {t("positions.submitModal")}

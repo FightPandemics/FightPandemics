@@ -39,6 +39,7 @@ import { LOCAL_NOTIFICATION_MARK_AS_CLEARED } from "actions/wsActions";
 import { applicantsActions, selectApplicants } from "reducers/applicants";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { selectOrganisationId } from "reducers/session";
 
 const initialState = {
     applicant: { name: "-" },
@@ -122,8 +123,8 @@ const Apply = (props) => {
         OrganisationContext,
     );
     const { error, loading, organisation } = orgProfileState;
-    // const actorOrganisationId = useSelector(selectOrganisationId);
-    const isSelf = actorId == organisationId;
+    const actorOrganisationId = useSelector(selectOrganisationId);
+    const isSelf = organisation && actorOrganisationId == organisation._id;
 
     const { t } = useTranslation();
     const {
@@ -201,7 +202,7 @@ const Apply = (props) => {
 
     useEffect(() => {
         loadApplicant()
-    }, [applicantName])
+    }, [applicantName, params.applicantId])
 
     const [intro, setIntro] = useState()
     const [introLoaded, setIntroLoaded] = useState(false)
@@ -267,7 +268,7 @@ const Apply = (props) => {
                             {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
                         </UserInfoDesktop>
                     </UserInfoContainer>
-                    {isSelf ?
+                    {isSelf || permissions?.isAdmin ?
                         <>
                             <ApplicationIntro
                                 // applicantName={applicantName}
