@@ -67,6 +67,11 @@ const ProfileList = ({
   totalCount,
   organisationId,
   isOwner,
+  isMember,
+  isAdmin,
+  isWiki,
+  isVolunteer,
+  activeTab,
   emptyFeed,
 }) => {
   // const applicants = Object.entries(filteredApplicants);
@@ -77,11 +82,8 @@ const ProfileList = ({
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
-  console.log({ "items!!!!": items });
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   const [seeAll, setSeeAll] = useState(false);
-
-  console.log({ items: items });
 
   const handleSeeAll = () => {
     setSeeAll((prevState) => !prevState);
@@ -104,8 +106,13 @@ const ProfileList = ({
               applicantsList={applicantsList}
               membersList={membersList}
               orgList={orgsList}
-              organisationId={organisationId}
+              organizationId={organisationId}
               isOwner={isOwner}
+              isMember={isMember}
+              isAdmin={isAdmin}
+              isWiki={isWiki}
+              isVolunteer={isVolunteer}
+              activeTab={activeTab}
             />
           </>
         );
@@ -127,10 +134,15 @@ const ProfileList = ({
       );
     },
     [
+      activeTab,
       applicantsList,
       hasNextPage,
+      isAdmin,
       isItemLoaded,
+      isMember,
       isOwner,
+      isVolunteer,
+      isWiki,
       items,
       membersList,
       organisationId,

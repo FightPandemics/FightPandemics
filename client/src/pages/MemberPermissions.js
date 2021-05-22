@@ -232,8 +232,6 @@ const MemberPermissions = (props, applicantId) => {
             </UserInfoDesktop>
           </UserInfoContainer>
           <ApplicationIntro
-            // TODO GET MEMBER INFO FROM STATE (6.1)
-            // TODO GET INTRO FROM BACKEND
             initials={getInitialsFromFullName(applicantState.applicant.name)}
             applicantName={applicantState.applicant.name}
             intro={intro}

@@ -55,6 +55,7 @@ import {
 } from "../components/Profile/ProfileComponents";
 import { WhiteSpace } from "antd-mobile";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import { TestMembersList, Meta } from "utils/TestMembersList";
 
@@ -370,6 +371,17 @@ const OrgWorkSpace = (props) => {
               </UserInfoDesktop>
             </UserInfoContainer>
             <WhiteSpace />
+            <Link
+              to={{
+                pathname: "/organisation/603be1140789a03df4bdb17c",
+                state: {
+                  tab: "members",
+                },
+              }}
+            >
+              {" "}
+              TEST LINK
+            </Link>
             <PositionsContainer>
               {
                 // Position title and description to be pulled from backend / API

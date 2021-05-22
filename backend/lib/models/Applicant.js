@@ -25,7 +25,14 @@ const applicantSchema = new Schema(
       required: true,
       type: String
     },
-    applicant: Object, //Author Schema
+    applicant: {
+      id: {
+        type: String,
+      },
+      name: {
+        type: String
+      }
+    }, //Author Schema
     answers: {
       required: true,
       type: [String]
@@ -181,6 +188,7 @@ const Applicants = model("Applicants", applicantSchema);
 
 module.exports = {
   APPLICANT_STATUS,
+  ORG_MEMBERS_TYPES,
   model: Applicants,
   schema: applicantSchema,
 };

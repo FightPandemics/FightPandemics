@@ -40,6 +40,7 @@ import { LOCAL_NOTIFICATION_MARK_AS_CLEARED } from "actions/wsActions";
 import { applicantsActions, selectApplicants } from "reducers/applicants";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { selectOrganisationId } from "reducers/session";
 
 const initialState = {
   applicant: { name: "-" },
@@ -54,6 +55,42 @@ const initialState = {
 
 const Apply = (props) => {
   // const { isAuthenticated, user } = props;
+  const {
+    userProfileState: { user },
+    userProfileDispatch,
+  } = useContext(UserContext);
+  const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false);
+  const [currentUserPermissions, setCurrentUserPermissions] = useState();
+  const actorId = user?.id;
+  const loadPermissions = async (actorId) => {
+    const endpoint = `/api/applicants/${organisationId}/status?status=accepted&userId=${actorId}&includeMeta=true`; // &userId=${user.id}
+
+    try {
+      const {
+        data: { data: applicants, meta },
+      } = await axios.get(endpoint);
+      // console.log({ "APPLICANTS!!!": applicants[0].organization.permissions })
+      // console.log({ "META!!!": meta })
+      setActorPermissionsLoaded(true);
+      setCurrentUserPermissions(applicants[0].organization.permissions);
+      // setMemberstatus(applicants[0].status)
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const permissions = {
+    isVolunteer:
+      currentUserPermissions == "Volunteer" || "WikiEditor" || "Admin",
+    isWikiEditor: currentUserPermissions == "WikiEditor" || "Admin",
+    isAdmin: currentUserPermissions == "Admin",
+  };
+  useEffect(() => {
+    // if (!actorPermissionsLoaded && actorId) {
+    loadPermissions(actorId);
+    // }
+  }, [actorId, loadPermissions]);
+
   const [applicantState, setApplicantState] = useState(initialState);
   const history = useHistory();
   const [visible, setVisible] = useState(false);
@@ -86,10 +123,9 @@ const Apply = (props) => {
     OrganisationContext,
   );
   const { error, loading, organisation } = orgProfileState;
-  const {
-    userProfileState: { user },
-    userProfileDispatch,
-  } = useContext(UserContext);
+  const actorOrganisationId = useSelector(selectOrganisationId);
+  const isSelf = organisation && actorOrganisationId == organisation._id;
+
   const { t } = useTranslation();
   const { name, location = {}, about = "" } = organisation || {};
 
@@ -159,7 +195,7 @@ const Apply = (props) => {
 
   useEffect(() => {
     loadApplicant();
-  }, [applicantName, loadApplicant]);
+  }, [applicantName, loadApplicant, params.applicantId]);
 
   const [intro, setIntro] = useState();
   const [introLoaded, setIntroLoaded] = useState(false);
@@ -217,25 +253,43 @@ const Apply = (props) => {
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
             </UserInfoDesktop>
           </UserInfoContainer>
-          <ApplicationIntro
-            // applicantName={applicantName}
-            applicantName={applicantState.applicant.name}
-            initials={getInitialsFromFullName(applicantState.applicant.name)}
-            permissions={applicantState.organization.permissions}
-            intro={intro}
-          />
-          <PositionsContainer>
-            <Application
-              orgName={name}
-              organisationId={organisationId}
-              application={applicantState}
-            ></Application>
-          </PositionsContainer>
-          <ExitModal
-            visible={visible}
-            handleExit={handleExit}
-            handleCancel={handleCancel}
-          />
+          {isSelf || permissions?.isAdmin ? (
+            <>
+              <ApplicationIntro
+                // applicantName={applicantName}
+                applicantName={applicantState.applicant.name}
+                initials={getInitialsFromFullName(
+                  applicantState.applicant.name,
+                )}
+                permissions={applicantState.organization.permissions}
+                intro={intro}
+              />
+              <PositionsContainer>
+                <Application
+                  orgName={name}
+                  organisationId={organisationId}
+                  application={applicantState}
+                ></Application>
+              </PositionsContainer>
+              <ExitModal
+                visible={visible}
+                handleExit={handleExit}
+                handleCancel={handleCancel}
+              />
+            </>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                "justify-content": "center",
+                "align-items": "center",
+                "font-size": "2rem",
+                height: "75%",
+              }}
+            >
+              You do not have permission to view this page 😥{" "}
+            </div>
+          )}
         </ProfileLayout>
       </>
     );

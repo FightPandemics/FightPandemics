@@ -37,17 +37,14 @@ const LabelContainer = styled.label`
   font-size: 2.2rem;
   font-weight: 400;
   line-height: 3.3rem;
-
   /* :after {
   content: " *";
 } */
-
   &.asterisk-error {
     :after {
       color: ${colors.red};
     }
   }
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 1.4rem;
     line-height: 1.8rem;
@@ -58,11 +55,9 @@ const Title = styled.h2`
   margin: 7rem auto;
   font-weight: 600;
   font-size: 3.2rem;
-
   &.application {
     font-size: 2.2rem;
   }
-
   &.review {
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       font-size: 1.3rem;
@@ -76,7 +71,6 @@ const ApplicationButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 7.2rem;
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     gap: 1.3rem;
   }
@@ -91,7 +85,6 @@ const ApplyFormSubmit = styled(Submit)`
   font-weight: 500;
   line-height: 2.02rem;
   margin-bottom: 40rem;
-
   span {
     font-size: 1.6rem;
   }
@@ -100,7 +93,6 @@ const ApplyFormSubmit = styled(Submit)`
     height: 4.8rem;
     margin-top: 2rem;
     margin-bottom: 5rem;
-
     span {
       font-size: 1.4rem;
     }
@@ -174,32 +166,14 @@ const Application = ({
 
   const handleReject = async (e) => {
     e.preventDefault();
-    // if (!formData.props) {
-    //     populateErrors()
-    // };
-    // if (formData.question1 && formData.question2 && formData.question3) {
-    //     showPopUp()
-    // };
-    // console.log("PRE API CALL" + formData)
     setFormData({ formData, status: "rejected" });
     showRejectModal();
-
-    // api call goes inside of function for submit modal
   };
 
   const handleAccept = async (e) => {
     e.preventDefault();
-    // if (!formData.props) {
-    //     populateErrors()
-    // };
-    // if (formData.question1 && formData.question2 && formData.question3) {
-    //     showPopUp()
-    // };
-    // console.log("PRE API CALL" + formData)
     setFormData({ formData, status: "accepted" });
     showAcceptModal();
-
-    // api call goes inside of function for submit modal
   };
 
   const [rejectVisible, setRejectVisible] = useState(false);
@@ -256,29 +230,6 @@ const Application = ({
     orgName,
   );
   const history = useHistory();
-
-  // GET APPLICANT FROM BACKEND
-
-  // const loadApplicant = async (e) => {
-  //     const endPoint = `/api/applicants?applicantId=${userId}&organisationId=${organisationId}`
-  //     try {
-  //         res = await axios.get(endPoint)
-  //     }
-  //     catch (error) {
-  //         console.log({ error });
-  //         dispatchPostAction(RESET_LOADING);
-  //       }
-  // }
-
-  // USE EFFECT > loadApplicants
-
-  // useEffect(() => {
-  //     loadApplicants()
-  //     return () => {
-  //         cleanup
-  //     }
-  // }, [input])
-
   return (
     <>
       <OuterWrapper className="review">
@@ -289,12 +240,6 @@ const Application = ({
           />
         </LabelContainer>
         <InputWrapper className="application-input review">
-          {/* <InputField
-                        disabled={true}
-                        // value={res.answers.q1}
-                        value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra, tortor dolor. odio feortor dolor."
-                    /> */}
-
           <ResponseField> {application.answers.q1} </ResponseField>
         </InputWrapper>
         <LabelContainer>
@@ -303,22 +248,12 @@ const Application = ({
           />
         </LabelContainer>
         <InputWrapper className="application-input review">
-          {/* <InputField
-                        disabled={true}
-                        // value={res.answers.q2}
-                        value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
-                    /> */}
           <ResponseField>{application.answers.q2}</ResponseField>
         </InputWrapper>
         <LabelContainer>
           <ApplyFormLabel label={t("orgJoinQ.question3") + "?"} />
         </LabelContainer>
         <InputWrapper className="application-input review">
-          {/* <InputField
-                        disabled={true}
-                        // value={res.answers.q3}
-                        value="odio felis cras risus. Sodales integer tempus elementum, arcu elit rutrum pharetra."
-                    /> */}
           <ResponseField>{application.answers.q3}</ResponseField>
         </InputWrapper>
       </OuterWrapper>
@@ -371,10 +306,7 @@ const Application = ({
             <StyledCancelButton onClick={handleCancel}>
               {t("positions.cancelModal")}
             </StyledCancelButton>
-            <StyledSubmitButton
-              // submit form to backend onClick
-              onClick={handleAcceptSuccess}
-            >
+            <StyledSubmitButton onClick={handleAcceptSuccess}>
               {t("positions.submitModal")}
             </StyledSubmitButton>
           </ButtonsContainer>
