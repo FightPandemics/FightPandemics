@@ -141,13 +141,16 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 const OrganisationProfile = ({ isAuthenticated }) => {
   const [activeTab, setActiveTab] = useState("applicants")
-  const [tab, setTab] = useState()
+
+  const [tab, setTab] = useState("activity")
+  const preSetActiveTab = (e) => {
+    setTab(e)
+    setActiveTab(e)
+  }
   const locationLink = useLocation(false)
   useEffect(() => {
-    if (locationLink.state) {
-      setTab(locationLink.state.tab)
-    }
-  })
+    setTab(locationLink.state.tab)
+  }, [])
 
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
@@ -532,8 +535,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       const {
         data: { data: applicants, meta }
       } = await axios.get(endpoint);
-      // console.log({ "APPLICANTS!!!": applicants[0].organization.permissions })
-      // console.log({ "META!!!": meta })
       setActorPermissionsLoaded(true)
       setCurrentUserPermissions(applicants[0].organization.permissions)
       setMemberstatus(applicants[0].status)
@@ -549,18 +550,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   }
 
   useEffect(() => {
-
     if (memberstatus == "accepted") {
       setIsMember(true)
     }
 
   })
-
-  // console.log(permissions)
-
-  // if (userId) {
-  //   console.log("user id true!!!!")
-  // }
 
   const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false)
 
@@ -691,11 +685,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
   useEffect(() => {
     refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
-  }, [activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadApplicants();
-  }, [toggleRefetchApplicants, pageApplicants, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [toggleRefetchApplicants, pageApplicants, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [feedApplicants]);
   const loadNextPageApplicant = useCallback(
@@ -718,9 +712,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     },
     [feedApplicants.length, isLoadingApplicants, loadMoreApplicants, activeTab], // eslint-disable-line react-hooks/exhaustive-deps
   );
-
-
-  console.log({ "activeTab!!!!": activeTab })
 
   useEffect(() => {
     setItemCountApplicants(loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length);
@@ -844,10 +835,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           }
           <ProfileTabs
             defaultActiveKey="activity"
-            // retrieve activeKey from incoming link
-            // activeKey={activeTab ? activeTab : "activity"}
-            activeKey={tab ? tab : undefined}
-            onChange={async (e) => setActiveTab(e)}
+            activeKey={tab}
+            onChange={(e) => preSetActiveTab(e)}
           >
             <ProfileTabPane tab={t("profile.views.activity")} key="activity"><div>
               <SectionHeader>
