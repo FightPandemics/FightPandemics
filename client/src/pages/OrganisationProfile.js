@@ -149,7 +149,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   }
   const locationLink = useLocation(false)
   useEffect(() => {
-    setTab(locationLink.state.tab)
+    setTab(locationLink?.state?.tab)
   }, [])
 
   let url = window.location.pathname.split("/");
