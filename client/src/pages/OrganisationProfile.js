@@ -140,7 +140,7 @@ const getOrgBookLink = (orgBookLink) => (orgBookLink.startsWith("http") ? orgBoo
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 const OrganisationProfile = ({ isAuthenticated }) => {
-
+  const [activeTab, setActiveTab] = useState("applicants")
   const [tab, setTab] = useState()
   const locationLink = useLocation(false)
   useEffect(() => {
@@ -314,7 +314,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       }
     };
     fetchOrganisationPosts();
-  }, [organisationId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [organisationId, page, toggleRefetch, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -563,7 +563,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   // }
 
   const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false)
-  const [activeTab, setActiveTab] = useState("applicants")
+
 
   // const preSetActiveTab = (e) => {
   //   // if (e = "members") {
