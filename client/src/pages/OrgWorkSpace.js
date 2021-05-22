@@ -381,7 +381,7 @@ const OrgWorkSpace = (props) => {
                                     tab: "members"
                                 }
                             }}
-                        > TEST LINK</Link>
+                        > TEST LINK -</Link>
                         <PositionsContainer>
                             {   // Position title and description to be pulled from backend / API
                                 // Placeholder text for ONE position is being used below
