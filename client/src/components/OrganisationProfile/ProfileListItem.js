@@ -8,12 +8,19 @@ const { colors } = theme;
 export const AllItems = styled.div`
   max-width: 100%;
   width: 100%;
-  height: 10rem;
+  // height: 6.6rem;
   display: flex;
   margin: 0;
 
   &.organisation-card {
+    height: 6rem;
+  }
+
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     height: 10rem;
+    &.organisation-card {
+      height: 10rem;
+    }
   }
 `;
 
@@ -25,11 +32,12 @@ export const ProfileContainer = styled.div`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
   padding: 0 1rem;
   width: 100%;
-  height: 9rem;
+  height: 6rem;
   background: ${theme.colors.white};
 
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     &.organisation-card {
+      height: 9rem;
     }
   }
 `;
@@ -39,7 +47,7 @@ export const ProfilePicContainer = styled.div`
   align-items: center;
   justify-self: flex-start;
   justify-content: center;
-  margin: 1rem 0;
+  margin-left: 1rem;
   border-radius: 50%;
   border: 0.1rem solid ${colors.royalBlue};
   //   color: ${colors.royalBlue};
@@ -66,8 +74,14 @@ export const ProfilePic = styled.div`
     // margin: 2.9rem 0;
     display: flex;
     justify-content: center;
-    height: 6rem;
+    height: 4rem;
     object-fit: cover;
+  }
+
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+    &.organisation-card {
+      height: 6rem;
+    }
   }
 `;
 
@@ -86,20 +100,30 @@ export const TextContainer = styled.div`
 
 export const Name = styled.p`
   color: ${colors.black};
-  font-size: 1.6rem;
-  line-height: 1.9rem;
+  font-size: ${theme.typography.size.small};
+  line-height: ${theme.typography.size.small};
   font-weight: 400;
   margin: 0;
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    font-weight: 400;
+  }
 `;
 
 export const Title = styled.p`
-  font-size: 1rem;
-  line-height: 1.8rem;
   color: rgba(0, 0, 0, 0.5);
   color: ${colors.lightishGray};
   opacity: 50%;
   margin: 0;
+  line-height: ${theme.typography.size.xsmall};
+  font-size: ${theme.typography.size.xsmall};
   margin-top: 1rem;
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+    line-height: 1.8rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
 `;
 
 const ProfileListItem = ({ item, isSelf, type }) => {

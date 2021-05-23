@@ -32,14 +32,16 @@ const cellMeasurerCache = new CellMeasurerCache({
 });
 
 const SeeAllLink = styled.div`
-  display: none;
+  display: block;
+  color: ${colors.royalBlue};
+  font-size: ${theme.typography.size.large};
+  font-weight: normal;
+  text-align: center;
+  margin-top: 3rem;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: block;
-    color: ${colors.royalBlue};
-    font-size: 1.4rem;
-    font-weight: normal;
-    text-align: center;
+    font-size: ${theme.typography.size.small};
+    margin-top: 2rem;
   }
 `;
 const ProfileList = ({
