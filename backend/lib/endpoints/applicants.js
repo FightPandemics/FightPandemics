@@ -7,7 +7,7 @@ const {
   createApplicantSchema,
   updateApplicantStatusSchema,
   getOrganizationApplicantsSchema
-} = require("./schema/applicants");
+} = require("../endpoints/schema/applicants");
 const { setElapsedTimeText } = require("../utils");
 
 /*
@@ -28,8 +28,7 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { applicantId
-          , orgizationId },
+        params: { applicantId },
       } = req;
 
       const [applicantErr, applicant] = await app.to(
@@ -63,7 +62,8 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { organizationId, status },
+        params: { organizationId },
+        query: { status }
       } = req;
 
       const [applicantErr, applicant] = await app.to(
@@ -95,33 +95,33 @@ async function routes(app) {
       schema: getApplicantsSchema
     },
     async (req) => {
-      const { limit, skip, organisationId, includeMeta, permissions, userId, status } = req.query;
+      const { limit, skip, organizationId, includeMeta, permissions, userId, status } = req.query;
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
-          organisationId
-            ?
-            [
+          [
+            {
+              $match:
               {
-                $match: {
-                  organization: { id: mongoose.Types.ObjectId(organisationId) }
-                }
+                $and: [
+                  organizationId ?
+                    {
+                      "organization.id": mongoose.Types.ObjectId(organizationId)
+                    } : {},
+                  userId ?
+                    { "applicant.id": userId } : {},
+                  status ?
+                    { status: status } : {},
+                ]
               }
-              ,
-              {
-                $skip: parseInt(skip, 10) || 0,
-              },
-              {
-                $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-              },
-            ] :
-            [
-              {
-                $skip: parseInt(skip, 10) || 0,
-              },
-              {
-                $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-              },
-            ]
+            },
+            {
+              $skip: parseInt(skip, 10) || 0,
+            },
+            {
+              $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+            }
+          ]
+
 
         ).then((applicants) => {
           applicants.forEach((applicant) => {
@@ -135,16 +135,24 @@ async function routes(app) {
       );
 
       const totalResultsAggregationPipeline = await Applicant.aggregate(
-        organisationId
-          ? [
-            { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
-            { $group: { _id: null, count: { $sum: 1 } } },
-          ]
-
-          : [
-            // { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
-            { $group: { _id: null, count: { $sum: 1 } } },
-          ],
+        [
+          {
+            $match:
+            {
+              $and: [
+                organizationId ?
+                  {
+                    "organization.id": mongoose.Types.ObjectId(organizationId)
+                  } : {},
+                userId ?
+                  { "applicant.id": userId } : {},
+                status ?
+                  { status: status } : {},
+              ]
+            }
+          },
+          { $group: { _id: null, count: { $sum: 1 } } }
+        ]
       );
       const applicantsResponse = (response) => {
         if (!includeMeta) {
@@ -176,7 +184,7 @@ async function routes(app) {
 
   // Applicants for orgasniation
   app.get(
-    "/:organisationId/status",
+    "/:organizationId/status",
     // TODO - change authenticateOptional to authenticate
     {
       preValidation: [app.authenticateOptional],
@@ -184,34 +192,30 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        params: { organisationId },
+        params: { organizationId },
         query: {
-          // organisationId,
           limit,
           skip,
           includeMeta,
-          // permissions, 
-          // userId, 
+          permissions,
+          userId,
           status
         },
       } = req;
-      console.log({ orgId: organisationId })
-      // console.log({ req: req.query })
+
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
-          // organisationId
-          // ?
           [
-            // { $match: { organization: { id: mongoose.Types.ObjectId("603be1140789a03df4bdb17c") } } },
-
-            // {
-            //   $match: {
-            //     $and: [
-            //       { organization: { id: mongoose.Types.ObjectId(organisationId) } },
-            //       // { status: "accepted" },
-            //     ]
-            //   }
-            // },
+            {
+              $match: {
+                $and: [
+                  { "organization.id": mongoose.Types.ObjectId(organizationId) },
+                  status ? { status: status } : {},
+                  permissions ? { "organization.permissions": permissions } : {},
+                  userId ? { "applicant.id": userId } : {}
+                ]
+              }
+            },
             {
               $skip: parseInt(skip, 10) || 0,
             },
@@ -219,48 +223,32 @@ async function routes(app) {
               $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
             },
           ]
-          // :
-          // [
-          //   {
-          //     $skip: parseInt(skip, 10) || 0,
-          //   },
-          //   {
-          //     $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-          //   },
-          // ]
-
         ).then((applicants) => {
-          console.log({ applicants: applicants })
           applicants.forEach((applicant) => {
             applicant.elapsedTimeText = setElapsedTimeText(
               applicant.createdAt,
               applicant.updatedAt
             );
           });
-          console.log({ applicants: applicants })
           return applicants;
         })
       );
 
       const totalResultsAggregationPipeline = await Applicant.aggregate(
-        // organisationId
-        // ? 
         [
-          // {
-          //   $match: {
-          //     $and: [
-          //       { organization: { id: mongoose.Types.ObjectId(organisationId) } },
-          //       // { status: "accepted" },
-          //     ]
-          //   }
-          // },
-          { $group: { _id: null, count: { $sum: 1 } } },
+          {
+            $match: {
+              $and: [
+                { "organization.id": mongoose.Types.ObjectId(organizationId) },
+                status ? { status: status } : {},
+                permissions ? { "organization.permissions": permissions } : {},
+                userId ? { "applicant.id": userId } : {}
+              ]
+            }
+          },
+          { $group: { _id: null, count: { $sum: 1 } } }
         ]
 
-        // : [
-        //   // { $match: { organization: { id: mongoose.Types.ObjectId(organisationId) } } },
-        //   { $group: { _id: null, count: { $sum: 1 } } },
-        // ],
       );
       const applicantsResponse = (response) => {
         if (!includeMeta) {
@@ -275,7 +263,6 @@ async function routes(app) {
           data: response,
         };
       };
-
       if (applicantsErr) {
         req.log.error(applicantsErr, "Failed requesting applicants");
         throw app.httpErrors.internalServerError();
@@ -310,6 +297,7 @@ async function routes(app) {
         verified: actor.verification && actor.verification.status === "approved",
       };
 
+
       const [err, applicant] = await app.to(new Applicant(applicantProps).save());
 
       if (err) {
@@ -333,32 +321,18 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        body,
+        body: { status },
         params: { applicantId },
-        organizationId,
+        query: { permissions }
       } = req;
-      // const [applicantErr, applicant] = await app.to(Applicant.findById(applicantId));
-      // // const [orgErr, org] = await app.to(Organization.findById(organizationId));
-      // console.log("BE TEST!")
-      // // console.log({ applicant: req })
-      // if (applicantErr) {
-      //   req.log.error(applicantErr, "Failed retrieving data for applicant");
-      //   throw app.httpErrors.internalServerError();
-      // } else if (applicant === null) {
-      //   throw app.httpErrors.notFound();
-      // } /* We need to check below wcenario if it can occur. If not then we can delete below check */
-      // else if (!applicant.organizationId.equals(organizationId)) {
-      //   req.log.error("Organization owner/admin not allowed to update the application status.");
-      //   throw app.httpErrors.forbidden();
-      // }
-
-      console.log({ applicantId: applicantId })
-
+      console.log({ "req!!!!": req })
       const [updateErr, updateApplicant] = await app.to(
-        // console.log("update test!")
         Applicant.findOneAndUpdate(
           { _id: applicantId },
-          { $set: { status: body.status } }
+          {
+            status: status,
+            "organization.permissions": permissions
+          }
         ),
       );
       if (updateErr) {
@@ -370,7 +344,6 @@ async function routes(app) {
         req.log.error(updateErr, "Failed updating applicant status.");
         throw app.httpErrors.internalServerError();
       }
-
 
       return updateApplicant;
     }
