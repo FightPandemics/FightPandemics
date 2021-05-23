@@ -376,7 +376,7 @@ const OrgWorkSpace = (props) => {
                         <WhiteSpace />
                         <Link
                             to={{
-                                pathname: "/organisation/603be1140789a03df4bdb17c",
+                                pathname: "/organisation/${organisationId}",
                                 state: {
                                     tab: "members"
                                 }
