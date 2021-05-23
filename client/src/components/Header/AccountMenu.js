@@ -16,7 +16,7 @@ import PlusIcon from "assets/icons/large-plus.svg";
 
 const CustomItemGroup = styled(Menu.ItemGroup)`
   .ant-menu-item-group-list .ant-menu-item {
-    padding: 0 16px;
+    padding: 0 36px;
   }
 `;
 

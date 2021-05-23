@@ -366,6 +366,9 @@ export const MobileMenuWrapper = styled(Menu)`
       border-bottom: 0.2rem solid ${theme.colors.black};
       font-weight: bold;
     }
+    &.ant-menu-vertical .ant-menu-item {
+      overflow: visible;
+    }
   }
 `;
 // TODO: Below is the wrapper for when future features get added

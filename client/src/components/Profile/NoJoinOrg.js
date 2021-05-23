@@ -9,7 +9,6 @@ const NoJoinOrg = ({ isSelf }) => {
   const othersText =
     "It looks like this person hasn’t joined an organization yet! ";
 
-
   return (
     <Wrapper>
       <div className="wrapper-content">
@@ -17,7 +16,6 @@ const NoJoinOrg = ({ isSelf }) => {
           <img src={noJoinOrgPic} alt="no join org pic" />
         </div>
         {isSelf ? <p>{ownText}</p> : <p>{othersText}</p>}
-
       </div>
     </Wrapper>
   );
@@ -60,7 +58,7 @@ const Wrapper = styled.div`
   //   Mobile
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
+    border-radius: 1.2rem;
     .wrapper-content {
       margin: 1rem 2rem 2rem 2rem;
     }

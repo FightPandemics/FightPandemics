@@ -252,8 +252,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-          ? "A"
-          : "D";
+        ? "A"
+        : "D";
     }
     return undefined;
   }, [sectionView, internalTab]);
@@ -324,6 +324,11 @@ const Profile = ({
         disabled: false,
         gtm: "offers",
       });
+      baseMenu.splice(3, 0, {
+        name: "Organisations",
+        disable: false,
+        gtm: "organisations",
+      });
       setSectionView(t("profile.views.requests"));
       setInternalTab(t("profile.views.active"));
     } else {
@@ -363,7 +368,6 @@ const Profile = ({
   };
 
   useEffect(() => {
-
     if (sectionView.toUpperCase() == "POSTS") {
       let _isMounted = false;
       const CancelToken = axios.CancelToken;
@@ -382,8 +386,6 @@ const Profile = ({
 
         dispatch(postsActions.fetchPostsBegin());
 
-
-
         try {
           if (userId) {
             let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
@@ -401,8 +403,8 @@ const Profile = ({
               data: { data: posts, meta },
             } = await axios.get(endpoint);
 
-            console.log({ posts: posts })
-            console.log({ error: postsError })
+            console.log({ posts: posts });
+            console.log({ error: postsError });
 
             if (!_isMounted) {
               //mobile fetch
@@ -469,7 +471,7 @@ const Profile = ({
             console.log(`request cancelled:${error.message}`);
           } else {
             console.log("Error:" + error.message);
-            console.log({ fetchPostError: posts })
+            console.log({ fetchPostError: posts });
           }
         }
       };
@@ -478,7 +480,7 @@ const Profile = ({
         _isMounted = true;
         source.cancel("Cancelling is cleanup");
       };
-    };
+    }
   }, [userId, page, toggleRefetch, isInit]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -788,7 +790,7 @@ const Profile = ({
     }
   };
 
-  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // useEffect(() => {
   //   refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
@@ -952,23 +954,26 @@ const Profile = ({
         <WhiteSpace />
         <SectionHeader>
           <PlaceholderIcon />
-          {isSelf && (
-            <>
-              <CreatePostIcon
-                id={GTM.user.profilePrefix + GTM.post.createPost}
-                src={createPost}
-                onClick={onToggleCreatePostDrawer}
-              />
-              <CreatePostButton
-                onClick={onToggleCreatePostDrawer}
-                id={GTM.user.profilePrefix + GTM.post.createPost}
-                inline={true}
-                icon={<PlusIcon />}
-              >
-                {t("post.create")}
-              </CreatePostButton>
-            </>
-          )}
+          {isSelf &&
+            (sectionView === "Requests" ||
+              sectionView === "Offers" ||
+              sectionView === "Posts") && (
+              <>
+                <CreatePostIcon
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  src={createPost}
+                  onClick={onToggleCreatePostDrawer}
+                />
+                <CreatePostButton
+                  onClick={onToggleCreatePostDrawer}
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  inline={true}
+                  icon={<PlusIcon />}
+                >
+                  {t("post.create")}
+                </CreatePostButton>
+              </>
+            )}
         </SectionHeader>
         {isSelf && (
           <CreatePost
@@ -1132,8 +1137,8 @@ const Profile = ({
                 )
               ) : null}
               {sectionView === "Requests" ||
-                sectionView === "Offers" ||
-                sectionView === "Posts" ? (
+              sectionView === "Offers" ||
+              sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>
