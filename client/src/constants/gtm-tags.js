@@ -245,6 +245,7 @@ module.exports = {
     comment: "_CM",
     settings: "_SET",
     report: "_RP",
+    newapplicant: "_NA",
   },
   moderation: {
     hide: "_HIP",

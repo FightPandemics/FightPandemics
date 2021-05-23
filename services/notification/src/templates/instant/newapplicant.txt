@@ -1,1 +1,1 @@
-a new applicant was added
+{{triggeredBy.name}} applied to your organisation

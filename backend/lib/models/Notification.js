@@ -3,14 +3,13 @@ const { Schema, model } = require("mongoose");
 const notificationSchema = new Schema(
   {
     action: {
-      enum: ["like", "comment", "share", "report"],
+      enum: ["like", "comment", "share", "report", "newapplicant"],
       required: true,
       type: String,
     },
     post: {
       id: {
         ref: "Post",
-        required: true,
         type: Schema.Types.ObjectId,
       },
       title: String,

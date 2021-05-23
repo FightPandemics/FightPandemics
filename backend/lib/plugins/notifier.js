@@ -79,6 +79,60 @@ class Notifier {
       .to(post.author.id.toString())
       .emit("NEW_NOTIFICATION", notification);
   }
+
+  async notifyNewApplicant(action, triggeredById, receiverId, details = {}) {   
+    
+    if (!this.Notification.schema.tree.action.enum.includes(action)) {
+      return this.app.log.error(new Error("Invalid Notification action"));
+    }
+
+    const [triggeredByErr, triggeredBy] = await this.app.to(
+      this.User.findById(triggeredById),
+    );
+    if (triggeredByErr || !triggeredBy) return;
+
+    const newNotification = {
+      action,
+      post: {
+        id: null,
+        title: null,
+      },
+      receiver: receiverId,
+      readAt: null,
+      emailSentAt: {
+        biweekly: null,
+        daily: null,
+        instant: null,
+        weekly: null,
+      },
+      sharedVia: details.sharedVia,
+      commentText: details.commentText,
+      justification: details.justification,
+      triggeredBy: {
+        id: triggeredBy._id,
+        name: triggeredBy.name,
+        photo: triggeredBy.photo,
+        type: triggeredBy.type,
+        verified: triggeredBy.verification && triggeredBy.verification.status === "approved",
+      },
+      isCleared: false,
+    };
+
+    const [err, notification] = await this.app.to(
+      new this.Notification(newNotification).save(),
+    );
+    
+    if (err) {
+      if (err.code === 11000) return; // MongoError: E11000 duplicate key error
+      return this.app.log.error(err, "Failed saving new Notification");
+    }
+
+    // send real-time web notification, the user will receive it if online
+    this.app.io
+      .to(receiverId.toString())
+      .emit("NEW_NOTIFICATION", notification);
+  }
+
 }
 
 function fastifyNotifier(app, config, next) {

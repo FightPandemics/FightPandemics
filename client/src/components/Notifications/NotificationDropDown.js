@@ -377,6 +377,11 @@ export const NotificationDropDown = ({
       icon: reportedpost,
       gtmId: GTM.notifications.prefix + GTM.notifications.report,
     },
+    newapplicant: {
+      text: "notifications.newapplicant",
+      icon: cmntflwpost,
+      gtmId: GTM.notifications.prefix + GTM.notifications.newapplicant,
+    },
   };
 
   const mappedNotifications = notifications

@@ -1,5 +1,7 @@
 export const formToApplicationMappings = (formData) => ({
-    organizationId: formData.organisationId,
+    organization: {
+        id: formData.organisationId
+    },
     applicantApplied: "Volunteer",
     answers: {
         q1: formData.question1,

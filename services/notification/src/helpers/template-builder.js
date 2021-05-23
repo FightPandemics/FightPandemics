@@ -61,7 +61,7 @@ class TemplateBuilder {
         },
         newapplicant: {
           html: this._loadTemplateFile("../templates/instant/newapplicant.html"),
-          subject: "a new applicant was added",
+          subject: "{{triggeredBy.name}} applied to your organisation",
           text: this._loadTemplateFile("../templates/instant/newapplicant.txt"),
         },
       },
