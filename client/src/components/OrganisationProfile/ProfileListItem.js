@@ -114,14 +114,14 @@ export const Name = styled.p`
 export const Title = styled.p`
   color: rgba(0, 0, 0, 0.5);
   color: ${colors.lightishGray};
-  opacity: 50%;
+  // opacity: 50%;
   margin: 0;
   line-height: ${theme.typography.size.xsmall};
   font-size: ${theme.typography.size.xsmall};
   margin-top: 1rem;
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     line-height: 1.8rem;
-    font-size: 1rem;
+    font-size: ${theme.typography.size.medium};
     margin-top: 1rem;
   }
 `;
