@@ -187,7 +187,7 @@ const ProfileNavMenu = (props) => {
 
     function buildNavSections() {
         const orgAccessLevels = {
-            "Org Work Space": 
+            "Org Workspace": 
             ["About", "Activity", "Posts", "Org Book", "Members", "Gallery"],
             "Org Admin": 
             ["Applications", "Messages", "Questionnaire", "Positions", "Thanks", "Minting Badges", "Manage Badges"]
