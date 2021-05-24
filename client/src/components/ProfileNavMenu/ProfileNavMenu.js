@@ -61,6 +61,7 @@ const AddOrganizationBtn = styled.button`
     padding: 0 1rem;
     background-color: transparent;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
         background-color: #B8C2F8;
