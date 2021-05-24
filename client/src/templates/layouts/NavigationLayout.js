@@ -24,7 +24,7 @@ import ErrorAlert from "components/Alert/ErrorAlert";
 import ProfileNavMenu from "components/ProfileNavMenu/ProfileNavMenu";
 
 
-import { theme } from "constants/theme";
+import { theme, mq } from "constants/theme";
 import {
   TOGGLE_STATE,
   SET_VALUE,
@@ -45,6 +45,10 @@ import DrawerMenu from "components/DrawerMenu";
 const MainWrapper = styled.div`
     width: 100vw;
     margin-left: 10rem;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        margin-left: 0;
+      }
 `;
 
 const BodyWrapper = styled.div`
