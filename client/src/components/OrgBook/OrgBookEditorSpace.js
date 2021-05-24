@@ -311,7 +311,7 @@ const OrgBookEditorSpace = (props) => {
           toolbar: false,
           content_style: `.tox .tox-button { border-radius: 3.8rem; background-color: ${royalBlue} !important; } 
           .tox .tox-button--icon, .tox .tox-button.tox-button--icon, .tox .tox-button.tox-button--secondary.tox-button--icon { 
-            background-color: ${white} !important; }`,
+            background-color: ${white} !important; } body { font-family: Arial; } `,
         }}
         onEditorChange={handleEditorChange}
       />
