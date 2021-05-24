@@ -76,7 +76,7 @@ const NavMenu = styled.div`
     background-color: #F6F7FB;
     display: flex;
     overflow: hidden;
-    transition: width 0.2s ease-in-out;
+    transition: width 0.1s ease-in-out;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
         top: ${navbarHeight};
