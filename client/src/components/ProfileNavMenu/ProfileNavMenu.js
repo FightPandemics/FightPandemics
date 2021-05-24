@@ -58,14 +58,13 @@ const AddOrganizationBtn = styled.button`
     border: none;
     border-radius: 50%;
     font-size: 3.424rem;
-    width: 4rem;
-    height: 4rem;
-    // background-color: #F6F7FB;
+    padding: 0 1rem;
+    background-color: transparent;
     cursor: pointer;
 
-    // &:hover {
-    //     background-color: #B8C2F8;
-    // }
+    &:hover {
+        background-color: #B8C2F8;
+    }
 `;
 
 const NavMenu = styled.div`
@@ -234,7 +233,7 @@ const ProfileNavMenu = (props) => {
                     );
                 })
             }
-             <AddOrganizationBtn>+</AddOrganizationBtn>
+             <AddOrganizationBtn type="button"><span>+</span></AddOrganizationBtn>
         </LeftContainer>
         <RightContainer navIsOpened = {navIsOpened}>
             <OrgTitle>{ organisations[organizationId].length <= 11 
