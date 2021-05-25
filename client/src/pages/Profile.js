@@ -1087,6 +1087,7 @@ const Profile = ({
                           page={pageApplicants}
                           emptyFeed={emptyFeedApplicants}
                           type="orgs"
+                          isSelf={isSelf}
                         />
                       </SeeAllContentWrapperOrg>
                     </SeeAllTabsWrapperOrg>
