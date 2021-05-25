@@ -121,7 +121,7 @@ import {
   DELETE_MODAL_HIDE,
   SET_VALUE,
 } from "hooks/actions/feedActions";
-import ProfileList from "components/OrganisationProfile/ProfileList";
+import ProfileList from "components/Profile/ProfileList";
 import {
   TestMemberOfOrgs,
   MemberOrgs,
@@ -252,8 +252,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-        ? "A"
-        : "D";
+          ? "A"
+          : "D";
     }
     return undefined;
   }, [sectionView, internalTab]);
@@ -790,7 +790,7 @@ const Profile = ({
     }
   };
 
-  useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // useEffect(() => {
   //   refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
@@ -1137,8 +1137,8 @@ const Profile = ({
                 )
               ) : null}
               {sectionView === "Requests" ||
-              sectionView === "Offers" ||
-              sectionView === "Posts" ? (
+                sectionView === "Offers" ||
+                sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>

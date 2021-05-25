@@ -1,5 +1,5 @@
 import Loader from "components/Feed/StyledLoader";
-import ProfileListItem from "components/OrganisationProfile/ProfileListItem";
+import ProfileListItem from "components/Profile/ProfileListItem";
 import { mq } from "constants/theme";
 import React, { useCallback, useState } from "react";
 import {
@@ -44,6 +44,14 @@ const SeeAllLink = styled.div`
     margin-top: 2rem;
   }
 `;
+
+const LinkContainer = styled.div`
+display: none;
+
+@media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+  display: unset;
+}
+`;
 const ProfileList = ({
   filteredApplicants,
   filteredMembers,
@@ -64,7 +72,7 @@ const ProfileList = ({
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
-  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
   const [seeAll, setSeeAll] = useState(false);
   const handleSeeAll = () => {
     setSeeAll((prevState) => !prevState);
@@ -148,9 +156,16 @@ const ProfileList = ({
           )}
         </WindowScroller>
       )}
-      <Link onClick={handleSeeAll}>
-        <SeeAllLink>See All</SeeAllLink>
-      </Link>
+      {totalCount >= 3 ? (
+        <LinkContainer>
+          <Link
+            className="see-all"
+            style={seeAll ? { display: "none" } : null}
+            onClick={handleSeeAll}>
+            <SeeAllLink>See All</SeeAllLink>
+          </Link>
+        </LinkContainer>)
+        : null}
     </div>
   );
 };
