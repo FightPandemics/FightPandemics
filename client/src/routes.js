@@ -303,7 +303,7 @@ const routes = [
     props: {
       isProfile: true,
       loggedInOnly: true,
-    }
+    },
   },
   {
     path: "/organisation/:id/apply",
@@ -311,8 +311,8 @@ const routes = [
     props: {
       props: {
         // loggedInOnly: true,
-      }
-    }
+      },
+    },
   },
   {
     path: "/orgworkspace/:id",
@@ -320,8 +320,8 @@ const routes = [
     props: {
       props: {
         // loggedInOnly: true,
-      }
-    }
+      },
+    },
   },
   ,
   {
@@ -330,8 +330,8 @@ const routes = [
     props: {
       props: {
         loggedInOnly: true,
-      }
-    }
+      },
+    },
   },
   {
     path: "/application/:organisationId/:userId/:applicantId",
@@ -341,8 +341,8 @@ const routes = [
       hideHeader: false,
       props: {
         loggedInOnly: true,
-      }
-    }
+      },
+    },
   },
   // {
   //   path: "/application/:id",

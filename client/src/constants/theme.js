@@ -20,7 +20,7 @@ import {
   GRAY,
   LIGHTER_BLACK,
   GHOST_WHITE,
-  SHADOW_BLACK
+  SHADOW_BLACK,
 } from "./colors";
 
 const theme = {

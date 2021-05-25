@@ -30,7 +30,7 @@ export const postState = {
   answer2: "",
   answer3: "",
   intro: "",
-  position: ""
+  position: "",
 };
 
 export const postReducer = (state = postState, action) => {
@@ -120,7 +120,6 @@ export const postReducer = (state = postState, action) => {
         ...state,
         loadMoreComments: !state.loadMoreComments,
       };
-
 
     default:
       return state;

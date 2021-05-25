@@ -158,6 +158,11 @@ export const EditIcon = styled(SvgIcon)`
   top: 2.4rem;
 `;
 
+export const PositionEditIcon = styled(SvgIcon)`
+  color: ${colors.offWhite};
+  float: right;
+`;
+
 export const ProfileBackgroup = styled.div`
   background-color: ${colors.royalBlue};
   position: absolute;
@@ -309,14 +314,14 @@ export const SeeOrgBookLink = styled.a`
   color: ${colors.royalBlue};
   width: 12rem;
   height: 2rem;
-  align-self: center;  
+  align-self: center;
   display: block;
   margin: auto;
   margin-top: 1rem;
   font-size: 1.6rem;
   font-family: Poppins;
-  font-weight: 500;  
-`; 
+  font-weight: 500;
+`;
 
 export const MobileLocation = styled.div`
   color: #939393;
