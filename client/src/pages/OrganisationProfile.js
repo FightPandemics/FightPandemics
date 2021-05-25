@@ -891,7 +891,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   See Org Book
                   </a>
               </SeeOrgBookLink>
-              }
+
             </UserInfoDesktop>
           </UserInfoContainer>
 
