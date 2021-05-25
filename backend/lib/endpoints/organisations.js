@@ -22,7 +22,7 @@ async function routes(app) {
   const Thread = app.mongo.model("Thread");
 
   const ORGS_PAGE_SIZE = 10;
-  
+
   app.get(
     "/",
     {
@@ -99,44 +99,44 @@ async function routes(app) {
       /* eslint-disable sort-keys */
       const sortAndFilterSteps = location
         ? [
-            {
-              $geoNear: {
-                distanceField: "distance",
-                key: "location.coordinates",
-                near: {
-                  $geometry: {
-                    coordinates: location.coordinates,
-                    type: "Point",
-                  },
+          {
+            $geoNear: {
+              distanceField: "distance",
+              key: "location.coordinates",
+              near: {
+                $geometry: {
+                  coordinates: location.coordinates,
+                  type: "Point",
                 },
-                query: { $and: filters },
               },
+              query: { $and: filters },
             },
-            { $sort: { distance: 1, _id: -1 } },
-          ]
+          },
+          { $sort: { distance: 1, _id: -1 } },
+        ]
         : keywords
-        ? [
+          ? [
             { $match: { $and: filters, $text: { $search: keywords } } },
             { $sort: { score: { $meta: "textScore" } } },
           ]
-        : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
+          : [{ $match: { $and: filters } }, { $sort: { _id: -1 } }];
 
       /* eslint-disable sort-keys */
       const paginationSteps =
         limit === -1
           ? [
-              {
-                $skip: skip || 0,
-              },
-            ]
+            {
+              $skip: skip || 0,
+            },
+          ]
           : [
-              {
-                $skip: skip || 0,
-              },
-              {
-                $limit: limit || ORGS_PAGE_SIZE,
-              },
-            ];
+            {
+              $skip: skip || 0,
+            },
+            {
+              $limit: limit || ORGS_PAGE_SIZE,
+            },
+          ];
 
       /* eslint-disable sort-keys */
       const projectionSteps = [
@@ -174,13 +174,13 @@ async function routes(app) {
       const totalResultsAggregationPipeline = await Organisation.aggregate(
         keywords && !location
           ? [
-              { $match: { $and: filters, $text: { $search: keywords } } },
-              { $group: { _id: null, count: { $sum: 1 } } },
-            ]
+            { $match: { $and: filters, $text: { $search: keywords } } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ]
           : [
-              { $match: { $and: filters } },
-              { $group: { _id: null, count: { $sum: 1 } } },
-            ],
+            { $match: { $and: filters } },
+            { $group: { _id: null, count: { $sum: 1 } } },
+          ],
       );
 
       const [organisationsErr, organisations] = await app.to(
@@ -273,16 +273,20 @@ async function routes(app) {
   app.patch(
     "/:organisationId",
     {
-      preValidation: [app.authenticate],
+      // TODO - SET authenticateOptional TO authenticate
+      preValidation: [app.authenticateOptional],
       schema: updateOrganisationSchema,
     },
     async (req) => {
       const {
         params: { organisationId },
+        body: { isJoinOrg, description },
         userId,
       } = req;
+      console.log({ description })
       const [orgErr, org] = await app.to(Organisation.findById(organisationId));
       if (orgErr) {
+        console.log({ "error!": orgErr })
         req.log.error(orgErr, "Failed retrieving organisation");
         throw app.httpErrors.internalServerError();
       } else if (org === null) {
@@ -296,6 +300,7 @@ async function routes(app) {
         Object.assign(org, req.body).save(),
       );
       if (updateErr) {
+        console.log({ "error!": updateErr })
         if (
           updateErr.name === "ValidationError" ||
           updateErr.name === "MongoError"
