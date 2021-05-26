@@ -48,21 +48,21 @@ const organisationSchema = new Schema(
       website: String,
     },
     isJoinOrg: {
-        required: true,
-        type: Boolean,
-        default: false,
+      required: true,
+      type: Boolean,
+      default: false,
     },
-    isNewApplicant : {
+    isNewApplicant: {
       required: true,
       type: Boolean,
       default: false,
     },
     orgBookLink: {
-        required: false,
-        type: String,
+      required: false,
+      type: String,
     },
     positions: {
-      name: { default: "Volunteer", required: true, type: String, },
+      name: { default: "Volunteer", type: String, },
       description: { default: "Position Description", required: true, type: String, },
     }
   },

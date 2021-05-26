@@ -192,7 +192,6 @@ async function routes(app) {
     },
     async (req) => {
       const {
-        // actor,
         params: { organizationId },
         query: {
           limit,
@@ -203,16 +202,10 @@ async function routes(app) {
           status
         },
       } = req;
-      // console.log({ req: req.query })
-      // console.log({ "userId!!!!!": userId })
 
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
-          // organisationId
-          // ?
           [
-            // { $match: { "organization.id": mongoose.Types.ObjectId(organizationId) } },
-            // { $match: { status: "accepted" } },
             {
               $match: {
                 $and: [
@@ -230,16 +223,6 @@ async function routes(app) {
               $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
             },
           ]
-          // :
-          // [
-          //   {
-          //     $skip: parseInt(skip, 10) || 0,
-          //   },
-          //   {
-          //     $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-          //   },
-          // ]
-
         ).then((applicants) => {
           applicants.forEach((applicant) => {
             applicant.elapsedTimeText = setElapsedTimeText(
@@ -252,8 +235,6 @@ async function routes(app) {
       );
 
       const totalResultsAggregationPipeline = await Applicant.aggregate(
-        // organisationId
-        // ? 
         [
           {
             $match: {

@@ -92,6 +92,7 @@ const updateOrganisationSchema = {
     .prop("isJoinOrg", organisation.isJoinOrg)
     .prop("orgBookLink", organisation.orgBookLink)
     .prop("positions", organisation.positions),
+  // .prop("description", positions.description),
   params: strictSchema().prop("organisationId", S.string().required()),
 };
 

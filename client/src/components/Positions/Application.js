@@ -37,18 +37,29 @@ const LabelContainer = styled.label`
   font-size: 2.2rem;
   font-weight: 400;
   line-height: 3.3rem;
+  <<<<<<< HEAD
 
   /* :after {
   content: " *";
 } */
 
+=======
+  /* :after {
+  content: " *";
+} */
+>>>>>>> feature/join-org
   &.asterisk-error {
     :after {
       color: ${colors.red};
     }
   }
-
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+  <<<<<<<
+    HEAD
+    =======>>>>>>>feature/join-org
+    @media
+    screen
+    and
+    (max-width: ${mq.phone.wide.maxWidth}) {
     font-size: 1.4rem;
     line-height: 1.8rem;
   }
@@ -58,11 +69,9 @@ const Title = styled.h2`
   margin: 7rem auto;
   font-weight: 600;
   font-size: 3.2rem;
-
   &.application {
     font-size: 2.2rem;
   }
-
   &.review {
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
       font-size: 1.3rem;
@@ -76,7 +85,6 @@ const ApplicationButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 7.2rem;
-
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     gap: 1.3rem;
   }
@@ -91,7 +99,6 @@ const ApplyFormSubmit = styled(Submit)`
   font-weight: 500;
   line-height: 2.02rem;
   margin-bottom: 40rem;
-
   span {
     font-size: 1.6rem;
   }
@@ -100,7 +107,6 @@ const ApplyFormSubmit = styled(Submit)`
     height: 4.8rem;
     margin-top: 2rem;
     margin-bottom: 5rem;
-
     span {
       font-size: 1.4rem;
     }

@@ -314,6 +314,83 @@ const OrgWorkSpace = (props) => {
       }
     }
   };
+  if (error) {
+    return <ErrorAlert message={error} type="error" />;
+  }
+  if (loading) return <Loader />;
+
+  if (!organisation) {
+    return <Loader />;
+  } else {
+    const { address } = location;
+    return (
+      <>
+        <FeedContext.Provider
+          value={{
+            isAuthenticated,
+            filters,
+            filterModal,
+            activePanel,
+            location,
+            dispatchAction,
+            selectedOptions,
+            showFilters,
+            totalApplicantCount,
+          }}
+        >
+          <ProfileBackgroup />
+          <ProfileLayout className="profile-list-page">
+            <UserInfoContainer>
+              <AvatarPhotoContainer>
+                <ProfilePic
+                  user={organisation}
+                  initials={getInitialsFromFullName(name)}
+                />
+              </AvatarPhotoContainer>
+              <UserInfoDesktop>
+                <NameDiv>
+                  <div className="name-container">
+                    <NamePara>{name}</NamePara>
+                    {address && (
+                      <div title={address} className="address-container">
+                        <img src={locationIcon} alt={address} />
+                        {address}
+                      </div>
+                    )}
+                  </div>
+                </NameDiv>
+                {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
+                {
+                  <SeeOrgBookLink>
+                    <a href={orgBookURL()} target="_blank">
+                      See Org Book
+                    </a>
+                  </SeeOrgBookLink>
+                }
+              </UserInfoDesktop>
+            </UserInfoContainer>
+            <WhiteSpace />
+            <Link
+              to={{
+                pathname: "/organisation/${organisationId}",
+                state: {
+                  tab: "members",
+                },
+              }}
+            >
+              {" "}
+              TEST LINK -
+            </Link>
+            <PositionsContainer>
+              {
+                // Position title and description to be pulled from backend / API
+                // Placeholder text for ONE position is being used below
+                // Component will be needed for multiple positions (based on backend schema / structure)
+              }
+
+              <ProfileTabs>
+                {/* 
+  };
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;

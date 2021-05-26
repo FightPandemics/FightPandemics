@@ -430,7 +430,8 @@
       "drafts": "drafts",
       "editOrgNotification": "Edit Organization Notification",
       "members": "Members",
-      "applicants": "Applicants"
+      "applicants": "Applicants",
+      "positions": "Positions"
     }
   },
   "auth": {
@@ -1157,5 +1158,18 @@
     "forDirAndMore": "For directions and more info",
     "localEmergencyNumber": "Local emergency number",
     "forMoreResults": "Show more search results..."
+  },
+  "position": {
+    "title": "Post Position",
+    "content": "Once confirmed, this action cannot be undone. We will notify the applicant as soon as possible.",
+    "text1": "We at ",
+    "text2": " are now accepting volunteers who are as excited as us about our cause. Feel free to submit your application and we will get back to you as soon as possible. Happy volunteering!",
+    "allowVolunteer": "Allow volunteers to join your organization",
+    "volunteerposition": "Volunteer Position",
+    "post": "post",
+    "cancel": "cancel",
+    "confirmTitle": "Your post has been updated!",
+    "confirmDescription": "Your post has been successfully updated. This will be shown to prospective candidates who are applying to join your organisation.",
+    "Okay": "Okay!"
   }
 }

@@ -1,5 +1,5 @@
 import { WhiteSpace } from "antd-mobile";
-import { Tabs } from "antd";
+import { Tabs, Switch, Col, Row } from "antd";
 import {
   ProfileTabs,
   ProfileTabPane,
@@ -24,6 +24,7 @@ import locationIcon from "assets/icons/location.svg";
 import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 import playStoreIcon from "assets/icons/play-store-icon.svg";
 import appStoreIcon from "assets/icons/app-store-icon.svg";
+import applicationConfirmation from "assets/icons/application-received.svg";
 
 import instagramIcon from "assets/icons/social-instagram.svg";
 import linkedinBlue from "assets/icons/social-linkedin.svg";
@@ -42,11 +43,18 @@ import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 import Verification from "components/Verification/";
 import VerificationTick from "components/Verification/Tick";
 
+import { theme, mq } from "../constants/theme";
+import styled from "styled-components";
+import { Modal, Button } from "antd";
+import { Input } from "antd";
+import { DescriptionInput } from "components/OrganisationProfile/Positions";
+
 import Loader from "components/Feed/StyledLoader";
 import {
   ProfileLayout,
   UserInfoContainer,
   EditIcon,
+  PositionEditIcon,
   UserInfoDesktop,
   NameDiv,
   PlaceholderIcon,
@@ -116,6 +124,23 @@ import JoinOrgButton, {
   JoinOrgContainer,
 } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
+
+import {
+  JoinPositionStyles,
+  DescContainer2,
+  FPSwitch,
+  DescContainer,
+  HeaderTitle,
+  StyledTextarea,
+  Label,
+  DisplayText,
+  StyledPostButton,
+  StyledPositionModal,
+  StyledConfirmModal,
+  ConfirmButton,
+} from "../components/Positions/JoinPositionStyles";
+import { PostPositionButton } from "../components/EditProfile/EditComponents";
+import TextInput from "../components/Input/PositionInput";
 import { TestMembers } from "components/OrganisationProfile/TestMembers";
 import ProfileList from "components/OrganisationProfile/ProfileList";
 import {
@@ -125,6 +150,7 @@ import {
   Meta,
 } from "utils/TestMembersList";
 
+const { TextArea } = Input;
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
   appStore: [appStoreIcon, APPSTORE_URL],
@@ -154,13 +180,16 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 const OrganisationProfile = ({ isAuthenticated }) => {
   const [activeTab, setActiveTab] = useState("applicants");
-  const [tab, setTab] = useState();
+
+  const [tab, setTab] = useState("activity");
+  const preSetActiveTab = (e) => {
+    setTab(e);
+    setActiveTab(e);
+  };
   const locationLink = useLocation(false);
   useEffect(() => {
-    if (locationLink.state) {
-      setTab(locationLink.state.tab);
-    }
-  }, [locationLink.state]);
+    setTab(locationLink?.state?.tab);
+  }, [locationLink.state.tab]);
 
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
@@ -186,6 +215,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
+
   const {
     email,
     name,
@@ -195,6 +225,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     urls = {},
     verified,
     orgBookLink,
+    isJoinOrg,
+    positions: { description } = { position: { description: "" } },
   } = organisation || {};
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
@@ -213,6 +245,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
+
   const actorId = user?.id;
   function usePrevious(value) {
     const ref = useRef();
@@ -477,7 +510,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
   const { TabPane } = Tabs;
-  // const filteredMembers = TestMembersList
 
   const [feedState, feedDispatch] = useReducer(feedReducer, {
     ...initialState,
@@ -491,8 +523,38 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     ARBITRARY_LARGE_NUM,
   );
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
+  const [switchOnOff, setSwitchOnOff] = useState();
+
+  useEffect(() => {
+    setSwitchOnOff(isJoinOrg);
+    setPosDescription(description);
+  }, [description, isJoinOrg, organisation, setSwitchOnOff]);
+
+  const initialDescription = {
+    description: "",
+  };
+  const [newPosDescription, setPosDescription] = useState(description);
+  const [descriptionLoaded, setDescriptionLoaded] = useState(false);
+
+  const posRef = useRef();
+  const handleDescription = (event) => {
+    setPosDescription(event.target.value);
+  };
+
+  const [checksEnabled, setChecksEnabled] = useState(true);
+  const [done, setDone] = useState(false);
+  const [displayText, setDisplayText] = useState(
+    t("position.text1") + name + t("position.text2"),
+  );
+  const [isEditable, setIsEditable] = useState(false);
+  const inputRef = useRef("");
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [postLoading, setPostLoading] = useState(false);
+  const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [textCount, setTextCount] = useState(1);
+
   const { filterModal, activePanel, showFilters } = feedState;
-  // const filters = Object.values(filterOptions);
   const {
     error: applicantsError,
     isLoadingApplicants,
@@ -511,12 +573,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     });
     return ref.current;
   }
-
-  // const {
-  //   // history,
-  //   isAuthenticated,
-  //   // user
-  // } = props;
 
   const history = useHistory();
 
@@ -552,8 +608,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
-      // console.log({ "APPLICANTS!!!": applicants[0].organization.permissions })
-      // console.log({ "META!!!": meta })
       setActorPermissionsLoaded(true);
       setCurrentUserPermissions(applicants[0].organization.permissions);
       setMemberstatus(applicants[0].status);
@@ -575,33 +629,57 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     }
   }, [memberstatus]);
 
-  // console.log(permissions)
-
-  // if (userId) {
-  //   console.log("user id true!!!!")
-  // }
-
   const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false);
 
-  // const preSetActiveTab = (e) => {
-  //   // if (e = "members") {
-  //   //   setActiveTab(e)
-  //   // }
-  //   // else if (e = "applicants") {
-  //   //   setActiveTab(e)
-  //   // }
-  //   // else {
-  //   //   setActiveTab(e)
-  //   // }
-  //   setActiveTab(e)
-  // }
-
   useEffect(() => {
-    // if (!actorPermissionsLoaded && actorId) {
     loadPermissions(actorId);
-    // preSetActiveTab()
-    // }
   }, [actorId, activeTab, loadPermissions]);
+
+  const handleIsJoinOrg = async (e) => {
+    if (typeof switchOnOff !== undefined) {
+      setSwitchOnOff(e);
+      sendIsJoinOrg(e);
+    } else {
+      setSwitchOnOff(isJoinOrg);
+    }
+  };
+
+  const sendIsJoinOrg = async (joinorg) => {
+    try {
+      const res = await axios.patch(`/api/organisations/${organisationId}`, {
+        isJoinOrg: joinorg,
+      });
+      console.log({ "sendJoinOrg!!!": res });
+    } catch (err) {
+      return error;
+    }
+  };
+
+  const sendPositionDescription = async (joinorg) => {
+    try {
+      const res = await axios.patch(`/api/organisations/${organisationId}`, {
+        positions: { description: newPosDescription },
+      });
+    } catch (err) {
+      return error;
+    }
+  };
+
+  const handleOk = () => {
+    sendPositionDescription();
+    setPostLoading(true);
+    setTimeout(() => {
+      setPostLoading(false);
+      setIsModalVisible(false);
+      setConfirmModalVisible(true);
+    }, 3000);
+
+    //TODO pass data to backend pending
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const loadApplicants = async () => {
     const limit = PAGINATION_LIMIT;
@@ -629,10 +707,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
-
-      // TEST DATA
-      // const applicants = Applicants
-      // const meta = Meta
 
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
@@ -701,12 +775,25 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    setChecksEnabled(switchOnOff);
+  }, [switchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
-  }, [activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadApplicants();
-  }, [toggleRefetchApplicants, pageApplicants, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [toggleRefetchApplicants, pageApplicants, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setDisplayText(t("position.text1") + name + t("position.text2"));
+  }, [name, t]);
+
+  const textField = () => {
+    if (textCount > 0) return <DisplayText>{displayText}</DisplayText>;
+    else return <div style={{ color: "red" }}>Add a description</div>;
+  };
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
     feedApplicants,
@@ -730,8 +817,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     },
     [feedApplicants.length, isLoadingApplicants, loadMoreApplicants, activeTab], // eslint-disable-line react-hooks/exhaustive-deps
   );
-
-  console.log({ "activeTab!!!!": activeTab });
 
   useEffect(() => {
     setItemCountApplicants(
@@ -800,46 +885,21 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </NameDiv>
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
 
-              {/* <IconsContainer>
-                <div className="social-icons">{renderURL()}</div>
-              </IconsContainer> */}
-
-              {
-                <SeeOrgBookLink>
-                  <a href={orgBookURL()} target="_blank">
-                    See Org Book
-                  </a>
-                </SeeOrgBookLink>
-              }
+              <SeeOrgBookLink>
+                <a href={orgBookURL()} target="_blank">
+                  See Org Book
+                </a>
+              </SeeOrgBookLink>
             </UserInfoDesktop>
           </UserInfoContainer>
-          {
-            // TODO - REMOVE ORG WORKSPACE TEST LINK
-          }
-          {/* <Link
-            to={`/applicants/${organisationId}`}
-          ><div style={{ color: "red", "font-weight": "bold" }}>TEST ORG APPLICANTS PAGE (6.1)</div></Link> */}
-
-          {/* <Link
-            style={{ color: "red", "font-weight": "bold" }}
-            to={`/orgworkspace/${organisationId}`}
-          //   LINK THAT GOES IN ORG WORKSPACE
-          //   to={{
-          //   pathname: "/organisation/603be1140789a03df4bdb17c",
-          //   state: {
-          //     tab: "members"
-          //   }
-          // }}
-          >TEST ORG WORKSPACE PAGE (8.1)</Link> */}
 
           {isSelf && !verified && <Verification />}
-
           <WhiteSpace />
           {
             // Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }
 
-          {!isOwner ? (
+          {!isOwner && isJoinOrg ? (
             <JoinOrgContainer>
               <Link
                 onClick={() =>
@@ -863,15 +923,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </Link>
             </JoinOrgContainer>
           ) : null}
-          {
-            // TABS
-          }
           <ProfileTabs
             defaultActiveKey="activity"
-            // retrieve activeKey from incoming link
-            // activeKey={activeTab ? activeTab : "activity"}
-            activeKey={tab ? tab : undefined}
-            onChange={async (e) => setActiveTab(e)}
+            activeKey={tab}
+            onChange={(e) => preSetActiveTab(e)}
           >
             <ProfileTabPane tab={t("profile.views.activity")} key="activity">
               <div>
@@ -969,33 +1024,148 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 tab={t("profile.views.applicants")}
                 key="applicants"
               >
-                {
-                  rawTotalApplicantCount == 0 ? (
-                    <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                      No applicants to display.
-                    </div>
-                  ) : (
-                    // activeTab == "applicants" ?
-                    <ProfileList
-                      filteredMembers={applicantsList}
-                      itemCount={itemCountApplicants}
-                      isItemLoaded={isApplicantLoaded}
-                      isNextPageLoading={isLoading}
-                      loadNextPage={loadNextPageApplicant}
-                      hasNextPage={loadMoreApplicants}
-                      totalCount={totalApplicantCount}
-                      page={pageApplicants}
-                      emptyFeed={emptyFeed}
-                      isOwner={isOwner}
-                      isMember={isMember}
-                      isAdmin={permissions.isAdmin}
-                      isWiki={permissions.isWiki}
-                      isVolunteer={permissions.isVolunteer}
-                      activeTab={activeTab}
+                {rawTotalApplicantCount == 0 ? (
+                  <div style={{ textAlign: "center", marginTop: "5rem" }}>
+                    No applicants to display.
+                  </div>
+                ) : (
+                  <ProfileList
+                    filteredMembers={applicantsList}
+                    itemCount={itemCountApplicants}
+                    isItemLoaded={isApplicantLoaded}
+                    isNextPageLoading={isLoading}
+                    loadNextPage={loadNextPageApplicant}
+                    hasNextPage={loadMoreApplicants}
+                    totalCount={totalApplicantCount}
+                    page={pageApplicants}
+                    emptyFeed={emptyFeed}
+                    isOwner={isOwner}
+                    isMember={isMember}
+                    isAdmin={permissions.isAdmin}
+                    isWiki={permissions.isWiki}
+                    isVolunteer={permissions.isVolunteer}
+                    activeTab={activeTab}
+                  />
+                )}
+              </ProfileTabPane>
+            ) : null}
+            {isSelf || permissions.isAdmin || isOwner ? (
+              <ProfileTabPane
+                tab={t("profile.views.positions")}
+                key="positions"
+              >
+                <Row>
+                  <Col flex={1}>
+                    {
+                      <JoinPositionStyles>
+                        {t("position.allowVolunteer")}
+                      </JoinPositionStyles>
+                    }
+                  </Col>
+                  <Col flex={5}>
+                    <FPSwitch
+                      checkedChildren={t("profile.common.on")}
+                      unCheckedChildren={t("profile.common.off")}
+                      onClick={(checked) => handleIsJoinOrg(checked)} //TODO Join Us CTA
+                      checked={switchOnOff}
                     />
-                  )
-                  // : null
-                }
+                  </Col>
+                </Row>
+                <Row>
+                  <DescContainer>
+                    <HeaderTitle>
+                      {t("position.volunteerposition")} *
+                      {!isEditable ? (
+                        <PositionEditIcon
+                          src={edit}
+                          onClick={() => {
+                            if (!checksEnabled) return;
+                            if (inputRef.current) {
+                              setDisplayText(inputRef.current.value);
+                            }
+                            setIsEditable((s) => !s);
+                            setDone(false);
+                          }}
+                        />
+                      ) : (
+                        <Label
+                          onClick={() => {
+                            if (inputRef.current) {
+                              setDisplayText(inputRef.current.value);
+                              setTextCount(inputRef.current.value.length);
+                            }
+                            setIsEditable((s) => !s);
+                            setDone(true);
+                          }}
+                        >
+                          Done
+                        </Label>
+                      )}
+                    </HeaderTitle>
+                    {isEditable ? (
+                      <DescriptionInput
+                        id="description"
+                        name="description"
+                        key="description"
+                        ref={posRef}
+                        value={newPosDescription}
+                        onChange={(e) => handleDescription(e)}
+                      />
+                    ) : (
+                      newPosDescription
+                    )}
+                  </DescContainer>
+                </Row>
+                <Row justify="center">
+                  <PostPositionButton
+                    disabled={checksEnabled && done ? false : true}
+                    primary="true"
+                    onClick={() => setIsModalVisible(true)}
+                  >
+                    {t("position.title")}
+                  </PostPositionButton>
+                </Row>
+                <StyledPositionModal
+                  closable={false}
+                  visible={isModalVisible}
+                  title={t("position.title")}
+                  footer={[
+                    <StyledPostButton
+                      name="cancel"
+                      type="text"
+                      onClick={handleCancel}
+                    >
+                      {t("position.cancel")}
+                    </StyledPostButton>,
+                    <StyledPostButton
+                      name="post"
+                      type="text"
+                      loading={postLoading}
+                      onClick={handleOk}
+                    >
+                      {t("position.post")}
+                    </StyledPostButton>,
+                  ]}
+                >
+                  <p>{t("position.content")}</p>
+                </StyledPositionModal>
+                <StyledConfirmModal
+                  closable={false}
+                  visible={isConfirmModalVisible}
+                  title={<img src={applicationConfirmation} />}
+                  footer={[
+                    <ConfirmButton
+                      key="submit"
+                      type="primary"
+                      onClick={() => setConfirmModalVisible(false)}
+                    >
+                      {t("position.Okay")}
+                    </ConfirmButton>,
+                  ]}
+                >
+                  <p>{t("position.confirmTitle")}</p>
+                  <p>{t("position.confirmDescription")}</p>
+                </StyledConfirmModal>
               </ProfileTabPane>
             ) : null}
           </ProfileTabs>
