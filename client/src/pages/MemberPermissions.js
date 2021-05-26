@@ -51,12 +51,14 @@ const MemberPermissions = (props, applicantId) => {
     applicant: { name: "-" },
     intro: "",
     organization: { permissions: "" },
+    loading: true
   };
 
 
   const [visible, setVisible] = useState(false);
   const { applicationId, id } = useParams();
   const history = useHistory();
+  const [applicantState, setApplicantState] = useState(initialState);
 
   const handleExit = (e) => {
     history.goBack(-1);
@@ -188,7 +190,7 @@ const MemberPermissions = (props, applicantId) => {
     })();
   }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const [applicantState, setApplicantState] = useState(initialState);
+
 
   const [applicantLoaded, setApplicantLoaded] = useState(false);
 
@@ -221,7 +223,7 @@ const MemberPermissions = (props, applicantId) => {
     if (!introLoaded) {
       loadApplicantUser();
     }
-  }, [introLoaded, loadApplicantUser]);
+  }, [introLoaded, loadApplicantUser, applicantState]);
 
   useEffect(() => {
     if (!applicantLoaded) {
@@ -289,7 +291,8 @@ const MemberPermissions = (props, applicantId) => {
               <PositionsContainer>
                 <PermissionsRadioGroup
                   onChange={(e) => { onChange(e) }}
-                  permissions={applicantState?.organization?.permissions}
+                  permissions={applicantState.organization.permissions}
+                  loading={applicantLoaded}
                 />
                 {// TODO - add button text to en_us
                 }

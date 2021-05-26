@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Radio, Collapse } from "antd";
 import BaseButton from "components/Button/BaseButton";
 import styled from "styled-components";
 import { theme, mq } from "constants/theme";
+
 
 const { colors, typography } = theme;
 
@@ -178,14 +179,15 @@ export const PermissionsApplyButton = styled(BaseButton)`
   }
 `;
 
-const PermissionsRadioGroup = (props, permissions) => {
-  const handleChange = (event) => {
-    props.onChange(event.target.value);
-  };
+const PermissionsRadioGroup = ({ permissions, loading }) => {
+
   return (
     <>
-      <RadioContainer onChange={handleChange} value={props.permissions} checked={true}>
-        <Radio className="option" value="Volunteer" key="volunteer">
+      <RadioContainer
+        onChange={(event) => event.target.value}
+        defaultValue="Volunteer"
+      >
+        <Radio className="option" value={permissions} key="volunteer">
           <div className="radio-content">
             <h3 className="radio-title">Volunteer</h3>
 
