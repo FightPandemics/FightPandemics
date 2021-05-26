@@ -600,11 +600,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     }
   };
   const [currentUserPermissions, setCurrentUserPermissions] = useState();
-  const [memberstatus, setMemberstatus] = useState(false);
+  const [memberstatus, setMemberstatus] = useState();
   const [isMember, setIsMember] = useState(false);
 
   const loadPermissions = async (actorId) => {
-    const endpoint = `/api/applicants/${organisationId}/status?status=accepted&userId=${actorId}&includeMeta=true`; // &userId=${user.id}
+    const endpoint = `/api/applicants/${organisationId}/status?userId=${actorId}&includeMeta=true`; // &userId=${user.id}
 
     try {
       const {
@@ -613,11 +613,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       setActorPermissionsLoaded(true)
       setCurrentUserPermissions(applicants[0].organization.permissions)
       setMemberstatus(applicants[0].status)
+
     } catch (error) {
       return error;
     }
   };
-
   const permissions = {
     isVolunteer:
       currentUserPermissions == "Volunteer" || "WikiEditor" || "Admin",
@@ -629,14 +629,25 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     if (memberstatus == "accepted") {
       setIsMember(true);
     }
+
+    if (memberstatus !== "accepted" ||
+      memberstatus !== "applied") {
+      setAppliedStatus(false)
+    }
+
+    else {
+      setAppliedStatus(true)
+    }
   }, [memberstatus]);
+  const [appliedStatus, setAppliedStatus] = useState()
 
   const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false);
 
 
   useEffect(() => {
     loadPermissions(actorId);
-  }, [actorId, activeTab]);
+    // notApplied(memberstatus)
+  }, [actorId, activeTab, tab]);
 
   const handleIsJoinOrg = async (e) => {
     if (typeof switchOnOff !== undefined) {
@@ -652,7 +663,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const sendIsJoinOrg = async (joinorg) => {
     try {
       const res = await axios.patch(`/api/organisations/${organisationId}`, { isJoinOrg: joinorg });
-      console.log({ "sendJoinOrg!!!": res })
     } catch (err) {
       return error
     }
@@ -823,6 +833,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     setItemCountApplicants(
       loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length,
     );
+    // notApplied(memberstatus)
   }, [feedApplicants.length, loadMoreApplicants]);
 
   if (error) {
@@ -901,9 +912,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             // Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }
 
-          {!isOwner || memberstatus !== "accepted" || "applied" && isJoinOrg ? (
-            <JoinOrgContainer>
-              <Link
+          {!isOwner && isJoinOrg || appliedStatus && isJoinOrg ? (
+            < JoinOrgContainer >
+              < Link
                 onClick={() =>
                   sessionStorage.setItem(
                     "postredirect",
@@ -924,7 +935,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 </JoinOrgButton>
               </Link>
             </JoinOrgContainer>
-          ) : null}
+          ) : null
+          }
 
           <ProfileTabs
             defaultActiveKey="activity"
@@ -1176,33 +1188,35 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             }
           </ProfileTabs>
 
-          {isSelf && (
-            <CustomDrawer
-              placement="bottom"
-              closable={false}
-              onClose={onToggleDrawer}
-              visible={drawer}
-              height="auto"
-              key="bottom"
-            >
-              <DrawerHeader>
-                <Link to={`/edit-organisation-account/${organisationId}`}>
-                  {t("profile.org.editOrgAccount")}
-                </Link>
-              </DrawerHeader>
-              <DrawerHeader>
-                <Link to={`/edit-organisation-profile/${organisationId}`}>
-                  {t("profile.org.editOrgProfile") + " "}
-                </Link>
-              </DrawerHeader>
-              <DrawerHeader>
-                <Link to={`/edit-organisation-notifications/${organisationId}`}>
-                  {t("profile.org.editOrgNotification")}{" "}
-                </Link>
-              </DrawerHeader>
-            </CustomDrawer>
-          )}
-        </ProfileLayout>
+          {
+            isSelf && (
+              <CustomDrawer
+                placement="bottom"
+                closable={false}
+                onClose={onToggleDrawer}
+                visible={drawer}
+                height="auto"
+                key="bottom"
+              >
+                <DrawerHeader>
+                  <Link to={`/edit-organisation-account/${organisationId}`}>
+                    {t("profile.org.editOrgAccount")}
+                  </Link>
+                </DrawerHeader>
+                <DrawerHeader>
+                  <Link to={`/edit-organisation-profile/${organisationId}`}>
+                    {t("profile.org.editOrgProfile") + " "}
+                  </Link>
+                </DrawerHeader>
+                <DrawerHeader>
+                  <Link to={`/edit-organisation-notifications/${organisationId}`}>
+                    {t("profile.org.editOrgNotification")}{" "}
+                  </Link>
+                </DrawerHeader>
+              </CustomDrawer>
+            )
+          }
+        </ProfileLayout >
       </>
     );
   }
