@@ -50,7 +50,9 @@ const MemberPermissions = (props, applicantId) => {
   const initialState = {
     applicant: { name: "-" },
     intro: "",
+    organization: { permissions: "" },
   };
+
 
   const [visible, setVisible] = useState(false);
   const { applicationId, id } = useParams();
@@ -76,21 +78,6 @@ const MemberPermissions = (props, applicantId) => {
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // let url = window.location.pathname.split("/");
-  // const organisationId = url[url.length - 3];
-  // const { organisationId } = useParams();
-
-  // const { orgProfileState, orgProfileDispatch } = useContext(
-  //   OrganisationContext,
-  // );
-  // const { error, loading, organisation } = orgProfileState;
-  // const {
-  //   userProfileState: { user },
-  //   userProfileDispatch,
-  // } = useContext(UserContext);
-  // const { t } = useTranslation();
-  // const { name, location = {}, about = "" } = organisation || {};
-
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -114,7 +101,9 @@ const MemberPermissions = (props, applicantId) => {
   const [intro, setIntro] = useState()
   const [introLoaded, setIntroLoaded] = useState(false)
   const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false)
+  const [memberPermissionsLoaded, setMemberPermissionsLoaded] = useState(false)
   const [currentUserPermissions, setCurrentUserPermissions] = useState()
+  const [currentMemberPermissions, setMemberPermissions] = useState()
   const actorId = user?.id
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
@@ -141,8 +130,6 @@ const MemberPermissions = (props, applicantId) => {
       const {
         data: { data: applicants, meta }
       } = await axios.get(endpoint);
-      // console.log({ "APPLICANTS!!!": applicants[0].organization.permissions })
-      // console.log({ "META!!!": meta })
       setActorPermissionsLoaded(true)
       setCurrentUserPermissions(applicants[0].organization.permissions)
       // setMemberstatus(applicants[0].status)
@@ -156,11 +143,11 @@ const MemberPermissions = (props, applicantId) => {
     isWikiEditor: currentUserPermissions == "WikiEditor" || "Admin",
     isAdmin: currentUserPermissions == "Admin"
   }
+
   useEffect(() => {
-    // if (!actorPermissionsLoaded && actorId) {
     loadPermissions(actorId)
-    // }
   }, [actorId])
+
   useEffect(() => {
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
@@ -241,15 +228,14 @@ const MemberPermissions = (props, applicantId) => {
       loadApplicant();
     }
   }, [applicantLoaded, loadApplicant]);
-  const [permissions, setPermissions] = useState();
-
+  const [updatePermissions, setUpdatePermissions] = useState();
   const onChange = (data) => {
-    setPermissions(data);
+    setUpdatePermissions(data);
   };
 
   const handleApply = async () => {
     // TODO - pull applicantId from state in Org Profile ProfileListItem link
-    const endpoint = `/applicants/${applicantId}?permissions=${permissions}`;
+    const endpoint = `/applicants/${applicantId}?permissions=${updatePermissions}`;
     try {
       const res = await axios.patch(endpoint);
     } catch (error) {
@@ -293,7 +279,7 @@ const MemberPermissions = (props, applicantId) => {
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
             </UserInfoDesktop>
           </UserInfoContainer>
-          {isSelf || permissions?.isAdmin ?
+          {isSelf || actorPermissions?.isAdmin ?
             <>
               <ApplicationIntro
                 initials={getInitialsFromFullName(applicantState.applicant.name)}
@@ -303,6 +289,7 @@ const MemberPermissions = (props, applicantId) => {
               <PositionsContainer>
                 <PermissionsRadioGroup
                   onChange={(e) => { onChange(e) }}
+                  permissions={applicantState?.organization?.permissions}
                 />
                 {// TODO - add button text to en_us
                 }

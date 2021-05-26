@@ -901,7 +901,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             // Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }
 
-          {!isOwner && isJoinOrg ? (
+          {!isOwner || memberstatus !== "accepted" || "applied" && isJoinOrg ? (
             <JoinOrgContainer>
               <Link
                 onClick={() =>

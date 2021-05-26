@@ -178,13 +178,13 @@ export const PermissionsApplyButton = styled(BaseButton)`
   }
 `;
 
-const PermissionsRadioGroup = (props) => {
+const PermissionsRadioGroup = (props, permissions) => {
   const handleChange = (event) => {
     props.onChange(event.target.value);
   };
   return (
     <>
-      <RadioContainer onChange={handleChange}>
+      <RadioContainer onChange={handleChange} value={props.permissions} checked={true}>
         <Radio className="option" value="Volunteer" key="volunteer">
           <div className="radio-content">
             <h3 className="radio-title">Volunteer</h3>
