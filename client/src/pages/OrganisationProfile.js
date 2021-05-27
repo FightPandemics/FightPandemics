@@ -47,7 +47,7 @@ import { theme, mq } from "../constants/theme";
 import styled from "styled-components";
 import { Modal, Button } from "antd";
 import { Input } from "antd";
-import { DescriptionInput } from "components/OrganisationProfile/Positions"
+import { DescriptionInput } from "components/OrganisationProfile/Positions";
 
 import Loader from "components/Feed/StyledLoader";
 import {
@@ -137,7 +137,7 @@ import {
   StyledPostButton,
   StyledPositionModal,
   StyledConfirmModal,
-  ConfirmButton
+  ConfirmButton,
 } from "../components/Positions/JoinPositionStyles";
 import { PostPositionButton } from "../components/EditProfile/EditComponents";
 import TextInput from "../components/Input/PositionInput";
@@ -179,17 +179,17 @@ const getOrgBookLink = (orgBookLink) =>
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 const OrganisationProfile = ({ isAuthenticated }) => {
-  const [activeTab, setActiveTab] = useState("applicants")
+  const [activeTab, setActiveTab] = useState("applicants");
 
-  const [tab, setTab] = useState("activity")
+  const [tab, setTab] = useState("activity");
   const preSetActiveTab = (e) => {
-    setTab(e)
-    setActiveTab(e)
-  }
-  const locationLink = useLocation(false)
+    setTab(e);
+    setActiveTab(e);
+  };
+  const locationLink = useLocation(false);
   useEffect(() => {
-    setTab(locationLink?.state?.tab)
-  }, [])
+    setTab(locationLink?.state?.tab);
+  }, [locationLink.state.tab]);
 
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
@@ -226,7 +226,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     verified,
     orgBookLink,
     isJoinOrg,
-    positions: { description } = { position: { description: "" } }
+    positions: { description } = { position: { description: "" } },
   } = organisation || {};
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
@@ -246,8 +246,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
 
-
-
   const actorId = user?.id;
   function usePrevious(value) {
     const ref = useRef();
@@ -262,6 +260,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
+
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
       userProfileDispatch(fetchUser());
@@ -281,6 +280,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         );
       }
     })();
+
     (async function fetchUserProfile() {
       userProfileDispatch(fetchUser());
       try {
@@ -528,20 +528,19 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [switchOnOff, setSwitchOnOff] = useState();
 
   useEffect(() => {
-    setSwitchOnOff(isJoinOrg)
-    setPosDescription(description)
-  }, [organisation, setSwitchOnOff])
+    setSwitchOnOff(isJoinOrg);
+    //setPosDescription(description)
+  }, [isJoinOrg, organisation, setSwitchOnOff]);
 
-  const initialDescription = {
-    description: ""
-  }
-  const [newPosDescription, setPosDescription] = useState(description)
-  const [descriptionLoaded, setDescriptionLoaded] = useState(false)
+  //description = description.length ? description : t("position.text1") + name + t("position.text2")
+  const [newPosDescription, setPosDescription] = useState(description);
+  const [descriptionLoaded, setDescriptionLoaded] = useState(false);
 
-  const posRef = useRef()
+  const posRef = useRef();
   const handleDescription = (event) => {
-    setPosDescription(event.target.value)
-  }
+    setPosDescription(event.target.value);
+    setTextCount(event.target.value.length);
+  };
 
   const [checksEnabled, setChecksEnabled] = useState(true);
   const [done, setDone] = useState(false);
@@ -610,9 +609,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
-      setActorPermissionsLoaded(true)
-      setCurrentUserPermissions(applicants[0].organization.permissions)
-      setMemberstatus(applicants[0].status)
+      setActorPermissionsLoaded(true);
+      setCurrentUserPermissions(applicants[0].organization.permissions);
+      setMemberstatus(applicants[0].status);
     } catch (error) {
       return error;
     }
@@ -633,41 +632,42 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
   const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false);
 
-
   useEffect(() => {
     loadPermissions(actorId);
-  }, [actorId, activeTab]);
+  }, [actorId, activeTab, loadPermissions]);
 
   const handleIsJoinOrg = async (e) => {
     if (typeof switchOnOff !== undefined) {
-      setSwitchOnOff(e)
-      sendIsJoinOrg(e)
+      setSwitchOnOff(e);
+      sendIsJoinOrg(e);
+    } else {
+      setSwitchOnOff(isJoinOrg);
     }
-    else {
-      setSwitchOnOff(isJoinOrg)
-    }
-
-  }
+  };
 
   const sendIsJoinOrg = async (joinorg) => {
     try {
-      const res = await axios.patch(`/api/organisations/${organisationId}`, { isJoinOrg: joinorg });
-      console.log({ "sendJoinOrg!!!": res })
+      const res = await axios.patch(`/api/organisations/${organisationId}`, {
+        isJoinOrg: joinorg,
+      });
+      console.log({ "sendJoinOrg!!!": res });
     } catch (err) {
-      return error
+      return error;
     }
-  }
+  };
 
   const sendPositionDescription = async (joinorg) => {
     try {
-      const res = await axios.patch(`/api/organisations/${organisationId}`, { positions: { "description": newPosDescription } });
+      const res = await axios.patch(`/api/organisations/${organisationId}`, {
+        positions: { description: newPosDescription },
+      });
     } catch (err) {
-      return error
+      return error;
     }
-  }
+  };
 
   const handleOk = () => {
-    sendPositionDescription()
+    sendPositionDescription();
     setPostLoading(true);
     setTimeout(() => {
       setPostLoading(false);
@@ -773,7 +773,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     }
   };
 
-  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setChecksEnabled(switchOnOff);
@@ -788,11 +788,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   }, [toggleRefetchApplicants, pageApplicants, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    setDisplayText(t("position.text1") + name + t("position.text2"));
-  }, [name, t]);
+    setPosDescription(description);
+  }, [description, name, t]);
 
-  const textField = () => {
-    if (textCount > 0) return <DisplayText>{displayText}</DisplayText>;
+  const descField = () => {
+    if (textCount > 0) return <DisplayText>{newPosDescription}</DisplayText>;
     else return <div style={{ color: "red" }}>Add a description</div>;
   };
 
@@ -889,9 +889,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <SeeOrgBookLink>
                 <a href={orgBookURL()} target="_blank">
                   See Org Book
-                  </a>
+                </a>
               </SeeOrgBookLink>
-
             </UserInfoDesktop>
           </UserInfoContainer>
 
@@ -914,9 +913,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   isAuthenticated
                     ? `/organisation/${organisationId}/positions`
                     : {
-                      pathname: LOGIN,
-                      state: { from: window.location.pathname },
-                    }
+                        pathname: LOGIN,
+                        state: { from: window.location.pathname },
+                      }
                 }
               >
                 <JoinOrgButton id={GTM.organisation.joinOrg}>
@@ -1027,153 +1026,151 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 tab={t("profile.views.applicants")}
                 key="applicants"
               >
-                {
-                  rawTotalApplicantCount == 0 ? (
-                    <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                      No applicants to display.
-                    </div>
-                  ) : (
-                    <ProfileList
-                      filteredMembers={applicantsList}
-                      itemCount={itemCountApplicants}
-                      isItemLoaded={isApplicantLoaded}
-                      isNextPageLoading={isLoading}
-                      loadNextPage={loadNextPageApplicant}
-                      hasNextPage={loadMoreApplicants}
-                      totalCount={totalApplicantCount}
-                      page={pageApplicants}
-                      emptyFeed={emptyFeed}
-                      isOwner={isOwner}
-                      isMember={isMember}
-                      isAdmin={permissions.isAdmin}
-                      isWiki={permissions.isWiki}
-                      isVolunteer={permissions.isVolunteer}
-                      activeTab={activeTab}
-                    />
-                  )
-                }
+                {rawTotalApplicantCount == 0 ? (
+                  <div style={{ textAlign: "center", marginTop: "5rem" }}>
+                    No applicants to display.
+                  </div>
+                ) : (
+                  <ProfileList
+                    filteredMembers={applicantsList}
+                    itemCount={itemCountApplicants}
+                    isItemLoaded={isApplicantLoaded}
+                    isNextPageLoading={isLoading}
+                    loadNextPage={loadNextPageApplicant}
+                    hasNextPage={loadMoreApplicants}
+                    totalCount={totalApplicantCount}
+                    page={pageApplicants}
+                    emptyFeed={emptyFeed}
+                    isOwner={isOwner}
+                    isMember={isMember}
+                    isAdmin={permissions.isAdmin}
+                    isWiki={permissions.isWiki}
+                    isVolunteer={permissions.isVolunteer}
+                    activeTab={activeTab}
+                  />
+                )}
               </ProfileTabPane>
             ) : null}
-            {
-              isSelf || permissions.isAdmin || isOwner ?
-                (<ProfileTabPane tab={t("profile.views.positions")} key="positions">
-                  <Row>
-                    <Col flex={1}>
-                      {
-                        <JoinPositionStyles>
-                          {t("position.allowVolunteer")}
-                        </JoinPositionStyles>
-                      }
-                    </Col>
-                    <Col flex={5}>
-                      <FPSwitch
-                        checkedChildren={t("profile.common.on")}
-                        unCheckedChildren={t("profile.common.off")}
-                        onClick={(checked) => handleIsJoinOrg(checked)} //TODO Join Us CTA
-                        checked={switchOnOff}
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <DescContainer>
-                      <HeaderTitle>
-                        {t("position.volunteerposition")} *
-
+            {isSelf || permissions.isAdmin || isOwner ? (
+              <ProfileTabPane
+                tab={t("profile.views.positions")}
+                key="positions"
+              >
+                <Row>
+                  <Col flex={1}>
+                    {
+                      <JoinPositionStyles>
+                        {t("position.allowVolunteer")}
+                      </JoinPositionStyles>
+                    }
+                  </Col>
+                  <Col flex={5}>
+                    <FPSwitch
+                      checkedChildren={t("profile.common.on")}
+                      unCheckedChildren={t("profile.common.off")}
+                      onClick={(checked) => handleIsJoinOrg(checked)} //TODO Join Us CTA
+                      checked={switchOnOff}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <DescContainer>
+                    <HeaderTitle>
+                      {t("position.volunteerposition")} *
                       {!isEditable ? (
-                          <PositionEditIcon
-                            src={edit}
-                            onClick={() => {
-                              if (!checksEnabled) return;
-                              if (inputRef.current) {
-                                setDisplayText(inputRef.current.value);
-                              }
-                              setIsEditable(s => !s);
-                              setDone(false)
-                            }}
-                          />
-                        ) : (
-                          <Label
-                            onClick={() => {
-                              if (inputRef.current) {
-                                setDisplayText(inputRef.current.value);
-                                setTextCount(inputRef.current.value.length);
-                              }
-                              setIsEditable(s => !s)
-                              setDone(true)
-                            }}
-                          >
-                            Done
-                          </Label>
-                        )}
-                      </HeaderTitle>
-                      {isEditable ? (
-
-                        <DescriptionInput
-                          id="description"
-                          name="description"
-                          key="description"
-                          ref={posRef}
-                          value={newPosDescription}
-                          onChange={(e) => handleDescription(e)}
+                        <PositionEditIcon
+                          src={edit}
+                          onClick={() => {
+                            if (!checksEnabled) return;
+                            if (inputRef.current) {
+                              setDisplayText(inputRef.current.value);
+                            }
+                            setIsEditable((s) => !s);
+                            setDone(false);
+                          }}
                         />
                       ) : (
-                        newPosDescription
+                        <Label
+                          onClick={() => {
+                            if (inputRef.current) {
+                              setDisplayText(inputRef.current.value);
+                              setTextCount(inputRef.current.value.length);
+                            }
+                            setIsEditable((s) => !s);
+                            setDone(true);
+                          }}
+                        >
+                          Done
+                        </Label>
                       )}
-                    </DescContainer>
-                  </Row>
-                  <Row justify="center">
-                    <PostPositionButton
-                      disabled={checksEnabled && done ? false : true}
-                      primary="true"
-                      onClick={() => setIsModalVisible(true)}
+                    </HeaderTitle>
+                    {isEditable ? (
+                      <DescriptionInput
+                        id="description"
+                        name="description"
+                        key="description"
+                        ref={posRef}
+                        value={newPosDescription}
+                        maxLength="500"
+                        onChange={(e) => handleDescription(e)}
+                      />
+                    ) : (
+                      descField()
+                    )}
+                  </DescContainer>
+                </Row>
+                <Row justify="center">
+                  <PostPositionButton
+                    disabled={checksEnabled && done ? false : true}
+                    primary="true"
+                    onClick={() => setIsModalVisible(true)}
+                  >
+                    {t("position.title")}
+                  </PostPositionButton>
+                </Row>
+                <StyledPositionModal
+                  closable={false}
+                  visible={isModalVisible}
+                  title={t("position.title")}
+                  footer={[
+                    <StyledPostButton
+                      name="cancel"
+                      type="text"
+                      onClick={handleCancel}
                     >
-                      {t("position.title")}
-                    </PostPositionButton>
-                  </Row>
-                  <StyledPositionModal
-                    closable={false}
-                    visible={isModalVisible}
-                    title={t("position.title")}
-                    footer={[
-                      <StyledPostButton
-                        name="cancel"
-                        type="text"
-                        onClick={handleCancel}
-                      >
-                        {t("position.cancel")}
-                      </StyledPostButton>,
-                      <StyledPostButton
-                        name="post"
-                        type="text"
-                        loading={postLoading}
-                        onClick={handleOk}
-                      >
-                        {t("position.post")}
-                      </StyledPostButton>,
-                    ]}
-                  >
-                    <p>{t("position.content")}</p>
-                  </StyledPositionModal>
-                  <StyledConfirmModal
-                    closable={false}
-                    visible={isConfirmModalVisible}
-                    title={<img src={applicationConfirmation} />}
-                    footer={[
-                      <ConfirmButton
-                        key="submit"
-                        type="primary"
-                        onClick={() => setConfirmModalVisible(false)}
-                      >
-                        {t("position.Okay")}
-                      </ConfirmButton>,
-                    ]}
-                  >
-                    <p>{t("position.confirmTitle")}</p>
-                    <p>{t("position.confirmDescription")}</p>
-                  </StyledConfirmModal>
-                </ProfileTabPane>)
-                : null
-            }
+                      {t("position.cancel")}
+                    </StyledPostButton>,
+                    <StyledPostButton
+                      name="post"
+                      type="text"
+                      loading={postLoading}
+                      onClick={handleOk}
+                    >
+                      {t("position.post")}
+                    </StyledPostButton>,
+                  ]}
+                >
+                  <p>{t("position.content")}</p>
+                </StyledPositionModal>
+                <StyledConfirmModal
+                  closable={false}
+                  visible={isConfirmModalVisible}
+                  title={<img src={applicationConfirmation} />}
+                  footer={[
+                    <ConfirmButton
+                      key="submit"
+                      type="primary"
+                      onClick={() => setConfirmModalVisible(false)}
+                    >
+                      {t("position.Okay")}
+                    </ConfirmButton>,
+                  ]}
+                >
+                  <p>{t("position.confirmTitle")}</p>
+                  <p>{t("position.confirmDescription")}</p>
+                </StyledConfirmModal>
+              </ProfileTabPane>
+            ) : null}
           </ProfileTabs>
 
           {isSelf && (
