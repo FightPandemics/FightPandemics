@@ -169,7 +169,7 @@ const initialState = {
   showCreatePostModal: false,
   applyFilters: false,
   activePanel: null,
-}; 
+};
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const getOrgBookLink = (orgBookLink) =>
@@ -912,7 +912,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             // Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
           }
 
-          {!isOwner && isJoinOrg || appliedStatus && isJoinOrg ? (
+          {(
             < JoinOrgContainer >
               < Link
                 onClick={() =>
@@ -935,7 +935,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 </JoinOrgButton>
               </Link>
             </JoinOrgContainer>
-          ) : null
+          )
           }
 
           <ProfileTabs
