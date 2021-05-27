@@ -202,8 +202,8 @@ const PositionApplicationForm = ({
             formData.question1.length > 250 || renderError("question1")
               ? "has-error text-present"
               : formData.question1.length > 0
-              ? "text-present"
-              : ""
+                ? "text-present"
+                : ""
           }
         >
           <InputField
@@ -212,7 +212,7 @@ const PositionApplicationForm = ({
             onChange={handleFormData("question1")}
             renderError={renderError}
             formData={formData}
-            // rows={formData.question1.length > 0 ? 3 : 1}
+          // rows={formData.question1.length > 0 ? 3 : 1}
           />
 
           <CharCounter
@@ -235,8 +235,8 @@ const PositionApplicationForm = ({
             formData.question2.length > 250 || renderError("question2")
               ? "has-error text-present"
               : formData.question2.length > 0
-              ? "text-present"
-              : ""
+                ? "text-present"
+                : ""
           }
         >
           <InputField
@@ -265,8 +265,8 @@ const PositionApplicationForm = ({
             formData.question3.length > 250 || renderError("question3")
               ? "has-error text-present"
               : formData.question3.length > 0
-              ? "text-present"
-              : ""
+                ? "text-present"
+                : ""
           }
         >
           <InputField
