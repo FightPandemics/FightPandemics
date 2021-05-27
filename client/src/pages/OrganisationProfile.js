@@ -169,7 +169,7 @@ const initialState = {
   showCreatePostModal: false,
   applyFilters: false,
   activePanel: null,
-};
+}; 
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
 const getOrgBookLink = (orgBookLink) =>
