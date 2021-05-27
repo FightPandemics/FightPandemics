@@ -330,8 +330,12 @@ const Application = ({
           </p>
           <Link
             onClick={handleConfirmation}
-            // TODO Send to applicants page
-            // to={}
+            to={{
+              pathname: `/organisation/${organisationId}`,
+              state: {
+                tab: "applicants"
+              }
+            }}
           >
             <PositionsButton>{t("positions.okay")}</PositionsButton>
           </Link>
