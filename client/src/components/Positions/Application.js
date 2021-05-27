@@ -268,7 +268,7 @@ const Application = ({
         closable={false}
       >
         <StyledContainer>
-          <h2>Are you sure you want to rejcet this applicant?</h2>
+          <h2>Are you sure you want to reject this applicant?</h2>
           <p>
             Once confirmed, this action cannot be undone. We will notify the
             applicant as soon as possible.
@@ -297,7 +297,7 @@ const Application = ({
         closable={false}
       >
         <StyledContainer>
-          <h2>Are you sure you want to rejcet this applicant?</h2>
+          <h2>Are you sure you want to accept this applicant?</h2>
           <p>
             Once confirmed, this action cannot be undone. We will notify the
             applicant as soon as possible.
