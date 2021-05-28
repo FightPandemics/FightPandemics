@@ -80,8 +80,7 @@ const NavMenu = styled.div`
     transition: width 0.1s ease-in-out;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        // display: initial;
-        display: none:
+        display: ${props => props.navIsOpened ? "initial" : "none"};
         width: 100vw;
         background-color: ${colors.white};
       }
@@ -179,7 +178,7 @@ const Footer = styled.footer`
 
 const OrganizationMobileHeader = styled.div`
     margin: 0 auto;
-    width: 94vw;
+    width: 94%;
     height: 11.8rem;
     border-radius: 1rem;
 
@@ -227,8 +226,7 @@ const OrgServices = styled.span`
     color: ${colors.darkGray};
 `;
 
-const ProfileNavMenu = (props) => {
-    const [ navIsOpened, setNavIsOpened ] = useState(false);
+const ProfileNavMenu = ({navIsOpened, setNavIsOpened}) => {
     const [organizationId, setOrganisationId] = useState(0);
     // This array will be the organizations array (dummy data for now)
     let organisations = ["Cards for Humanity", "Doing Good", "Hearts for LA",

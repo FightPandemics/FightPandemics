@@ -22,6 +22,7 @@ import ErrorAlert from "components/Alert/ErrorAlert";
 
 // New import
 import ProfileNavMenu from "components/ProfileNavMenu/ProfileNavMenu";
+import MobileDrawer from "components/ProfileNavMenu/MobileDrawer";
 
 
 import { theme, mq } from "constants/theme";
@@ -94,6 +95,7 @@ const NavigationLayout = (props) => {
     organisationId,
   } = props;
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [profileNavMenuIsOpened, setProfileNavMenuIsOpened] = useState(false);
 
   const onOrganisationChange = (index) => {
     if (index !== organisationId) {
@@ -450,7 +452,14 @@ const NavigationLayout = (props) => {
           ) : null}
 
           <BodyWrapper>
-            <ProfileNavMenu />
+            <ProfileNavMenu 
+                navIsOpened = {profileNavMenuIsOpened}
+                setNavIsOpened = {setProfileNavMenuIsOpened}
+            />
+            <MobileDrawer
+                navIsOpened = {profileNavMenuIsOpened}
+                setNavIsOpened = {setProfileNavMenuIsOpened}
+            />
 
             <MainWrapper>
             <Main isProfile={props?.isProfile}>
