@@ -80,8 +80,8 @@ const NavMenu = styled.div`
     transition: width 0.1s ease-in-out;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        top: ${navbarHeight};
-        display: block;
+        // display: initial;
+        display: none:
         width: 100vw;
         background-color: ${colors.white};
       }
@@ -96,8 +96,7 @@ const LeftContainer = styled.div`
     align-items: center;
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-        display: block;
-        // display: none;
+        display: none;
         margin: 0 auto;
         width: 94vw;
         height: auto;
@@ -134,7 +133,7 @@ const OrgImage  = styled.img`
     cursor: pointer;
 `;
 
-const OrgTitle = styled.h1`
+const OrgTitle = styled.h2`
     color: ${theme.colors.royalBlue};
     margin-top: 0;
     font-size: 2.4rem;
@@ -178,41 +177,62 @@ const Footer = styled.footer`
       }
 `;
 
+const OrganizationMobileHeader = styled.div`
+    margin: 0 auto;
+    width: 94vw;
+    height: 11.8rem;
+    border-radius: 1rem;
+
+    @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+        display: none;
+    }
+`;
+
+const OrganizationMobileHeaderTop = styled.div`
+    width: 100%;
+    height: 5.9rem;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    background-color: ${colors.royalBlue};
+    padding: 0 2.2rem;
+    display: flex;
+    align-items: center;
+`;
+const OrganizationMobileHeaderBottom = styled.div`
+    width: 100%;
+    height: 5.9rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem; 
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    box-shadow: 0.1rem 0.3rem 1rem -0.09rem #ddd;
+`;
+
+const OrgImageMobile = styled(OrgImage)`
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 0;
+    margin-right: 0.8rem;
+`;
+
+const OrgTitleMobile = styled.span`
+    color: ${colors.white};
+    margin-top: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+`;
+
+const OrgServices = styled.span`
+    color: ${colors.darkGray};
+`;
+
 const ProfileNavMenu = (props) => {
     const [ navIsOpened, setNavIsOpened ] = useState(false);
     const [organizationId, setOrganisationId] = useState(0);
     // This array will be the organizations array (dummy data for now)
     let organisations = ["Cards for Humanity", "Doing Good", "Hearts for LA",
      "Fight it Peters", "Helping Hands", "FightPandemics"]; 
-
-    function buildNavSections() {
-        const orgAccessLevels = {
-            "Org Workspace": 
-            ["About", "Activity", "Posts", "Org Book", "Members", "Gallery"],
-            "Org Admin": 
-            ["Applications", "Messages", "Questionnaire", "Positions", "Thanks", "Minting Badges", "Manage Badges"]
-        };
-    
-        const navSections = [];
-        for (let title in orgAccessLevels){
-            const links = orgAccessLevels[title];
-            const NavSection = styled.nav`
-            margin-bottom: 2.3rem;
-            `;
-            
-            const navSectionComponent = 
-            <NavSection key = {title}>
-                <OrgAccessLevelTitle id={title}> 
-                    {mobileMediaQuery.matches && title === "Org Admin" ? "ADMIN" : title}
-                 </OrgAccessLevelTitle>
-                {links.map((link, idx) => {
-                    return <NavLink to="/about-us" key = {link}> {link} </NavLink>;
-                })}
-            </NavSection>
-            navSections.push(navSectionComponent);
-        }
-        return navSections;
-    }
 
     return (
     <NavMenu navIsOpened = {navIsOpened}>
@@ -236,11 +256,22 @@ const ProfileNavMenu = (props) => {
             }
              <AddOrganizationBtn type="button"><span>+</span></AddOrganizationBtn>
         </LeftContainer>
+        <OrganizationMobileHeader>
+            <OrganizationMobileHeaderTop>
+                 <OrgImageMobile 
+                    src ="https://data.whicdn.com/images/22345458/original.jpg" 
+                />
+                <OrgTitleMobile>Fight It Peters</OrgTitleMobile>
+            </OrganizationMobileHeaderTop>
+            <OrganizationMobileHeaderBottom>
+                <OrgServices>Emergency Relief / International Assistance</OrgServices>
+            </OrganizationMobileHeaderBottom>
+        </OrganizationMobileHeader>
         <RightContainer navIsOpened = {navIsOpened}>
             <OrgTitle>{ organisations[organizationId].length <= 11 
             ? organisations[organizationId] 
             : organisations[organizationId].slice(0, 12) + "..."}</OrgTitle>
-            {buildNavSections()}
+            {renderNavSections()}
             <Footer>
                 <NavLink>Account</NavLink>
                 <NavLink>Profile</NavLink>
@@ -250,6 +281,35 @@ const ProfileNavMenu = (props) => {
         </RightContainer>
     </NavMenu>
     );
+}
+
+function renderNavSections() {
+    const orgAccessLevels = {
+        "Org Workspace": 
+        ["About", "Activity", "Posts", "Org Book", "Members", "Gallery"],
+        "Org Admin": 
+        ["Applications", "Messages", "Questionnaire", "Positions", "Thanks", "Minting Badges", "Manage Badges"]
+    };
+
+    const navSections = [];
+    for (let title in orgAccessLevels){
+        const links = orgAccessLevels[title];
+        const NavSection = styled.nav`
+        margin-bottom: 2.3rem;
+        `;
+        
+        const navSectionComponent = 
+        <NavSection key = {title}>
+            <OrgAccessLevelTitle id={title}> 
+                {mobileMediaQuery.matches && title === "Org Admin" ? "ADMIN" : title}
+             </OrgAccessLevelTitle>
+            {links.map((link, idx) => {
+                return <NavLink to="/about-us" key = {link}> {link} </NavLink>;
+            })}
+        </NavSection>
+        navSections.push(navSectionComponent);
+    }
+    return navSections;
 }
 
 export default ProfileNavMenu;
