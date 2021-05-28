@@ -89,7 +89,7 @@ const JoinOrgContainerMobile = styled.div`
   top: 15rem;
   height: 4.5rem;
   left: 20rem;
-  z-index: 5;
+  z-index: 3;
   background-color: ${white};
 `;
 
@@ -173,6 +173,8 @@ const PageContentWrapper = styled.div`
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     height: 45vh;
+    width: 30rem;
+    scroll-behavior: auto;
   }
 `;
 
