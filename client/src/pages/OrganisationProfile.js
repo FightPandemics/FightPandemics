@@ -187,9 +187,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     setActiveTab(e);
   };
   const locationLink = useLocation(false);
-  useEffect(() => {
-    setTab(locationLink?.state?.tab);
-  }, [locationLink.state.tab]);
+  // useEffect(() => {
+  //   setTab(locationLink?.state?.tab);
+  // }, [locationLink.state.tab]);
 
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];

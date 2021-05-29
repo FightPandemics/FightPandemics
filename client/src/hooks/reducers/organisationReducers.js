@@ -44,22 +44,25 @@ export const orgProfileReducer = (state, action) => {
     case FETCH_Organisation_SUCCESS:
       const organName = payload.organisation.name;
       let desc = payload.organisation.positions.description;
-      const text1 = desc.split("-")[0];
-      const text2 = desc.split("-")[1];
-      desc = text1 + " " + organName + " " + text2;
-      Object.assign(state, payload);
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        organisation: {
-          ...state.organisation,
-          positions: {
-            ...state.organisation.positions,
-            description: desc,
+
+      if (desc.includes("-")) {
+        const text1 = desc.split("-")[0];
+        const text2 = desc.split("-")[1];
+        desc = text1 + " " + organName + " " + text2;
+        Object.assign(state, payload);
+        return {
+          ...state,
+          loading: false,
+          error: null,
+          organisation: {
+            ...state.organisation,
+            positions: {
+              ...state.organisation.positions,
+              description: desc,
+            },
           },
-        },
-      };
+        };
+      }
     case UPDATE_Organisation_SUCCESS:
       return {
         ...state,
