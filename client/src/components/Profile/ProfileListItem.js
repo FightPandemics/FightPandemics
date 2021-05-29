@@ -133,7 +133,7 @@ const ProfileListItem = ({ item, isSelf, type }) => {
   }
 
   if (type == "orgs") {
-    list = "organisation";
+    list = "organization";
   }
 
   return (
@@ -164,20 +164,24 @@ const ProfileListItem = ({ item, isSelf, type }) => {
         </ProfilePicContainer>
         <TextContainer className={type == "orgs" ? "organisation-card" : null}>
           <Name>
-            {type == "orgs"
+            {/* {type == "orgs"
               ? item?.[list]?.name
-              : (item?.[list]?.name && item?.[list]?.name) || ""}
+              : (item?.[list]?.name && item?.[list]?.name) || ""} */}
           </Name>
-          {type == "applicant" ? null : (
+          {!isSelf || type == "applicant" ? null : (
             <Title>
-              {
+              {/* {
                 //ORG PERMISSIONS OR POSITION TITLE
                 type == "orgs"
                   ? // org permissions prop (test placeholder is below)
                     "Your Role: Editor"
                   : // member position title prop (test placeholder is below)
                     "Volunteer"
-              }
+              } */}
+              {type == "orgs"
+                ? item?.[list]?.permissions
+                : (item?.[list]?.permissions && item?.[list]?.permissions) ||
+                  ""}
             </Title>
           )}
         </TextContainer>

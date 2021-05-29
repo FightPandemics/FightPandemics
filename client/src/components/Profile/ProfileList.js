@@ -46,11 +46,11 @@ const SeeAllLink = styled.div`
 `;
 
 const LinkContainer = styled.div`
-display: none;
+  display: none;
 
-@media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-  display: unset;
-}
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: unset;
+  }
 `;
 const ProfileList = ({
   filteredApplicants,
@@ -65,6 +65,7 @@ const ProfileList = ({
   totalCount,
   emptyFeed,
   type,
+  isSelf,
 }) => {
   const applicantsList = filteredApplicants && true;
   const membersList = filteredMembers && true;
@@ -72,7 +73,7 @@ const ProfileList = ({
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
-  const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
+  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   const [seeAll, setSeeAll] = useState(false);
   const handleSeeAll = () => {
     setSeeAll((prevState) => !prevState);
@@ -93,6 +94,7 @@ const ProfileList = ({
               membersList={membersList}
               orgList={orgsList}
               type={type}
+              isSelf={isSelf}
             />
           </>
         );
@@ -161,11 +163,12 @@ const ProfileList = ({
           <Link
             className="see-all"
             style={seeAll ? { display: "none" } : null}
-            onClick={handleSeeAll}>
+            onClick={handleSeeAll}
+          >
             <SeeAllLink>See All</SeeAllLink>
           </Link>
-        </LinkContainer>)
-        : null}
+        </LinkContainer>
+      ) : null}
     </div>
   );
 };
