@@ -189,7 +189,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const locationLink = useLocation(false)
   useEffect(() => {
     setTab(locationLink?.state?.tab)
-  },[])
+  }, [])
 
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
@@ -509,6 +509,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   };
 
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
+  const emptyFeedApplicants = () => Object.keys(applicantsList).length < 1 && !isLoadingApplicants;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
   const { TabPane } = Tabs;
@@ -782,7 +783,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       dispatch(applicantsActions.fetchApplicantsError(error));
     }
   };
-
   useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -1006,55 +1006,29 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </div>
             </ProfileTabPane>
             {
+
               <ProfileTabPane tab={t("profile.views.members")} key="members">
-                {rawTotalApplicantCount == 0 ? (
-                  <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                    No members to display.
-                  </div>
-                ) : (
-                  <ProfileList
-                    // TODO -conditionally show role / permissions and permissions link
-                    filteredMembers={applicantsList}
-                    itemCount={itemCountApplicants}
-                    isItemLoaded={isApplicantLoaded}
-                    isNextPageLoading={isLoading}
-                    loadNextPage={loadNextPageApplicant}
-                    hasNextPage={loadMoreApplicants}
-                    filteredApplicants={applicantsList}
-                    totalCount={totalApplicantCount}
-                    page={pageApplicants}
-                    emptyFeed={emptyFeed}
-                    isOwner={isOwner}
-                    isMember={isMember}
-                    isAdmin={permissions.isAdmin}
-                    isWiki={permissions.isWiki}
-                    isVolunteer={permissions.isVolunteer}
-                    activeTab={activeTab}
-                  />
-                )}
-              </ProfileTabPane>
-            }
-            {isOwner || permissions.isAdmin || isSelf ? (
-              <ProfileTabPane
-                tab={t("profile.views.applicants")}
-                key="applicants"
-              >
-                {
+                {isLoadingApplicants ?
+                  <Loader /> :
                   rawTotalApplicantCount == 0 ? (
-                    <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                      No applicants to display.
+                    < div style={{ textAlign: "center", marginTop: "5rem" }}>
+                      No members to display.
                     </div>
                   ) : (
                     <ProfileList
+                      // TODO -conditionally show role / permissions and permissions link
                       filteredMembers={applicantsList}
                       itemCount={itemCountApplicants}
                       isItemLoaded={isApplicantLoaded}
-                      isNextPageLoading={isLoading}
+                      // isNextPageLoading={isLoading}
+                      isNextPageLoading={isLoadingApplicants}
                       loadNextPage={loadNextPageApplicant}
                       hasNextPage={loadMoreApplicants}
+                      filteredApplicants={applicantsList}
                       totalCount={totalApplicantCount}
+                      // totalCount={rawTotalApplicantCount}
                       page={pageApplicants}
-                      emptyFeed={emptyFeed}
+                      emptyFeed={emptyFeedApplicants}
                       isOwner={isOwner}
                       isMember={isMember}
                       isAdmin={permissions.isAdmin}
@@ -1062,10 +1036,45 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       isVolunteer={permissions.isVolunteer}
                       activeTab={activeTab}
                     />
-                  )
-                }
+                  )}
               </ProfileTabPane>
-            ) : null}
+            }
+            {
+              isOwner || permissions.isAdmin || isSelf ? (
+                <ProfileTabPane
+                  tab={t("profile.views.applicants")}
+                  key="applicants"
+                >
+                  {isLoadingApplicants ?
+                    <Loader /> :
+                    rawTotalApplicantCount == 0 ? (
+                      <div style={{ textAlign: "center", marginTop: "5rem" }}>
+                        No applicants to display.
+                      </div>
+                    ) : (
+                      <ProfileList
+                        filteredMembers={applicantsList}
+                        itemCount={itemCountApplicants}
+                        isItemLoaded={isApplicantLoaded}
+                        // isNextPageLoading={isLoading}
+                        isNextPageLoading={isLoadingApplicants}
+                        loadNextPage={loadNextPageApplicant}
+                        hasNextPage={loadMoreApplicants}
+                        totalCount={totalApplicantCount}
+                        // totalCount={rawTotalApplicantCount}
+                        page={pageApplicants}
+                        emptyFeed={emptyFeedApplicants}
+                        isOwner={isOwner}
+                        isMember={isMember}
+                        isAdmin={permissions.isAdmin}
+                        isWiki={permissions.isWiki}
+                        isVolunteer={permissions.isVolunteer}
+                        activeTab={activeTab}
+                      />
+                    )
+                  }
+                </ProfileTabPane>
+              ) : null}
             {
               isSelf || permissions.isAdmin || isOwner ?
                 (<ProfileTabPane tab={t("profile.views.positions")} key="positions">

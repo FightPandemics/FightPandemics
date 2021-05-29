@@ -6,8 +6,8 @@ const initialState = {
   applicants: [],
   page: 0,
   error: null,
-  isLoading: false,
-  loadMore: true,
+  isLoadingApplicants: false,
+  loadMoreApplicants: true,
   isCachedStale: false,
   profilePosts: {},
 };
@@ -36,7 +36,7 @@ const applicantsReducer = (state = initialState, action) => {
     case APPLICANTS_ACTIONS.FETCH_APPLICANTS_BEGIN:
       return {
         ...state,
-        isLoading: true,
+        isLoadingApplicants: true,
       };
     case APPLICANTS_ACTIONS.FETCH_APPLICANTS_SUCCESS: {
       const { payload } = action;
@@ -44,7 +44,7 @@ const applicantsReducer = (state = initialState, action) => {
         ...state,
         error: null,
         applicants: payload,
-        isLoading: false,
+        isLoadingApplicants: false,
       };
     }
 
@@ -65,7 +65,7 @@ const applicantsReducer = (state = initialState, action) => {
             },
           },
         },
-        isLoading: false,
+        isLoadingApplicants: false,
       };
     }
     case APPLICANTS_ACTIONS.UPDATE_PROFILE_APPLICANT_SUCCESS: {
@@ -143,7 +143,7 @@ const applicantsReducer = (state = initialState, action) => {
         ...state,
         error: payload,
         applicants: [],
-        isLoading: false,
+        isLoadingApplicants: false,
       };
     }
     case APPLICANTS_ACTIONS.NEXT_PAGE:
@@ -157,15 +157,15 @@ const applicantsReducer = (state = initialState, action) => {
         ...state,
         page: 0,
         applicants: [],
-        loadMore: payload.loadMore,
-        isLoading: payload.isLoading,
+        loadMoreApplicants: payload.loadMoreApplicants,
+        isLoadingApplicants: payload.isLoadingApplicants,
       };
     }
     case APPLICANTS_ACTIONS.FINISH_LOADING:
       return {
         ...state,
-        isLoading: false,
-        loadMore: false,
+        isLoadingApplicants: false,
+        loadMoreApplicants: false,
       };
     case APPLICANTS_ACTIONS.SET_REPORTED: {
       const { payload } = action;

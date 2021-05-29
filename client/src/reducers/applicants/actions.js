@@ -13,11 +13,11 @@ export const APPLICANTS_ACTIONS = {
   SHOW_ANYWAY: "SHOW_ANYWAY",
 };
 
-export const resetPageAction = ({ isLoading = false, loadMore = true }) => ({
+export const resetPageAction = ({ isLoadingApplicants = false, loadMoreApplicants = true }) => ({
   type: APPLICANTS_ACTIONS.RESET_PAGE,
   payload: {
-    isLoading,
-    loadMore,
+    isLoadingApplicants,
+    loadMoreApplicants,
   },
 });
 
@@ -63,9 +63,9 @@ export const setPageAction = (page) => ({
   payload: { page },
 });
 
-export const setLoadingAction = ({ isLoading, loadMore }) => ({
+export const setLoadingAction = ({ isLoadingApplicants, loadMoreApplicants }) => ({
   type: APPLICANTS_ACTIONS.SET_LOADING,
-  payload: { isLoading, loadMore },
+  payload: { isLoadingApplicants, loadMoreApplicants },
 });
 
 export const setReported = ({ applicantId }) => ({

@@ -89,7 +89,7 @@ const Apply = (props) => {
     // if (!actorPermissionsLoaded && actorId) {
     loadPermissions(actorId);
     // }
-  }, [actorId, loadPermissions]);
+  }, [actorId]);
 
   const [applicantState, setApplicantState] = useState(initialState);
   const history = useHistory();
@@ -195,7 +195,7 @@ const Apply = (props) => {
 
   useEffect(() => {
     loadApplicant();
-  }, [applicantName, loadApplicant, params.applicantId]);
+  }, [applicantName, params.applicantId]);
 
   const [intro, setIntro] = useState();
   const [introLoaded, setIntroLoaded] = useState(false);

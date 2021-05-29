@@ -2,7 +2,8 @@ import Loader from "components/Feed/StyledLoader";
 import Applicant from "components/OrganisationProfile/ApplicantOrMember";
 import ProfileListItem from "components/OrganisationProfile/ProfileListItem";
 import { mq } from "constants/theme";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import {
   InfiniteLoader,
   AutoSizer,
@@ -38,8 +39,10 @@ const HorizontalRule = styled.hr`
 
 const cellMeasurerCache = new CellMeasurerCache({
   fixedWidth: true,
-  defaultHeight: 70,
+  defaultHeight: 380,
 });
+
+
 
 const SeeAllLink = styled.div`
   display: none;
@@ -82,25 +85,52 @@ const ProfileList = ({
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
-  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+
+  const scrollIndex = useRef(0);
+  const history = useHistory();
+  const scrollToIndex = () => {
+    if (history?.location?.state) {
+      let { keepScrollIndex, keepScroll } = history.location.state;
+      if (keepScroll) return keepScrollIndex;
+    }
+    return -1;
+  };
+  const scrollToTop = async () => window.scrollTo({ top: 0, behavior: "smooth" });
+  console.log({ "SCROLLTOP!!": scrollToTop })
+  // const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
+  const loadMoreItems = isNextPageLoading
+    ? () => {
+      if (history?.location?.state) {
+        const { keepScrollIndex, keepScroll } = history.location.state;
+        if (keepScroll && scrollIndex.current < keepScrollIndex) {
+          scrollIndex.current = keepScrollIndex;
+        } else {
+          history.location.state.keepScrollIndex = scrollIndex.current;
+          history.location.state.keepScroll = false;
+          history.location.state.keepPostsState = undefined;
+          history.location.state.keepPageState = undefined;
+        }
+      }
+    }
+    : loadNextPage;
+
   const [seeAll, setSeeAll] = useState(false);
 
   const handleSeeAll = () => {
     setSeeAll((prevState) => !prevState);
   };
 
-  const scrollTop = async () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const windowWidth = window.innerWidth;
   const profileItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
+      // scrollIndex.current = index;
       if (!isItemLoaded(index) && hasNextPage) {
         content = <Loader />;
       } else if (items[index]) {
         content = (
           <>
-            <HorizontalRule />
             <ProfileListItem
               item={items[index][1]}
               applicantsList={applicantsList}
@@ -114,6 +144,7 @@ const ProfileList = ({
               isVolunteer={isVolunteer}
               activeTab={activeTab}
             />
+            <HorizontalRule />
           </>
         );
       }
@@ -172,17 +203,22 @@ const ProfileList = ({
                       width={width}
                       isScrolling={isScrolling}
                       onRowsRendered={onRowsRendered}
+                      // rowCount={
+                      //   windowWidth > 767 ? itemCount : seeAll ? itemCount : 3
+                      // }
                       rowCount={
-                        windowWidth > 767 ? itemCount : seeAll ? itemCount : 3
+                        itemCount
                       }
-                      rowHeight={cellMeasurerCache.getHeight()}
+                      // rowHeight={cellMeasurerCache.getHeight()}
+                      rowHeight={cellMeasurerCache.rowHeight}
                       deferredMeasurementCache={cellMeasurerCache}
                       rowRenderer={profileItem}
                       scrollTop={scrollTop}
                       onScroll={onChildScroll}
                       overscanRowCount={1}
                       scrollToAlignment={"start"}
-                      style={{ "margin-top": "3rem" }}
+                      // style={{ "margin-top": "3rem" }}
+                    scrollToIndex={scrollToIndex()}
                     />
                   )}
                 </AutoSizer>
@@ -199,9 +235,9 @@ const ProfileList = ({
           >
             <SeeAllLink>See All</SeeAllLink>
           </Link>
-          <Link onClick={scrollTop}>
+          {/* <Link onClick={scrollToTop}>
             <UpArrow activate={seeAll} />
-          </Link>
+          </Link> */}
         </>
       ) : null}
     </ListContainer>
