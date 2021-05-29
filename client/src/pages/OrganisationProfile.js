@@ -1041,7 +1041,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 {
                   rawTotalApplicantCount == 0 ? (
                     <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                      No applicants to display...
+                      No applicants to display....
                     </div>
                   ) : (
                     <ProfileList
