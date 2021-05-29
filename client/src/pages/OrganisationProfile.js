@@ -1009,7 +1009,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <ProfileTabPane tab={t("profile.views.members")} key="members">
                 {rawTotalApplicantCount == 0 ? (
                   <div style={{ textAlign: "center", marginTop: "5rem" }}>
-                    No members to display.
+                    No members to display..
                   </div>
                 ) : (
                   <ProfileList
