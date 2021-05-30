@@ -313,7 +313,7 @@ async function routes(app) {
       const [err, applicant] = await app.to(new Applicant(applicantProps).save());
 
       if (err) {
-        req.log.error(err, "Failed creating applicaorganisationnt.");
+        req.log.error(err, "Failed creating applicant organisation.");
         throw app.httpErrors.internalServerError();
       }
 
