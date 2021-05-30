@@ -313,7 +313,7 @@ async function routes(app) {
       const [err, applicant] = await app.to(new Applicant(applicantProps).save());
 
       if (err) {
-        req.log.error(err, "Failed creating applicant.");
+        req.log.error(err, "Failed creating applicaorganisationnt.");
         throw app.httpErrors.internalServerError();
       }
 
@@ -337,10 +337,12 @@ async function routes(app) {
       }
 
       if (owner.notifyPrefs.instant.newapplicant === true) {
-        app.notifier.notifyNewApplicant("newapplicant", triggeredById, receiverId);
+        app.notifier.notifyNewApplicant("newapplicant", organisation, triggeredById, receiverId);
       } else {
         console.log("Notification Preference for new applicant is turned off");
       }
+
+      app.notifier.notifyNewApplicant("applicationSubmitted", organisation, triggeredById, triggeredById);
 
       reply.code(201);
       return {

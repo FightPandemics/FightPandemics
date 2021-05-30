@@ -1,1 +1,1 @@
-{{triggeredBy.name}} applied to your organisation
+{{triggeredBy.name}} applied to your organisation {{organisation.name}}

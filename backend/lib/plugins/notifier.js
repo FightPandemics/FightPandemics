@@ -80,7 +80,7 @@ class Notifier {
       .emit("NEW_NOTIFICATION", notification);
   }
 
-  async notifyNewApplicant(action, triggeredById, receiverId, details = {}) {   
+  async notifyNewApplicant(action, organisation, triggeredById, receiverId, details = {}) {   
     
     if (!this.Notification.schema.tree.action.enum.includes(action)) {
       return this.app.log.error(new Error("Invalid Notification action"));
@@ -96,6 +96,10 @@ class Notifier {
       post: {
         id: null,
         title: null,
+      },
+      organisation: {
+        id: organisation._id,
+        name: organisation.name,
       },
       receiver: receiverId,
       readAt: null,

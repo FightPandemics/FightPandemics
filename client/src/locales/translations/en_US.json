@@ -1055,7 +1055,8 @@
     "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
     "empty": "No more notifications",
     "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed",
-    "newapplicant": "<0>{{username}}</0> applied to your organisation"
+    "newapplicant": "<0>{{username}}</0> applied to your organisation <1>{{organisationname}}</1>",
+    "applicationSubmitted": "Your application for <1>{{organisationname}}</1> has been submitted"
   },
   "moderation": {
     "report": "Report",

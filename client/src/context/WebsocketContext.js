@@ -330,7 +330,13 @@ export default class SocketManager extends React.Component {
       case "newapplicant":
         return i18n.t("notifications.newapplicant", {
           username: n.triggeredBy.name,
+          organisationname: n.organisation.name,
         });
+      case "applicationSubmitted":
+        return i18n.t("notifications.applicationSubmitted", {
+          username: n.triggeredBy.name,
+          organisationname: n.organisation.name,
+        });  
       case "report":
         return i18n.t("notifications.reported", {
           postTitle: n.post.title,
