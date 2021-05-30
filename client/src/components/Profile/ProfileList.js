@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "constants/theme";
 import { TestMemberOfOrgs } from "utils/TestMemberOfOrgs";
+import { forEach } from "tlds";
 
 const { colors } = theme;
 
@@ -66,6 +67,7 @@ const ProfileList = ({
   emptyFeed,
   type,
   isSelf,
+  listOrgs,
 }) => {
   const applicantsList = filteredApplicants && true;
   const membersList = filteredMembers && true;
@@ -73,6 +75,19 @@ const ProfileList = ({
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
+  console.log(items);
+  listOrgs = Object.entries(listOrgs);
+  console.log(listOrgs);
+  // const updateItems = items;
+  // const addOrgName = (updateItems, listOrgs, updateItems) => {
+  //   lengthItems = updateItems.length();
+  //   lengthListOrgs = listOrgs.length();
+  //   for ( let i = 0; i < lengthItems-1; i++ ) {
+  //     for (let j = 0; j < lengthListOrgs-1; j++) {
+  //       if (updateItems[i][1])
+  //     }
+  //   }
+  // };
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   const [seeAll, setSeeAll] = useState(false);
   const handleSeeAll = () => {
@@ -95,6 +110,7 @@ const ProfileList = ({
               orgList={orgsList}
               type={type}
               isSelf={isSelf}
+              listOrgs={listOrgs}
             />
           </>
         );

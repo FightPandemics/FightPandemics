@@ -126,7 +126,7 @@ export const Title = styled.p`
   }
 `;
 
-const ProfileListItem = ({ item, isSelf, type }) => {
+const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
   let list;
   if (type != "orgs") {
     list = "applicant";
@@ -135,6 +135,16 @@ const ProfileListItem = ({ item, isSelf, type }) => {
   if (type == "orgs") {
     list = "organization";
   }
+  console.log(item);
+  console.log(item["organization"]["id"]);
+  // console.log(orgItem[1].name);
+  let orgName;
+  listOrgs.forEach((orgItem) => {
+    if (item["organization"]["id"] == orgItem[0]) {
+      orgName = orgItem[1].name;
+    }
+  });
+  console.log(orgName);
 
   return (
     <AllItems className={type == "orgs" ? "organisation-card" : null}>
@@ -167,6 +177,7 @@ const ProfileListItem = ({ item, isSelf, type }) => {
             {/* {type == "orgs"
               ? item?.[list]?.name
               : (item?.[list]?.name && item?.[list]?.name) || ""} */}
+            {orgName}
           </Name>
           {!isSelf || type == "applicant" ? null : (
             <Title>

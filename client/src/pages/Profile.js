@@ -672,6 +672,7 @@ const Profile = ({
     pageApplicants,
     applicants: applicantsList,
   } = applicants;
+  // console.log(applicants);
   const feedApplicants = Object.entries(applicantsList);
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
 
@@ -710,8 +711,8 @@ const Profile = ({
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
     const getApplicantsBaseURL = (organisationId, limit, skip) => {
-      return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
-      // return `api/applicants?userId=${userId}&status=member&includeMeta=true&limit=${limit}&skip=${skip}`;
+      // return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+      return `api/applicants?userId=${userId}&status=member&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
     let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
     let endpoint = baseURL;
@@ -791,6 +792,27 @@ const Profile = ({
     }
   };
 
+  const [listOrgs, setOrganisations] = useState([]);
+  const loadOrganisations = async () => {
+    let endpoint = `/api/organisations`;
+    try {
+      // TODO - CONFIGURE API ONCE BE IS DONE
+      const { data: organisations } = await axios.get(endpoint);
+      console.log(organisations);
+      setOrganisations(organisations);
+      const listOrgs = organisations.reduce((objOrg, itemOrg) => {
+        objOrg[itemOrg._id] = itemOrg;
+        return objOrg;
+      }, {});
+      setOrganisations(listOrgs);
+      console.log(listOrgs);
+    } catch (error) {
+      console.log({
+        error,
+      });
+    }
+  };
+
   useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // useEffect(() => {
@@ -800,6 +822,10 @@ const Profile = ({
   useEffect(() => {
     loadApplicants();
   }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    loadOrganisations();
+  }, []);
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
     feedApplicants,
@@ -1089,6 +1115,7 @@ const Profile = ({
                           emptyFeed={emptyFeedApplicants}
                           type="orgs"
                           isSelf={isSelf}
+                          listOrgs={listOrgs}
                         />
                       </SeeAllContentWrapperOrg>
                     </SeeAllTabsWrapperOrg>
@@ -1134,6 +1161,7 @@ const Profile = ({
                         emptyFeed={emptyFeedApplicants}
                         type="orgs"
                         isSelf={isSelf}
+                        listOrgs={listOrgs}
                       />
                     </SeeAllContentWrapperOrg>
                   </SeeAllTabsWrapperOrg>
