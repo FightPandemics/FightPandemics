@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "constants/theme";
 import { TestMemberOfOrgs } from "utils/TestMemberOfOrgs";
+import { forEach } from "tlds";
 
 const { colors } = theme;
 
@@ -46,11 +47,11 @@ const SeeAllLink = styled.div`
 `;
 
 const LinkContainer = styled.div`
-display: none;
+  display: none;
 
-@media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-  display: unset;
-}
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    display: unset;
+  }
 `;
 const ProfileList = ({
   filteredApplicants,
@@ -65,6 +66,8 @@ const ProfileList = ({
   totalCount,
   emptyFeed,
   type,
+  isSelf,
+  listOrgs,
 }) => {
   const applicantsList = filteredApplicants && true;
   const membersList = filteredMembers && true;
@@ -72,7 +75,20 @@ const ProfileList = ({
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
-  const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
+  console.log(items);
+  listOrgs = Object.entries(listOrgs);
+  console.log(listOrgs);
+  // const updateItems = items;
+  // const addOrgName = (updateItems, listOrgs, updateItems) => {
+  //   lengthItems = updateItems.length();
+  //   lengthListOrgs = listOrgs.length();
+  //   for ( let i = 0; i < lengthItems-1; i++ ) {
+  //     for (let j = 0; j < lengthListOrgs-1; j++) {
+  //       if (updateItems[i][1])
+  //     }
+  //   }
+  // };
+  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
   const [seeAll, setSeeAll] = useState(false);
   const handleSeeAll = () => {
     setSeeAll((prevState) => !prevState);
@@ -93,6 +109,8 @@ const ProfileList = ({
               membersList={membersList}
               orgList={orgsList}
               type={type}
+              isSelf={isSelf}
+              listOrgs={listOrgs}
             />
           </>
         );
@@ -161,11 +179,12 @@ const ProfileList = ({
           <Link
             className="see-all"
             style={seeAll ? { display: "none" } : null}
-            onClick={handleSeeAll}>
+            onClick={handleSeeAll}
+          >
             <SeeAllLink>See All</SeeAllLink>
           </Link>
-        </LinkContainer>)
-        : null}
+        </LinkContainer>
+      ) : null}
     </div>
   );
 };

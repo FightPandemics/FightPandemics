@@ -126,15 +126,25 @@ export const Title = styled.p`
   }
 `;
 
-const ProfileListItem = ({ item, isSelf, type }) => {
+const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
   let list;
   if (type != "orgs") {
     list = "applicant";
   }
 
   if (type == "orgs") {
-    list = "organisation";
+    list = "organization";
   }
+  console.log(item);
+  console.log(item["organization"]["id"]);
+  // console.log(orgItem[1].name);
+  let orgName;
+  listOrgs.forEach((orgItem) => {
+    if (item["organization"]["id"] == orgItem[0]) {
+      orgName = orgItem[1].name;
+    }
+  });
+  console.log(orgName);
 
   return (
     <AllItems className={type == "orgs" ? "organisation-card" : null}>
@@ -164,20 +174,25 @@ const ProfileListItem = ({ item, isSelf, type }) => {
         </ProfilePicContainer>
         <TextContainer className={type == "orgs" ? "organisation-card" : null}>
           <Name>
-            {type == "orgs"
+            {/* {type == "orgs"
               ? item?.[list]?.name
-              : (item?.[list]?.name && item?.[list]?.name) || ""}
+              : (item?.[list]?.name && item?.[list]?.name) || ""} */}
+            {orgName}
           </Name>
-          {type == "applicant" ? null : (
+          {!isSelf || type == "applicant" ? null : (
             <Title>
-              {
+              {/* {
                 //ORG PERMISSIONS OR POSITION TITLE
                 type == "orgs"
                   ? // org permissions prop (test placeholder is below)
                     "Your Role: Editor"
                   : // member position title prop (test placeholder is below)
                     "Volunteer"
-              }
+              } */}
+              {type == "orgs"
+                ? item?.[list]?.permissions
+                : (item?.[list]?.permissions && item?.[list]?.permissions) ||
+                  ""}
             </Title>
           )}
         </TextContainer>

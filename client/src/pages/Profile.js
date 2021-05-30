@@ -252,8 +252,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-          ? "A"
-          : "D";
+        ? "A"
+        : "D";
     }
     return undefined;
   }, [sectionView, internalTab]);
@@ -672,6 +672,7 @@ const Profile = ({
     pageApplicants,
     applicants: applicantsList,
   } = applicants;
+  // console.log(applicants);
   const feedApplicants = Object.entries(applicantsList);
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
 
@@ -710,7 +711,8 @@ const Profile = ({
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
     const getApplicantsBaseURL = (organisationId, limit, skip) => {
-      return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+      // return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+      return `api/applicants?userId=${userId}&status=member&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
     let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
     let endpoint = baseURL;
@@ -718,13 +720,13 @@ const Profile = ({
 
     try {
       // TODO - CONFIGURE API ONCE BE IS DONE
-      // const {
-      //     data: { data: applicants, meta },
-      // } = await axios.get(endpoint);
+      const {
+        data: { data: applicants, meta },
+      } = await axios.get(endpoint);
 
       // TEST DATA
-      const applicants = MemberOrgs;
-      const meta = Meta;
+      // const applicants = MemberOrgs;
+      // const meta = Meta;
 
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
@@ -790,7 +792,28 @@ const Profile = ({
     }
   };
 
-  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [listOrgs, setOrganisations] = useState([]);
+  const loadOrganisations = async () => {
+    let endpoint = `/api/organisations`;
+    try {
+      // TODO - CONFIGURE API ONCE BE IS DONE
+      const { data: organisations } = await axios.get(endpoint);
+      console.log(organisations);
+      setOrganisations(organisations);
+      const listOrgs = organisations.reduce((objOrg, itemOrg) => {
+        objOrg[itemOrg._id] = itemOrg;
+        return objOrg;
+      }, {});
+      setOrganisations(listOrgs);
+      console.log(listOrgs);
+    } catch (error) {
+      console.log({
+        error,
+      });
+    }
+  };
+
+  useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // useEffect(() => {
   //   refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
@@ -799,6 +822,10 @@ const Profile = ({
   useEffect(() => {
     loadApplicants();
   }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    loadOrganisations();
+  }, []);
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
     feedApplicants,
@@ -1088,6 +1115,7 @@ const Profile = ({
                           emptyFeed={emptyFeedApplicants}
                           type="orgs"
                           isSelf={isSelf}
+                          listOrgs={listOrgs}
                         />
                       </SeeAllContentWrapperOrg>
                     </SeeAllTabsWrapperOrg>
@@ -1132,14 +1160,16 @@ const Profile = ({
                         page={pageApplicants}
                         emptyFeed={emptyFeedApplicants}
                         type="orgs"
+                        isSelf={isSelf}
+                        listOrgs={listOrgs}
                       />
                     </SeeAllContentWrapperOrg>
                   </SeeAllTabsWrapperOrg>
                 )
               ) : null}
               {sectionView === "Requests" ||
-                sectionView === "Offers" ||
-                sectionView === "Posts" ? (
+              sectionView === "Offers" ||
+              sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>
