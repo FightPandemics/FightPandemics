@@ -1,5 +1,5 @@
 export const LANG_MAP = [
-  { localeLang: "ar", tinyMceLang: "ar", tinyMceFile: false },
+  { localeLang: "ar", tinyMceLang: "ar", default: false },
   { localeLang: "de", tinyMceLang: "de", default: false },
   { localeLang: "el", tinyMceLang: "el", default: false },
   { localeLang: "en-US", tinyMceLang: "en", default: true },
