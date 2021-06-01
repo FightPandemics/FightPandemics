@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { theme, mq } from "constants/theme";
 import { getInitialsFromFullName } from "utils/userInfo";
 import OrgProfileBackup from "assets/icons/org-no-photo-profile.svg";
+import { Link } from "react-router-dom";
+
 const { colors } = theme;
 
 export const AllItems = styled.div`
@@ -139,9 +141,11 @@ const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
   console.log(item["organization"]["id"]);
   // console.log(orgItem[1].name);
   let orgName;
+  let orgPic;
   listOrgs.forEach((orgItem) => {
     if (item["organization"]["id"] == orgItem[0]) {
       orgName = orgItem[1].name;
+      orgItem[1].photo ? (orgPic = orgItem[1].photo) : (orgPic = "");
     }
   });
   console.log(orgName);
@@ -153,14 +157,14 @@ const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
           className={type == "orgs" ? "organisation-card" : null}
         >
           <ProfilePic className={type == "orgs" ? "organisation-card" : null}>
-            {item?.[list]?.photo ? (
+            {orgPic ? (
               <img
                 style={{
                   maxWidth: "100%",
                   borderRadius: "50%",
                   boxSizing: "content-box",
                 }}
-                src={item?.[list]?.photo}
+                src={orgPic}
               />
             ) : type == "orgs" ? (
               <img src={OrgProfileBackup} />
@@ -174,21 +178,13 @@ const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
         </ProfilePicContainer>
         <TextContainer className={type == "orgs" ? "organisation-card" : null}>
           <Name>
+            <Link to={`/organisation/${item?.[list]?.id}`}>{orgName}</Link>
             {/* {type == "orgs"
               ? item?.[list]?.name
               : (item?.[list]?.name && item?.[list]?.name) || ""} */}
-            {orgName}
           </Name>
           {!isSelf || type == "applicant" ? null : (
             <Title>
-              {/* {
-                //ORG PERMISSIONS OR POSITION TITLE
-                type == "orgs"
-                  ? // org permissions prop (test placeholder is below)
-                    "Your Role: Editor"
-                  : // member position title prop (test placeholder is below)
-                    "Volunteer"
-              } */}
               {type == "orgs"
                 ? item?.[list]?.permissions
                 : (item?.[list]?.permissions && item?.[list]?.permissions) ||
