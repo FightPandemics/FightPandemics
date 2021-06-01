@@ -5,9 +5,9 @@ import noJoinOrgPic from "assets/no-org-animal.svg";
 
 const NoJoinOrg = ({ isSelf }) => {
   const ownText =
-    "It looks like you haven't joined an organization yet! To join an organization, please go to the organization's profile page and click to Join button under the description.";
+    "It looks like you haven't joined an organisation yet! To join an organisation, please go to the organisation's profile page and click to Join button under the description.";
   const othersText =
-    "It looks like this person hasn’t joined an organization yet! ";
+    "It looks like this person hasn’t joined an organisation yet! ";
 
   return (
     <Wrapper>
