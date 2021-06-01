@@ -357,7 +357,7 @@ const Application = ({
                             // submit form to backend onClick
                             onClick={handleRejectSuccess}
                         >
-                            {t("positions.submitModal")}
+                            {t("positions.rejectModal")}
                         </StyledSubmitButton>
                     </ButtonsContainer>
                 </StyledContainer>
@@ -383,7 +383,7 @@ const Application = ({
                             // submit form to backend onClick
                             onClick={handleAcceptSuccess}
                         >
-                            {t("positions.submitModal")}
+                            {t("positions.acceptModal")}
                         </StyledSubmitButton>
                     </ButtonsContainer>
                 </StyledContainer>
