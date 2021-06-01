@@ -4,6 +4,10 @@ import { theme, mq } from "constants/theme";
 import { getInitialsFromFullName } from "utils/userInfo";
 import OrgProfileBackup from "assets/icons/org-no-photo-profile.svg";
 import { Link } from "react-router-dom";
+import { Avatar } from "antd";
+import TextAvatar from "components/TextAvatar";
+
+const { royalBlue, selago } = theme.colors;
 
 const { colors } = theme;
 
@@ -59,6 +63,9 @@ export const ProfilePicContainer = styled.div`
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 2rem;
+  span {
+    color: ${royalBlue};
+  }
 
   @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
     &.organisation-card {
@@ -85,6 +92,14 @@ export const ProfilePic = styled.div`
       height: 6rem;
     }
   }
+`;
+
+export const OrgTextAvatar = styled(TextAvatar)`
+  height: 6rem;
+  line-height: 6rem;
+  width: 6rem;
+  font-size: 2.5rem;
+  margin-right: 0rem;
 `;
 
 export const TextContainer = styled.div`
@@ -166,13 +181,14 @@ const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
                 }}
                 src={orgPic}
               />
-            ) : type == "orgs" ? (
-              <img src={OrgProfileBackup} />
             ) : (
-              type != "orgs" &&
-              ((item?.[list]?.name &&
-                getInitialsFromFullName(item?.[list]?.name)) ||
-                "")
+              // ) : type == "orgs" ? (
+              //   <img src={OrgProfileBackup} />
+              // ) : (
+              //   type != "orgs" &&
+              <OrgTextAvatar>
+                {(orgName && getInitialsFromFullName(orgName)) || ""}
+              </OrgTextAvatar>
             )}
           </ProfilePic>
         </ProfilePicContainer>
