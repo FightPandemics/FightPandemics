@@ -711,8 +711,8 @@ const Profile = ({
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
     const getApplicantsBaseURL = (organisationId, limit, skip) => {
-      // return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
-      return `api/applicants?userId=${userId}&status=member&includeMeta=true&limit=${limit}&skip=${skip}`;
+      return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+      // return `api/applicants?userId=${userId}&status=member&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
     let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
     let endpoint = baseURL;

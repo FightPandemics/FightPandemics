@@ -166,13 +166,12 @@ const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
                 }}
                 src={orgPic}
               />
-            ) : type == "orgs" ? (
-              <img src={OrgProfileBackup} />
             ) : (
-              type != "orgs" &&
-              ((item?.[list]?.name &&
-                getInitialsFromFullName(item?.[list]?.name)) ||
-                "")
+              // ) : type == "orgs" ? (
+              //   <img src={OrgProfileBackup} />
+              // ) : (
+              //   type != "orgs" &&
+              (orgName && getInitialsFromFullName(orgName)) || ""
             )}
           </ProfilePic>
         </ProfilePicContainer>
