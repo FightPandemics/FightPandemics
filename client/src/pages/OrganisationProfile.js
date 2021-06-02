@@ -560,9 +560,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const { filterModal, activePanel, showFilters } = feedState;
   const {
     error: applicantsError,
-    isLoadingApplicants,
-    loadMoreApplicants,
-    pageApplicants,
+    isLoading: isLoadingApplicants,
+    loadMore: loadMoreApplicants,
+    page: pageApplicants,
     applicants: applicantsList,
   } = applicants;
 
@@ -585,20 +585,20 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const refetchApplicants = (
     isLoadingApplicants,
     loadMoreApplicants,
-    softRefresh = false,
+    // softRefresh = false,
   ) => {
-    if (!softRefresh) {
-      dispatchAction(SET_VALUE, "applyFilters", true);
-      dispatch(
-        applicantsActions.resetPageAction({
-          isLoadingApplicants,
-          loadMoreApplicants,
-        }),
-      );
-      if (pageApplicants === 0) {
-        setToggleRefetchApplicants(!toggleRefetchApplicants);
-      }
+    // if (!softRefresh) {
+    // dispatchAction(SET_VALUE, "applyFilters", true);
+    dispatch(
+      applicantsActions.resetPageAction({
+        isLoadingApplicants,
+        loadMoreApplicants,
+      }),
+    );
+    if (pageApplicants === 0) {
+      setToggleRefetchApplicants(!toggleRefetchApplicants);
     }
+    // }
   };
   const [currentUserPermissions, setCurrentUserPermissions] = useState();
   const [memberstatus, setMemberstatus] = useState();
@@ -719,7 +719,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
-
+      console.log({ "applicants!!": applicants.length })
+      console.log({ "meta!!": meta.total })
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
@@ -826,9 +827,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         return Promise.resolve();
       }
     },
-    [feedApplicants.length, isLoadingApplicants, loadMoreApplicants, activeTab], // eslint-disable-line react-hooks/exhaustive-deps
+    [feedApplicants.length, isLoadingApplicants, loadMoreApplicants, activeTab, dispatch], // eslint-disable-line react-hooks/exhaustive-deps
   );
-
+  console.log("pageApplicants: " + pageApplicants)
+  console.log("pagePosts: " + page)
   useEffect(() => {
     setItemCountApplicants(
       loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length,
@@ -900,7 +902,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <SeeOrgBookLink>
                 <a href={orgBookURL()} target="_blank">
                   See Org Book
-                  </a>
+                </a>
               </SeeOrgBookLink>
 
             </UserInfoDesktop>
@@ -1056,10 +1058,12 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                         filteredMembers={applicantsList}
                         itemCount={itemCountApplicants}
                         isItemLoaded={isApplicantLoaded}
-                        // isNextPageLoading={isLoading}
-                        isNextPageLoading={isLoadingApplicants}
-                        loadNextPage={loadNextPageApplicant}
-                        hasNextPage={loadMoreApplicants}
+                        // isNextPageLoading={isLoadingApplicants}
+                        // loadNextPage={loadNextPageApplicant}
+                        // hasNextPage={loadMoreApplicants}
+                        isNextPageLoading={isLoading}
+                        loadNextPage={loadNextPage}
+                        hasNextPage={loadMore}
                         totalCount={totalApplicantCount}
                         // totalCount={rawTotalApplicantCount}
                         page={pageApplicants}

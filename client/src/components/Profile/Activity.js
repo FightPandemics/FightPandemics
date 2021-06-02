@@ -62,6 +62,10 @@ const Activity = ({
     [hiddenPosts],
   );
 
+  // console.log({ "total count - Post": totalPostCount })
+  // console.log({ "isItemLoaded - Post": isItemLoaded })
+  // console.log("loadMoreItems - Post " + loadMoreItems)
+
   const postItem = useCallback(
     ({ key, index, style, parent }) => {
       let content;
