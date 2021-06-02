@@ -1,12 +1,11 @@
 // -- Imports
 const { Schema, model, ObjectId } = require("mongoose");
 const APPLICANT_STATUS = ["applied", "accepted", "rejected"];
-const ORG_MEMBERS_TYPES = ["volunteer", "wikieditor", "admin"];
+const ORG_MEMBERS_TYPES = ["Volunteer", "Wikieditor", "Admin"];
 
 // --Schema
 const applicantSchema = new Schema(
   {
-    // 6.1 has a different structure (organisationId)
     organization: {
       id: {
         ref: "OrganisationUser",
@@ -16,16 +15,23 @@ const applicantSchema = new Schema(
       name: String,
       permissions: {
         enum: ORG_MEMBERS_TYPES,
-        default: "volunteer",
+        default: "Volunteer",
         required: true,
-        type: String
+        type: String,
       }
     },
     applicantApplied: {
       required: true,
       type: String
     },
-    applicant: Object, //Author Schema
+    applicant: {
+      id: {
+        type: String,
+      },
+      name: {
+        type: String
+      }
+    }, //Author Schema
     answers: {
       required: true,
       type: [String]
@@ -35,7 +41,8 @@ const applicantSchema = new Schema(
       enum: APPLICANT_STATUS,
       default: "applied",
       required: true,
-      type: String
+      type: String,
+      applied: "applied"
     },
   },
   { collection: "applicants", timestamps: true },
@@ -180,6 +187,7 @@ const Applicants = model("Applicants", applicantSchema);
 
 module.exports = {
   APPLICANT_STATUS,
+  ORG_MEMBERS_TYPES,
   model: Applicants,
   schema: applicantSchema,
 };

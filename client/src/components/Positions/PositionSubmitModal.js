@@ -8,6 +8,7 @@ export const PositionSubmitModal = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 
   h2 {
     font-family: ${display};
@@ -59,5 +60,9 @@ button {
   .am-button {
    width: 15.6rem; 
   } 
+
+  p {
+    width: 100%;
+  }
 }
 `;
