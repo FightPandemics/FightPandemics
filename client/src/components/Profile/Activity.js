@@ -179,11 +179,11 @@ const Activity = ({
                       scrollTop={scrollTop}
                       // scrollTop={10}
                       onScroll={onChildScroll}
-                      overscanRowCount={1}
+                      overscanRowCount={10}
                       scrollToAlignment={"start"}
                       // scrollToIndex={scrollToIndex()}
-                      scrollToIndex={-1}
-                      tabIndex={4}
+                      // scrollToIndex={-1}
+                      // tabIndex={4}
                     />
                   )}
                 </AutoSizer>

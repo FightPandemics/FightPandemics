@@ -302,7 +302,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [orgProfileDispatch, organisationId, userProfileDispatch, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const fetchOrganisationPosts = async () => {
@@ -367,7 +367,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       }
     };
     fetchOrganisationPosts();
-  }, [organisationId, page, toggleRefetch, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [organisationId, page, toggleRefetch, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -396,7 +396,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, organisationPosts.length],
+    [dispatch, isLoading, loadMore, organisationPosts.length, activeTab],
   );
   console.log({ "loadmore": loadMore })
 
@@ -404,7 +404,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     setItemCount(
       loadMore ? organisationPosts.length + 1 : organisationPosts.length,
     );
-  }, [loadMore, organisationPosts.length]);
+  }, [loadMore, organisationPosts.length, activeTab]);
 
   const postDelete = async (post) => {
     let deleteResponse;
