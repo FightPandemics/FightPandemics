@@ -279,7 +279,7 @@ const OrgBookEditorSpace = (props) => {
     //contextmenu appears after right-clicking on editable content
     return (
       <Editor
-        apiKey="6wsqfx2q8gaxfha3k31vw5hivcu9rp3su7q4o2kuy8p9qavt"
+        apiKey="1d329a60tmusxkp5p0ifsk7ezr8dzy1vw5x4c4b1ms7hm394"
         initialValue={selectedPage?.content}
         value={selectedPage?.content}
         init={{

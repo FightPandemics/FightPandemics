@@ -691,13 +691,15 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   {t("profile.org.editOrgNotification")}{" "}
                 </Link>
               </DrawerHeader>
-              <DrawerHeader>
-                <Link
-                  to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
-                >
-                  {editOrgBookLinkLabel}{" "}
-                </Link>
-              </DrawerHeader>
+              {!isMobile && (
+                <DrawerHeader>
+                  <Link
+                    to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                  >
+                    {editOrgBookLinkLabel}{" "}
+                  </Link>
+                </DrawerHeader>
+              )}
             </CustomDrawer>
           )}
         </ProfileLayout>

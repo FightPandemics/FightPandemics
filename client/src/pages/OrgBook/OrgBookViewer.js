@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { theme, mq } from "../../constants/theme";
 import { connect } from "react-redux";
 import dompurify from "dompurify";
+import { notification } from "antd";
 import OrgBookViewerTableOfContents from "../../components/OrgBook/OrgBookViewerTableOfContents";
 import OrgBookViewerTOCMobile from "../../components/OrgBook/OrgBookViewerTOCMobile";
-
+import { LOGIN } from "templates/RouteWithSubRoutes";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import GTM from "constants/gtm-tags";
 import axios from "axios";
 import locationIcon from "assets/icons/location.svg";
@@ -265,7 +266,11 @@ const OrgBookViewer = (props) => {
         `error.${message}`,
         `error.http.${message}`,
       ]);
-      console.log("got err:  " + message);
+      const title = t(`error.http.${"Internal Server Error"}`);
+      notification.error({
+        message: title,
+        translatedErrorMessage,
+      });
     }
   };
 
@@ -446,14 +451,23 @@ const OrgBookViewer = (props) => {
 
                 {organisation && !isOrgMember() ? (
                   <JoinOrgContainer>
-                    <JoinOrgButton
+                    <Link
                       onClick={() => {
-                        console.log("clicked join org");
+                        sessionStorage.setItem(
+                          "postredirect",
+                          `/organisation/${organisationId}`, //will be `/organisation/${organisationId}/positions`
+                        );
+                      }}
+                      to={{
+                        pathname: LOGIN,
+                        state: { from: window.location.pathname },
                       }}
                       id={GTM.orgBook.prefix + GTM.orgBook.joinOrgContainer}
                     >
-                      <JoinOrgLabel>{t("orgBook.joinUs")}</JoinOrgLabel>
-                    </JoinOrgButton>
+                      <JoinOrgButton>
+                        <JoinOrgLabel>{t("orgBook.joinUs")}</JoinOrgLabel>
+                      </JoinOrgButton>
+                    </Link>
                   </JoinOrgContainer>
                 ) : (
                   ""
@@ -496,14 +510,23 @@ const OrgBookViewer = (props) => {
           </div>
           {organisation && !isOrgMember() ? (
             <JoinOrgContainerMobile>
-              <JoinOrgButtonMobile
+              <Link
                 onClick={() => {
-                  console.log("clicked join org");
+                  sessionStorage.setItem(
+                    "postredirect",
+                    `/organisation/${organisationId}`, //will be `/organisation/${organisationId}/positions`
+                  );
+                }}
+                to={{
+                  pathname: LOGIN,
+                  state: { from: window.location.pathname },
                 }}
                 id={GTM.orgBook.prefix + GTM.orgBook.joinOrgContainer}
               >
-                <JoinOrgLabel>{t("orgBook.joinUs")}</JoinOrgLabel>
-              </JoinOrgButtonMobile>
+                <JoinOrgButtonMobile>
+                  <JoinOrgLabel>{t("orgBook.joinUs")}</JoinOrgLabel>
+                </JoinOrgButtonMobile>
+              </Link>
             </JoinOrgContainerMobile>
           ) : (
             ""
