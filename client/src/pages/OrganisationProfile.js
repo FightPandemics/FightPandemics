@@ -315,7 +315,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
-          console.log({ "fetch posts!!": posts })
+          console.log({ "posts - OrgProfile": posts })
+          console.log({ "posts meta - OrgProfile": meta.total })
           if (prevOrgId !== organisationId) {
             dispatch(
               postsActions.fetchPostsSuccess({
@@ -930,14 +931,18 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   useEffect(() => {
     refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
     refetchMembers(); // will trigger loadMembers(if needed) (by toggling toggleRefetchApplicants)
-    refetchPosts();
+
   }, [activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    loadApplicants();
+    if (activeTab == "applicants") {
+      loadApplicants();
+    }
   }, [toggleRefetchApplicants, pageApplicants, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    loadMembers();
+    if (activeTab == "members") {
+      loadMembers();
+    }
   }, [toggleRefetchMembers, pageMembers, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -1159,6 +1164,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                     isItemLoaded={isItemLoaded}
                     hasNextPage={loadMore}
                     totalPostCount={totalPostCount}
+                    activeTab={activeTab}
                   />
                   {postsError && (
                     <ErrorAlert
@@ -1181,7 +1187,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 </FeedWrapper>
               </div>
             </ProfileTabPane>
-            {/* {
+            {
 
               <ProfileTabPane tab={t("profile.views.members")} key="members">
                 {isLoadingApplicants ?
@@ -1229,7 +1235,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       </div>
                     ) : (
                       <ProfileList
-                        filteredMembers={applicantsList}
+                        filteredApplicants={applicantsList}
                         itemCount={itemCountApplicants}
                         isItemLoaded={isApplicantLoaded}
                         isNextPageLoading={isLoadingApplicants}
@@ -1252,7 +1258,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                     )
                   }
                 </ProfileTabPane>
-              ) : null} */}
+              ) : null}
             {
               isSelf || permissions.isAdmin || isOwner ?
                 (<ProfileTabPane tab={t("profile.views.positions")} key="positions">
