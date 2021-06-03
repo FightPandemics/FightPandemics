@@ -68,14 +68,14 @@ export const setLoadingAction = ({ isLoading, loadMore }) => ({
   payload: { isLoading, loadMore },
 });
 
-export const setReported = ({ memberId }) => ({
+export const setReported = ({ applicantId }) => ({
   type: MEMBERS_ACTIONS.SET_REPORTED,
-  payload: { memberId },
+  payload: { applicantId },
 });
 
-export const showAnyway = ({ memberId }) => ({
+export const showAnyway = ({ applicantId }) => ({
   type: MEMBERS_ACTIONS.SHOW_ANYWAY,
-  payload: { memberId },
+  payload: { applicantId },
 });
 
 export const membersActions = {

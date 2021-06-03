@@ -9,7 +9,6 @@ const initialState = {
   isLoading: false,
   loadMore: true,
   isCachedStale: false,
-  profilePosts: {},
 };
 
 export const getProfileObjectiveProp = (view) => {
@@ -173,8 +172,8 @@ const membersReducer = (state = initialState, action) => {
         ...state,
         members: {
           ...state.members,
-          [payload.memberId]: {
-            ...state.members[payload.memberId],
+          [payload.applicantId]: {
+            ...state.members[payload.applicantId],
             didReport: true,
           },
         },
@@ -186,8 +185,8 @@ const membersReducer = (state = initialState, action) => {
         ...state,
         members: {
           ...state.members,
-          [payload.memberId]: {
-            ...state.members[payload.memberId],
+          [payload.applicantId]: {
+            ...state.members[payload.applicantId],
             reportsCount: 0,
           },
         },

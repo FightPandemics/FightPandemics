@@ -930,7 +930,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   useEffect(() => {
     refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
     refetchMembers(); // will trigger loadMembers(if needed) (by toggling toggleRefetchApplicants)
-    refetchPosts();
+
   }, [activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -1181,7 +1181,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 </FeedWrapper>
               </div>
             </ProfileTabPane>
-            {/* {
+            {
 
               <ProfileTabPane tab={t("profile.views.members")} key="members">
                 {isLoadingApplicants ?
@@ -1252,7 +1252,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                     )
                   }
                 </ProfileTabPane>
-              ) : null} */}
+              ) : null}
             {
               isSelf || permissions.isAdmin || isOwner ?
                 (<ProfileTabPane tab={t("profile.views.positions")} key="positions">

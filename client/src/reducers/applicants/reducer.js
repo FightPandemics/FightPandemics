@@ -6,10 +6,9 @@ const initialState = {
   applicants: [],
   page: 0,
   error: null,
-  isLoadingApplicants: false,
-  loadMoreApplicants: true,
+  isLoading: false,
+  loadMore: true,
   isCachedStale: false,
-  profilePosts: {},
 };
 
 export const getProfileObjectiveProp = (view) => {
@@ -33,10 +32,14 @@ export const getProfileModeProp = (mode) => {
 
 const applicantsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case APPLICANTS_ACTIONS.RESET_APPLICANTS:
+      return {
+        state
+      };
     case APPLICANTS_ACTIONS.FETCH_APPLICANTS_BEGIN:
       return {
         ...state,
-        isLoadingApplicants: true,
+        isLoading: true,
       };
     case APPLICANTS_ACTIONS.FETCH_APPLICANTS_SUCCESS: {
       const { payload } = action;
@@ -44,7 +47,7 @@ const applicantsReducer = (state = initialState, action) => {
         ...state,
         error: null,
         applicants: payload,
-        isLoadingApplicants: false,
+        isLoading: false,
       };
     }
 
@@ -65,7 +68,7 @@ const applicantsReducer = (state = initialState, action) => {
             },
           },
         },
-        isLoadingApplicants: false,
+        isLoading: false,
       };
     }
     case APPLICANTS_ACTIONS.UPDATE_PROFILE_APPLICANT_SUCCESS: {
@@ -143,7 +146,7 @@ const applicantsReducer = (state = initialState, action) => {
         ...state,
         error: payload,
         applicants: [],
-        isLoadingApplicants: false,
+        isLoading: false,
       };
     }
     case APPLICANTS_ACTIONS.NEXT_PAGE:
@@ -157,15 +160,15 @@ const applicantsReducer = (state = initialState, action) => {
         ...state,
         page: 0,
         applicants: [],
-        loadMoreApplicants: payload.loadMoreApplicants,
-        isLoadingApplicants: payload.isLoadingApplicants,
+        loadMore: payload.loadMore,
+        isLoading: payload.isLoading,
       };
     }
     case APPLICANTS_ACTIONS.FINISH_LOADING:
       return {
         ...state,
-        isLoadingApplicants: false,
-        loadMoreApplicants: false,
+        isLoading: false,
+        loadMore: false,
       };
     case APPLICANTS_ACTIONS.SET_REPORTED: {
       const { payload } = action;

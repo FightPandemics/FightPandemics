@@ -1,6 +1,6 @@
 import Loader from "components/Feed/StyledLoader";
 import Applicant from "components/OrganisationProfile/ApplicantOrMember";
-import ProfileListItem from "components/OrganisationProfile/ProfileListItem";
+import ProfileListItem2 from "components/OrganisationProfile/ProfileListItem2";
 import { mq } from "constants/theme";
 import React, { useCallback, useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -139,7 +139,7 @@ const ProfileList = ({
       } else if (items[index]) {
         content = (
           <>
-            <ProfileListItem
+            <ProfileListItem2
               item={items[index][1]}
               applicantsList={applicantsList}
               membersList={membersList}
@@ -218,7 +218,7 @@ const ProfileList = ({
                       width={width}
                       // height={500}
                       // width={500}
-                      isScrolling={isScrolling}
+                      // isScrolling={isScrolling}
                       onRowsRendered={onRowsRendered}
                       // rowCount={
                       //   windowWidth > 767 ? itemCount : seeAll ? itemCount : 3
@@ -229,8 +229,8 @@ const ProfileList = ({
                       // rowCount={
                       //   20
                       // }
-                      // rowHeight={cellMeasurerCache.getHeight()}
-                      rowHeight={cellMeasurerCache.rowHeight}
+                      rowHeight={cellMeasurerCache.getHeight()}
+                      // rowHeight={cellMeasurerCache.rowHeight}
                       deferredMeasurementCache={cellMeasurerCache}
                       rowRenderer={profileItem}
                       scrollTop={scrollTop}

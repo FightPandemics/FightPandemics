@@ -8,6 +8,7 @@ export const APPLICANTS_ACTIONS = {
   NEXT_PAGE: "NEXT_PAGE",
   SET_PAGE: "SET_PAGE",
   RESET_PAGE: "RESET_PAGE",
+  RESET_APPLICANTS: "RESET_APPLICANTS",
   SET_LOADING: "SET_LOADING",
   SET_REPORTED: "SET_REPORTED",
   SHOW_ANYWAY: "SHOW_ANYWAY",
@@ -19,6 +20,10 @@ export const resetPageAction = ({ isLoading = false, loadMore = true }) => ({
     isLoading,
     loadMore,
   },
+});
+
+export const resetApplicants = () => ({
+  type: APPLICANTS_ACTIONS.RESET_APPLICANTS,
 });
 
 export const fetchApplicantsBegin = () => ({
@@ -63,9 +68,9 @@ export const setPageAction = (page) => ({
   payload: { page },
 });
 
-export const setLoadingAction = ({ isLoading, loadMoreApplicants }) => ({
+export const setLoadingAction = ({ isLoading, loadMore }) => ({
   type: APPLICANTS_ACTIONS.SET_LOADING,
-  payload: { isLoading, loadMoreApplicants },
+  payload: { isLoading, loadMore },
 });
 
 export const setReported = ({ applicantId }) => ({
@@ -79,6 +84,7 @@ export const showAnyway = ({ applicantId }) => ({
 });
 
 export const applicantsActions = {
+  resetApplicants,
   resetPageAction,
   fetchApplicantsBegin,
   fetchApplicantsSuccess,

@@ -144,7 +144,7 @@ const Activity = ({
             >
               {({ onRowsRendered }) => (
                 <AutoSizer disableHeight>
-                  {({ width }) => (
+                  {({ width }) => ( 
                     <List
                       autoHeight
                       height={height}
