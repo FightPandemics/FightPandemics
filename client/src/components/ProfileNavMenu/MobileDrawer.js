@@ -61,12 +61,18 @@ const JoinOrgWrapper = styled.div`
     height: 15%;
     display: flex;
     align-items: center;
-    padding-left: 2.1rem;
+    justify-content: space-between;
+    padding: 0 2.1rem;
     border-top: 1px solid rgba(215, 215, 215, 0.3);
     color: ${colors.royalBlue};
 `;
 
-const AddOrganizationBtn = styled.button`
+const RightSideWrapper = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const RoundedButton = styled.button`
     border: none;
     border-radius: 50%;
     font-size: 3.424rem;
@@ -89,11 +95,6 @@ const DrawerComponent = ({navIsOpened, setNavIsOpened}) => {
     let organisations = ["Cards for Humanity", "Doing Good", "Hearts for LA",
      "Fight it Peters", "Helping Hands", "FightPandemics"]; 
 
-     function handleClick(orgName){
-        setNavIsOpened(true);
-        setDrawerIsClosed(true);
-     }
-
     return (
         <Drawer drawerIsClosed = {drawerIsClosed}>
             <DrawerTitleWrapper>
@@ -103,7 +104,10 @@ const DrawerComponent = ({navIsOpened, setNavIsOpened}) => {
                 {
                 organisations.map((orgName, idx) => {
                     return (
-                        <OrgCard onClick = {() => handleClick(orgName)}>
+                        <OrgCard onClick = {() => {
+                            setNavIsOpened(true);
+                            setDrawerIsClosed(true);
+                        }}>
                             <OrgImage 
                             key= {idx}
                             src ="https://data.whicdn.com/images/22345458/original.jpg" 
@@ -115,8 +119,11 @@ const DrawerComponent = ({navIsOpened, setNavIsOpened}) => {
             }
             </OrgsWrapper>
             <JoinOrgWrapper>
-                <AddOrganizationBtn><span>+</span></AddOrganizationBtn>
-                <JoinOrgLink to="/about-us">Join an organization</JoinOrgLink>
+                <RightSideWrapper>
+                    <RoundedButton><span>+</span></RoundedButton>
+                    <JoinOrgLink to="/about-us">Join an organization</JoinOrgLink>
+                </RightSideWrapper>
+                <RoundedButton onClick={ () =>  setDrawerIsClosed(true)}><span>&times;</span></RoundedButton>
             </JoinOrgWrapper>
         </Drawer>
     );
