@@ -10,8 +10,8 @@ const leftContainerWidth = "9.5rem";
 const Arrow = () => {
     return (
         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path className="path1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path className="path2" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path className="path1" stroke= {colors.royalBlue} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path className="path2" stroke= {colors.royalBlue} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     );
 }
@@ -54,7 +54,7 @@ const ArrowWrapper = styled.div`
     }
 `;
 
-const AddOrganizationBtn = styled.button`
+const RoundedButton = styled.button`
     border: none;
     border-radius: 50%;
     font-size: 3.424rem;
@@ -62,9 +62,16 @@ const AddOrganizationBtn = styled.button`
     background-color: transparent;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    color: ${colors.royalBlue};
 
     &:hover {
         background-color: #B8C2F8;
+    }
+`;
+
+const CloseNavButtomMobile = styled(RoundedButton)`
+    @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+        display: none;
     }
 `;
 
@@ -154,6 +161,10 @@ const OrgAccessLevelTitle = styled.h2`
         position: initial;
         display: ${props => props.id === "Org Work Space" ? "none" : "initial"}
       }
+`;
+
+const NavSection = styled.nav`
+    margin-bottom: 2.3rem;
 `;
 
 const NavLink = styled(Link)`
@@ -252,7 +263,7 @@ const ProfileNavMenu = ({navIsOpened, setNavIsOpened}) => {
                     );
                 })
             }
-             <AddOrganizationBtn type="button"><span>+</span></AddOrganizationBtn>
+             <RoundedButton type="button"><span>+</span></RoundedButton>
         </LeftContainer>
         <OrganizationMobileHeader>
             <OrganizationMobileHeaderTop>
@@ -270,6 +281,7 @@ const ProfileNavMenu = ({navIsOpened, setNavIsOpened}) => {
             ? organisations[organizationId] 
             : organisations[organizationId].slice(0, 12) + "..."}</OrgTitle>
             {renderNavSections()}
+            <CloseNavButtomMobile onClick = {()=> setNavIsOpened(false)}><span>&times;</span></CloseNavButtomMobile>
             <Footer>
                 <NavLink>Account</NavLink>
                 <NavLink>Profile</NavLink>
@@ -292,9 +304,6 @@ function renderNavSections() {
     const navSections = [];
     for (let title in orgAccessLevels){
         const links = orgAccessLevels[title];
-        const NavSection = styled.nav`
-        margin-bottom: 2.3rem;
-        `;
         
         const navSectionComponent = 
         <NavSection key = {title}>
