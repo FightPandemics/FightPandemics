@@ -533,7 +533,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   useEffect(() => {
     setSwitchOnOff(isJoinOrg);
     setPosDescription(description);
-  }, [description, isJoinOrg, organisation, setSwitchOnOff]);
+  }, [organisation, setSwitchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const initialDescription = {
     description: "",
@@ -645,7 +645,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   useEffect(() => {
     loadPermissions(actorId);
     // notApplied(memberstatus)
-  }, [actorId, activeTab, tab, loadPermissions]);
+  }, [actorId, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleIsJoinOrg = async (e) => {
     if (typeof switchOnOff !== undefined) {
