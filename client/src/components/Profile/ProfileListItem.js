@@ -36,7 +36,7 @@ export const ProfileContainer = styled.div`
   align-items: center;
   margin: 0.5rem 0;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
-  padding: 0 1rem;
+  // padding: 0 1rem;
   width: 100%;
   height: 6rem;
   background: ${theme.colors.white};
@@ -95,11 +95,17 @@ export const ProfilePic = styled.div`
 `;
 
 export const OrgTextAvatar = styled(TextAvatar)`
-  height: 6rem;
-  line-height: 6rem;
-  width: 6rem;
-  font-size: 2.5rem;
+  height: 4rem;
+  line-height: 4rem;
+  width: 4rem;
+  font-size: 2rem;
   margin-right: 0rem;
+  @media screen and (min-width: ${mq.phone.wide.maxWidth}) {
+    height: 6rem;
+    line-height: 6rem;
+    width: 6rem;
+    font-size: 2.5rem;
+  }
 `;
 
 export const TextContainer = styled.div`
@@ -152,8 +158,8 @@ const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
   if (type == "orgs") {
     list = "organization";
   }
-  console.log(item);
-  console.log(item["organization"]["id"]);
+  // console.log(item);
+  // console.log(item["organization"]["id"]);
   // console.log(orgItem[1].name);
   let orgName;
   let orgPic;
@@ -163,7 +169,7 @@ const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
       orgItem[1].photo ? (orgPic = orgItem[1].photo) : (orgPic = "");
     }
   });
-  console.log(orgName);
+  // console.log(orgName);
 
   return (
     <AllItems className={type == "orgs" ? "organisation-card" : null}>

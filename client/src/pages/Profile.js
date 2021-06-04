@@ -710,11 +710,13 @@ const Profile = ({
   const loadApplicants = async () => {
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
-    const getApplicantsBaseURL = (organisationId, limit, skip) => {
+    const getApplicantsBaseURL = (userId, limit, skip) => {
+      // console.log(organisationId);
+      console.log(userId);
       // return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
       return `api/applicants?userId=${userId}&status=member&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
-    let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
+    let baseURL = getApplicantsBaseURL(userId, limit, skip);
     let endpoint = baseURL;
     dispatch(applicantsActions.fetchApplicantsBegin());
 
@@ -798,14 +800,14 @@ const Profile = ({
     try {
       // TODO - CONFIGURE API ONCE BE IS DONE
       const { data: organisations } = await axios.get(endpoint);
-      console.log(organisations);
+      // console.log(organisations);
       setOrganisations(organisations);
       const listOrgs = organisations.reduce((objOrg, itemOrg) => {
         objOrg[itemOrg._id] = itemOrg;
         return objOrg;
       }, {});
       setOrganisations(listOrgs);
-      console.log(listOrgs);
+      // console.log(listOrgs);
     } catch (error) {
       console.log({
         error,

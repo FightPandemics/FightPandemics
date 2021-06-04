@@ -75,9 +75,9 @@ const ProfileList = ({
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
-  console.log(items);
+  // console.log(items);
   listOrgs = Object.entries(listOrgs);
-  console.log(listOrgs);
+  // console.log(listOrgs);
   // const updateItems = items;
   // const addOrgName = (updateItems, listOrgs, updateItems) => {
   //   lengthItems = updateItems.length();
@@ -150,6 +150,7 @@ const ProfileList = ({
                 <AutoSizer disableHeight className="autosizer">
                   {({ width }) => (
                     <List
+                      // style={{ height: "200px" }}
                       autoHeight
                       height={height}
                       width={width}
