@@ -194,7 +194,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const locationLink = useLocation(false);
   useEffect(() => {
     setTab(locationLink?.state?.tab);
-  }, [locationLink.state.tab]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
@@ -1103,15 +1103,15 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       ) : (
                         <Label
                           onClick={() => {
-                            if (newPosDescription.length == 0) {
-                              return;
-                            }
                             if (inputRef.current) {
                               setDisplayText(inputRef.current.value);
                               setTextCount(inputRef.current.value.length);
                             }
-                            setIsEditable((s) => !s);
-                            setDone(true);
+                            if (newPosDescription.length > 0) {
+                              setIsEditable((s) => !s);
+                              setDone(true);
+                              // return;
+                            }
                           }}
                         >
                           Done
