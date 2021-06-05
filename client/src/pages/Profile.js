@@ -230,6 +230,7 @@ const Profile = ({
 
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
+  // console.log(userId);
 
   let filteredPost = [];
 
@@ -385,9 +386,20 @@ const Profile = ({
         }
 
         dispatch(postsActions.fetchPostsBegin());
-
+        // console.log(userId);
         try {
           if (userId) {
+            // console.log(
+            //   "userId" +
+            //     userId +
+            //     ", limit" +
+            //     limit +
+            //     ", skip" +
+            //     skip +
+            //     ", getActorQuery()" +
+            //     getActorQuery(),
+            // );
+            // console.log(getActorQuery);
             let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
             const view = getView();
 
@@ -403,7 +415,7 @@ const Profile = ({
               data: { data: posts, meta },
             } = await axios.get(endpoint);
 
-            console.log({ posts: posts });
+            // console.log({ posts: posts });
             console.log({ error: postsError });
 
             if (!_isMounted) {
@@ -471,7 +483,7 @@ const Profile = ({
             console.log(`request cancelled:${error.message}`);
           } else {
             console.log("Error:" + error.message);
-            console.log({ fetchPostError: posts });
+            // console.log({ fetchPostError: posts });
           }
         }
       };
@@ -706,23 +718,29 @@ const Profile = ({
       }
     }
   };
-
+  // console.log(userId);
   const loadApplicants = async () => {
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
-    const getApplicantsBaseURL = (organisationId, limit, skip) => {
+    const getApplicantsBaseURL = (userId, limit, skip) => {
+      // console.log(organisationId);
+      // console.log(userId);
       // return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
-      return `api/applicants?userId=${userId}&status=member&includeMeta=true&limit=${limit}&skip=${skip}`;
+      return `/api/applicants?userId=${userId}&status=member&includeMeta=true&limit=${limit}&skip=${skip}`;
+      // return `/api/applicants?userId=${userId}&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
-    let baseURL = getApplicantsBaseURL(organisationId, limit, skip);
+    let baseURL = getApplicantsBaseURL(userId, limit, skip);
     let endpoint = baseURL;
     dispatch(applicantsActions.fetchApplicantsBegin());
-
+    // console.log("userId" + userId + ", limit" + limit + ", skip" + skip);
+    // console.log("endpoint: " + endpoint);
     try {
       // TODO - CONFIGURE API ONCE BE IS DONE
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
+      // console.log("applicants: " + applicants);
+      // console.log("meta: " + meta);
 
       // TEST DATA
       // const applicants = MemberOrgs;
@@ -798,14 +816,14 @@ const Profile = ({
     try {
       // TODO - CONFIGURE API ONCE BE IS DONE
       const { data: organisations } = await axios.get(endpoint);
-      console.log(organisations);
+      // console.log(organisations);
       setOrganisations(organisations);
       const listOrgs = organisations.reduce((objOrg, itemOrg) => {
         objOrg[itemOrg._id] = itemOrg;
         return objOrg;
       }, {});
       setOrganisations(listOrgs);
-      console.log(listOrgs);
+      // console.log(listOrgs);
     } catch (error) {
       console.log({
         error,
@@ -820,11 +838,14 @@ const Profile = ({
   // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    loadApplicants();
-  }, [toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (userId) {
+      loadApplicants();
+    }
+  }, [userId, toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadOrganisations();
+    // loadApplicants();
   }, []);
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
