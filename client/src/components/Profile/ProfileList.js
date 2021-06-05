@@ -159,8 +159,9 @@ const ProfileList = ({
                       rowCount={
                         windowWidth > 767 ? itemCount : seeAll ? itemCount : 3
                       }
-                      rowHeight={cellMeasurerCache.getHeight()}
-                      rowHeight={cellMeasurerCache.rowHeight}
+                      // rowHeight={cellMeasurerCache.getHeight()}
+                      // rowHeight={cellMeasurerCache.rowHeight}
+                      rowHeight={windowWidth > 767 ? 100 : 67}
                       deferredMeasurementCache={cellMeasurerCache}
                       rowRenderer={applicantItem}
                       scrollTop={scrollTop}
