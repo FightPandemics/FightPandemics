@@ -137,7 +137,7 @@ import {
   StyledPostButton,
   StyledPositionModal,
   StyledConfirmModal,
-  ConfirmButton
+  ConfirmButton,
 } from "../components/Positions/JoinPositionStyles";
 import { PostPositionButton } from "../components/EditProfile/EditComponents";
 import TextInput from "../components/Input/PositionInput";
@@ -149,6 +149,10 @@ import {
   Applicants,
   Meta
 } from "utils/TestMembersList";
+
+const Error = styled.span`
+  color: red;
+`;
 
 const { TextArea } = Input;
 const URLS = {
@@ -178,6 +182,7 @@ const getOrgBookLink = (orgBookLink) =>
     : window.location.pathname + `/${orgBookLink}`;
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
+
 const OrganisationProfile = ({ isAuthenticated }) => {
   const [activeTab, setActiveTab] = useState("applicants");
 
@@ -189,7 +194,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const locationLink = useLocation(false);
   useEffect(() => {
     setTab(locationLink?.state?.tab);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
@@ -226,7 +231,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     verified,
     orgBookLink,
     isJoinOrg,
-    positions: { description } = { position: { description: "" } }
+    positions: { description } = { position: { description: "" } },
   } = organisation || {};
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
@@ -528,10 +533,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   useEffect(() => {
     setSwitchOnOff(isJoinOrg);
     setPosDescription(description);
-  }, [organisation, setSwitchOnOff]);
+  }, [organisation, setSwitchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const initialDescription = {
-    description: ""
+    description: "",
   };
   const [newPosDescription, setPosDescription] = useState(description);
   const [descriptionLoaded, setDescriptionLoaded] = useState(false);
@@ -639,7 +644,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   useEffect(() => {
     loadPermissions(actorId);
     // notApplied(memberstatus)
-  }, [actorId, activeTab, tab]);
+  }, [actorId, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleIsJoinOrg = async (e) => {
     if (typeof switchOnOff !== undefined) {
@@ -653,7 +658,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const sendIsJoinOrg = async (joinorg) => {
     try {
       const res = await axios.patch(`/api/organisations/${organisationId}`, {
-        isJoinOrg: joinorg
+        isJoinOrg: joinorg,
       });
     } catch (err) {
       return error;
@@ -663,7 +668,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const sendPositionDescription = async (joinorg) => {
     try {
       const res = await axios.patch(`/api/organisations/${organisationId}`, {
-        positions: { description: newPosDescription }
+        positions: { description: newPosDescription },
       });
     } catch (err) {
       return error;
@@ -919,7 +924,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                     ? `/organisation/${organisationId}/positions`
                     : {
                         pathname: LOGIN,
-                        state: { from: window.location.pathname }
+                        state: { from: window.location.pathname },
                       }
                 }
               >
@@ -1101,8 +1106,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                               setDisplayText(inputRef.current.value);
                               setTextCount(inputRef.current.value.length);
                             }
-                            setIsEditable((s) => !s);
-                            setDone(true);
+                            if (newPosDescription.length > 0) {
+                              setIsEditable((s) => !s);
+                              setDone(true);
+                              // return;
+                            }
                           }}
                         >
                           Done
@@ -1120,6 +1128,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       />
                     ) : (
                       newPosDescription
+                    )}
+                    {newPosDescription?.length === 0 && (
+                      <Error>Please enter description.</Error>
                     )}
                   </DescContainer>
                 </Row>
@@ -1151,7 +1162,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       onClick={handleOk}
                     >
                       {t("position.post")}
-                    </StyledPostButton>
+                    </StyledPostButton>,
+                    
                   ]}
                 >
                   <p>{t("position.content")}</p>
@@ -1167,7 +1179,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                       onClick={() => setConfirmModalVisible(false)}
                     >
                       {t("position.Okay")}
-                    </ConfirmButton>
+                    </ConfirmButton>,
                   ]}
                 >
                   <p>{t("position.confirmTitle")}</p>
