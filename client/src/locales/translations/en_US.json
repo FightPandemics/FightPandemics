@@ -1116,6 +1116,8 @@
     "submitModalDescription": "Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.",
     "submitButton": "Submit",
     "submitModal": "SUBMIT",
+    "acceptModal": "ACCEPT",
+    "rejectModal": "REJECT",
     "submitModalCancel": "CANCEL",
     "cancelModal": "Cancel",
     "cancelModalExit": "Exit",
