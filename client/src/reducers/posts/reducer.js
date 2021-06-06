@@ -154,7 +154,7 @@ const postsReducer = (state = initialState, action) => {
       const { payload } = action;
       return {
         ...state,
-        page: 1,
+        page: 0,
         posts: [],
         loadMore: payload.loadMore,
         isLoading: payload.isLoading,

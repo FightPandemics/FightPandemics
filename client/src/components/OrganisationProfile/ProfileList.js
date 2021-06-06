@@ -27,6 +27,10 @@ const ListContainer = styled.div`
   overflow: hidden;
   margin-top: 0.3rem;
   box-shadow: 0 0 20px 0 ${colors.shadowBlack};
+  .ant-list-empty-text {
+     display: none;
+  }
+
 `;
 
 const HorizontalRule = styled.hr`
@@ -78,7 +82,10 @@ const ItemContainer = styled.div`
 .ant-list-item a{
   width: 100%;
 }
+
 `;
+
+
 
 const ProfileList = ({
   filteredApplicants,
@@ -99,6 +106,7 @@ const ProfileList = ({
   isVolunteer,
   activeTab,
   emptyFeed,
+  listInitialized
 }) => {
   // const applicants = Object.entries(filteredApplicants);
   // console.log(JSON.stringify(filteredApplicants))
@@ -343,44 +351,50 @@ const ProfileList = ({
   //   </ListContainer >
   // );
   return (
+
     <>
+      {
 
-      <AntList
-        loading={isNextPageLoading}
-        itemLayout="horizontal"
-        loadMore={
-          items.length >= totalCount ? null :
-            <LoadMoreButton onClick={loadNextPage}>
-              {/* <Link onClick={loadNextPage}>Load More</Link> */}
-                Load More
-              </LoadMoreButton>
-        }
-        dataSource={items}
-        renderItem={item => (
-          <ItemContainer>
-            <AntList.Item
-            >
-              <ProfileListItem
-                // item={items[index][1]}
-                // item={items}
-                style={{ width: "100%", display: "flex" }}
-                item={item[1]}
-                applicantsList={applicantsList}
-                membersList={membersList}
-                orgList={orgsList}
-                organizationId={organisationId}
-                isOwner={isOwner}
-                isMember={isMember}
-                isAdmin={isAdmin}
-                isWiki={isWiki}
-                isVolunteer={isVolunteer}
-                activeTab={activeTab}
-              />
-            </AntList.Item>
-          </ItemContainer>
-        )}
-      />
-
+        <ListContainer>
+          <AntList
+            // loading={isNextPageLoading}
+            itemLayout="horizontal"
+            loadMore={
+              items.length >= totalCount ? null :
+                <LoadMoreButton onClick={loadNextPage}>
+                  {/* <Link onClick={loadNextPage}>Load More</Link> */}
+                  Load More
+                </LoadMoreButton>
+            }
+            dataSource={items}
+            renderItem={item => (
+              <ItemContainer>
+                {!listInitialized ?
+                  <Loader /> :
+                  <AntList.Item
+                  >
+                    <ProfileListItem
+                      // item={items[index][1]}
+                      // item={items}
+                      style={{ width: "100%", display: "flex" }}
+                      item={item[1]}
+                      applicantsList={applicantsList}
+                      membersList={membersList}
+                      orgList={orgsList}
+                      organizationId={organisationId}
+                      isOwner={isOwner}
+                      isMember={isMember}
+                      isAdmin={isAdmin}
+                      isWiki={isWiki}
+                      isVolunteer={isVolunteer}
+                      activeTab={activeTab}
+                    />
+                  </AntList.Item>}
+              </ItemContainer>
+            )}
+          />
+        </ListContainer>
+      }
     </>
   )
 };
