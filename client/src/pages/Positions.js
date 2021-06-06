@@ -2,23 +2,23 @@ import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
 import ApplyButton, {
-  ApplyButtonContainer,
+  ApplyButtonContainer
 } from "components/Positions/PositionsButton";
 import ProfilePic from "components/Picture/ProfilePic";
 import {
   OrganisationContext,
-  withOrganisationContext,
+  withOrganisationContext
 } from "context/OrganisationContext";
 import { UserContext, withUserContext } from "context/UserContext";
 import {
   fetchOrganisation,
   fetchOrganisationError,
-  fetchOrganisationSuccess,
+  fetchOrganisationSuccess
 } from "hooks/actions/organisationActions";
 import {
   fetchUser,
   fetchUserError,
-  fetchUserSuccess,
+  fetchUserSuccess
 } from "hooks/actions/userActions";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,7 +29,7 @@ import ErrorAlert from "../components/Alert/ErrorAlert";
 import {
   PositionDescription,
   PositionsContainer,
-  PositionTitle,
+  PositionTitle
 } from "../components/Profile/PositionsComponents";
 import {
   AvatarPhotoContainer,
@@ -39,7 +39,7 @@ import {
   ProfileBackgroup,
   ProfileLayout,
   UserInfoContainer,
-  UserInfoDesktop,
+  UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 import isEqual from "lodash/isEqual";
 
@@ -47,7 +47,7 @@ const Positions = () => {
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 2];
   const { orgProfileState, orgProfileDispatch } = useContext(
-    OrganisationContext,
+    OrganisationContext
   );
   const { error, loading, organisation } = orgProfileState;
   const { userProfileDispatch } = useContext(UserContext);
@@ -65,12 +65,12 @@ const Positions = () => {
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
           `error.${message}`,
-          `error.http.${message}`,
+          `error.http.${message}`
         ]);
         orgProfileDispatch(
           fetchOrganisationError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
-          ),
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
+          )
         );
       }
     })();
@@ -83,12 +83,12 @@ const Positions = () => {
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
           `error.${message}`,
-          `error.http.${message}`,
+          `error.http.${message}`
         ]);
         userProfileDispatch(
           fetchUserError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
-          ),
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
+          )
         );
       }
     })();
@@ -144,17 +144,7 @@ const Positions = () => {
           <PositionsContainer>
             <PositionTitle>Volunteer Position</PositionTitle>
             <PositionDescription>
-              <p>
-                We are now accepting volunteers who are as excited as us about
-                our cause.
-                <br />
-                <br />
-                Feel free to submit your application and we will get back to you
-                as soon as possible.
-                <br />
-                <br />
-                Happy volunteering!
-              </p>
+              {organisation.positions.description}
             </PositionDescription>
             {
               //Button will connect applications page
