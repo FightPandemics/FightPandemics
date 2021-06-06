@@ -301,9 +301,36 @@ async function routes(app) {
       const [err, applicant] = await app.to(new Applicant(applicantProps).save());
 
       if (err) {
-        req.log.error(err, "Failed creating applicant.");
+        req.log.error(err, "Failed creating applicant organisation.");
         throw app.httpErrors.internalServerError();
       }
+
+      const organizationId = applicant.organization.id;
+
+      const [errOrg, organisation] = await app.to(Organization.findById(organizationId));
+
+      if (errOrg) {
+        req.log.error(errOrg, "Failed to find organisation with id=" + organizationId + " applied by applicant.");
+        throw app.httpErrors.internalServerError();
+      }
+
+      const receiverId = organisation.ownerId;
+      const triggeredById = applicant.applicant.id;
+
+      const [errUser, owner] = await app.to(User.findById(receiverId));
+
+      if (errUser) {
+        req.log.error(errUser, "Failed to find user with id=" + receiverId);
+        throw app.httpErrors.internalServerError();
+      }
+
+      if (owner.notifyPrefs.instant.newapplicant === true) {
+        app.notifier.notifyNewApplicant("newapplicant", organisation, triggeredById, receiverId);
+      } else {
+        console.log("Notification Preference for new applicant is turned off");
+      }
+
+      app.notifier.notifyNewApplicant("applicationSubmitted", organisation, triggeredById, triggeredById);
 
       reply.code(201);
       return {

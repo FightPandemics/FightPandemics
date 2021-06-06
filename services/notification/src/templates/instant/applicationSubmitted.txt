@@ -1,0 +1,1 @@
+Your application for {{organisation.name}} has been submitted
