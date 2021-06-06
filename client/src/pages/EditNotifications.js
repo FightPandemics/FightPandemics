@@ -41,11 +41,12 @@ function EditNotifications(props) {
   const { firstName, lastName, usesPassword = false } = user || {};
   const { t } = useTranslation();
   const disabledPrefs = {
-    instant: { message: false, like: false, comment: false, share: false },
+    instant: { message: false, like: false, comment: false, share: false,newapplicant: false},
     digest: { daily: false, weekly: false, biweekly: false },
   };
   const [currPrefs, setCurrPrefs] = useState({ ...disabledPrefs });
   const [switchOnOff, setSwitchOnOff] = useState(true);
+  const [isCurrOwner, setCurrOwner] = useState(false);
 
   const onSubmit = async (formData) => {
     userProfileDispatch(updateUser());
@@ -74,6 +75,18 @@ function EditNotifications(props) {
       try {
         const res = await axios.get("/api/users/current");
         let { _id, ...prefs } = res.data.notifyPrefs;
+        //console.log("the res data is " + JSON.stringify(res) );
+        let isOwner = false;
+        if (res) {
+          if (res.data) {
+            if (res.data.organisations) {
+              if(res.data.organisations.length){
+                isOwner = true;
+              }
+            }
+          }
+        }  
+
         if (isEqual(prefs, disabledPrefs)) {
           setSwitchOnOff(false); // update switch button
           const preNotifyPrefsString = localStorage.getItem("notifyPrefs");
@@ -81,6 +94,7 @@ function EditNotifications(props) {
             Object.assign(prefs, JSON.parse(preNotifyPrefsString));
           }
         }
+        setCurrOwner(isOwner);
         setCurrPrefs({ ...currPrefs, ...prefs });
         setValue("notifyPrefs", { ...prefs }); // update chexkboxes
         userProfileDispatch(fetchUserSuccess(res.data));
@@ -140,6 +154,7 @@ function EditNotifications(props) {
               currPrefs={currPrefs}
               switchOnOff={switchOnOff}
               setSwitchOnOff={setSwitchOnOff}
+              isOwner={isCurrOwner}
             />
             {/* Button that saves changes */}
             <CustomSubmitButton

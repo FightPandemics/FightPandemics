@@ -1056,7 +1056,9 @@
     "commented": "<0>{{username}}</0> commented on your post <1>{{postTitle}}</1>",
     "shared": "<0>{{username}}</0> shared your post <1>{{postTitle}}</1> on <1>{{shareMedium}}</1>",
     "empty": "No more notifications",
-    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed"
+    "reported": "Your post <1>{{postTitle}}</1> violates our content policy and hence it was removed",
+    "newapplicant": "<0>{{username}}</0> applied to your organisation <1>{{organisationname}}</1>",
+    "applicationSubmitted": "Your application for <1>{{organisationname}}</1> has been submitted"
   },
   "moderation": {
     "report": "Report",
@@ -1116,6 +1118,8 @@
     "submitModalDescription": "Once confirmed, this action cannot be undone. Your application will be forwarded to the organization.",
     "submitButton": "Submit",
     "submitModal": "SUBMIT",
+    "acceptModal": "ACCEPT",
+    "rejectModal": "REJECT",
     "submitModalCancel": "CANCEL",
     "cancelModal": "Cancel",
     "cancelModalExit": "Exit",
@@ -1157,6 +1161,9 @@
     "forDirAndMore": "For directions and more info",
     "localEmergencyNumber": "Local emergency number",
     "forMoreResults": "Show more search results..."
+  },
+  "newapplicant":{
+    "newapplicant_singular": "New Applicant"
   },
   "position": {
     "title": "Post Position",

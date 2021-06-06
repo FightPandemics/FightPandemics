@@ -174,7 +174,7 @@ const PositionApplicationForm = ({
     const payload = formToApplicationMappings(formData);
 
     try {
-      await axios.post("/api/applicants", payload);
+      await axios.post("/api/applicants", payload);    
     } catch (error) {
       console.log(error);
     }

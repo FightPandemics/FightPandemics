@@ -226,6 +226,7 @@ const MenuItem = ({
   t,
   gtmId,
   verified,
+  organisationname,
 }) => {
   const { clearNotification: clearRemoteNotification } = useContext(
     WebSocketContext,
@@ -253,6 +254,7 @@ const MenuItem = ({
               username: author,
               postTitle,
               shareMedium: sharedVia,
+              organisationname: organisationname,
             }}
           ></Trans>
         </div>
@@ -326,6 +328,7 @@ const menu = (notifications, clearAllNotifications, organisationId, t) => {
               t={t}
               gtmId={each.gtmId}
               verified={each.verified}
+              organisationname={each.organisationname}
             />
           ))}
         </div>
@@ -377,6 +380,16 @@ export const NotificationDropDown = ({
       icon: reportedpost,
       gtmId: GTM.notifications.prefix + GTM.notifications.report,
     },
+    newapplicant: {
+      text: "notifications.newapplicant",
+      icon: cmntflwpost,
+      gtmId: GTM.notifications.prefix + GTM.notifications.newapplicant,
+    },
+    applicationSubmitted:{
+      text: "notifications.applicationSubmitted",
+      icon: cmntflwpost,
+      gtmId: GTM.notifications.prefix + GTM.notifications.applicationSubmitted,
+    },
   };
 
   const mappedNotifications = notifications
@@ -387,13 +400,14 @@ export const NotificationDropDown = ({
       verified: n.triggeredBy.verified,
       action: notificationTypes[n.action]?.text,
       postTitle: n.post.title,
-      path: `/post/${n.post.id}`,
+      path: n.post.id?`/post/${n.post.id}`:'',
       actionAvatar: notificationTypes[n.action]?.icon,
       createdAt: getRelativeTime(n.createdAt),
       avatar: n.triggeredBy.photo,
       sharedVia: n.sharedVia,
       unread: !n.readAt,
       gtmId: notificationTypes[n.action]?.gtmId,
+      organisationname : n.organisation?.name,
     }));
 
   return (
