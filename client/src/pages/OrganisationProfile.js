@@ -1305,7 +1305,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           >
             <ProfileTabPane tab={t("profile.views.activity")} key="activity">
               <div>
-                <div>postsList: {postsList.length} totalPostCount:{totalPostCount} </div>
                 <SectionHeader>
                   {/* {t("profile.org.activity")} */}
                   <PlaceholderIcon />
@@ -1472,99 +1471,99 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                         {t("position.volunteerposition")} *
 
                       {!isEditable ? (
-                        <PositionEditIcon
-                          src={edit}
-                          onClick={() => {
-                            if (!checksEnabled) return;
-                            if (inputRef.current) {
-                              setDisplayText(inputRef.current.value);
-                            }
-                            setIsEditable((s) => !s);
-                            setDone(false);
-                          }}
+                          <PositionEditIcon
+                            src={edit}
+                            onClick={() => {
+                              if (!checksEnabled) return;
+                              if (inputRef.current) {
+                                setDisplayText(inputRef.current.value);
+                              }
+                              setIsEditable((s) => !s);
+                              setDone(false);
+                            }}
+                          />
+                        ) : (
+                          <Label
+                            onClick={() => {
+                              if (inputRef.current) {
+                                setDisplayText(inputRef.current.value);
+                                setTextCount(inputRef.current.value.length);
+                              }
+                              setIsEditable((s) => !s);
+                              setDone(true);
+                            }}
+                          >
+                            Done
+                          </Label>
+                        )}
+                      </HeaderTitle>
+                      {isEditable ? (
+                        <DescriptionInput
+                          id="description"
+                          name="description"
+                          key="description"
+                          ref={posRef}
+                          value={newPosDescription}
+                          maxLength="500"
+                          onChange={(e) => handleDescription(e)}
                         />
                       ) : (
-                        <Label
-                          onClick={() => {
-                            if (inputRef.current) {
-                              setDisplayText(inputRef.current.value);
-                              setTextCount(inputRef.current.value.length);
-                            }
-                            setIsEditable((s) => !s);
-                            setDone(true);
-                          }}
-                        >
-                          Done
-                        </Label>
+                        descField()
                       )}
-                    </HeaderTitle>
-                    {isEditable ? (
-                      <DescriptionInput
-                        id="description"
-                        name="description"
-                        key="description"
-                        ref={posRef}
-                        value={newPosDescription}
-                        maxLength="500"
-                        onChange={(e) => handleDescription(e)}
-                      />
-                    ) : (
-                      descField()
-                    )}
-                  </DescContainer>
-                </Row>
-                <Row justify="center">
-                  <PostPositionButton
-                    disabled={checksEnabled && done ? false : true}
-                    primary="true"
-                    onClick={() => setIsModalVisible(true)}
+                    </DescContainer>
+                  </Row>
+                  <Row justify="center">
+                    <PostPositionButton
+                      disabled={checksEnabled && done ? false : true}
+                      primary="true"
+                      onClick={() => setIsModalVisible(true)}
+                    >
+                      {t("position.title")}
+                    </PostPositionButton>
+                  </Row>
+                  <StyledPositionModal
+                    closable={false}
+                    visible={isModalVisible}
+                    title={t("position.title")}
+                    footer={[
+                      <StyledPostButton
+                        name="cancel"
+                        type="text"
+                        onClick={handleCancel}
+                      >
+                        {t("position.cancel")}
+                      </StyledPostButton>,
+                      <StyledPostButton
+                        name="post"
+                        type="text"
+                        loading={postLoading}
+                        onClick={handleOk}
+                      >
+                        {t("position.post")}
+                      </StyledPostButton>,
+                    ]}
                   >
-                    {t("position.title")}
-                  </PostPositionButton>
-                </Row>
-                <StyledPositionModal
-                  closable={false}
-                  visible={isModalVisible}
-                  title={t("position.title")}
-                  footer={[
-                    <StyledPostButton
-                      name="cancel"
-                      type="text"
-                      onClick={handleCancel}
-                    >
-                      {t("position.cancel")}
-                    </StyledPostButton>,
-                    <StyledPostButton
-                      name="post"
-                      type="text"
-                      loading={postLoading}
-                      onClick={handleOk}
-                    >
-                      {t("position.post")}
-                    </StyledPostButton>,
-                  ]}
-                >
-                  <p>{t("position.content")}</p>
-                </StyledPositionModal>
-                <StyledConfirmModal
-                  closable={false}
-                  visible={isConfirmModalVisible}
-                  title={<img src={applicationConfirmation} />}
-                  footer={[
-                    <ConfirmButton
-                      key="submit"
-                      type="primary"
-                      onClick={() => setConfirmModalVisible(false)}
-                    >
-                      {t("position.Okay")}
-                    </ConfirmButton>,
-                  ]}
-                >
-                  <p>{t("position.confirmTitle")}</p>
-                  <p>{t("position.confirmDescription")}</p>
-                </StyledConfirmModal>
-              </ProfileTabPane>
-            ) : null}
+                    <p>{t("position.content")}</p>
+                  </StyledPositionModal>
+                  <StyledConfirmModal
+                    closable={false}
+                    visible={isConfirmModalVisible}
+                    title={<img src={applicationConfirmation} />}
+                    footer={[
+                      <ConfirmButton
+                        key="submit"
+                        type="primary"
+                        onClick={() => setConfirmModalVisible(false)}
+                      >
+                        {t("position.Okay")}
+                      </ConfirmButton>,
+                    ]}
+                  >
+                    <p>{t("position.confirmTitle")}</p>
+                    <p>{t("position.confirmDescription")}</p>
+                  </StyledConfirmModal>
+                </ProfileTabPane>
+                ) : null}
           </ProfileTabs>
 
           {isSelf && (

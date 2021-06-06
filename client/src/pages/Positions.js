@@ -144,6 +144,8 @@ const Positions = () => {
           <PositionsContainer>
             <PositionTitle>Volunteer Position</PositionTitle>
             <PositionDescription>
+              {// TODO - Pull in from BE
+              }
               {organisation.positions.description}
             </PositionDescription>
             {
