@@ -265,6 +265,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
+
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
       userProfileDispatch(fetchUser());
@@ -284,6 +285,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         );
       }
     })();
+
     (async function fetchUserProfile() {
       userProfileDispatch(fetchUser());
       try {
@@ -532,18 +534,17 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
   useEffect(() => {
     setSwitchOnOff(isJoinOrg);
-    setPosDescription(description);
-  }, [organisation, setSwitchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
+    //setPosDescription(description)
+  }, [isJoinOrg, organisation, setSwitchOnOff]);
 
-  const initialDescription = {
-    description: "",
-  };
+  //description = description.length ? description : t("position.text1") + name + t("position.text2")
   const [newPosDescription, setPosDescription] = useState(description);
   const [descriptionLoaded, setDescriptionLoaded] = useState(false);
 
   const posRef = useRef();
   const handleDescription = (event) => {
     setPosDescription(event.target.value);
+    setTextCount(event.target.value.length);
   };
 
   const [checksEnabled, setChecksEnabled] = useState(true);
@@ -783,7 +784,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     }
   };
 
-  useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setChecksEnabled(switchOnOff);
@@ -798,11 +799,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   }, [toggleRefetchApplicants, pageApplicants, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    setDisplayText(t("position.text1") + name + t("position.text2"));
-  }, [name, t]);
+    setPosDescription(description);
+  }, [description, name, t]);
 
-  const textField = () => {
-    if (textCount > 0) return <DisplayText>{displayText}</DisplayText>;
+  const descField = () => {
+    if (textCount > 0) return <DisplayText>{newPosDescription}</DisplayText>;
     else return <div style={{ color: "red" }}>Add a description</div>;
   };
 
@@ -924,9 +925,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   isAuthenticated
                     ? `/organisation/${organisationId}/positions`
                     : {
-                        pathname: LOGIN,
-                        state: { from: window.location.pathname },
-                      }
+                      pathname: LOGIN,
+                      state: { from: window.location.pathname },
+                    }
                 }
               >
                 <JoinOrgButton id={GTM.organisation.joinOrg}>
@@ -1107,11 +1108,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                               setDisplayText(inputRef.current.value);
                               setTextCount(inputRef.current.value.length);
                             }
-                            if (newPosDescription.length > 0) {
-                              setIsEditable((s) => !s);
-                              setDone(true);
-                              // return;
-                            }
+                            setIsEditable((s) => !s);
+                            setDone(true);
                           }}
                         >
                           Done
@@ -1125,13 +1123,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                         key="description"
                         ref={posRef}
                         value={newPosDescription}
+                        maxLength="500"
                         onChange={(e) => handleDescription(e)}
                       />
                     ) : (
-                      newPosDescription
-                    )}
-                    {newPosDescription?.length === 0 && (
-                      <Error>Please enter description.</Error>
+                      descField()
                     )}
                   </DescContainer>
                 </Row>
