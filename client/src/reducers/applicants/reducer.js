@@ -149,12 +149,20 @@ const applicantsReducer = (state = initialState, action) => {
         isLoading: false,
       };
     }
-    case APPLICANTS_ACTIONS.NEXT_PAGE:
+    case APPLICANTS_ACTIONS.NEXT_PAGE: {
+      const { payload } = action;
+      console.log({ "next page4 APPLICANTS_ACTION": state.page + 1 })
+      console.log({ "loadNextPageApplicants! state.page": state.page })
+      // console.log({ "loadNextPageApplicants! page": page })
       return { ...state, page: state.page + 1 };
+      // return { ...state, page: state.page + 1 };
+    }
+
     case APPLICANTS_ACTIONS.SET_PAGE:
       const { payload } = action;
       return { ...state, page: payload.page };
     case APPLICANTS_ACTIONS.RESET_PAGE: {
+      // console.log("next page4 APPLICANTS_RESET_PAGE")
       const { payload } = action;
       return {
         ...state,

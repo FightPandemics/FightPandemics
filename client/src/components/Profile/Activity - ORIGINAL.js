@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   InfiniteLoader,
   AutoSizer,
@@ -7,6 +7,8 @@ import {
   CellMeasurer,
   CellMeasurerCache,
 } from "react-virtualized";
+import { useHistory } from "react-router-dom";
+
 import Post from "../Feed/Post";
 import Loader from "components/Feed/StyledLoader";
 import GTM from "constants/gtm-tags";
@@ -33,13 +35,32 @@ const Activity = ({
   totalPostCount,
   isProfile,
   gtmIdPost,
+  activeTab
 }) => {
   const posts = Object.entries(filteredPosts);
-  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  // console.log({ "posts - activity": posts })
+  // console.log({ "next page3 itemCount ACTIVITY": itemCount })
+  const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
   const [hiddenPosts, setHiddenPosts] = useState(
     JSON.parse(localStorage.getItem("hiddenPosts")) || {},
   );
+  // useEffect(() => {
+  //   cellMeasurerCache.clear()
+  //   cellMeasurerCache.clearAll()
+  // })
 
+  const [scrollIndex, setScrollIndex] = useState(-1)
+
+  const history = useHistory();
+  const scrollToIndex = () => {
+    if (history?.location?.state) {
+      let { keepScrollIndex, keepScroll } = history.location.state;
+      if (keepScroll) return keepScrollIndex;
+    }
+    return -1;
+  };
+
+  // console.log({ "scrollToIndex Activity": scrollToIndex })
   const hidePost = useCallback(
     (postId) => {
       localStorage.setItem(
@@ -122,6 +143,7 @@ const Activity = ({
       unhidePost,
       updateComments,
       user,
+      activeTab
     ],
   );
 

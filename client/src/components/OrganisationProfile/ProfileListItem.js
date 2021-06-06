@@ -6,7 +6,9 @@ import { getInitialsFromFullName } from "utils/userInfo";
 import { useState, useEffect } from "react";
 const { colors } = theme;
 
-export const AllItems = styled.div``;
+export const AllItems = styled.div`
+
+`;
 
 export const ProfileContainer = styled.div`
   display: flex;
@@ -131,6 +133,7 @@ const ProfileListItem = ({
 
   return (
     <Link
+
       to={{
         pathname: itemPath,
         state: {

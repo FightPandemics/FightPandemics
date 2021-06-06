@@ -77,14 +77,14 @@ const postsReducer = (state = initialState, action) => {
       currentPosts =
         currentPosts !== undefined
           ? currentPosts.map((currentPost) => {
-              if (currentPost._id !== post._id) {
-                return currentPost;
-              }
-              return {
-                ...currentPost,
-                ...post,
-              };
-            })
+            if (currentPost._id !== post._id) {
+              return currentPost;
+            }
+            return {
+              ...currentPost,
+              ...post,
+            };
+          })
           : undefined;
 
       let currentActivePosts = state.profilePosts[userId]?.[objective]?.active;
@@ -96,28 +96,28 @@ const postsReducer = (state = initialState, action) => {
         currentActivePosts =
           currentActivePosts !== undefined
             ? currentActivePosts.map((currentActivePost) => {
-                if (currentActivePost._id !== post._id) {
-                  return currentActivePost;
-                }
-                return {
-                  ...currentActivePost,
-                  ...post,
-                };
-              })
+              if (currentActivePost._id !== post._id) {
+                return currentActivePost;
+              }
+              return {
+                ...currentActivePost,
+                ...post,
+              };
+            })
             : undefined;
       } else {
         // map though achived Profile posts to update
         currentInActivePosts =
           currentInActivePosts !== undefined
             ? currentInActivePosts.map((currentInActivePost) => {
-                if (currentInActivePost._id !== post._id) {
-                  return currentInActivePost;
-                }
-                return {
-                  ...currentInActivePost,
-                  ...post,
-                };
-              })
+              if (currentInActivePost._id !== post._id) {
+                return currentInActivePost;
+              }
+              return {
+                ...currentInActivePost,
+                ...post,
+              };
+            })
             : undefined;
       }
       return {
@@ -154,14 +154,14 @@ const postsReducer = (state = initialState, action) => {
       const { payload } = action;
       return {
         ...state,
-        page: 0,
+        page: 1,
         posts: [],
         loadMore: payload.loadMore,
         isLoading: payload.isLoading,
       };
     }
     case POSTS_ACTIONS.FINISH_LOADING:
-      return {
+    return {
         ...state,
         isLoading: false,
         loadMore: false,

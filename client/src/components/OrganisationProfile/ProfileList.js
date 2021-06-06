@@ -12,10 +12,12 @@ import {
   CellMeasurer,
   CellMeasurerCache,
 } from "react-virtualized";
+import { List as AntList } from "antd";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "constants/theme";
 import UpArrow from "../../components/Icon/up-arrow.js";
+import BaseButton from "components/Button/BaseButton";
 
 const { colors } = theme;
 
@@ -57,6 +59,27 @@ const SeeAllLink = styled.div`
     text-align: center;
   }
 `;
+
+const LoadMoreButton = styled(BaseButton)`
+  background-color: ${colors.royalBlue};
+  color: ${colors.white};
+  width: 25%;
+  justify-self: center;
+  margin: auto;
+  /* pointer-events: none; */
+  :hover {
+    color: ${colors.white};
+    cursor: pointer !important;
+  }
+
+`;
+
+const ItemContainer = styled.div`
+.ant-list-item a{
+  width: 100%;
+}
+`;
+
 const ProfileList = ({
   filteredApplicants,
   filteredMembers,
@@ -79,14 +102,15 @@ const ProfileList = ({
 }) => {
   // const applicants = Object.entries(filteredApplicants);
   // console.log(JSON.stringify(filteredApplicants))
+  console.log({ "next page4 itemCount APPLICANTS": itemCount })
   const applicantsList = filteredApplicants && true;
   const membersList = filteredMembers && true;
   const orgsList = filteredOrgs && true;
-  // const items = Object.entries(
-  //   filteredApplicants || filteredMembers || filteredOrgs,
-  // );
-  const items = Object.entries(filteredApplicants);
-  console.log("items " + items.length)
+  const items = Object.entries(
+    filteredApplicants || filteredMembers || filteredOrgs,
+  );
+  // const items = Object.entries(filteredApplicants);
+  // console.log("items " + items.length)
   const ref = useRef()
   // const scrollIndex = useRef(0);
   const history = useHistory();
@@ -97,10 +121,12 @@ const ProfileList = ({
     }
     return -1;
   };
-  console.log({ "scrollToIndex Profile List": scrollToIndex })
+  // console.log({ "scrollToIndex Profile List": scrollToIndex })
   // const scrollToTop = async () => window.scrollTo({ top: 0, behavior: "smooth" });
   // console.log({ "SCROLLTOP!!": scrollToTop })
-  const loadMoreItems = isNextPageLoading ? () => { } : loadNextPage;
+  const loadMoreItems = isNextPageLoading ? () => {
+    console.log("next page4 isNextPageLoading TRUE!")
+  } : loadNextPage;
   // const loadMoreItems = isNextPageLoading
   //   ? () => {
   //     if (history?.location?.state) {
@@ -117,6 +143,8 @@ const ProfileList = ({
   //   }
   //   : loadNextPage;
 
+  console.log({ "manual loadMore: items": items.length })
+  console.log({ "manual loadMore: totalCount": totalCount })
   const [seeAll, setSeeAll] = useState(false);
   const log = (e) => {
     console.log(e)
@@ -137,154 +165,224 @@ const ProfileList = ({
     cellMeasurerCache.clearAll()
   }, [activeTab])
   const windowWidth = window.innerWidth;
-  const profileItem = useCallback(
-    ({ key, index, style, parent }) => {
-      let content;
-      // scrollIndex.current = index;
-      if (!isItemLoaded(index) && hasNextPage) {
-        content = <Loader />;
-      } else if (items[index]) {
-        content = (
-          <>
-            <ProfileListItem
-              item={items[index][1]}
-              applicantsList={applicantsList}
-              membersList={membersList}
-              orgList={orgsList}
-              organizationId={organisationId}
-              isOwner={isOwner}
-              isMember={isMember}
-              isAdmin={isAdmin}
-              isWiki={isWiki}
-              isVolunteer={isVolunteer}
-              activeTab={activeTab}
-            />
-            <HorizontalRule />
-          </>
-        );
-      }
-      return (
-        <CellMeasurer
-          key={key}
-          cache={cellMeasurerCache}
-          parent={parent}
-          columnIndex={0}
-          rowIndex={index}
-        >
-          {({ measure, registerChild }) => (
-            <div key={key} ref={registerChild} onLoad={measure} style={style}>
-              {content}
-            </div>
-          )}
-        </CellMeasurer>
-      );
-    },
-    [
-      filteredApplicants,
-      filteredMembers,
-      filteredOrgs,
-      user,
-      loadNextPage,
-      isNextPageLoading,
-      itemCount,
-      isItemLoaded,
-      hasNextPage,
-      totalCount,
-      organisationId,
-      isOwner,
-      isMember,
-      isAdmin,
-      isWiki,
-      isVolunteer,
-      activeTab,
-      emptyFeed,
-    ],
-  );
+  // const profileItem = useCallback(
+  //   ({ key, index, style, parent }) => {
+  //     let content;
+  //     // scrollIndex.current = index;
+  //     if (!isItemLoaded(index) && hasNextPage) {
+  //       content = <Loader />;
+  //     } else if (items[index]) {
+  //       content = (
+  //         <>
+  //           <ProfileListItem
+  //             item={items[index][1]}
+  //             applicantsList={applicantsList}
+  //             membersList={membersList}
+  //             orgList={orgsList}
+  //             organizationId={organisationId}
+  //             isOwner={isOwner}
+  //             isMember={isMember}
+  //             isAdmin={isAdmin}
+  //             isWiki={isWiki}
+  //             isVolunteer={isVolunteer}
+  //             activeTab={activeTab}
+  //           />
+  //           <HorizontalRule />
+  //         </>
+  //       );
+  //     }
+  //     return (
+  //       <CellMeasurer
+  //         key={key}
+  //         cache={cellMeasurerCache}
+  //         parent={parent}
+  //         columnIndex={0}
+  //         rowIndex={index}
+  //       >
+  //         {({ measure, registerChild }) => (
+  //           <div key={key} ref={registerChild} onLoad={measure} style={style}>
+  //             {content}
+  //           </div>
+  //         )}
+  //       </CellMeasurer>
+  //     );
+  //   },
+  //   [
+  //     filteredApplicants,
+  //     filteredMembers,
+  //     filteredOrgs,
+  //     user,
+  //     loadNextPage,
+  //     isNextPageLoading,
+  //     itemCount,
+  //     isItemLoaded,
+  //     hasNextPage,
+  //     totalCount,
+  //     organisationId,
+  //     isOwner,
+  //     isMember,
+  //     isAdmin,
+  //     isWiki,
+  //     isVolunteer,
+  //     activeTab,
+  //     emptyFeed,
+  //   ],
+  // );
 
+  // return (
+  //   <ListContainer id="profile-list" className="activity">
+  //     {/* <Link onClick={async (e) => { cellMeasurerCache.clearAll() }}>CLEAR CACHE</Link> */}
+  //     {!items.length && isNextPageLoading ? (
+  //       <Loader />
+  //     ) : (
+  //       <WindowScroller>
+  //         {({ height, isScrolling, scrollTop, onChildScroll }) => (
+
+  //           // <InfiniteLoader
+  //           //   isRowLoaded={isItemLoaded}
+  //           //   // isRowLoaded={() => true}
+  //           //   loadMoreRows={loadMoreItems}
+  //           //   // loadMoreRows={() => console.log("next page4 loadMoreRows!")}
+  //           //   rowCount={totalCount}
+  //           //   // rowCount={5}
+  //           //   threshold={5}
+  //           // >
+  //           // ({ onRowsRendered }) => (
+  //           <AutoSizer disableHeight>
+  //             {
+  //               ({ width }) => (
+  //                 <div>
+  //                   <List
+  //                     autoHeight
+  //                     height={height}
+  //                     // height={cellMeasurerCache.getHeight() * itemCount}
+  //                     // height={500}
+  //                     width={width}
+  //                     // height={500}
+  //                     // width={500}
+  //                     isScrolling={isScrolling}
+  //                     // isScrolling={console.log("scrolling!")}
+  //                     // onRowsRendered={onRowsRendered}
+  //                     // rowCount={
+  //                     //   windowWidth > 767 ? itemCount : seeAll ? itemCount : 3
+  //                     // }
+  //                     rowCount={
+  //                       itemCount
+  //                     }
+  //                     // rowCount={
+  //                     //   7
+  //                     // }
+  //                     // rowCount={
+  //                     //   20
+  //                     // }
+  //                     // rowHeight={cellMeasurerCache.getHeight()}
+  //                     rowHeight={cellMeasurerCache.rowHeight}
+  //                     deferredMeasurementCache={cellMeasurerCache}
+  //                     rowRenderer={profileItem}
+  //                     scrollTop={scrollTop}
+  //                     // scrollTop={scrollTop}
+  //                     onScroll={onChildScroll}
+  //                     overscanRowCount={5}
+  //                     // overscanRowCount={1}
+  //                     scrollToAlignment={"start"}
+  //                     // scrollToAlignment={"center"}
+  //                     scrollToRow={100}
+  //                     // style={{ "margin-top": "3rem" }}
+  //                     // scrollToIndex={scrollToIndex()}
+  //                     // scrollToIndex={List.scrollToRow}
+  //                     // scrollToIndex={5}
+  //                     // ref={el => {
+  //                     //   window.listEl = el;
+  //                     // }}
+  //                     // onScroll={console.log({
+  //                     //   "isScrolling": isScrolling,
+  //                     //   "scrollTop": scrollTop,
+  //                     //   "onChildScroll": onChildScroll,
+  //                     // })}
+  //                     scrollToIndex={-1}
+  //                   // tabIndex={2}
+  //                   />
+
+  //                 </div>
+  //               )
+  //             }
+  //           </AutoSizer>
+  //         )}
+  //         {/* </InfiniteLoader> */}
+  //         {/* )} */}
+  //       </WindowScroller>
+  //     )
+  //     }
+  //     {
+  //       !hasNextPage && !isNextPageLoading ? null :
+  //         <LoadMoreButton>
+  //           <Link onClick={loadNextPage}>Load More</Link>
+  //         </LoadMoreButton>
+  //     }
+  //     {/* {windowWidth < 767 && totalCount >= 3 ? (
+  //       <>
+  //         <Link
+  //           onClick={handleSeeAll}
+  //           style={seeAll ? { display: "none" } : null}
+  //         >
+  //           <SeeAllLink>See All</SeeAllLink>
+  //         </Link>
+  //         <Link onClick={scrollToTop}>
+  //           <UpArrow activate={seeAll} />
+  //         </Link>
+
+
+  //       </>
+  //     ) : null} */}
+
+
+  //       )}
+  //     />
+
+
+  //   </ListContainer >
+  // );
   return (
-    <ListContainer id="profile-list" className="activity">
-      {/* <Link onClick={async (e) => { cellMeasurerCache.clearAll() }}>CLEAR CACHE</Link> */}
-      {!items.length && isNextPageLoading ? (
-        <Loader />
-      ) : (
-        <WindowScroller>
-          {({ height, isScrolling, scrollTop, onChildScroll }) => (
+    <>
 
-            <InfiniteLoader
-              isRowLoaded={isItemLoaded}
-              loadMoreRows={loadMoreItems}
-              rowCount={totalCount}
-              threshold={5}
+      <AntList
+        loading={isNextPageLoading}
+        itemLayout="horizontal"
+        loadMore={
+          items.length >= totalCount ? null :
+            <LoadMoreButton onClick={loadNextPage}>
+              {/* <Link onClick={loadNextPage}>Load More</Link> */}
+                Load More
+              </LoadMoreButton>
+        }
+        dataSource={items}
+        renderItem={item => (
+          <ItemContainer>
+            <AntList.Item
             >
-              {({ onRowsRendered }) => (
-                <AutoSizer disableHeight>
-                  {({ width }) => (
-                    <List
-                      autoHeight
-                      height={height}
-                      width={width}
-                      // height={500}
-                      // width={500}
-                      isScrolling={isScrolling}
-                      onRowsRendered={onRowsRendered}
-                      // rowCount={
-                      //   windowWidth > 767 ? itemCount : seeAll ? itemCount : 3
-                      // }
-                      rowCount={
-                        itemCount
-                      }
-                      // rowCount={
-                      //   20
-                      // }
-                      // rowHeight={cellMeasurerCache.getHeight()}
-                      rowHeight={cellMeasurerCache.rowHeight}
-                      deferredMeasurementCache={cellMeasurerCache}
-                      rowRenderer={profileItem}
-                      // scrollTop={scrollTop}
-                      // scrollTop={scrollTop}
-                      onScroll={onChildScroll}
-                      overscanRowCount={10}
-                      // overscanRowCount={1}
-                      scrollToAlignment={"start"}
-                      // style={{ "margin-top": "3rem" }}
-                      // scrollToIndex={scrollToIndex()}
-                      // scrollToIndex={List.scrollToRow}
-                      // scrollToIndex={5}
-                      // ref={el => {
-                      //   window.listEl = el;
-                      // }}
-                      // onScroll={console.log({
-                      //   "isScrolling": isScrolling,
-                      //   "scrollTop": scrollTop,
-                      //   "onChildScroll": onChildScroll,
-                      // })}
-                      scrollToIndex={-1}
-                      tabIndex={2}
-                    />
-                  )}
-                </AutoSizer>
-              )}
-            </InfiniteLoader>
-          )}
-        </WindowScroller>
-      )}
-      {/* {windowWidth < 767 && totalCount >= 3 ? (
-        <>
-          <Link
-            onClick={handleSeeAll}
-            style={seeAll ? { display: "none" } : null}
-          >
-            <SeeAllLink>See All</SeeAllLink>
-          </Link>
-          <Link onClick={scrollToTop}>
-            <UpArrow activate={seeAll} />
-          </Link>
+              <ProfileListItem
+                // item={items[index][1]}
+                // item={items}
+                style={{ width: "100%", display: "flex" }}
+                item={item[1]}
+                applicantsList={applicantsList}
+                membersList={membersList}
+                orgList={orgsList}
+                organizationId={organisationId}
+                isOwner={isOwner}
+                isMember={isMember}
+                isAdmin={isAdmin}
+                isWiki={isWiki}
+                isVolunteer={isVolunteer}
+                activeTab={activeTab}
+              />
+            </AntList.Item>
+          </ItemContainer>
+        )}
+      />
 
-
-        </>
-      ) : null} */}
-    </ListContainer>
-  );
+    </>
+  )
 };
 
 export default ProfileList;
