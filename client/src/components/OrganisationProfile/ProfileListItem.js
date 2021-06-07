@@ -79,6 +79,7 @@ const ProfileListItem = ({
   isWiki,
   activeTab,
 }) => {
+  let itemState
   let list;
   let itemPath;
 
@@ -127,7 +128,7 @@ const ProfileListItem = ({
                   }}
                   src={item?.[list]?.userInfo.photo}
                 /> :
-                getInitialsFromFullName(item?.[list]?.name)}
+                getInitialsFromFullName(item?.[list]?.name || "")}
             </ProfilePic>
           </ProfilePicContainer>
           <TextContainer>
