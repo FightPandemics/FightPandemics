@@ -376,7 +376,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     };
     fetchOrganisationPosts();
     // }
-  }, [organisationId, page, toggleRefetch, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [organisationId, page, toggleRefetch, activeTab, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -1049,7 +1049,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             </JoinOrgContainer>
           ) : null
           }
-  Post Count: {itemCount}
           <ProfileTabs
             defaultActiveKey="activity"
             // defaultActiveKey="applicants"
@@ -1121,9 +1120,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             </ProfileTabPane>
             {
               <ProfileTabPane
-                tab={`${t("profile.views.members")}`} key="members">
-                {/* tab={`${t("profile.views.members")} ${membersLoaded ? "( " + totalMemberCount + " )" : ""} `} key="members"> */}
-
+                tab={`${t("profile.views.members")} ${membersLoaded ? "( " + totalMemberCount + " )" : ""} `} key="members">
                 {
                   // isLoadingApplicants ?
                   //   <Loader /> :
@@ -1159,8 +1156,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
               isOwner || permissions.isAdmin || isSelf ? (
                 <ProfileTabPane
-                  // tab={`${t("profile.views.applicants")} ${applicantsLoaded ? "( " + (totalApplicantCount) + " )" : ""} `}
-                  tab={`${t("profile.views.applicants")}`}
+                  tab={`${t("profile.views.applicants")} ${applicantsLoaded ? "( " + (totalApplicantCount) + " )" : ""} `}
                   key="applicants"
                 >
                   {
