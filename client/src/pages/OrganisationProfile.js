@@ -248,12 +248,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     error: postsError,
   } = posts;
 
-  console.log({ "page!": page })
   const { deleteModalVisibility } = deleteModal;
   const prevTotalPostCount = usePrevious(totalPostCount);
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
-  // console.log({ "organisationPosts!!!!": organisationPosts.length })
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
   const [doneLoadingApplicants, setDoneLoadingApplicants] = useState(false)
@@ -315,8 +313,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   }, [orgProfileDispatch, organisationId, userProfileDispatch, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // const tab = activeTab
-    // console.log("fetch posts useEffect")
     if (tab == "activity") {
       const fetchOrganisationPosts = async () => {
         const limit = PAGINATION_LIMIT;
@@ -341,14 +337,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 setTotalPostCount(meta.total);
               }
               if (posts.length < limit) {
-                console.log("posts.length < limit: finishLoadingAction")
-                console.log({ "limit: finishLoadingAction": limit })
-                console.log({ "posts.length: finishLoadingAction": posts.length })
-                console.log({ "meta  : finishLoadingAction": meta.total })
-                console.log({ "postsList: finishLoadingAction": postsList.length })
                 dispatch(postsActions.finishLoadingAction());
               } else if (meta.total === limit) {
-                console.log("meta.total === limit: finishLoadingAction")
                 dispatch(postsActions.finishLoadingAction());
               }
               const loadedPosts = posts.reduce((obj, item) => {
@@ -375,10 +365,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   posts: { ...postsList },
                 }),
               );
-              console.log("posts - elseIf: finishLoadingAction")
               dispatch(postsActions.finishLoadingAction());
             } else {
-              console.log("posts - else: finishLoadingAction")
               dispatch(postsActions.finishLoadingAction());
             }
           }
@@ -388,10 +376,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       };
       fetchOrganisationPosts();
     }
-  }, [organisationId, page, toggleRefetch,
-    activeTab,
-    // tab
-  ]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [organisationId, page, toggleRefetch, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -406,14 +391,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
-      console.log("next page3")
-      console.log({ "next page3 isLoading": isLoading })
-      console.log({ "next page3 loadMore": loadMore })
-      console.log({ "next page3 stopIndex": stopIndex })
-      console.log({ "next page3 PAGE": page })
-      console.log({ "next page3 stopIndex >= organisationPosts.length": stopIndex >= organisationPosts.length })
-      console.log({ "next page3 postsLength": organisationPosts.length })
-      console.log({ "next page3 itemCount": itemCount })
       if (
         !isLoading &&
         loadMore &&
@@ -421,7 +398,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         organisationPosts.length
       ) {
         return new Promise((resolve) => {
-          console.log("next page3-2")
           dispatch(postsActions.setNextPageAction());
           resolve();
         });
@@ -429,19 +405,14 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, organisationPosts.length,
-      activeTab
-    ],
+    [dispatch, isLoading, loadMore, organisationPosts.length, activeTab],
   );
-  // console.log({ "loadmore": loadMore })
 
   useEffect(() => {
     setItemCount(
       loadMore ? organisationPosts.length + 1 : organisationPosts.length,
     );
-  }, [loadMore, organisationPosts.length,
-    // activeTab
-  ]);
+  }, [loadMore, organisationPosts.length,]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -617,10 +588,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     applicants: applicantsList,
   } = applicants;
 
-
   const feedApplicants = Object.entries(applicantsList);
-
-  // console.log({ "FeedApplicants!!!!": feedApplicants })
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
   const {
     error: membersError,
@@ -640,7 +608,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     });
     return ref.current;
   }
-  // console.log({ "loadmoreApplicants": loadMoreApplicants })
   const history = useHistory();
 
   const dispatchAction = (type, key, value) =>
@@ -649,10 +616,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const refetchApplicants = (
     isLoadingApplicants,
     loadMoreApplicants,
-    // softRefresh = false,
   ) => {
-    // if (!softRefresh) {
-    // dispatchAction(SET_VALUE, "applyFilters", true);
     dispatch(
       applicantsActions.resetPageAction({
         isLoadingApplicants,
@@ -662,15 +626,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     if (pageApplicants === 0) {
       setToggleRefetchApplicants(!toggleRefetchApplicants);
     }
-    // }
   };
   const refetchMembers = (
     isLoadingMembers,
     loadMoreMembers,
-    // softRefresh = false,
   ) => {
-    // if (!softRefresh) {
-    // dispatchAction(SET_VALUE, "applyFilters", true);
     dispatch(
       membersActions.resetPageAction({
         isLoadingMembers,
@@ -683,7 +643,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     // }
   };
   const [currentUserPermissions, setCurrentUserPermissions] = useState();
-  const [memberstatus, setMemberstatus] = useState();
+  const [memberStatus, setMemberStatus] = useState();
+  const [appliedStatus, setAppliedStatus] = useState(false);
   const [isMember, setIsMember] = useState(false);
 
   const loadPermissions = async (actorId) => {
@@ -695,7 +656,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       } = await axios.get(endpoint);
       setActorPermissionsLoaded(true);
       setCurrentUserPermissions(applicants[0].organization.permissions);
-      setMemberstatus(applicants[0].status);
+      setMemberStatus(applicants[0].status);
     } catch (error) {
       return error;
     }
@@ -707,28 +668,23 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     isAdmin: currentUserPermissions == "Admin",
   };
 
-  useEffect(() => {
-    if (memberstatus == "accepted") {
+
+  const setStatus = () => {
+    if (memberStatus == "accepted") {
       setIsMember(true);
     }
-
-    if (memberstatus !== "accepted" || memberstatus !== "applied") {
-      setAppliedStatus(false);
-    } else {
+    if (memberStatus == "rejected" || memberStatus == undefined) {
       setAppliedStatus(true);
     }
-  }, [memberstatus]);
-  const [appliedStatus, setAppliedStatus] = useState();
+  }
+  useEffect(() => {
+    setStatus()
+  }, [memberStatus]);
 
   const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false);
-
   useEffect(() => {
     loadPermissions(actorId);
-    // notApplied(memberstatus)
-  }, [actorId,
-    // activeTab,
-    // tab
-  ]);
+  }, [actorId]);
 
   const handleIsJoinOrg = async (e) => {
     if (typeof switchOnOff !== undefined) {
@@ -767,8 +723,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       setIsModalVisible(false);
       setConfirmModalVisible(true);
     }, 3000);
-
-    //TODO pass data to backend pending
   };
 
   const handleCancel = () => {
@@ -784,101 +738,30 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       return `/api/applicants/${organisationId}/status?includeMeta=true&limit=${limit}&skip=${skip}&status=applied`;
     };
 
-    // const getMembersBaseURL = (organisationId, limit, skip) => {
-    //   return `/api/applicants/${organisationId}/status?status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
-    // };
-
-    // if (activeTab == "members") {
-    // baseURL = getMembersBaseURL(organisationId, limit, skip);
-    // }
-
-    // if (activeTab == "applicants") {
     baseURL = getApplicantsBaseURL(organisationId, limit, skip);
-    // }
-    // console.log({ "API URL!": baseURL })
-    // let endpoint = baseURL;
     const endpoint = `/api/applicants/${organisationId}/status?includeMeta=true&limit=${limit}&skip=${skip}&status=applied`;
     dispatch(applicantsActions.fetchApplicantsBegin());
-    // console.log({ "skip URL!": skip })
 
     try {
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
-      // console.log("fetch applicants!!")
-      // console.log({ "next page4 meta URL": meta.total })
-      // console.log({ "applicants total URL": applicants.length })
       if (applicants.length && meta.total) {
-        // console.log("applicants.length && meta.total")
-        // dispatch(applicantsActions.finishLoadingAction());
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
           setRawTotalApplicants(meta.total);
         }
         if (applicants.length < limit) {
-          console.log("applicants.length < limit : finishLoadingAction")
-          console.log({ "applicants.length : finishLoadingAction": applicants.length })
-          console.log({ "limit : finishLoadingAction": limit })
-
           dispatch(applicantsActions.finishLoadingAction());
         } else if (meta.total === limit) {
-          console.log("meta.total === limit : finishLoadingAction")
           dispatch(applicantsActions.finishLoadingAction());
         }
-
-        // const lastPage = Math.ceil(meta.total / limit) - 1;
-        // if (pageApplicants === lastPage) {
-        //   dispatch(applicantsActions.finishLoadingAction());
-        // }
-
-        // let applicantsInState;
-        // if (history.location.state) {
-        //   const { keepApplicantsState, keepPageState } = history.location.state;
-        //   applicantsInState = keepApplicantsState;
-        //   if (keepPageState >= pageApplicants) {
-        //     dispatch(applicantsActions.setPageAction(keepPageState));
-        //   }
-        // }
-        // if (applicantsInState) {
-        //   if (Object.keys(applicantsInState).length === meta.total) {
-        //     dispatch(applicantsActions.finishLoadingAction());
-        //   }
-        // }
 
         const loadedApplicants = applicants.reduce((obj, item) => {
           obj[item._id] = item;
           return obj;
         }, {});
 
-        //   if (applicantsInState) {
-        //     dispatch(
-        //       applicantsActions.fetchApplicantsSuccess({
-        //         applicants: { ...applicantsInState, ...loadedApplicants },
-        //       }),
-        //     );
-        //   } else if (Object.keys(applicantsList).length && pageApplicants) {
-        //     dispatch(
-        //       applicantsActions.fetchApplicantsSuccess({
-        //         applicants: { ...applicantsList, ...loadedApplicants },
-        //       }),
-        //     );
-        //   } else {
-        //     dispatch(
-        //       applicantsActions.fetchApplicantsSuccess({
-        //         applicants: { ...loadedApplicants },
-        //       }),
-        //     );
-        //   }
-        // } else if (applicants) {
-        //   dispatch(
-        //     applicantsActions.fetchApplicantsSuccess({
-        //       applicants: { ...applicantsList },
-        //     }),
-        //   );
-        //   dispatch(applicantsActions.finishLoadingAction());
-        // } else {
-        //   dispatch(applicantsActions.finishLoadingAction());
-        // }
         if (prevOrgId === organisationId && applicantsList) {
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
@@ -898,14 +781,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             applicants: { ...applicantsList },
           }),
         );
-        // dispatch(applicantsActions.finishLoadingAction());
-        console.log("elseIf : finishLoadingAction")
       } else {
-        console.log("else : finishLoadingAction")
         dispatch(applicantsActions.finishLoadingAction());
       }
     } catch (error) {
-      console.log({ "applicants error": error })
       dispatch(applicantsActions.fetchApplicantsError(error));
     }
   };
@@ -913,21 +792,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
     let baseURL;
-    // const getApplicantsBaseURL = (organisationId, limit, skip) => {
-    //   return `/api/applicants/${organisationId}/status?includeMeta=true&limit=${limit}&skip=${skip}&status=applied`;
-    // };
     const getMembersBaseURL = (organisationId, limit, skip) => {
       return `/api/applicants/${organisationId}/status?status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
 
-    // if (activeTab == "members") {
     baseURL = getMembersBaseURL(organisationId, limit, skip);
-    // }
-
-    // if (activeTab == "applicants") {
-    //   baseURL = getApplicantsBaseURL(organisationId, limit, skip);
-    // }
-
     let endpoint = baseURL;
     dispatch(membersActions.fetchMembersBegin());
 
@@ -935,9 +804,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       const {
         data: { data: members, meta },
       } = await axios.get(endpoint);
-      // console.log({ "fetch memberss!!": members })
-      // console.log({ "applicants!!": applicants.length })
-      // console.log({ "meta!!": meta.total })
       if (members.length && meta.total) {
         if (prevTotalMemberCount !== meta.total) {
           setTotalMemberCount(meta.total);
@@ -1028,20 +894,13 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   useEffect(() => {
     if (activeTab == "applicants") {
       loadApplicants();
-      console.log("useEffect loadApplicants")
       if (applicantsLoaded == false) {
         setApplicantsLoaded(true)
       } else {
         return
       }
     }
-  }, [
-    // toggleRefetchApplicants,
-    organisationId,
-    pageApplicants,
-    // activeTab, // keep off 
-    tab
-  ]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [organisationId, pageApplicants, tab]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (activeTab == "members") {
       loadMembers();
@@ -1051,13 +910,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         return
       }
     }
-  }, [
-    // toggleRefetchMembers,
-    organisationId,
-    pageMembers,
-    // activeTab,
-    tab
-  ]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [organisationId, pageMembers, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setPosDescription(description);
@@ -1077,125 +930,28 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
   const [applicantsLoaded, setApplicantsLoaded] = useState(false)
   const [membersLoaded, setMembersLoaded] = useState(false)
-  // const loadNextPageApplicant = useCallback(
-  //   ({ stopIndex }) => {
-  //     console.log("next page4")
-  //     console.log({ "next page4 isLoading": isLoadingApplicants })
-  //     console.log({ "next page4 loadMore": loadMoreApplicants })
-  //     console.log({ "next page4 stopIndex": stopIndex })
-  //     console.log({ "next page4 stopIndex >= feedApplicants.length": stopIndex >= feedApplicants.length })
-  //     console.log({ "next page4 feedApplicantsLength": feedApplicants.length })
-  //     console.log({ "next page4 page": pageApplicants })
-  //     console.log({ "next page4 itemCountApplicants": itemCountApplicants })
-  //     if (
-  //       !isLoadingApplicants &&
-  //       loadMoreApplicants &&
-  //       stopIndex >= feedApplicants.length &&
-  //       feedApplicants.length
-  //     ) {
-  //       return new Promise((resolve) => {
-  //         console.log("next page4-1")
-  //         dispatch(applicantsActions.setNextPageAction());
-  //         // dispatchAction(SET_VALUE, "applyFilters", true);
-  //         resolve();
-  //       });
-  //     } else {
-  //       return Promise.resolve();
-  //     }
-  //   },
-  //   [feedApplicants.length,
-  //     isLoadingApplicants,
-  //     loadMoreApplicants,
-  //     // activeTab, 
-  //     // dispatch
-  //   ], // eslint-disable-line react-hooks/exhaustive-deps
-  // );
-
-  // LOAD MORE BUTTON
   const loadNextPageApplicant = useCallback(
-    // () => {
-
-    //   if (
-    //     !isLoadingApplicants &&
-    //     loadMoreApplicants &&
-    //     stopIndex >= feedApplicants.length &&
-    //     feedApplicants.length
-    //   ) {
-    //     return new Promise((resolve) => {
-    //       console.log("next page4-1")
-    //       dispatch(applicantsActions.setNextPageAction());
-    //       // dispatchAction(SET_VALUE, "applyFilters", true);
-    //       resolve();
-    //     });
-    //   } else {
-    //     return Promise.resolve();
-    //   }
     async () => {
-      console.log("next page4")
-      console.log({ "next page4 isLoading": isLoadingApplicants })
-      console.log({ "next page4 loadMore": loadMoreApplicants })
-      console.log({ "next page4 feedApplicantsLength": feedApplicants.length })
-      console.log({ "next page4 page": pageApplicants })
-      console.log({ "next page4 itemCountApplicants": itemCountApplicants })
-      console.log("loadNextPageApplicants!")
-      console.log({ "loadNextPageApplicants! Page": pageApplicants })
       dispatch(applicantsActions.setNextPageAction());
       setToggleRefetchApplicants(!toggleRefetchApplicants)
     },
-    [
-      // feedApplicants.length,
-      // isLoadingApplicants,
-      // loadMoreApplicants,
-      // activeTab, 
-      // dispatch
-    ], // eslint-disable-line react-hooks/exhaustive-deps
   );
   const loadNextPageMember = useCallback(
-    // ({ stopIndex }) => {
-    //   if (
-    //     !isLoadingMembers &&
-    //     loadMoreMembers &&
-    //     stopIndex >= feedMembers.length &&
-    //     feedMembers.length
-    //   ) {
-    //     return new Promise((resolve) => {
-    //       dispatch(membersActions.setNextPageAction());
-    //       dispatchAction(SET_VALUE, "applyFilters", true);
-    //       resolve();
-    //     });
-    //   } else {
-    //     return Promise.resolve();
-    //   }
-    // },
     async () => {
       dispatch(membersActions.setNextPageAction());
       setToggleRefetchMembers(!toggleRefetchMembers)
     },
-    // [feedMembers.length, isLoadingMembers, loadMoreMembers, activeTab, dispatch], // eslint-disable-line react-hooks/exhaustive-deps
   );
-  // console.log("pageApplicants: " + pageApplicants)
-  // console.log("pagePosts: " + page)
   useEffect(() => {
     setItemCountApplicants(
       loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length,
     );
-    // notApplied(memberstatus)
-  }, [feedApplicants.length, loadMoreApplicants,
-    // activeTab
-    tab
-  ]);
+  }, [feedApplicants.length, loadMoreApplicants, tab]);
   useEffect(() => {
     setItemCountMembers(
       loadMoreMembers ? feedMembers.length + 1 : feedMembers.length,
     );
-    // notApplied(memberstatus)
   }, [feedMembers.length, loadMoreMembers, activeTab]);
-
-  // useEffect(() => {
-  //   dispatch(applicantsActions.resetPageAction({}));
-  // }, [
-  //   // activeTab
-  //   , organisationId, tab])
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -1268,12 +1024,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
           {isSelf && !verified && <Verification />}
           <WhiteSpace />
-          {
-            // Only show JoinOrgButton if user is not Member, Wiki Editor, or Admin
-          }
-
-          {(!isOwner && isJoinOrg) || (appliedStatus && isJoinOrg) ? (
-            <JoinOrgContainer>
+          {(!isOwner && isJoinOrg && appliedStatus) ? (
+            < JoinOrgContainer >
               <Link
                 onClick={() =>
                   sessionStorage.setItem(
@@ -1298,8 +1050,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           ) : null
           }
           <ProfileTabs
-            // defaultActiveKey="activity"
-            defaultActiveKey="applicants"
+            defaultActiveKey="activity"
+            // defaultActiveKey="applicants"
             activeKey={tab}
             onChange={(e) => preSetActiveTab(e)}
           >
@@ -1326,7 +1078,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                     </>
                   ) : null}
                 </SectionHeader>
-
                 <FeedWrapper isProfile>
                   <Activity
                     postDispatch={dispatch}
@@ -1378,7 +1129,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                     </div>
                   ) : (
                     <ProfileList
-                      // TODO -conditionally show role / permissions and permissions link
                       filteredMembers={membersList}
                       itemCount={itemCountMembers}
                       isItemLoaded={isMemberLoaded}
@@ -1424,11 +1174,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                         hasNextPage={loadMoreApplicants}
                         loadNextPage={loadNextPageApplicant}
                         totalCount={totalApplicantCount}
-                        // totalCount={rawTotalApplicantCount}
-                        // loadNextPage={loadNextPageApplicant}
-                        // hasNextPage={loadMore}
-                        // isNextPageLoading={isLoading}
-                        // totalCount={rawTotalApplicantCount}
                         page={pageApplicants}
                         emptyFeed={emptyFeedApplicants}
                         isOwner={isOwner}

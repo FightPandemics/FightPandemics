@@ -93,19 +93,9 @@ const ProfileListItem = ({
   let list;
   let itemPath;
 
-  // useEffect(() => {
-  //     if (activeTab = "members") {
-  //         setTabState("members")
-  //     }
-  //     if (activeTab = "applicants") {
-  //         setTabState("applicants")
-  //     }
-  // }, [activeTab])
-
   if (activeTab == "members") {
     list = "applicant";
     itemPath = `/profile/${item?.applicant?.id}`;
-    // itemPath = `/ooooooooooo`
     itemState = {
       applicant: item,
       applicantId: item?._id,
@@ -123,14 +113,6 @@ const ProfileListItem = ({
     };
   }
 
-  // if (activeTab = "orgs") {
-  //     itemPath = `/${item?.organization?.id}/permissions/${item?._id}/${item?.[list]?.id}`
-  // }
-
-  // if (orgsList) {
-  //     list = "organisation"
-  // }
-
   return (
     <Link
 
@@ -142,11 +124,13 @@ const ProfileListItem = ({
         },
       }}
     >
-      {/* Current Tab {activeTab} */}
       <AllItems>
         <ProfileContainer>
           <ProfilePicContainer>
             <ProfilePic>
+              {
+                // TODO - ADD USER INFO (photo, etc.) FROM BE LOOKUP
+              }
               {item?.[list]?.photo ? (
                 <img
                   style={{
