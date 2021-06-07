@@ -1,7 +1,9 @@
 import Loader from "components/Feed/StyledLoader";
+// import Applicant from "components/OrganisationProfile/ApplicantOrMember";
 import ProfileListItem from "components/Profile/ProfileListItem";
 import { mq } from "constants/theme";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   InfiniteLoader,
   AutoSizer,
@@ -10,13 +12,26 @@ import {
   CellMeasurer,
   CellMeasurerCache,
 } from "react-virtualized";
+import { List as AntList } from "antd";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "constants/theme";
-import { TestMemberOfOrgs } from "utils/TestMemberOfOrgs";
-import { forEach } from "tlds";
+// import UpArrow from "../../components/Icon/up-arrow.js";
+import BaseButton from "components/Button/BaseButton";
 
 const { colors } = theme;
+
+const ListContainer = styled.div`
+  /* background-color: ${colors.white}; */
+  /* border-radius: 1.2rem; */
+  overflow: hidden;
+  /* margin-top: 0.3rem; */
+  /* box-shadow: 0 0 20px 0 ${colors.shadowBlack}; */
+  .ant-list-empty-text {
+     display: none;
+  }
+
+`;
 
 const HorizontalRule = styled.hr`
   display: none;
@@ -30,29 +45,48 @@ const HorizontalRule = styled.hr`
 
 const cellMeasurerCache = new CellMeasurerCache({
   fixedWidth: true,
+  defaultHeight: 100,
 });
 
+
+
 const SeeAllLink = styled.div`
-  display: block;
-  color: ${colors.royalBlue};
-  font-size: ${theme.typography.size.large};
-  font-weight: normal;
-  text-align: center;
-  margin-top: 3rem;
-
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    font-size: ${theme.typography.size.small};
-    margin-top: 2rem;
-  }
-`;
-
-const LinkContainer = styled.div`
   display: none;
 
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: unset;
+    display: block;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+    color: ${colors.royalBlue};
+    font-size: 1.4rem;
+    font-weight: normal;
+    text-align: center;
   }
 `;
+
+const LoadMoreButton = styled(BaseButton)`
+  background-color: ${colors.royalBlue};
+  color: ${colors.white};
+  width: 25%;
+  justify-self: center;
+  margin: auto;
+  /* pointer-events: none; */
+  :hover {
+    color: ${colors.white};
+    cursor: pointer !important;
+  }
+
+`;
+
+const ItemContainer = styled.div`
+.ant-list-item a{
+  width: 100%;
+}
+
+`;
+
+
+
 const ProfileList = ({
   filteredApplicants,
   filteredMembers,
@@ -64,131 +98,117 @@ const ProfileList = ({
   isItemLoaded,
   hasNextPage,
   totalCount,
+  organisationId,
+  isOwner,
+  isMember,
+  isAdmin,
+  isWiki,
+  isVolunteer,
+  activeTab,
   emptyFeed,
-  type,
-  isSelf,
-  listOrgs,
+  listInitialized,
+  isSelf
 }) => {
-  const applicantsList = filteredApplicants && true;
-  const membersList = filteredMembers && true;
-  const orgsList = filteredOrgs && true;
-  const items = Object.entries(
-    filteredApplicants || filteredMembers || filteredOrgs,
-  );
-  // console.log(items);
-  listOrgs = Object.entries(listOrgs);
-  // console.log(listOrgs);
-  // const updateItems = items;
-  // const addOrgName = (updateItems, listOrgs, updateItems) => {
-  //   lengthItems = updateItems.length();
-  //   lengthListOrgs = listOrgs.length();
-  //   for ( let i = 0; i < lengthItems-1; i++ ) {
-  //     for (let j = 0; j < lengthListOrgs-1; j++) {
-  //       if (updateItems[i][1])
+  // const applicants = Object.entries(filteredApplicants);
+  // console.log(JSON.stringify(filteredApplicants))
+  // console.log({ "next page4 itemCount APPLICANTS": itemCount })
+  // const applicantsList = filteredApplicants && true;
+  // const membersList = filteredMembers && true;
+  // const orgsList = filteredOrgs && true;
+  const items = Object.entries(filteredOrgs);
+  // const items = Object.entries(filteredApplicants);
+  // console.log("items " + items.length)
+  // const ref = useRef()
+  // const scrollIndex = useRef(0);
+  // const history = useHistory();
+  // const scrollToIndex = () => {
+  //   if (history?.location?.state) {
+  //     let { keepScrollIndex, keepScroll } = history.location.state;
+  //     if (keepScroll) return keepScrollIndex;
+  //   }
+  //   return -1;
+  // };
+  // console.log({ "scrollToIndex Profile List": scrollToIndex })
+  // const scrollToTop = async () => window.scrollTo({ top: 0, behavior: "smooth" });
+  // console.log({ "SCROLLTOP!!": scrollToTop })
+  const loadMoreItems = isNextPageLoading ? () => {
+    console.log("next page4 isNextPageLoading TRUE!")
+  } : loadNextPage;
+  // const loadMoreItems = isNextPageLoading
+  //   ? () => {
+  //     if (history?.location?.state) {
+  //       const { keepScrollIndex, keepScroll } = history.location.state;
+  //       if (keepScroll && scrollIndex.current < keepScrollIndex) {
+  //         scrollIndex.current = keepScrollIndex;
+  //       } else {
+  //         history.location.state.keepScrollIndex = scrollIndex.current;
+  //         history.location.state.keepScroll = false;
+  //         history.location.state.keepPostsState = undefined;
+  //         history.location.state.keepPageState = undefined;
+  //       }
   //     }
   //   }
-  // };
-  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
+  //   : loadNextPage;
+
+  console.log({ "manual loadMore: items": items.length })
+  console.log({ "manual loadMore: totalCount": totalCount })
   const [seeAll, setSeeAll] = useState(false);
+  const log = (e) => {
+    console.log(e)
+  }
   const handleSeeAll = () => {
     setSeeAll((prevState) => !prevState);
   };
+  // useEffect(() => {
+  //   cellMeasurerCache.clear()
+  //   cellMeasurerCache.clearAll()
+  // }, [activeTab])
   const windowWidth = window.innerWidth;
-  const applicantItem = useCallback(
-    ({ key, index, style, parent }) => {
-      let content;
-      if (!isItemLoaded(index) && hasNextPage) {
-        content = <Loader />;
-      } else if (items[index]) {
-        content = (
-          <>
-            <HorizontalRule />
-            <ProfileListItem
-              item={items[index][1]}
-              applicantsList={applicantsList}
-              membersList={membersList}
-              orgList={orgsList}
-              type={type}
-              isSelf={isSelf}
-              listOrgs={listOrgs}
-            />
-          </>
-        );
-      }
-      return (
-        <CellMeasurer
-          key={key}
-          cache={cellMeasurerCache}
-          parent={parent}
-          columnIndex={0}
-          rowIndex={index}
-        >
-          {({ measure, registerChild }) => (
-            <div key={key} ref={registerChild} onLoad={measure} style={style}>
-              {content}
-            </div>
-          )}
-        </CellMeasurer>
-      );
-    },
-    [hasNextPage, isItemLoaded, items, user],
-  );
+  console.log({ "items": items })
   return (
-    <div className="activity" style={{ width: "100%", height: "100%" }}>
-      {!items.length && isNextPageLoading ? (
-        <Loader />
-      ) : (
-        <WindowScroller>
-          {({ height, isScrolling, scrollTop, onChildScroll }) => (
-            <InfiniteLoader
-              isRowLoaded={isItemLoaded}
-              loadMoreRows={loadMoreItems}
-              rowCount={totalCount}
-              threshold={5}
-            >
-              {({ onRowsRendered }) => (
-                <AutoSizer disableHeight className="autosizer">
-                  {({ width }) => (
-                    <List
-                      // style={{ height: "200px" }}
-                      autoHeight
-                      height={height}
-                      width={width}
-                      isScrolling={isScrolling}
-                      onRowsRendered={onRowsRendered}
-                      rowCount={
-                        windowWidth > 767 ? itemCount : seeAll ? itemCount : 3
-                      }
-                      // rowHeight={cellMeasurerCache.getHeight()}
-                      // rowHeight={cellMeasurerCache.rowHeight}
-                      rowHeight={windowWidth > 767 ? 100 : 67}
-                      deferredMeasurementCache={cellMeasurerCache}
-                      rowRenderer={applicantItem}
-                      scrollTop={scrollTop}
-                      onScroll={onChildScroll}
-                      overscanRowCount={1}
-                      scrollToAlignment={"start"}
+
+    <>
+      {
+
+        <ListContainer>
+          <AntList
+            itemLayout="horizontal"
+            loadMore={
+              items.length >= totalCount ? null :
+                <LoadMoreButton onClick={loadNextPage}>
+                  {/* <Link onClick={loadNextPage}>Load More</Link> */}
+                  Load More
+                </LoadMoreButton>
+            }
+            dataSource={items}
+            renderItem={item => (
+              <ItemContainer>
+                {
+                  // !listInitialized ?
+                  //   <Loader /> :
+                  <AntList.Item
+                  >
+                    <ProfileListItem
+                      style={{ width: "100%", display: "flex" }}
+                      item={item[1]}
+                      // applicantsList={filteredOrgs}
+                      // organizationId={organisationId}
+                      isOwner={isOwner}
+                      // isMember={isMember}
+                      // isAdmin={isAdmin}
+                      // isWiki={isWiki}
+                      // isVolunteer={isVolunteer}
+                      // activeTab={activeTab}
+                      isSelf={isSelf}
                     />
-                  )}
-                </AutoSizer>
-              )}
-            </InfiniteLoader>
-          )}
-        </WindowScroller>
-      )}
-      {totalCount >= 3 ? (
-        <LinkContainer>
-          <Link
-            className="see-all"
-            style={seeAll ? { display: "none" } : null}
-            onClick={handleSeeAll}
-          >
-            <SeeAllLink>See All</SeeAllLink>
-          </Link>
-        </LinkContainer>
-      ) : null}
-    </div>
-  );
+                  </AntList.Item>}
+              </ItemContainer>
+            )}
+          />
+        </ListContainer>
+      }
+    </>
+  )
 };
 
 export default ProfileList;

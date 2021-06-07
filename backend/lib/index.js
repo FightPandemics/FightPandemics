@@ -15,6 +15,7 @@ const reports = require("./endpoints/reports");
 const users = require("./endpoints/users");
 const sendgrid = require("./endpoints/sendgrid");
 const version = require("./endpoints/version");
+const applicants = require("./endpoints/applicants");
 
 module.exports = function createApp(config) {
   const logger = {
@@ -22,9 +23,9 @@ module.exports = function createApp(config) {
     prettyPrint:
       config.env === "dev"
         ? {
-            colorize: true,
-            translateTime: "SYS:standard",
-          }
+          colorize: true,
+          translateTime: "SYS:standard",
+        }
         : false,
   };
   if (config.logger.host) {
@@ -73,6 +74,7 @@ module.exports = function createApp(config) {
   app.register(users, { prefix: "/api/users" });
   app.register(reports, { prefix: "/api/reports" });
   app.register(sendgrid, { prefix: "/api/sendgrid" });
+  app.register(applicants, { prefix: "/api/applicants" });
   app.get("/api/version", version);
 
   return app;

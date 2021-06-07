@@ -15,7 +15,7 @@ const getApplicantByIdSchema = {
 const getApplicantsSchema = {
   queryString: strictQueryStringSchema()
     .prop("applicantId", S.string())
-    .prop("organizationId", S.string().required())
+    .prop("organizationId", S.string())
     .prop("skip", S.integer())
     .prop("includeMeta", S.boolean().default(false))
     .prop("permissions", S.string())

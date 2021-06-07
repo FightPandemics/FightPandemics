@@ -253,8 +253,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-        ? "A"
-        : "D";
+          ? "A"
+          : "D";
     }
     return undefined;
   }, [sectionView, internalTab]);
@@ -726,7 +726,7 @@ const Profile = ({
       // console.log(organisationId);
       // console.log(userId);
       // return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
-      return `/api/applicants?userId=${userId}&status=member&includeMeta=true&limit=${limit}&skip=${skip}`;
+      return `/api/applicants?userId=${userId}&status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
       // return `/api/applicants?userId=${userId}&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
     let baseURL = getApplicantsBaseURL(userId, limit, skip);
@@ -831,7 +831,7 @@ const Profile = ({
     }
   };
 
-  useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // useEffect(() => {
   //   refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
@@ -841,35 +841,37 @@ const Profile = ({
     if (userId) {
       loadApplicants();
     }
-  }, [userId, toggleRefetchApplicants, pageApplicants]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, toggleRefetchApplicants, pageApplicants, internalTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadOrganisations();
     // loadApplicants();
   }, []);
 
+
+
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
     feedApplicants,
   ]);
-  const loadNextPageApplicant = useCallback(
-    ({ stopIndex }) => {
-      if (
-        !isLoadingApplicants &&
-        loadMoreApplicants &&
-        stopIndex >= feedApplicants.length &&
-        feedApplicants.length
-      ) {
-        return new Promise((resolve) => {
-          dispatch(applicantsActions.setNextPageAction());
-          dispatchAction(SET_VALUE, "applyFilters", true);
-          resolve();
-        });
-      } else {
-        return Promise.resolve();
-      }
-    },
-    [feedApplicants.length, isLoadingApplicants, loadMoreApplicants], // eslint-disable-line react-hooks/exhaustive-deps
-  );
+  // const loadNextPageApplicant = useCallback(
+  //   ({ stopIndex }) => {
+  //     if (
+  //       !isLoadingApplicants &&
+  //       loadMoreApplicants &&
+  //       stopIndex >= feedApplicants.length &&
+  //       feedApplicants.length
+  //     ) {
+  //       return new Promise((resolve) => {
+  //         dispatch(applicantsActions.setNextPageAction());
+  //         dispatchAction(SET_VALUE, "applyFilters", true);
+  //         resolve();
+  //       });
+  //     } else {
+  //       return Promise.resolve();
+  //     }
+  //   },
+  //   [feedApplicants.length, isLoadingApplicants, loadMoreApplicants], // eslint-disable-line react-hooks/exhaustive-deps
+  // );
 
   useEffect(() => {
     setItemCountApplicants(
@@ -877,6 +879,19 @@ const Profile = ({
     );
   }, [feedApplicants.length, loadMoreApplicants]);
 
+  const [orgsLoaded, setOrgsLoaded] = useState(false)
+  useEffect(() => {
+    if (orgsLoaded == false) {
+      setOrgsLoaded(true)
+    } else {
+      return
+    }
+  }); // eslint-disable-line react-hooks/exhaustive-deps
+  const loadNextPageApplicant = useCallback(
+    async () => {
+      dispatch(applicantsActions.setNextPageAction());
+    }, [], // eslint-disable-line react-hooks/exhaustive-deps
+  );
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -1130,13 +1145,13 @@ const Profile = ({
                           isNextPageLoading={isLoading}
                           loadNextPage={loadNextPageApplicant}
                           hasNextPage={loadMoreApplicants}
-                          filteredApplicants={applicantsList}
                           totalCount={totalApplicantCount}
                           page={pageApplicants}
                           emptyFeed={emptyFeedApplicants}
                           type="orgs"
                           isSelf={isSelf}
                           listOrgs={listOrgs}
+                          listInitialized={orgsLoaded}
                         />
                       </SeeAllContentWrapperOrg>
                     </SeeAllTabsWrapperOrg>
@@ -1189,8 +1204,8 @@ const Profile = ({
                 )
               ) : null}
               {sectionView === "Requests" ||
-              sectionView === "Offers" ||
-              sectionView === "Posts" ? (
+                sectionView === "Offers" ||
+                sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>
