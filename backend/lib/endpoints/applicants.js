@@ -86,7 +86,7 @@ async function routes(app) {
       };
     }
   );
-
+  // TODO - CHANGE ALL userId variables to mongoose.Types.ObjectId(userId)
   app.get(
     "/",
     // TODO - change authenticateOptional to authenticate
@@ -108,10 +108,32 @@ async function routes(app) {
                       "organization.id": mongoose.Types.ObjectId(organizationId)
                     } : {},
                   userId ?
-                    { "applicant.id": userId } : {},
+                    { "applicant.id": mongoose.Types.ObjectId(userId) } : {},
                   status ?
                     { status: status } : {},
                 ]
+              }
+            },
+            {
+              $lookup: {
+                "from": "users",
+                "localField": "organization.id",
+                "foreignField": "_id",
+                "as": "orgInfo"
+              }
+            },
+            {
+              $lookup: {
+                "from": "users",
+                "localField": "applicant.id",
+                "foreignField": "_id",
+                "as": "userInfo"
+              }
+            },
+            {
+              $set: {
+                orgInfo: { $arrayElemAt: ["$orgInfo", 0] },
+                userInfo: { $arrayElemAt: ["$userInfo", 0] },
               }
             },
             {
@@ -145,7 +167,7 @@ async function routes(app) {
                     "organization.id": mongoose.Types.ObjectId(organizationId)
                   } : {},
                 userId ?
-                  { "applicant.id": userId } : {},
+                  { "applicant.id": mongoose.Types.ObjectId(userId) } : {},
                 status ?
                   { status: status } : {},
               ]

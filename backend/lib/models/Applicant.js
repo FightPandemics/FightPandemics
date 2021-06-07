@@ -26,7 +26,8 @@ const applicantSchema = new Schema(
     },
     applicant: {
       id: {
-        type: String,
+        ref: "IndividualUser",
+        type: ObjectId,
       },
       name: {
         type: String

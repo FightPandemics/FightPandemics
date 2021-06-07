@@ -69,27 +69,16 @@ export const Permissions = styled.div`
   width: 100%;
   position: absolute;
   bottom: 0.2rem;
-  /* margin: 1rem 0; */
 `;
 
 const ProfileListItem = ({
   item,
   applicantsList,
-  membersList,
-  orgsList,
-  organizationId,
   isOwner,
-  isMember,
   isAdmin,
   isWiki,
-  isVolunteer,
   activeTab,
-  members,
-  applicants,
 }) => {
-  const [tabState, setTabState] = useState();
-
-  let itemState;
   let list;
   let itemPath;
 
@@ -104,7 +93,9 @@ const ProfileListItem = ({
 
   if ((activeTab == "members" && isOwner) || isAdmin) {
     itemPath = `/${item?.organization?.id}/permissions/${item?._id}/${item?.[list]?.id}`;
-  } else if (activeTab == "applicants") {
+  }
+
+  else if (activeTab == "applicants") {
     list = "applicant";
     itemPath = `/application/${item?.organization?.id}/${item?.applicant.id}/${item?._id}`;
     itemState = {
@@ -115,7 +106,6 @@ const ProfileListItem = ({
 
   return (
     <Link
-
       to={{
         pathname: itemPath,
         state: {
@@ -128,27 +118,16 @@ const ProfileListItem = ({
         <ProfileContainer>
           <ProfilePicContainer>
             <ProfilePic>
-              {
-                // TODO - ADD USER INFO (photo, etc.) FROM BE LOOKUP
-              }
-              {item?.[list]?.photo ? (
+              {item?.[list]?.photo ?
                 <img
                   style={{
                     maxWidth: "100%",
                     borderRadius: "50%",
                     boxSizing: "content-box",
                   }}
-                  src={item?.[list]?.photo}
-                />
-              ) : orgsList ? (
-                <img
-                // src will be org profile generic image
-                />
-              ) : (
-                (item?.[list]?.name &&
-                  getInitialsFromFullName(item?.[list]?.name)) ||
-                ""
-              )}
+                  src={item?.[list]?.userInfo.photo}
+                /> :
+                getInitialsFromFullName(item?.[list]?.name)}
             </ProfilePic>
           </ProfilePicContainer>
           <TextContainer>
