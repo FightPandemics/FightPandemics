@@ -119,16 +119,18 @@ const ProfileListItem = ({
         <ProfileContainer>
           <ProfilePicContainer>
             <ProfilePic>
-              {item?.[list]?.photo ?
+              {item?.[list]?.userInfo?.photo ?
                 <img
                   style={{
                     maxWidth: "100%",
                     borderRadius: "50%",
                     boxSizing: "content-box",
                   }}
-                  src={item?.[list]?.userInfo.photo}
+                  src={item?.[list]?.userInfo?.photo}
                 /> :
-                getInitialsFromFullName(item?.[list]?.name || "")}
+
+                item?.[list]?.name && getInitialsFromFullName(item?.[list]?.name || "")
+              }
             </ProfilePic>
           </ProfilePicContainer>
           <TextContainer>

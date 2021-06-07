@@ -310,7 +310,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         );
       }
     })();
-  }, [orgProfileDispatch, organisationId, userProfileDispatch, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (tab == "activity") {
@@ -613,20 +613,20 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const dispatchAction = (type, key, value) =>
     feedDispatch({ type, key, value });
 
-  const refetchApplicants = (
-    isLoadingApplicants,
-    loadMoreApplicants,
-  ) => {
-    dispatch(
-      applicantsActions.resetPageAction({
-        isLoadingApplicants,
-        loadMoreApplicants,
-      }),
-    );
-    if (pageApplicants === 0) {
-      setToggleRefetchApplicants(!toggleRefetchApplicants);
-    }
-  };
+  // const refetchApplicants = (
+  //   isLoadingApplicants,
+  //   loadMoreApplicants,
+  // ) => {
+  //   dispatch(
+  //     applicantsActions.resetPageAction({
+  //       isLoadingApplicants,
+  //       loadMoreApplicants,
+  //     }),
+  //   );
+  //   if (pageApplicants === 0) {
+  //     setToggleRefetchApplicants(!toggleRefetchApplicants);
+  //   }
+  // };
   const refetchMembers = (
     isLoadingMembers,
     loadMoreMembers,
@@ -787,6 +787,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     } catch (error) {
       dispatch(applicantsActions.fetchApplicantsError(error));
     }
+    if (applicantsLoaded == false) {
+      setApplicantsLoaded(true)
+    }
   };
   const loadMembers = async () => {
     const limit = PAGINATION_LIMIT;
@@ -866,6 +869,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     } catch (error) {
       dispatch(membersActions.fetchMembersError(error));
     }
+    if (membersLoaded == false) {
+      setMembersLoaded(true)
+    }
   };
   useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -892,24 +898,17 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   // ]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (activeTab == "applicants") {
-      loadApplicants();
-      if (applicantsLoaded == false) {
-        setApplicantsLoaded(true)
-      } else {
-        return
-      }
-    }
+    // if (activeTab == "applicants") {
+    loadApplicants();
+    // }
   }, [organisationId, pageApplicants, tab]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (activeTab == "members") {
-      loadMembers();
-      if (membersLoaded == false) {
-        setMembersLoaded(true)
-      } else {
-        return
-      }
-    }
+    // if (activeTab == "members") {
+    loadMembers();
+    //   else {
+    //   return
+    // }
+    // }
   }, [organisationId, pageMembers, tab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -966,6 +965,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       <>
         <ProfileBackgroup />
         <ProfileLayout>
+
           <UserInfoContainer>
             <AvatarPhotoContainer>
               <ProfilePic
@@ -1049,12 +1049,14 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             </JoinOrgContainer>
           ) : null
           }
+
           <ProfileTabs
             defaultActiveKey="activity"
             // defaultActiveKey="applicants"
             activeKey={tab}
             onChange={(e) => preSetActiveTab(e)}
           >
+
             <ProfileTabPane tab={t("profile.views.activity")} key="activity">
               <div>
                 <SectionHeader>
@@ -1118,8 +1120,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </div>
             </ProfileTabPane>
             {
+              <ProfileTabPane tab={`${t("profile.views.members")} ${membersLoaded ? "( " + totalMemberCount + " )" : ""} `} key="members">
 
-              <ProfileTabPane tab={t("profile.views.members")} key="members">
                 {
                   // isLoadingApplicants ?
                   //   <Loader /> :
@@ -1155,7 +1157,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
               isOwner || permissions.isAdmin || isSelf ? (
                 <ProfileTabPane
-                  tab={t("profile.views.applicants")}
+                  tab={`${t("profile.views.applicants")} ${applicantsLoaded ? "( " + (totalApplicantCount) + " )" : ""} `}
                   key="applicants"
                 >
                   {
@@ -1321,7 +1323,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               key="bottom"
             >
               <DrawerHeader>
-                <Link to={`/edit-organisation-account/${organisationId}`}>
+                <Link to={`/ edit - organisation - account / ${organisationId}`}>
                   {t("profile.org.editOrgAccount")}
                 </Link>
               </DrawerHeader>
@@ -1336,8 +1338,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 </Link>
               </DrawerHeader>
             </CustomDrawer>
-          )}
-        </ProfileLayout>
+          )
+          }
+        </ProfileLayout >
       </>
     );
   }

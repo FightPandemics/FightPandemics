@@ -157,7 +157,6 @@ const applicantsReducer = (state = initialState, action) => {
       const { payload } = action;
       return { ...state, page: payload.page };
     case APPLICANTS_ACTIONS.RESET_PAGE: {
-      console.log("next page4 APPLICANTS_RESET_PAGE")
       const { payload } = action;
       return {
         ...state,
