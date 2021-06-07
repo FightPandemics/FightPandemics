@@ -313,69 +313,69 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (tab == "activity") {
-      const fetchOrganisationPosts = async () => {
-        const limit = PAGINATION_LIMIT;
-        const skip = page * limit;
-        dispatch(postsActions.fetchPostsBegin());
-        try {
+    // if (tab == "activity") {
+    const fetchOrganisationPosts = async () => {
+      const limit = PAGINATION_LIMIT;
+      const skip = page * limit;
+      dispatch(postsActions.fetchPostsBegin());
+      try {
 
-          if (organisationId) {
-            const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}${getActorQuery()}`;
-            const {
-              data: { data: posts, meta },
-            } = await axios.get(endpoint);
-            if (prevOrgId !== organisationId) {
-              dispatch(
-                postsActions.fetchPostsSuccess({
-                  posts: [],
-                }),
-              );
-            }
-            if (posts.length && meta.total) {
-              if (prevTotalPostCount !== meta.total) {
-                setTotalPostCount(meta.total);
-              }
-              if (posts.length < limit) {
-                dispatch(postsActions.finishLoadingAction());
-              } else if (meta.total === limit) {
-                dispatch(postsActions.finishLoadingAction());
-              }
-              const loadedPosts = posts.reduce((obj, item) => {
-                obj[item._id] = item;
-                return obj;
-              }, {});
-
-              if (prevOrgId === organisationId && postsList) {
-                dispatch(
-                  postsActions.fetchPostsSuccess({
-                    posts: { ...postsList, ...loadedPosts },
-                  }),
-                );
-              } else {
-                dispatch(
-                  postsActions.fetchPostsSuccess({
-                    posts: { ...loadedPosts },
-                  }),
-                );
-              }
-            } else if (prevOrgId === organisationId && posts) {
-              dispatch(
-                postsActions.fetchPostsSuccess({
-                  posts: { ...postsList },
-                }),
-              );
-              dispatch(postsActions.finishLoadingAction());
-            } else {
-              dispatch(postsActions.finishLoadingAction());
-            }
+        if (organisationId) {
+          const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}${getActorQuery()}`;
+          const {
+            data: { data: posts, meta },
+          } = await axios.get(endpoint);
+          if (prevOrgId !== organisationId) {
+            dispatch(
+              postsActions.fetchPostsSuccess({
+                posts: [],
+              }),
+            );
           }
-        } catch (error) {
-          dispatch(postsActions.fetchPostsError(error));
+          if (posts.length && meta.total) {
+            if (prevTotalPostCount !== meta.total) {
+              setTotalPostCount(meta.total);
+            }
+            if (posts.length < limit) {
+              dispatch(postsActions.finishLoadingAction());
+            } else if (meta.total === limit) {
+              dispatch(postsActions.finishLoadingAction());
+            }
+            const loadedPosts = posts.reduce((obj, item) => {
+              obj[item._id] = item;
+              return obj;
+            }, {});
+
+            if (prevOrgId === organisationId && postsList) {
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: { ...postsList, ...loadedPosts },
+                }),
+              );
+            } else {
+              dispatch(
+                postsActions.fetchPostsSuccess({
+                  posts: { ...loadedPosts },
+                }),
+              );
+            }
+          } else if (prevOrgId === organisationId && posts) {
+            dispatch(
+              postsActions.fetchPostsSuccess({
+                posts: { ...postsList },
+              }),
+            );
+            dispatch(postsActions.finishLoadingAction());
+          } else {
+            dispatch(postsActions.finishLoadingAction());
+          }
         }
-      };
-      fetchOrganisationPosts();
-    }
+      } catch (error) {
+        dispatch(postsActions.fetchPostsError(error));
+      }
+    };
+    fetchOrganisationPosts();
+    // }
   }, [organisationId, page, toggleRefetch, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
@@ -405,7 +405,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, organisationPosts.length, activeTab],
+    [dispatch, isLoading, loadMore, organisationPosts.length, activeTab, tab],
   );
 
   useEffect(() => {
@@ -1049,7 +1049,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             </JoinOrgContainer>
           ) : null
           }
-
+  Post Count: {itemCount}
           <ProfileTabs
             defaultActiveKey="activity"
             // defaultActiveKey="applicants"
@@ -1120,7 +1120,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               </div>
             </ProfileTabPane>
             {
-              <ProfileTabPane tab={`${t("profile.views.members")} ${membersLoaded ? "( " + totalMemberCount + " )" : ""} `} key="members">
+              <ProfileTabPane
+                tab={`${t("profile.views.members")}`} key="members">
+                {/* tab={`${t("profile.views.members")} ${membersLoaded ? "( " + totalMemberCount + " )" : ""} `} key="members"> */}
 
                 {
                   // isLoadingApplicants ?
@@ -1157,7 +1159,8 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
               isOwner || permissions.isAdmin || isSelf ? (
                 <ProfileTabPane
-                  tab={`${t("profile.views.applicants")} ${applicantsLoaded ? "( " + (totalApplicantCount) + " )" : ""} `}
+                  // tab={`${t("profile.views.applicants")} ${applicantsLoaded ? "( " + (totalApplicantCount) + " )" : ""} `}
+                  tab={`${t("profile.views.applicants")}`}
                   key="applicants"
                 >
                   {
