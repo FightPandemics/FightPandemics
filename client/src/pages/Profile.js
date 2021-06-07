@@ -853,25 +853,6 @@ const Profile = ({
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
     feedApplicants,
   ]);
-  // const loadNextPageApplicant = useCallback(
-  //   ({ stopIndex }) => {
-  //     if (
-  //       !isLoadingApplicants &&
-  //       loadMoreApplicants &&
-  //       stopIndex >= feedApplicants.length &&
-  //       feedApplicants.length
-  //     ) {
-  //       return new Promise((resolve) => {
-  //         dispatch(applicantsActions.setNextPageAction());
-  //         dispatchAction(SET_VALUE, "applyFilters", true);
-  //         resolve();
-  //       });
-  //     } else {
-  //       return Promise.resolve();
-  //     }
-  //   },
-  //   [feedApplicants.length, isLoadingApplicants, loadMoreApplicants], // eslint-disable-line react-hooks/exhaustive-deps
-  // );
 
   useEffect(() => {
     setItemCountApplicants(

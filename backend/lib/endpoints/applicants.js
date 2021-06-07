@@ -115,6 +115,19 @@ async function routes(app) {
               }
             },
             {
+              $lookup: {
+                "from": "users",
+                "localField": "organization.id",
+                "foreignField": "_id",
+                "as": "orgInfo"
+              }
+            },
+            {
+              $set: {
+                orgInfo: { $arrayElemAt: ["$orgInfo", 0] },
+              }
+            },
+            {
               $skip: parseInt(skip, 10) || 0,
             },
             {

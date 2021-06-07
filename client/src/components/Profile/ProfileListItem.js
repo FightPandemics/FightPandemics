@@ -150,26 +150,6 @@ export const Title = styled.p`
 `;
 
 const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
-  // let list;
-  // if (type != "orgs") {
-  //   list = "applicant";
-  // }
-
-  // if (type == "orgs") {
-  //   list = "organization";
-  // }
-  // // console.log(item);
-  // // console.log(item["organization"]["id"]);
-  // // console.log(orgItem[1].name);
-  // let orgName;
-  // let orgPic;
-  // // listOrgs.forEach((orgItem) => {
-  // //   if (item["organization"]["id"] == orgItem[0]) {
-  // //     orgName = orgItem[1].name;
-  // //     orgItem[1].photo ? (orgPic = orgItem[1].photo) : (orgPic = "");
-  // //   }
-  // // });
-  // // console.log(orgName);
 
   return (
     <AllItems className="organisation-card">
@@ -178,25 +158,25 @@ const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
           className={"organisation-card"}
         >
           <ProfilePic className="organisation-card">
-            {item?.organization?.pic ? (
+            {item?.orgInfo?.photo ? (
               <img
                 style={{
                   maxWidth: "100%",
                   borderRadius: "50%",
                   boxSizing: "content-box",
                 }}
-                src={item?.organization?.pic}
+                src={item?.orgInfo?.photo}
               />
             ) : (
               <OrgTextAvatar>
-                {(item?.organization?.name && getInitialsFromFullName(item?.organization?.name)) || ""}
+                {(item?.orgInfo?.name && getInitialsFromFullName(item?.orgInfo?.name)) || ""}
               </OrgTextAvatar>
             )}
           </ProfilePic>
         </ProfilePicContainer>
         <TextContainer className="organisation-card">
           <Name>
-            <Link to={`/organisation/${item?.organization?.id}`}>{item.organization.name}</Link>
+            <Link to={`/organisation/${item?.organization?.id}`}>{item?.orgInfo?.name}</Link>
           </Name>
           {!isSelf ? null : (
             <Title>

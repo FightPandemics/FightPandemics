@@ -12,13 +12,14 @@ const applicantSchema = new Schema(
         required: true,
         type: ObjectId,
       },
+      // orgInfo: Object,
       name: String,
       permissions: {
         enum: ORG_MEMBERS_TYPES,
         default: "Volunteer",
         required: true,
         type: String,
-      }
+      },
     },
     applicantApplied: {
       required: true,
@@ -30,7 +31,7 @@ const applicantSchema = new Schema(
       },
       name: {
         type: String
-      }
+      },
     }, //Author Schema
     answers: {
       required: true,
