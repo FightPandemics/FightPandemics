@@ -1,24 +1,24 @@
 export const APPLICANTS_ACTIONS = {
-  FINISH_LOADING: "FINISH_LOADING",
+  FINISH_LOADING_APPLICANTS: "FINISH_LOADING_APPLICANTS",
   FETCH_APPLICANTS_SUCCESS: "FETCH_APPLICANTS_SUCCESS",
   FETCH_APPLICANTS_BEGIN: "FETCH_APPLICANTS_BEGIN",
   FETCH_APPLICANTS_ERROR: "FETCH_APPLICANTS_ERROR",
   FETCH_PROFILE_APPLICANTS_SUCCESS: "FETCH_PROFILE_APPLICANTS_SUCCESS",
   UPDATE_PROFILE_APPLICANT_SUCCESS: "UPDATE_PROFILE_APPLICANT_SUCCESS",
-  NEXT_PAGE: "NEXT_PAGE",
+  NEXT_PAGE_APPLICANTS: "NEXT_PAGE_APPLICANTS",
   SET_PAGE: "SET_PAGE",
-  RESET_PAGE: "RESET_PAGE",
+  RESET_PAGE_APPLICANTS: "RESET_PAGE_APPLICANTS",
   RESET_APPLICANTS: "RESET_APPLICANTS",
-  SET_LOADING: "SET_LOADING",
+  SET_LOADING_APPLICANTS: "SET_LOADING_APPLICANTS",
   SET_REPORTED: "SET_REPORTED",
   SHOW_ANYWAY: "SHOW_ANYWAY",
 };
 
-export const resetPageAction = ({ isLoading = false, loadMore = true }) => ({
-  type: APPLICANTS_ACTIONS.RESET_PAGE,
+export const resetPageAction = ({ isLoadingApplicants = false, loadMoreApplicants = true }) => ({
+  type: APPLICANTS_ACTIONS.RESET_PAGE_APPLICANTS,
   payload: {
-    isLoading,
-    loadMore,
+    isLoadingApplicants,
+    loadMoreApplicants,
   },
 });
 
@@ -56,11 +56,11 @@ export const fetchApplicantsError = (error) => ({
 });
 
 export const finishLoadingAction = () => ({
-  type: APPLICANTS_ACTIONS.FINISH_LOADING,
+  type: APPLICANTS_ACTIONS.FINISH_LOADING_APPLICANTS,
 });
 
 export const setNextPageAction = () => ({
-  type: APPLICANTS_ACTIONS.NEXT_PAGE,
+  type: APPLICANTS_ACTIONS.NEXT_PAGE_APPLICANTS,
 });
 
 export const setPageAction = (page) => ({
@@ -68,9 +68,9 @@ export const setPageAction = (page) => ({
   payload: { page },
 });
 
-export const setLoadingAction = ({ isLoading, loadMore }) => ({
-  type: APPLICANTS_ACTIONS.SET_LOADING,
-  payload: { isLoading, loadMore },
+export const setLoadingAction = ({ isLoadingApplicants, loadMoreApplicants }) => ({
+  type: APPLICANTS_ACTIONS.SET_LOADING_APPLICANTS,
+  payload: { isLoadingApplicants, loadMoreApplicants },
 });
 
 export const setReported = ({ applicantId }) => ({

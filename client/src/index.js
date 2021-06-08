@@ -25,7 +25,11 @@ const tagManagerArgs = {
 if (localStorage.getItem("fp_qa") != "true")
   TagManager.initialize(tagManagerArgs);
 
-const store = createStore(rootReducer, composeWithDevTools( // TODO - REMOVE REDUX DEV TOOLS
+const composeEnhancers = composeWithDevTools({
+  trace: true,
+  traceLimit: 25
+})
+const store = createStore(rootReducer, composeEnhancers( // TODO - REMOVE REDUX DEV TOOLS
   applyMiddleware(thunk)
 ));
 

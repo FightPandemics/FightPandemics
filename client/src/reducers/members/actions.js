@@ -1,23 +1,23 @@
 export const MEMBERS_ACTIONS = {
-  FINISH_LOADING: "FINISH_LOADING",
+  FINISH_LOADING_MEMBERS: "FINISH_LOADING_MEMBERS",
   FETCH_MEMBERS_SUCCESS: "FETCH_MEMBERS_SUCCESS",
   FETCH_MEMBERS_BEGIN: "FETCH_MEMBERS_BEGIN",
   FETCH_MEMBERS_ERROR: "FETCH_MEMBERS_ERROR",
   FETCH_PROFILE_MEMBERS_SUCCESS: "FETCH_PROFILE_MEMBERS_SUCCESS",
   UPDATE_PROFILE_MEMBER_SUCCESS: "UPDATE_PROFILE_MEMBER_SUCCESS",
-  NEXT_PAGE: "NEXT_PAGE",
-  SET_PAGE: "SET_PAGE",
-  RESET_PAGE: "RESET_PAGE",
-  SET_LOADING: "SET_LOADING",
+  NEXT_PAGE_MEMBERS: "NEXT_PAGE_MEMBERS",
+  SET_PAGE_MEMBERS: "SET_PAGE_MEMBERS",
+  RESET_PAGE_MEMBERS: "RESET_PAGE_MEMBERS",
+  SET_LOADING_MEMBERS: "SET_LOADING_MEMBERS",
   SET_REPORTED: "SET_REPORTED",
   SHOW_ANYWAY: "SHOW_ANYWAY",
 };
 
-export const resetPageAction = ({ isLoading = false, loadMore = true }) => ({
-  type: MEMBERS_ACTIONS.RESET_PAGE,
+export const resetPageAction = ({ isLoadingMembers = false, loadMoreMembers = true }) => ({
+  type: MEMBERS_ACTIONS.RESET_PAGE_MEMBERS,
   payload: {
-    isLoading,
-    loadMore,
+    isLoadingMembers,
+    loadMoreMembers,
   },
 });
 
@@ -51,21 +51,21 @@ export const fetchMembersError = (error) => ({
 });
 
 export const finishLoadingAction = () => ({
-  type: MEMBERS_ACTIONS.FINISH_LOADING,
+  type: MEMBERS_ACTIONS.FINISH_LOADING_MEMBERS,
 });
 
 export const setNextPageAction = () => ({
-  type: MEMBERS_ACTIONS.NEXT_PAGE,
+  type: MEMBERS_ACTIONS.NEXT_PAGE_MEMBERS,
 });
 
-export const setPageAction = (page) => ({
-  type: MEMBERS_ACTIONS.SET_PAGE,
-  payload: { page },
+export const setPageAction = (pageMembers) => ({
+  type: MEMBERS_ACTIONS.SET_PAGE_MEMBERS,
+  payload: { pageMembers },
 });
 
-export const setLoadingAction = ({ isLoading, loadMore }) => ({
-  type: MEMBERS_ACTIONS.SET_LOADING,
-  payload: { isLoading, loadMore },
+export const setLoadingAction = ({ isLoadingMembers, loadMoreMembers }) => ({
+  type: MEMBERS_ACTIONS.SET_LOADING_MEMBERS,
+  payload: { isLoadingMembers, loadMoreMembers },
 });
 
 export const setReported = ({ applicantId }) => ({

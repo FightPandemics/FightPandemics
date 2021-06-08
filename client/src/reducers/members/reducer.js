@@ -4,10 +4,10 @@ import { isPostExpired } from "components/Feed/utils";
 //TODO remove expired
 const initialState = {
   members: [],
-  page: 0,
+  pageMembers: 0,
   error: null,
-  isLoading: false,
-  loadMore: true,
+  isLoadingMembers: false,
+  loadMoreMembers: true,
   isCachedStale: false,
 };
 
@@ -35,7 +35,7 @@ const membersReducer = (state = initialState, action) => {
     case MEMBERS_ACTIONS.FETCH_MEMBERS_BEGIN:
       return {
         ...state,
-        isLoading: true,
+        isLoadingMembers: true,
       };
     case MEMBERS_ACTIONS.FETCH_MEMBERS_SUCCESS: {
       const { payload } = action;
@@ -43,7 +43,7 @@ const membersReducer = (state = initialState, action) => {
         ...state,
         error: null,
         members: payload,
-        isLoading: false,
+        isLoadingMembers: false,
       };
     }
 
@@ -64,7 +64,7 @@ const membersReducer = (state = initialState, action) => {
             },
           },
         },
-        isLoading: false,
+        isLoadingMembers: false,
       };
     }
     case MEMBERS_ACTIONS.UPDATE_PROFILE_MEMBER_SUCCESS: {
@@ -142,29 +142,29 @@ const membersReducer = (state = initialState, action) => {
         ...state,
         error: payload,
         members: [],
-        isLoading: false,
+        isLoadingMembers: false,
       };
     }
-    case MEMBERS_ACTIONS.NEXT_PAGE:
-      return { ...state, page: state.page + 1 };
-    case MEMBERS_ACTIONS.SET_PAGE:
+    case MEMBERS_ACTIONS.NEXT_PAGE_MEMBERS:
+      return { ...state, pageMembers: state.pageMembers + 1 };
+    case MEMBERS_ACTIONS.SET_PAGE_MEMBERS:
       const { payload } = action;
-      return { ...state, page: payload.page };
-    case MEMBERS_ACTIONS.RESET_PAGE: {
+      return { ...state, pageMembers: payload.pageMembers };
+    case MEMBERS_ACTIONS.RESET_PAGE_MEMBERS: {
       const { payload } = action;
       return {
         ...state,
-        page: 0,
+        pageMembers: 0,
         members: [],
-        loadMore: payload.loadMore,
-        isLoading: payload.isLoading,
+        loadMoreMembers: payload.loadMoreMembers,
+        isLoadingMembers: payload.isLoadingMembers,
       };
     }
-    case MEMBERS_ACTIONS.FINISH_LOADING:
+    case MEMBERS_ACTIONS.FINISH_LOADING_MEMBERS:
       return {
         ...state,
-        isLoading: false,
-        loadMore: false,
+        isLoadingMembers: false,
+        loadMoreMembers: false,
       };
     case MEMBERS_ACTIONS.SET_REPORTED: {
       const { payload } = action;
