@@ -9,6 +9,7 @@ const initialState = {
   isLoadingApplicants: false,
   loadMoreApplicants: true,
   isCachedStale: false,
+  profileApplicants: {},
 };
 
 export const getProfileObjectiveProp = (view) => {
@@ -169,7 +170,7 @@ const applicantsReducer = (state = initialState, action) => {
         isLoadingApplicants: payload.isLoadingApplicants,
       };
     }
-    case APPLICANTS_ACTIONS.FINISH_LOADING:
+    case APPLICANTS_ACTIONS.FINISH_LOADING_APPLICANTS:
       return {
         ...state,
         isLoadingApplicants: false,

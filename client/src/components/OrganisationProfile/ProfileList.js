@@ -116,7 +116,8 @@ const ProfileList = ({
 
     <>
       {
-        <ListContainer>
+
+        < ListContainer >
           <AntList
             itemLayout="horizontal"
             loadMore={

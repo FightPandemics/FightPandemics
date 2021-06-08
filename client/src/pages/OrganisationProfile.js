@@ -223,7 +223,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const [itemCount, setItemCount] = useState(0);
   const [toggleRefetch, setToggleRefetch] = useState(false);
   const [totalPostCount, setTotalPostCount] = useState(ARBITRARY_LARGE_NUM);
-
   const {
     email,
     name,
@@ -271,7 +270,8 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
-
+    dispatch(applicantsActions.resetPageAction({}));
+    dispatch(membersActions.resetPageAction({}));
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
       userProfileDispatch(fetchUser());
@@ -324,6 +324,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
+          setTotalPostCount(meta.total);
           if (prevOrgId !== organisationId) {
             dispatch(
               postsActions.fetchPostsSuccess({
@@ -365,6 +366,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
               }),
             );
             dispatch(postsActions.finishLoadingAction());
+
           } else {
             dispatch(postsActions.finishLoadingAction());
           }
@@ -373,16 +375,11 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
         dispatch(postsActions.fetchPostsError(error));
       }
     };
+
     fetchOrganisationPosts();
     setPostsLoaded(true)
 
-  }, [
-    organisationId,
-    page,
-    toggleRefetch,
-    tab,
-    activeTab
-  ]);
+  }, [organisationId, page, toggleRefetch, tab, activeTab]);
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -732,12 +729,13 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     baseURL = getApplicantsBaseURL(organisationId, limit, skip);
     const endpoint = `/api/applicants/${organisationId}/status?includeMeta=true&limit=${limit}&skip=${skip}&status=applied`;
     dispatch(applicantsActions.fetchApplicantsBegin());
-
+    setApplicantsLoaded(false)
     try {
       if (organisationId) {
         const {
           data: { data: applicants, meta },
         } = await axios.get(endpoint);
+        setRawTotalApplicants(meta.total);
         if (applicants.length && meta.total) {
           if (prevTotalApplicantCount !== meta.total) {
             setTotalApplicantCount(meta.total);
@@ -747,6 +745,13 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
             dispatch(applicantsActions.finishLoadingAction());
           } else if (meta.total === limit) {
             dispatch(applicantsActions.finishLoadingAction());
+          }
+          if (prevOrgId !== organisationId) {
+            dispatch(
+              applicantsActions.fetchApplicantsSuccess({
+                applicants: [],
+              }),
+            );
           }
 
           const loadedApplicants = applicants.reduce((obj, item) => {
@@ -781,9 +786,9 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     catch (error) {
       dispatch(applicantsActions.fetchApplicantsError(error));
     }
-    if (applicantsLoaded == false) {
-      setApplicantsLoaded(true)
-    }
+    // if (applicantsLoaded == false) {
+    setApplicantsLoaded(true)
+    // }
   };
   const loadMembers = async () => {
     const limit = PAGINATION_LIMIT;
@@ -796,12 +801,13 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     baseURL = getMembersBaseURL(organisationId, limit, skip);
     let endpoint = baseURL;
     dispatch(membersActions.fetchMembersBegin());
-
+    setMembersLoaded(false)
     try {
       if (organisationId) {
         const {
           data: { data: members, meta },
         } = await axios.get(endpoint);
+        setRawTotalMembers(meta.total);
         if (members.length && meta.total) {
           if (prevTotalMemberCount !== meta.total) {
             setTotalMemberCount(meta.total);
@@ -867,9 +873,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     catch (error) {
       dispatch(membersActions.fetchMembersError(error));
     }
-    if (membersLoaded == false) {
-      setMembersLoaded(true)
-    }
+    setMembersLoaded(true)
   };
   useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -881,12 +885,12 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     if (postsLoaded) {
       loadApplicants();
     }
-  }, [pageApplicants, tab, postsLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [organisationId, pageApplicants, tab, postsLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (postsLoaded) {
       loadMembers();
     }
-  }, [pageMembers, tab, postsLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [organisationId, pageMembers, tab, postsLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setPosDescription(description);
@@ -1024,6 +1028,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
             </JoinOrgContainer>
           ) : null
           }
+          
           <ProfileTabs
             defaultActiveKey="activity"
             activeKey={tab}
@@ -1132,6 +1137,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                   tab={`${t("profile.views.applicants")} ${applicantsLoaded ? "( " + (rawTotalApplicantCount) + " )" : ""} `}
                   key="applicants"
                 >
+
                   {
                     // isLoadingApplicants ?
                     //   <Loader /> :
