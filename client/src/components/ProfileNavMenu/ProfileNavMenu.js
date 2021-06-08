@@ -137,6 +137,8 @@ const OrgImage  = styled.img`
     border-radius: 50%;
     margin-bottom: 2.5rem;
     cursor: pointer;
+    border: ${props => props.active ? "4px solid #425AF2" : "none"};
+
 `;
 
 const OrgTitle = styled.h2`
@@ -237,59 +239,74 @@ const OrgServices = styled.span`
     color: ${colors.darkGray};
 `;
 
-const ProfileNavMenu = ({navIsOpened, setNavIsOpened}) => {
-    const [organizationId, setOrganisationId] = useState(0);
-    // This array will be the organizations array (dummy data for now)
-    let organisations = ["Cards for Humanity", "Doing Good", "Hearts for LA",
-     "Fight it Peters", "Helping Hands", "FightPandemics"]; 
+const ProfileNavMenu = 
+({  
+    navIsOpened,
+    setNavIsOpened, 
+    organisationId,
+    setOrganisationId,
+    user
+}) => {
+    let organisations = user ? user.organisations : [];
 
     return (
-    <NavMenu navIsOpened = {navIsOpened}>
-        <LeftContainer>
-            <ArrowWrapper onClick = {() => setNavIsOpened(!navIsOpened)} navIsOpened = {navIsOpened}>
-                <Arrow />
-            </ArrowWrapper>
-            {
-             organisations.map((item, idx) => {
-                    return (
-                        <OrgImage 
-                            key= {idx}
-                            src ="https://data.whicdn.com/images/22345458/original.jpg" 
-                            onClick = {() => {
-                                setNavIsOpened(true);
-                                setOrganisationId(idx);
-                            } }
-                        />
-                    );
-                })
-            }
-             <RoundedButton type="button"><span>+</span></RoundedButton>
-        </LeftContainer>
-        <OrganizationMobileHeader>
-            <OrganizationMobileHeaderTop>
-                 <OrgImageMobile 
-                    src ="https://data.whicdn.com/images/22345458/original.jpg" 
-                />
-                <OrgTitleMobile>Fight It Peters</OrgTitleMobile>
-            </OrganizationMobileHeaderTop>
-            <OrganizationMobileHeaderBottom>
-                <OrgServices>Emergency Relief / International Assistance</OrgServices>
-            </OrganizationMobileHeaderBottom>
-        </OrganizationMobileHeader>
-        <RightContainer navIsOpened = {navIsOpened}>
-            <OrgTitle>{ organisations[organizationId].length <= 11 
-            ? organisations[organizationId] 
-            : organisations[organizationId].slice(0, 12) + "..."}</OrgTitle>
-            {renderNavSections()}
-            <CloseNavButtomMobile onClick = {()=> setNavIsOpened(false)}><span>&times;</span></CloseNavButtomMobile>
-            <Footer>
-                <NavLink>Account</NavLink>
-                <NavLink>Profile</NavLink>
-                <NavLink>Privacy/Security</NavLink>
-                <NavLink>Notifications</NavLink>
-            </Footer>
-        </RightContainer>
-    </NavMenu>
+        organisations 
+        ?
+        <NavMenu navIsOpened = {navIsOpened}>
+            <LeftContainer>
+                <ArrowWrapper onClick = {() => setNavIsOpened(!navIsOpened)} navIsOpened = {navIsOpened}>
+                    <Arrow />
+                </ArrowWrapper>
+                {
+                organisations.map((org, idx) => {
+                        return (
+                            <OrgImage 
+                                key= {org._id}
+                                src = "https://data.whicdn.com/images/22345458/original.jpg" 
+                                active = {idx === organisationId ? true : false}
+                                onClick = {() => {
+                                    setNavIsOpened(true);
+                                    setOrganisationId(idx);
+                                } }
+                            />
+                        );
+                    })
+                }
+                <RoundedButton type="button"><span>+</span></RoundedButton>
+            </LeftContainer>
+            <OrganizationMobileHeader>
+                <OrganizationMobileHeaderTop>
+                    <OrgImageMobile 
+                        src ="https://data.whicdn.com/images/22345458/original.jpg" 
+                    />
+                    <OrgTitleMobile>
+                        {organisations.length > 0 ? organisations[organisationId].name : ""}
+                    </OrgTitleMobile>
+                </OrganizationMobileHeaderTop>
+                <OrganizationMobileHeaderBottom>
+                    <OrgServices>{organisations.length > 0 ? organisations[organisationId].industry : ""}</OrgServices>
+                </OrganizationMobileHeaderBottom>
+            </OrganizationMobileHeader>
+            <RightContainer navIsOpened = {navIsOpened}>
+                <OrgTitle>{ 
+                    organisations.length > 0
+                    && 
+                    (organisations[organisationId].name.length <= 11 
+                    ? organisations[organisationId].name 
+                    : organisations[organisationId].name.slice(0, 12) + "...")
+                }</OrgTitle>
+                {renderNavSections()}
+                <CloseNavButtomMobile onClick = {()=> setNavIsOpened(false)}><span>&times;</span></CloseNavButtomMobile>
+                <Footer>
+                    <NavLink>Account</NavLink>
+                    <NavLink>Profile</NavLink>
+                    <NavLink>Privacy/Security</NavLink>
+                    <NavLink>Notifications</NavLink>
+                </Footer>
+            </RightContainer>
+        </NavMenu>
+        :
+        ""
     );
 }
 

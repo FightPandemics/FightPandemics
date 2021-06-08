@@ -90,29 +90,37 @@ const JoinOrgLink = styled(Link)`
     margin-left: 2.6rem;
 `;
 
-const DrawerComponent = ({navIsOpened, setNavIsOpened}) => {
+const DrawerComponent = 
+({
+    navIsOpened, 
+    setNavIsOpened, 
+    organisationId,
+    setOrganisationId,
+    user
+}) => {
     const [drawerIsClosed, setDrawerIsClosed] = useState(false);
-    let organisations = ["Cards for Humanity", "Doing Good", "Hearts for LA",
-     "Fight it Peters", "Helping Hands", "FightPandemics"]; 
+    let organisations = user ? user.organisations : [];
 
     return (
+        organisations
+        ?
         <Drawer drawerIsClosed = {drawerIsClosed}>
             <DrawerTitleWrapper>
                 <DrawerTitle>Org Workspace</DrawerTitle>
             </DrawerTitleWrapper>
             <OrgsWrapper>
                 {
-                organisations.map((orgName, idx) => {
+                organisations.map((org, idx) => {
                     return (
-                        <OrgCard onClick = {() => {
+                        <OrgCard 
+                            key= {org._id}
+                            onClick = {() => {
                             setNavIsOpened(true);
                             setDrawerIsClosed(true);
+                            setOrganisationId(idx);
                         }}>
-                            <OrgImage 
-                            key= {idx}
-                            src ="https://data.whicdn.com/images/22345458/original.jpg" 
-                            />
-                            <OrgTitle key={idx}>{ orgName }</OrgTitle>
+                            <OrgImage src ="https://data.whicdn.com/images/22345458/original.jpg" />
+                            <OrgTitle key={idx}>{ org.name }</OrgTitle>
                         </OrgCard>
                     );
                 })
@@ -126,6 +134,8 @@ const DrawerComponent = ({navIsOpened, setNavIsOpened}) => {
                 <RoundedButton onClick={ () =>  setDrawerIsClosed(true)}><span>&times;</span></RoundedButton>
             </JoinOrgWrapper>
         </Drawer>
+        :
+        ""
     );
 }
 

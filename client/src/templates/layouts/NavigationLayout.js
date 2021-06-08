@@ -96,6 +96,7 @@ const NavigationLayout = (props) => {
   } = props;
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [profileNavMenuIsOpened, setProfileNavMenuIsOpened] = useState(false);
+  const [orgId, setOrgId] = useState(0);
 
   const onOrganisationChange = (index) => {
     if (index !== organisationId) {
@@ -453,12 +454,18 @@ const NavigationLayout = (props) => {
 
           <BodyWrapper>
             <ProfileNavMenu 
+                user = {user}
                 navIsOpened = {profileNavMenuIsOpened}
                 setNavIsOpened = {setProfileNavMenuIsOpened}
+                organisationId = {orgId}
+                setOrganisationId = {setOrgId}
             />
             <MobileDrawer
+                user = {user}
                 navIsOpened = {profileNavMenuIsOpened}
                 setNavIsOpened = {setProfileNavMenuIsOpened}
+                organisationId = {orgId}
+                setOrganisationId = {setOrgId}
             />
 
             <MainWrapper>
