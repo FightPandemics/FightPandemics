@@ -120,9 +120,11 @@ const ProfileList = ({
           <AntList
             itemLayout="horizontal"
             loadMore={
-              items.length >= totalCount ? null :
-                <LoadMoreButton onClick={loadNextPage}>
-                  Load More
+              !listInitialized || isNextPageLoading ?
+                <Loader /> :
+                items.length >= totalCount ? null :
+                  <LoadMoreButton onClick={loadNextPage}>
+                    Load More
                 </LoadMoreButton>
             }
             dataSource={items}
