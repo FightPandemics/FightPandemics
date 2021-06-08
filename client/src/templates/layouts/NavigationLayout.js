@@ -45,7 +45,7 @@ import DrawerMenu from "components/DrawerMenu";
 // Added Styles
 const MainWrapper = styled.div`
     width: 100vw;
-    margin-left: 10rem;
+    margin-left: ${props => props.user ? "10rem" : "0rem"};
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
         margin-left: 0;
@@ -453,37 +453,40 @@ const NavigationLayout = (props) => {
           ) : null}
 
           <BodyWrapper>
-            <ProfileNavMenu 
-                user = {user}
-                navIsOpened = {profileNavMenuIsOpened}
-                setNavIsOpened = {setProfileNavMenuIsOpened}
-                organisationId = {orgId}
-                setOrganisationId = {setOrgId}
-            />
-            <MobileDrawer
-                user = {user}
-                navIsOpened = {profileNavMenuIsOpened}
-                setNavIsOpened = {setProfileNavMenuIsOpened}
-                organisationId = {orgId}
-                setOrganisationId = {setOrgId}
-            />
-
-            <MainWrapper>
-            <Main isProfile={props?.isProfile}>
-                <props.component {...props} />
-                {feedbackFormState.error && (
-                <ErrorAlert
-                message={feedbackFormState.error}
-                type="error"
-                closable={true}
-                fullWidthBanner={true}
-                />
-                )}
-                {renderRatingModal()}
-                {renderTextFeedbackModal()}
-                {renderRadioModal()}
-                {renderThanksModal()}
-            </Main>
+            {   user &&
+                <React.Fragment>
+                    <ProfileNavMenu 
+                        user = {user}
+                        navIsOpened = {profileNavMenuIsOpened}
+                        setNavIsOpened = {setProfileNavMenuIsOpened}
+                        organisationId = {orgId}
+                        setOrganisationId = {setOrgId}
+                    />
+                    <MobileDrawer
+                        user = {user}
+                        navIsOpened = {profileNavMenuIsOpened}
+                        setNavIsOpened = {setProfileNavMenuIsOpened}
+                        organisationId = {orgId}
+                        setOrganisationId = {setOrgId}
+                    />
+                </React.Fragment>
+            }
+            <MainWrapper user = {user}>
+                <Main isProfile={props?.isProfile}>
+                    <props.component {...props} />
+                    {feedbackFormState.error && (
+                    <ErrorAlert
+                    message={feedbackFormState.error}
+                    type="error"
+                    closable={true}
+                    fullWidthBanner={true}
+                    />
+                    )}
+                    {renderRatingModal()}
+                    {renderTextFeedbackModal()}
+                    {renderRadioModal()}
+                    {renderThanksModal()}
+                </Main>
             </MainWrapper>
             </BodyWrapper>
             {!hideFooter && <Footnote />}
