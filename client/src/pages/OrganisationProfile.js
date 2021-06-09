@@ -1050,7 +1050,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
 
             // : null
           }
-          appliedStatus: {JSON.stringify(appliedStatus)}
           < ProfileTabs
             defaultActiveKey="activity"
             activeKey={tab}
