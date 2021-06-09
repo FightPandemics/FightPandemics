@@ -136,7 +136,7 @@ const getOrgBookLink = (orgBookLink) =>
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
-const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId }) => {
+const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId, authLoading }) => {
   const [activeTab, setActiveTab] = useState("applicants");
   const [tab, setTab] = useState("activity");
   const preSetActiveTab = (e) => {
@@ -977,7 +977,8 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
           </UserInfoContainer>
 
           {
-            !appliedStatus || !appliedStatus ? null :
+            // !appliedStatus || !appliedStatus || 
+            authLoading ? null :
               (isOwner ? null :
                 isJoinOrg && appliedStatus && !currentUserOrgId && actorPermissionsLoaded || !isAuthenticated
               ) && (
