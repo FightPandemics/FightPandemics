@@ -1,155 +1,107 @@
-import { WhiteSpace } from "antd-mobile";
-import { Tabs, Switch, Col, Row } from "antd";
-import {
-  ProfileTabs,
-  ProfileTabPane,
-} from "components/OrganisationProfile/ProfileTabs";
-import axios from "axios";
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  useReducer,
-  useRef,
-} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-
+import { Col, Input, Row, Tabs } from "antd";
+import appStoreIcon from "assets/icons/app-store-icon.svg";
+import applicationConfirmation from "assets/icons/application-received.svg";
 // ICONS
 import createPost from "assets/icons/create-post.svg";
 import edit from "assets/icons/edit.svg";
 import locationIcon from "assets/icons/location.svg";
-import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 import playStoreIcon from "assets/icons/play-store-icon.svg";
-import appStoreIcon from "assets/icons/app-store-icon.svg";
-import applicationConfirmation from "assets/icons/application-received.svg";
-
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
+import envelopeBlue from "assets/icons/social-envelope-blue.svg";
+import facebookIcon from "assets/icons/social-fb.svg";
+import githubIcon from "assets/icons/social-github.svg";
 import instagramIcon from "assets/icons/social-instagram.svg";
 import linkedinBlue from "assets/icons/social-linkedin.svg";
-import facebookIcon from "assets/icons/social-fb.svg";
 import twitterBlue from "assets/icons/social-tw.svg";
-import githubIcon from "assets/icons/social-github.svg";
 import websiteIcon from "assets/icons/website-icon.svg";
-
-import Activity from "components/Profile/Activity";
+import axios from "axios";
 import CreatePost from "components/CreatePost/CreatePost";
-import ErrorAlert from "../components/Alert/ErrorAlert";
+import CreatePostButton from "components/Feed/CreatePostButton";
 import { FeedWrapper } from "components/Feed/FeedWrappers";
+import Loader from "components/Feed/StyledLoader";
+import JoinOrgButton, {
+  JoinOrgContainer
+} from "components/OrganisationProfile/JoinOrgButton";
+import { DescriptionInput } from "components/OrganisationProfile/Positions";
+import ProfileList from "components/OrganisationProfile/ProfileList";
+import {
+  ProfileTabPane, ProfileTabs
+} from "components/OrganisationProfile/ProfileTabs";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "components/Picture/UploadPic";
-import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
-import Verification from "components/Verification/";
+import Activity from "components/Profile/Activity";
 import VerificationTick from "components/Verification/Tick";
-
-import { theme, mq } from "../constants/theme";
-import styled from "styled-components";
-import { Modal, Button } from "antd";
-import { Input } from "antd";
-import { DescriptionInput } from "components/OrganisationProfile/Positions";
-
-import Loader from "components/Feed/StyledLoader";
+import GTM from "constants/gtm-tags";
 import {
-  ProfileLayout,
-  UserInfoContainer,
-  EditIcon,
-  PositionEditIcon,
-  UserInfoDesktop,
-  NameDiv,
-  PlaceholderIcon,
-  DescriptionDesktop,
-  IconsContainer,
-  SeeOrgBookLink,
-  SocialIcon,
-  SectionHeader,
-  CreatePostDiv,
-  CreatePostIcon,
-  DrawerHeader,
-  CustomDrawer,
-  PhotoUploadButton,
-  AvatarPhotoContainer,
-  NamePara,
-  ProfileBackgroup,
-} from "../components/Profile/ProfileComponents";
-import {
-  getInitialsFromFullName,
-  isAuthorOrg,
-  isAuthorUser,
-} from "utils/userInfo";
-import {
-  FACEBOOK_URL,
-  INSTAGRAM_URL,
+  APPSTORE_URL, FACEBOOK_URL,
+  GITHUB_URL, INSTAGRAM_URL,
   LINKEDIN_URL,
-  TWITTER_URL,
-  GITHUB_URL,
-  APPSTORE_URL,
-  PLAYSTORE_URL,
+  PLAYSTORE_URL, TWITTER_URL
 } from "constants/urls";
+import {
+  OrganisationContext,
+  withOrganisationContext
+} from "context/OrganisationContext";
+import { UserContext, withUserContext } from "context/UserContext";
+import {
+  DELETE_MODAL_HIDE, DELETE_MODAL_POST, SET_DELETE_MODAL_VISIBILITY
+} from "hooks/actions/feedActions";
 import {
   fetchOrganisation,
   fetchOrganisationError,
-  fetchOrganisationSuccess,
+  fetchOrganisationSuccess
 } from "hooks/actions/organisationActions";
+import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   fetchUser,
   fetchUserError,
-  fetchUserSuccess,
+  fetchUserSuccess
 } from "hooks/actions/userActions";
-import {
-  OrganisationContext,
-  withOrganisationContext,
-} from "context/OrganisationContext";
-import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
-import {
-  SET_DELETE_MODAL_VISIBILITY,
-  DELETE_MODAL_POST,
-  DELETE_MODAL_HIDE,
-  SET_VALUE,
-} from "hooks/actions/feedActions";
 import {
   deletePostModalreducer,
   deletePostState,
   feedReducer,
-  optionsReducer,
+  optionsReducer
 } from "hooks/reducers/feedReducers";
-import { UserContext, withUserContext } from "context/UserContext";
-import GTM from "constants/gtm-tags";
-import { selectPosts, postsActions } from "reducers/posts";
+import React, {
+  useCallback, useContext, useEffect,
+  useReducer,
+  useRef, useState
+} from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { applicantsActions, selectApplicants } from "reducers/applicants";
 import { membersActions, selectMembers } from "reducers/members";
+import { postsActions, selectPosts } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
-import CreatePostButton from "components/Feed/CreatePostButton";
-import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
-import JoinOrgButton, {
-  JoinOrgContainer,
-} from "components/OrganisationProfile/JoinOrgButton";
+import styled from "styled-components";
 import { LOGIN } from "templates/RouteWithSubRoutes";
-
 import {
-  JoinPositionStyles,
-  DescContainer2,
-  FPSwitch,
-  DescContainer,
-  HeaderTitle,
-  StyledTextarea,
-  Label,
-  DisplayText,
-  StyledPostButton,
-  StyledPositionModal,
-  StyledConfirmModal,
-  ConfirmButton,
-} from "../components/Positions/JoinPositionStyles";
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser
+} from "utils/userInfo";
+import ErrorAlert from "../components/Alert/ErrorAlert";
 import { PostPositionButton } from "../components/EditProfile/EditComponents";
-import TextInput from "../components/Input/PositionInput";
-import { TestMembers } from "components/OrganisationProfile/TestMembers";
-import ProfileList from "components/OrganisationProfile/ProfileList";
+import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
 import {
-  TestMembersList,
-  FilteredApplicants,
-  Applicants,
-  Meta,
-} from "utils/TestMembersList";
+  ConfirmButton, DescContainer,
+  DisplayText, FPSwitch,
+  HeaderTitle, JoinPositionStyles,
+  Label, StyledConfirmModal, StyledPositionModal, StyledPostButton
+} from "../components/Positions/JoinPositionStyles";
+import {
+  AvatarPhotoContainer, CreatePostIcon,
+  CustomDrawer, DescriptionDesktop,
+  DrawerHeader, EditIcon,
+  NameDiv,
+  NamePara, PhotoUploadButton, PlaceholderIcon, PositionEditIcon,
+  ProfileBackgroup, ProfileLayout,
+  SectionHeader, SeeOrgBookLink,
+  SocialIcon, UserInfoContainer,
+  UserInfoDesktop
+} from "../components/Profile/ProfileComponents";
 
 const Error = styled.span`
   color: red;
@@ -209,7 +161,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const posts = useSelector(selectPosts);
   const applicants = useSelector(selectApplicants);
 
-
   const {
     userProfileState: { user },
     userProfileDispatch,
@@ -266,7 +217,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const getActorQuery = () => {
     return actorOrganisationId ? `&actorId=${actorOrganisationId}` : "";
   };
-
+  console.log("yoo")
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
     dispatch(applicantsActions.resetPageAction({}));
@@ -1053,15 +1004,13 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                   </Link>
                 </JoinOrgContainer>
               )
-
-            // : null
           }
           < ProfileTabs
             defaultActiveKey="activity"
             activeKey={tab}
             onChange={(e) => preSetActiveTab(e)}
           >
-            <ProfileTabPane tab={t("profile.views.activity")} key="activity">
+            <ProfileTabPane id="test-tab" tab={t("profile.views.activity")} key="activity">
               {postsLoaded &&
                 <div>
                   <SectionHeader>
@@ -1127,8 +1076,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
               <ProfileTabPane
                 tab={`${t("profile.views.members")} ${membersLoaded ? "( " + rawTotalMemberCount + " )" : ""} `} key="members">
                 {
-                  // isLoadingApplicants ?
-                  //   <Loader /> :
                   rawTotalMemberCount == 0 && !isLoadingMembers ? (
                     < div style={{ textAlign: "center", marginTop: "5rem" }}>
                       No members to display.
@@ -1156,18 +1103,12 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
               </ProfileTabPane>
             }
             {
-              // isLoadingApplicants ?
-              //   <Loader /> :
-
               isOwner || permissions.isAdmin || isSelf ? (
                 <ProfileTabPane
                   tab={`${t("profile.views.applicants")} ${applicantsLoaded ? "( " + (rawTotalApplicantCount) + " )" : ""} `}
                   key="applicants"
                 >
-
                   {
-                    // isLoadingApplicants ?
-                    //   <Loader /> :
                     rawTotalApplicantCount == 0 && !isLoadingApplicants ? (
                       <div style={{ textAlign: "center", marginTop: "5rem" }}>
                         No applicants to display.
