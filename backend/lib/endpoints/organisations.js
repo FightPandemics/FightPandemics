@@ -283,7 +283,6 @@ async function routes(app) {
         body: { isJoinOrg, description },
         userId,
       } = req;
-      console.log({ description })
       const [orgErr, org] = await app.to(Organisation.findById(organisationId));
       if (orgErr) {
         console.log({ "error!": orgErr })

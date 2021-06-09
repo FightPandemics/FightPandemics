@@ -137,7 +137,6 @@ const postsReducer = (state = initialState, action) => {
       };
     }
     case POSTS_ACTIONS.FETCH_POSTS_ERROR: {
-      console.log("posts error!!!")
       const { payload } = action;
       return {
         ...state,
@@ -147,13 +146,11 @@ const postsReducer = (state = initialState, action) => {
       };
     }
     case POSTS_ACTIONS.NEXT_PAGE:
-      console.log("next page posts!!!")
       return { ...state, page: state.page + 1 };
     case POSTS_ACTIONS.SET_PAGE:
       const { payload } = action;
       return { ...state, page: payload.page };
     case POSTS_ACTIONS.RESET_PAGE: {
-      console.log("posts resetPageAction!!!")
       const { payload } = action;
       return {
         ...state,

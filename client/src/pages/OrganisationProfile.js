@@ -144,7 +144,6 @@ import { PostPositionButton } from "../components/EditProfile/EditComponents";
 import TextInput from "../components/Input/PositionInput";
 import { TestMembers } from "components/OrganisationProfile/TestMembers";
 import ProfileList from "components/OrganisationProfile/ProfileList";
-import ProfileList2 from "components/OrganisationProfile/ProfileList2";
 import {
   TestMembersList,
   FilteredApplicants,
@@ -311,6 +310,73 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
       }
     })();
   }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const [currentUserPermissions, setCurrentUserPermissions] = useState();
+  const [memberStatus, setMemberStatus] = useState(null);
+  const [appliedStatus, setAppliedStatus] = useState(false);
+  const [isMember, setIsMember] = useState(false);
+  const [loadingPermissions, setLoadingPermissions] = useState(true)
+  const loadPermissions = async () => {
+    const endpoint = `/api/applicants/${organisationId}/status?userId=${actorId}&includeMeta=true`;
+    if (isAuthenticated) {
+      setAppliedStatus(true);
+      try {
+        const {
+          data: { data: applicants, meta },
+        } = await axios.get(endpoint);
+        if (applicants) {
+          setMemberStatus(applicants[0].status);
+          setCurrentUserPermissions(applicants[0].organization.permissions);
+          setActorPermissionsLoaded(true)
+
+        }
+        // if (actorId) {
+        //   setActorPermissionsLoaded(true)
+        // }
+        setLoadingPermissions(false)
+      } catch (error) {
+        return error;
+      }
+      // setActorPermissionsLoaded(true)
+    }
+    if (!isAuthenticated) {
+      setMemberStatus(undefined)
+      setCurrentUserPermissions(undefined)
+      // setActorPermissionsLoaded(true)
+    }
+  };
+  const permissions = {
+    isVolunteer:
+      currentUserPermissions == "Volunteer" || "WikiEditor" || "Admin",
+    isWikiEditor: currentUserPermissions == "WikiEditor" || "Admin",
+    isAdmin: currentUserPermissions == "Admin",
+  };
+  const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false);
+
+  const setStatus = () => {
+    // if (actorPermissionsLoaded) {
+    if (memberStatus == "accepted") {
+      setIsMember(true);
+    }
+
+    if (memberStatus == "applied" || memberStatus == "accepted") {
+      setAppliedStatus(false);
+    }
+    if (memberStatus == "rejected"
+      || memberStatus == undefined
+      || !isAuthenticated
+    ) {
+      setAppliedStatus(true);
+    }
+
+    // }
+  }
+  useEffect(() => {
+    loadPermissions();
+  }, [actorId, organisationId, tab, isAuthenticated]);
+  useEffect(() => {
+    setStatus()
+  }, [memberStatus, organisationId, actorId, actorPermissionsLoaded, loadingPermissions, tab]);
 
   useEffect(() => {
     const fetchOrganisationPosts = async () => {
@@ -631,69 +697,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
       setToggleRefetchMembers(!toggleRefetchMembers);
     }
   };
-  const [currentUserPermissions, setCurrentUserPermissions] = useState();
-  const [memberStatus, setMemberStatus] = useState(null);
-  const [appliedStatus, setAppliedStatus] = useState(false);
-  const [isMember, setIsMember] = useState(false);
-  const [loadingPermissions, setLoadingPermissions] = useState(true)
-  const loadPermissions = async () => {
-    const endpoint = `/api/applicants/${organisationId}/status?userId=${actorId}&includeMeta=true`;
-    // if (!isAuthenticated) {
-    setAppliedStatus(true);
 
-    try {
-      const {
-        data: { data: applicants, meta },
-      } = await axios.get(endpoint);
-
-      if (applicants) {
-        setMemberStatus(applicants[0].status);
-        setCurrentUserPermissions(applicants[0].organization.permissions);
-
-      }
-      if (actorId) {
-        setActorPermissionsLoaded(true)
-      }
-      setLoadingPermissions(false)
-    } catch (error) {
-      return error;
-    }
-    setActorPermissionsLoaded(true)
-  };
-  const permissions = {
-    isVolunteer:
-      currentUserPermissions == "Volunteer" || "WikiEditor" || "Admin",
-    isWikiEditor: currentUserPermissions == "WikiEditor" || "Admin",
-    isAdmin: currentUserPermissions == "Admin",
-  };
-  const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false);
-
-  const setStatus = () => {
-    if (actorPermissionsLoaded) {
-      if (memberStatus == "accepted") {
-        setIsMember(true);
-      }
-
-      if (memberStatus == "applied" || memberStatus == "accepted") {
-        setAppliedStatus(false);
-      }
-      if (memberStatus == "rejected"
-        || memberStatus == undefined
-        || !isAuthenticated
-      ) {
-        setAppliedStatus(true);
-      }
-
-    }
-  }
-  useEffect(() => {
-    setStatus()
-  }, [memberStatus, organisationId, actorId, actorPermissionsLoaded, loadingPermissions]);
-
-  useEffect(() => {
-    // loadPermissions(organisationId, actorId);
-    loadPermissions();
-  }, [actorId, organisationId, tab]);
 
   const handleIsJoinOrg = async (e) => {
     if (typeof switchOnOff !== undefined) {
@@ -1020,33 +1024,35 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
               </SeeOrgBookLink>
             </UserInfoDesktop>
           </UserInfoContainer>
+
           {
-            (isOwner ? null :
-              isJoinOrg && appliedStatus && !currentUserOrgId
-            ) && (
-              < JoinOrgContainer >
-                <Link
-                  onClick={() =>
-                    sessionStorage.setItem(
-                      "postredirect",
-                      window.location.pathname,
-                    )
-                  }
-                  to={
-                    isAuthenticated
-                      ? `/organisation/${organisationId}/positions`
-                      : {
-                        pathname: LOGIN,
-                        state: { from: window.location.pathname },
-                      }
-                  }
-                >
-                  <JoinOrgButton id={GTM.organisation.joinOrg}>
-                    {t("profile.individual.joinOrg")}
-                  </JoinOrgButton>
-                </Link>
-              </JoinOrgContainer>
-            )
+            !appliedStatus || !appliedStatus ? null :
+              (isOwner ? null :
+                isJoinOrg && appliedStatus && !currentUserOrgId && actorPermissionsLoaded || !isAuthenticated
+              ) && (
+                < JoinOrgContainer >
+                  <Link
+                    onClick={() =>
+                      sessionStorage.setItem(
+                        "postredirect",
+                        window.location.pathname,
+                      )
+                    }
+                    to={
+                      isAuthenticated
+                        ? `/organisation/${organisationId}/positions`
+                        : {
+                          pathname: LOGIN,
+                          state: { from: window.location.pathname },
+                        }
+                    }
+                  >
+                    <JoinOrgButton id={GTM.organisation.joinOrg}>
+                      {t("profile.individual.joinOrg")}
+                    </JoinOrgButton>
+                  </Link>
+                </JoinOrgContainer>
+              )
 
             // : null
           }

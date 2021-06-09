@@ -224,8 +224,8 @@ async function routes(app) {
           status
         },
       } = req;
-
       const [applicantsErr, applicants] = await app.to(
+
         Applicant.aggregate(
           [
             {
@@ -234,7 +234,8 @@ async function routes(app) {
                   { "organization.id": mongoose.Types.ObjectId(organizationId) },
                   status ? { status: status } : {},
                   permissions ? { "organization.permissions": permissions } : {},
-                  userId ? { "applicant.id": userId } : {}
+                  userId ? { "applicant.id": mongoose.Types.ObjectId(userId) }
+                    : {}
                 ]
               }
             },
@@ -264,7 +265,7 @@ async function routes(app) {
                 { "organization.id": mongoose.Types.ObjectId(organizationId) },
                 status ? { status: status } : {},
                 permissions ? { "organization.permissions": permissions } : {},
-                userId ? { "applicant.id": userId } : {}
+                userId ? { "applicant.id": mongoose.Types.ObjectId(userId) } : {}
               ]
             }
           },
@@ -374,7 +375,6 @@ async function routes(app) {
         params: { applicantId },
         query: { permissions }
       } = req;
-      console.log({ "req!!!!": req })
       const [updateErr, updateApplicant] = await app.to(
         Applicant.findOneAndUpdate(
           { _id: applicantId },

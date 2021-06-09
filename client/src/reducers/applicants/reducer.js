@@ -142,7 +142,6 @@ const applicantsReducer = (state = initialState, action) => {
       };
     }
     case APPLICANTS_ACTIONS.FETCH_APPLICANTS_ERROR: {
-      console.log("applicants error!!!")
       const { payload } = action;
       return {
         ...state,
@@ -152,7 +151,6 @@ const applicantsReducer = (state = initialState, action) => {
       };
     }
     case APPLICANTS_ACTIONS.NEXT_PAGE_APPLICANTS: {
-      console.log("next pageApplicants appplicants!!!")
       return { ...state, pageApplicants: state.pageApplicants + 1 };
     }
 
@@ -160,7 +158,6 @@ const applicantsReducer = (state = initialState, action) => {
       const { payload } = action;
       return { ...state, pageApplicants: payload.pageApplicants };
     case APPLICANTS_ACTIONS.RESET_PAGE_APPLICANTS: {
-      console.log("applicants resetPageAction!!!")
       const { payload } = action;
       return {
         ...state,
