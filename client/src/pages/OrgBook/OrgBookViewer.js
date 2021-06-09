@@ -83,6 +83,7 @@ const JoinOrgContainer = styled.div`
   z-index: 5;
   width: 100%;
   background-color: ${ROYAL_BLUE};
+  display: none; //remove when integrating
 `;
 
 const JoinOrgContainerMobile = styled.div`
@@ -92,6 +93,7 @@ const JoinOrgContainerMobile = styled.div`
   left: 20rem;
   z-index: 3;
   background-color: ${white};
+  display: none; //remove when integrating
 `;
 
 const JoinOrgButton = styled.button`
