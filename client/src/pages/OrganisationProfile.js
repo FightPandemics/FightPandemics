@@ -977,7 +977,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
           </UserInfoContainer>
 
           {
-            // !appliedStatus || !appliedStatus || 
             authLoading ? null :
               (isOwner ? null :
                 isJoinOrg && appliedStatus && !currentUserOrgId && actorPermissionsLoaded || !isAuthenticated

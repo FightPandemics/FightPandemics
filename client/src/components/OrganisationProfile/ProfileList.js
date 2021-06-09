@@ -131,25 +131,23 @@ const ProfileList = ({
             dataSource={items}
             renderItem={item => (
               <ItemContainer>
-                {!listInitialized ?
-                  <Loader /> :
-                  <AntList.Item
-                  >
-                    <ProfileListItem
-                      style={{ width: "100%", display: "flex" }}
-                      item={item[1]}
-                      applicantsList={applicantsList}
-                      membersList={membersList}
-                      orgList={orgsList}
-                      organizationId={organisationId}
-                      isOwner={isOwner}
-                      isMember={isMember}
-                      isAdmin={isAdmin}
-                      isWiki={isWiki}
-                      isVolunteer={isVolunteer}
-                      activeTab={activeTab}
-                    />
-                  </AntList.Item>}
+                <AntList.Item
+                >
+                  <ProfileListItem
+                    style={{ width: "100%", display: "flex" }}
+                    item={item[1]}
+                    applicantsList={applicantsList}
+                    membersList={membersList}
+                    orgList={orgsList}
+                    organizationId={organisationId}
+                    isOwner={isOwner}
+                    isMember={isMember}
+                    isAdmin={isAdmin}
+                    isWiki={isWiki}
+                    isVolunteer={isVolunteer}
+                    activeTab={activeTab}
+                  />
+                </AntList.Item>
               </ItemContainer>
             )}
           />
