@@ -199,10 +199,11 @@ async function routes(app) {
           includeMeta,
           permissions,
           userId,
-          status
+          status,
+          sort
         },
       } = req;
-
+      console.log("userId", sort);
       const [applicantsErr, applicants] = await app.to(
         Applicant.aggregate(
           [
@@ -212,7 +213,8 @@ async function routes(app) {
                   { "organization.id": mongoose.Types.ObjectId(organizationId) },
                   status ? { status: status } : {},
                   permissions ? { "organization.permissions": permissions } : {},
-                  userId ? { "applicant.id": userId } : {}
+                  { "applicant.id": userId ? mongoose.Types.ObjectId(userId): {} },
+                  // sort ? { sort: { "createdAt": -1 } } : {},
                 ]
               }
             },
@@ -220,8 +222,11 @@ async function routes(app) {
               $skip: parseInt(skip, 10) || 0,
             },
             {
-              $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+              $sort: sort!=="undefined" ? {"createdAt": -1} : {}
             },
+            {
+              $limit: sort ? 1: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
+            }
           ]
         ).then((applicants) => {
           applicants.forEach((applicant) => {

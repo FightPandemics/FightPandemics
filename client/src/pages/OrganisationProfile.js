@@ -2,7 +2,7 @@ import { WhiteSpace } from "antd-mobile";
 import { Tabs, Switch, Col, Row } from "antd";
 import {
   ProfileTabs,
-  ProfileTabPane
+  ProfileTabPane,
 } from "components/OrganisationProfile/ProfileTabs";
 import axios from "axios";
 import React, {
@@ -11,7 +11,7 @@ import React, {
   useContext,
   useCallback,
   useReducer,
-  useRef
+  useRef,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -70,12 +70,12 @@ import {
   PhotoUploadButton,
   AvatarPhotoContainer,
   NamePara,
-  ProfileBackgroup
+  ProfileBackgroup,
 } from "../components/Profile/ProfileComponents";
 import {
   getInitialsFromFullName,
   isAuthorOrg,
-  isAuthorUser
+  isAuthorUser,
 } from "utils/userInfo";
 import {
   FACEBOOK_URL,
@@ -84,34 +84,34 @@ import {
   TWITTER_URL,
   GITHUB_URL,
   APPSTORE_URL,
-  PLAYSTORE_URL
+  PLAYSTORE_URL,
 } from "constants/urls";
 import {
   fetchOrganisation,
   fetchOrganisationError,
-  fetchOrganisationSuccess
+  fetchOrganisationSuccess,
 } from "hooks/actions/organisationActions";
 import {
   fetchUser,
   fetchUserError,
-  fetchUserSuccess
+  fetchUserSuccess,
 } from "hooks/actions/userActions";
 import {
   OrganisationContext,
-  withOrganisationContext
+  withOrganisationContext,
 } from "context/OrganisationContext";
 import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
-  SET_VALUE
+  SET_VALUE,
 } from "hooks/actions/feedActions";
 import {
   deletePostModalreducer,
   deletePostState,
   feedReducer,
-  optionsReducer
+  optionsReducer,
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
 import GTM from "constants/gtm-tags";
@@ -121,7 +121,7 @@ import { selectOrganisationId } from "reducers/session";
 import CreatePostButton from "components/Feed/CreatePostButton";
 import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
 import JoinOrgButton, {
-  JoinOrgContainer
+  JoinOrgContainer,
 } from "components/OrganisationProfile/JoinOrgButton";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 
@@ -147,7 +147,7 @@ import {
   TestMembersList,
   FilteredApplicants,
   Applicants,
-  Meta
+  Meta,
 } from "utils/TestMembersList";
 
 const Error = styled.span`
@@ -164,7 +164,7 @@ const URLS = {
   twitter: [twitterBlue, TWITTER_URL],
   github: [githubIcon, GITHUB_URL],
   website: [websiteIcon],
-  email: [envelopeBlue]
+  email: [envelopeBlue],
 };
 
 const initialState = {
@@ -172,7 +172,7 @@ const initialState = {
   filterModal: true,
   showCreatePostModal: false,
   applyFilters: false,
-  activePanel: null
+  activePanel: null,
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
@@ -199,18 +199,18 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
   const { orgProfileState, orgProfileDispatch } = useContext(
-    OrganisationContext
+    OrganisationContext,
   );
   const { error, loading, organisation } = orgProfileState;
   const [deleteModal, deleteModalDispatch] = useReducer(
     deletePostModalreducer,
-    deletePostState
+    deletePostState,
   );
   const posts = useSelector(selectPosts);
 
   const {
     userProfileState: { user },
-    userProfileDispatch
+    userProfileDispatch,
   } = useContext(UserContext);
 
   const { t } = useTranslation();
@@ -241,7 +241,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     loadMore,
     page,
     posts: postsList,
-    error: postsError
+    error: postsError,
   } = posts;
   const { deleteModalVisibility } = deleteModal;
 
@@ -275,12 +275,12 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
           `error.${message}`,
-          `error.http.${message}`
+          `error.http.${message}`,
         ]);
         orgProfileDispatch(
           fetchOrganisationError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
-          )
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
@@ -293,12 +293,12 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
           `error.${message}`,
-          `error.http.${message}`
+          `error.http.${message}`,
         ]);
         userProfileDispatch(
           fetchUserError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
-          )
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();
@@ -313,13 +313,13 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         if (organisationId) {
           const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}${getActorQuery()}`;
           const {
-            data: { data: posts, meta }
+            data: { data: posts, meta },
           } = await axios.get(endpoint);
           if (prevOrgId !== organisationId) {
             dispatch(
               postsActions.fetchPostsSuccess({
-                posts: []
-              })
+                posts: [],
+              }),
             );
           }
           if (posts.length && meta.total) {
@@ -339,21 +339,21 @@ const OrganisationProfile = ({ isAuthenticated }) => {
             if (prevOrgId === organisationId && postsList) {
               dispatch(
                 postsActions.fetchPostsSuccess({
-                  posts: { ...postsList, ...loadedPosts }
-                })
+                  posts: { ...postsList, ...loadedPosts },
+                }),
               );
             } else {
               dispatch(
                 postsActions.fetchPostsSuccess({
-                  posts: { ...loadedPosts }
-                })
+                  posts: { ...loadedPosts },
+                }),
               );
             }
           } else if (prevOrgId === organisationId && posts) {
             dispatch(
               postsActions.fetchPostsSuccess({
-                posts: { ...postsList }
-              })
+                posts: { ...postsList },
+              }),
             );
             dispatch(postsActions.finishLoadingAction());
           } else {
@@ -375,7 +375,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   };
 
   const isItemLoaded = useCallback((index) => !!organisationPosts[index], [
-    organisationPosts
+    organisationPosts,
   ]);
 
   const loadNextPage = useCallback(
@@ -394,12 +394,12 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, organisationPosts.length]
+    [dispatch, isLoading, loadMore, organisationPosts.length],
   );
 
   useEffect(() => {
     setItemCount(
-      loadMore ? organisationPosts.length + 1 : organisationPosts.length
+      loadMore ? organisationPosts.length + 1 : organisationPosts.length,
     );
   }, [loadMore, organisationPosts.length]);
 
@@ -414,7 +414,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         deleteResponse = await axios.delete(endPoint);
         if (deleteResponse && deleteResponse.data.success === true) {
           const allPosts = {
-            ...postsList
+            ...postsList,
           };
           delete allPosts[post._id];
           setTotalPostCount(totalPostCount - 1);
@@ -428,7 +428,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         }
       } catch (error) {
         console.log({
-          error
+          error,
         });
       }
     }
@@ -437,14 +437,14 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const handlePostDelete = () => {
     deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: DELETE_MODAL_POST
+      visibility: DELETE_MODAL_POST,
     });
   };
 
   const handleCancelPostDelete = () => {
     deleteModalDispatch({
       type: SET_DELETE_MODAL_VISIBILITY,
-      visibility: DELETE_MODAL_HIDE
+      visibility: DELETE_MODAL_HIDE,
     });
   };
 
@@ -452,12 +452,12 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     if (deleteModal.editPostModalVisibility) {
       deleteModalDispatch({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
-        visibility: false
+        visibility: false,
       });
     } else {
       deleteModalDispatch({
         type: SET_EDIT_POST_MODAL_VISIBILITY,
-        visibility: true
+        visibility: true,
       });
     }
   };
@@ -517,7 +517,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const { TabPane } = Tabs;
 
   const [feedState, feedDispatch] = useReducer(feedReducer, {
-    ...initialState
+    ...initialState,
   });
   const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
   const applicants = useSelector(selectApplicants);
@@ -525,7 +525,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [itemCountApplicants, setItemCountApplicants] = useState(0);
   const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
   const [totalApplicantCount, setTotalApplicantCount] = useState(
-    ARBITRARY_LARGE_NUM
+    ARBITRARY_LARGE_NUM,
   );
   const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
   const [switchOnOff, setSwitchOnOff] = useState();
@@ -549,7 +549,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [checksEnabled, setChecksEnabled] = useState(true);
   const [done, setDone] = useState(false);
   const [displayText, setDisplayText] = useState(
-    t("position.text1") + name + t("position.text2")
+    t("position.text1") + name + t("position.text2"),
   );
   const [isEditable, setIsEditable] = useState(false);
   const inputRef = useRef("");
@@ -565,7 +565,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     isLoadingApplicants,
     loadMoreApplicants,
     pageApplicants,
-    applicants: applicantsList
+    applicants: applicantsList,
   } = applicants;
 
   const feedApplicants = Object.entries(applicantsList);
@@ -587,15 +587,15 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const refetchApplicants = (
     isLoadingApplicants,
     loadMoreApplicants,
-    softRefresh = false
+    softRefresh = false,
   ) => {
     if (!softRefresh) {
       dispatchAction(SET_VALUE, "applyFilters", true);
       dispatch(
         applicantsActions.resetPageAction({
           isLoadingApplicants,
-          loadMoreApplicants
-        })
+          loadMoreApplicants,
+        }),
       );
       if (pageApplicants === 0) {
         setToggleRefetchApplicants(!toggleRefetchApplicants);
@@ -607,13 +607,14 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const [isMember, setIsMember] = useState(false);
 
   const loadPermissions = async (actorId) => {
-    const endpoint = `/api/applicants/${organisationId}/status?userId=${actorId}&includeMeta=true`; // &userId=${user.id}
-
+    const endpoint = `/api/applicants/${organisationId}/status?userId=${actorId}&includeMeta=true&sort=true`; // &userId=${user.id}
+    console.log(endpoint);
     try {
       const {
-        data: { data: applicants, meta }
+        data: { data: applicants, meta },
       } = await axios.get(endpoint);
       setActorPermissionsLoaded(true);
+      console.log("applicants", applicants);
       setCurrentUserPermissions(applicants[0].organization.permissions);
       setMemberstatus(applicants[0].status);
     } catch (error) {
@@ -624,7 +625,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     isVolunteer:
       currentUserPermissions == "Volunteer" || "WikiEditor" || "Admin",
     isWikiEditor: currentUserPermissions == "WikiEditor" || "Admin",
-    isAdmin: currentUserPermissions == "Admin"
+    isAdmin: currentUserPermissions == "Admin",
   };
 
   useEffect(() => {
@@ -712,10 +713,10 @@ const OrganisationProfile = ({ isAuthenticated }) => {
 
     let endpoint = baseURL;
     dispatch(applicantsActions.fetchApplicantsBegin());
-
+    console.log(endpoint);
     try {
       const {
-        data: { data: applicants, meta }
+        data: { data: applicants, meta },
       } = await axios.get(endpoint);
 
       if (applicants.length && meta.total) {
@@ -751,27 +752,27 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         if (applicantsInState) {
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
-              applicants: { ...applicantsInState, ...loadedApplicants }
-            })
+              applicants: { ...applicantsInState, ...loadedApplicants },
+            }),
           );
         } else if (Object.keys(applicantsList).length && pageApplicants) {
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
-              applicants: { ...applicantsList, ...loadedApplicants }
-            })
+              applicants: { ...applicantsList, ...loadedApplicants },
+            }),
           );
         } else {
           dispatch(
             applicantsActions.fetchApplicantsSuccess({
-              applicants: { ...loadedApplicants }
-            })
+              applicants: { ...loadedApplicants },
+            }),
           );
         }
       } else if (applicants) {
         dispatch(
           applicantsActions.fetchApplicantsSuccess({
-            applicants: { ...applicantsList }
-          })
+            applicants: { ...applicantsList },
+          }),
         );
         dispatch(applicantsActions.finishLoadingAction());
       } else {
@@ -806,7 +807,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   };
 
   const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
-    feedApplicants
+    feedApplicants,
   ]);
   const loadNextPageApplicant = useCallback(
     ({ stopIndex }) => {
@@ -825,12 +826,12 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         return Promise.resolve();
       }
     },
-    [feedApplicants.length, isLoadingApplicants, loadMoreApplicants, activeTab] // eslint-disable-line react-hooks/exhaustive-deps
+    [feedApplicants.length, isLoadingApplicants, loadMoreApplicants, activeTab], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(() => {
     setItemCountApplicants(
-      loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length
+      loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length,
     );
     // notApplied(memberstatus)
   }, [feedApplicants.length, loadMoreApplicants]);
@@ -916,7 +917,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 onClick={() =>
                   sessionStorage.setItem(
                     "postredirect",
-                    window.location.pathname
+                    window.location.pathname,
                   )
                 }
                 to={
@@ -985,7 +986,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                     <ErrorAlert
                       message={t([
                         `error.${postsError.message}`,
-                        `error.http.${postsError.message}`
+                        `error.http.${postsError.message}`,
                       ])}
                     />
                   )}
@@ -1163,7 +1164,6 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                     >
                       {t("position.post")}
                     </StyledPostButton>,
-                    
                   ]}
                 >
                   <p>{t("position.content")}</p>
