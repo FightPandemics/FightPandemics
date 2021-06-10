@@ -453,7 +453,7 @@ const NavigationLayout = (props) => {
           ) : null}
 
           <BodyWrapper>
-            {   user &&
+            {   user && user.organisations.length > 0 &&
                 <React.Fragment>
                     <ProfileNavMenu 
                         user = {user}
