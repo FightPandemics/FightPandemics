@@ -313,9 +313,9 @@ const ProfileNavMenu =
 function renderNavSections() {
     const orgAccessLevels = {
         "Org Workspace": 
-        ["About", "Activity", "Posts", "Org Book", "Members", "Gallery"],
+        ["Activity", "Posts", "Org Book", "Members"],
         "Org Admin": 
-        ["Applications", "Messages", "Questionnaire", "Positions", "Thanks", "Minting Badges", "Manage Badges"]
+        ["Applications", "Messages", "Positions", "Thanks"]
     };
 
     const navSections = [];
