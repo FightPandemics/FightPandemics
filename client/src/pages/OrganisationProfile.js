@@ -217,7 +217,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const getActorQuery = () => {
     return actorOrganisationId ? `&actorId=${actorOrganisationId}` : "";
   };
-  console.log("yoo")
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
     dispatch(applicantsActions.resetPageAction({}));
@@ -228,7 +227,9 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
+        console.log({ "organisation!!!": res.data })
       } catch (err) {
+        console.log({ "organisation!!! error": error })
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
           `error.${message}`,
@@ -978,32 +979,32 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
 
           {
             authLoading ? null :
-              (isOwner ? null :
-                isJoinOrg && appliedStatus && !currentUserOrgId && actorPermissionsLoaded || !isAuthenticated
-              ) && (
-                < JoinOrgContainer >
-                  <Link
-                    onClick={() =>
-                      sessionStorage.setItem(
-                        "postredirect",
-                        window.location.pathname,
-                      )
-                    }
-                    to={
-                      isAuthenticated
-                        ? `/organisation/${organisationId}/positions`
-                        : {
-                          pathname: LOGIN,
-                          state: { from: window.location.pathname },
-                        }
-                    }
-                  >
-                    <JoinOrgButton id={GTM.organisation.joinOrg}>
-                      {t("profile.individual.joinOrg")}
-                    </JoinOrgButton>
-                  </Link>
-                </JoinOrgContainer>
-              )
+              isOwner ? null :
+                isJoinOrg && appliedStatus && !currentUserOrgId || !isAuthenticated ?
+                  (< JoinOrgContainer >
+                    <Link
+                      onClick={() =>
+                        sessionStorage.setItem(
+                          "postredirect",
+                          window.location.pathname,
+                        )
+                      }
+                      to={
+                        isAuthenticated
+                          ? `/organisation/${organisationId}/positions`
+                          : {
+                            pathname: LOGIN,
+                            state: { from: window.location.pathname },
+                          }
+                      }
+                    >
+                      <JoinOrgButton id={GTM.organisation.joinOrg}>
+                        {t("profile.individual.joinOrg")}
+                      </JoinOrgButton>
+                    </Link>
+                  </JoinOrgContainer>
+                  )
+                  : null
           }
           < ProfileTabs
             defaultActiveKey="activity"

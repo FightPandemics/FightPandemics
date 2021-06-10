@@ -285,7 +285,6 @@ async function routes(app) {
       } = req;
       const [orgErr, org] = await app.to(Organisation.findById(organisationId));
       if (orgErr) {
-        console.log({ "error!": orgErr })
         req.log.error(orgErr, "Failed retrieving organisation");
         throw app.httpErrors.internalServerError();
       } else if (org === null) {
