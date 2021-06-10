@@ -13,7 +13,11 @@ const Drawer = styled.div`
     z-index: 999;
     background-color: ${colors.white};
     box-shadow: 0.1rem -0.3rem 1rem -0.2rem #ddd;
-    display: ${props => props.drawerIsClosed ? "none" : "initial"};
+    display: none;
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        display: ${props => props.drawerIsClosed ? "none" : "initial"};
+    }
 `;
 
 const DrawerTitleWrapper = styled.div`
