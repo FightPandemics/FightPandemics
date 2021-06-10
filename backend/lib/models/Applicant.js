@@ -22,7 +22,6 @@ const applicantSchema = new Schema(
       },
     },
     applicantApplied: {
-      required: true,
       type: String
     },
     applicant: {

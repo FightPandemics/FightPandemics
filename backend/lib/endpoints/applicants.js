@@ -337,13 +337,13 @@ async function routes(app) {
         throw app.httpErrors.internalServerError();
       }
 
-      if (owner.notifyPrefs.instant.newapplicant === true) {
-        app.notifier.notifyNewApplicant("newapplicant", organisation, triggeredById, receiverId);
-      } else {
-        console.log("Notification Preference for new applicant is turned off");
-      }
+      // if (owner.notifyPrefs.instant.newapplicant === true) {
+      //   app.notifier.notifyNewApplicant("newapplicant", organisation, triggeredById, receiverId);
+      // } else {
+      //   console.log("Notification Preference for new applicant is turned off");
+      // }
 
-      app.notifier.notifyNewApplicant("applicationSubmitted", organisation, triggeredById, triggeredById);
+      // app.notifier.notifyNewApplicant("applicationSubmitted", organisation, triggeredById, triggeredById);
 
       reply.code(201);
       return {

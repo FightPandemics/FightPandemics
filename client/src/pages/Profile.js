@@ -906,7 +906,7 @@ const Profile = ({
   if (authLoading == null || authLoading === true) {
     return <></>;
   }
-
+  
   return (
     <>
       <ProfileBackgroup />
@@ -996,6 +996,7 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
+        
         <SectionHeader>
           <PlaceholderIcon />
           {isSelf &&

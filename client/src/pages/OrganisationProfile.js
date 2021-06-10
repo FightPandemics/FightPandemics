@@ -424,6 +424,23 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
 
+  const becomeMember = async () => { // TODO REMOVE - ONLY FOR TESTING
+    const applicant = {
+      "organization": { "id": organisationId },
+      "answers": {
+        "q1": "answer 1",
+        "q2": "answer 2",
+        "q3": "answer 3"
+      },
+      "status": "accepted"
+    }
+    try {
+      await axios.post("/api/applicants", applicant);
+    } catch (error) {
+      console.log({ "error!!": error })
+      return error
+    }
+  }
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -491,6 +508,13 @@ const OrganisationProfile = ({ isAuthenticated }) => {
           </UserInfoContainer>
           {isSelf && !verified && <Verification />}
           <WhiteSpace />
+          {
+            //TODO REMOVE BUTTONS - TESTING ONLY
+            <>
+              <button onClick={becomeMember}>Become Member</button>
+              <div style={{ color: "red" }}>TESTING ONLY</div>
+            </>
+          }
           <div>
             <SectionHeader>
               {t("profile.org.activity")}
