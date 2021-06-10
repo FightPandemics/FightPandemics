@@ -45,7 +45,7 @@ import DrawerMenu from "components/DrawerMenu";
 // Added Styles
 const MainWrapper = styled.div`
     width: 100vw;
-    margin-left: ${props => props.user ? "10rem" : "0rem"};
+    margin-left: ${props => props.user && props.user.organisations.length > 0 ? "10rem" : "0rem"};
 
     @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
         margin-left: 0;
