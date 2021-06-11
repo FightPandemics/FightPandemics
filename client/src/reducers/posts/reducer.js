@@ -1,7 +1,7 @@
 import { POSTS_ACTIONS } from "./actions";
 import { isPostExpired } from "components/Feed/utils";
 
-const innitialState = {
+const initialState = {
   posts: [],
   page: 0,
   error: null,
@@ -30,7 +30,26 @@ export const getProfileModeProp = (mode) => {
   return modeMap[mode];
 };
 
-const postsReducer = (state = innitialState, action) => {
+export const getProfileObjectiveProp = (view) => {
+  // convert 'request' or 'offer' tab to requests or offers prop name
+  const viewMap = {
+    request: "requests",
+    offer: "offers",
+  };
+  return viewMap[view];
+};
+
+export const getProfileModeProp = (mode) => {
+  // convert I, A, undefined to active, inactive, all
+  const modeMap = {
+    A: "active",
+    IA: "inactive",
+    undefined: "all",
+  };
+  return modeMap[mode];
+};
+
+const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case POSTS_ACTIONS.FETCH_POSTS_BEGIN:
       return {

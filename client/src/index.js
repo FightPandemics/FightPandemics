@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from 'redux-devtools-extension'; // TODO - REMOVE REDUX DEV TOOLS
 import "antd/dist/antd.css";
 import "antd-mobile/dist/antd-mobile.css";
 import "typeface-poppins";
@@ -24,7 +25,13 @@ const tagManagerArgs = {
 if (localStorage.getItem("fp_qa") != "true")
   TagManager.initialize(tagManagerArgs);
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const composeEnhancers = composeWithDevTools({
+  trace: true,
+  traceLimit: 25
+})
+const store = createStore(rootReducer, composeEnhancers( // TODO - REMOVE REDUX DEV TOOLS
+  applyMiddleware(thunk)
+));
 
 ReactDOM.render(
   <Provider store={store}>

@@ -71,6 +71,7 @@ module.exports = {
     createOrgProfPrefix: "COP",
     createNew: "_CN",
     email: "_EM",
+    joinOrg: "JOR",
   },
   profile: {
     createProfile: "_CPR",
@@ -244,6 +245,8 @@ module.exports = {
     comment: "_CM",
     settings: "_SET",
     report: "_RP",
+    newapplicant: "_NA",
+    applicationSubmitted: "_AS",
   },
   moderation: {
     hide: "_HIP",

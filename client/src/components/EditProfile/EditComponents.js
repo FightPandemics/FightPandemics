@@ -99,6 +99,18 @@ export const CustomSubmitButton = styled(SubmitButton)`
   }
 `;
 
+export const PostPositionButton = styled(SubmitButton)`
+  align: center;
+  margin: 2rem;
+  @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
+    width: 30rem;
+    align-self: center;
+  }
+  @media screen and (min-width: ${mq.phone.narrow.minWidth}) {
+    width: 20rem;
+  }
+`;
+
 export const OptionDiv = styled.div`
   display: none;
 

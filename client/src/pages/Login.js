@@ -347,6 +347,7 @@ const Login = ({ isLoginForm, forgotPassword, isAuthenticated }) => {
 
   return (
     <LoginContainer>
+      
       <LoginLeftContainer>
         <SocialImageContainer>
           <img

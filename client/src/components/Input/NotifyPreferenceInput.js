@@ -29,12 +29,6 @@ const NotifyGroup = {
   digest: "profile.common.digest",
 };
 
-const NotifyType = {
-  like: "post.like_plural",
-  share: "post.share_plural",
-  comment: "comment.comment_plural",
-  message: "message.message_plural",
-};
 
 const NotifyFreq = {
   daily: "profile.common.daily",
@@ -47,13 +41,27 @@ const NotifyPreferenceInput = ({
   currPrefs,
   switchOnOff,
   setSwitchOnOff,
+  isOwner
 }) => {
   const [checksEnabled, setChecksEnabled] = useState(true);
   const { t } = useTranslation();
 
+  const [NotifyType,setNotifyType] = useState({
+    like: "post.like_plural",
+    share: "post.share_plural",
+    comment: "comment.comment_plural",
+    message: "message.message_plural",
+    newapplicant: "newapplicant.newapplicant_singular"
+  });
+
   useEffect(() => {
     setChecksEnabled(switchOnOff);
-  }, [switchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
+    if(!isOwner){
+      const removeProp = 'newapplicant';
+      const { [removeProp]: remove, ...rest } = NotifyType;
+      setNotifyType(rest);
+    }
+  }, [switchOnOff,isOwner]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
@@ -80,7 +88,7 @@ const NotifyPreferenceInput = ({
       <WhiteSpace />
       <HelpWrapper>
         {Object.entries(NotifyGroup).map(([key1, label1]) => (
-          <>
+          <div key={key1}>
             <Col md="auto" key={(key1, label1)}>
               <WhiteSpace />
               <Label key={(key1, label1)}>{t(label1)}</Label>
@@ -105,7 +113,7 @@ const NotifyPreferenceInput = ({
               <WhiteSpace />
             </Col>
             <Col span={2}></Col>
-          </>
+          </div>
         ))}
       </HelpWrapper>
     </div>

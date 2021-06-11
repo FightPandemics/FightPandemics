@@ -32,7 +32,7 @@ async function routes(app) {
   const User = mongo.model("User");
 
   // /posts
-  const POST_PAGE_SIZE = 5;
+  const POST_PAGE_SIZE = 10;
   const UNLOGGED_POST_SIZE = 120;
   const EXPIRATION_OPTIONS = ["day", "week", "month"];
 
@@ -66,16 +66,16 @@ async function routes(app) {
       let filters = [
         postMode === "IA"
           ? {
-              $and: [
-                { expireAt: { $ne: null } },
-                { expireAt: { $lt: new Date() } },
-              ],
-              status: { $ne: "removed" },
-            }
+            $and: [
+              { expireAt: { $ne: null } },
+              { expireAt: { $lt: new Date() } },
+            ],
+            status: { $ne: "removed" },
+          }
           : {
-              $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }],
-              status: { $ne: "removed" },
-            },
+            $or: [{ expireAt: null }, { expireAt: { $gt: new Date() } }],
+            status: { $ne: "removed" },
+          },
       ];
       // prefer location from query filters, then user if authenticated
       let location;
@@ -504,8 +504,8 @@ async function routes(app) {
         likesCount: post.likes.length || 0,
         liked: post.likes
           ? post.likes.includes(
-              mongoose.Types.ObjectId(actor ? actor._id : null)
-            )
+            mongoose.Types.ObjectId(actor ? actor._id : null)
+          )
           : post.likes,
       };
 
@@ -613,8 +613,8 @@ async function routes(app) {
         commentsCount: commentQuery || 0,
         liked: updatedPost.likes
           ? updatedPost.likes.includes(
-              mongoose.Types.ObjectId(actor ? actor._id : null)
-            )
+            mongoose.Types.ObjectId(actor ? actor._id : null)
+          )
           : updatedPost.likes,
       };
     }
@@ -657,8 +657,8 @@ async function routes(app) {
           likesCount: updatedPost.likes.length,
           liked: updatedPost.likes
             ? updatedPost.likes.includes(
-                mongoose.Types.ObjectId(actor ? actor._id : null)
-              )
+              mongoose.Types.ObjectId(actor ? actor._id : null)
+            )
             : updatedPost.likes,
         },
       };
@@ -697,8 +697,8 @@ async function routes(app) {
           likesCount: updatedPost.likes.length,
           liked: updatedPost.likes
             ? updatedPost.likes.includes(
-                mongoose.Types.ObjectId(actor ? actor._id : null)
-              )
+              mongoose.Types.ObjectId(actor ? actor._id : null)
+            )
             : updatedPost.likes,
         },
       };

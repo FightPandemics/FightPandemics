@@ -31,7 +31,13 @@ import Inbox from "./pages/Inbox";
 import ToggleQAMode from "./pages/ToggleQAMode.js";
 import Unsubscribe from "./pages/Unsubscribe.js";
 import EditSecurity from "./pages/EditSecurity";
+import Positions from "./pages/Positions";
 import SeeAll from "./pages/SeeAllPost";
+import Apply from "./pages/Apply";
+import Applications from "./pages/Applications";
+import AdminProfile from "./pages/AdminProfile";
+import OrgWorkSpace from "./pages/OrgWorkSpace";
+import MemberPermissions from "./pages/MemberPermissions";
 
 import { SCOPES } from "constants/permissions";
 
@@ -91,6 +97,7 @@ const routes = [
     component: OfferHelp,
   },
   {
+    // exact: true,
     path: "/about-us",
     component: AboutUs,
   },
@@ -107,6 +114,7 @@ const routes = [
     component: ProfileCompleted,
   },
   {
+    exact: true,
     path: "/organisation/:id",
     component: OrganisationProfile,
     props: {
@@ -175,7 +183,7 @@ const routes = [
     },
   },
   {
-    path: "/feed/:id",
+    path: "/feed",
     component: Feed,
     props: {
       mobiletabs: true,
@@ -189,6 +197,14 @@ const routes = [
       isProfile: true,
     },
   },
+  {
+    path: "/applicants/:id",
+    component: AdminProfile,
+    props: {
+      // isProfile: true,
+    },
+  },
+
   // todo: maybe move this inside the create-user-profile since it doesn't really need a separate route for a "page"
   {
     path: "/profile-completed",
@@ -226,7 +242,7 @@ const routes = [
     },
   },
   {
-    path: "/post/:postId/",
+    path: "/post/:postId",
     component: PostPage,
     props: {
       loggedInOnly: false,
@@ -280,7 +296,63 @@ const routes = [
     component: Unsubscribe,
     layout: "logo",
   },
-
+  {
+    path: "/organisation/:id/positions",
+    component: Positions,
+    props: {
+      isProfile: true,
+      loggedInOnly: true,
+    },
+  },
+  {
+    path: "/organisation/:id/apply",
+    component: Apply,
+    props: {
+      props: {
+        // loggedInOnly: true,
+      },
+    },
+  },
+  {
+    path: "/orgworkspace/:id",
+    component: OrgWorkSpace,
+    props: {
+      props: {
+        // loggedInOnly: true,
+      },
+    },
+  },
+  ,
+  {
+    path: "/:organisationId/permissions/:applicationId/:id",
+    component: MemberPermissions,
+    props: {
+      props: {
+        loggedInOnly: true,
+      },
+    },
+  },
+  {
+    path: "/application/:organisationId/:userId/:applicantId",
+    component: Applications,
+    props: {
+      hideFooter: false,
+      hideHeader: false,
+      props: {
+        loggedInOnly: true,
+      },
+    },
+  },
+  // {
+  //   path: "/application/:id",
+  //   component: Application,
+  //   props: {
+  //     props: {
+  //       // TODO ENABLE loggedInOnly
+  //       // loggedInOnly: true,
+  //     }
+  //   }
+  // },
   {
     path: "*",
     component: NotFoundPage,

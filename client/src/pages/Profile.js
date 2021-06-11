@@ -58,6 +58,8 @@ import {
   StyledMobileMenuContainer,
 } from "../components/Profile/ProfileComponents";
 
+import { ProfileTabs, ProfileTabPane } from "components/OrganisationProfile/ProfileTabs"
+
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -768,6 +770,7 @@ const Profile = ({
                 ))}
               </MobileMenuWrapper>
               <div style={{ width: "100%" }}>
+
                 {sectionView === "Requests" && (
                   <PostTabCard
                     initialPage={internalTab}
@@ -937,6 +940,7 @@ const Profile = ({
           </CustomDrawer>
         )}
       </ProfileLayout>
+
     </>
   );
 };

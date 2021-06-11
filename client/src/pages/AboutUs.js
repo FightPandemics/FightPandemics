@@ -96,10 +96,6 @@ import twitterLogo from "assets/icons/social-tw.svg";
 
 import GTM from "constants/gtm-tags";
 
-// const DemoBox = (props) => (
-//   <p className={`height-${props.value}`}>{props.children}</p>
-// );
-
 const getGTM = (id) => {
   return `${GTM?.aboutUs?.prefix}${GTM?.aboutUs?.[id]}`;
 };

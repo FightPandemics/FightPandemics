@@ -1,40 +1,35 @@
-import { WhiteSpace } from "antd-mobile";
-import axios from "axios";
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  useReducer,
-  useRef,
-} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-
+import { Col, Input, Row, Tabs } from "antd";
+import appStoreIcon from "assets/icons/app-store-icon.svg";
+import applicationConfirmation from "assets/icons/application-received.svg";
 // ICONS
 import createPost from "assets/icons/create-post.svg";
 import edit from "assets/icons/edit.svg";
 import locationIcon from "assets/icons/location.svg";
-import envelopeBlue from "assets/icons/social-envelope-blue.svg";
 import playStoreIcon from "assets/icons/play-store-icon.svg";
-import appStoreIcon from "assets/icons/app-store-icon.svg";
-
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
+import envelopeBlue from "assets/icons/social-envelope-blue.svg";
+import facebookIcon from "assets/icons/social-fb.svg";
+import githubIcon from "assets/icons/social-github.svg";
 import instagramIcon from "assets/icons/social-instagram.svg";
 import linkedinBlue from "assets/icons/social-linkedin.svg";
-import facebookIcon from "assets/icons/social-fb.svg";
 import twitterBlue from "assets/icons/social-tw.svg";
-import githubIcon from "assets/icons/social-github.svg";
 import websiteIcon from "assets/icons/website-icon.svg";
-
-import Activity from "components/Profile/Activity";
+import axios from "axios";
 import CreatePost from "components/CreatePost/CreatePost";
-import ErrorAlert from "../components/Alert/ErrorAlert";
+import CreatePostButton from "components/Feed/CreatePostButton";
 import { FeedWrapper } from "components/Feed/FeedWrappers";
+import Loader from "components/Feed/StyledLoader";
+import JoinOrgButton, {
+  JoinOrgContainer
+} from "components/OrganisationProfile/JoinOrgButton";
+import { DescriptionInput } from "components/OrganisationProfile/Positions";
+import ProfileList from "components/OrganisationProfile/ProfileList";
+import {
+  ProfileTabPane, ProfileTabs
+} from "components/OrganisationProfile/ProfileTabs";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "components/Picture/UploadPic";
-import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
-import Verification from "components/Verification/";
+import Activity from "components/Profile/Activity";
 import VerificationTick from "components/Verification/Tick";
 
 import Loader from "components/Feed/StyledLoader";
@@ -63,46 +58,83 @@ import {
   isAuthorOrg,
   isAuthorUser,
 } from "utils/userInfo";
+import GTM from "constants/gtm-tags";
 import {
-  FACEBOOK_URL,
-  INSTAGRAM_URL,
+  APPSTORE_URL, FACEBOOK_URL,
+  GITHUB_URL, INSTAGRAM_URL,
   LINKEDIN_URL,
-  TWITTER_URL,
-  GITHUB_URL,
-  APPSTORE_URL,
-  PLAYSTORE_URL,
+  PLAYSTORE_URL, TWITTER_URL
 } from "constants/urls";
+import {
+  OrganisationContext,
+  withOrganisationContext
+} from "context/OrganisationContext";
+import { UserContext, withUserContext } from "context/UserContext";
+import {
+  DELETE_MODAL_HIDE, DELETE_MODAL_POST, SET_DELETE_MODAL_VISIBILITY
+} from "hooks/actions/feedActions";
 import {
   fetchOrganisation,
   fetchOrganisationError,
-  fetchOrganisationSuccess,
+  fetchOrganisationSuccess
 } from "hooks/actions/organisationActions";
+import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
 import {
   fetchUser,
   fetchUserError,
-  fetchUserSuccess,
+  fetchUserSuccess
 } from "hooks/actions/userActions";
-import {
-  OrganisationContext,
-  withOrganisationContext,
-} from "context/OrganisationContext";
-import { SET_EDIT_POST_MODAL_VISIBILITY } from "hooks/actions/postActions";
-import {
-  SET_DELETE_MODAL_VISIBILITY,
-  DELETE_MODAL_POST,
-  DELETE_MODAL_HIDE,
-} from "hooks/actions/feedActions";
 import {
   deletePostModalreducer,
   deletePostState,
+  feedReducer,
+  optionsReducer
 } from "hooks/reducers/feedReducers";
-import { UserContext, withUserContext } from "context/UserContext";
-import GTM from "constants/gtm-tags";
-import { selectPosts, postsActions } from "reducers/posts";
+import React, {
+  useCallback, useContext, useEffect,
+  useReducer,
+  useRef, useState
+} from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { applicantsActions, selectApplicants } from "reducers/applicants";
+import { membersActions, selectMembers } from "reducers/members";
+import { postsActions, selectPosts } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
-import CreatePostButton from "components/Feed/CreatePostButton";
-import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
+import styled from "styled-components";
+import { LOGIN } from "templates/RouteWithSubRoutes";
+import {
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser
+} from "utils/userInfo";
+import ErrorAlert from "../components/Alert/ErrorAlert";
+import { PostPositionButton } from "../components/EditProfile/EditComponents";
+import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
+import {
+  ConfirmButton, DescContainer,
+  DisplayText, FPSwitch,
+  HeaderTitle, JoinPositionStyles,
+  Label, StyledConfirmModal, StyledPositionModal, StyledPostButton
+} from "../components/Positions/JoinPositionStyles";
+import {
+  AvatarPhotoContainer, CreatePostIcon,
+  CustomDrawer, DescriptionDesktop,
+  DrawerHeader, EditIcon,
+  NameDiv,
+  NamePara, PhotoUploadButton, PlaceholderIcon, PositionEditIcon,
+  ProfileBackgroup, ProfileLayout,
+  SectionHeader, SeeOrgBookLink,
+  SocialIcon, UserInfoContainer,
+  UserInfoDesktop
+} from "../components/Profile/ProfileComponents";
 
+const Error = styled.span`
+  color: red;
+`;
+
+const { TextArea } = Input;
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
   appStore: [appStoreIcon, APPSTORE_URL],
@@ -115,10 +147,34 @@ const URLS = {
   email: [envelopeBlue],
 };
 
+const initialState = {
+  showFilters: false,
+  filterModal: true,
+  showCreatePostModal: false,
+  applyFilters: false,
+  activePanel: null,
+};
+
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
+const getOrgBookLink = (orgBookLink) =>
+  orgBookLink.startsWith("http")
+    ? orgBookLink
+    : window.location.pathname + `/${orgBookLink}`;
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
-const OrganisationProfile = ({ isAuthenticated }) => {
+
+const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId, authLoading }) => {
+  const [activeTab, setActiveTab] = useState("applicants");
+  const [tab, setTab] = useState("activity");
+  const preSetActiveTab = (e) => {
+    setTab(e);
+    setActiveTab(e);
+  };
+  const locationLink = useLocation(false);
+  useEffect(() => {
+    setTab(locationLink?.state?.tab);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   let url = window.location.pathname.split("/");
   const organisationId = url[url.length - 1];
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -130,6 +186,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     deletePostState,
   );
   const posts = useSelector(selectPosts);
+  const applicants = useSelector(selectApplicants);
 
   const {
     userProfileState: { user },
@@ -151,6 +208,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     isOwner,
     urls = {},
     verified,
+    orgBookLink,
+    isJoinOrg,
+    positions: { description } = { position: { description: "" } },
   } = organisation || {};
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
@@ -162,14 +222,18 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     posts: postsList,
     error: postsError,
   } = posts;
-  const { deleteModalVisibility } = deleteModal;
 
+  const { deleteModalVisibility } = deleteModal;
   const prevTotalPostCount = usePrevious(totalPostCount);
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
-
+  const [doneLoadingApplicants, setDoneLoadingApplicants] = useState(false)
+  const [applicantsLoaded, setApplicantsLoaded] = useState(false)
+  const [membersLoaded, setMembersLoaded] = useState(false)
+  const [postsLoaded, setPostsLoaded] = useState(false)
+  const actorId = user?.id;
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -180,16 +244,19 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const getActorQuery = () => {
     return actorOrganisationId ? `&actorId=${actorOrganisationId}` : "";
   };
-
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
+    dispatch(applicantsActions.resetPageAction({}));
+    dispatch(membersActions.resetPageAction({}));
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
       userProfileDispatch(fetchUser());
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
+        console.log({ "organisation!!!": res.data })
       } catch (err) {
+        console.log({ "organisation!!! error": error })
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
           `error.${message}`,
@@ -202,6 +269,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         );
       }
     })();
+
     (async function fetchUserProfile() {
       userProfileDispatch(fetchUser());
       try {
@@ -222,18 +290,86 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     })();
   }, [orgProfileDispatch, organisationId, userProfileDispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const [currentUserPermissions, setCurrentUserPermissions] = useState();
+  const [memberStatus, setMemberStatus] = useState(null);
+  const [appliedStatus, setAppliedStatus] = useState(false);
+  const [isMember, setIsMember] = useState(false);
+  const [loadingPermissions, setLoadingPermissions] = useState(true)
+  const loadPermissions = async () => {
+    const endpoint = `/api/applicants/${organisationId}/status?userId=${actorId}&includeMeta=true`;
+    if (isAuthenticated) {
+      setAppliedStatus(true);
+      try {
+        const {
+          data: { data: applicants, meta },
+        } = await axios.get(endpoint);
+        if (applicants) {
+          setMemberStatus(applicants[0].status);
+          setCurrentUserPermissions(applicants[0].organization.permissions);
+          setActorPermissionsLoaded(true)
+
+        }
+        // if (actorId) {
+        //   setActorPermissionsLoaded(true)
+        // }
+        setLoadingPermissions(false)
+      } catch (error) {
+        return error;
+      }
+      // setActorPermissionsLoaded(true)
+    }
+    if (!isAuthenticated) {
+      setMemberStatus(undefined)
+      setCurrentUserPermissions(undefined)
+      // setActorPermissionsLoaded(true)
+    }
+  };
+  const permissions = {
+    isVolunteer:
+      currentUserPermissions == "Volunteer" || "WikiEditor" || "Admin",
+    isWikiEditor: currentUserPermissions == "WikiEditor" || "Admin",
+    isAdmin: currentUserPermissions == "Admin",
+  };
+  const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false);
+
+  const setStatus = () => {
+    // if (actorPermissionsLoaded) {
+    if (memberStatus == "accepted") {
+      setIsMember(true);
+    }
+
+    if (memberStatus == "applied" || memberStatus == "accepted") {
+      setAppliedStatus(false);
+    }
+    if (memberStatus == "rejected"
+      || memberStatus == undefined
+      || !isAuthenticated
+    ) {
+      setAppliedStatus(true);
+    }
+
+    // }
+  }
+  useEffect(() => {
+    loadPermissions();
+  }, [actorId, organisationId, tab, isAuthenticated]);
+  useEffect(() => {
+    setStatus()
+  }, [memberStatus, organisationId, actorId, actorPermissionsLoaded, loadingPermissions, tab]);
+
   useEffect(() => {
     const fetchOrganisationPosts = async () => {
       const limit = PAGINATION_LIMIT;
       const skip = page * limit;
       dispatch(postsActions.fetchPostsBegin());
+      setPostsLoaded(false)
       try {
         if (organisationId) {
           const endpoint = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${organisationId}${getActorQuery()}`;
           const {
             data: { data: posts, meta },
           } = await axios.get(endpoint);
-
+          setTotalPostCount(meta.total);
           if (prevOrgId !== organisationId) {
             dispatch(
               postsActions.fetchPostsSuccess({
@@ -275,6 +411,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               }),
             );
             dispatch(postsActions.finishLoadingAction());
+
           } else {
             dispatch(postsActions.finishLoadingAction());
           }
@@ -283,8 +420,11 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         dispatch(postsActions.fetchPostsError(error));
       }
     };
+
     fetchOrganisationPosts();
-  }, [organisationId, page, toggleRefetch]); // eslint-disable-line react-hooks/exhaustive-deps
+    setPostsLoaded(true)
+
+  }, [organisationId, page, toggleRefetch, tab, activeTab]);
 
   const refetchPosts = (isLoading, loadMore) => {
     dispatch(postsActions.resetPageAction({ isLoading, loadMore }));
@@ -313,14 +453,14 @@ const OrganisationProfile = ({ isAuthenticated }) => {
         return Promise.resolve();
       }
     },
-    [dispatch, isLoading, loadMore, organisationPosts.length],
+    [isLoading, loadMore, organisationPosts.length],
   );
 
   useEffect(() => {
     setItemCount(
       loadMore ? organisationPosts.length + 1 : organisationPosts.length,
     );
-  }, [loadMore, organisationPosts.length]);
+  }, [loadMore, organisationPosts.length,]);
 
   const postDelete = async (post) => {
     let deleteResponse;
@@ -420,9 +560,379 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     }
   };
 
+  const orgBookURL = () => {
+    if (organisation) {
+      if (orgBookLink) {
+        return getOrgBookLink(orgBookLink);
+      } else {
+        return;
+      }
+    }
+  };
+
   const emptyFeed = () => Object.keys(postsList).length < 1 && !isLoading;
+  const emptyFeedApplicants = () => Object.keys(applicantsList).length < 1 && !isLoadingApplicants;
+  const emptyFeedMembers = () => Object.keys(membersList).length < 1 && !isLoadingMembers;
   const onToggleDrawer = () => setDrawer(!drawer);
   const onToggleCreatePostDrawer = () => setModal(!modal);
+  const { TabPane } = Tabs;
+
+  const [feedState, feedDispatch] = useReducer(feedReducer, {
+    ...initialState,
+  });
+  const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
+
+  const members = useSelector(selectMembers);
+  //react-virtualized loaded rows and row count.
+  const [itemCountApplicants, setItemCountApplicants] = useState(0);
+  const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
+  const [totalApplicantCount, setTotalApplicantCount] = useState(
+    ARBITRARY_LARGE_NUM,
+  );
+  const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
+  const [itemCountMembers, setItemCountMembers] = useState(0);
+  const [toggleRefetchMembers, setToggleRefetchMembers] = useState(false);
+  const [totalMemberCount, setTotalMemberCount] = useState(
+    ARBITRARY_LARGE_NUM,
+  );
+  const [rawTotalMemberCount, setRawTotalMembers] = useState(0);
+  const [switchOnOff, setSwitchOnOff] = useState();
+
+  useEffect(() => {
+    setSwitchOnOff(isJoinOrg);
+    //setPosDescription(description)
+  }, [isJoinOrg, organisation, setSwitchOnOff]);
+
+  const [newPosDescription, setPosDescription] = useState(description);
+  const [descriptionLoaded, setDescriptionLoaded] = useState(false);
+
+  const posRef = useRef();
+  const handleDescription = (event) => {
+    setPosDescription(event.target.value);
+    setTextCount(event.target.value.length);
+  };
+
+  const [checksEnabled, setChecksEnabled] = useState(true);
+  const [done, setDone] = useState(false);
+  const [displayText, setDisplayText] = useState(
+    t("position.text1") + name + t("position.text2"),
+  );
+  const [isEditable, setIsEditable] = useState(false);
+  const inputRef = useRef("");
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [postLoading, setPostLoading] = useState(false);
+  const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [textCount, setTextCount] = useState(1);
+
+  const { filterModal, activePanel, showFilters } = feedState;
+  const {
+    error: applicantsError,
+    // isLoading: isLoadingApplicants,
+    // loadMore: loadMoreApplicants,
+    isLoadingApplicants,
+    loadMoreApplicants,
+    // page: pageApplicants,
+    pageApplicants,
+    applicants: applicantsList,
+  } = applicants;
+
+  const feedApplicants = Object.entries(applicantsList);
+  const prevTotalApplicantCount = usePrevious(totalApplicantCount);
+  const {
+    error: membersError,
+    isLoading: isLoadingMembers,
+    loadMore: loadMoreMembers,
+    // page: pageMembers,
+    pageMembers,
+    members: membersList,
+  } = members;
+
+  const feedMembers = Object.entries(membersList);
+  const prevTotalMemberCount = usePrevious(totalMemberCount);
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+  const history = useHistory();
+
+  const dispatchAction = (type, key, value) =>
+    feedDispatch({ type, key, value });
+
+  const refetchMembers = (
+    isLoadingMembers,
+    loadMoreMembers,
+  ) => {
+    dispatch(
+      membersActions.resetPageAction({
+        isLoadingMembers,
+        loadMoreMembers,
+      }),
+    );
+    if (pageMembers === 0) {
+      setToggleRefetchMembers(!toggleRefetchMembers);
+    }
+  };
+
+
+  const handleIsJoinOrg = async (e) => {
+    if (typeof switchOnOff !== undefined) {
+      setSwitchOnOff(e);
+      sendIsJoinOrg(e);
+    } else {
+      setSwitchOnOff(isJoinOrg);
+    }
+  };
+
+  const sendIsJoinOrg = async (joinorg) => {
+    try {
+      const res = await axios.patch(`/api/organisations/${organisationId}`, {
+        isJoinOrg: joinorg,
+      });
+    } catch (err) {
+      return error;
+    }
+  };
+
+  const sendPositionDescription = async (joinorg) => {
+    try {
+      const res = await axios.patch(`/api/organisations/${organisationId}`, {
+        positions: { description: newPosDescription },
+      });
+    } catch (err) {
+      return error;
+    }
+  };
+
+  const handleOk = () => {
+    sendPositionDescription();
+    setPostLoading(true);
+    setTimeout(() => {
+      setPostLoading(false);
+      setIsModalVisible(false);
+      setConfirmModalVisible(true);
+    }, 3000);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const loadApplicants = async () => {
+    const limit = PAGINATION_LIMIT;
+    const skip = pageApplicants * limit;
+    let baseURL;
+    const getApplicantsBaseURL = (organisationId, limit, skip) => {
+      return `/api/applicants/${organisationId}/status?includeMeta=true&limit=${limit}&skip=${skip}&status=applied`;
+    };
+
+    baseURL = getApplicantsBaseURL(organisationId, limit, skip);
+    const endpoint = `/api/applicants/${organisationId}/status?includeMeta=true&limit=${limit}&skip=${skip}&status=applied`;
+    dispatch(applicantsActions.fetchApplicantsBegin());
+    setApplicantsLoaded(false)
+    try {
+      if (organisationId) {
+        const {
+          data: { data: applicants, meta },
+        } = await axios.get(endpoint);
+        setRawTotalApplicants(meta.total);
+        if (applicants.length && meta.total) {
+          if (prevTotalApplicantCount !== meta.total) {
+            setTotalApplicantCount(meta.total);
+            setRawTotalApplicants(meta.total);
+          }
+          if (applicants.length < limit) {
+            dispatch(applicantsActions.finishLoadingAction());
+          } else if (meta.total === limit) {
+            dispatch(applicantsActions.finishLoadingAction());
+          }
+          if (prevOrgId !== organisationId) {
+            dispatch(
+              applicantsActions.fetchApplicantsSuccess({
+                applicants: [],
+              }),
+            );
+          }
+
+          const loadedApplicants = applicants.reduce((obj, item) => {
+            obj[item._id] = item;
+            return obj;
+          }, {});
+
+          if (prevOrgId === organisationId && applicantsList) {
+            dispatch(
+              applicantsActions.fetchApplicantsSuccess({
+                applicants: { ...applicantsList, ...loadedApplicants },
+              }),
+            );
+          } else {
+            dispatch(
+              applicantsActions.fetchApplicantsSuccess({
+                applicants: { ...loadedApplicants },
+              }),
+            );
+          }
+        } else if (prevOrgId === organisationId && applicants) {
+          dispatch(
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...applicantsList },
+            }),
+          );
+        } else {
+          dispatch(applicantsActions.finishLoadingAction());
+        }
+      }
+    }
+    catch (error) {
+      dispatch(applicantsActions.fetchApplicantsError(error));
+    }
+    // if (applicantsLoaded == false) {
+    setApplicantsLoaded(true)
+    // }
+  };
+  const loadMembers = async () => {
+    const limit = PAGINATION_LIMIT;
+    const skip = pageMembers * limit;
+    let baseURL;
+    const getMembersBaseURL = (organisationId, limit, skip) => {
+      return `/api/applicants/${organisationId}/status?status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
+    };
+
+    baseURL = getMembersBaseURL(organisationId, limit, skip);
+    let endpoint = baseURL;
+    dispatch(membersActions.fetchMembersBegin());
+    setMembersLoaded(false)
+    try {
+      if (organisationId) {
+        const {
+          data: { data: members, meta },
+        } = await axios.get(endpoint);
+        setRawTotalMembers(meta.total);
+        if (members.length && meta.total) {
+          if (prevTotalMemberCount !== meta.total) {
+            setTotalMemberCount(meta.total);
+            setRawTotalMembers(meta.total);
+          }
+
+          const lastPage = Math.ceil(meta.total / limit) - 1;
+          if (pageMembers === lastPage) {
+            dispatch(membersActions.finishLoadingAction());
+          }
+
+          let membersInState;
+          if (history.location.state) {
+            const { keepMembersState, keepMembersPageState } = history.location.state;
+            membersInState = keepMembersState;
+            if (keepMembersPageState >= pageMembers) {
+              dispatch(membersActions.setPageAction(keepMembersState));
+            }
+          }
+          if (membersInState) {
+            if (Object.keys(membersInState).length === meta.total) {
+              dispatch(membersActions.finishLoadingAction());
+            }
+          }
+
+          const loadedApplicants = members.reduce((obj, item) => {
+            obj[item._id] = item;
+            return obj;
+          }, {});
+
+          if (membersInState) {
+            dispatch(
+              membersActions.fetchMembeuccess({
+                members: { ...membersInState, ...loadedApplicants },
+              }),
+            );
+          } else if (Object.keys(membersList).length && pageMembers) {
+            dispatch(
+              membersActions.fetchMembersSuccess({
+                members: { ...membersList, ...loadedApplicants },
+              }),
+            );
+          } else {
+            dispatch(
+              membersActions.fetchMembersSuccess({
+                members: { ...loadedApplicants },
+              }),
+            );
+          }
+        } else if (members) {
+          dispatch(
+            membersActions.fetchMembersSuccess({
+              members: { ...membersList },
+            }),
+          );
+          dispatch(membersActions.finishLoadingAction());
+        } else {
+          dispatch(membersActions.finishLoadingAction());
+        }
+      }
+
+    }
+    catch (error) {
+      dispatch(membersActions.fetchMembersError(error));
+    }
+    setMembersLoaded(true)
+  };
+  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setChecksEnabled(switchOnOff);
+  }, [switchOnOff]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (postsLoaded) {
+      loadApplicants();
+    }
+  }, [organisationId, pageApplicants, tab, postsLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (postsLoaded) {
+      loadMembers();
+    }
+  }, [organisationId, pageMembers, tab, postsLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setPosDescription(description);
+  }, [description, name, t]);
+
+  const descField = () => {
+    if (textCount > 0) return <DisplayText>{newPosDescription}</DisplayText>;
+    else return <div style={{ color: "red" }}>Add a description</div>;
+  };
+
+  const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
+    feedApplicants,
+  ]);
+  const isMemberLoaded = useCallback((index) => !!feedMembers[index], [
+    feedMembers,
+  ]);
+
+  const loadNextPageApplicant = useCallback(
+    async () => {
+      dispatch(applicantsActions.setNextPageAction());
+      setToggleRefetchApplicants(!toggleRefetchApplicants)
+    },
+  );
+  const loadNextPageMember = useCallback(
+    async () => {
+      dispatch(membersActions.setNextPageAction());
+      setToggleRefetchMembers(!toggleRefetchMembers)
+    },
+  );
+  useEffect(() => {
+    setItemCountApplicants(
+      loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length,
+    );
+  }, [feedApplicants.length, loadMoreApplicants, tab]);
+  useEffect(() => {
+    setItemCountMembers(
+      loadMoreMembers ? feedMembers.length + 1 : feedMembers.length,
+    );
+  }, [feedMembers.length, loadMoreMembers, tab]);
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -437,6 +947,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       <>
         <ProfileBackgroup />
         <ProfileLayout>
+
           <UserInfoContainer>
             <AvatarPhotoContainer>
               <ProfilePic
@@ -484,72 +995,298 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   )}
               </NameDiv>
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-              <IconsContainer>
-                <div className="social-icons">{renderURL()}</div>
-              </IconsContainer>
+
+              <SeeOrgBookLink>
+                <a href={orgBookURL()} target="_blank">
+                  See Org Book
+                </a>
+              </SeeOrgBookLink>
             </UserInfoDesktop>
           </UserInfoContainer>
-          {isSelf && !verified && <Verification />}
-          <WhiteSpace />
-          <div>
-            <SectionHeader>
-              {t("profile.org.activity")}
-              <PlaceholderIcon />
-              {isSelf && (
-                <>
-                  <CreatePostIcon
-                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    src={createPost}
-                    onClick={onToggleCreatePostDrawer}
-                  />
-                  <CreatePostButton
-                    onClick={onToggleCreatePostDrawer}
-                    id={GTM.organisation.orgPrefix + GTM.post.createPost}
-                    inline={true}
-                    icon={<PlusIcon />}
+
+          {
+            authLoading ? null :
+              isOwner ? null :
+                isJoinOrg && appliedStatus && !currentUserOrgId || !isAuthenticated ?
+                  (< JoinOrgContainer >
+                    <Link
+                      onClick={() =>
+                        sessionStorage.setItem(
+                          "postredirect",
+                          window.location.pathname,
+                        )
+                      }
+                      to={
+                        isAuthenticated
+                          ? `/organisation/${organisationId}/positions`
+                          : {
+                            pathname: LOGIN,
+                            state: { from: window.location.pathname },
+                          }
+                      }
+                    >
+                      <JoinOrgButton id={GTM.organisation.joinOrg}>
+                        {t("profile.individual.joinOrg")}
+                      </JoinOrgButton>
+                    </Link>
+                  </JoinOrgContainer>
+                  )
+                  : null
+          }
+          < ProfileTabs
+            defaultActiveKey="activity"
+            activeKey={tab}
+            onChange={(e) => preSetActiveTab(e)}
+          >
+            <ProfileTabPane id="test-tab" tab={t("profile.views.activity")} key="activity">
+              {postsLoaded &&
+                <div>
+                  <SectionHeader>
+                    <PlaceholderIcon />
+                    {isSelf || isMember ? (
+                      <>
+                        <CreatePostIcon
+                          id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                          src={createPost}
+                          onClick={onToggleCreatePostDrawer}
+                        />
+                        <CreatePostButton
+                          onClick={onToggleCreatePostDrawer}
+                          id={GTM.organisation.orgPrefix + GTM.post.createPost}
+                          inline={true}
+                          icon={<PlusIcon />}
+                        >
+                          {t("post.create")}
+                        </CreatePostButton>
+                      </>
+                    ) : null}
+                  </SectionHeader>
+                  <FeedWrapper isProfile>
+                    <Activity
+                      postDispatch={dispatch}
+                      filteredPosts={postsList}
+                      user={user}
+                      postDelete={postDelete}
+                      handlePostDelete={handlePostDelete}
+                      handleEditPost={handleEditPost}
+                      deleteModalVisibility={deleteModalVisibility}
+                      handleCancelPostDelete={handleCancelPostDelete}
+                      loadNextPage={loadNextPage}
+                      isNextPageLoading={isLoading}
+                      itemCount={itemCount}
+                      isItemLoaded={isItemLoaded}
+                      hasNextPage={loadMore}
+                      totalPostCount={totalPostCount}
+                      activeTab={activeTab}
+                    />
+                    {postsError && (
+                      <ErrorAlert
+                        message={t([
+                          `error.${postsError.message}`,
+                          `error.http.${postsError.message}`,
+                        ])}
+                      />
+                    )}
+                    {emptyFeed() && <></>}
+                    {isSelf || isMember ? (
+                      <CreatePost
+                        gtmPrefix={GTM.organisation.orgPrefix}
+                        onCancel={onToggleCreatePostDrawer}
+                        loadPosts={refetchPosts}
+                        visible={modal}
+                        user={user}
+                      />
+                    ) : null}
+                  </FeedWrapper>
+                </div>}
+            </ProfileTabPane>
+            {
+              <ProfileTabPane
+                tab={`${t("profile.views.members")} ${membersLoaded ? "( " + rawTotalMemberCount + " )" : ""} `} key="members">
+                {
+                  rawTotalMemberCount == 0 && !isLoadingMembers ? (
+                    < div style={{ textAlign: "center", marginTop: "5rem" }}>
+                      No members to display.
+                    </div>
+                  ) : (
+                    <ProfileList
+                      filteredMembers={membersList}
+                      itemCount={itemCountMembers}
+                      isItemLoaded={isMemberLoaded}
+                      isNextPageLoading={isLoadingMembers}
+                      loadNextPage={loadNextPageMember}
+                      hasNextPage={loadMoreMembers}
+                      totalCount={totalMemberCount}
+                      page={pageMembers}
+                      emptyFeed={emptyFeedMembers}
+                      isOwner={isOwner}
+                      isMember={isMember}
+                      isAdmin={permissions.isAdmin}
+                      isWiki={permissions.isWiki}
+                      isVolunteer={permissions.isVolunteer}
+                      activeTab={activeTab}
+                      listInitialized={membersLoaded}
+                    />
+                  )}
+              </ProfileTabPane>
+            }
+            {
+              isOwner || permissions.isAdmin || isSelf ? (
+                <ProfileTabPane
+                  tab={`${t("profile.views.applicants")} ${applicantsLoaded ? "( " + (rawTotalApplicantCount) + " )" : ""} `}
+                  key="applicants"
+                >
+                  {
+                    rawTotalApplicantCount == 0 && !isLoadingApplicants ? (
+                      <div style={{ textAlign: "center", marginTop: "5rem" }}>
+                        No applicants to display.
+                      </div>
+                    ) : (
+                      <ProfileList
+                        filteredApplicants={applicantsList}
+                        itemCount={itemCountApplicants}
+                        isItemLoaded={isApplicantLoaded}
+                        isNextPageLoading={isLoadingApplicants}
+                        hasNextPage={loadMoreApplicants}
+                        loadNextPage={loadNextPageApplicant}
+                        totalCount={totalApplicantCount}
+                        page={pageApplicants}
+                        emptyFeed={emptyFeedApplicants}
+                        isOwner={isOwner}
+                        isMember={isMember}
+                        isAdmin={permissions.isAdmin}
+                        isWiki={permissions.isWiki}
+                        isVolunteer={permissions.isVolunteer}
+                        activeTab={activeTab}
+                        listInitialized={applicantsLoaded}
+                      />
+                    )
+                  }
+                </ProfileTabPane>
+              )
+                : null
+            }
+            {
+              isSelf || permissions.isAdmin || isOwner ?
+                (<ProfileTabPane tab={t("profile.views.positions")} key="positions">
+                  <Row>
+                    <Col flex={1}>
+                      {
+                        <JoinPositionStyles>
+                          {t("position.allowVolunteer")}
+                        </JoinPositionStyles>
+                      }
+                    </Col>
+                    <Col flex={5}>
+                      <FPSwitch
+                        checkedChildren={t("profile.common.on")}
+                        unCheckedChildren={t("profile.common.off")}
+                        onClick={(checked) => handleIsJoinOrg(checked)} //TODO Join Us CTA
+                        checked={switchOnOff}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <DescContainer>
+                      <HeaderTitle>
+                        {t("position.volunteerposition")} *
+
+                      {!isEditable ? (
+                          <PositionEditIcon
+                            src={edit}
+                            onClick={() => {
+                              if (!checksEnabled) return;
+                              if (inputRef.current) {
+                                setDisplayText(inputRef.current.value);
+                              }
+                              setIsEditable((s) => !s);
+                              setDone(false);
+                            }}
+                          />
+                        ) : (
+                          <Label
+                            onClick={() => {
+                              if (inputRef.current) {
+                                setDisplayText(inputRef.current.value);
+                                setTextCount(inputRef.current.value.length);
+                              }
+                              setIsEditable((s) => !s);
+                              setDone(true);
+                            }}
+                          >
+                            Done
+                          </Label>
+                        )}
+                      </HeaderTitle>
+                      {isEditable ? (
+                        <DescriptionInput
+                          id="description"
+                          name="description"
+                          key="description"
+                          ref={posRef}
+                          value={newPosDescription}
+                          maxLength="500"
+                          onChange={(e) => handleDescription(e)}
+                        />
+                      ) : (
+                        descField()
+                      )}
+                    </DescContainer>
+                  </Row>
+                  <Row justify="center">
+                    <PostPositionButton
+                      disabled={checksEnabled && done ? false : true}
+                      primary="true"
+                      onClick={() => setIsModalVisible(true)}
+                    >
+                      {t("position.title")}
+                    </PostPositionButton>
+                  </Row>
+                  <StyledPositionModal
+                    closable={false}
+                    visible={isModalVisible}
+                    title={t("position.title")}
+                    footer={[
+                      <StyledPostButton
+                        name="cancel"
+                        type="text"
+                        onClick={handleCancel}
+                      >
+                        {t("position.cancel")}
+                      </StyledPostButton>,
+                      <StyledPostButton
+                        name="post"
+                        type="text"
+                        loading={postLoading}
+                        onClick={handleOk}
+                      >
+                        {t("position.post")}
+                      </StyledPostButton>,
+                    ]}
                   >
-                    {t("post.create")}
-                  </CreatePostButton>
-                </>
-              )}
-            </SectionHeader>
-            <FeedWrapper isProfile>
-              <Activity
-                postDispatch={dispatch}
-                filteredPosts={postsList}
-                user={user}
-                postDelete={postDelete}
-                handlePostDelete={handlePostDelete}
-                handleEditPost={handleEditPost}
-                deleteModalVisibility={deleteModalVisibility}
-                handleCancelPostDelete={handleCancelPostDelete}
-                loadNextPage={loadNextPage}
-                isNextPageLoading={isLoading}
-                itemCount={itemCount}
-                isItemLoaded={isItemLoaded}
-                hasNextPage={loadMore}
-                totalPostCount={totalPostCount}
-              />
-              {postsError && (
-                <ErrorAlert
-                  message={t([
-                    `error.${postsError.message}`,
-                    `error.http.${postsError.message}`,
-                  ])}
-                />
-              )}
-              {emptyFeed() && <></>}
-              {isSelf && (
-                <CreatePost
-                  gtmPrefix={GTM.organisation.orgPrefix}
-                  onCancel={onToggleCreatePostDrawer}
-                  loadPosts={refetchPosts}
-                  visible={modal}
-                  user={user}
-                />
-              )}
-            </FeedWrapper>
-          </div>
+                    <p>{t("position.content")}</p>
+                  </StyledPositionModal>
+                  <StyledConfirmModal
+                    closable={false}
+                    visible={isConfirmModalVisible}
+                    title={<img src={applicationConfirmation} />}
+                    footer={[
+                      <ConfirmButton
+                        key="submit"
+                        type="primary"
+                        onClick={() => setConfirmModalVisible(false)}
+                      >
+                        {t("position.Okay")}
+                      </ConfirmButton>,
+                    ]}
+                  >
+                    <p>{t("position.confirmTitle")}</p>
+                    <p>{t("position.confirmDescription")}</p>
+                  </StyledConfirmModal>
+                </ProfileTabPane>
+                ) : null}
+          </ProfileTabs>
+
           {isSelf && (
             <CustomDrawer
               placement="bottom"
@@ -560,7 +1297,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               key="bottom"
             >
               <DrawerHeader>
-                <Link to={`/edit-organisation-account/${organisationId}`}>
+                <Link to={`/ edit - organisation - account / ${organisationId}`}>
                   {t("profile.org.editOrgAccount")}
                 </Link>
               </DrawerHeader>
@@ -575,8 +1312,9 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                 </Link>
               </DrawerHeader>
             </CustomDrawer>
-          )}
-        </ProfileLayout>
+          )
+          }
+        </ProfileLayout >
       </>
     );
   }
