@@ -885,7 +885,7 @@ const OrgBookEditor = () => {
   };
 
   const handleBackBtnClick = () => {
-    history.push(`/organisation/${organisation._id}`);
+    history.goBack();
   };
 
   const renderTableOfContents = () => {

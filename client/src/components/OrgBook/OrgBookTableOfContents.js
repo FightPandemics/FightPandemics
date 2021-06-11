@@ -236,7 +236,7 @@ const OrgBookTableOfContents = (props) => {
             handleClick={onBackButtonClick}
             id={GTM.orgBook.prefix + GTM.orgBook.back}
             label={t("onboarding.common.previous")}
-            title={t("orgBook.backToViewOrgProfile")}
+            title={t("orgBook.backToPreviousPage")}
             color={white}
             bgcolor="transparent"
           ></BackArrowButton>

@@ -510,7 +510,7 @@
     "click": "Click \"",
     "belowOr": "\" below to save when ready or ",
     "undoAllMyChanges": "Undo All My Changes",
-    "backToViewOrgProfile": "Back to View Org Profile",
+    "backToPreviousPage": "Back",
     "orgViewOnly": "Private",
     "publicView": "Public",
     "changeToPublicView": "Change View To Public",
