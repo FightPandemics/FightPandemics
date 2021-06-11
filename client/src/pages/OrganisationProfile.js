@@ -32,7 +32,6 @@ import UploadPic from "components/Picture/UploadPic";
 import Activity from "components/Profile/Activity";
 import VerificationTick from "components/Verification/Tick";
 
-import Loader from "components/Feed/StyledLoader";
 import {
   ProfileLayout,
   UserInfoContainer,
@@ -52,6 +51,7 @@ import {
   AvatarPhotoContainer,
   NamePara,
   ProfileBackgroup,
+  PositionEditIcon
 } from "../components/Profile/ProfileComponents";
 import {
   getInitialsFromFullName,
@@ -104,11 +104,6 @@ import { postsActions, selectPosts } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
 import styled from "styled-components";
 import { LOGIN } from "templates/RouteWithSubRoutes";
-import {
-  getInitialsFromFullName,
-  isAuthorOrg,
-  isAuthorUser
-} from "utils/userInfo";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import { PostPositionButton } from "../components/EditProfile/EditComponents";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
@@ -118,17 +113,6 @@ import {
   HeaderTitle, JoinPositionStyles,
   Label, StyledConfirmModal, StyledPositionModal, StyledPostButton
 } from "../components/Positions/JoinPositionStyles";
-import {
-  AvatarPhotoContainer, CreatePostIcon,
-  CustomDrawer, DescriptionDesktop,
-  DrawerHeader, EditIcon,
-  NameDiv,
-  NamePara, PhotoUploadButton, PlaceholderIcon, PositionEditIcon,
-  ProfileBackgroup, ProfileLayout,
-  SectionHeader, SeeOrgBookLink,
-  SocialIcon, UserInfoContainer,
-  UserInfoDesktop
-} from "../components/Profile/ProfileComponents";
 
 const Error = styled.span`
   color: red;
@@ -996,11 +980,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
               </NameDiv>
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
 
-              <SeeOrgBookLink>
-                <a href={orgBookURL()} target="_blank">
-                  See Org Book
-                </a>
-              </SeeOrgBookLink>
             </UserInfoDesktop>
           </UserInfoContainer>
 
@@ -1191,7 +1170,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                       <HeaderTitle>
                         {t("position.volunteerposition")} *
 
-                      {!isEditable ? (
+                        {!isEditable ? (
                           <PositionEditIcon
                             src={edit}
                             onClick={() => {
