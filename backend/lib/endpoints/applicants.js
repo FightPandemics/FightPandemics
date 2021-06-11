@@ -100,6 +100,9 @@ async function routes(app) {
         Applicant.aggregate(
           [
             {
+              $sort: { createdAt: -1 }
+            },
+            {
               $match:
               {
                 $and: [
@@ -141,7 +144,8 @@ async function routes(app) {
             },
             {
               $limit: parseInt(limit, 10) || APPLICANT_PAGE_SIZE
-            }
+            },
+
           ]
 
 
@@ -228,6 +232,9 @@ async function routes(app) {
 
         Applicant.aggregate(
           [
+            {
+              $sort: { createdAt: -1 }
+            },
             {
               $match: {
                 $and: [
