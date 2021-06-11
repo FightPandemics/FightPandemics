@@ -1018,7 +1018,8 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
             onChange={(e) => preSetActiveTab(e)}
           >
             <ProfileTabPane id="test-tab" tab={t("profile.views.activity")} key="activity">
-              {postsLoaded &&
+              {
+              postsLoaded &&
                 <div>
                   <SectionHeader>
                     <PlaceholderIcon />
@@ -1276,7 +1277,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
               key="bottom"
             >
               <DrawerHeader>
-                <Link to={`/ edit - organisation - account / ${organisationId}`}>
+                <Link to={`/edit-organisation-account/${organisationId}`}>
                   {t("profile.org.editOrgAccount")}
                 </Link>
               </DrawerHeader>
