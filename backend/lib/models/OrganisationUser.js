@@ -45,6 +45,7 @@ const organisationSchema = new Schema(
       twitter: String,
       website: String,
     },
+    orgBookPages: Array,
   },
   { collection: "users" },
 );

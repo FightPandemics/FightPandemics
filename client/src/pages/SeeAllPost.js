@@ -200,8 +200,8 @@ const SeeAll = (props) => {
         ]);
         userProfileDispatch(
           fetchUserError(
-            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`
-          )
+            `${t("error.failedLoadingProfile")} ${translatedErrorMessage}`,
+          ),
         );
       }
     })();

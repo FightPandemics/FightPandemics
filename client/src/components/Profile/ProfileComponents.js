@@ -1,4 +1,5 @@
 import { Drawer, Menu } from "antd";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -299,6 +300,33 @@ export const DescriptionDesktop = styled.div`
     line-height: 140%;
     color: #282828;
   }
+`;
+export const SeeOrgBookLink = styled(Link)`
+  color: ${theme.colors.royalBlue};
+  font-size: ${theme.typography.size.xlarge};
+  align-self: center;
+  display: block;
+  width: fit-content;
+  margin: auto;
+  margin-top: 1rem;
+`;
+export const SeeOrgBookDisabled = styled.div`
+  color: ${theme.colors.lightGray};
+  font-size: ${theme.typography.size.xlarge};
+  align-self: center;
+  display: block;
+  width: fit-content;
+  margin: auto;
+  margin-top: 1rem;
+`;
+export const CreateOrgBookLink = styled(Link)`
+  color: ${theme.colors.royalBlue};
+  font-size: ${theme.typography.size.xlarge};
+  align-self: center;
+  display: block;
+  width: fit-content;
+  margin: auto;
+  margin-top: 1rem;
 `;
 export const MobileLocation = styled.div`
   color: #939393;

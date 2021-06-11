@@ -101,13 +101,13 @@ const PostSocial = ({
       try {
         const { data } = await request(endPoint);
         postDispatch(
-          postsActions.setLikeAction(data.post, data.post.likesCount)
+          postsActions.setLikeAction(data.post, data.post.likesCount),
         );
         dispatch(
           postsActions.updateProfilePostSucess({
             post: data.post,
             userId: authorId,
-          })
+          }),
         );
       } catch (error) {
         console.log({ error });
@@ -126,7 +126,7 @@ const PostSocial = ({
         handlePostLike(post, likePost, liked, false);
       }
     }
-  }, [handlePostLike, id, liked]);
+  }, [handlePostLike, id, liked, post]);
 
   const renderPostSocialIcons = (
     <>

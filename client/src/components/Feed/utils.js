@@ -33,11 +33,11 @@ export const highlightSearchRegex = (text) => {
             ? "\\b" + key + "\\b"
             : isLatin
             ? "\\b" + key
-            : key
+            : key,
         )
         .join("|") || "\\b\\B"
     })`,
-    "ig"
+    "ig",
   );
   return regex;
 };

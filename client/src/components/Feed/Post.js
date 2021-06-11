@@ -85,7 +85,7 @@ const highlightString = (text, highlight) => {
   return parts
     .filter((part) => part)
     .map((part) =>
-      regex.test(part) ? <span className={"highlighted"}>{part}</span> : part
+      regex.test(part) ? <span className={"highlighted"}>{part}</span> : part,
     );
 };
 
@@ -96,7 +96,7 @@ const Highlight = ({ textObj = "", highlight = "" }) => {
   // linkify result could be Array
   if (Array.isArray(textObj)) {
     return textObj.map((part) =>
-      typeof part === "string" ? highlightString(part, highlight) : part
+      typeof part === "string" ? highlightString(part, highlight) : part,
     );
   }
   return textObj;
@@ -220,7 +220,7 @@ const Post = ({
 
       allComments = allComments.filter(
         (comment1, index, self) =>
-          index === self.findIndex((comment2) => comment2._id === comment1._id)
+          index === self.findIndex((comment2) => comment2._id === comment1._id),
       );
       if (
         previousComments.length === allComments.length ||
@@ -234,7 +234,7 @@ const Post = ({
           "comments",
           allComments,
           "commentsCount",
-          commentCountRes.data.post.commentsCount
+          commentCountRes.data.post.commentsCount,
         );
       }
 
@@ -299,13 +299,13 @@ const Post = ({
         "comments",
         allComments,
         "commentsCount",
-        commentCountRes.data.post.commentsCount
+        commentCountRes.data.post.commentsCount,
       );
       dispatch(
         postsActions.updateProfilePostSucess({
           post: commentCountRes.data.post,
           userId: commentCountRes.data.post.author.id,
-        })
+        }),
       );
       setComment([]);
     }
@@ -351,7 +351,7 @@ const Post = ({
       }
       if (response && response.data) {
         let filterComments = comments.filter(
-          (comment) => comment._id !== commentId
+          (comment) => comment._id !== commentId,
         );
 
         await dispatchPostAction(
@@ -359,13 +359,13 @@ const Post = ({
           "comments",
           filterComments,
           "commentsCount",
-          commentCountRes.data.post.commentsCount
+          commentCountRes.data.post.commentsCount,
         );
         dispatch(
           postsActions.updateProfilePostSucess({
             post: commentCountRes.data.post,
             userId: commentCountRes.data.post.author.id,
-          })
+          }),
         );
       }
     }
@@ -516,7 +516,7 @@ const Post = ({
             </PostTag>
           ) : (
             ""
-          )
+          ),
         )}
     </Card.Body>
   );
@@ -650,7 +650,7 @@ const Post = ({
                     `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
                     {
                       count: post?.elapsedTimeText?.created?.count,
-                    }
+                    },
                   )}
                   {post?.elapsedTimeText?.isEdited && ` · ${t("post.edited")}`}
                 </span>
@@ -687,7 +687,7 @@ const Post = ({
               content,
               highlightWords,
               showComplete,
-              convertTextToURL
+              convertTextToURL,
             )}
             {fullPostLength > CONTENT_LENGTH ? (
               <RenderViewMore />
@@ -786,7 +786,7 @@ const Post = ({
                       `relativeTime.${post?.elapsedTimeText?.created?.unit}WithCount`,
                       {
                         count: post?.elapsedTimeText?.created?.count,
-                      }
+                      },
                     )}
                     {post?.elapsedTimeText?.isEdited &&
                       ` · ${t("post.edited")}`}
@@ -838,7 +838,7 @@ const Post = ({
                     content,
                     highlightWords,
                     showComplete,
-                    convertTextToURL
+                    convertTextToURL,
                   )}
                 </Link>
               ) : (
@@ -858,7 +858,7 @@ const Post = ({
                     content,
                     highlightWords,
                     showComplete,
-                    convertTextToURL
+                    convertTextToURL,
                   )}
                 </>
               )}
@@ -914,7 +914,7 @@ const renderContent = (
   content,
   highlightWords,
   showComplete,
-  convertTextToURL
+  convertTextToURL,
 ) => {
   let finalContent = content;
   if (finalContent.length > CONTENT_LENGTH && !showComplete) {

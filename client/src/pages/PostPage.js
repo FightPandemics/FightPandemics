@@ -152,7 +152,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       postsActions.updateProfilePostSucess({
         post,
         userId: post.author.id,
-      })
+      }),
     );
   };
 
@@ -194,7 +194,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
       dispatchPostAction(
         SET_DELETE_MODAL_VISIBILITY,
         "deleteModalVisibility",
-        DELETE_MODAL_HIDE
+        DELETE_MODAL_HIDE,
       );
       history.push(FEED);
       let endPoint = `/api/posts/${postId}${getActorQuery()}`;
@@ -206,7 +206,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
             "post",
             initialState,
             "content",
-            initialState.content
+            initialState.content,
           );
         }
       } catch (error) {
@@ -231,7 +231,7 @@ const PostPage = ({ user, updateComments, isAuthenticated }) => {
         "post",
         initialState,
         "content",
-        initialState.content
+        initialState.content,
       );
     }
     if (response && response.data) {

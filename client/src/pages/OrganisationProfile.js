@@ -11,6 +11,7 @@ import React, {
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { mq } from "constants/theme";
 
 // ICONS
 import createPost from "assets/icons/create-post.svg";
@@ -47,6 +48,9 @@ import {
   PlaceholderIcon,
   DescriptionDesktop,
   IconsContainer,
+  SeeOrgBookLink,
+  SeeOrgBookDisabled,
+  CreateOrgBookLink,
   SocialIcon,
   SectionHeader,
   CreatePostDiv,
@@ -97,7 +101,7 @@ import {
   deletePostState,
 } from "hooks/reducers/feedReducers";
 import { UserContext, withUserContext } from "context/UserContext";
-import GTM from "constants/gtm-tags";
+import GTM, { orgBook } from "constants/gtm-tags";
 import { selectPosts, postsActions } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
 import CreatePostButton from "components/Feed/CreatePostButton";
@@ -152,6 +156,17 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     urls = {},
     verified,
   } = organisation || {};
+  const ORGBOOK_CREATE_MODE = "create";
+  const ORGBOOK_EDIT_MODE = "edit";
+  const PAGE_CATEGORIES = {
+    liveCategory: "live",
+    draftCategory: "draft",
+  };
+  const LIVE_PAGE_VIEW_LEVELS = {
+    publicView: "public",
+    orgView: "org",
+    notApplicable: "n/a",
+  };
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
   if (isOwner) sessionStorage.removeItem("msgModal");
@@ -168,7 +183,14 @@ const OrganisationProfile = ({ isAuthenticated }) => {
   const prevOrgId = usePrevious(organisationId);
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
-  const isSelf = organisation && actorOrganisationId == organisation._id;
+  const isSelf = organisation && actorOrganisationId === organisation._id;
+
+  const [orgBookPages, setOrgBookPages] = useState(null);
+  const [editOrgBookMode, setEditOrgBookMode] = useState(ORGBOOK_CREATE_MODE);
+  const [editOrgBookLinkLabel, setEditOrgBookLinkLabel] = useState(
+    t("profile.org.createOrgBook").toString(),
+  );
+  const [isMobile, setIsMobile] = useState(false);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -181,6 +203,52 @@ const OrganisationProfile = ({ isAuthenticated }) => {
     return actorOrganisationId ? `&actorId=${actorOrganisationId}` : "";
   };
 
+  const setOrgBookState = (orgBookPages = null) => {
+    setOrgBookPages(orgBookPages);
+    setEditOrgBookMode(
+      orgBookPages && orgBookPages.length > 0
+        ? ORGBOOK_EDIT_MODE
+        : ORGBOOK_CREATE_MODE,
+    );
+    setEditOrgBookLinkLabel(
+      orgBookPages && orgBookPages.length > 0
+        ? t("profile.org.editOrgBook")
+        : t("profile.org.createOrgBook"),
+    );
+  };
+
+  const areLivePublicOrgBookPages = () => {
+    if (!orgBookPages || orgBookPages.length === 0) {
+      return false;
+    }
+    return orgBookPages.some(
+      (page) =>
+        page.status === PAGE_CATEGORIES.liveCategory &&
+        page.viewLevel === LIVE_PAGE_VIEW_LEVELS.publicView,
+    )
+      ? true
+      : false;
+  };
+
+  const areLiveOrgBookPages = () => {
+    if (!orgBookPages || orgBookPages.length === 0) {
+      return false;
+    }
+    return orgBookPages.some(
+      (page) => page.status === PAGE_CATEGORIES.liveCategory,
+    )
+      ? true
+      : false;
+  };
+
+  useEffect(() => {
+    (function initialSet() {
+      if (window.screen.width <= parseInt(mq.phone.wide.maxWidth)) {
+        setIsMobile(true);
+      }
+    })();
+  }, []);
+
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
     (async function fetchOrgProfile() {
@@ -189,6 +257,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
+        setOrgBookState(res.data.orgBookPages);
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
@@ -380,6 +449,7 @@ const OrganisationProfile = ({ isAuthenticated }) => {
       });
     }
   };
+
   const renderURL = () => {
     if (organisation) {
       if (urlsAndEmail.length !== 0) {
@@ -487,6 +557,53 @@ const OrganisationProfile = ({ isAuthenticated }) => {
               <IconsContainer>
                 <div className="social-icons">{renderURL()}</div>
               </IconsContainer>
+
+              {editOrgBookMode === ORGBOOK_EDIT_MODE ? (
+                isSelf ? ( //this condition should eventually be isEditor
+                  areLiveOrgBookPages() ? (
+                    <SeeOrgBookLink to={`/orgbook-viewer`}>
+                      {t("profile.org.seeOrgBook")}
+                    </SeeOrgBookLink>
+                  ) : //this condition would only be reached if another user deleted all live pgs
+                  isMobile ? (
+                    <SeeOrgBookDisabled>
+                      {t("profile.org.seeOrgBook")}
+                    </SeeOrgBookDisabled>
+                  ) : (
+                    <CreateOrgBookLink
+                      to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                    >
+                      {t("profile.org.createOrgBook")}
+                    </CreateOrgBookLink>
+                  )
+                ) : areLivePublicOrgBookPages() ? ( //this is only for non-members and non-registered
+                  <SeeOrgBookLink to={`/orgbook-viewer/${organisationId}`}>
+                    {t("profile.org.seeOrgBook")}
+                  </SeeOrgBookLink>
+                ) : (
+                  <SeeOrgBookDisabled>
+                    {t("profile.org.seeOrgBook")}
+                  </SeeOrgBookDisabled>
+                )
+              ) : //edit mode is "create"
+              isSelf ? ( //only owners can create but not if mobile
+                isMobile ? (
+                  <SeeOrgBookDisabled>
+                    {t("profile.org.seeOrgBook")}
+                  </SeeOrgBookDisabled>
+                ) : (
+                  <CreateOrgBookLink
+                    to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                  >
+                    {t("profile.org.createOrgBook")}
+                  </CreateOrgBookLink>
+                )
+              ) : (
+                //all other members cannot create and there is no orgbook yet to see
+                <SeeOrgBookDisabled>
+                  {t("profile.org.seeOrgBook")}
+                </SeeOrgBookDisabled>
+              )}
             </UserInfoDesktop>
           </UserInfoContainer>
           {isSelf && !verified && <Verification />}
@@ -574,6 +691,15 @@ const OrganisationProfile = ({ isAuthenticated }) => {
                   {t("profile.org.editOrgNotification")}{" "}
                 </Link>
               </DrawerHeader>
+              {!isMobile && (
+                <DrawerHeader>
+                  <Link
+                    to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                  >
+                    {editOrgBookLinkLabel}{" "}
+                  </Link>
+                </DrawerHeader>
+              )}
             </CustomDrawer>
           )}
         </ProfileLayout>
