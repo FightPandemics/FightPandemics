@@ -11,7 +11,7 @@ const {
 const { setElapsedTimeText } = require("../utils");
 
 /*
- * /api/applicants
+ * /api/applicants 
  */
 async function routes(app) {
   const Applicant = app.mongo.model("Applicants");
