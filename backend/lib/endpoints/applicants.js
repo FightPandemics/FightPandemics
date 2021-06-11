@@ -100,7 +100,7 @@ async function routes(app) {
         Applicant.aggregate(
           [
             {
-              $sort: { createdAt: -1 }
+              $sort: { createdAt: -1, "_id": 1 }
             },
             {
               $match:
@@ -233,7 +233,7 @@ async function routes(app) {
         Applicant.aggregate(
           [
             {
-              $sort: { createdAt: -1 }
+              $sort: { createdAt: -1, "_id": 1 },
             },
             {
               $match: {

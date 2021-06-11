@@ -238,9 +238,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
-        console.log({ "organisation!!!": res.data })
       } catch (err) {
-        console.log({ "organisation!!! error": error })
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
           `error.${message}`,
@@ -722,6 +720,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
         const {
           data: { data: applicants, meta },
         } = await axios.get(endpoint);
+        console.log({ "applicants!!!": applicants.length })
         setRawTotalApplicants(meta.total);
         if (applicants.length && meta.total) {
           if (prevTotalApplicantCount !== meta.total) {
@@ -794,6 +793,8 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
         const {
           data: { data: members, meta },
         } = await axios.get(endpoint);
+        console.log({ "members!!! - Length API": members.length })
+        console.log({ "members!!! - API": members })
         setRawTotalMembers(meta.total);
         if (members.length && meta.total) {
           if (prevTotalMemberCount !== meta.total) {
@@ -918,6 +919,9 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     );
   }, [feedMembers.length, loadMoreMembers, tab]);
 
+  console.log({ "members!!! membersList!!!": membersList })
+  console.log({ "members!!! membersList.length!!!": Object.entries(membersList).length })
+
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -1019,7 +1023,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
           >
             <ProfileTabPane id="test-tab" tab={t("profile.views.activity")} key="activity">
               {
-              postsLoaded &&
+                postsLoaded &&
                 <div>
                   <SectionHeader>
                     <PlaceholderIcon />
@@ -1105,6 +1109,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                       isWiki={permissions.isWiki}
                       isVolunteer={permissions.isVolunteer}
                       activeTab={activeTab}
+                      tab={tab}
                       listInitialized={membersLoaded}
                     />
                   )}
@@ -1138,6 +1143,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                         isWiki={permissions.isWiki}
                         isVolunteer={permissions.isVolunteer}
                         activeTab={activeTab}
+                        tab={tab}
                         listInitialized={applicantsLoaded}
                       />
                     )

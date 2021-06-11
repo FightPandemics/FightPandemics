@@ -100,18 +100,22 @@ const ProfileList = ({
   isWiki,
   isVolunteer,
   activeTab,
+  tab,
   emptyFeed,
   listInitialized
 }) => {
   const applicantsList = filteredApplicants && true;
   const membersList = filteredMembers && true;
   const orgsList = filteredOrgs && true;
+  
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
 
-  const windowWidth = window.innerWidth;
+  console.log({ "tab": tab })
 
+  const windowWidth = window.innerWidth;
+  console.log({ "items!!!": items.length })
   return (
 
     <>
@@ -126,7 +130,7 @@ const ProfileList = ({
                 items.length >= totalCount ? null :
                   <LoadMoreButton onClick={loadNextPage}>
                     Load More
-                </LoadMoreButton>
+                  </LoadMoreButton>
             }
             dataSource={items}
             renderItem={item => (
