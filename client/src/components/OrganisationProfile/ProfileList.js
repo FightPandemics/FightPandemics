@@ -111,11 +111,7 @@ const ProfileList = ({
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
-
-  console.log({ "tab": tab })
-
   const windowWidth = window.innerWidth;
-  console.log({ "items!!!": items.length })
   return (
 
     <>

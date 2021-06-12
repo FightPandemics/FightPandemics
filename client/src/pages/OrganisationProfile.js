@@ -720,7 +720,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
         const {
           data: { data: applicants, meta },
         } = await axios.get(endpoint);
-        console.log({ "applicants!!!": applicants.length })
         setRawTotalApplicants(meta.total);
         if (applicants.length && meta.total) {
           if (prevTotalApplicantCount !== meta.total) {
@@ -793,8 +792,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
         const {
           data: { data: members, meta },
         } = await axios.get(endpoint);
-        console.log({ "members!!! - Length API": members.length })
-        console.log({ "members!!! - API": members })
         setRawTotalMembers(meta.total);
         if (members.length && meta.total) {
           if (prevTotalMemberCount !== meta.total) {
@@ -919,8 +916,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     );
   }, [feedMembers.length, loadMoreMembers, tab]);
 
-  console.log({ "members!!! membersList!!!": membersList })
-  console.log({ "members!!! membersList.length!!!": Object.entries(membersList).length })
 
   if (error) {
     return <ErrorAlert message={error} type="error" />;
@@ -1023,7 +1018,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
           >
             <ProfileTabPane id="test-tab" tab={t("profile.views.activity")} key="activity">
               {
-                postsLoaded &&
+                postsLoaded && tab == "activity" &&
                 <div>
                   <SectionHeader>
                     <PlaceholderIcon />
