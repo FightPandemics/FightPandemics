@@ -148,7 +148,7 @@ const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
 const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId, authLoading }) => {
-  const [activeTab, setActiveTab] = useState("applicants");
+  const [activeTab, setActiveTab] = useState("activity");
   const [tab, setTab] = useState("activity");
   const preSetActiveTab = (e) => {
     setTab(e);
@@ -1008,7 +1008,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
           >
             <ProfileTabPane id="test-tab" tab={t("profile.views.activity")} key="activity">
               {
-                postsLoaded && tab == "activity" &&
+                postsLoaded && activeTab == "activity" &&
                 <div>
                   <SectionHeader>
                     <PlaceholderIcon />
