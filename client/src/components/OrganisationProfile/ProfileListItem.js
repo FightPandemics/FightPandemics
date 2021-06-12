@@ -92,10 +92,6 @@ const ProfileListItem = ({
     };
   }
 
-  if ((activeTab == "members" && isOwner) || isAdmin) {
-    itemPath = `/${item?.organization?.id}/permissions/${item?._id}/${item?.[list]?.id}`;
-  }
-
   else if (activeTab == "applicants") {
     list = "applicant";
     itemPath = `/application/${item?.organization?.id}/${item?.applicant.id}/${item?._id}`;
