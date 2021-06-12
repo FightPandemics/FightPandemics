@@ -32,7 +32,7 @@ export const DescContainer2 = styled.div`
 
 export const FPSwitch = styled(Switch)`
 background-color: ${(props) =>
-  props?.checked ? theme.colors.royalBlue : theme.colors.mediumGray};
+    props?.checked ? theme.colors.royalBlue : theme.colors.mediumGray};
 margin: 40px 50px 63px 0px;
 `;
 
@@ -72,17 +72,17 @@ float: right;
 
 export const DisplayText = styled.label`
 display: block;
-overflow: auto;
+overflow: hidden;
 `;
 
 export const StyledPostButton = styled(Button)`
 color: blue;
 font-weight: ${({ name }) => {
-  switch (name) {
-    case "post":
-      return "bold";
-  }
-}};
+    switch (name) {
+      case "post":
+        return "bold";
+    }
+  }};
 `;
 
 export const StyledPositionModal = styled(Modal)`
