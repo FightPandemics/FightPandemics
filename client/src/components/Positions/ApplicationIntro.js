@@ -156,28 +156,19 @@ const ApplicationIntro = ({
         <ApplicantTop>
           <ApplicantAvatar>
             <ApplicantInitials>
-              {
-                // getInitialsFromFullName(applicantName)
-                initials
-              }
+              {initials}
             </ApplicantInitials>
           </ApplicantAvatar>
           <div className="applicant-margin">
             <ApplicantName>{applicantName}</ApplicantName>
             <ApplicantPosition>
-              {
-                // TODO ENABLE AFTER POSITION IS PASSED IN FROM MEMBERPERMISSIONS PAGE
-                permissions
-              }
+              {permissions}
             </ApplicantPosition>
           </div>
         </ApplicantTop>
         <ApplicantBottom>
           <div className="applicant-margin applicant-bottom">
             <ApplicantIntroTitle>
-              {
-                // SWAP OUT TEXT VIA en_us
-              }
               Profile
             </ApplicantIntroTitle>
             <AppilcantIntroBody

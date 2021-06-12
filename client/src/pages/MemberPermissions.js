@@ -1,4 +1,3 @@
-// import React from "react";
 import { Radio } from "antd";
 import PermissionsRadioGroup, {
   PermissionsApplyButton,
@@ -6,7 +5,6 @@ import PermissionsRadioGroup, {
 import locationIcon from "assets/icons/location.svg";
 import axios from "axios";
 import Loader from "components/Feed/StyledLoader";
-// import Application, { Title } from "components/Positions/Application";
 import ProfilePic from "components/Picture/ProfilePic";
 import {
   OrganisationContext,
@@ -46,7 +44,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectOrganisationId } from "reducers/session";
 
 const MemberPermissions = (props, applicantId) => {
-  // const { isAuthenticated, user } = props;
   const initialState = {
     applicant: { name: "-" },
     intro: "",
@@ -134,7 +131,6 @@ const MemberPermissions = (props, applicantId) => {
       } = await axios.get(endpoint);
       setActorPermissionsLoaded(true)
       setCurrentUserPermissions(applicants[0].organization.permissions)
-      // setMemberstatus(applicants[0].status)
     } catch (error) {
       return error
     }
@@ -236,7 +232,6 @@ const MemberPermissions = (props, applicantId) => {
   };
 
   const handleApply = async () => {
-    // TODO - pull applicantId from state in Org Profile ProfileListItem link
     const endpoint = `/applicants/${applicantId}?permissions=${updatePermissions}`;
     try {
       const res = await axios.patch(endpoint);
@@ -294,13 +289,10 @@ const MemberPermissions = (props, applicantId) => {
                   permissions={applicantState.organization.permissions}
                   loading={applicantLoaded}
                 />
-                {// TODO - add button text to en_us
-                }
                 <div style={{ display: "flex" }}>
                   <Link
                     style={{ width: "fit-content", margin: "auto" }}
                     onClick={handleApply}
-                    // TODO - redirect to Org Page
                     to={`/organisation/${organisationId}`}
                   >
                     <PermissionsApplyButton

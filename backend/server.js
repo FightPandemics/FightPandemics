@@ -3,14 +3,7 @@ require("dotenv").config();
 const createServer = require("./lib");
 const { config } = require("./config");
 
-// const server = createServer(config);
-
-// TODO - REMOVE TEMP SERVER CONFIG BELOW
-const server = createServer(config, {
-  cors: {
-    origin: '0.0.0.0',
-  }
-});
+const server = createServer(config);
 
 server.ready(async () => {
   await server.oas();

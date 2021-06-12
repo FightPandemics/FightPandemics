@@ -1,7 +1,6 @@
 import { APPLICANTS_ACTIONS } from "./actions";
 import { isPostExpired } from "components/Feed/utils";
 
-//TODO remove expired
 const initialState = {
   applicants: [],
   pageApplicants: 0,

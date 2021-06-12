@@ -86,10 +86,8 @@ async function routes(app) {
       };
     }
   );
-  // TODO - CHANGE ALL userId variables to mongoose.Types.ObjectId(userId)
   app.get(
     "/",
-    // TODO - change authenticateOptional to authenticate
     {
       preValidation: [app.authenticateOptional],
       schema: getApplicantsSchema
@@ -211,7 +209,6 @@ async function routes(app) {
   // Applicants for orgasniation
   app.get(
     "/:organizationId/status",
-    // TODO - change authenticateOptional to authenticate
     {
       preValidation: [app.authenticateOptional],
       schema: getOrganizationApplicantsSchema
@@ -309,7 +306,6 @@ async function routes(app) {
 
   app.post(
     "/",
-    // TODO - change authenticateOptional to authenticate
     {
       preValidation: [app.authenticateOptional, app.setActor],
       schema: createApplicantSchema,
@@ -372,7 +368,6 @@ async function routes(app) {
   app.patch(
     "/:applicantId",
     {
-      // TODO - change authenticateOptional to authenticate
       preValidation: [app.authenticateOptional],
       schema: updateApplicantStatusSchema
     },

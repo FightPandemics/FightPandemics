@@ -214,7 +214,6 @@ const Application = ({
     setAcceptVisible(false);
     try {
       await axios.patch(endPoint, { status: "accepted" });
-      console.log({ formdata: formData.status });
     } catch (error) {
       return error;
     }

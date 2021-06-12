@@ -136,21 +136,13 @@ const Positions = () => {
               </IconsContainer> */}
             </UserInfoDesktop>
           </UserInfoContainer>
-          {
-            // Position title and description to be pulled from backend / API
-            // Placeholder text for ONE position is being used below
-            // Component will be needed for multiple positions (based on backend schema / structure)
-          }
+         
           <PositionsContainer>
             <PositionTitle>Volunteer Position</PositionTitle>
             <PositionDescription>
-              {// TODO - Pull in from BE
-              }
+              
               {organisation.positions.description}
             </PositionDescription>
-            {
-              //Button will connect applications page
-            }
             <ApplyButtonContainer>
               <Link to={`/organisation/${organisationId}/apply`}>
                 <ApplyButton>{t("positions.apply")}</ApplyButton>

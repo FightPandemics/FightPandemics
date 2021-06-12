@@ -133,15 +133,9 @@ const OrgWorkSpace = (props) => {
     dispatch(applicantsActions.fetchApplicantsBegin());
 
     try {
-      // TODO - SWAP OUT MEMBER STATIC TEST DATA FOR API CALL
-
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
-
-      // const meta = Meta
-      // const { applicants: applicants } = TestMembersList
-
       if (!meta.total) {
         setRawTotalApplicants(0);
       }

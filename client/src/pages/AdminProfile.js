@@ -7,7 +7,6 @@ import {
   ProfileTabPane,
   ProfileTabs,
 } from "components/OrganisationProfile/ProfileTabs";
-// import ProfilePic from "components/Positions/ProfilePic";
 import ProfilePic from "components/Picture/ProfilePic";
 import {
   OrganisationContext,
@@ -15,7 +14,6 @@ import {
 } from "context/OrganisationContext";
 import { UserContext, withUserContext } from "context/UserContext";
 import { SET_VALUE } from "hooks/actions/feedActions";
-//hooks, actions, reducers
 import {
   fetchOrganisation,
   fetchOrganisationError,
@@ -129,7 +127,6 @@ const AdminProfile = (props) => {
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
-      console.log({ applicants: applicants });
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
@@ -194,7 +191,7 @@ const AdminProfile = (props) => {
     }
   };
 
-  useEffect(() => {}, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetch)

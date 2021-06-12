@@ -2,12 +2,6 @@ const S = require("fluent-schema");
 const { APPLICANT_STATUS, ORG_MEMBERS_TYPES } = require("../../models/Applicant");
 const { strictQueryStringSchema, strictSchema } = require("./utils");
 
-// const applicant = {
-//   organizationId: S.string(),
-//   postApplied: S.string(),
-//   applicant: 
-// };
-
 const getApplicantByIdSchema = {
   params: S.object().prop("applicantId", S.string().required()),
 };

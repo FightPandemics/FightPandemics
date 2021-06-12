@@ -273,7 +273,6 @@ async function routes(app) {
   app.patch(
     "/:organisationId",
     {
-      // TODO - SET authenticateOptional TO authenticate
       preValidation: [app.authenticateOptional],
       schema: updateOrganisationSchema,
     },
