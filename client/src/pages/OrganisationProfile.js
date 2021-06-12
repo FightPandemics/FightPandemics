@@ -279,33 +279,30 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const [loadingPermissions, setLoadingPermissions] = useState(true)
   const loadPermissions = async () => {
     const endpoint = `/api/applicants/${organisationId}/status?userId=${actorId}&includeMeta=true`;
-    if (isAuthenticated) {
-      setAppliedStatus(true);
-      try {
-        const {
-          data: { data: applicants, meta },
-        } = await axios.get(endpoint);
-        if (applicants) {
-          setMemberStatus(applicants[0].status);
-          setCurrentUserPermissions(applicants[0].organization.permissions);
-          setActorPermissionsLoaded(true)
+    if (!authLoading) {
+      if (isAuthenticated) {
+        try {
+          const {
+            data: { data: applicants, meta },
+          } = await axios.get(endpoint);
+          if (applicants) {
+            setMemberStatus(applicants[0].status);
+            setCurrentUserPermissions(applicants[0].organization.permissions);
+            setActorPermissionsLoaded(true)
 
+          }
+          setLoadingPermissions(false)
+        } catch (error) {
+          setActorPermissionsLoaded(true)
+          return error;
         }
-        // if (actorId) {
-        //   setActorPermissionsLoaded(true)
-        // }
-        setLoadingPermissions(false)
-      } catch (error) {
-        return error;
       }
-      // setActorPermissionsLoaded(true)
-    }
-    if (!isAuthenticated) {
-      setMemberStatus(undefined)
-      setCurrentUserPermissions(undefined)
-      // setActorPermissionsLoaded(true)
-    }
-  };
+      if (!isAuthenticated) {
+        setMemberStatus(undefined)
+        setCurrentUserPermissions(undefined)
+      }
+    };
+  }
   const permissions = {
     isVolunteer:
       currentUserPermissions == "Volunteer" || "WikiEditor" || "Admin",
@@ -315,18 +312,18 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const [actorPermissionsLoaded, setActorPermissionsLoaded] = useState(false);
 
   const setStatus = () => {
-    // if (actorPermissionsLoaded) {
     if (memberStatus == "accepted") {
-      setIsMember(true);
+      setIsMember(false);
     }
 
     if (memberStatus == "applied" || memberStatus == "accepted") {
       setAppliedStatus(false);
     }
-    if (memberStatus == "rejected"
-      || memberStatus == undefined
-      || !isAuthenticated
-    ) {
+    if (memberStatus == "rejected") {
+      setAppliedStatus(true);
+    }
+
+    if (actorPermissionsLoaded && !authLoading && !isLoadingMembers && !loadMoreMembers && memberStatus == undefined) {
       setAppliedStatus(true);
     }
 
@@ -582,7 +579,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
 
   useEffect(() => {
     setSwitchOnOff(isJoinOrg);
-    //setPosDescription(description)
   }, [isJoinOrg, organisation, setSwitchOnOff]);
 
   const [newPosDescription, setPosDescription] = useState(description);
@@ -610,11 +606,8 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const { filterModal, activePanel, showFilters } = feedState;
   const {
     error: applicantsError,
-    // isLoading: isLoadingApplicants,
-    // loadMore: loadMoreApplicants,
     isLoadingApplicants,
     loadMoreApplicants,
-    // page: pageApplicants,
     pageApplicants,
     applicants: applicantsList,
   } = applicants;
@@ -625,7 +618,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     error: membersError,
     isLoading: isLoadingMembers,
     loadMore: loadMoreMembers,
-    // page: pageMembers,
     pageMembers,
     members: membersList,
   } = members;
@@ -771,9 +763,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     catch (error) {
       dispatch(applicantsActions.fetchApplicantsError(error));
     }
-    // if (applicantsLoaded == false) {
     setApplicantsLoaded(true)
-    // }
   };
   const loadMembers = async () => {
     const limit = PAGINATION_LIMIT;
@@ -1162,7 +1152,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                       <FPSwitch
                         checkedChildren={t("profile.common.on")}
                         unCheckedChildren={t("profile.common.off")}
-                        onClick={(checked) => handleIsJoinOrg(checked)} //TODO Join Us CTA
+                        onClick={(checked) => handleIsJoinOrg(checked)}
                         checked={switchOnOff}
                       />
                     </Col>
