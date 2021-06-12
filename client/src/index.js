@@ -29,9 +29,11 @@ const composeEnhancers = composeWithDevTools({
   trace: true,
   traceLimit: 25
 })
-const store = createStore(rootReducer, composeEnhancers( // TODO - REMOVE REDUX DEV TOOLS
-  applyMiddleware(thunk)
-));
+// const store = createStore(rootReducer, composeEnhancers( // FOR LOCAL
+//   applyMiddleware(thunk)
+// ));
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
