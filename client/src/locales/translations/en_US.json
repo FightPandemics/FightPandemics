@@ -347,7 +347,9 @@
       "editSecurity": "Edit Security",
       "editNotification": "Edit Notification",
       "editAccount": "Edit Account",
-      "joinOrg": "Join Us"
+      "joinOrg": "Join Us",
+      "noOrgs": "It looks like you haven't joined an organisation yet! To join an organisation, please go to the organisation's profile page and click the Join Us button under the description.",
+      "noOrgsOther": "It looks like this person hasn’t joined an organisation yet!"
     },
     "org": {
       "title": "Create Organization Profile",
