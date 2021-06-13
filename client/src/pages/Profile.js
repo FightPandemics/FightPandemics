@@ -283,12 +283,7 @@ const Profile = ({
         disable: false,
         gtm: "posts",
       });
-      baseMenu.splice(1, 0, {
-        name: "Organisations",
-        disable: false,
-        gtm: "organisations",
-      });
-      setSectionView("Organisations");
+      setSectionView("profile.views.posts");
       setInternalTab(t("profile.views.requests"));
     }
     setNavMenu(baseMenu);
@@ -312,7 +307,9 @@ const Profile = ({
   };
 
   useEffect(() => {
-    if (sectionView.toUpperCase() == "POSTS") {
+    if (sectionView.toUpperCase() == "POSTS" ||
+      sectionView.toUpperCase() == "REQUESTS" ||
+      sectionView.toUpperCase() == "OFFERS") {
       let _isMounted = false;
       const CancelToken = axios.CancelToken;
       const source = CancelToken.source();
@@ -419,7 +416,7 @@ const Profile = ({
         source.cancel("Cancelling is cleanup");
       };
     }
-  }, [userId, page, toggleRefetch, isInit]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, page, toggleRefetch, isInit, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
@@ -452,15 +449,11 @@ const Profile = ({
   };
 
   useEffect(() => {
-    if (sectionView.toUpperCase() == "POSTS") {
-      refetchPosts();
-    }
+    refetchPosts();
   }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (sectionView.toUpperCase() == "ORGANISATIONS") {
-      refetchApplicants();
-    }
+    refetchApplicants();
   }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {

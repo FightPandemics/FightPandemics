@@ -171,11 +171,11 @@ const ProfileListItem = ({ item, isSelf }) => {
           <Name>
             <Link to={`/organisation/${item?.organization?.id}`}>{item?.orgInfo?.name}</Link>
           </Name>
-          {!isSelf ? null : (
+          {/* {!isSelf ? null : (
             <Title>
               {item?.organization?.permissions}
             </Title>
-          )}
+          )} */}
         </TextContainer>
       </ProfileContainer>
     </AllItems>
