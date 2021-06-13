@@ -1,136 +1,81 @@
-import { WhiteSpace } from "antd-mobile";
 import { Menu } from "antd";
-import axios from "axios";
-import React, {
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-  useCallback,
-  useRef,
-} from "react";
-import { Link, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { theme, mq } from "constants/theme";
-
-import CreatePost from "components/CreatePost/CreatePost";
-import ErrorAlert from "../components/Alert/ErrorAlert";
-import {
-  FeedWrapper,
-  SeeAllTabsWrapper,
-  SeeAllContentWrapper,
-  SeeAllTabsWrapperOrg,
-  SeeAllContentWrapperOrg,
-} from "components/Feed/FeedWrappers";
-import ProfilePic from "components/Picture/ProfilePic";
-import UploadPic from "../components/Picture/UploadPic";
-import PostTabCard from "components/Feed/PostTabCard";
-import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
-import CreatePostButton from "components/Feed/CreatePostButton";
-import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
-import Verification from "components/Verification/";
-import VerificationTick from "components/Verification/Tick";
-import ProfileDesktop from "components/Profile/ProfileDesktop";
-
-import {
-  ProfileLayout,
-  ProfileBackgroup,
-  UserInfoContainer,
-  EditIcon,
-  UserInfoDesktop,
-  NameDiv,
-  PlaceholderIcon,
-  DescriptionDesktop,
-  IconsContainer,
-  HelpContainer,
-  SocialIcon,
-  SectionHeader,
-  CreatePostDiv,
-  CreatePostIcon,
-  DrawerHeader,
-  CustomDrawer,
-  PhotoUploadButton,
-  AvatarPhotoContainer,
-  NamePara,
-  DesktopLocation,
-  MobileLocation,
-  MobileMenuWrapper,
-  DesktopMenuWrapper,
-  StyledMobileMenuContainer,
-} from "../components/Profile/ProfileComponents";
-
-import { ProfileTabs, ProfileTabPane } from "components/OrganisationProfile/ProfileTabs"
-
-import {
-  FACEBOOK_URL,
-  INSTAGRAM_URL,
-  LINKEDIN_INDIVIDUAL_URL,
-  TWITTER_URL,
-  GITHUB_URL,
-} from "constants/urls";
-
-import {
-  selectPosts,
-  postsActions,
-  getProfileObjectiveProp,
-  getProfileModeProp,
-} from "reducers/posts";
-// import { applicantsActions, selectMemberOrgs } from "reducers/memberOrganisations";
-import { applicantsActions, selectApplicants } from "reducers/applicants";
-
-import {
-  fetchUser,
-  fetchUserError,
-  fetchUserSuccess,
-} from "hooks/actions/userActions";
-import { UserContext, withUserContext } from "context/UserContext";
-import { getInitialsFromFullName } from "utils/userInfo";
-import { isPostExpired } from "components/Feed/utils";
-import GTM, { post } from "constants/gtm-tags";
-import TagManager from "react-gtm-module";
-import Loader from "components/Feed/StyledLoader";
-import {
-  selectOrganisationId,
-  selectActorId,
-  selectAuthStatus,
-} from "reducers/session";
-
+import { WhiteSpace } from "antd-mobile";
 // ICONS
 import createPost from "assets/icons/create-post.svg";
 import edit from "assets/icons/edit.svg";
+import { ReactComponent as PlusIcon } from "assets/icons/pretty-plus.svg";
+import facebookIcon from "assets/icons/social-fb.svg";
+import githubIcon from "assets/icons/social-github.svg";
 import instagramIcon from "assets/icons/social-instagram.svg";
 import linkedinBlue from "assets/icons/social-linkedin.svg";
-import facebookIcon from "assets/icons/social-fb.svg";
 import twitterBlue from "assets/icons/social-tw.svg";
-import githubIcon from "assets/icons/social-github.svg";
-import websiteIcon from "assets/icons/website-icon.svg";
-
 import locationIcon from "assets/icons/status-indicator.svg";
-import useWindowDimensions from "../utils/windowSize";
-import { lowerCase } from "lodash";
-
+import websiteIcon from "assets/icons/website-icon.svg";
+import axios from "axios";
+import CreatePost from "components/CreatePost/CreatePost";
+import CreatePostButton from "components/Feed/CreatePostButton";
+import {
+  FeedWrapper, SeeAllContentWrapper, SeeAllContentWrapperOrg, SeeAllTabsWrapper, SeeAllTabsWrapperOrg
+} from "components/Feed/FeedWrappers";
+import PostTabCard from "components/Feed/PostTabCard";
+import Loader from "components/Feed/StyledLoader";
+import { isPostExpired } from "components/Feed/utils";
+import ProfilePic from "components/Picture/ProfilePic";
+import NoJoinOrg from "components/Profile/NoJoinOrg";
+import ProfileDesktop from "components/Profile/ProfileDesktop";
+import ProfileList from "components/Profile/ProfileList";
+import Verification from "components/Verification/";
+import VerificationTick from "components/Verification/Tick";
+import GTM from "constants/gtm-tags";
+import { mq } from "constants/theme";
+import {
+  FACEBOOK_URL, GITHUB_URL, INSTAGRAM_URL,
+  LINKEDIN_INDIVIDUAL_URL,
+  TWITTER_URL
+} from "constants/urls";
+import { UserContext, withUserContext } from "context/UserContext";
+import {
+  DELETE_MODAL_HIDE, DELETE_MODAL_POST, SET_DELETE_MODAL_VISIBILITY, SET_VALUE
+} from "hooks/actions/feedActions";
+import {
+  fetchUser,
+  fetchUserError,
+  fetchUserSuccess
+} from "hooks/actions/userActions";
 //delete post
 import {
   deletePostModalreducer,
   deletePostState,
   feedReducer,
-  optionsReducer,
+  optionsReducer
 } from "hooks/reducers/feedReducers";
+import { lowerCase } from "lodash";
+import React, {
+  useCallback, useContext,
+  useEffect,
+  useReducer, useRef, useState
+} from "react";
+import TagManager from "react-gtm-module";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { applicantsActions, selectApplicants } from "reducers/applicants";
 import {
-  SET_DELETE_MODAL_VISIBILITY,
-  DELETE_MODAL_POST,
-  DELETE_MODAL_HIDE,
-  SET_VALUE,
-} from "hooks/actions/feedActions";
-import ProfileList from "components/Profile/ProfileList";
+  getProfileModeProp, getProfileObjectiveProp, postsActions, selectPosts
+} from "reducers/posts";
 import {
-  TestMemberOfOrgs,
-  MemberOrgs,
-  Applicants,
-  Meta,
-} from "utils/TestMemberOfOrgs";
-import NoJoinOrg from "components/Profile/NoJoinOrg";
+  selectActorId,
+  selectAuthStatus, selectOrganisationId
+} from "reducers/session";
+import { getInitialsFromFullName } from "utils/userInfo";
+import ErrorAlert from "../components/Alert/ErrorAlert";
+import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
+import UploadPic from "../components/Picture/UploadPic";
+import {
+  AvatarPhotoContainer, CreatePostIcon, CustomDrawer, DescriptionDesktop, DesktopLocation, DesktopMenuWrapper, DrawerHeader, EditIcon, IconsContainer, MobileLocation,
+  MobileMenuWrapper, NameDiv, NamePara, PhotoUploadButton, PlaceholderIcon, ProfileBackgroup, ProfileLayout, SectionHeader, SocialIcon, StyledMobileMenuContainer, UserInfoContainer, UserInfoDesktop
+} from "../components/Profile/ProfileComponents";
+import useWindowDimensions from "../utils/windowSize";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -232,8 +177,6 @@ const Profile = ({
 
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
-  // console.log(userId);
-
   let filteredPost = [];
 
   const convertToObjectPost = useCallback((postArray) => {
@@ -345,8 +288,6 @@ const Profile = ({
         disable: false,
         gtm: "organisations",
       });
-      // sets default tab (set to "Organisations" for testing)
-      // setSectionView(t("profile.views.posts"));
       setSectionView("Organisations");
       setInternalTab(t("profile.views.requests"));
     }
@@ -388,20 +329,9 @@ const Profile = ({
         }
 
         dispatch(postsActions.fetchPostsBegin());
-        // console.log(userId);
         try {
           if (userId) {
-            // console.log(
-            //   "userId" +
-            //     userId +
-            //     ", limit" +
-            //     limit +
-            //     ", skip" +
-            //     skip +
-            //     ", getActorQuery()" +
-            //     getActorQuery(),
-            // );
-            // console.log(getActorQuery);
+
             let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
             const view = getView();
 
@@ -410,18 +340,13 @@ const Profile = ({
             const mode = getMode();
 
             const modeURL = `&postMode=${mode}`;
-            // const modeURL = `&postMode=A`;
             const endpoint = `${baseURL}${objURL}${modeURL}`;
 
             const {
               data: { data: posts, meta },
             } = await axios.get(endpoint);
 
-            // console.log({ posts: posts });
-            console.log({ error: postsError });
-
             if (!_isMounted) {
-              //mobile fetch
               dispatch(
                 postsActions.fetchProfilePostSuccess({
                   posts: [...filteredPost, ...posts],
@@ -485,7 +410,6 @@ const Profile = ({
             console.log(`request cancelled:${error.message}`);
           } else {
             console.log("Error:" + error.message);
-            // console.log({ fetchPostError: posts });
           }
         }
       };
@@ -529,11 +453,8 @@ const Profile = ({
 
   useEffect(() => {
     if (sectionView.toUpperCase() == "POSTS") {
-      refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
+      refetchPosts();
     }
-    // if (sectionView.toUpperCase() == "ORGANISATIONS") {
-    //   refetchApplicants();
-    // }
   }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -686,7 +607,6 @@ const Profile = ({
     pageApplicants,
     applicants: applicantsList,
   } = applicants;
-  // console.log(applicants);
   const feedApplicants = Object.entries(applicantsList);
   const prevTotalApplicantCount = usePrevious(totalApplicantCount);
 
@@ -720,34 +640,19 @@ const Profile = ({
       }
     }
   };
-  // console.log(userId);
   const loadApplicants = async () => {
     const limit = PAGINATION_LIMIT;
     const skip = pageApplicants * limit;
     const getApplicantsBaseURL = (userId, limit, skip) => {
-      // console.log(organisationId);
-      // console.log(userId);
-      // return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
       return `/api/applicants?userId=${userId}&status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
-      // return `/api/applicants?userId=${userId}&includeMeta=true&limit=${limit}&skip=${skip}`;
     };
     let baseURL = getApplicantsBaseURL(userId, limit, skip);
     let endpoint = baseURL;
     dispatch(applicantsActions.fetchApplicantsBegin());
-    // console.log("userId" + userId + ", limit" + limit + ", skip" + skip);
-    // console.log("endpoint: " + endpoint);
     try {
-      // TODO - CONFIGURE API ONCE BE IS DONE
       const {
         data: { data: applicants, meta },
       } = await axios.get(endpoint);
-      // console.log("applicants: " + applicants);
-      // console.log("meta: " + meta);
-
-      // TEST DATA
-      // const applicants = MemberOrgs;
-      // const meta = Meta;
-
       if (applicants.length && meta.total) {
         if (prevTotalApplicantCount !== meta.total) {
           setTotalApplicantCount(meta.total);
@@ -816,16 +721,13 @@ const Profile = ({
   const loadOrganisations = async () => {
     let endpoint = `/api/organisations`;
     try {
-      // TODO - CONFIGURE API ONCE BE IS DONE
       const { data: organisations } = await axios.get(endpoint);
-      // console.log(organisations);
       setOrganisations(organisations);
       const listOrgs = organisations.reduce((objOrg, itemOrg) => {
         objOrg[itemOrg._id] = itemOrg;
         return objOrg;
       }, {});
       setOrganisations(listOrgs);
-      // console.log(listOrgs);
     } catch (error) {
       console.log({
         error,
@@ -835,10 +737,6 @@ const Profile = ({
 
   useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // useEffect(() => {
-  //   refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   useEffect(() => {
     if (userId) {
       loadApplicants();
@@ -847,7 +745,6 @@ const Profile = ({
 
   useEffect(() => {
     loadOrganisations();
-    // loadApplicants();
   }, []);
 
 
@@ -1050,7 +947,6 @@ const Profile = ({
                   </Menu.Item>
                 ))}
               </MobileMenuWrapper>
-              {/* <NoJoinOrg isSelf={isSelf} /> */}
               <div style={{ width: "100%" }}>
 
                 {sectionView === "Requests" && (

@@ -1,23 +1,9 @@
-import Loader from "components/Feed/StyledLoader";
-import Applicant from "components/OrganisationProfile/ApplicantOrMember";
-import ProfileListItem from "components/OrganisationProfile/ProfileListItem";
-import { mq } from "constants/theme";
-import React, { useCallback, useState, useRef, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import {
-  InfiniteLoader,
-  AutoSizer,
-  WindowScroller,
-  List,
-  CellMeasurer,
-  CellMeasurerCache,
-} from "react-virtualized";
 import { List as AntList } from "antd";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import Loader from "components/Feed/StyledLoader";
+import ProfileListItem from "components/OrganisationProfile/ProfileListItem";
 import { theme } from "constants/theme";
-import UpArrow from "../../components/Icon/up-arrow.js";
-import BaseButton from "components/Button/BaseButton";
+import React from "react";
+import styled from "styled-components";
 
 const { colors } = theme;
 
@@ -31,37 +17,6 @@ const ListContainer = styled.div`
      display: none;
   }
 
-`;
-
-const HorizontalRule = styled.hr`
-  display: none;
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    border: 0;
-    height: 0;
-    display: block;
-    max-width: 325px;
-  }
-`;
-
-const cellMeasurerCache = new CellMeasurerCache({
-  fixedWidth: true,
-  defaultHeight: 100,
-});
-
-
-
-const SeeAllLink = styled.div`
-  display: none;
-
-  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
-    display: block;
-    margin-top: 1.5rem;
-    margin-bottom: 3rem;
-    color: ${colors.royalBlue};
-    font-size: 1.4rem;
-    font-weight: normal;
-    text-align: center;
-  }
 `;
 
 const LoadMoreButton = styled.div`
@@ -86,12 +41,8 @@ const ProfileList = ({
   filteredApplicants,
   filteredMembers,
   filteredOrgs,
-  user,
   loadNextPage,
   isNextPageLoading,
-  itemCount,
-  isItemLoaded,
-  hasNextPage,
   totalCount,
   organisationId,
   isOwner,
@@ -100,23 +51,18 @@ const ProfileList = ({
   isWiki,
   isVolunteer,
   activeTab,
-  tab,
-  emptyFeed,
   listInitialized
 }) => {
   const applicantsList = filteredApplicants && true;
   const membersList = filteredMembers && true;
   const orgsList = filteredOrgs && true;
-  
+
   const items = Object.entries(
     filteredApplicants || filteredMembers || filteredOrgs,
   );
-  const windowWidth = window.innerWidth;
   return (
-
     <>
       {
-
         < ListContainer >
           <AntList
             itemLayout="horizontal"

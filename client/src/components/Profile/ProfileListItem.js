@@ -1,20 +1,17 @@
-import React from "react";
-import styled from "styled-components";
-import { theme, mq } from "constants/theme";
-import { getInitialsFromFullName } from "utils/userInfo";
-import OrgProfileBackup from "assets/icons/org-no-photo-profile.svg";
-import { Link } from "react-router-dom";
-import { Avatar } from "antd";
 import TextAvatar from "components/TextAvatar";
+import { mq, theme } from "constants/theme";
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { getInitialsFromFullName } from "utils/userInfo";
 
-const { royalBlue, selago } = theme.colors;
+const { royalBlue } = theme.colors;
 
 const { colors } = theme;
 
 export const AllItems = styled.div`
   max-width: 100%;
   width: 100%;
-  // height: 6.6rem;
   display: flex;
   margin: 0;
 
@@ -36,7 +33,6 @@ export const ProfileContainer = styled.div`
   align-items: center;
   margin: 0.5rem 0;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
-  // padding: 0 1rem;
   width: 100%;
   height: 6rem;
   background: ${theme.colors.white};
@@ -56,7 +52,6 @@ export const ProfilePicContainer = styled.div`
   margin-left: 1rem;
   border-radius: 50%;
   border: 0.1rem solid ${colors.royalBlue};
-  //   color: ${colors.royalBlue};
   width: 4rem;
   height: 4rem;
   text-align: center;
@@ -80,7 +75,6 @@ export const ProfilePicContainer = styled.div`
 export const ProfilePic = styled.div`
   font-size: 1.5rem;
   &.organisation-card {
-    // margin: 2.9rem 0;
     display: flex;
     justify-content: center;
     height: 4rem;
@@ -137,7 +131,6 @@ export const Name = styled.p`
 export const Title = styled.p`
   color: rgba(0, 0, 0, 0.5);
   color: ${colors.lightishGray};
-  // opacity: 50%;
   margin: 0;
   line-height: ${theme.typography.size.xsmall};
   font-size: ${theme.typography.size.xsmall};
@@ -149,7 +142,7 @@ export const Title = styled.p`
   }
 `;
 
-const ProfileListItem = ({ item, isSelf, type, listOrgs }) => {
+const ProfileListItem = ({ item, isSelf }) => {
 
   return (
     <AllItems className="organisation-card">

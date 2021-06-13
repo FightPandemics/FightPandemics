@@ -31,33 +31,6 @@ import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "components/Picture/UploadPic";
 import Activity from "components/Profile/Activity";
 import VerificationTick from "components/Verification/Tick";
-
-import {
-  ProfileLayout,
-  UserInfoContainer,
-  EditIcon,
-  UserInfoDesktop,
-  NameDiv,
-  PlaceholderIcon,
-  DescriptionDesktop,
-  IconsContainer,
-  SocialIcon,
-  SectionHeader,
-  CreatePostDiv,
-  CreatePostIcon,
-  DrawerHeader,
-  CustomDrawer,
-  PhotoUploadButton,
-  AvatarPhotoContainer,
-  NamePara,
-  ProfileBackgroup,
-  PositionEditIcon
-} from "../components/Profile/ProfileComponents";
-import {
-  getInitialsFromFullName,
-  isAuthorOrg,
-  isAuthorUser,
-} from "utils/userInfo";
 import GTM from "constants/gtm-tags";
 import {
   APPSTORE_URL, FACEBOOK_URL,
@@ -104,6 +77,11 @@ import { postsActions, selectPosts } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
 import styled from "styled-components";
 import { LOGIN } from "templates/RouteWithSubRoutes";
+import {
+  getInitialsFromFullName,
+  isAuthorOrg,
+  isAuthorUser
+} from "utils/userInfo";
 import ErrorAlert from "../components/Alert/ErrorAlert";
 import { PostPositionButton } from "../components/EditProfile/EditComponents";
 import MessageModal from "../components/Feed/MessagesModal/MessageModal.js";
@@ -113,12 +91,10 @@ import {
   HeaderTitle, JoinPositionStyles,
   Label, StyledConfirmModal, StyledPositionModal, StyledPostButton
 } from "../components/Positions/JoinPositionStyles";
+import {
+  AvatarPhotoContainer, CreatePostIcon, CustomDrawer, DescriptionDesktop, DrawerHeader, EditIcon, NameDiv, NamePara, PhotoUploadButton, PlaceholderIcon, PositionEditIcon, ProfileBackgroup, ProfileLayout, SectionHeader, SocialIcon, UserInfoContainer, UserInfoDesktop
+} from "../components/Profile/ProfileComponents";
 
-const Error = styled.span`
-  color: red;
-`;
-
-const { TextArea } = Input;
 const URLS = {
   playStore: [playStoreIcon, PLAYSTORE_URL],
   appStore: [appStoreIcon, APPSTORE_URL],

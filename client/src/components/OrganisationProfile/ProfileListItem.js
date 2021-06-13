@@ -1,9 +1,8 @@
+import { theme } from "constants/theme";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { theme } from "constants/theme";
 import { getInitialsFromFullName } from "utils/userInfo";
-import { useState, useEffect } from "react";
 const { colors } = theme;
 
 export const AllItems = styled.div`
@@ -18,7 +17,6 @@ export const ProfileContainer = styled.div`
   margin: 0.25rem 0;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
   padding: 0.5rem 1rem;
-  /* padding-bottom: .5rem; */
 `;
 
 export const ProfilePicContainer = styled.div`
@@ -75,7 +73,6 @@ const ProfileListItem = ({
   item,
   applicantsList,
   isOwner,
-  isAdmin,
   isWiki,
   activeTab,
 }) => {
@@ -124,7 +121,6 @@ const ProfileListItem = ({
                   }}
                   src={item?.[list]?.userInfo?.photo}
                 /> :
-
                 item?.[list]?.name && getInitialsFromFullName(item?.[list]?.name || "")
               }
             </ProfilePic>
