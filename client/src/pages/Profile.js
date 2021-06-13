@@ -9,7 +9,7 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { theme, mq } from "constants/theme";
@@ -20,6 +20,8 @@ import {
   FeedWrapper,
   SeeAllTabsWrapper,
   SeeAllContentWrapper,
+  SeeAllTabsWrapperOrg,
+  SeeAllContentWrapperOrg,
 } from "components/Feed/FeedWrappers";
 import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "../components/Picture/UploadPic";
@@ -74,6 +76,8 @@ import {
   getProfileObjectiveProp,
   getProfileModeProp,
 } from "reducers/posts";
+// import { applicantsActions, selectMemberOrgs } from "reducers/memberOrganisations";
+import { applicantsActions, selectApplicants } from "reducers/applicants";
 
 import {
   fetchUser,
@@ -110,12 +114,23 @@ import { lowerCase } from "lodash";
 import {
   deletePostModalreducer,
   deletePostState,
+  feedReducer,
+  optionsReducer,
 } from "hooks/reducers/feedReducers";
 import {
   SET_DELETE_MODAL_VISIBILITY,
   DELETE_MODAL_POST,
   DELETE_MODAL_HIDE,
+  SET_VALUE,
 } from "hooks/actions/feedActions";
+import ProfileList from "components/Profile/ProfileList";
+import {
+  TestMemberOfOrgs,
+  MemberOrgs,
+  Applicants,
+  Meta,
+} from "utils/TestMemberOfOrgs";
+import NoJoinOrg from "components/Profile/NoJoinOrg";
 
 const URLS = {
   facebook: [facebookIcon, FACEBOOK_URL],
@@ -124,6 +139,14 @@ const URLS = {
   twitter: [twitterBlue, TWITTER_URL],
   github: [githubIcon, GITHUB_URL],
   website: [websiteIcon],
+};
+
+const initialState = {
+  showFilters: false,
+  filterModal: true,
+  showCreatePostModal: false,
+  applyFilters: false,
+  activePanel: null,
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
@@ -209,6 +232,7 @@ const Profile = ({
 
   const actorId = useSelector(selectActorId);
   const isSelf = actorId === userId;
+  // console.log(userId);
 
   let filteredPost = [];
 
@@ -231,8 +255,8 @@ const Profile = ({
       return lowerCase(internalTab).includes("archived")
         ? "IA"
         : lowerCase(internalTab).includes("active")
-        ? "A"
-        : "D";
+          ? "A"
+          : "D";
     }
     return undefined;
   }, [sectionView, internalTab]);
@@ -303,6 +327,11 @@ const Profile = ({
         disabled: false,
         gtm: "offers",
       });
+      baseMenu.splice(3, 0, {
+        name: "Organisations",
+        disable: false,
+        gtm: "organisations",
+      });
       setSectionView(t("profile.views.requests"));
       setInternalTab(t("profile.views.active"));
     } else {
@@ -311,7 +340,14 @@ const Profile = ({
         disable: false,
         gtm: "posts",
       });
-      setSectionView(t("profile.views.posts"));
+      baseMenu.splice(1, 0, {
+        name: "Organisations",
+        disable: false,
+        gtm: "organisations",
+      });
+      // sets default tab (set to "Organisations" for testing)
+      // setSectionView(t("profile.views.posts"));
+      setSectionView("Organisations");
       setInternalTab(t("profile.views.requests"));
     }
     setNavMenu(baseMenu);
@@ -335,111 +371,130 @@ const Profile = ({
   };
 
   useEffect(() => {
-    let _isMounted = false;
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
+    if (sectionView.toUpperCase() == "POSTS") {
+      let _isMounted = false;
+      const CancelToken = axios.CancelToken;
+      const source = CancelToken.source();
 
-    const fetchPosts = async () => {
-      if (!isInit) {
-        return;
-      }
+      const fetchPosts = async () => {
+        if (!isInit) {
+          return;
+        }
 
-      const limit = PAGINATION_LIMIT;
-      const skip = page * limit;
-      if (!shouldRefetchPost()) {
-        return;
-      }
+        const limit = PAGINATION_LIMIT;
+        const skip = page * limit;
+        if (!shouldRefetchPost()) {
+          return;
+        }
 
-      dispatch(postsActions.fetchPostsBegin());
-      try {
-        if (userId) {
-          let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
-          const view = getView();
+        dispatch(postsActions.fetchPostsBegin());
+        // console.log(userId);
+        try {
+          if (userId) {
+            // console.log(
+            //   "userId" +
+            //     userId +
+            //     ", limit" +
+            //     limit +
+            //     ", skip" +
+            //     skip +
+            //     ", getActorQuery()" +
+            //     getActorQuery(),
+            // );
+            // console.log(getActorQuery);
+            let baseURL = `/api/posts?ignoreUserLocation=true&includeMeta=true&limit=${limit}&skip=${skip}&authorId=${userId}${getActorQuery()}`;
+            const view = getView();
 
-          const objURL = `&objective=${view}`;
+            const objURL = `&objective=${view}`;
 
-          const mode = getMode();
+            const mode = getMode();
 
-          const modeURL = `&postMode=${mode}`;
-          const endpoint = `${baseURL}${objURL}${modeURL}`;
+            const modeURL = `&postMode=${mode}`;
+            // const modeURL = `&postMode=A`;
+            const endpoint = `${baseURL}${objURL}${modeURL}`;
 
-          const {
-            data: { data: posts, meta },
-          } = await axios.get(endpoint);
+            const {
+              data: { data: posts, meta },
+            } = await axios.get(endpoint);
 
-          if (!_isMounted) {
-            //mobile fetch
-            dispatch(
-              postsActions.fetchProfilePostSuccess({
-                posts: [...filteredPost, ...posts],
-                userId,
-                objective: view,
-                mode: mode,
-              }),
-            );
+            // console.log({ posts: posts });
+            console.log({ error: postsError });
 
-            //desktop fetch
-            if (prevUserId !== userId) {
+            if (!_isMounted) {
+              //mobile fetch
               dispatch(
-                postsActions.fetchPostsSuccess({
-                  posts: [],
+                postsActions.fetchProfilePostSuccess({
+                  posts: [...filteredPost, ...posts],
+                  userId,
+                  objective: view,
+                  mode: mode,
                 }),
               );
-            }
-            if (posts.length && meta.total) {
-              if (prevTotalPostCount !== meta.total) {
-                setTotalPostCount(meta.total);
-              }
-              if (posts.length < limit) {
-                dispatch(postsActions.finishLoadingAction());
-              } else if (meta.total === limit) {
-                dispatch(postsActions.finishLoadingAction());
-              }
-              const loadedPosts = posts.reduce((obj, item) => {
-                obj[item._id] = item;
-                return obj;
-              }, {});
 
-              if (prevUserId === userId && postsList) {
+              //desktop fetch
+              if (prevUserId !== userId) {
                 dispatch(
                   postsActions.fetchPostsSuccess({
-                    posts: { ...postsList, ...loadedPosts },
+                    posts: [],
                   }),
                 );
+              }
+              if (posts.length && meta.total) {
+                if (prevTotalPostCount !== meta.total) {
+                  setTotalPostCount(meta.total);
+                }
+                if (posts.length < limit) {
+                  dispatch(postsActions.finishLoadingAction());
+                } else if (meta.total === limit) {
+                  dispatch(postsActions.finishLoadingAction());
+                }
+                const loadedPosts = posts.reduce((obj, item) => {
+                  obj[item._id] = item;
+                  return obj;
+                }, {});
+
+                if (prevUserId === userId && postsList) {
+                  dispatch(
+                    postsActions.fetchPostsSuccess({
+                      posts: { ...postsList, ...loadedPosts },
+                    }),
+                  );
+                } else {
+                  dispatch(
+                    postsActions.fetchPostsSuccess({
+                      posts: { ...loadedPosts },
+                    }),
+                  );
+                }
+              } else if (prevUserId === userId && posts) {
+                dispatch(
+                  postsActions.fetchPostsSuccess({
+                    posts: { ...postsList },
+                  }),
+                );
+                dispatch(postsActions.finishLoadingAction());
               } else {
-                dispatch(
-                  postsActions.fetchPostsSuccess({
-                    posts: { ...loadedPosts },
-                  }),
-                );
+                dispatch(postsActions.finishLoadingAction());
               }
-            } else if (prevUserId === userId && posts) {
-              dispatch(
-                postsActions.fetchPostsSuccess({
-                  posts: { ...postsList },
-                }),
-              );
-              dispatch(postsActions.finishLoadingAction());
-            } else {
-              dispatch(postsActions.finishLoadingAction());
             }
           }
+        } catch (error) {
+          console.log("Error - ", error);
+          dispatch(postsActions.fetchPostsError(error));
+          if (axios.isCancel(error)) {
+            console.log(`request cancelled:${error.message}`);
+          } else {
+            console.log("Error:" + error.message);
+            // console.log({ fetchPostError: posts });
+          }
         }
-      } catch (error) {
-        console.log("Error - ", error);
-        dispatch(postsActions.fetchPostsError(error));
-        if (axios.isCancel(error)) {
-          console.log(`request cancelled:${error.message}`);
-        } else {
-          console.log("Error:" + error.message);
-        }
-      }
-    };
-    fetchPosts();
-    return () => {
-      _isMounted = true;
-      source.cancel("Cancelling is cleanup");
-    };
+      };
+      fetchPosts();
+      return () => {
+        _isMounted = true;
+        source.cancel("Cancelling is cleanup");
+      };
+    }
   }, [userId, page, toggleRefetch, isInit]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -473,7 +528,18 @@ const Profile = ({
   };
 
   useEffect(() => {
-    refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
+    if (sectionView.toUpperCase() == "POSTS") {
+      refetchPosts(); // will trigger loadPosts(if needed) (by toggling toggleRefetch)
+    }
+    // if (sectionView.toUpperCase() == "ORGANISATIONS") {
+    //   refetchApplicants();
+    // }
+  }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (sectionView.toUpperCase() == "ORGANISATIONS") {
+      refetchApplicants();
+    }
   }, [internalTab, sectionView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetchPosts = (isLoading, loadMore) => {
@@ -600,6 +666,215 @@ const Profile = ({
   const filterMode = getProfileModeProp(mode);
   filteredPost = posts.profilePosts[userId]?.[filterView]?.[filterMode] ?? [];
 
+  const [feedState, feedDispatch] = useReducer(feedReducer, {
+    ...initialState,
+  });
+  const [selectedOptions, optionsDispatch] = useReducer(optionsReducer, {});
+  const applicants = useSelector(selectApplicants);
+  //react-virtualized loaded rows and row count.
+  const [itemCountApplicants, setItemCountApplicants] = useState(0);
+  const [toggleRefetchApplicants, setToggleRefetchApplicants] = useState(false);
+  const [totalApplicantCount, setTotalApplicantCount] = useState(
+    ARBITRARY_LARGE_NUM,
+  );
+  const [rawTotalApplicantCount, setRawTotalApplicants] = useState(0);
+  const { filterModal, activePanel, showFilters } = feedState;
+  const {
+    error: applicantsError,
+    isLoadingApplicants,
+    loadMoreApplicants,
+    pageApplicants,
+    applicants: applicantsList,
+  } = applicants;
+  // console.log(applicants);
+  const feedApplicants = Object.entries(applicantsList);
+  const prevTotalApplicantCount = usePrevious(totalApplicantCount);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+  const history = useHistory();
+
+  const dispatchAction = (type, key, value) =>
+    feedDispatch({ type, key, value });
+
+  const refetchApplicants = (
+    isLoadingApplicants,
+    loadMoreApplicants,
+    softRefresh = false,
+  ) => {
+    if (!softRefresh) {
+      dispatchAction(SET_VALUE, "applyFilters", true);
+      dispatch(
+        applicantsActions.resetPageAction({
+          isLoadingApplicants,
+          loadMoreApplicants,
+        }),
+      );
+      if (pageApplicants === 0) {
+        setToggleRefetchApplicants(!toggleRefetchApplicants);
+      }
+    }
+  };
+  // console.log(userId);
+  const loadApplicants = async () => {
+    const limit = PAGINATION_LIMIT;
+    const skip = pageApplicants * limit;
+    const getApplicantsBaseURL = (userId, limit, skip) => {
+      // console.log(organisationId);
+      // console.log(userId);
+      // return `/api/applicants?organisationId=${organisationId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+      return `/api/applicants?userId=${userId}&status=accepted&includeMeta=true&limit=${limit}&skip=${skip}`;
+      // return `/api/applicants?userId=${userId}&includeMeta=true&limit=${limit}&skip=${skip}`;
+    };
+    let baseURL = getApplicantsBaseURL(userId, limit, skip);
+    let endpoint = baseURL;
+    dispatch(applicantsActions.fetchApplicantsBegin());
+    // console.log("userId" + userId + ", limit" + limit + ", skip" + skip);
+    // console.log("endpoint: " + endpoint);
+    try {
+      // TODO - CONFIGURE API ONCE BE IS DONE
+      const {
+        data: { data: applicants, meta },
+      } = await axios.get(endpoint);
+      // console.log("applicants: " + applicants);
+      // console.log("meta: " + meta);
+
+      // TEST DATA
+      // const applicants = MemberOrgs;
+      // const meta = Meta;
+
+      if (applicants.length && meta.total) {
+        if (prevTotalApplicantCount !== meta.total) {
+          setTotalApplicantCount(meta.total);
+          setRawTotalApplicants(meta.total);
+        }
+
+        const lastPage = Math.ceil(meta.total / limit) - 1;
+        if (pageApplicants === lastPage) {
+          dispatch(applicantsActions.finishLoadingAction());
+        }
+
+        let applicantsInState;
+        if (history.location.state) {
+          const { keepApplicantsState, keepPageState } = history.location.state;
+          applicantsInState = keepApplicantsState;
+          if (keepPageState >= pageApplicants) {
+            dispatch(applicantsActions.setPageAction(keepPageState));
+          }
+        }
+        if (applicantsInState) {
+          if (Object.keys(applicantsInState).length === meta.total) {
+            dispatch(applicantsActions.finishLoadingAction());
+          }
+        }
+
+        const loadedApplicants = applicants.reduce((obj, item) => {
+          obj[item._id] = item;
+          return obj;
+        }, {});
+
+        if (applicantsInState) {
+          dispatch(
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...applicantsInState, ...loadedApplicants },
+            }),
+          );
+        } else if (Object.keys(applicantsList).length && pageApplicants) {
+          dispatch(
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...applicantsList, ...loadedApplicants },
+            }),
+          );
+        } else {
+          dispatch(
+            applicantsActions.fetchApplicantsSuccess({
+              applicants: { ...loadedApplicants },
+            }),
+          );
+        }
+      } else if (applicants) {
+        dispatch(
+          applicantsActions.fetchApplicantsSuccess({
+            applicants: { ...applicantsList },
+          }),
+        );
+        dispatch(applicantsActions.finishLoadingAction());
+      } else {
+        dispatch(applicantsActions.finishLoadingAction());
+      }
+    } catch (error) {
+      dispatch(applicantsActions.fetchApplicantsError(error));
+    }
+  };
+
+  const [listOrgs, setOrganisations] = useState([]);
+  const loadOrganisations = async () => {
+    let endpoint = `/api/organisations`;
+    try {
+      // TODO - CONFIGURE API ONCE BE IS DONE
+      const { data: organisations } = await axios.get(endpoint);
+      // console.log(organisations);
+      setOrganisations(organisations);
+      const listOrgs = organisations.reduce((objOrg, itemOrg) => {
+        objOrg[itemOrg._id] = itemOrg;
+        return objOrg;
+      }, {});
+      setOrganisations(listOrgs);
+      // console.log(listOrgs);
+    } catch (error) {
+      console.log({
+        error,
+      });
+    }
+  };
+
+  useEffect(() => { }, [history.location.search]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // useEffect(() => {
+  //   refetchApplicants(); // will trigger loadApplicants(if needed) (by toggling toggleRefetchApplicants)
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (userId) {
+      loadApplicants();
+    }
+  }, [userId, toggleRefetchApplicants, pageApplicants, internalTab]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    loadOrganisations();
+    // loadApplicants();
+  }, []);
+
+
+
+  const isApplicantLoaded = useCallback((index) => !!feedApplicants[index], [
+    feedApplicants,
+  ]);
+
+  useEffect(() => {
+    setItemCountApplicants(
+      loadMoreApplicants ? feedApplicants.length + 1 : feedApplicants.length,
+    );
+  }, [feedApplicants.length, loadMoreApplicants]);
+
+  const [orgsLoaded, setOrgsLoaded] = useState(false)
+  useEffect(() => {
+    if (orgsLoaded == false) {
+      setOrgsLoaded(true)
+    } else {
+      return
+    }
+  }); // eslint-disable-line react-hooks/exhaustive-deps
+  const loadNextPageApplicant = useCallback(
+    async () => {
+      dispatch(applicantsActions.setNextPageAction());
+    }, [], // eslint-disable-line react-hooks/exhaustive-deps
+  );
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -626,6 +901,8 @@ const Profile = ({
     }
   };
 
+  const emptyFeedApplicants = () =>
+    Object.keys(applicantsList).length < 1 && !isLoadingApplicants;
   const emptyFeed = () => filteredPost.length < 1 && !isLoading;
 
   if (authLoading == null || authLoading === true) {
@@ -659,7 +936,7 @@ const Profile = ({
                   {address && (
                     <div title={address} className="address-container">
                       <img src={locationIcon} alt={address} />
-                      {address}
+                      {address} Yooooo
                     </div>
                   )}
                 </DesktopLocation>
@@ -721,25 +998,29 @@ const Profile = ({
           <Verification gtmPrefix={GTM.user.profilePrefix} />
         )}
         <WhiteSpace />
+
         <SectionHeader>
           <PlaceholderIcon />
-          {isSelf && (
-            <>
-              <CreatePostIcon
-                id={GTM.user.profilePrefix + GTM.post.createPost}
-                src={createPost}
-                onClick={onToggleCreatePostDrawer}
-              />
-              <CreatePostButton
-                onClick={onToggleCreatePostDrawer}
-                id={GTM.user.profilePrefix + GTM.post.createPost}
-                inline={true}
-                icon={<PlusIcon />}
-              >
-                {t("post.create")}
-              </CreatePostButton>
-            </>
-          )}
+          {isSelf &&
+            (sectionView === "Requests" ||
+              sectionView === "Offers" ||
+              sectionView === "Posts") && (
+              <>
+                <CreatePostIcon
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  src={createPost}
+                  onClick={onToggleCreatePostDrawer}
+                />
+                <CreatePostButton
+                  onClick={onToggleCreatePostDrawer}
+                  id={GTM.user.profilePrefix + GTM.post.createPost}
+                  inline={true}
+                  icon={<PlusIcon />}
+                >
+                  {t("post.create")}
+                </CreatePostButton>
+              </>
+            )}
         </SectionHeader>
         {isSelf && (
           <CreatePost
@@ -769,6 +1050,7 @@ const Profile = ({
                   </Menu.Item>
                 ))}
               </MobileMenuWrapper>
+              {/* <NoJoinOrg isSelf={isSelf} /> */}
               <div style={{ width: "100%" }}>
 
                 {sectionView === "Requests" && (
@@ -835,6 +1117,31 @@ const Profile = ({
                     viewType={sectionView.toUpperCase()}
                   />
                 )}
+                {sectionView === "Organisations" ? (
+                  rawTotalApplicantCount == 0 ? (
+                    <NoJoinOrg isSelf={isSelf} />
+                  ) : (
+                    <SeeAllTabsWrapperOrg>
+                      <SeeAllContentWrapperOrg>
+                        <ProfileList
+                          filteredOrgs={applicantsList}
+                          itemCount={itemCountApplicants}
+                          isItemLoaded={isApplicantLoaded}
+                          isNextPageLoading={isLoading}
+                          loadNextPage={loadNextPageApplicant}
+                          hasNextPage={loadMoreApplicants}
+                          totalCount={totalApplicantCount}
+                          page={pageApplicants}
+                          emptyFeed={emptyFeedApplicants}
+                          type="orgs"
+                          isSelf={isSelf}
+                          listOrgs={listOrgs}
+                          listInitialized={orgsLoaded}
+                        />
+                      </SeeAllContentWrapperOrg>
+                    </SeeAllTabsWrapperOrg>
+                  )
+                ) : null}
               </div>
             </StyledMobileMenuContainer>
           ) : null}
@@ -856,9 +1163,34 @@ const Profile = ({
                 ))}
               </DesktopMenuWrapper>
 
+              {sectionView === "Organisations" ? (
+                rawTotalApplicantCount == 0 ? (
+                  <NoJoinOrg isSelf={isSelf} />
+                ) : (
+                  <SeeAllTabsWrapperOrg>
+                    <SeeAllContentWrapperOrg>
+                      <ProfileList
+                        filteredOrgs={applicantsList}
+                        itemCount={itemCountApplicants}
+                        isItemLoaded={isApplicantLoaded}
+                        isNextPageLoading={isLoading}
+                        loadNextPage={loadNextPageApplicant}
+                        hasNextPage={loadMoreApplicants}
+                        filteredApplicants={applicantsList}
+                        totalCount={totalApplicantCount}
+                        page={pageApplicants}
+                        emptyFeed={emptyFeedApplicants}
+                        type="orgs"
+                        isSelf={isSelf}
+                        listOrgs={listOrgs}
+                      />
+                    </SeeAllContentWrapperOrg>
+                  </SeeAllTabsWrapperOrg>
+                )
+              ) : null}
               {sectionView === "Requests" ||
-              sectionView === "Offers" ||
-              sectionView === "Posts" ? (
+                sectionView === "Offers" ||
+                sectionView === "Posts" ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>

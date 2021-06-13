@@ -907,6 +907,23 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   }, [feedMembers.length, loadMoreMembers, tab]);
 
 
+  const becomeMember = async () => { // TODO REMOVE - ONLY FOR TESTING
+    const applicant = {
+      "organization": { "id": organisationId },
+      "answers": {
+        "q1": "answer 1",
+        "q2": "answer 2",
+        "q3": "answer 3"
+      },
+      "status": "accepted"
+    }
+    try {
+      await axios.post("/api/applicants", applicant);
+    } catch (error) {
+      console.log({ "error!!": error })
+      return error
+    }
+  }
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }

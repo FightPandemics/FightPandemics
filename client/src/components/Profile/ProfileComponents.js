@@ -354,6 +354,7 @@ export const DesktopLocation = styled.div`
     font-weight: normal;
     font-size: 1.1rem;
     line-height: 1rem;
+    margin-top: 1rem;
   }
 `;
 
@@ -384,6 +385,9 @@ export const MobileMenuWrapper = styled(Menu)`
       background-color: transparent;
       border-bottom: 0.2rem solid ${theme.colors.black};
       font-weight: bold;
+    }
+    &.ant-menu-vertical .ant-menu-item {
+      overflow: visible;
     }
   }
 `;
