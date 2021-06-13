@@ -255,27 +255,34 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const [loadingPermissions, setLoadingPermissions] = useState(true)
   const loadPermissions = async () => {
     const endpoint = `/api/applicants/${organisationId}/status?userId=${actorId}&includeMeta=true`;
+    setActorPermissionsLoaded(false)
+    dispatch(applicantsActions.loadPermissionsBegin());
     if (!authLoading) {
       if (isAuthenticated) {
+
         try {
           const {
             data: { data: applicants, meta },
           } = await axios.get(endpoint);
           if (applicants) {
             setMemberStatus(applicants[0].status);
+            dispatch(applicantsActions.setActorPermissions(applicants[0].status));
             setCurrentUserPermissions(applicants[0].organization.permissions);
-            setActorPermissionsLoaded(true)
-
+            setActorPermissionsLoaded(true);
+            dispatch(applicantsActions.loadPermissionsFinish());
           }
           setLoadingPermissions(false)
         } catch (error) {
           setActorPermissionsLoaded(true)
+          // dispatch(applicantsActions.loadPermissionsFinish());
           return error;
         }
       }
       if (!isAuthenticated) {
         setMemberStatus(undefined)
         setCurrentUserPermissions(undefined)
+        setAppliedStatus(true)
+        // dispatch(applicantsActions.loadPermissionsFinish());
       }
     };
   }
@@ -308,9 +315,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   useEffect(() => {
     loadPermissions();
   }, [actorId, organisationId, tab, isAuthenticated]);
-  useEffect(() => {
-    setStatus()
-  }, [memberStatus, organisationId, actorId, actorPermissionsLoaded, loadingPermissions, tab]);
+
 
   useEffect(() => {
     const fetchOrganisationPosts = async () => {
@@ -585,6 +590,8 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     isLoadingApplicants,
     loadMoreApplicants,
     pageApplicants,
+    permissionsLoaded,
+    actorPermissions,
     applicants: applicantsList,
   } = applicants;
 
@@ -627,6 +634,9 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     }
   };
 
+  useEffect(() => {
+    setStatus()
+  }, [memberStatus, organisationId, actorId, actorPermissionsLoaded, loadingPermissions, tab, permissionsLoaded]);
 
   const handleIsJoinOrg = async (e) => {
     if (typeof switchOnOff !== undefined) {
@@ -964,11 +974,15 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
 
             </UserInfoDesktop>
           </UserInfoContainer>
-
+          appliedStatus: {appliedStatus}
+          actorPermissions: {actorPermissions}
           {
-            authLoading ? null :
+            authLoading
+              || !permissionsLoaded && actorPermissions
+              || currentUserOrgId ? null :
               isOwner ? null :
-                isJoinOrg && appliedStatus && !currentUserOrgId || !isAuthenticated ?
+                isJoinOrg && appliedStatus && permissionsLoaded && !currentUserOrgId
+                  || !isAuthenticated ?
                   (< JoinOrgContainer >
                     <Link
                       onClick={() =>
@@ -992,8 +1006,8 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                     </Link>
                   </JoinOrgContainer>
                   )
-                  : null
-          }
+                  : null}
+
           < ProfileTabs
             defaultActiveKey="activity"
             activeKey={tab}

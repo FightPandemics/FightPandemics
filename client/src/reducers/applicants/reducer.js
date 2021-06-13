@@ -9,6 +9,8 @@ const initialState = {
   loadMoreApplicants: true,
   isCachedStale: false,
   profileApplicants: {},
+  permissionsLoaded: false,
+  actorPermissions: null
 };
 
 export const getProfileObjectiveProp = (view) => {
@@ -197,6 +199,26 @@ const applicantsReducer = (state = initialState, action) => {
           },
         },
       };
+    }
+
+    case APPLICANTS_ACTIONS.PERMISSIONS_FINISHED: {
+      return {
+        ...state,
+        permissionsLoaded: true
+      }
+    }
+    case APPLICANTS_ACTIONS.PERMISSIONS_LOAD_BEGIN: {
+      return {
+        ...state,
+        permissionsLoaded: false
+      }
+    }
+    case APPLICANTS_ACTIONS.SET_ACTOR_PERMISSIONS: {
+      const { payload } = action;
+      return {
+        ...state,
+        actorPermissions: payload.actorPermissions
+      }
     }
     default:
       return state;

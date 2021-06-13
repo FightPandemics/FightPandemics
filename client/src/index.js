@@ -29,7 +29,7 @@ const composeEnhancers = composeWithDevTools({
   trace: true,
   traceLimit: 25
 })
-// const store = createStore(rootReducer, composeEnhancers( // FOR LOCAL
+// const store = createStore(rootReducer, composeEnhancers( // TODO - REMOVE // FOR LOCAL ONLY
 //   applyMiddleware(thunk)
 // ));
 

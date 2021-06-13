@@ -12,6 +12,9 @@ export const APPLICANTS_ACTIONS = {
   SET_LOADING_APPLICANTS: "SET_LOADING_APPLICANTS",
   SET_REPORTED: "SET_REPORTED",
   SHOW_ANYWAY: "SHOW_ANYWAY",
+  PERMISSIONS_LOAD_BEGIN: "PERMISSIONS_LOAD_BEGIN",
+  PERMISSIONS_FINISHED: "PERMISSIONS_FINISHED",
+  SET_ACTOR_PERMISSIONS: "SET_ACTOR_PERMISSIONS"
 };
 
 export const resetPageAction = ({ isLoadingApplicants = false, loadMoreApplicants = true }) => ({
@@ -83,6 +86,17 @@ export const showAnyway = ({ applicantId }) => ({
   payload: { applicantId },
 });
 
+export const loadPermissionsFinish = () => ({
+  type: APPLICANTS_ACTIONS.PERMISSIONS_FINISHED,
+})
+export const loadPermissionsBegin = () => ({
+  type: APPLICANTS_ACTIONS.PERMISSIONS_LOAD_BEGIN,
+})
+export const setActorPermissions = (actorPermissions) => ({
+  type: APPLICANTS_ACTIONS.SET_ACTOR_PERMISSIONS,
+  payload: { actorPermissions },
+})
+
 export const applicantsActions = {
   resetApplicants,
   resetPageAction,
@@ -97,4 +111,7 @@ export const applicantsActions = {
   setReported,
   showAnyway,
   updateProfileApplicantSucess,
+  loadPermissionsFinish,
+  loadPermissionsBegin,
+  setActorPermissions
 };
