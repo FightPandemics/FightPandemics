@@ -974,8 +974,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
 
             </UserInfoDesktop>
           </UserInfoContainer>
-          appliedStatus: {appliedStatus}
-          actorPermissions: {actorPermissions}
           {
             authLoading
               || !permissionsLoaded && actorPermissions
