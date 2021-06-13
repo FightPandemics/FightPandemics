@@ -936,7 +936,7 @@ const Profile = ({
                   {address && (
                     <div title={address} className="address-container">
                       <img src={locationIcon} alt={address} />
-                      {address} Yooooo
+                      {address}
                     </div>
                   )}
                 </DesktopLocation>
