@@ -283,8 +283,14 @@ const Profile = ({
         disable: false,
         gtm: "posts",
       });
-      setSectionView("profile.views.posts");
+      setSectionView(t("profile.views.posts"));
       setInternalTab(t("profile.views.requests"));
+      baseMenu.splice(3, 0, {
+        name: "Organisations",
+        disable: false,
+        gtm: "organisations",
+      });
+
     }
     setNavMenu(baseMenu);
     setIsInit(true);
@@ -342,7 +348,6 @@ const Profile = ({
             const {
               data: { data: posts, meta },
             } = await axios.get(endpoint);
-
             if (!_isMounted) {
               dispatch(
                 postsActions.fetchProfilePostSuccess({
@@ -1079,7 +1084,8 @@ const Profile = ({
               ) : null}
               {sectionView === "Requests" ||
                 sectionView === "Offers" ||
-                sectionView === "Posts" ? (
+                sectionView === "Posts"
+                && !isLoading ? (
                 <div style={{ width: "100%" }}>
                   <SeeAllTabsWrapper>
                     <SeeAllContentWrapper>
@@ -1110,7 +1116,7 @@ const Profile = ({
                     </SeeAllContentWrapper>
                   </SeeAllTabsWrapper>
 
-                  {postsError && (
+                  {postsError && !isLoading && !loadMore && (
                     <ErrorAlert
                       message={t([
                         `error.${postsError.message}`,
