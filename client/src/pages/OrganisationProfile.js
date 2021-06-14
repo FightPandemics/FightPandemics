@@ -92,7 +92,24 @@ import {
   Label, StyledConfirmModal, StyledPositionModal, StyledPostButton
 } from "../components/Positions/JoinPositionStyles";
 import {
-  AvatarPhotoContainer, CreatePostIcon, CustomDrawer, DescriptionDesktop, DrawerHeader, EditIcon, NameDiv, NamePara, PhotoUploadButton, PlaceholderIcon, PositionEditIcon, ProfileBackgroup, ProfileLayout, SectionHeader, SocialIcon, UserInfoContainer, UserInfoDesktop
+  AvatarPhotoContainer,
+  CreatePostIcon,
+  CustomDrawer,
+  DescriptionDesktop,
+  IconsContainer,
+  DrawerHeader,
+  EditIcon,
+  NameDiv,
+  NamePara,
+  PhotoUploadButton,
+  PlaceholderIcon,
+  PositionEditIcon,
+  ProfileBackgroup,
+  ProfileLayout,
+  SectionHeader,
+  SocialIcon,
+  UserInfoContainer,
+  UserInfoDesktop
 } from "../components/Profile/ProfileComponents";
 
 const URLS = {
@@ -958,10 +975,31 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                   )}
               </NameDiv>
               {about && <DescriptionDesktop> {about} </DescriptionDesktop>}
-
+              <IconsContainer>
+                <div className="social-icons">
+                  {Object.entries(urls).map(([name, url]) => {
+                    return (
+                      url && (
+                        <a
+                          href={
+                            name === "website"
+                              ? getHref(url)
+                              : `${URLS[name][1]}${url}`
+                          }
+                          key={name}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <SocialIcon src={URLS[name][0]} />
+                        </a>
+                      )
+                    );
+                  })}
+                </div>
+              </IconsContainer>
             </UserInfoDesktop>
           </UserInfoContainer>
-          
+
           {
             authLoading
               || !permissionsLoaded && actorPermissions
@@ -969,8 +1007,8 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
               || currentUserOrgId ? null :
               isOwner ? null :
                 isJoinOrg && appliedStatus && permissionsLoaded && !currentUserOrgId
-                  || !isAuthenticated 
-                  || permissionsLoaded && !actorPermissions ?
+                  || isJoinOrg && !isAuthenticated
+                  || isJoinOrg && permissionsLoaded && !actorPermissions ?
                   (< JoinOrgContainer >
                     <Link
                       onClick={() =>
