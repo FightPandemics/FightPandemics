@@ -169,7 +169,7 @@ const ProfileListItem = ({ item, isSelf }) => {
         </ProfilePicContainer>
         <TextContainer className="organisation-card">
           <Name>
-            <Link to={`/organisation/${item?.organization?.id}`}>{item?.orgInfo?.name}</Link>
+           <Link to={`/organisation/${item?.organization?.id}`}>{item?.orgInfo?.name}</Link>
           </Name>
           {/* {!isSelf ? null : (
             <Title>

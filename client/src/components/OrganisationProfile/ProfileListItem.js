@@ -75,12 +75,13 @@ const ProfileListItem = ({
   isOwner,
   isWiki,
   activeTab,
+  tab
 }) => {
   let itemState
   let list;
   let itemPath;
 
-  if (activeTab == "members") {
+  if (tab == "members") {
     list = "applicant";
     itemPath = `/profile/${item?.applicant?.id}`;
     itemState = {
@@ -89,7 +90,7 @@ const ProfileListItem = ({
     };
   }
 
-  else if (activeTab == "applicants") {
+  else if (tab == "applicants") {
     list = "applicant";
     itemPath = `/application/${item?.organization?.id}/${item?.applicant.id}/${item?._id}`;
     itemState = {

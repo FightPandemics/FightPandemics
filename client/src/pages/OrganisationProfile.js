@@ -208,6 +208,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     dispatch(postsActions.resetPageAction({}));
     dispatch(applicantsActions.resetPageAction({}));
     dispatch(membersActions.resetPageAction({}));
+    dispatch(applicantsActions.loadPermissionsBegin());
     (async function fetchOrgProfile() {
       orgProfileDispatch(fetchOrganisation());
       userProfileDispatch(fetchUser());
@@ -259,11 +260,14 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     dispatch(applicantsActions.loadPermissionsBegin());
     if (!authLoading) {
       if (isAuthenticated) {
-
         try {
           const {
             data: { data: applicants, meta },
           } = await axios.get(endpoint);
+          if (applicants.length == 0) {
+            dispatch(applicantsActions.loadPermissionsFinish());
+            setActorPermissionsLoaded(true);
+          }
           if (applicants) {
             setMemberStatus(applicants[0].status);
             dispatch(applicantsActions.setActorPermissions(applicants[0].status));
@@ -273,8 +277,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
           }
           setLoadingPermissions(false)
         } catch (error) {
-          setActorPermissionsLoaded(true)
-          // dispatch(applicantsActions.loadPermissionsFinish());
           return error;
         }
       }
@@ -282,7 +284,10 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
         setMemberStatus(undefined)
         setCurrentUserPermissions(undefined)
         setAppliedStatus(true)
-        // dispatch(applicantsActions.loadPermissionsFinish());
+        dispatch(applicantsActions.loadPermissionsFinish());
+      }
+      else {
+
       }
     };
   }
@@ -892,24 +897,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     );
   }, [feedMembers.length, loadMoreMembers, tab]);
 
-
-  const becomeMember = async () => { // TODO REMOVE - ONLY FOR TESTING
-    const applicant = {
-      "organization": { "id": organisationId },
-      "answers": {
-        "q1": "answer 1",
-        "q2": "answer 2",
-        "q3": "answer 3"
-      },
-      "status": "accepted"
-    }
-    try {
-      await axios.post("/api/applicants", applicant);
-    } catch (error) {
-      console.log({ "error!!": error })
-      return error
-    }
-  }
   if (error) {
     return <ErrorAlert message={error} type="error" />;
   }
@@ -974,13 +961,16 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
 
             </UserInfoDesktop>
           </UserInfoContainer>
+          
           {
             authLoading
               || !permissionsLoaded && actorPermissions
+              || !permissionsLoaded
               || currentUserOrgId ? null :
               isOwner ? null :
                 isJoinOrg && appliedStatus && permissionsLoaded && !currentUserOrgId
-                  || !isAuthenticated ?
+                  || !isAuthenticated 
+                  || permissionsLoaded && !actorPermissions ?
                   (< JoinOrgContainer >
                     <Link
                       onClick={() =>

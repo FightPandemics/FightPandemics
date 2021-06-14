@@ -51,7 +51,8 @@ const ProfileList = ({
   isWiki,
   isVolunteer,
   activeTab,
-  listInitialized
+  listInitialized,
+  tab
 }) => {
   const applicantsList = filteredApplicants && true;
   const membersList = filteredMembers && true;
@@ -92,6 +93,7 @@ const ProfileList = ({
                     isWiki={isWiki}
                     isVolunteer={isVolunteer}
                     activeTab={activeTab}
+                    tab={tab}
                   />
                 </AntList.Item>
               </ItemContainer>

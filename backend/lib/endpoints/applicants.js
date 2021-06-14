@@ -290,6 +290,9 @@ async function routes(app) {
           data: response,
         };
       };
+      // if (userId && organizationId && applicants.length == 0) {
+      //   return applicantsResponse(applicants);
+      // }
       if (applicantsErr) {
         req.log.error(applicantsErr, "Failed requesting applicants");
         throw app.httpErrors.internalServerError();
