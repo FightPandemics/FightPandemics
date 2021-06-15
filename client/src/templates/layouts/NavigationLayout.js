@@ -96,7 +96,7 @@ const NavigationLayout = (props) => {
   } = props;
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [profileNavMenuIsOpened, setProfileNavMenuIsOpened] = useState(false);
-  const [orgId, setOrgId] = useState(0);
+  const [orgIdx, setOrgIdx] = useState(0);
 
   const onOrganisationChange = (index) => {
     if (index !== organisationId) {
@@ -459,15 +459,15 @@ const NavigationLayout = (props) => {
                         user = {user}
                         navIsOpened = {profileNavMenuIsOpened}
                         setNavIsOpened = {setProfileNavMenuIsOpened}
-                        organisationId = {orgId}
-                        setOrganisationId = {setOrgId}
+                        orgIdx = {orgIdx}
+                        setOrgIdx = {setOrgIdx}
                     />
                     <MobileDrawer
                         user = {user}
                         navIsOpened = {profileNavMenuIsOpened}
                         setNavIsOpened = {setProfileNavMenuIsOpened}
-                        organisationId = {orgId}
-                        setOrganisationId = {setOrgId}
+                        orgIdx = {orgIdx}
+                        setOrgIdx = {setOrgIdx}
                     />
                 </React.Fragment>
             }

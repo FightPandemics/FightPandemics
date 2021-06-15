@@ -243,11 +243,13 @@ const ProfileNavMenu =
 ({  
     navIsOpened,
     setNavIsOpened, 
-    organisationId,
-    setOrganisationId,
+    orgIdx,
+    setOrgIdx,
     user
 }) => {
     let organisations = user ? user.organisations : [];
+
+    console.log(user.organisations);
 
     return (
         organisations 
@@ -263,10 +265,10 @@ const ProfileNavMenu =
                             <OrgImage 
                                 key= {org._id}
                                 src = "https://data.whicdn.com/images/22345458/original.jpg" 
-                                active = {idx === organisationId ? true : false}
+                                active = {idx === orgIdx ? true : false}
                                 onClick = {() => {
                                     setNavIsOpened(true);
-                                    setOrganisationId(idx);
+                                    setOrgIdx(idx);
                                 } }
                             />
                         );
@@ -280,22 +282,22 @@ const ProfileNavMenu =
                         src ="https://data.whicdn.com/images/22345458/original.jpg" 
                     />
                     <OrgTitleMobile>
-                        {organisations.length > 0 ? organisations[organisationId].name : ""}
+                        {organisations.length > 0 ? organisations[orgIdx].name : ""}
                     </OrgTitleMobile>
                 </OrganizationMobileHeaderTop>
                 <OrganizationMobileHeaderBottom>
-                    <OrgServices>{organisations.length > 0 ? organisations[organisationId].industry : ""}</OrgServices>
+                    <OrgServices>{organisations.length > 0 ? organisations[orgIdx].industry : ""}</OrgServices>
                 </OrganizationMobileHeaderBottom>
             </OrganizationMobileHeader>
             <RightContainer navIsOpened = {navIsOpened}>
                 <OrgTitle>{ 
                     organisations.length > 0
                     && 
-                    (organisations[organisationId].name.length <= 11 
-                    ? organisations[organisationId].name 
-                    : organisations[organisationId].name.slice(0, 12) + "...")
+                    (organisations[orgIdx].name.length <= 11 
+                    ? organisations[orgIdx].name 
+                    : organisations[orgIdx].name.slice(0, 12) + "...")
                 }</OrgTitle>
-                {renderNavSections(organisationId)}
+                {renderNavSections(orgIdx)}
                 <CloseNavButtomMobile onClick = {()=> setNavIsOpened(false)}><span>&times;</span></CloseNavButtomMobile>
                 <Footer>
                     <NavLink>Account</NavLink>
@@ -310,7 +312,7 @@ const ProfileNavMenu =
     );
 }
 
-function getLinkUrl(linkName, organisationId) {
+function getLinkUrl(linkName, orgIdx) {
     // Add entry here to add link url. 
     // Properties should match orgAccessLevels links above,
     // i.e "Activity", "Messages", etc
@@ -323,12 +325,12 @@ function getLinkUrl(linkName, organisationId) {
     };
 
     return {
-        pathname: `/organisation/${organisationId}`,
+        pathname: `/organisation/${orgIdx}`,
         tab: paths.hasOwnProperty(linkName) ? paths[linkName] : paths["Default"]
     }
 }
 
-function renderNavSections(organisationId) {
+function renderNavSections(orgIdx) {
     const orgAccessLevels = {
         "Org Workspace": 
         ["Activity", "Posts", "Org Book", "Members"],
@@ -346,7 +348,7 @@ function renderNavSections(organisationId) {
                 {mobileMediaQuery.matches && title === "Org Admin" ? "ADMIN" : title}
              </OrgAccessLevelTitle>
             {links.map((linkName, idx) => {
-                const { pathname, tab} = getLinkUrl(linkName, organisationId);
+                const { pathname, tab} = getLinkUrl(linkName, orgIdx);
                 return <NavLink 
                 to={
                     {
