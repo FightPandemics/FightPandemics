@@ -249,8 +249,6 @@ const ProfileNavMenu =
 }) => {
     let organisations = user ? user.organisations : [];
 
-    console.log(user.organisations);
-
     return (
         organisations 
         ?
