@@ -276,7 +276,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     setActorPermissionsLoaded(false)
     dispatch(applicantsActions.loadPermissionsBegin());
     if (!authLoading) {
-      if (isAuthenticated) {
+      if (isAuthenticated && actorId) {
         try {
           const {
             data: { data: applicants, meta },
@@ -715,6 +715,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     const endpoint = `/api/applicants/${organisationId}/status?includeMeta=true&limit=${limit}&skip=${skip}&status=applied`;
     dispatch(applicantsActions.fetchApplicantsBegin());
     setApplicantsLoaded(false)
+
     try {
       if (organisationId) {
         const {
