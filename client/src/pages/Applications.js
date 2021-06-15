@@ -53,8 +53,7 @@ const initialState = {
   },
 };
 
-const Apply = (props) => {
-  // const { isAuthenticated, user } = props;
+const Apply = (props, isAuthenticated) => {
   const {
     userProfileState: { user },
     userProfileDispatch,
@@ -65,17 +64,16 @@ const Apply = (props) => {
   const loadPermissions = async (actorId) => {
     const endpoint = `/api/applicants/${organisationId}/status?status=accepted&userId=${actorId}&includeMeta=true`; // &userId=${user.id}
 
-    try {
-      const {
-        data: { data: applicants, meta },
-      } = await axios.get(endpoint);
-      // console.log({ "APPLICANTS!!!": applicants[0].organization.permissions })
-      // console.log({ "META!!!": meta })
-      setActorPermissionsLoaded(true);
-      setCurrentUserPermissions(applicants[0].organization.permissions);
-      // setMemberstatus(applicants[0].status)
-    } catch (error) {
-      return error;
+    if (organisationId && actorId) {
+      try {
+        const {
+          data: { data: applicants, meta },
+        } = await axios.get(endpoint);
+        setActorPermissionsLoaded(true);
+        setCurrentUserPermissions(applicants[0].organization.permissions);
+      } catch (error) {
+        return error;
+      }
     }
   };
 
@@ -86,9 +84,7 @@ const Apply = (props) => {
     isAdmin: currentUserPermissions == "Admin",
   };
   useEffect(() => {
-    // if (!actorPermissionsLoaded && actorId) {
     loadPermissions(actorId);
-    // }
   }, [actorId]);
 
   const [applicantState, setApplicantState] = useState(initialState);
@@ -114,9 +110,6 @@ const Apply = (props) => {
       initialBackRequest();
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // let url = window.location.pathname.split("/");
-  // const organisationId = url[url.length - 2];
 
   const { organisationId, userId } = useParams();
   const { orgProfileState, orgProfileDispatch } = useContext(
@@ -256,7 +249,6 @@ const Apply = (props) => {
           {isSelf || permissions?.isAdmin ? (
             <>
               <ApplicationIntro
-                // applicantName={applicantName}
                 applicantName={applicantState.applicant.name}
                 initials={getInitialsFromFullName(
                   applicantState.applicant.name,
