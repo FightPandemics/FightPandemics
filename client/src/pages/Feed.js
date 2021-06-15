@@ -443,6 +443,7 @@ const Feed = (props) => {
   };
 
   const loadPosts = async () => {
+
     if (!applyFilters) return;
     dispatchAction(SET_VALUE, "applyFilters", false);
     const filterURL = () => {
@@ -453,7 +454,6 @@ const Feed = (props) => {
         ? ""
         : `&filter=${encodeURIComponent(JSON.stringify(filterObj))}`;
     };
-
     const objectiveURL = () => {
       let objective = queryParams.objective;
       if (
@@ -493,7 +493,7 @@ const Feed = (props) => {
     };
     const limit = PAGINATION_LIMIT;
     const skip = page * limit;
-    let baseURL = gePostsBasetUrl(organisationId, limit, skip);
+    let baseURL = getPostsBaseUrl(organisationId, limit, skip);
     // ${searchURL()}&ignoreUserLocation=${ignoreUserLocation}
     switch (queryParams.s_category) {
       case "POSTS":
@@ -593,6 +593,7 @@ const Feed = (props) => {
     } catch (error) {
       dispatch(postsActions.fetchPostsError(error));
     }
+
   };
 
   // useEffect(() => {}, [ignoreUserLocation]);
@@ -660,6 +661,7 @@ const Feed = (props) => {
 
   const loadNextPage = useCallback(
     ({ stopIndex }) => {
+
       if (
         !isLoading &&
         loadMore &&
@@ -822,15 +824,15 @@ const Feed = (props) => {
                 )}
                 {(!queryParams.s_category ||
                   queryParams.s_category === "POSTS") && (
-                  <CreatePostButton
-                    id={gtmTag(GTM.post.createPost)}
-                    onClick={handleCreatePost}
-                    inline={true}
-                    icon={<PlusIcon />}
-                  >
-                    {t("post.create")}
-                  </CreatePostButton>
-                )}
+                    <CreatePostButton
+                      id={gtmTag(GTM.post.createPost)}
+                      onClick={handleCreatePost}
+                      inline={true}
+                      icon={<PlusIcon />}
+                    >
+                      {t("post.create")}
+                    </CreatePostButton>
+                  )}
               </HeaderWrapper>
               <MobileSearchWrapper>
                 <FeedSearch
@@ -905,11 +907,11 @@ const Feed = (props) => {
                   <Trans
                     i18nKey={
                       !queryParams.s_category ||
-                      queryParams.s_category === "POSTS"
+                        queryParams.s_category === "POSTS"
                         ? "feed.noResultsPosts"
                         : queryParams.s_category === "INDIVIDUALS"
-                        ? "feed.noResultsPeople"
-                        : "feed.noResultsOrgs"
+                          ? "feed.noResultsPeople"
+                          : "feed.noResultsOrgs"
                     }
                     components={[
                       <a
@@ -945,7 +947,7 @@ const Feed = (props) => {
   );
 };
 
-const gePostsBasetUrl = (organisationId, limit, skip) => {
+const getPostsBaseUrl = (organisationId, limit, skip) => {
   const actorId = organisationId ? `&actorId=${organisationId}` : "";
   return `/api/posts?&includeMeta=true&limit=${limit}&skip=${skip}${actorId}`;
 };

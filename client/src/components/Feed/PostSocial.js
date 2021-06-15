@@ -126,7 +126,7 @@ const PostSocial = ({
         handlePostLike(post, likePost, liked, false);
       }
     }
-  }, [handlePostLike, id, liked]);
+  }, [handlePostLike, id, liked, post]);
 
   const renderPostSocialIcons = (
     <>

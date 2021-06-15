@@ -1,6 +1,8 @@
 const { Schema } = require("mongoose");
 const { model: User } = require("./User");
 
+const posDescription = "";
+
 const organisationSchema = new Schema(
   {
     global: Boolean,
@@ -45,6 +47,24 @@ const organisationSchema = new Schema(
       twitter: String,
       website: String,
     },
+    isJoinOrg: {
+      required: true,
+      type: Boolean,
+      default: false,
+    },
+    isNewApplicant: {
+      required: true,
+      type: Boolean,
+      default: false,
+    },
+    orgBookLink: {
+      required: false,
+      type: String,
+    },
+    positions: {
+      name: { default: "Volunteer", type: String, },
+      description: { default: "We at-are now accepting volunteers who are as excited as us about our cause. Feel free to submit your application and we will get back to you as soon as possible. Happy volunteering!", required: true, type: String, },
+    }
   },
   { collection: "users" },
 );

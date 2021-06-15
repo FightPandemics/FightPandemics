@@ -12,8 +12,8 @@ const LabelIcon = styled.img`
   margin-right: 1rem;
 `;
 
-const Label = ({ htmlFor, icon, label, style }) => (
-  <StyledLabel htmlFor={htmlFor} style={style}>
+const Label = ({ htmlFor, icon, label, style, className }) => (
+  <StyledLabel htmlFor={htmlFor} style={style} className={className}>
     {icon && <LabelIcon src={icon} />}
     {label}
   </StyledLabel>

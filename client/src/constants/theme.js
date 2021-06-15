@@ -6,6 +6,8 @@ import {
   MEDIUM_GRAY,
   LIGHT_GRAY,
   LIGHTER_GRAY,
+  LIGHTISH_GRAY,
+  MEDIUMISH_GRAY,
   SELAGO,
   ORANGE_RED,
   RED,
@@ -18,6 +20,7 @@ import {
   GRAY,
   LIGHTER_BLACK,
   GHOST_WHITE,
+  SHADOW_BLACK,
 } from "./colors";
 
 const theme = {
@@ -71,6 +74,7 @@ const theme = {
     mediumGray: MEDIUM_GRAY,
     lightGray: LIGHT_GRAY,
     lighterGray: LIGHTER_GRAY,
+    lightishGray: LIGHTISH_GRAY,
     orangeRed: ORANGE_RED,
     red: RED,
     green: GREEN,
@@ -81,6 +85,7 @@ const theme = {
     gray: GRAY,
     lighterBlack: LIGHTER_BLACK,
     ghostWhite: GHOST_WHITE,
+    shadowBlack: SHADOW_BLACK,
   },
   button: {
     fontFamily: '"DM Sans", sans-serif',

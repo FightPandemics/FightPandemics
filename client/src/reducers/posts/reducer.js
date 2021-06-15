@@ -1,7 +1,7 @@
 import { POSTS_ACTIONS } from "./actions";
 import { isPostExpired } from "components/Feed/utils";
 
-const innitialState = {
+const initialState = {
   posts: [],
   page: 0,
   error: null,
@@ -30,7 +30,7 @@ export const getProfileModeProp = (mode) => {
   return modeMap[mode];
 };
 
-const postsReducer = (state = innitialState, action) => {
+const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case POSTS_ACTIONS.FETCH_POSTS_BEGIN:
       return {
@@ -77,14 +77,14 @@ const postsReducer = (state = innitialState, action) => {
       currentPosts =
         currentPosts !== undefined
           ? currentPosts.map((currentPost) => {
-              if (currentPost._id !== post._id) {
-                return currentPost;
-              }
-              return {
-                ...currentPost,
-                ...post,
-              };
-            })
+            if (currentPost._id !== post._id) {
+              return currentPost;
+            }
+            return {
+              ...currentPost,
+              ...post,
+            };
+          })
           : undefined;
 
       let currentActivePosts = state.profilePosts[userId]?.[objective]?.active;
@@ -96,28 +96,28 @@ const postsReducer = (state = innitialState, action) => {
         currentActivePosts =
           currentActivePosts !== undefined
             ? currentActivePosts.map((currentActivePost) => {
-                if (currentActivePost._id !== post._id) {
-                  return currentActivePost;
-                }
-                return {
-                  ...currentActivePost,
-                  ...post,
-                };
-              })
+              if (currentActivePost._id !== post._id) {
+                return currentActivePost;
+              }
+              return {
+                ...currentActivePost,
+                ...post,
+              };
+            })
             : undefined;
       } else {
         // map though achived Profile posts to update
         currentInActivePosts =
           currentInActivePosts !== undefined
             ? currentInActivePosts.map((currentInActivePost) => {
-                if (currentInActivePost._id !== post._id) {
-                  return currentInActivePost;
-                }
-                return {
-                  ...currentInActivePost,
-                  ...post,
-                };
-              })
+              if (currentInActivePost._id !== post._id) {
+                return currentInActivePost;
+              }
+              return {
+                ...currentInActivePost,
+                ...post,
+              };
+            })
             : undefined;
       }
       return {
