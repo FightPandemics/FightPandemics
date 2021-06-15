@@ -295,7 +295,7 @@ const ProfileNavMenu =
                     ? organisations[organisationId].name 
                     : organisations[organisationId].name.slice(0, 12) + "...")
                 }</OrgTitle>
-                {renderNavSections()}
+                {renderNavSections(organisationId)}
                 <CloseNavButtomMobile onClick = {()=> setNavIsOpened(false)}><span>&times;</span></CloseNavButtomMobile>
                 <Footer>
                     <NavLink>Account</NavLink>
@@ -310,7 +310,25 @@ const ProfileNavMenu =
     );
 }
 
-function renderNavSections() {
+function getLinkUrl(linkName, organisationId) {
+    // Add entry here to add link url. 
+    // Properties should match orgAccessLevels links above,
+    // i.e "Activity", "Messages", etc
+    const paths = {
+        Applications: "applicants",
+        Positions: "positions",
+        Activity: "activity",
+        Members: "members",
+        Default: "/"
+    };
+
+    return {
+        pathname: `/organisation/${organisationId}`,
+        tab: paths.hasOwnProperty(linkName) ? paths[linkName] : paths["Default"]
+    }
+}
+
+function renderNavSections(organisationId) {
     const orgAccessLevels = {
         "Org Workspace": 
         ["Activity", "Posts", "Org Book", "Members"],
@@ -327,8 +345,18 @@ function renderNavSections() {
             <OrgAccessLevelTitle id={title}> 
                 {mobileMediaQuery.matches && title === "Org Admin" ? "ADMIN" : title}
              </OrgAccessLevelTitle>
-            {links.map((link, idx) => {
-                return <NavLink to="/about-us" key = {link}> {link} </NavLink>;
+            {links.map((linkName, idx) => {
+                const { pathname, tab} = getLinkUrl(linkName, organisationId);
+                return <NavLink 
+                to={
+                    {
+                        pathname: pathname,
+                        state: {
+                            tab: tab
+                        }
+                    }
+                } 
+                key = {linkName}> {linkName} </NavLink>;
             })}
         </NavSection>
         navSections.push(navSectionComponent);
