@@ -248,6 +248,9 @@ const ProfileNavMenu =
     user
 }) => {
     let organisations = user ? user.organisations : [];
+    let [organisationId, setOrganisationId] = useState((()=>{
+        return organisations.length > 0 ? organisations[0]._id : 0;
+    })());
 
     return (
         organisations 
@@ -267,6 +270,7 @@ const ProfileNavMenu =
                                 onClick = {() => {
                                     setNavIsOpened(true);
                                     setOrgIdx(idx);
+                                    setOrganisationId(org._id);
                                 } }
                             />
                         );
@@ -295,7 +299,7 @@ const ProfileNavMenu =
                     ? organisations[orgIdx].name 
                     : organisations[orgIdx].name.slice(0, 12) + "...")
                 }</OrgTitle>
-                {renderNavSections(orgIdx)}
+                {renderNavSections(organisationId)}
                 <CloseNavButtomMobile onClick = {()=> setNavIsOpened(false)}><span>&times;</span></CloseNavButtomMobile>
                 <Footer>
                     <NavLink>Account</NavLink>
@@ -310,7 +314,7 @@ const ProfileNavMenu =
     );
 }
 
-function getLinkUrl(linkName, orgIdx) {
+function getLinkUrl(linkName, organisationId) {
     // Add entry here to add link url. 
     // Properties should match orgAccessLevels links above,
     // i.e "Activity", "Messages", etc
@@ -323,12 +327,12 @@ function getLinkUrl(linkName, orgIdx) {
     };
 
     return {
-        pathname: `/organisation/${orgIdx}`,
+        pathname: `/organisation/${organisationId}`,
         tab: paths.hasOwnProperty(linkName) ? paths[linkName] : paths["Default"]
     }
 }
 
-function renderNavSections(orgIdx) {
+function renderNavSections(organisationId) {
     const orgAccessLevels = {
         "Org Workspace": 
         ["Activity", "Posts", "Org Book", "Members"],
@@ -346,7 +350,7 @@ function renderNavSections(orgIdx) {
                 {mobileMediaQuery.matches && title === "Org Admin" ? "ADMIN" : title}
              </OrgAccessLevelTitle>
             {links.map((linkName, idx) => {
-                const { pathname, tab} = getLinkUrl(linkName, orgIdx);
+                const { pathname, tab} = getLinkUrl(linkName, organisationId);
                 return <NavLink 
                 to={
                     {
