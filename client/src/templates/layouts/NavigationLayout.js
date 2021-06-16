@@ -18,7 +18,14 @@ import TextFeedbackModal from "components/Feedback/TextFeedbackModal";
 import ThanksModal from "components/Feedback/ThanksModal";
 import withLabel from "components/Input/with-label";
 import ErrorAlert from "components/Alert/ErrorAlert";
-import { theme } from "constants/theme";
+
+
+// New import
+import ProfileNavMenu from "components/ProfileNavMenu/ProfileNavMenu";
+import MobileDrawer from "components/ProfileNavMenu/MobileDrawer";
+
+
+import { theme, mq } from "constants/theme";
 import {
   TOGGLE_STATE,
   SET_VALUE,
@@ -34,6 +41,20 @@ import {
 import Logo from "components/Logo";
 import logo from "assets/logo.svg";
 import DrawerMenu from "components/DrawerMenu";
+
+// Added Styles
+const MainWrapper = styled.div`
+    width: 100vw;
+    margin-left: ${props => props.user && props.user.organisations.length > 0 ? "10rem" : "0rem"};
+
+    @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+        margin-left: 0;
+      }
+`;
+
+const BodyWrapper = styled.div`
+    display: flex;
+`;
 
 const { royalBlue } = theme.colors;
 
@@ -74,6 +95,8 @@ const NavigationLayout = (props) => {
     organisationId,
   } = props;
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [profileNavMenuIsOpened, setProfileNavMenuIsOpened] = useState(false);
+  const [orgIdx, setOrgIdx] = useState(0);
 
   const onOrganisationChange = (index) => {
     if (index !== organisationId) {
@@ -428,23 +451,46 @@ const NavigationLayout = (props) => {
           {mobiletabs ? (
             <MobileTabs tabIndex={tabIndex} childComponent={props.children} />
           ) : null}
-          <Main isProfile={props?.isProfile}>
-            <props.component {...props} />
-            {feedbackFormState.error && (
-              <ErrorAlert
-                message={feedbackFormState.error}
-                type="error"
-                closable={true}
-                fullWidthBanner={true}
-              />
-            )}
-            {renderRatingModal()}
-            {renderTextFeedbackModal()}
-            {renderRadioModal()}
-            {renderThanksModal()}
-          </Main>
-          {!hideFooter && <Footnote />}
-          <CookieAlert />
+
+          <BodyWrapper>
+            {   user && user.organisations.length > 0 &&
+                <React.Fragment>
+                    <ProfileNavMenu 
+                        user = {user}
+                        navIsOpened = {profileNavMenuIsOpened}
+                        setNavIsOpened = {setProfileNavMenuIsOpened}
+                        orgIdx = {orgIdx}
+                        setOrgIdx = {setOrgIdx}
+                    />
+                    <MobileDrawer
+                        user = {user}
+                        navIsOpened = {profileNavMenuIsOpened}
+                        setNavIsOpened = {setProfileNavMenuIsOpened}
+                        orgIdx = {orgIdx}
+                        setOrgIdx = {setOrgIdx}
+                    />
+                </React.Fragment>
+            }
+            <MainWrapper user = {user}>
+                <Main isProfile={props?.isProfile}>
+                    <props.component {...props} />
+                    {feedbackFormState.error && (
+                    <ErrorAlert
+                    message={feedbackFormState.error}
+                    type="error"
+                    closable={true}
+                    fullWidthBanner={true}
+                    />
+                    )}
+                    {renderRatingModal()}
+                    {renderTextFeedbackModal()}
+                    {renderRadioModal()}
+                    {renderThanksModal()}
+                </Main>
+            </MainWrapper>
+            </BodyWrapper>
+            {!hideFooter && <Footnote />}
+            <CookieAlert />
         </StyledDrawer>
       </div>
     );
