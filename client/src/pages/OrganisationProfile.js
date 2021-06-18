@@ -1,6 +1,7 @@
 import { Col, Input, Row, Tabs } from "antd";
 import appStoreIcon from "assets/icons/app-store-icon.svg";
 import applicationConfirmation from "assets/icons/application-received.svg";
+import { mq } from "constants/theme";
 // ICONS
 import createPost from "assets/icons/create-post.svg";
 import edit from "assets/icons/edit.svg";
@@ -31,7 +32,7 @@ import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "components/Picture/UploadPic";
 import Activity from "components/Profile/Activity";
 import VerificationTick from "components/Verification/Tick";
-import GTM from "constants/gtm-tags";
+import GTM, { orgBook } from "constants/gtm-tags";
 import {
   APPSTORE_URL, FACEBOOK_URL,
   GITHUB_URL, INSTAGRAM_URL,
@@ -97,6 +98,9 @@ import {
   CustomDrawer,
   DescriptionDesktop,
   IconsContainer,
+  SeeOrgBookLink,
+  SeeOrgBookDisabled,
+  CreateOrgBookLink,
   DrawerHeader,
   EditIcon,
   NameDiv,
@@ -133,10 +137,6 @@ const initialState = {
 };
 
 const getHref = (url) => (url.startsWith("http") ? url : `//${url}`);
-const getOrgBookLink = (orgBookLink) =>
-  orgBookLink.startsWith("http")
-    ? orgBookLink
-    : window.location.pathname + `/${orgBookLink}`;
 const PAGINATION_LIMIT = 10;
 const ARBITRARY_LARGE_NUM = 10000;
 
@@ -185,10 +185,21 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
     isOwner,
     urls = {},
     verified,
-    orgBookLink,
     isJoinOrg,
     positions: { description } = { position: { description: "" } },
   } = organisation || {};
+
+  const ORGBOOK_CREATE_MODE = "create";
+  const ORGBOOK_EDIT_MODE = "edit";
+  const PAGE_CATEGORIES = {
+    liveCategory: "live",
+    draftCategory: "draft",
+  };
+  const LIVE_PAGE_VIEW_LEVELS = {
+    publicView: "public",
+    orgView: "org",
+    notApplicable: "n/a",
+  };
 
   const urlsAndEmail = { ...urls, email: isOwner ? null : email };
   if (isOwner) sessionStorage.removeItem("msgModal");
@@ -206,6 +217,12 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const organisationPosts = Object.entries(postsList);
   const actorOrganisationId = useSelector(selectOrganisationId);
   const isSelf = organisation && actorOrganisationId == organisation._id;
+  const [orgBookPages, setOrgBookPages] = useState(null);
+  const [editOrgBookMode, setEditOrgBookMode] = useState(ORGBOOK_CREATE_MODE);
+  const [editOrgBookLinkLabel, setEditOrgBookLinkLabel] = useState(
+    t("profile.org.createOrgBook").toString(),
+  );
+  const [isMobile, setIsMobile] = useState(false);
   const [doneLoadingApplicants, setDoneLoadingApplicants] = useState(false)
   const [applicantsLoaded, setApplicantsLoaded] = useState(false)
   const [membersLoaded, setMembersLoaded] = useState(false)
@@ -221,6 +238,53 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
   const getActorQuery = () => {
     return actorOrganisationId ? `&actorId=${actorOrganisationId}` : "";
   };
+
+  const setOrgBookState = (orgBookPages = null) => {
+    setOrgBookPages(orgBookPages);
+    setEditOrgBookMode(
+      orgBookPages && orgBookPages.length > 0
+        ? ORGBOOK_EDIT_MODE
+        : ORGBOOK_CREATE_MODE,
+    );
+    setEditOrgBookLinkLabel(
+      orgBookPages && orgBookPages.length > 0
+        ? t("profile.org.editOrgBook")
+        : t("profile.org.createOrgBook"),
+    );
+  };
+
+  const areLivePublicOrgBookPages = () => {
+    if (!orgBookPages || orgBookPages.length === 0) {
+      return false;
+    }
+    return orgBookPages.some(
+      (page) =>
+        page.status === PAGE_CATEGORIES.liveCategory &&
+        page.viewLevel === LIVE_PAGE_VIEW_LEVELS.publicView,
+    )
+      ? true
+      : false;
+  };
+
+  const areLiveOrgBookPages = () => {
+    if (!orgBookPages || orgBookPages.length === 0) {
+      return false;
+    }
+    return orgBookPages.some(
+      (page) => page.status === PAGE_CATEGORIES.liveCategory,
+    )
+      ? true
+      : false;
+  };
+
+  useEffect(() => {
+    (function initialSet() {
+      if (window.screen.width <= parseInt(mq.phone.wide.maxWidth)) {
+        setIsMobile(true);
+      }
+    })();
+  }, []);
+
   useEffect(() => {
     dispatch(postsActions.resetPageAction({}));
     dispatch(applicantsActions.resetPageAction({}));
@@ -232,6 +296,7 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
       try {
         const res = await axios.get(`/api/organisations/${organisationId}`);
         orgProfileDispatch(fetchOrganisationSuccess(res.data));
+        setOrgBookState(res.data.orgBookPages);
       } catch (err) {
         const message = err.response?.data?.message || err.message;
         const translatedErrorMessage = t([
@@ -536,16 +601,6 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
             )
           );
         });
-      } else {
-        return;
-      }
-    }
-  };
-
-  const orgBookURL = () => {
-    if (organisation) {
-      if (orgBookLink) {
-        return getOrgBookLink(orgBookLink);
       } else {
         return;
       }
@@ -998,6 +1053,54 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                   })}
                 </div>
               </IconsContainer>
+
+              {editOrgBookMode === ORGBOOK_EDIT_MODE ? (
+                isSelf ? ( //this version only owners can edit or create
+                  areLiveOrgBookPages() ? (
+                    <SeeOrgBookLink to={`/orgbook-viewer`}>
+                      {t("profile.org.seeOrgBook")}
+                    </SeeOrgBookLink>
+                  ) : //this condition would only be reached if another user deleted all live pgs
+                  isMobile ? (
+                    <SeeOrgBookDisabled>
+                      {t("profile.org.seeOrgBook")}
+                    </SeeOrgBookDisabled>
+                  ) : (
+                    <CreateOrgBookLink
+                      to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                    >
+                      {t("profile.org.createOrgBook")}
+                    </CreateOrgBookLink>
+                  )
+                ) : areLivePublicOrgBookPages() ? ( //this is only for non-members and non-registered
+                  <SeeOrgBookLink to={`/orgbook-viewer/${organisationId}`}>
+                    {t("profile.org.seeOrgBook")}
+                  </SeeOrgBookLink>
+                ) : (
+                  <SeeOrgBookDisabled>
+                    {t("profile.org.seeOrgBook")}
+                  </SeeOrgBookDisabled>
+                )
+              ) : //edit mode is "create"
+              isSelf ? ( //only owners can create but not if mobile
+                isMobile ? (
+                  <SeeOrgBookDisabled>
+                    {t("profile.org.seeOrgBook")}
+                  </SeeOrgBookDisabled>
+                ) : (
+                  <CreateOrgBookLink
+                    to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                  >
+                    {t("profile.org.createOrgBook")}
+                  </CreateOrgBookLink>
+                )
+              ) : (
+                //all other members cannot create and there is no orgbook yet to see
+                <SeeOrgBookDisabled>
+                  {t("profile.org.seeOrgBook")}
+                </SeeOrgBookDisabled>
+              )}
+
             </UserInfoDesktop>
           </UserInfoContainer>
 
@@ -1316,6 +1419,15 @@ const OrganisationProfile = ({ isAuthenticated, organisationId: currentUserOrgId
                   {t("profile.org.editOrgNotification")}{" "}
                 </Link>
               </DrawerHeader>
+              {!isMobile && (
+                <DrawerHeader>
+                  <Link
+                    to={`/orgbook-editor/${editOrgBookMode}/${organisationId}`}
+                  >
+                    {editOrgBookLinkLabel}{" "}
+                  </Link>
+                </DrawerHeader>
+              )}
             </CustomDrawer>
           )
           }

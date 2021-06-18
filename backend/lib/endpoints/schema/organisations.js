@@ -2,6 +2,7 @@ const S = require("fluent-schema");
 const { strictSchema, strictQueryStringSchema } = require("./utils");
 const { locationSchema } = require("./location");
 const { notifyPreferenceSchema } = require("./notificationPreference");
+const { orgBookPagesSchema } = require("./orgBookPages");
 
 const organisation = {
   about: S.string().maxLength(260),
@@ -29,6 +30,9 @@ const organisation = {
   positions: S.object()
     .prop("name", S.string())
     .prop("description", S.string()),
+  orgBookPages: S.array().items(
+    orgBookPagesSchema)
+    .maxItems(10),
 };
 
 const createOrganisationSchema = {
@@ -91,7 +95,8 @@ const updateOrganisationSchema = {
     .prop("notifyPrefs", notifyPreferenceSchema)
     .prop("isJoinOrg", organisation.isJoinOrg)
     .prop("orgBookLink", organisation.orgBookLink)
-    .prop("positions", organisation.positions),
+    .prop("positions", organisation.positions)
+    .prop("orgBookPages", organisation.orgBookPages),
   // .prop("description", positions.description),
   params: strictSchema().prop("organisationId", S.string().required()),
 };
