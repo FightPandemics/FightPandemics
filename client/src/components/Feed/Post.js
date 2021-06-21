@@ -307,6 +307,12 @@ const Post = ({
           userId: commentCountRes.data.post.author.id,
         })
       );
+      dispatch(
+        postsActions.updateProfilePostSucess({
+          post: commentCountRes.data.post,
+          userId: commentCountRes.data.post.author.id,
+        }),
+      );
       setComment([]);
     }
   };
@@ -366,6 +372,12 @@ const Post = ({
             post: commentCountRes.data.post,
             userId: commentCountRes.data.post.author.id,
           })
+        );
+        dispatch(
+          postsActions.updateProfilePostSucess({
+            post: commentCountRes.data.post,
+            userId: commentCountRes.data.post.author.id,
+          }),
         );
       }
     }

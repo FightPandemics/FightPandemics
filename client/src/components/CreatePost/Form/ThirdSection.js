@@ -37,7 +37,7 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
             filterOption={false}
             options={translateOptions(shareWith.options)}
             popUpContainer={
-              document.getElementsByClassName("ant-tabs-content-holder")[0]
+              document.getElementsByClassName("ant-tabs-content-holder")[1]
             }
             minWidth="13rem"
           />
@@ -53,7 +53,7 @@ const Third = ({ onShareWithChange, onExpirationChange, formData }) => {
             filterOption={false}
             options={translateOptions(expires.options)}
             popUpContainer={
-              document.getElementsByClassName("ant-tabs-content-holder")[0]
+              document.getElementsByClassName("ant-tabs-content-holder")[1]
             }
           />
         </div>

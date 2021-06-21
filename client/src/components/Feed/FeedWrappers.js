@@ -179,3 +179,26 @@ export const SeeAllContentWrapper = styled(Content)`
   margin: auto;
   background: ${white};
 `;
+
+export const SeeAllTabsWrapperOrg = styled(Content)`
+  background: transparent;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    // display: flex;
+    align-item: center;
+    background: ${theme.colors.white};
+    box-shadow: 0rem 0.4rem 2rem rgba(0, 0, 0, 0.08);
+    border-radius: 1.2rem;
+    // padding: 2rem;
+  }
+`;
+
+export const SeeAllContentWrapperOrg = styled(Content)`
+  // overflow-x: visible !important;
+  width: 98%;
+  margin-top: 0rem;
+  margin-left: 0rem;
+  @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
+    width: 100%;
+    padding: 1.8rem;
+  }
+`;

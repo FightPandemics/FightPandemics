@@ -1,4 +1,5 @@
 import { Drawer, Menu } from "antd";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -113,7 +114,6 @@ export const NameDiv = styled(TextLabel)`
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100% - 1.6rem);
-    backgroun-color: red;
 
     img {
       margin-right: 0.8rem;
@@ -158,6 +158,11 @@ export const EditIcon = styled(SvgIcon)`
   top: 2.4rem;
 `;
 
+export const PositionEditIcon = styled(SvgIcon)`
+  color: ${colors.offWhite};
+  float: right;
+`;
+
 export const ProfileBackgroup = styled.div`
   background-color: ${colors.royalBlue};
   position: absolute;
@@ -170,7 +175,7 @@ export const ProfileBackgroup = styled.div`
 `;
 
 export const ProfileLayout = styled.div`
-  background-color: ${colors.offWhite};
+  /* background-color: ${colors.offWhite}; */
   max-height: 100%;
   z-index: 1;
   max-width: 80rem;
@@ -180,11 +185,15 @@ export const ProfileLayout = styled.div`
   border-radius: 0.8rem;
   margin-bottom: 4rem;
 
+  &.profile-list-page {
+    overflow: visible;
+  }
+
   @media screen and (max-width: ${mq.phone.wide.maxWidth}) {
     width: 90vw;
     margin-left: auto;
     margin-right: auto;
-    background-color: #f6f7fb;
+    /* background-color: #f6f7fb; */
   }
 `;
 
@@ -300,6 +309,37 @@ export const DescriptionDesktop = styled.div`
     color: #282828;
   }
 `;
+
+export const SeeOrgBookLink = styled(Link)`
+  color: ${theme.colors.royalBlue};
+  font-size: ${theme.typography.size.xlarge};
+  align-self: center;
+  display: block;
+  width: fit-content;
+  margin: auto;
+  margin-top: 1rem;
+`;
+
+export const SeeOrgBookDisabled = styled.div`
+  color: ${theme.colors.lightGray};
+  font-size: ${theme.typography.size.xlarge};
+  align-self: center;
+  display: block;
+  width: fit-content;
+  margin: auto;
+  margin-top: 1rem;
+`;
+
+export const CreateOrgBookLink = styled(Link)`
+  color: ${theme.colors.royalBlue};
+  font-size: ${theme.typography.size.xlarge};
+  align-self: center;
+  display: block;
+  width: fit-content;
+  margin: auto;
+  margin-top: 1rem;
+`;
+
 export const MobileLocation = styled.div`
   color: #939393;
   font-weight: normal;
@@ -319,6 +359,7 @@ export const MobileLocation = styled.div`
     display: none;
   }
 `;
+
 export const DesktopLocation = styled.div`
   display: none;
   @media screen and (min-width: ${mq.tablet.narrow.minWidth}) {
@@ -332,6 +373,7 @@ export const DesktopLocation = styled.div`
     font-weight: normal;
     font-size: 1.1rem;
     line-height: 1rem;
+    margin-top: 1rem;
   }
 `;
 
@@ -362,6 +404,9 @@ export const MobileMenuWrapper = styled(Menu)`
       background-color: transparent;
       border-bottom: 0.2rem solid ${theme.colors.black};
       font-weight: bold;
+    }
+    &.ant-menu-vertical .ant-menu-item {
+      overflow: visible;
     }
   }
 `;

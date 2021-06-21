@@ -71,6 +71,7 @@ module.exports = {
     createOrgProfPrefix: "COP",
     createNew: "_CN",
     email: "_EM",
+    joinOrg: "JOR",
   },
   profile: {
     createProfile: "_CPR",
@@ -132,6 +133,21 @@ module.exports = {
     facilityType: "_FT",
     locationChange: "_LC",
     locationShare: "_LS",
+  },
+  orgBook: {
+    prefix: "OB",
+    back: "_BA",
+    undoAll: "_UA",
+    deleteDraft: "_DD",
+    changeLiveViewType: "_CL",
+    saveContent: "_SC",
+    pubOrUnpublish: "_PU",
+    renamePage: "_RP",
+    seePreview: "_SP",
+    pageContainer: "_PC",
+    joinOrgContainer: "_JO",
+    deleteOrgBook: "_DO",
+    openOrgBookTOCMenu: "_OM",
   },
   providersFilters: {
     individual: "_IN",
@@ -244,6 +260,8 @@ module.exports = {
     comment: "_CM",
     settings: "_SET",
     report: "_RP",
+    newapplicant: "_NA",
+    applicationSubmitted: "_AS",
   },
   moderation: {
     hide: "_HIP",
