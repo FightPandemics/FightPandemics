@@ -1,4 +1,4 @@
-import { Col, Input, Row, Tabs } from "antd";
+import { Col, Row, Tabs } from "antd";
 import appStoreIcon from "assets/icons/app-store-icon.svg";
 import applicationConfirmation from "assets/icons/application-received.svg";
 import { mq } from "constants/theme";
