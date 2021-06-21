@@ -32,7 +32,7 @@ import ProfilePic from "components/Picture/ProfilePic";
 import UploadPic from "components/Picture/UploadPic";
 import Activity from "components/Profile/Activity";
 import VerificationTick from "components/Verification/Tick";
-import GTM, { orgBook } from "constants/gtm-tags";
+import GTM from "constants/gtm-tags";
 import {
   APPSTORE_URL, FACEBOOK_URL,
   GITHUB_URL, INSTAGRAM_URL,
@@ -76,7 +76,6 @@ import { applicantsActions, selectApplicants } from "reducers/applicants";
 import { membersActions, selectMembers } from "reducers/members";
 import { postsActions, selectPosts } from "reducers/posts";
 import { selectOrganisationId } from "reducers/session";
-import styled from "styled-components";
 import { LOGIN } from "templates/RouteWithSubRoutes";
 import {
   getInitialsFromFullName,
