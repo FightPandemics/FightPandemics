@@ -42,6 +42,7 @@
     "fastify-authz-jwks": "^1.0.11",
     "fastify-cookie": "^3.6.1",
     "fastify-file-upload": "^2.1.0",
+    "fastify-helmet": "^3.0.2",
     "fastify-jwt": "^1.3.1",
     "fastify-oas": "^2.7.0",
     "fastify-plugin": "^1.6.1",
